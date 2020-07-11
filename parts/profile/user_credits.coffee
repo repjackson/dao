@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Router.route '/user/:username/generated', (->
+    Router.route '/user/:username/credits', (->
         @layout 'profile_layout'
         @render 'user_credits'
         ), name:'user_credits'

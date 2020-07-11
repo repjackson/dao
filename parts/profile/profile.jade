@@ -17,7 +17,7 @@ template(name='profile_layout')
                 .ui.large.basic.label(title='points given') 
                     i.minus.icon
                     |#{total_debit_amount}
-                .ui.large.basic.label(title='points received')
+                .ui.large.basic.label(title='points credits')
                     i.plus.small.icon
                     |#{total_credit_amount}
                 .item #{total_bandwith} total bandwith
@@ -26,21 +26,22 @@ template(name='profile_layout')
                 div
                 if is_admin
                     a.ui.basic.button(href="/user/#{username}/edit")
-                        +icon name='shield' cl='ui mini inline image'
+                        i.cog.icon
                         |account
                 if is_current_user
                     a.ui.large.basic.compact.button(href="/user/#{username}/edit")
-                        +icon name='settings' cl='ui mini inline image'
+                        i.cog.icon
                         |account
                     a.ui.large.basic.compact.button.logout(href="#")
-                        +icon name='logout-rounded' cl='ui mini inline image'
+                        i.sign.out.alternate.icon
                         |log out
                 unless is_current_user
                     if currentUser
+                        div
                         +user_friend_button 
-                        .ui.basic.compact.button.quick_give
-                            +icon name='initiate-money-transfer' cl='ui inline mini image'
-                            |quick +1
+                        // .ui.basic.compact.button.quick_give
+                        //     +icon name='initiate-money-transfer' cl='ui inline mini image'
+                        //     |quick +1
                         .ui.basic.compact.button.give
                             +icon name='donate' cl='ui inline mini image'
                             |give
@@ -64,28 +65,29 @@ template(name='profile_layout')
                     .ui.label #{this}
         
             .twelve.wide.column
-                a.ui.large.basic.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
-                    +icon name='home' cl='ui inline mini image'
+                a.ui.big.basic.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
+                    i.dashboard.icon
                     |dashboard
-                a.ui.large.basic.compact.button(href="/user/#{username}/about" class="{{isActivePath user_about}}")
-                    +icon name='info' cl='ui inline mini image'
+                a.ui.big.basic.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
+                    i.info.icon
                     |about
-                a.ui.large.basic.compact.button(href="/user/#{username}/generated" class="{{isActivePath 'user_generated'}}")
-                    +icon name='sprout' cl='ui inline mini image'
-                    |generated
-                a.ui.large.basic.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
-                    +icon name='receipt' cl='ui inline mini image'
+                a.ui.big.basic.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
+                    i.chevron.down.icon
+                    |credits
+                a.ui.big.basic.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                    i.chevron.up.icon
                     |sent
-                a.ui.large.basic.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
-                    +icon name='calendar' cl='ui inline mini image'
-                    |events
-                a.ui.large.basic.compact.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
-                    +icon name='groups' cl='ui inline mini image'
+                // a.ui.big.basic.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
+                //     +icon name='calendar' cl='ui inline mini image'
+                //     |events
+                a.ui.big.basic.compact.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
+                    i.users.icon
                     |friends
-                a.ui.large.basic.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
-                    +icon name='chat' cl='ui inline mini image'
+                a.ui.big.basic.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                    i.chat.icon
                     |chat
-                div   
+                .spacer
+                .spacer
                 +yield    
                       
 

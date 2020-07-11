@@ -15,9 +15,18 @@ template(name='debit_edit')
                             |#{_author.username}
                     .ui.segment
                         .ui.header recipient(s)
-                        .ui.header
-                            img.ui.circular.small.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{target.username}
+                        each recipients
+                            .ui.basic.label 
+                                i.remove.icon.remove_recipient
+                                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{username}
+                        .ui.segment 
+                            .ui.inline.header add
+                            each members
+                                .ui.basic.button.add_recipient
+                                    i.plus.icon
+                                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{username}
                     .ui.big.input
                         input(type='number' value=amount)
                     +key_value_edit key='amount' value=1
@@ -41,7 +50,7 @@ template(name='debit_edit')
                     
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.header total
+                    .ui.header subtotal #{subtotal}
                     if can_submit
                         .ui.fluid.green.big.button.submit
                             i.checkmark.icon

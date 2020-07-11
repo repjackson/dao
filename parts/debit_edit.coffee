@@ -4,14 +4,47 @@ if Meteor.isClient
         @render 'debit_view'
         ), name:'debit_view'
 
+    Template.debit_edit.onCreated ->
+        @autorun => Meteor.subscribe 'target_from_debit_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'all_users'
     Template.debit_view.onCreated ->
         @autorun => Meteor.subscribe 'target_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'all_users'
+        
     Template.debit_view.onRendered ->
 
 
+    Template.debit_edit.helpers
+        recipients: ->
+            debit = Docs.findOne Router.current().params.doc_id
+            if debit.recipient_ids
+                Meteor.users.find 
+                    _id: $in: debit.recipient_ids
+        members: ->
+            debit = Docs.findOne Router.current().params.doc_id
+            if debit.recipient_ids
+                Meteor.users.find 
+                    levels: $in: ['member']
+                    _id: $nin: debit.recipient_ids
+            else
+                Meteor.users.find 
+                    levels: $in: ['member']
+        subtotal: ->
+            debit = Docs.findOne Router.current().params.doc_id
+            debit.amount*debit.recipient_ids.length
     Template.debit_edit.events
+        'click .add_recipient': ->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    recipient_ids:@_id
+        'click .remove_recipient': ->
+            Docs.update Router.current().params.doc_id,
+                $pull:
+                    recipient_ids:@_id
         'keyup .new_element': (e,t)->
             if e.which is 13
                 element_val = t.$('.new_element').val().trim()
@@ -52,8 +85,6 @@ if Meteor.isClient
                     Router.go "/debit/#{@_id}/view"
 
 
-    Template.debit_view.helpers
-    Template.debit_view.events
 
 # if Meteor.isServer
 #     Meteor.methods

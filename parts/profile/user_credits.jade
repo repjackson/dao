@@ -1,7 +1,7 @@
 template(name='user_credits')  
     .ui.header 
-        +icon name='sprout'
-        |Generated
+        i.chevron.down
+        |earned
     .ui.link.list.smallscroll
         each earned_items
             .item
@@ -23,23 +23,24 @@ template(name='user_credits')
 
 template(name='user_credits_small')
     .ui.header 
-        i.receipt.icon
+        i.chevron.down.icon
         |received
     .ui.link.list.smallscroll
         each earned_items
             .item
                 if author.profile_image_id
                     img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                strong #{amount}pt 
                 .content
-                    a(href="/debit/#{_id}/view")
-                        |#{when} from 
-                    a(href="/user/#{author.username}")
-                        |#{author.username}
+                    .header
+                        strong #{amount}pt 
+                        a(href="/user/#{author.username}")
+                            |#{author.username}
+                    .description
+                        a(href="/debit/#{_id}/view")
+                            |#{when}
                 .content
                     .description
                         |#{description}
                         each tags
                             .ui.mini.basic.label #{this}
-                    if is_admin
-                        +remove_button
+                .spacer
