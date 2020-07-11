@@ -1,0 +1,26 @@
+template(name='user_about')
+    .ui.header user info
+    with current_user
+        +textarea_view key='profile_hope_receive' label='What do you hope to receive?' direct=true
+        .spacer
+        .spacer
+        +textarea_view key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
+        .spacer
+        .spacer
+        +textarea_view key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
+        .spacer
+        .spacer
+        +textarea_view key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
+        .spacer
+        .spacer
+        if tags 
+            .ui.tags.icon 
+            each tags
+                +user_info_tag
+
+template(name='user_info_tag')
+    .ui.basic.tertiary.button 
+        if term 
+            if term.image 
+                img.ui.tiny.inline.image(src=term.image)
+        |#{this}

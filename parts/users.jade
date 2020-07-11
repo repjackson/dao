@@ -1,0 +1,69 @@
+template(name='users')
+    .ui.padded.stackable.grid
+        .four.wide.column
+            +user_cloud
+        .twelve.wide.column
+            .ui.button 
+                |debit count
+            .ui.button 
+                |debit amount
+            .ui.button 
+                |credit count
+            .ui.button 
+                |credit amount
+            .scrolling
+                .ui.stackable.four.cards
+                    each users
+                        +user_item
+
+
+
+
+template(name='user_cloud')
+    i.tags.icon
+    if selected_user_tags
+        #clear_tags.ui.primary.icon.compact.button
+            i.remove.icon
+        each selected_user_tags
+            .unselect_tag.ui.primary.compact.button
+                strong #{this}
+    each all_tags
+        .ui.compact.basic.button.select_tag(class=cloud_tag_class) 
+            strong #{this.name}
+
+
+        
+
+template(name='user_item')
+    .card
+        a(href="/user/#{username}")
+            img.ui.raw.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
+        .content
+            a.ui.inline.header(href="/user/#{username}")
+                |#{name}
+                //- |#{username}
+        .content
+            each levels
+                .ui.label #{this}
+            strong #{debit_count} debits
+            span ##{global_debit_count_rank}
+            strong #{credit_count} credits
+            span ##{global_credit_count_rank}
+            .ui.small.header #{points} points
+            each first_five_tags
+                .ui.circular.basic.label #{this}
+            
+            if is_admin
+                +addtoset_user key='levels' value='member'
+                +addtoset_user key='levels' value='contributor'
+                +addtoset_user key='levels' value='explorer'
+                +addtoset_user key='levels' value='regenerator'
+                +addtoset_user key='levels' value='steward'
+        //- .content
+        //-     +user_friend_button
+        
+        //- .ui.button send credit
+                
+
+template(name='addtoset_user')
+    .ui.button.toggle_value(class=ats_class) #{key} #{value}

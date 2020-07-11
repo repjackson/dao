@@ -1,0 +1,188 @@
+template(name='user_edit_layout')
+    //- img.ui.fluid.image.bg_overlay(src="{{c.url 'fantasy_bg' width=1000 height=1000 crop='crop'}}")    
+    +nav
+    with current_user          
+        .ui.stackable.padded.grid
+            .row
+                .four.wide.column
+                    .ui.center.aligned.large.inline.header
+                        +i name='settings'
+                        | #{current_user.name}
+                    .ui.small.inline.header @#{current_user.username}
+                    a.ui.fluid.large.green.button(href="/user/#{current_user.username}/") 
+                        i.checkmark.icon
+                        strong save
+                    a.ui.basic.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}") 
+                        i.info.icon 
+                        |info
+                    a.ui.basic.button(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}") 
+                        i.cog.icon 
+                        |account
+                    a.ui.basic.button(href="/user/#{current_user.username}/edit/friends" class="{{isActivePath regex='user_edit_friends'}}") 
+                        i.users.icon 
+                        |friends
+                    a.ui.basic.button(href="/user/#{current_user.username}/edit/levels" class="{{isActivePath regex='user_edit_alerts'}}") 
+                        i.bell.icon 
+                        |levels
+                    a.ui.basic.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActivePath regex='user_edit_alerts'}}") 
+                        i.bell.icon 
+                        |alerts
+                    a.ui.basic.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
+                        i.lock.icon 
+                        | privacy
+                    a.ui.basic.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}") 
+                        i.shield.icon 
+                        | membership
+                .twelve.wide.column
+                    +yield
+
+template(name='user_edit_info')
+    .ui.two.column.stackable.grid
+        .column
+            +array_edit key='tags' label='tags' direct=true
+            .spacer
+            +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
+            .spacer
+            +textarea_edit key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
+            .spacer
+            +textarea_edit key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
+            .spacer
+            
+        .column
+            +textarea_edit key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
+            .spacer
+            +textarea_edit key='emergency_contact_name' label='emergency contact name' direct=true
+            .spacer
+            +textarea_edit key='emergency_contact_number' label='emergency contact number' direct=true
+     
+template(name='phone_editor')
+    .ui.small.header    
+        i.phone.icon
+        |phone
+    .ui.icon.fluid.input(title='Add Phone')
+        i.plus.icon
+        input#phone.form-control(type='phone', name='phone', value='{{newNumber}}')
+    //- if current_user.profile.phone
+    //-     if current_user.profile.phone_verified
+    //-         .ui.label verified
+    //-     else
+    //-         p
+    //-             .ui.label not verified
+    //-             a.resend_verification(href='#')
+    //-                 |resend code
+    //-             .ui.small.icon.button.remove_phone(title='remove phone')
+    //-                 i.remove.icon
+    //- else
+    //-     .ui.fluid.button.update_phone add phone
+
+
+
+template(name='password_edit')
+    .ui.small.header
+        //- +i name='password'
+        i.lock.icon
+        |change password
+    //- .ui.fluid.input
+    //-     input#password(type='password', placeholder='old password')
+    .ui.fluid.icon.input
+        input#new_password(type='password', placeholder='new password')
+    if is_dev
+        .ui.fluid.button.send_enrollment_email
+            |send enrollment email
+    if is_admin
+        .ui.fluid.button.reset_password
+            |reset password
+    .ui.fluid.large.button.set_password
+        i.lock.icon
+        //- +i name='password' cl='ui mini inline image'
+        | set password
+            
+            
+            
+template(name='emails_edit')
+    //- .ui.small.header 
+    //-     i.envelope.icon
+    //-     | email(s)
+    //- #test_email.ui.large.button test email
+    .ui.divided.list
+        each current_user.emails
+            .item 
+                // unless verified
+                //     .right.floated.content
+                //         .ui.button Verify
+                .content
+                    if verified
+                        .ui.large.label(title='verified')
+                            | #{address}
+                            i.checkmark.icon
+                    else
+                        .ui.large.label
+                            //- i.ban.icon
+                            | #{address}
+                        .send_verification_email.ui.button 
+                            |verify
+                            i.caret.right.icon
+                    .ui.small.icon.button.remove_email
+                        i.remove.icon
+    .ui.action.large.fluid.icon.action.input
+        input#new_email(type='email' placeholder='add new email address' autocomplete="off")
+        #add_email.ui.submit.icon.button 
+            i.plus.icon
+            |email
+
+
+
+template(name='user_edit_friends')
+    .ui.header
+        i.users.icon
+        | friends
+    
+    
+    
+    
+template(name='user_edit_privacy')
+    .ui.header
+        i.shield.icon
+        | privacy
+    .ui.grid 
+        .row 
+            .four.wide.column
+                +boolean_edit key='publish_profile' label='publish profile' direct=true
+            .twelve.wide.column
+                .ui.header 
+                    |make profile public 
+                .ui.small.header 
+                    |Allow others to find your profile and follow you. Allows you to follow others. Enrolls you in public leaderboards.
+
+template(name='user_edit_account')
+    .ui.header 
+        i.cog.icons
+        |account
+    .ui.two.column.stackable.grid
+        .column
+            +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true
+            +password_edit
+            if is_admin
+                with current_user
+                    .ui.button.remove_user 
+                        i.remove.icon
+                        |delete user
+        .column
+            +text_edit key='first_name' label='first name' direct=true
+            +text_edit key='last_name' label='last name' direct=true
+            .ui.header 
+                i.envelope.outline.icon
+                |emails
+            +emails_edit
+            +username_edit
+            +phone_edit key='phone' label='phone' icon='phone' direct=true
+
+            //- +phone_editor
+    
+template(name='username_edit')
+    .ui.small.header 
+        i.cursor.icon
+        |change username [#{current_user.username}]
+    .ui.icon.fluid.input
+        input.new_username(type='text' placeholder='new username...')
+        i.play.link.icon.change_username

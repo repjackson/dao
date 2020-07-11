@@ -1,0 +1,166 @@
+template(name='profile_layout')
+    //- img.ui.image.home_banner(src="{{c.url 'nightbg' width=1000 height=1000 crop='crop'}}")    
+    +nav
+    with user
+        .ui.stackable.padded.grid
+            .four.wide.column
+                img.ui.centered.small.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                a.ui.large.center.aligned.header.refresh_user_stats(href="/user/#{username}") #{username}
+                //- .ui.basic.compact.icon.button.refresh_user_stats(title='refresh stats')
+                //-     i.refresh.icon
+                .spacer
+                .ui.horizontal.list
+                    .item #{debit_count} debits
+                        .ui.label ##{global_debit_count_rank}
+                    .item #{credit_count} credits
+                        .ui.label ##{global_credit_count_rank}
+                .ui.large.basic.label(title='points given') 
+                    i.minus.icon
+                    |#{total_debit_amount}
+                .ui.large.basic.label(title='points received')
+                    i.plus.small.icon
+                    |#{total_credit_amount}
+                .item #{total_bandwith} total bandwith
+                .item #{calculated_user_balance}p recorded balance
+                .ui.small.inline.header {{fixed one_score}} one score
+                div
+                if is_admin
+                    a.ui.basic.button(href="/user/#{username}/edit")
+                        +icon name='shield' cl='ui mini inline image'
+                        |account
+                if is_current_user
+                    a.ui.large.basic.compact.button(href="/user/#{username}/edit")
+                        +icon name='settings' cl='ui mini inline image'
+                        |account
+                    a.ui.large.basic.compact.button.logout(href="#")
+                        +icon name='logout-rounded' cl='ui mini inline image'
+                        |log out
+                unless is_current_user
+                    if currentUser
+                        +user_friend_button 
+                        .ui.basic.compact.button.quick_give
+                            +icon name='initiate-money-transfer' cl='ui inline mini image'
+                            |quick +1
+                        .ui.basic.compact.button.give
+                            +icon name='donate' cl='ui inline mini image'
+                            |give
+                        .ui.basic.compact.button.offer
+                            +icon name='hand-planting' cl='ui inline mini image'
+                            |offer
+             
+                .ui.header levels
+                each levels
+                    .ui.basic.label #{this}
+                .ui.header #{points}pts
+                       
+                //- a.ui.basic.compact.button.logout_other_clients(href="#")
+                //-     //- i.globe.icon
+                //-     |log out other clients
+                .ui.header 
+                    //- +icon name='shield'
+                    i.shield.icon
+                    |roles
+                each roles
+                    .ui.label #{this}
+        
+            .twelve.wide.column
+                a.ui.large.basic.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
+                    +icon name='home' cl='ui inline mini image'
+                    |dashboard
+                a.ui.large.basic.compact.button(href="/user/#{username}/about" class="{{isActivePath user_about}}")
+                    +icon name='info' cl='ui inline mini image'
+                    |about
+                a.ui.large.basic.compact.button(href="/user/#{username}/generated" class="{{isActivePath 'user_generated'}}")
+                    +icon name='sprout' cl='ui inline mini image'
+                    |generated
+                a.ui.large.basic.compact.button(href="/user/#{username}/gifted" class="{{isActivePath 'user_gifted'}}")
+                    +icon name='plant-under-rain' cl='ui inline mini image'
+                    |gifted
+                a.ui.large.basic.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
+                    +icon name='calendar' cl='ui inline mini image'
+                    |events
+                a.ui.large.basic.compact.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
+                    +icon name='groups' cl='ui inline mini image'
+                    |friends
+                a.ui.large.basic.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                    +icon name='chat' cl='ui inline mini image'
+                    |chat
+                div   
+                +yield    
+                      
+
+
+
+template(name='user_dashboard')
+    .ui.stackable.three.column.grid
+        .column
+            +user_credits_small
+        .column
+            .ui.header 
+                i.donate.icon
+                |gifted
+            .ui.link.list.smallscroll
+                each gifted_items
+                    .item 
+                        if target.profile_image_id
+                            img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                strong #{amount}pt
+                                a(href="/debit/#{_id}/view")
+                                    |#{when}
+                                    | to 
+                            .description
+                                a(href="/user/#{target.username}")
+                                    |#{target.username}
+                                |#{description}
+                            .description
+                                each tags
+                                    .ui.mini.basic.label #{this}
+                            if is_admin
+                                +remove_button
+        .column
+            .ui.header 
+                // +icon name='hand-planting'
+                i.bullhorn.icon
+                |offers
+            .ui.link.list.smallscroll
+                each user_offers
+                    a.item(href="/offer/#{_id}/view")
+                        .header #{amount}pts
+                        |#{_author.username}
+                        |#{description}
+                        |#{when}
+                                
+    //- +user_following
+    //- +user_groups
+
+template(name='user_groups')
+    .ui.center.aligned.header 
+        i.users.icon
+        | groups
+
+
+
+template(name='user_friend_button')
+    if is_friend
+        .ui.blue.fade.animated.basic.compact.button.unfriend
+            .visible.content
+                i.checkmark.icon
+                |friend
+            .hidden.content
+                i.minus.icon
+    else
+        .ui.basic.basic.compact.button.friend
+            i.plus.icon
+            |friend
+
+
+
+template(name='user_alerts_small')
+    .ui.header 
+        i.bell.small.icon
+        |alerts
+    .ui.list
+        each alerts 
+            .ui.item #{content}

@@ -1,0 +1,53 @@
+template(name='login')
+    .ui.padded.stackable.grid
+        .centered.row
+            .eight.wide.column
+                .ui.center.aligned.basic.segment
+                    .ui.big.blue.inline.header 
+                        +icon name='1-circle' cl='ui inline compact image'                    
+                        |One Riverside
+                    .ui.inline.header login
+                div
+                if message
+                    h4.ui.center.aligned.header #{message}
+                .ui.inline.small.header 
+                    //- i.user.outline.icon
+                    +icon name='user'
+                    |username
+                .ui.fluid.large.input(class=login_class)
+                    input.username(type='text')
+                .spacer
+                .ui.inline.small.header 
+                    +icon name='password'
+                    //- i.lock.icon
+                    | password
+                .ui.fluid.large.input(class=login_class)
+                    input.password(type='password')
+                //- if username
+                if logging_in
+                    .spacer
+                    .ui.fluid.big.circular.basic.button.enter(title="login #{username}" class=enter_class)
+                        |login
+                        strong #{username}
+                        |&nbsp;
+                        //- i.sign.in.alternate.icon
+                        //- +icon name='login-rounded-right' cl='ui avatar image'
+                        i.right.chevron.icon
+                else
+                    if username
+                        .ui.center.aligned.basic.segment
+                            .ui.header no '#{username}' user
+                            a.ui.basic.button(href='/register')
+                                //- i.user.plus.icon
+                                +icon name='add-user-male' cl='ui mini inline image'
+                                | register
+                .ui.center.aligned.basic.segment    
+                    a.ui.basic.button(href='/forgot_password')
+                        //- i.refresh.icon
+                        +icon name='forgot-password' cl='ui mini inline image'
+                        |forgot password
+                    a.ui.basic.button(href='/register') 
+                        //- i.user.plus.icon
+                        +icon name='add-user-male' cl='ui mini inline image'
+                        |register
+                    //- .ui.center.aligned.inline.header see the front desk to register an account

@@ -1,0 +1,86 @@
+template(name='nav')
+    .ui.fluid.attached.borderless.menu.topnav
+        a.item(href="/" class="{{isActivePath regex='home'}}")
+            //- +icon name='home' cl='ui avatar image'
+            i.large.home.icon
+            //- +icon name='home' cl='ui avatar image'
+            |The Stand
+        .right.menu
+            if is_in_admin
+                .icon.item.toggle_admin
+                    i.shield.icon
+            if currentUser
+                a.large.item(href="/user/#{currentUser.username}" class="{{isActivePath regex='profile_layout'}}")
+                    //- i.large.user.large.icon
+                    if currentUser.profile_image_id
+                        img.ui.avatar.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    else 
+                        i.large.user.large.icon
+                    |#{currentUser.username}
+                    //- .ui.circular.inverted.black.large.label 
+                    |#{currentUser.points}
+            else
+                a.item(href="/login")
+                    +icon name='internal' cl='ui avatar image'
+                    //- i.large.sign.in.alternate.icon
+                    |login
+
+
+template(name='home')
+    .ui.padded.stackable.grid
+        .row
+            .four.wide.column
+                .ui.fluid.big.button.send
+                    |send
+            .four.wide.column
+                .ui.fluid.big.button.send
+                    |request
+        .row
+            .four.wide.column
+                //- a.ui.header.toggle_shifts(href="/shifts")
+                a.ui.header.set_shifts
+                    +icon name='clock'
+                    |upcoming shifts
+                .smallscroll
+                    .ui.selection.link.list
+                        each upcoming_shifts
+                            a.item(href="/shift/#{_id}/view")
+                                if job.image_id
+                                    img.ui.avatar.image(src="{{c.url job.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                .content
+                                    .header #{date} #{start_time}-#{end_time}:
+            .four.wide.column
+                // a.ui.header.set_latest_celebrations
+                //     +icon name='exchnange'
+                //     |latest transactions
+                // .smallscroll
+                //     .ui.selection.link.list
+                //         each news_items
+                //             a.item(href="/debit/#{_id}/view")
+                //                 .content
+                //                     .header
+                //                         .ui.basic.circular.label #{amount}p
+                //                         if _author.profile_image_id
+                //                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //                         | #{_author_username}
+                //                         |>
+                //                         if target.profile_image_id
+                //                             img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //                         |#{target.username}
+                //                     .meta #{when}
+                //                     .description 
+                //                         |#{description}
+                //                     each tags 
+                //                         .ui.tiny.basic.circular.label #{this}
+            .four.wide.column
+                a.ui.header.set_offers
+                    +icon name='hand-planting'
+                    |offers
+                .smallscroll
+                    .ui.selection.list
+                        each offers
+                            a.item(href="/offer/#{_id}/view")
+                                .header #{amount}p
+                                |#{_author.username}
+                                |#{description}
+                                |#{when}
