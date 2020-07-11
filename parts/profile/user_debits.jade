@@ -1,9 +1,9 @@
 template(name='user_debits')  
     .ui.header 
         +icon name='sprout'
-        |gifted
+        |sent
     .ui.link.list.scrolling
-        each gifted_items
+        each sent_items
             .item
                 if target.profile_image_id
                     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")

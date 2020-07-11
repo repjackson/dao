@@ -11,6 +11,36 @@ if Meteor.isClient
     Template.debit_view.onRendered ->
 
 
+    Template.debit_edit.events
+        'keyup .new_element': (e,t)->
+            if e.which is 13
+                element_val = t.$('.new_element').val().trim()
+                Docs.update Router.current().params.doc_id,
+                    $addToSet:tags:element_val
+                t.$('.new_element').val('')
+    
+        'click .remove_element': (e,t)->
+            element = @valueOf()
+            field = Template.currentData()
+            Docs.update Router.current().params.doc_id,
+                $pull:tags:element
+            t.$('.new_element').focus()
+            t.$('.new_element').val(element)
+    
+    
+        'blur .edit_description': (e,t)->
+            textarea_val = t.$('.edit_textarea').val()
+            Docs.update Router.current().params.doc_id,
+                $set:description:textarea_val
+    
+    
+        'blur .edit_text': (e,t)->
+            val = t.$('.edit_text').val()
+            Docs.update Router.current().params.doc_id,
+                $set:"#{@key}":val
+    
+    
+
     Template.debit_view.events
         'click .delete_item': ->
             if confirm 'delete item?'

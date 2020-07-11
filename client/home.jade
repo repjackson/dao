@@ -1,9 +1,7 @@
 template(name='nav')
     .ui.fluid.attached.borderless.menu.topnav
         a.item(href="/" class="{{isActivePath regex='home'}}")
-            //- +icon name='home' cl='ui avatar image'
-            i.large.home.icon
-            //- +icon name='home' cl='ui avatar image'
+            i.large.store.icon
             |The Stand
         .right.menu
             if is_in_admin
@@ -30,10 +28,12 @@ template(name='home')
     .ui.padded.stackable.grid
         .row
             .four.wide.column
-                .ui.fluid.big.button.send
+                .ui.fluid.big.green.basic.button.send
                     |send
+                    i.right.chevron.icon
             .four.wide.column
-                .ui.fluid.big.button.send
+                .ui.fluid.big.basic.teal.button.send
+                    i.bullhorn.icon
                     |request
         .row
             .four.wide.column
@@ -50,28 +50,28 @@ template(name='home')
                                 .content
                                     .header #{date} #{start_time}-#{end_time}:
             .four.wide.column
-                // a.ui.header.set_latest_celebrations
-                //     +icon name='exchnange'
-                //     |latest transactions
-                // .smallscroll
-                //     .ui.selection.link.list
-                //         each news_items
-                //             a.item(href="/debit/#{_id}/view")
-                //                 .content
-                //                     .header
-                //                         .ui.basic.circular.label #{amount}p
-                //                         if _author.profile_image_id
-                //                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                //                         | #{_author_username}
-                //                         |>
-                //                         if target.profile_image_id
-                //                             img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                //                         |#{target.username}
-                //                     .meta #{when}
-                //                     .description 
-                //                         |#{description}
-                //                     each tags 
-                //                         .ui.tiny.basic.circular.label #{this}
+                a.ui.header.set_latest_celebrations
+                    +icon name='exchange'
+                    |latest transactions
+                .smallscroll
+                    .ui.selection.link.list
+                        each news_items
+                            a.item(href="/debit/#{_id}/view")
+                                .content
+                                    .header
+                                        .ui.basic.circular.label #{amount}p
+                                        if _author.profile_image_id
+                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        | #{_author_username}
+                                        |>
+                                        if target.profile_image_id
+                                            img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        |#{target.username}
+                                    .meta #{when}
+                                    .description 
+                                        |#{description}
+                                    each tags 
+                                        .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 a.ui.header.set_offers
                     +icon name='hand-planting'

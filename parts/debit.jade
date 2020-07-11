@@ -44,35 +44,3 @@ template(name='debit_view')
                     //-     i.checkmark.icon
                     //-     |submit
 
-template(name='debit_edit')
-    with current_doc
-        .ui.stackable.padded.grid
-            .row 
-                .four.wide.column
-                    .ui.button.delete_item
-                        |delete
-                        i.large.red.remove.icon
-                
-                .eight.wide.column
-                    .ui.stackable.two.column.grid
-                        .column
-                            .ui.header sender
-                                |#{_author.username}
-                        .column
-                            .ui.header recipient
-                                |#{target.username}
-                            
-                    +number_edit key='amount' label='amount' direct=true
-                    +key_value_edit key='amount' value=1
-                    +key_value_edit key='amount' value=5
-                    +key_value_edit key='amount' value=10
-                    +key_value_edit key='amount' value=20
-                    +textarea_edit key='description' label='description' direct=true
-                    +image_edit key='image_id' label='image' direct=true
-                    div 
-                    +array_edit key='tags' label='tags' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    .ui.fluid.green.button.submit
-                        i.checkmark.icon
-                        |submit

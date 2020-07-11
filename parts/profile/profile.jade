@@ -73,9 +73,9 @@ template(name='profile_layout')
                 a.ui.large.basic.compact.button(href="/user/#{username}/generated" class="{{isActivePath 'user_generated'}}")
                     +icon name='sprout' cl='ui inline mini image'
                     |generated
-                a.ui.large.basic.compact.button(href="/user/#{username}/gifted" class="{{isActivePath 'user_gifted'}}")
-                    +icon name='plant-under-rain' cl='ui inline mini image'
-                    |gifted
+                a.ui.large.basic.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                    +icon name='receipt' cl='ui inline mini image'
+                    |sent
                 a.ui.large.basic.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
                     +icon name='calendar' cl='ui inline mini image'
                     |events
@@ -98,9 +98,9 @@ template(name='user_dashboard')
         .column
             .ui.header 
                 i.donate.icon
-                |gifted
+                |sent
             .ui.link.list.smallscroll
-                each gifted_items
+                each sent_items
                     .item 
                         if target.profile_image_id
                             img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -131,15 +131,6 @@ template(name='user_dashboard')
                         |#{_author.username}
                         |#{description}
                         |#{when}
-                                
-    //- +user_following
-    //- +user_groups
-
-template(name='user_groups')
-    .ui.center.aligned.header 
-        i.users.icon
-        | groups
-
 
 
 template(name='user_friend_button')
