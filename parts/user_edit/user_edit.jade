@@ -12,48 +12,48 @@ template(name='user_edit_layout')
                     a.ui.fluid.large.green.button(href="/user/#{current_user.username}/") 
                         i.checkmark.icon
                         strong save
-                    a.ui.basic.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}") 
-                        i.info.icon 
-                        |info
+                    // a.ui.basic.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}") 
+                    //     i.info.icon 
+                    //     |info
                     a.ui.basic.button(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}") 
                         i.cog.icon 
                         |account
-                    a.ui.basic.button(href="/user/#{current_user.username}/edit/friends" class="{{isActivePath regex='user_edit_friends'}}") 
-                        i.users.icon 
-                        |friends
-                    a.ui.basic.button(href="/user/#{current_user.username}/edit/levels" class="{{isActivePath regex='user_edit_alerts'}}") 
-                        i.bell.icon 
-                        |levels
-                    a.ui.basic.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActivePath regex='user_edit_alerts'}}") 
-                        i.bell.icon 
-                        |alerts
-                    a.ui.basic.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
-                        i.lock.icon 
-                        | privacy
+                    // a.ui.basic.button(href="/user/#{current_user.username}/edit/friends" class="{{isActivePath regex='user_edit_friends'}}") 
+                    //     i.users.icon 
+                    //     |friends
+                    // a.ui.basic.button(href="/user/#{current_user.username}/edit/levels" class="{{isActivePath regex='user_edit_alerts'}}") 
+                    //     i.bell.icon 
+                    //     |levels
+                    // a.ui.basic.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActivePath regex='user_edit_alerts'}}") 
+                    //     i.bell.icon 
+                    //     |alerts
+                    // a.ui.basic.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
+                    //     i.lock.icon 
+                    //     | privacy
                     a.ui.basic.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}") 
                         i.shield.icon 
                         | membership
                 .twelve.wide.column
                     +yield
 
-template(name='user_edit_info')
-    .ui.two.column.stackable.grid
-        .column
-            +array_edit key='tags' label='tags' direct=true
-            .spacer
-            +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
-            .spacer
-            +textarea_edit key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
-            .spacer
-            +textarea_edit key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
-            .spacer
+// template(name='user_edit_info')
+//     .ui.two.column.stackable.grid
+//         .column
+//             +array_edit key='tags' label='tags' direct=true
+//             .spacer
+//             +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
+//             .spacer
+//             +textarea_edit key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
+//             .spacer
+//             +textarea_edit key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
+//             .spacer
             
-        .column
-            +textarea_edit key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
-            .spacer
-            +textarea_edit key='emergency_contact_name' label='emergency contact name' direct=true
-            .spacer
-            +textarea_edit key='emergency_contact_number' label='emergency contact number' direct=true
+//         .column
+//             +textarea_edit key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
+//             .spacer
+//             +textarea_edit key='emergency_contact_name' label='emergency contact name' direct=true
+//             .spacer
+//             +textarea_edit key='emergency_contact_number' label='emergency contact number' direct=true
      
 template(name='phone_editor')
     .ui.small.header    

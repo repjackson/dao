@@ -1,6 +1,6 @@
 template(name='user_credits')  
     .ui.header 
-        i.chevron.down
+        i.minus.icon
         |earned
     .ui.link.list.smallscroll
         each earned_items
@@ -23,7 +23,7 @@ template(name='user_credits')
 
 template(name='user_credits_small')
     .ui.header 
-        i.chevron.down.icon
+        i.minus.icon
         |received
     .ui.link.list.smallscroll
         each earned_items

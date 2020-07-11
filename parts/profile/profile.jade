@@ -45,9 +45,9 @@ template(name='profile_layout')
                         .ui.basic.compact.button.give
                             +icon name='donate' cl='ui inline mini image'
                             |give
-                        .ui.basic.compact.button.offer
-                            +icon name='hand-planting' cl='ui inline mini image'
-                            |offer
+                        // .ui.basic.compact.button.offer
+                        //     +icon name='hand-planting' cl='ui inline mini image'
+                        //     |offer
              
                 .ui.header levels
                 each levels
@@ -71,12 +71,12 @@ template(name='profile_layout')
                 a.ui.big.basic.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
                     i.info.icon
                     |about
-                a.ui.big.basic.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
-                    i.chevron.down.icon
-                    |credits
-                a.ui.big.basic.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
-                    i.chevron.up.icon
-                    |sent
+                // a.ui.big.basic.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
+                //     i.chevron.down.icon
+                //     |credits
+                // a.ui.big.basic.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                //     i.chevron.up.icon
+                //     |sent
                 // a.ui.big.basic.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
                 //     +icon name='calendar' cl='ui inline mini image'
                 //     |events
@@ -94,12 +94,12 @@ template(name='profile_layout')
 
 
 template(name='user_dashboard')
-    .ui.stackable.three.column.grid
+    .ui.stackable.two.column.grid
         .column
             +user_credits_small
         .column
             .ui.header 
-                i.donate.icon
+                i.plus.icon
                 |sent
             .ui.link.list.smallscroll
                 each sent_items
@@ -121,18 +121,18 @@ template(name='user_dashboard')
                                     .ui.mini.basic.label #{this}
                             if is_admin
                                 +remove_button
-        .column
-            .ui.header 
-                // +icon name='hand-planting'
-                i.bullhorn.icon
-                |offers
-            .ui.link.list.smallscroll
-                each user_offers
-                    a.item(href="/offer/#{_id}/view")
-                        .header #{amount}pts
-                        |#{_author.username}
-                        |#{description}
-                        |#{when}
+        // .column
+        //     .ui.header 
+        //         // +icon name='hand-planting'
+        //         i.bullhorn.icon
+        //         |offers
+        //     .ui.link.list.smallscroll
+        //         each user_offers
+        //             a.item(href="/offer/#{_id}/view")
+        //                 .header #{amount}pts
+        //                 |#{_author.username}
+        //                 |#{description}
+        //                 |#{when}
 
 
 template(name='user_friend_button')
@@ -147,13 +147,3 @@ template(name='user_friend_button')
         .ui.basic.basic.compact.button.friend
             i.plus.icon
             |friend
-
-
-
-template(name='user_alerts_small')
-    .ui.header 
-        i.bell.small.icon
-        |alerts
-    .ui.list
-        each alerts 
-            .ui.item #{content}

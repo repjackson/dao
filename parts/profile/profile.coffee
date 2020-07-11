@@ -15,26 +15,14 @@ if Meteor.isClient
         @layout 'profile_layout'
         @render 'user_contact'
         ), name:'user_contact'
-    Router.route '/user/:username/stats', (->
-        @layout 'profile_layout'
-        @render 'user_stats'
-        ), name:'user_stats'
     Router.route '/user/:username/messages', (->
         @layout 'profile_layout'
         @render 'user_messages'
         ), name:'user_messages'
-    Router.route '/user/:username/bookmarks', (->
-        @layout 'profile_layout'
-        @render 'user_bookmarks'
-        ), name:'user_bookmarks'
     Router.route '/user/:username/friends', (->
         @layout 'profile_layout'
         @render 'user_friends'
         ), name:'user_friends'
-    Router.route '/user/:username/events', (->
-        @layout 'profile_layout'
-        @render 'user_events'
-        ), name:'user_events'
 
 
     Template.profile_layout.onCreated ->
@@ -42,41 +30,13 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_offers', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_model_docs', 'debit', Router.current().params.username
         @autorun -> Meteor.subscribe 'all_users'
+
     Template.user_credits_small.onCreated ->
         @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
-    Template.profile_layout.onRendered ->
-        Meteor.setTimeout ->
-            $('.button').popup()
-        , 2000
-        Meteor.setTimeout ->
-            $('.progress').progress();
-        , 2000
-
-        Session.setDefault 'view_side', false
 
     Template.profile_layout.helpers
         route_slug: -> "user_#{@slug}"
         user: -> Meteor.users.findOne username:Router.current().params.username
-        # user_sections: ->
-        #     Docs.find {
-        #         model:'user_section'
-        #     }, sort:title:1
-        # student_classrooms: ->
-        #     user = Meteor.users.findOne username:Router.current().params.username
-        #     Docs.find
-        #         model:'classroom'
-        #         student_ids: $in: [user._id]
-        # ssd: ->
-        #     user = Meteor.users.findOne username:Router.current().params.username
-        #     Docs.findOne
-        #         model:'student_stats'
-        #         user_id:user._id
-        # view_side: -> Session.get 'view_side'
-        # main_column_class: ->
-        #     if Session.get 'view_side'
-        #         'fourteen wide column'
-        #     else
-        #         'sixteen wide column'
 
     Template.profile_layout.events
         'click .give': ->
@@ -87,14 +47,6 @@ if Meteor.isClient
                     target_id: user._id
             Router.go "/debit/#{new_debit_id}/edit"
 
-        'click .offer': ->
-            user = Meteor.users.findOne(username:Router.current().params.username)
-            new_debit_id =
-                Docs.insert
-                    model:'offer'
-                    target_ids: [user._id]
-            Router.go "/debit/#{new_debit_id}/edit"
-
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             # Meteor.call 'calc_user_stats', user._id, ->
@@ -102,24 +54,10 @@ if Meteor.isClient
 
 
 
-        'click .quick_give': ->
-            target_user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.insert
-                model:'debit'
-                amount:1
-                target_id:target_user._id
-            Meteor.users.update Meteor.userId(),
-                $inc: points: -1
-            Meteor.users.update target_user._id,
-                $inc: points: 1
 
     Template.user_dashboard.events
-        'click .recalc_user_cloud': ->
-            Meteor.call 'recalc_user_cloud', Router.current().params.username, ->
-        'click .calc_test_sessions': ->
-            Meteor.call 'calc_test_sessions', Router.current().params.username, ->
-        'click .recalc_user_act_stats': ->
-            Meteor.call 'recalc_user_act_stats', Router.current().params.username, ->
+        # 'click .recalc_user_cloud': ->
+        #     Meteor.call 'recalc_user_cloud', Router.current().params.username, ->
 
     Template.user_credits_small.helpers
         earned_items: ->
@@ -135,84 +73,13 @@ if Meteor.isClient
                 model:'debit'
                 _author_id: current_user._id
             }, sort: _timestamp:-1
-        # ssd: ->
-        #     user = Meteor.users.findOne username:Router.current().params.username
-        #     Docs.findOne
-        #         model:'student_stats'
-        #         user_id:user._id
-        # student_classrooms: ->
-        #     user = Meteor.users.findOne username:Router.current().params.username
-        #     Docs.find
-        #         model:'classroom'
-        #         student_ids: $in: [user._id]
-        user_events: ->
-            Docs.find {
-                model:'log_event'
-            }, sort: _timestamp: -1
-        user_offers: ->
-            user = Meteor.users.findOne username:Router.current().params.username
-
-            Docs.find {
-                model:'offer'
-                _author_id:user._id
-            }, sort: _timestamp: -1
-        # user_finances: ->
-        #     Docs.find {
-        #         model:'log_event'
-        #         event_type:'credit'
-        #     }, sort: _timestamp: -1
-        # user_debits: ->
-        #     Docs.find {
-        #         model:'log_event'
-        #         event_type:'debit'
-        #     }, sort: _timestamp: -1
-        # user_models: ->
-        #     user = Meteor.users.findOne username:Router.current().params.username
-        #     Docs.find
-        #         model:'model'
-        #         _id:$in:user.model_ids
 
 
     Template.profile_layout.events
-        'click .profile_image': (e,t)->
-            $(e.currentTarget).closest('.profile_image').transition(
-                animation: 'jiggle'
-                duration: 700
-            )
-            user = Meteor.users.findOne username:Router.current().params.username
-
-            Meteor.users.update user._id,
-                $inc:boops:1
-        'click .toggle_size': -> Session.set 'view_side', !Session.get('view_side')
-        'click .recalc_student_stats': -> Meteor.call 'recalc_student_stats', Router.current().params.username
-        'click .set_delta_model': -> Meteor.call 'set_delta_facets', @slug, null, true
         'click .logout_other_clients': -> Meteor.logoutOtherClients()
         'click .logout': ->
             Router.go '/login'
             Meteor.logout()
-
-
-    Template.user_alerts_small.helpers
-        alerts: ->
-            Docs.find
-                model:'alert'
-
-
-
-
-    # Template.user_internships.onCreated ->
-    #     @autorun -> Meteor.subscribe 'user_model_docs', Router.current().params.username, 'internship'
-    # Template.user_internships.onRendered ->
-    # Template.user_internships.helpers
-    #     internships: ->
-    #         user = Meteor.users.findOne username:Router.current().params.username
-    #         Docs.find
-    #             model:'internship'
-    #             _author_id: user._id
-    #             has_correct_answer:true
-
-
-
 
 
 
@@ -224,34 +91,6 @@ if Meteor.isServer
         Docs.find
             model:'offer'
             _author_id:user._id
-
-    Meteor.publish 'user_bookmarks', (user_id)->
-        user = Meteor.users.findOne user_id
-        Docs.find
-            _id:$in:user.bookmark_ids
-
-    Meteor.publish 'user_model_docs', (model, username)->
-        user = Meteor.users.findOne username:username
-        Docs.find {
-            model:model
-            _author_id:user._id
-        },
-            sort:_timestamp:-1
-            limit:20
-
-    Meteor.publish 'user_events', (user_id)->
-        user = Meteor.users.findOne user_id
-        Docs.find
-            model:'log_event'
-            user_id:user._id
-
-    Meteor.publish 'student_stats', (user_id)->
-        user = Meteor.users.findOne user_id
-        if user
-            Docs.find
-                model:'student_stats'
-                user_id:user._id
-
 
     Meteor.methods
         calc_test_sessions: (user_id)->

@@ -2,17 +2,17 @@ template(name='debit_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
+                .three.wide.column
                     .ui.large.basic.button.delete_item
                         i.large.red.remove.icon
                         |cancel
                 
-                .eight.wide.column
                     .ui.segment
                         .ui.header sender
                         .ui.header
                             img.ui.circular.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
+                .ten.wide.column
                     .ui.segment
                         .ui.header recipient(s)
                         each recipients
@@ -20,13 +20,13 @@ template(name='debit_edit')
                                 i.remove.icon.remove_recipient
                                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{username}
-                        .ui.segment 
-                            .ui.inline.header add
-                            each members
-                                .ui.basic.button.add_recipient
-                                    i.plus.icon
-                                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                    |#{username}
+                        .ui.divider
+                        i.large.user.plus.icon
+                        each members
+                            .ui.basic.small.compact.button.add_recipient
+                                i.plus.icon
+                                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{username}
                     .ui.big.input
                         input(type='number' value=amount)
                     +key_value_edit key='amount' value=1
@@ -49,7 +49,7 @@ template(name='debit_edit')
                             |#{this}
                     
                     //- +array_edit key='location_tags' label='location_tags' direct=true
-                .four.wide.column
+                .three.wide.column
                     .ui.header subtotal #{subtotal}
                     if can_submit
                         .ui.fluid.green.big.button.submit
