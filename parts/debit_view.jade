@@ -32,11 +32,15 @@ template(name='debit_view')
                     +textarea_view key='description' label='description' direct=true
                     +image_view key='image_id' label='image' direct=true
                     div 
+                    if tags
+                        i.tags.icon
+                        each tags 
+                            .ui.big.label #{this}
                     +array_view key='tags' label='tags' direct=true
                     .spacer
                     .spacer
                     +comments
-                    +voting_full
+                    // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     //- .ui.fluid.green.button.submit

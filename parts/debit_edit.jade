@@ -2,7 +2,7 @@ template(name='debit_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .three.wide.column
+                .four.wide.column
                     .ui.large.basic.button.delete_item
                         i.large.red.remove.icon
                         |cancel
@@ -12,27 +12,26 @@ template(name='debit_edit')
                         .ui.header
                             img.ui.circular.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
-                .ten.wide.column
+                .eight.wide.column
                     .ui.segment
-                        .ui.header recipient(s)
-                        each recipients
-                            .ui.basic.label 
-                                i.remove.icon.remove_recipient
-                                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{username}
-                        .ui.divider
-                        i.large.user.plus.icon
-                        each members
-                            .ui.basic.small.compact.button.add_recipient
-                                i.plus.icon
-                                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{username}
-                    .ui.big.input
-                        input(type='number' value=amount)
-                    +key_value_edit key='amount' value=1
-                    +key_value_edit key='amount' value=5
-                    +key_value_edit key='amount' value=10
-                    +key_value_edit key='amount' value=20
+                        .ui.header target
+                        with target
+                            i.large.remove.circular.icon.remove_target
+                            img.ui.tiny.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            .ui.inline.header #{username}
+                            .ui.small.grey.inline.header #{points}
+                        unless target
+                            .ui.divider
+                            i.large.user.plus.icon
+                            .ui.icon.input
+                                i.search.icon
+                                input.search_username(type='text' placeholder='username')
+                            each members
+                                .ui.basic.small.compact.button.add_target
+                                    // i.plus.icon
+                                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{username}
+                                    
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
@@ -49,8 +48,14 @@ template(name='debit_edit')
                             |#{this}
                     
                     //- +array_edit key='location_tags' label='location_tags' direct=true
-                .three.wide.column
-                    .ui.header subtotal #{subtotal}
+                .four.wide.column
+                    .ui.big.inline.header #{amount}
+                    // .ui.big.input
+                    //     input(type='number' value=amount)
+                    +key_value_edit key='amount' value=1
+                    +key_value_edit key='amount' value=5
+                    +key_value_edit key='amount' value=10
+                    +key_value_edit key='amount' value=20
                     if can_submit
                         .ui.fluid.green.big.button.submit
                             i.checkmark.icon

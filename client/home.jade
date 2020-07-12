@@ -2,7 +2,8 @@ template(name='nav')
     .ui.fluid.attached.borderless.large.menu.topnav
         a.icon.item(href="/" class="{{isActivePath regex='home'}}")
             i.large.home.icon
-            // |The Stand
+        a.icon.item(href="/users" class="{{isActivePath regex='users'}}")
+            i.large.users.icon
         .right.menu
             if is_in_admin
                 .icon.item.toggle_admin
@@ -15,7 +16,6 @@ template(name='nav')
                     else 
                         i.large.user.large.icon
                     |#{currentUser.username}
-                    //- .ui.circular.inverted.black.large.label 
                     |#{currentUser.points}
             else
                 a.item(href="/login")
@@ -36,26 +36,8 @@ template(name='home')
                         .ui.fluid.big.green.basic.disabled.button
                             |insufficient points
                             // i.right.chevron.icon
-                    
-                // .four.wide.column
-                //     .ui.fluid.big.basic.teal.disabled.button.request
-                //         i.bullhorn.icon
-                //         |request
         .centered.row
-            // .four.wide.column
-            //     //- a.ui.header.toggle_shifts(href="/shifts")
-            //     a.ui.header.set_shifts
-            //         +icon name='clock'
-            //         |upcoming shifts
-            //     .smallscroll
-            //         .ui.selection.link.list
-            //             each upcoming_shifts
-            //                 a.item(href="/shift/#{_id}/view")
-            //                     if job.image_id
-            //                         img.ui.avatar.image(src="{{c.url job.image_id height=200 width=200 gravity='face' crop='fill'}}")
-            //                     .content
-            //                         .header #{date} #{start_time}-#{end_time}:
-            .twelve.wide.column
+            .eight.wide.column
                 a.ui.header.set_latest_celebrations
                     i.exchange.icon
                     |latest transactions
@@ -65,11 +47,11 @@ template(name='home')
                             a.item(href="/debit/#{_id}/view")
                                 .content
                                     .header
-                                        .ui.basic.circular.label #{amount}p
+                                        .ui.inline.header #{amount}p
                                         if _author.profile_image_id
                                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                         | #{_author_username}
-                                        |>
+                                        .ui.inline.header >
                                         if target.profile_image_id
                                             img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                         |#{target.username}
@@ -78,15 +60,11 @@ template(name='home')
                                         |#{description}
                                     each tags 
                                         .ui.tiny.basic.circular.label #{this}
-            // .eight.wide.column
-            //     a.ui.header.set_offers
-            //         i.chevron.left.icon
-            //         |offers
-            //     .smallscrol
-            //         .ui.selection.list
-            //             each offers
-            //                 a.item(href="/offer/#{_id}/view")
-            //                     .header #{amount}p
-            //                     |#{_author.username}
-            //                     |#{description}
-            //                     |#{when}
+            .eight.wide.column
+                .ui.header.refresh_stats
+                    i.line.chart.icon
+                    |stats
+                with stats_doc
+                    .ui.list
+                        .item #{total_points} total points sent
+                                    

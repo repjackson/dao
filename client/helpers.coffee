@@ -68,6 +68,28 @@ Template.registerHelper 'current_doc', () ->
 
 Template.registerHelper 'lowered_title', ()-> @title.toLowerCase()
 
+
+Template.registerHelper 'field_value', () ->
+    # console.log @
+    parent = Template.parentData()
+    parent5 = Template.parentData(5)
+    parent6 = Template.parentData(6)
+
+
+    if @direct
+        parent = Template.parentData()
+    else if parent5
+        if parent5._id
+            parent = Template.parentData(5)
+    else if parent6
+        if parent6._id
+            parent = Template.parentData(6)
+    # console.log 'parent', parent
+    if parent
+        parent["#{@key}"]
+
+
+
 Template.registerHelper 'lowered', (input)-> input.toLowerCase()
 
 Template.registerHelper 'session_key_value_is', (key, value) ->

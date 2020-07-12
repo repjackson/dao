@@ -4,9 +4,6 @@ if Meteor.isClient
         @render 'user_credits'
         ), name:'user_credits'
 
-    Template.user_credits.onCreated ->
-        @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'thought'
-
 
     Template.user_credits.onCreated ->
         @autorun => Meteor.subscribe 'user_credits', Router.current().params.username
@@ -21,24 +18,20 @@ if Meteor.isClient
         #         Docs.insert
         #             model:'credit'
         #             body: val
-        #             target_user_id: target_user._id
+        #             target_id: target_user._id
 
 
 
-    Template.user_credits.helpers
+    Template.user_credits_small.helpers
         user_credits: ->
-            target_user = Meteor.users.findOne(username:Router.current().params.username)
+            target_user = Meteor.users.findOne({username:Router.current().params.username})
             Docs.find {
                 model:'debit'
-                target_user_id: target_user._id
+                target_id: target_user._id
             },
                 sort:_timestamp:-1
 
 
-        slots: ->
-            Docs.find
-                model:'slot'
-                _author_id: Router.current().params.user_id
 
 
 if Meteor.isServer

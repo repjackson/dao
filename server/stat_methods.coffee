@@ -55,3 +55,27 @@ Meteor.methods
         Meteor.users.update user_id,
             $set:
                 global_credit_count_rank:my_rank
+
+
+
+
+
+
+    calc_global_stats: ()->
+        gs = Docs.findOne model:'global_stats'
+        unless gs 
+            Docs.insert 
+                model:'global_stats'
+        gs = Docs.findOne model:'global_stats'
+        
+        total_points = 0
+        
+        point_users = 
+            Meteor.users.find 
+                points: $exists:true
+        for point_user in point_users.fetch()
+            total_points += point_user.points
+    
+        console.log 'total points', total_points
+        Docs.update gs._id,
+            $set:total_points:total_points

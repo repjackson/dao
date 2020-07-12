@@ -15,7 +15,8 @@ if Meteor.isClient
         users: ->
             match = {}
             if selected_user_tags.array().length > 0 then match.tags = $all: selected_user_tags.array()
-            Meteor.users.find match
+            Meteor.users.find match,
+                sort:points:-1
             # if Meteor.user()
             #     if 'admin' in Meteor.user().roles
             #         Meteor.users.find()

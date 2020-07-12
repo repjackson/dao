@@ -6,6 +6,7 @@ if Meteor.isClient
 
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'debit'
+        @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         @autorun => Meteor.subscribe 'all_users'
         @autorun -> Meteor.subscribe('home_tag_results',
             selected_tags.array()
@@ -23,6 +24,9 @@ if Meteor.isClient
             )
 
     Template.home.helpers
+        stats_doc: ->
+            Docs.findOne 
+                model:'global_stats'
         can_send: ->
             Meteor.user().points > 0
         stewards: ->
@@ -40,6 +44,8 @@ if Meteor.isClient
                 model:'debit'
 
     Template.home.events
+        'click .refresh_stats': ->
+            Meteor.call 'calc_global_stats'
         'click .send': ->
             new_debit_id =
                 Docs.insert

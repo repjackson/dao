@@ -1,22 +1,44 @@
 template(name='user_about')
-    .ui.header user info
+    .ui.header 
+        i.info.icon
+        |user info
     with current_user
         +textarea_view key='profile_hope_receive' label='What do you hope to receive?' direct=true
+        .ui.small.header What do you hope to receive?
+        |#{profile_hope_receive}
         .spacer
         .spacer
-        +textarea_view key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
+        .ui.small.header What excites you about being apart of this community?
+        |#{profile_excites_blurb}
         .spacer
         .spacer
-        +textarea_view key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
+        .ui.small.header What do you want this community to know about you?
+        |#{profile_community_blurb}
         .spacer
         .spacer
-        +textarea_view key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
+        .ui.small.header What would you like to contribute (think: superpowers, talents, gifts, resources)?
+        |#{profile_contribute_blurb}
         .spacer
         .spacer
         if tags 
             .ui.tags.icon 
             each tags
                 +user_info_tag
+        div
+        .ui.small.inline.header levels
+        each levels
+            .ui.basic.label #{this}
+               
+        //- a.ui.basic.compact.button.logout_other_clients(href="#")
+        //-     //- i.globe.icon
+        //-     |log out other clients
+        div
+        .ui.small.inline.header 
+            //- +icon name='shield'
+            i.shield.icon
+            |roles
+        each roles
+            .ui.label #{this}
 
 template(name='user_info_tag')
     .ui.basic.tertiary.button 

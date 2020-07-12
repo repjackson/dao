@@ -3,7 +3,7 @@ template(name='user_credits')
         i.minus.icon
         |earned
     .ui.link.list.smallscroll
-        each earned_items
+        each user_credits
             .item
                 if author.profile_image_id
                     img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -22,17 +22,22 @@ template(name='user_credits')
                         +remove_button
 
 template(name='user_credits_small')
-    .ui.header 
+    .ui.inline.header 
         i.minus.icon
+        |#{total_credit_amount}p
         |received
-    .ui.link.list.smallscroll
-        each earned_items
+        .ui.basic.circular.label #{credit_count} credits
+            | ##{global_credit_count_rank}
+    div
+    .ui.link.list.scrolling
+        each user_credits
             .item
                 if author.profile_image_id
                     img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 .content
                     .header
                         strong #{amount}pt 
+                        |from 
                         a(href="/user/#{author.username}")
                             |#{author.username}
                     .description
@@ -43,4 +48,6 @@ template(name='user_credits_small')
                         |#{description}
                         each tags
                             .ui.mini.basic.label #{this}
+                if is_admin 
+                    +remove_button
                 .spacer

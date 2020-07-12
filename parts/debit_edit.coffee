@@ -15,36 +15,36 @@ if Meteor.isClient
 
 
     Template.debit_edit.helpers
-        recipient: ->
+        target: ->
             debit = Docs.findOne Router.current().params.doc_id
-            if debit.recipient_id
+            if debit.target_id
                 Meteor.users.findOne
-                    _id: recipient_id
+                    _id: debit.target_id
         members: ->
             debit = Docs.findOne Router.current().params.doc_id
-            if debit.recipient_ids
+            if debit.target_ids
                 Meteor.users.find 
                     levels: $in: ['member']
-                    _id: $ne: debit.recipient_id
+                    _id: $ne: debit.target_id
             else
                 Meteor.users.find 
                     levels: $in: ['member']
         # subtotal: ->
         #     debit = Docs.findOne Router.current().params.doc_id
-        #     debit.amount*debit.recipient_ids.length
+        #     debit.amount*debit.target_ids.length
         
         can_submit: ->
             debit = Docs.findOne Router.current().params.doc_id
-            debit.amount and debit.recipient_id
+            debit.amount and debit.target_id
     Template.debit_edit.events
-        'click .add_recipient': ->
+        'click .add_target': ->
             Docs.update Router.current().params.doc_id,
                 $set:
-                    recipient_id:@_id
-        'click .remove_recipient': ->
+                    target_id:@_id
+        'click .remove_target': ->
             Docs.update Router.current().params.doc_id,
                 $unset:
-                    recipient_ids:1
+                    target_id:1
         'keyup .new_element': (e,t)->
             if e.which is 13
                 element_val = t.$('.new_element').val().trim()
@@ -76,7 +76,6 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-
     Template.debit_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'target_from_debit_id', Router.current().params.doc_id

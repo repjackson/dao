@@ -27,8 +27,8 @@ if Meteor.isClient
 
     Template.profile_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
-        @autorun -> Meteor.subscribe 'user_offers', Router.current().params.username
-        @autorun -> Meteor.subscribe 'user_model_docs', 'debit', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
         @autorun -> Meteor.subscribe 'all_users'
 
     Template.user_credits_small.onCreated ->
@@ -67,7 +67,7 @@ if Meteor.isClient
                 target_id: current_user._id
             }, sort: _timestamp:-1
     Template.user_dashboard.helpers
-        spent_items: ->
+        sent_items: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
                 model:'debit'
@@ -86,12 +86,6 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'user_offers', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find
-            model:'offer'
-            _author_id:user._id
-
     Meteor.methods
         calc_test_sessions: (user_id)->
             user = Meteor.users.findOne user_id
