@@ -1,11 +1,12 @@
 template(name='user_edit_membership')
     .ui.header
-        i.shield.icon
+        i.id.badge.outline.icon
         | riverside membership
     .ui.grid 
         .row 
             .sixteen.wide.column
-                +boolean_edit key='publish_profile' label='publish profile' direct=true
+                .ui.big.disabled.button
+                    |pay for membership
                 if is_admin
                     .ui.header
                         i.shield.icon

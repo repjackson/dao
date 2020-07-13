@@ -3,7 +3,7 @@ Meteor.publish 'user_from_username', (username)->
     Meteor.users.find
         username:username
 
-Meteor.publish 'target_from_debit_id', (debit_id)->
+Meteor.publish 'recipient_from_debit_id', (debit_id)->
     # console.log 'pulling doc'
     debit = Docs.findOne debit_id
     Meteor.users.find

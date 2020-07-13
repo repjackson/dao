@@ -8,26 +8,26 @@ template(name='debit_edit')
                         |cancel
                 
                     .ui.segment
-                        .ui.header sender
+                        .ui.header gifter
                         .ui.header
                             img.ui.circular.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
                 .eight.wide.column
                     .ui.segment
-                        .ui.header target
-                        with target
-                            i.large.remove.circular.icon.remove_target
+                        .ui.header recipient
+                        with recipient
+                            i.large.remove.circular.icon.remove_recipient
                             img.ui.tiny.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             .ui.inline.header #{username}
                             .ui.small.grey.inline.header #{points}
-                        unless target
+                        unless recipient
                             .ui.divider
                             i.large.user.plus.icon
                             .ui.icon.input
                                 i.search.icon
                                 input.search_username(type='text' placeholder='username')
                             each members
-                                .ui.basic.small.compact.button.add_target
+                                .ui.basic.small.compact.button.add_recipient
                                     // i.plus.icon
                                     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                     |#{username}

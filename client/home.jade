@@ -1,12 +1,16 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.large.menu.topnav
+    .ui.fluid.attached.borderless.large.inverted.menu.topnav
         a.icon.item(href="/" class="{{isActivePath regex='home'}}")
             i.large.home.icon
         a.icon.item(href="/users" class="{{isActivePath regex='users'}}")
             i.large.users.icon
+        a.icon.disabled.item.add_gift(class="{{isActivePath regex='debit_edit'}}" title='gift')
+            i.large.gift.icon
+        a.icon.disabled.item.add_request(class="{{isActivePath regex='request_edit'}}" title='request')
+            i.large.hand.holding.heart.icon
         .right.menu
             if is_in_admin
-                .icon.item.toggle_admin
+                a.icon.item.toggle_admin
                     i.shield.icon
             if currentUser
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActivePath regex='profile_layout'}}")
@@ -25,25 +29,45 @@ template(name='nav')
 
 template(name='home')
     .ui.padded.stackable.grid
+        .two.column.middle.aligned.row
+            .column
+                img.ui.fluid.image(src="{{c.url 'river_small' crop='fill'}}")
+            .column
+                .ui.large.header The Riverside – So Memorable. So Boulder. So You.
+                .ui.header
+                    The Riverside’s diverse indoor-outdoor event spaces and farm-fresh catered tastes create unforgettable guest experiences.
+                    
+                    Located alongside Boulder Creek, this rare and historic property provides eclectic Boulder vibes and local collective services for weddings, special occasions, and community events.
+
+
         if currentUser
-            .row
+            .centered.row
                 .four.wide.column
-                    if can_send
-                        .ui.fluid.big.green.basic.button.send
-                            |send
-                            i.right.chevron.icon
+                    if can_gift
+                        .ui.fluid.big.green.button.gift
+                            i.gift.icon
+                            |gift
                     else
-                        .ui.fluid.big.green.basic.disabled.button
-                            |insufficient points
-                            // i.right.chevron.icon
-        .centered.row
-            .eight.wide.column
-                a.ui.header.set_latest_celebrations
-                    i.exchange.icon
-                    |latest transactions
+                        .ui.fluid.big.green.disabled.button
+                            i.gift.icon
+                            |not enough to gift
+                .four.wide.column
+                    if can_gift
+                        .ui.fluid.big.teal.button.offer
+                            i.hand.holding.heart.icon
+                            |offer
+                    else
+                        .ui.fluid.big.teal.disabled.button
+                            i.hand.holding.heart.icon
+                            |not enough to offer
+        .row
+            .six.wide.column
+                .ui.center.aligned.header
+                    i.gift.icon
+                    |latest gifts
                 .smallscrol
                     .ui.selection.link.list
-                        each latest_transactions
+                        each latest_gifts
                             a.item(href="/debit/#{_id}/view")
                                 .content
                                     .header
@@ -60,8 +84,31 @@ template(name='home')
                                         |#{description}
                                     each tags 
                                         .ui.tiny.basic.circular.label #{this}
-            .eight.wide.column
-                .ui.header.refresh_stats
+            .six.wide.column
+                .ui.center.aligned.header
+                    i.hand.holding.heart.icon
+                    |latest requests
+                .smallscrol
+                    .ui.selection.link.list
+                        each latest_requests
+                            a.item(href="/offer/#{_id}/view")
+                                .content
+                                    .header
+                                        .ui.inline.header #{amount}p
+                                        if _author.profile_image_id
+                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        | #{_author_username}
+                                        .ui.inline.header >
+                                        if target.profile_image_id
+                                            img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        |#{target.username}
+                                    .meta #{when}
+                                    .description 
+                                        |#{description}
+                                    each tags 
+                                        .ui.tiny.basic.circular.label #{this}
+            .two.wide.column
+                .ui.center.aligned.header.refresh_stats
                     i.line.chart.icon
                     |stats
                 with stats_doc

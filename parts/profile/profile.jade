@@ -1,10 +1,10 @@
 template(name='profile_layout')
-    //- img.ui.image.home_banner(src="{{c.url 'nightbg' width=1000 height=1000 crop='crop'}}")    
+    img.bg_overlay(src="{{c.url 'nightbg' width=1000 height=1000 crop='crop'}}")    
     +nav
     with user
         .ui.stackable.padded.grid
-            .four.wide.column
-                img.ui.centered.small.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            .three.wide.column
+                img.ui.centered.medium.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 a.ui.large.center.aligned.header.refresh_user_stats(href="/user/#{username}") #{username}
                 //- .ui.basic.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
@@ -14,14 +14,14 @@ template(name='profile_layout')
                 // .ui.small.inline.header {{fixed one_score}} one score
                 div
                 if is_admin
-                    a.ui.basic.button(href="/user/#{username}/edit")
-                        i.cog.icon
-                        |account
+                    a.ui.basic.fluid.button(href="/user/#{username}/edit")
+                        i.shield.icon
+                        |admin edit
                 if is_current_user
-                    a.ui.large.basic.compact.button(href="/user/#{username}/edit")
+                    a.ui.large.basic.fluid.button(href="/user/#{username}/edit")
                         i.cog.icon
                         |account
-                    a.ui.large.basic.compact.button.logout(href="#")
+                    a.ui.large.basic.fluid.button.logout(href="#")
                         i.sign.out.alternate.icon
                         |log out
                 .ui.header #{points}pts
@@ -35,11 +35,11 @@ template(name='profile_layout')
                         .ui.basic.compact.fluid.button.give
                             +icon name='donate' cl='ui inline mini image'
                             |give
-                        // .ui.basic.compact.button.offer
+                        // .ui.basic.compact.button.request
                         //     +icon name='hand-planting' cl='ui inline mini image'
-                        //     |offer
+                        //     |request
         
-            .twelve.wide.column
+            .thirteen.wide.column
                 // a.ui.big.basic.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
                 //     i.dashboard.icon
                 //     |dashboard
@@ -61,8 +61,8 @@ template(name='profile_layout')
                 // a.ui.big.basic.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
                 //     i.chat.icon
                 //     |chat
-                .spacer
-                .spacer
+                // .spacer
+                // .spacer
                 +yield    
                       
 
@@ -71,21 +71,28 @@ template(name='profile_layout')
 template(name='user_dashboard')
     +user_about
     .ui.hidden.divider
-    .ui.big.fluid.green.button
-        |give
+    .ui.two.column.grid 
+        .column
+            .ui.huge.fluid.green.button
+                i.gift.icon
+                |gift
+        .column
+            .ui.huge.fluid.teal.button
+                i.hand.holding.heart.icon
+                |request
     .ui.hidden.divider
     .ui.stackable.three.column.grid
         .column
             +user_credits_small
         .column
             .ui.inline.header 
-                i.plus.icon
+                i.gift.icon
                 |#{total_debit_amount}p
-                |sent
+                |gifted
                 small(title='debit count') (#{debit_count}x)
                     .ui.basic.circular.label ##{global_debit_count_rank}
             div
-            .ui.link.list.scrolling
+            .ui.link.large.list.scrolling
                 each sent_items
                     .item 
                         if target.profile_image_id
@@ -106,29 +113,28 @@ template(name='user_dashboard')
                             if is_admin
                                 +remove_button
             +number_edit key='points' label='points' direct=true
-        // .column
-        //     .ui.header 
-        //         // +icon name='hand-planting'
-        //         i.bullhorn.icon
-        //         |offers
-        //     .ui.link.list.smallscroll
-        //         each user_offers
-        //             a.item(href="/offer/#{_id}/view")
-        //                 .header #{amount}pts
-        //                 |#{_author.username}
-        //                 |#{description}
-        //                 |#{when}
+        .column
+            .ui.header 
+                i.hand.holding.heart.icon
+                |requests
+            .ui.link.list.smallscroll
+                each user_requests
+                    a.item(href="/request/#{_id}/view")
+                        .header #{amount}pts
+                        |#{_author.username}
+                        |#{description}
+                        |#{when}
 
 
 template(name='user_friend_button')
     if is_friend
-        .ui.blue.fade.animated.basic.compact.button.unfriend
+        .ui.blue.fade.animated.fluid.button.unfriend
             .visible.content
                 i.checkmark.icon
                 |friend
             .hidden.content
                 i.minus.icon
     else
-        .ui.basic.basic.compact.button.friend
+        .ui.basic.fluid.button.friend
             i.plus.icon
             |friend

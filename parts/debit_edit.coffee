@@ -6,7 +6,7 @@ if Meteor.isClient
         
         
     Template.debit_edit.onCreated ->
-        @autorun => Meteor.subscribe 'target_from_debit_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'all_users'
@@ -15,36 +15,36 @@ if Meteor.isClient
 
 
     Template.debit_edit.helpers
-        target: ->
+        recipient: ->
             debit = Docs.findOne Router.current().params.doc_id
-            if debit.target_id
+            if debit.recipient_id
                 Meteor.users.findOne
-                    _id: debit.target_id
+                    _id: debit.recipient_id
         members: ->
             debit = Docs.findOne Router.current().params.doc_id
-            if debit.target_ids
+            if debit.recipient_ids
                 Meteor.users.find 
                     levels: $in: ['member']
-                    _id: $ne: debit.target_id
+                    _id: $ne: debit.recipient_id
             else
                 Meteor.users.find 
                     levels: $in: ['member']
         # subtotal: ->
         #     debit = Docs.findOne Router.current().params.doc_id
-        #     debit.amount*debit.target_ids.length
+        #     debit.amount*debit.recipient_ids.length
         
         can_submit: ->
             debit = Docs.findOne Router.current().params.doc_id
-            debit.amount and debit.target_id
+            debit.amount and debit.recipient_id
     Template.debit_edit.events
-        'click .add_target': ->
+        'click .add_recipient': ->
             Docs.update Router.current().params.doc_id,
                 $set:
-                    target_id:@_id
-        'click .remove_target': ->
+                    recipient_id:@_id
+        'click .remove_recipient': ->
             Docs.update Router.current().params.doc_id,
                 $unset:
-                    target_id:1
+                    recipient_id:1
         'keyup .new_element': (e,t)->
             if e.which is 13
                 element_val = t.$('.new_element').val().trim()
@@ -78,7 +78,7 @@ if Meteor.isClient
 if Meteor.isClient
     Template.debit_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'target_from_debit_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
     Template.debit_edit.onRendered ->
 
@@ -101,11 +101,11 @@ if Meteor.isServer
     Meteor.methods
         send_debit: (debit_id)->
             debit = Docs.findOne debit_id
-            target = Meteor.users.findOne debit.target_id
+            recipient = Meteor.users.findOne debit.recipient_id
             sender = Meteor.users.findOne debit._author_id
 
             console.log 'sending debit', debit
-            Meteor.users.update target._id,
+            Meteor.users.update recipient._id,
                 $inc:
                     points: debit.amount
             Meteor.users.update sender._id,
@@ -118,6 +118,6 @@ if Meteor.isServer
 
 
 
-            Docs.update Router.current().params.doc_id,
+            Docs.update debit_id,
                 $set:
                     submitted:true

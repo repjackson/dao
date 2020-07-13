@@ -6,6 +6,7 @@ if Meteor.isClient
 
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'debit'
+        @autorun => Meteor.subscribe 'model_docs', 'offer'
         @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         @autorun => Meteor.subscribe 'all_users'
         @autorun -> Meteor.subscribe('home_tag_results',
@@ -27,14 +28,22 @@ if Meteor.isClient
         stats_doc: ->
             Docs.findOne 
                 model:'global_stats'
-        can_send: ->
+        can_gift: ->
             Meteor.user().points > 0
         stewards: ->
             Meteor.users.find
                 levels:$in:['steward']
-        latest_transactions: ->
+        latest_gifts: ->
             Docs.find {
                 model:'debit'
+                submitted:true
+            },
+                sort:
+                    _timestamp: -1
+                limit:10
+        latest_requests: ->
+            Docs.find {
+                model:'offer'
             },
                 sort:
                     _timestamp: -1
@@ -46,7 +55,7 @@ if Meteor.isClient
     Template.home.events
         'click .refresh_stats': ->
             Meteor.call 'calc_global_stats'
-        'click .send': ->
+        'click .gift': ->
             new_debit_id =
                 Docs.insert
                     model:'debit'

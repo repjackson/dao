@@ -236,7 +236,7 @@ template(name='textarea_view')
         .f11 {{nl2br field_value}}
 
 template(name='textarea_edit')
-    .ui.form
+    .ui.large.form
         .field
             label 
                 //- if icon
@@ -375,8 +375,8 @@ template(name='parent_view')
 
 
 template(name='phone_edit')
-    //- i.phone.icon
     .ui.inline.header 
+        i.phone.icon
         if title
             |#{title}
         else if label

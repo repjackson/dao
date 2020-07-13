@@ -1,5 +1,5 @@
 head
-    title The Stand
+    title ONE|Riverside
     meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.3, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
@@ -24,8 +24,9 @@ head
     //-   gtag('config', 'UA-156965333-1');
 
 template(name='layout')
+    img.bg_overlay(src="{{c.url 'nightbg' width=1000 height=1000 crop='crop'}}")
     +nav
-    #main_area
+    #main_area.scrolling
         +yield
     
     

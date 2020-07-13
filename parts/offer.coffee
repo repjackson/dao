@@ -1,43 +1,43 @@
 if Meteor.isClient
-    Router.route '/offer/:doc_id/view', (->
+    Router.route '/request/:doc_id/view', (->
         @layout 'layout'
-        @render 'offer_view'
-        ), name:'offer_view'
+        @render 'request_view'
+        ), name:'request_view'
 
-    Template.offer_view.onCreated ->
+    Template.request_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.offer_view.onRendered ->
+    Template.request_view.onRendered ->
 
 
-    Template.offer_view.events
+    Template.request_view.events
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
 
         'click .submit': ->
             if confirm 'confirm?'
-                Meteor.call 'send_offer', @_id, =>
-                    Router.go "/offer/#{@_id}/view"
+                Meteor.call 'send_request', @_id, =>
+                    Router.go "/request/#{@_id}/view"
 
 
-    Template.offer_view.helpers
-    Template.offer_view.events
+    Template.request_view.helpers
+    Template.request_view.events
 
 # if Meteor.isServer
 #     Meteor.methods
-        # send_offer: (offer_id)->
-        #     offer = Docs.findOne offer_id
-        #     target = Meteor.users.findOne offer.target_id
-        #     sender = Meteor.users.findOne offer._author_id
+        # send_request: (request_id)->
+        #     request = Docs.findOne request_id
+        #     target = Meteor.users.findOne request.target_id
+        #     sender = Meteor.users.findOne request._author_id
         #
-        #     console.log 'sending offer', offer
+        #     console.log 'sending request', request
         #     Meteor.users.update target._id,
         #         $inc:
-        #             points: offer.amount
+        #             points: request.amount
         #     Meteor.users.update sender._id,
         #         $inc:
-        #             points: -offer.amount
-        #     Docs.update offer_id,
+        #             points: -request.amount
+        #     Docs.update request_id,
         #         $set:
         #             submitted:true
         #             submitted_timestamp:Date.now()
@@ -50,17 +50,17 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Router.route '/offer/:doc_id/edit', (->
+    Router.route '/request/:doc_id/edit', (->
         @layout 'layout'
-        @render 'offer_edit'
-        ), name:'offer_edit'
+        @render 'request_edit'
+        ), name:'request_edit'
 
-    Template.offer_edit.onCreated ->
+    Template.request_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.offer_edit.onRendered ->
+    Template.request_edit.onRendered ->
 
 
-    Template.offer_edit.events
+    Template.request_edit.events
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -69,28 +69,28 @@ if Meteor.isClient
             Docs.update Router.current().params.doc_id,
                 $set:published:true
             if confirm 'confirm?'
-                Meteor.call 'send_offer', @_id, =>
-                    Router.go "/offer/#{@_id}/view"
+                Meteor.call 'send_request', @_id, =>
+                    Router.go "/request/#{@_id}/view"
 
 
-    Template.offer_edit.helpers
-    Template.offer_edit.events
+    Template.request_edit.helpers
+    Template.request_edit.events
 
 if Meteor.isServer
     Meteor.methods
-        send_offer: (offer_id)->
-            offer = Docs.findOne offer_id
-            target = Meteor.users.findOne offer.target_id
-            sender = Meteor.users.findOne offer._author_id
+        send_request: (request_id)->
+            request = Docs.findOne request_id
+            target = Meteor.users.findOne request.target_id
+            sender = Meteor.users.findOne request._author_id
 
-            console.log 'sending offer', offer
+            console.log 'sending request', request
             Meteor.users.update target._id,
                 $inc:
-                    points: offer.amount
+                    points: request.amount
             Meteor.users.update sender._id,
                 $inc:
-                    points: -offer.amount
-            Docs.update offer_id,
+                    points: -request.amount
+            Docs.update request_id,
                 $set:
                     submitted:true
                     submitted_timestamp:Date.now()
