@@ -1,20 +1,20 @@
 template(name='users')
     .ui.padded.stackable.grid
-        .four.wide.column
-            +user_cloud
-        .twelve.wide.column
-            .ui.button 
-                |debit count
-            .ui.button 
-                |debit amount
-            .ui.button 
-                |credit count
-            .ui.button 
-                |credit amount
+        .sixteen.wide.column
+            // .ui.button 
+            //     |debit count
+            // .ui.button 
+            //     |debit amount
+            // .ui.button 
+            //     |credit count
+            // .ui.button 
+            //     |credit amount
             .scrolling
-                .ui.stackable.four.cards
+                .ui.stackable.five.cards
                     each users
                         +user_item
+        .sixteen.wide.column
+            +user_cloud
 
 
 
@@ -43,15 +43,17 @@ template(name='user_item')
                 |#{name}
                 //- |#{username}
         .content
-            each levels
-                .ui.label #{this}
-            strong #{debit_count} debits
-            span ##{global_debit_count_rank}
-            strong #{credit_count} credits
-            span ##{global_credit_count_rank}
-            .ui.small.header #{points} points
-            each first_five_tags
-                .ui.circular.basic.label #{this}
+            // each levels
+            //     .ui.label #{this}
+            // strong #{credit_count} credits
+            strong #{credit_count}/
+            strong #{debit_count}
+            strong {{credit_count/debit_count}}
+            // span ##{global_debit_count_rank}
+            // span ##{global_credit_count_rank}
+            // .ui.small.header #{points} points
+            // each first_five_tags
+            //     .ui.circular.basic.label #{this}
             
             if is_admin
                 +addtoset_user key='levels' value='member'
@@ -59,6 +61,10 @@ template(name='user_item')
                 +addtoset_user key='levels' value='explorer'
                 +addtoset_user key='levels' value='regenerator'
                 +addtoset_user key='levels' value='steward'
+            // else 
+        .ui.fluid.green.button.give
+            i.donate.green.icon
+            |give
         //- .content
         //-     +user_friend_button
         

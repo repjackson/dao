@@ -14,6 +14,8 @@ if Meteor.isClient
     Template.users.helpers
         users: ->
             match = {}
+            unless 'admin' in Meteor.user().roles
+                match.levels = $in:['member']
             if selected_user_tags.array().length > 0 then match.tags = $all: selected_user_tags.array()
             Meteor.users.find match,
                 sort:points:-1

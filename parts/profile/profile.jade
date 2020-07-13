@@ -32,7 +32,7 @@ template(name='profile_layout')
                         // .ui.basic.compact.button.quick_give
                         //     +icon name='initiate-money-transfer' cl='ui inline mini image'
                         //     |quick +1
-                        .ui.basic.compact.button.give
+                        .ui.basic.compact.fluid.button.give
                             +icon name='donate' cl='ui inline mini image'
                             |give
                         // .ui.basic.compact.button.offer
@@ -40,12 +40,12 @@ template(name='profile_layout')
                         //     |offer
         
             .twelve.wide.column
-                a.ui.big.basic.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
-                    i.dashboard.icon
-                    |dashboard
-                a.ui.big.basic.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
-                    i.info.icon
-                    |about
+                // a.ui.big.basic.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
+                //     i.dashboard.icon
+                //     |dashboard
+                // a.ui.big.basic.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
+                //     i.info.icon
+                //     |about
                 // // a.ui.big.basic.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
                 // //     i.chevron.down.icon
                 // //     |credits
@@ -69,7 +69,12 @@ template(name='profile_layout')
 
 
 template(name='user_dashboard')
-    .ui.stackable.two.column.grid
+    +user_about
+    .ui.hidden.divider
+    .ui.big.fluid.green.button
+        |give
+    .ui.hidden.divider
+    .ui.stackable.three.column.grid
         .column
             +user_credits_small
         .column
