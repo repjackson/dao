@@ -6,3 +6,9 @@
 
 # Router.configure
 	# progressDelay : 100
+
+Template.body.events
+    'click a': ->
+        $('.global_container')
+        .transition('fade out', 200)
+        .transition('fade in', 200)

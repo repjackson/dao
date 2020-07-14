@@ -5,7 +5,7 @@ if Meteor.isClient
         ), name:'home'
 
     Template.home.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'debit'
+        @autorun => Meteor.subscribe 'model_docs', 'gift'
         @autorun => Meteor.subscribe 'model_docs', 'offer'
         @autorun => Meteor.subscribe 'model_docs', 'shift'
         @autorun => Meteor.subscribe 'model_docs', 'event'
@@ -37,7 +37,7 @@ if Meteor.isClient
                 levels:$in:['steward']
         latest_gifts: ->
             Docs.find {
-                model:'debit'
+                model:'gift'
                 submitted:true
             },
                 sort:
@@ -64,18 +64,18 @@ if Meteor.isClient
                 sort:
                     _timestamp: -1
                 limit:10
-        debits: ->
+        gifts: ->
             Docs.find
-                model:'debit'
+                model:'gift'
 
     Template.home.events
         'click .refresh_stats': ->
             Meteor.call 'calc_global_stats'
         'click .gift': ->
-            new_debit_id =
+            new_gift_id =
                 Docs.insert
-                    model:'debit'
-            Router.go "/debit/#{new_debit_id}/edit"
+                    model:'gift'
+            Router.go "/gift/#{new_gift_id}/edit"
 
         'keydown .find_username': (e,t)->
             # email = $('submit_email').val()

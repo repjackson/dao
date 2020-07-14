@@ -1,3 +1,26 @@
+template(name='events')
+    .ui.padded.stackable.grid
+        .sixteen.wide.column
+            // .ui.button 
+            //     |debit count
+            // .ui.button 
+            //     |debit amount
+            // .ui.button 
+            //     |credit count
+            // .ui.button 
+            //     |credit amount
+            .ui.header level filter
+            .scrolling
+                .ui.stackable.six.cards
+                    each users
+                        +user_item
+        .sixteen.wide.column
+            +user_cloud
+
+
+
+
+
 template(name='event_view')
     with current_doc
         .ui.stackable.padded.grid

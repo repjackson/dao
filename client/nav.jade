@@ -1,8 +1,8 @@
 template(name='nav')
     .ui.fluid.attached.borderless.large.inverted.menu.topnav
         a.item(href="/" class="{{isActivePath regex='home'}}")
-            i.large.home.icon
-            span.mobile.hidden home
+            i.large.tree.icon
+            span.mobile.hidden ONE|Riverside
         a.item(href="/users" class="{{isActivePath regex='users'}}")
             i.large.users.icon
             span.mobile.hidden members
@@ -13,7 +13,7 @@ template(name='nav')
             i.large.clock.icon
             span.mobile.hidden shifts
         .right.menu
-            a.item.add_gift(class="{{isActivePath regex='debit_edit'}}" title='gift')
+            a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
                 i.large.gift.icon
                 span.mobile.hidden gift
             a.item.add_request(class="{{isActivePath regex='request_edit'}}" title='request')

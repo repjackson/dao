@@ -29,11 +29,11 @@ Template.nav.events
             Session.set 'loading', false
     'click .add_gift': ->
         # user = Meteor.users.findOne(username:@username)
-        new_debit_id =
+        new_gift_id =
             Docs.insert
-                model:'debit'
+                model:'gift'
                 recipient_id: @_id
-        Router.go "/debit/#{new_debit_id}/edit"
+        Router.go "/gift/#{new_gift_id}/edit"
 
     'click .add_request': ->
         # user = Meteor.users.findOne(username:@username)

@@ -72,7 +72,7 @@ template(name='user_dashboard')
                 i.hand.holding.heart.icon
                 |request
     .ui.hidden.divider
-    .ui.stackable.three.column.grid
+    .ui.stackable.four.column.grid
         .column
             +user_credits_small
         .column
@@ -112,6 +112,17 @@ template(name='user_dashboard')
                 each user_requests
                     a.item(href="/request/#{_id}/view")
                         .header #{amount}pts
+                        |#{_author.username}
+                        |#{description}
+                        |#{when}
+        .column
+            .ui.header 
+                i.calendar.icon
+                |events
+            .ui.link.list.smallscroll
+                each user_events
+                    a.item(href="/event/#{_id}/view")
+                        .header #{title} #{amount}pts
                         |#{_author.username}
                         |#{description}
                         |#{when}
