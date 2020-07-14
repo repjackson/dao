@@ -1,4 +1,8 @@
 if Meteor.isClient
+    Router.route '/events/', (->
+        @layout 'layout'
+        @render 'events'
+        ), name:'events'
     Router.route '/event/:doc_id/view', (->
         @layout 'layout'
         @render 'event_view'
@@ -6,9 +10,21 @@ if Meteor.isClient
 
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+    Template.events.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'event'
+    Template.events.events
+        'click .add_event': ->
+            new_id = 
+                Docs.insert
+                    model:'event'
+            Router.go "/event/#{new_id}/edit"
+    Template.events.helpers
+        next_events: ->
+            Docs.find {model:'event'}, 
+                sort:
+                    start_datetime:-1
+
     Template.event_view.onRendered ->
-
-
     Template.event_view.events
         'click .delete_item': ->
             if confirm 'delete item?'

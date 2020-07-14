@@ -7,10 +7,10 @@ template(name='nav')
             a.item(href="/users" class="{{isActivePath regex='users'}}")
                 i.large.users.icon
                 span.mobile.hidden members
-        a.item(class="{{isActivePath regex='events'}}" title='events')
+        a.item(href="/events" class="{{isActivePath regex='events'}}" title='events')
             i.large.calendar.icon
             span.mobile.hidden events
-        a.item(class="{{isActivePath regex='shifts'}}" title='shifts')
+        a.item(href="/shifts" class="{{isActivePath regex='shifts'}}" title='shifts')
             i.large.clock.icon
             span.mobile.hidden shifts
         .right.menu

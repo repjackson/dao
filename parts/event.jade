@@ -9,15 +9,25 @@ template(name='events')
             //     |credit count
             // .ui.button 
             //     |credit amount
-            .ui.header level filter
+            .ui.header 
+                i.calendar.icon
+                |events
+            if is_admin
+                .ui.button.add_event
+                    i.plus.icon
+                    |add event
             .scrolling
                 .ui.stackable.six.cards
-                    each users
-                        +user_item
+                    each next_events
+                        +event_item
         .sixteen.wide.column
-            +user_cloud
+            // +event_cloud
 
 
+template(name='event_item')
+    .ui.card
+        .content
+            |#{when}
 
 
 
@@ -83,15 +93,12 @@ template(name='event_edit')
             .row 
                 .four.wide.column
                 .eight.wide.column
-                    .ui.stackable.two.column.grid
-                        .column
-                            .ui.header 
-                                small author
-                                |#{_author.username}
-                        .column
-                            .ui.header 
-                                |recipient
-                                |#{target.username}
+                    +text_edit key='title' label='title' direct=true
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    .ui.header 
+                        |audience
                             
                     +number_edit key='amount' label='amount' direct=true
                     +key_value_edit key='amount' value=1
@@ -104,6 +111,10 @@ template(name='event_edit')
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.fluid.green.button.submit
-                        i.checkmark.icon
-                        |submit
+                    unless published
+                        .ui.fluid.green.button.submit
+                            i.checkmark.icon
+                            |publish
+                    else
+                        .ui.basic.button.unpublish 
+                            |unpublish

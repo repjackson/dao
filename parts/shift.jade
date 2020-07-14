@@ -1,0 +1,163 @@
+template(name='shifts')
+    .ui.padded.stackable.grid
+        .sixteen.wide.column
+            // .ui.button 
+            //     |debit count
+            // .ui.button 
+            //     |debit amount
+            // .ui.button 
+            //     |credit count
+            // .ui.button 
+            //     |credit amount
+            .ui.header 
+                i.calendar.icon
+                |shifts
+            if is_admin
+                .ui.button.add_shift
+                    i.plus.icon
+                    |add shift
+            .scrolling
+                .ui.stackable.six.cards
+                    each next_shifts
+                        +shift_item
+        .sixteen.wide.column
+            // +shift_cloud
+
+
+template(name='shift_item')
+    a.card(href="/shift/#{_id}/view")
+        .image
+            img.ui.raw.image(src="{{c.url job.image_id width=400 height=300 crop='fill'}}")    
+        .content
+            a.ui.header(href="/shift/#{_id}/view")
+                |#{job.title}
+            .ui.list 
+                .item #{date} date
+                .item from {{from_now start_datetime}}
+                .item to {{from_now end_datetime}}
+                .item #{end_time} end time
+                .item #{steward.username} leader(s)
+            .ui.list
+                each contributers
+                    .item #{username} contributer
+                //- |#{username}
+        .content
+        
+
+
+template(name='shift_card')
+    .card
+        .image
+            img.ui.raw.image(src="{{c.url job.image_id width=400 height=300 crop='fill'}}")    
+        .content
+            a.ui.header(href="/shift/#{_id}/view")
+                |#{job.title}
+                |#{title}
+            .ui.basic.label from {{long_date start_datetime}}
+                small {{from_now start_datetime}}
+            .ui.basic.label to {{long_date end_datetime}}
+            .item to {{from_now end_datetime}}
+            .item #{end_time} end time
+            .item #{steward.username} leader(s)
+            .ui.list
+                each contributers
+                    .item #{username} contributer
+                //- |#{username}
+        a.ui.button(href="/shift/#{_id}/view")
+            |view
+            i.right.chevron.icon
+
+
+template(name='shift_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .center.aligned.row 
+                .four.wide.center.aligned.column
+                    a.ui.fluid.button(href="/m/shift")
+                        i.chevron.left.icon
+                        |shifts
+                .eight.wide.center.aligned.column
+                    .ui.header 
+                        +icon name='clock'
+                        |view shift 
+                        |#{title}
+                .four.wide.center.aligned.column
+            .row 
+                .four.wide.column
+                .eight.wide.column
+                    .ui.header
+                        |participants
+                    each recipients
+                        a.ui.header(href="/user/#{username}")
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{username}
+                    +textarea_view key='description' label='description' direct=true
+                    +image_view key='image_id' label='image' direct=true
+                    div 
+                    +array_view key='tags' label='tags' direct=true
+                    .spacer
+                    .spacer
+                    +comments
+                    +voting_full
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    if can_edit 
+                        a.ui.button(href="/shift/#{_id}/edit")
+                            i.pencil.icon
+                            |edit
+                    a.ui.header(href="/shift/#{_id}/view")
+                        |#{job.title}
+                    .ui.basic.label from {{long_date start_datetime}}
+                        small {{from_now start_datetime}}
+                    .ui.basic.label to {{long_date end_datetime}}
+                    .item to {{from_now end_datetime}}
+                    .ui.list
+                        each contributers
+                            .item #{username} contributer
+                            
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+template(name='shift_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .middle.aligned.row 
+                .four.wide.center.aligned.column
+                    a.ui.fluid.green.big.button(href="/shift/#{_id}/view")
+                        i.checkmark.big.icon
+                        |save
+                .eight.wide.center.aligned.column
+                    .ui.header 
+                        +icon name='clock'
+                        |edit shift
+                .four.wide.center.aligned.column
+                    .ui.small.basic.button.delete_item
+                        i.large.red.remove.icon
+                        |delete
+            .row 
+                .four.wide.column
+                    +image_edit key='image_id' label='image' direct=true
+                    .ui.small.header #{job} job
+                .eight.wide.column
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    |#{target.username}
+                    //- +date_edit key='date' label='date' direct=true
+                    +datetime_edit key='start_datetime' label='start time' direct=true
+                    +datetime_edit key='end_datetime' label='end time' direct=true
+                    //- +multi_user_ref key=leader_ids direct=true
+                    .item #{steward.username} steward (lead?)
+                    +textarea_edit key='description' label='description' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    .ui.header leader(s)
+                    each shift_leaders
+                        .ui.item #{username}
+                    +number_edit key='leader_bounty' label='leader bounty' direct=true
+                    .ui.header contributers
+                    each shift_leaders
+                        .ui.item #{username}
+                    
