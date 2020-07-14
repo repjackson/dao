@@ -12,6 +12,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'selected_users', selected_user_tags.array()
 
     Template.users.helpers
+        
         users: ->
             match = {}
             unless 'admin' in Meteor.user().roles
@@ -33,17 +34,36 @@ if Meteor.isClient
             #     )
 
     Template.user_item.helpers
-
+        credit_ratio: ->
+            unless @debit_count is 0
+                @debit_count/@debit_count
 
     Template.user_item.events
+        'click .gift': ->
+            # user = Meteor.users.findOne(username:@username)
+            new_debit_id =
+                Docs.insert
+                    model:'debit'
+                    recipient_id: @_id
+            Router.go "/debit/#{new_debit_id}/edit"
+
+        'click .request': ->
+            # user = Meteor.users.findOne(username:@username)
+            new_id =
+                Docs.insert
+                    model:'request'
+                    recipient_id: @_id
+            Router.go "/request/#{new_id}/edit"
 
     Template.addtoset_user.helpers
         ats_class: ->
-            if @["#{@key}"] is @value
-                console.log 'yes'
+            # console.log Templat
+            if Template.parentData()["#{@value}"] in @key
+                # console.log 'yes'
+                'blue'
             else
-                console.log 'oh god no'
-
+                # console.log 'oh god no'
+                ''
 
     Template.addtoset_user.events
         'click .toggle_value': ->

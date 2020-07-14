@@ -1,4 +1,4 @@
-template(name='debit_view')
+template(name='gift_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
@@ -9,9 +9,11 @@ template(name='debit_view')
                             i.large.red.remove.icon
                 .eight.wide.column
                     .ui.header
-                        i.exchange.icon
+                        i.gift.icon
                         |#{amount}p
-                        | transaction
+                        | gift
+                    .ui.small.header
+                        i.clock.icon
                         | #{when}
                     .ui.segment
                         .ui.inline.header 
@@ -24,9 +26,9 @@ template(name='debit_view')
                         .ui.inline.header
                             i.chevron.down.icon
                             |recipient
-                        a.ui.inline.header(href="/user/#{target.username}")
-                            img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{target.username}
+                        a.ui.inline.header(href="/user/#{recipient.username}")
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{recipient.username}
                             
                     +number_view key='amount' label='amount' direct=true
                     +textarea_view key='description' label='description' direct=true

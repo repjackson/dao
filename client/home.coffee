@@ -7,6 +7,8 @@ if Meteor.isClient
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'debit'
         @autorun => Meteor.subscribe 'model_docs', 'offer'
+        @autorun => Meteor.subscribe 'model_docs', 'shift'
+        @autorun => Meteor.subscribe 'model_docs', 'event'
         @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         @autorun => Meteor.subscribe 'all_users'
         @autorun -> Meteor.subscribe('home_tag_results',
@@ -44,6 +46,20 @@ if Meteor.isClient
         latest_requests: ->
             Docs.find {
                 model:'offer'
+            },
+                sort:
+                    _timestamp: -1
+                limit:10
+        latest_events: ->
+            Docs.find {
+                model:'event'
+            },
+                sort:
+                    _timestamp: -1
+                limit:10
+        next_shifts: ->
+            Docs.find {
+                model:'shift'
             },
                 sort:
                     _timestamp: -1

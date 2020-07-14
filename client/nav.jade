@@ -1,0 +1,40 @@
+template(name='nav')
+    .ui.fluid.attached.borderless.large.inverted.menu.topnav
+        a.item(href="/" class="{{isActivePath regex='home'}}")
+            i.large.home.icon
+            span.mobile.hidden home
+        a.item(href="/users" class="{{isActivePath regex='users'}}")
+            i.large.users.icon
+            span.mobile.hidden members
+        a.item(class="{{isActivePath regex='events'}}" title='events')
+            i.large.calendar.icon
+            span.mobile.hidden events
+        a.item(class="{{isActivePath regex='shifts'}}" title='shifts')
+            i.large.clock.icon
+            span.mobile.hidden shifts
+        .right.menu
+            a.item.add_gift(class="{{isActivePath regex='debit_edit'}}" title='gift')
+                i.large.gift.icon
+                span.mobile.hidden gift
+            a.item.add_request(class="{{isActivePath regex='request_edit'}}" title='request')
+                i.large.hand.holding.heart.icon
+                span.mobile.hidden request
+            // if currentUser
+            //     a.icon.item.add(href="/add" title='add') 
+            //         i.plus.icon
+            if is_in_admin
+                a.icon.item.toggle_admin
+                    i.shield.icon
+            if currentUser
+                a.large.item(href="/user/#{currentUser.username}" class="{{isActivePath regex='profile_layout'}}")
+                    //- i.large.user.large.icon
+                    if currentUser.profile_image_id
+                        img.ui.avatar.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    else 
+                        i.large.user.large.icon
+                    |#{currentUser.username}
+                    |#{currentUser.points}
+            else
+                a.item(href="/login")
+                    i.large.sign.in.alternate.icon
+                    |login

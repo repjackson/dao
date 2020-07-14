@@ -29,15 +29,6 @@ template(name='profile_layout')
                     if currentUser
                         div
                         +user_friend_button 
-                        // .ui.basic.compact.button.quick_give
-                        //     +icon name='initiate-money-transfer' cl='ui inline mini image'
-                        //     |quick +1
-                        .ui.basic.compact.fluid.button.give
-                            +icon name='donate' cl='ui inline mini image'
-                            |give
-                        // .ui.basic.compact.button.request
-                        //     +icon name='hand-planting' cl='ui inline mini image'
-                        //     |request
         
             .thirteen.wide.column
                 // a.ui.big.basic.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
@@ -73,11 +64,11 @@ template(name='user_dashboard')
     .ui.hidden.divider
     .ui.two.column.grid 
         .column
-            .ui.huge.fluid.green.button
+            .ui.huge.fluid.green.button.gift
                 i.gift.icon
                 |gift
         .column
-            .ui.huge.fluid.teal.button
+            .ui.huge.fluid.teal.button.request
                 i.hand.holding.heart.icon
                 |request
     .ui.hidden.divider

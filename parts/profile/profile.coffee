@@ -44,7 +44,7 @@ if Meteor.isClient
             new_debit_id =
                 Docs.insert
                     model:'debit'
-                    target_id: user._id
+                    recipient_id: user._id
             Router.go "/debit/#{new_debit_id}/edit"
 
         'click .refresh_user_stats': ->
@@ -56,6 +56,22 @@ if Meteor.isClient
 
 
     Template.user_dashboard.events
+        'click .gift': ->
+            # user = Meteor.users.findOne(username:@username)
+            new_debit_id =
+                Docs.insert
+                    model:'debit'
+                    recipient_id: @_id
+            Router.go "/debit/#{new_debit_id}/edit"
+
+        'click .request': ->
+            # user = Meteor.users.findOne(username:@username)
+            new_id =
+                Docs.insert
+                    model:'request'
+                    recipient_id: @_id
+            Router.go "/request/#{new_id}/edit"
+    
         # 'click .recalc_user_cloud': ->
         #     Meteor.call 'recalc_user_cloud', Router.current().params.username, ->
 
@@ -64,7 +80,7 @@ if Meteor.isClient
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
                 model:'debit'
-                target_id: current_user._id
+                recipient_id: current_user._id
             }, sort: _timestamp:-1
     Template.user_dashboard.helpers
         sent_items: ->
@@ -340,7 +356,7 @@ if Meteor.isServer
             credits = Docs.find({
                 model:'debit'
                 amount:$exists:true
-                target_id:user_id})
+                recipient_id:user_id})
             credit_count = credits.count()
             total_credit_amount = 0
             for credit in credits.fetch()

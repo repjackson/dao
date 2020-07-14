@@ -27,7 +27,7 @@ if Meteor.isClient
 #     Meteor.methods
         # send_request: (request_id)->
         #     request = Docs.findOne request_id
-        #     target = Meteor.users.findOne request.target_id
+        #     target = Meteor.users.findOne request.recipient_id
         #     sender = Meteor.users.findOne request._author_id
         #
         #     console.log 'sending request', request
@@ -80,7 +80,7 @@ if Meteor.isServer
     Meteor.methods
         send_request: (request_id)->
             request = Docs.findOne request_id
-            target = Meteor.users.findOne request.target_id
+            target = Meteor.users.findOne request.recipient_id
             sender = Meteor.users.findOne request._author_id
 
             console.log 'sending request', request

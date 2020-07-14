@@ -1,0 +1,86 @@
+template(name='event_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .four.wide.column
+                    //- .ui.button.delete_item
+                    //-     |delete
+                    //-     i.large.red.remove.icon
+                
+                .eight.wide.column
+                    .ui.header 
+                        +icon name='hand-planting'
+                        |view event
+                .four.wide.column
+            .row 
+                .four.wide.column
+                .eight.wide.column
+                    .ui.stackable.two.column.grid
+                        .column
+                            .ui.header 
+                                small author
+                            a.ui.header(href="/user/#{_author.username}") 
+                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{_author.username}
+                        .column
+                            .ui.header
+                                |recipient
+                            a.ui.header(href="/user/#{target.username}")
+                                img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{target.username}
+                            
+                    +number_view key='amount' label='amount' direct=true
+                    +textarea_view key='description' label='description' direct=true
+                    +image_view key='image_id' label='image' direct=true
+                    div 
+                    +array_view key='tags' label='tags' direct=true
+                    .spacer
+                    .spacer
+                    +comments
+                    +voting_full
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+
+template(name='event_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .four.wide.column
+                    .ui.button.delete_item
+                        |delete
+                        i.large.red.remove.icon
+                .eight.wide.column
+                    .ui.header 
+                        +icon name='hand-planting'
+                        |edit event
+                .four.wide.column
+            .row 
+                .four.wide.column
+                .eight.wide.column
+                    .ui.stackable.two.column.grid
+                        .column
+                            .ui.header 
+                                small author
+                                |#{_author.username}
+                        .column
+                            .ui.header 
+                                |recipient
+                                |#{target.username}
+                            
+                    +number_edit key='amount' label='amount' direct=true
+                    +key_value_edit key='amount' value=1
+                    +key_value_edit key='amount' value=5
+                    +key_value_edit key='amount' value=10
+                    +key_value_edit key='amount' value=20
+                    +textarea_edit key='description' label='description' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    .ui.fluid.green.button.submit
+                        i.checkmark.icon
+                        |submit

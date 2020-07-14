@@ -27,3 +27,18 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'shop', ->
             Session.set 'loading', false
+    'click .add_gift': ->
+        # user = Meteor.users.findOne(username:@username)
+        new_debit_id =
+            Docs.insert
+                model:'debit'
+                recipient_id: @_id
+        Router.go "/debit/#{new_debit_id}/edit"
+
+    'click .add_request': ->
+        # user = Meteor.users.findOne(username:@username)
+        new_id =
+            Docs.insert
+                model:'request'
+                recipient_id: @_id
+        Router.go "/request/#{new_id}/edit"

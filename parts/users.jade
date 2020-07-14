@@ -11,7 +11,7 @@ template(name='users')
             //     |credit amount
             .ui.header level filter
             .scrolling
-                .ui.stackable.five.cards
+                .ui.stackable.six.cards
                     each users
                         +user_item
         .sixteen.wide.column
@@ -36,11 +36,11 @@ template(name='user_cloud')
         
 
 template(name='user_item')
-    .card
+    .card.rounded
         a(href="/user/#{username}")
             img.ui.raw.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.inline.header(href="/user/#{username}")
+            a.ui.header(href="/user/#{username}")
                 |#{name}
                 //- |#{username}
             // each levels
@@ -48,14 +48,15 @@ template(name='user_item')
             // strong #{credit_count} credits
             strong #{credit_count}/
             strong #{debit_count}
-            strong {{credit_count/debit_count}}
+            strong {{credit_ratio}}
             // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
             // .ui.small.header #{points} points
             // each first_five_tags
             //     .ui.circular.basic.label #{this}
-            
             if is_admin
+                each levels
+                    .ui.label #{this}
                 +addtoset_user key='levels' value='member'
                 // +addtoset_user key='levels' value='contributor'
                 +addtoset_user key='levels' value='explorer'
@@ -63,7 +64,7 @@ template(name='user_item')
                 +addtoset_user key='levels' value='steward'
         .content
             .ui.two.buttons
-                .ui.green.gift.button.give(title='gift')
+                .ui.green.gift.icon.button.gift(title='gift')
                     i.gift.large.icon
                     // |gift
                 .ui.teal.icon.button.request(title='request')
@@ -72,4 +73,5 @@ template(name='user_item')
                     
 
 template(name='addtoset_user')
-    .ui.small.compact.button.toggle_value(class=ats_class) #{key} +#{value}
+    // .ui.small.compact.button.toggle_value(class=ats_class) #{key} #{value}
+    .ui.small.compact.button.toggle_value(class=ats_class) +#{value}

@@ -11,13 +11,14 @@ template(name='user_edit_layout')
                     img.ui.centered.small.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         
                     .ui.small.inline.center.aligned.header @#{current_user.username}
-                    a.ui.fluid.large.green.button(href="/user/#{current_user.username}/") 
+                    a.ui.fluid.big.green.button(href="/user/#{current_user.username}/") 
                         i.checkmark.icon
                         strong save
-                    a.ui.fluid.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}") 
+                    .spacer
+                    a.ui.fluid.large.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}") 
                         i.info.icon 
                         |info
-                    a.ui.fluid.button(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}") 
+                    a.ui.fluid.large.button(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}") 
                         i.cog.icon 
                         |account
                     // a.ui.button(href="/user/#{current_user.username}/edit/friends" class="{{isActivePath regex='user_edit_friends'}}") 
@@ -32,7 +33,7 @@ template(name='user_edit_layout')
                     // a.ui.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
                     //     i.lock.icon 
                     //     | privacy
-                    a.ui.fluid.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}") 
+                    a.ui.fluid.large.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}") 
                         i.shield.icon 
                         | membership
                 .twelve.wide.column
@@ -42,6 +43,10 @@ template(name='user_edit_info')
     .ui.two.column.stackable.grid
         .column
             +array_edit key='tags' label='tags' direct=true
+            .spacer
+            +text_edit key='city' label='city' direct=true
+            .spacer
+            +text_edit key='state' label='state' direct=true
             .spacer
             +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
             .spacer
