@@ -26,8 +26,13 @@ template(name='events')
 
 template(name='event_item')
     .ui.card
+        if image_id
+            img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
         .content
+            a.ui.header(href="/event/#{_id}/view") #{title}
             |#{when}
+            |{{from_now start_datetime}}
+            |- {{from_now end_datetime}}
 
 
 
@@ -36,33 +41,59 @@ template(name='event_view')
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
-                    //- .ui.button.delete_item
-                    //-     |delete
-                    //-     i.large.red.remove.icon
-                
+                    a.ui.fluid.button(href="/events")
+                        i.calendar.icon
+                        |events
                 .eight.wide.column
                     .ui.header 
                         +icon name='hand-planting'
                         |view event
                 .four.wide.column
+                    if is_admin
+                        .ui.button.delete_item
+                            |delete
+                            i.large.red.remove.icon
+                        a.ui.button.edit_event(href="/event/#{_id}/edit")
+                            i.large.pencil.icon
+                            |event
+
             .row 
                 .four.wide.column
+                    .ui.header 
+                        small author
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.username}
+                    .ui.small.header 
+                        i.green.checkmark.icon
+                        |going
+                    .ui.big.list
+                        each going 
+                            .item #{username}
+                    .ui.small.header 
+                        i.yellow.minus.icon
+                        |maybe
+                    .ui.big.list
+                        each maybe 
+                            .item #{username}
+                    .ui.small.header 
+                        i.red.remove.icon
+                        |not going
+                    .ui.big.list
+                        each not_going 
+                            .item #{username}
+                        
                 .eight.wide.column
-                    .ui.stackable.two.column.grid
-                        .column
-                            .ui.header 
-                                small author
-                            a.ui.header(href="/user/#{_author.username}") 
-                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{_author.username}
-                        .column
-                            .ui.header
-                                |recipient
-                            a.ui.header(href="/user/#{target.username}")
-                                img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{target.username}
-                            
+                    .ui.header
+                        |attendees
+                    // a.ui.header(href="/user/#{target.username}")
+                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //     |#{target.username}
+                    .ui.header $#{usd_price} per ticket
                     +number_view key='amount' label='amount' direct=true
+                    .ui.header your points #{currentUser.points}
+                    .ui.big.green.button.purchase
+                        |purchase for #{amount}p and $#{usd_price}
                     +textarea_view key='description' label='description' direct=true
                     +image_view key='image_id' label='image' direct=true
                     div 
@@ -73,6 +104,14 @@ template(name='event_view')
                     +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
+                    .ui.small.grey.header 
+                        i.line.chart.icon
+                        |stats
+                    .ui.list
+                        .item #{views} views
+                    each viewers
+                        .ui.label #{username
+                    
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
@@ -90,14 +129,17 @@ template(name='event_edit')
                         +icon name='hand-planting'
                         |edit event
                 .four.wide.column
-            .row 
+            .row
                 .four.wide.column
-                .eight.wide.column
-                    +text_edit key='title' label='title' direct=true
                     .ui.header 
                         small author
                         |#{_author.username}
-                    .ui.header 
+                    +datetime_edit key='start_datetime' label='start' direct=true
+                    +datetime_edit key='end_datetime' label='end' direct=true
+                    
+                .eight.wide.column
+                    +text_edit key='title' label='title' direct=true
+                    .ui.header
                         |audience
                             
                     +number_edit key='amount' label='amount' direct=true
@@ -105,16 +147,20 @@ template(name='event_edit')
                     +key_value_edit key='amount' value=5
                     +key_value_edit key='amount' value=10
                     +key_value_edit key='amount' value=20
+                    +number_edit key='usd_price' label='usd price' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    unless published
-                        .ui.fluid.green.button.submit
-                            i.checkmark.icon
-                            |publish
-                    else
-                        .ui.basic.button.unpublish 
-                            |unpublish
+                    a.ui.fluid.green.big.button(href="/event/#{_id}/view")
+                        i.checkmark.icon
+                        |save
+                    // unless published
+                    //     a.ui.fluid.green.button.submit(href="/save")
+                    //         i.checkmark.icon
+                    //         |publish
+                    // else
+                    //     .ui.basic.button.unpublish 
+                    //         |unpublish

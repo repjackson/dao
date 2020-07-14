@@ -27,16 +27,16 @@ template(name='profile_layout')
                     a.ui.large.fluid.button.logout(href="#")
                         i.sign.out.alternate.icon
                         |log out
-                .ui.header #{points}pts
+                // .ui.header #{points}pts
                 
                 unless is_current_user
                     if currentUser
                         div
                         +user_friend_button 
-                a.ui.big.icon.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
+                a.ui.big.icon.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
                     i.dashboard.large.icon
                     // |dashboard
-                a.ui.big.icon.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                a.ui.big.icon.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
                     i.chat.large.icon
                     // |chat
 

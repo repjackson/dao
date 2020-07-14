@@ -50,7 +50,7 @@ if Meteor.isClient
                 sort:
                     _timestamp: -1
                 limit:10
-        latest_events: ->
+        next_events: ->
             Docs.find {
                 model:'event'
             },

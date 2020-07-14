@@ -1,20 +1,30 @@
 template(name='add')
     .ui.stackable.padded.grid
-        .ui.header add
-        .ui.stackable.cards
-            a.ui.card.add_request
-                .content
-                    .ui.icon.header
-                        i.hand.holding.heart.icon
-                        |request
-            a.ui.card.add_event
-                .content
-                    .ui.icon.header
-                        i.calendar.icon
-                        |event
-            a.ui.card.add_event
-                .content
-                    .ui.icon.header
-                        i.clock.icon
-                        |shift
-            
+        .centered.row
+            .sixteen.wide.column
+                .ui.header
+                    i.big.plus.icon
+                    |add
+            .sixteen.wide.column
+                .ui.stackable.blue.cards
+                    a.ui.teal.card.add_request
+                        .content
+                            .ui.icon.teal.header
+                                i.hand.holding.heart.icon
+                                |request
+                    a.ui.maroon.card.add_event
+                        .content
+                            .ui.icon.maroon.header
+                                i.calendar.icon
+                                |event
+                    a.ui.blue.card.add_shift
+                        .content
+                            .ui.icon.orange.header
+                                i.clock.icon
+                                |shift
+                    a.ui.yellow.card.add_gift
+                        .content
+                            .ui.icon.green.header
+                                i.gift.icon
+                                |gift
+                    

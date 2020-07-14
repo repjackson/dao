@@ -1,10 +1,10 @@
 
 
 template(name='home')
-    .ui.padded.stackable.grid
+    .ui.stackable.grid
         .two.column.middle.aligned.row
             .column
-                img.ui.fluid.image(src="{{c.url 'river_small' crop='fill'}}")
+                img.ui.fluid.rounded.image(src="{{c.url 'river_small' crop='fill'}}")
             .column
                 .ui.large.header The Riverside – So Memorable. So Boulder. So You.
                 .ui.header
@@ -34,12 +34,12 @@ template(name='home')
                             i.hand.holding.heart.icon
                             |not enough to request
                 .two.wide.column
-                    .ui.center.aligned.header.refresh_stats
-                        i.line.chart.icon
-                        |stats
+                    // .ui.center.aligned.grey.header.refresh_stats
+                    //     i.line.chart.icon
+                    //     |stats
                     with stats_doc
-                        .ui.big.list
-                            .item #{total_points} total system points
+                        .ui.list
+                            .item #{total_points} system points
                             
         .row
             .four.wide.column
@@ -81,6 +81,7 @@ template(name='home')
                             a.item(href="/shift/#{_id}/view")
                                 .content
                                     .header
+                                        .ui.inline.header #{title} 
                                         .ui.inline.header #{amount}p
                                         if _author.profile_image_id
                                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")

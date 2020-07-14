@@ -123,7 +123,7 @@ template(name='shift_edit')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.fluid.green.big.button(href="/shift/#{_id}/view")
+                    a.ui.fluid.green.button(href="/shift/#{_id}/view")
                         i.checkmark.big.icon
                         |save
                 .eight.wide.center.aligned.column
@@ -147,7 +147,7 @@ template(name='shift_edit')
                     +datetime_edit key='start_datetime' label='start time' direct=true
                     +datetime_edit key='end_datetime' label='end time' direct=true
                     //- +multi_user_ref key=leader_ids direct=true
-                    .item #{steward.username} steward (lead?)
+                    .item #{leader.username} lead
                     +textarea_edit key='description' label='description' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
