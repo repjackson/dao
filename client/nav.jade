@@ -13,6 +13,12 @@ template(name='nav')
         a.item(href="/shifts" class="{{isActivePath regex='shifts'}}" title='shifts')
             i.large.clock.icon
             span.mobile.hidden shifts
+        a.item(href="/gifts" class="{{isActivePath regex='gifts'}}" title='gifts')
+            i.large.gift.icon
+            span.mobile.hidden gifts
+        a.item(href="/requests" class="{{isActivePath regex='requests'}}" title='requests')
+            i.large.hand.holding.heart.icon
+            span.mobile.hidden requests
         .right.menu
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
             //     i.large.gift.icon

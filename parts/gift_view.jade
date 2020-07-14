@@ -1,3 +1,38 @@
+template(name='gifts')
+    .ui.padded.stackable.grid
+        .sixteen.wide.column
+            // .ui.button 
+            //     |debit count
+            // .ui.button 
+            //     |debit amount
+            // .ui.button 
+            //     |credit count
+            // .ui.button 
+            //     |credit amount
+            .ui.header 
+                i.calendar.icon
+                |gifts
+            if is_admin
+                .ui.button.add_gift
+                    i.plus.icon
+                    |add gift
+            .scrolling
+                .ui.stackable.six.cards
+                    each next_gifts
+                        +gift_item
+        .sixteen.wide.column
+            // +gift_cloud
+
+
+template(name='gift_item')
+    .ui.card
+        .content
+            |#{when}
+
+
+
+
+
 template(name='gift_view')
     with current_doc
         .ui.stackable.padded.grid

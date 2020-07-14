@@ -1,4 +1,9 @@
 if Meteor.isClient
+    Router.route '/requests/', (->
+        @layout 'layout'
+        @render 'requests'
+        ), name:'requests'
+    
     Router.route '/request/:doc_id/view', (->
         @layout 'layout'
         @render 'request_view'

@@ -1,4 +1,10 @@
 if Meteor.isClient
+    Router.route '/gifts/', (->
+        @layout 'layout'
+        @render 'gifts'
+        ), name:'gifts'
+    
+
     Router.route '/gift/:doc_id/view', (->
         @layout 'layout'
         @render 'gift_view'

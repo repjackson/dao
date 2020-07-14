@@ -1,5 +1,20 @@
 template(name='add')
-    .ui.header add
-    .ui.card 
-        .content
-            .header request
+    .ui.stackable.padded.grid
+        .ui.header add
+        .ui.stackable.cards
+            a.ui.card.add_request
+                .content
+                    .ui.icon.header
+                        i.hand.holding.heart.icon
+                        |request
+            a.ui.card.add_event
+                .content
+                    .ui.icon.header
+                        i.calendar.icon
+                        |event
+            a.ui.card.add_event
+                .content
+                    .ui.icon.header
+                        i.clock.icon
+                        |shift
+            
