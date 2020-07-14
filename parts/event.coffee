@@ -28,13 +28,13 @@ if Meteor.isClient
         # send_event: (event_id)->
         #     event = Docs.findOne event_id
         #     target = Meteor.users.findOne event.recipient_id
-        #     sender = Meteor.users.findOne event._author_id
+        #     gifter = Meteor.users.findOne event._author_id
         #
         #     console.log 'sending event', event
         #     Meteor.users.update target._id,
         #         $inc:
         #             points: event.amount
-        #     Meteor.users.update sender._id,
+        #     Meteor.users.update gifter._id,
         #         $inc:
         #             points: -event.amount
         #     Docs.update event_id,
@@ -81,13 +81,13 @@ if Meteor.isServer
         send_event: (event_id)->
             event = Docs.findOne event_id
             target = Meteor.users.findOne event.recipient_id
-            sender = Meteor.users.findOne event._author_id
+            gifter = Meteor.users.findOne event._author_id
 
             console.log 'sending event', event
             Meteor.users.update target._id,
                 $inc:
                     points: event.amount
-            Meteor.users.update sender._id,
+            Meteor.users.update gifter._id,
                 $inc:
                     points: -event.amount
             Docs.update event_id,

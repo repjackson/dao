@@ -36,8 +36,8 @@ template(name='comments')
         each doc_comments
             .comment
                 .content
-                    .ui.header #{body}
-                    .meta #{when}
+                    .ui.inline.header #{body}
+                    span.meta #{when}
                         |by 
                         a(href="/user/#{author.username}") #{author.first_name} #{author.last_name}
                         if currentUser

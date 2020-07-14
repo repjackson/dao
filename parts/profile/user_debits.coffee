@@ -1,32 +1,32 @@
 if Meteor.isClient
-    Router.route '/user/:username/sent', (->
+    Router.route '/user/:username/gifted', (->
         @layout 'profile_layout'
-        @render 'user_debits'
-        ), name:'user_debits'
+        @render 'user_gifts'
+        ), name:'user_gifts'
 
-    Template.user_debits.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'debit', Router.current().params.username
-        # @autorun => Meteor.subscribe 'user_debits', Router.current().params.username
-        @autorun => Meteor.subscribe 'model_docs', 'debit'
+    Template.user_gifts.onCreated ->
+        @autorun -> Meteor.subscribe 'user_model_docs', 'gift', Router.current().params.username
+        # @autorun => Meteor.subscribe 'user_gifts', Router.current().params.username
+        @autorun => Meteor.subscribe 'model_docs', 'gift'
 
-    Template.user_debits.events
-        'keyup .new_debit': (e,t)->
+    Template.user_gifts.events
+        'keyup .new_gift': (e,t)->
             if e.which is 13
-                val = $('.new_debit').val()
+                val = $('.new_gift').val()
                 console.log val
                 target_user = Meteor.users.findOne(username:Router.current().params.username)
                 Docs.insert
-                    model:'debit'
+                    model:'gift'
                     body: val
                     target_user_id: target_user._id
 
 
 
-    Template.user_debits.helpers
+    Template.user_gifts.helpers
         sent_items: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
-                model:'debit'
+                model:'gift'
                 _author_id: current_user._id
                 # target_user_id: target_user._id
             },
@@ -39,6 +39,6 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'user_debits', (username)->
+    Meteor.publish 'user_gifts', (username)->
         Docs.find
-            model:'debit'
+            model:'gift'

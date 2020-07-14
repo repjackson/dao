@@ -26,13 +26,13 @@ template(name='home')
                             |not enough to gift
                 .six.wide.column
                     if can_gift
-                        .ui.fluid.big.teal.button.offer
+                        .ui.fluid.big.teal.button.request
                             i.hand.holding.heart.icon
-                            |offer
+                            |request
                     else
                         .ui.fluid.big.teal.disabled.button
                             i.hand.holding.heart.icon
-                            |not enough to offer
+                            |not enough to request
                 .two.wide.column
                     .ui.center.aligned.header.refresh_stats
                         i.line.chart.icon
@@ -46,16 +46,18 @@ template(name='home')
                 .ui.center.aligned.header
                     i.clock.icon
                     |next shifts
+                if is_admin 
+                    i.circular.plus.icon.add_shift
                 .smallscrol
                     .ui.selection.link.list
                         each next_shifts
                             a.item(href="/shift/#{_id}/view")
                                 .content
                                     .header
-                                        .ui.inline.header #{amount}p
-                                        if _author.profile_image_id
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        | #{_author_username}
+                                        .ui.inline.header
+                                        // if _author.profile_image_id
+                                        //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        // | #{_author_username}
                                         .ui.inline.header >
                                         if shift_contributors 
                                             each shift_contributors
@@ -70,6 +72,9 @@ template(name='home')
                 .ui.center.aligned.header
                     i.calendar.icon
                     |next events
+                if is_admin 
+                    i.circular.plus.icon.add_shift
+                    
                 .smallscrol
                     .ui.selection.link.list
                         each next_events
@@ -120,14 +125,14 @@ template(name='home')
                 .smallscrol
                     .ui.selection.link.list
                         each latest_requests
-                            a.item(href="/offer/#{_id}/view")
+                            a.item(href="/request/#{_id}/view")
                                 .content
                                     .header
                                         .ui.inline.header #{amount}p
                                         if _author.profile_image_id
                                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                         | #{_author_username}
-                                        .ui.inline.header
+                                        .ui.inline.small.grey.header
                                             |#{description}
                                     .meta #{when}
                                     // each tags 

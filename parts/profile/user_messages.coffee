@@ -17,6 +17,7 @@ if Meteor.isClient
                     model:'message'
                     body: val
                     target_user_id: target_user._id
+                val = $('.new_message').val('')
 
 
 

@@ -9,7 +9,7 @@ template(name='user_credits')
                     img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 strong #{amount}pt 
                 .content
-                    a(href="/debit/#{_id}/view")
+                    a(href="/gift/#{_id}/view")
                         |#{when} from 
                     a(href="/user/#{author.username}")
                         |#{author.username}
@@ -41,7 +41,7 @@ template(name='user_credits_small')
                         a(href="/user/#{author.username}")
                             |#{author.username}
                     .description
-                        a(href="/debit/#{_id}/view")
+                        a(href="/gift/#{_id}/view")
                             |#{when}
                 .content
                     .description

@@ -28,13 +28,13 @@ if Meteor.isClient
         # send_request: (request_id)->
         #     request = Docs.findOne request_id
         #     target = Meteor.users.findOne request.recipient_id
-        #     sender = Meteor.users.findOne request._author_id
+        #     gifter = Meteor.users.findOne request._author_id
         #
         #     console.log 'sending request', request
         #     Meteor.users.update target._id,
         #         $inc:
         #             points: request.amount
-        #     Meteor.users.update sender._id,
+        #     Meteor.users.update gifter._id,
         #         $inc:
         #             points: -request.amount
         #     Docs.update request_id,
@@ -81,13 +81,13 @@ if Meteor.isServer
         send_request: (request_id)->
             request = Docs.findOne request_id
             target = Meteor.users.findOne request.recipient_id
-            sender = Meteor.users.findOne request._author_id
+            gifter = Meteor.users.findOne request._author_id
 
             console.log 'sending request', request
             Meteor.users.update target._id,
                 $inc:
                     points: request.amount
-            Meteor.users.update sender._id,
+            Meteor.users.update gifter._id,
                 $inc:
                     points: -request.amount
             Docs.update request_id,

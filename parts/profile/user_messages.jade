@@ -6,14 +6,14 @@ template(name='user_messages')
         .ui.fluid.icon.input
             i.plus.icon
             input.new_message(type='text' placeholder='new message...')
-    .ui.small.segments
-        each user_messages
-            .ui.segment
-                .ui.small.header #{body}
-                div
-                +user_list_toggle key='read_by_ids' label='mark read' icon='eye'
-                if can_edit
-                    +remove_button
-                //- div
-                +author_info
-                +creation_info
+    // .ui.small.segments
+    each user_messages
+        .ui.small.segment
+            .ui.small.inline.header #{body}
+            // div
+            // +user_list_toggle key='read_by_ids' label='mark read' icon='eye'
+            if can_edit
+                +remove_button
+            //- div
+            +author_info
+            +creation_info

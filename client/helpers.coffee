@@ -53,9 +53,10 @@ Template.registerHelper 'is_author', () ->
 
 Template.registerHelper 'can_edit', () ->
     # if @_author_id and Meteor.userId()
-    @_author_id is Meteor.userId()
-    if Meteor.user().roles
-        'admin' in Meteor.user().roles or @_author_id is Meteor.userId()
+    # @_author_id is Meteor.userId()
+    # if Meteor.user().roles
+    if Meteor.user()
+        if Meteor.user().roles and 'admin' in Meteor.user().roles or @_author_id is Meteor.userId() then true else false
 
 
 

@@ -1,11 +1,12 @@
 template(name='nav')
     .ui.fluid.attached.borderless.large.inverted.menu.topnav
         a.item(href="/" class="{{isActivePath regex='home'}}")
-            i.large.tree.icon
+            i.large.tree.green.icon
             span.mobile.hidden ONE|Riverside
-        a.item(href="/users" class="{{isActivePath regex='users'}}")
-            i.large.users.icon
-            span.mobile.hidden members
+        if currentUser
+            a.item(href="/users" class="{{isActivePath regex='users'}}")
+                i.large.users.icon
+                span.mobile.hidden members
         a.item(class="{{isActivePath regex='events'}}" title='events')
             i.large.calendar.icon
             span.mobile.hidden events
@@ -13,15 +14,15 @@ template(name='nav')
             i.large.clock.icon
             span.mobile.hidden shifts
         .right.menu
-            a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
-                i.large.gift.icon
-                span.mobile.hidden gift
-            a.item.add_request(class="{{isActivePath regex='request_edit'}}" title='request')
-                i.large.hand.holding.heart.icon
-                span.mobile.hidden request
-            // if currentUser
-            //     a.icon.item.add(href="/add" title='add') 
-            //         i.plus.icon
+            // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
+            //     i.large.gift.icon
+            //     span.mobile.hidden gift
+            // a.item.add_request(class="{{isActivePath regex='request_edit'}}" title='request')
+            //     i.large.hand.holding.heart.icon
+            //     span.mobile.hidden request
+            if currentUser
+                a.icon.item.add(href="/add" title='add') 
+                    i.plus.large.icon
             if is_in_admin
                 a.icon.item.toggle_admin
                     i.shield.icon
@@ -36,5 +37,5 @@ template(name='nav')
                     |#{currentUser.points}
             else
                 a.item(href="/login")
-                    i.large.sign.in.alternate.icon
                     |login
+                    i.large.chevron.right.icon

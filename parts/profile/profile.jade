@@ -5,8 +5,11 @@ template(name='profile_layout')
         .ui.stackable.padded.grid
             .three.wide.column
                 img.ui.centered.medium.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                a.ui.large.center.aligned.header.refresh_user_stats(href="/user/#{username}") #{username}
-                //- .ui.basic.compact.icon.button.refresh_user_stats(title='refresh stats')
+                a.ui.large.center.aligned.header.refresh_user_stats(href="/user/#{username}") 
+                    |#{name}
+                a.ui.center.aligned.header.refresh_user_stats(href="/user/#{username}") 
+                    |@#{username}
+                //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
                 .spacer
                 .item #{total_bandwith} total bandwith
@@ -14,44 +17,45 @@ template(name='profile_layout')
                 // .ui.small.inline.header {{fixed one_score}} one score
                 div
                 if is_admin
-                    a.ui.basic.fluid.button(href="/user/#{username}/edit")
+                    a.ui.fluid.button(href="/user/#{username}/edit")
                         i.shield.icon
                         |admin edit
                 if is_current_user
-                    a.ui.large.basic.fluid.button(href="/user/#{username}/edit")
+                    a.ui.large.fluid.button(href="/user/#{username}/edit")
                         i.cog.icon
                         |account
-                    a.ui.large.basic.fluid.button.logout(href="#")
+                    a.ui.large.fluid.button.logout(href="#")
                         i.sign.out.alternate.icon
                         |log out
                 .ui.header #{points}pts
+                
                 unless is_current_user
                     if currentUser
                         div
                         +user_friend_button 
-        
+                a.ui.big.icon.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
+                    i.dashboard.large.icon
+                    // |dashboard
+                a.ui.big.icon.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                    i.chat.large.icon
+                    // |chat
+
             .thirteen.wide.column
-                // a.ui.big.basic.compact.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
-                //     i.dashboard.icon
-                //     |dashboard
-                // a.ui.big.basic.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
+                // a.ui.big.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
                 //     i.info.icon
                 //     |about
-                // // a.ui.big.basic.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
+                // // a.ui.big.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
                 // //     i.chevron.down.icon
                 // //     |credits
-                // // a.ui.big.basic.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                // // a.ui.big.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
                 // //     i.chevron.up.icon
                 // //     |sent
-                // // a.ui.big.basic.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
+                // // a.ui.big.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
                 // //     +icon name='calendar' cl='ui inline mini image'
                 // //     |events
-                // a.ui.big.basic.compact.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
+                // a.ui.big.compact.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
                 //     i.users.icon
                 //     |friends
-                // a.ui.big.basic.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
-                //     i.chat.icon
-                //     |chat
                 // .spacer
                 // .spacer
                 +yield    
@@ -78,10 +82,10 @@ template(name='user_dashboard')
         .column
             .ui.inline.header 
                 i.gift.icon
-                |#{total_debit_amount}p
+                |#{total_gift_amount}p
                 |gifted
-                small(title='debit count') (#{debit_count}x)
-                    .ui.basic.circular.label ##{global_debit_count_rank}
+                small(title='gift count') (#{gift_count}x)
+                    .ui.circular.label ##{global_gift_count_rank}
             div
             .ui.link.large.list.scrolling
                 each sent_items
@@ -91,7 +95,7 @@ template(name='user_dashboard')
                         .content
                             .header
                                 strong #{amount}pt
-                                a(href="/debit/#{_id}/view")
+                                a(href="/gift/#{_id}/view")
                                     |#{when}
                                     | to 
                                 a(href="/user/#{target.username}")
@@ -100,7 +104,7 @@ template(name='user_dashboard')
                                 |#{description}
                             .description
                                 each tags
-                                    .ui.mini.basic.label #{this}
+                                    .ui.mini.label #{this}
                             if is_admin
                                 +remove_button
             +number_edit key='points' label='points' direct=true
@@ -137,6 +141,6 @@ template(name='user_friend_button')
             .hidden.content
                 i.minus.icon
     else
-        .ui.basic.fluid.button.friend
+        .ui.fluid.button.friend
             i.plus.icon
             |friend

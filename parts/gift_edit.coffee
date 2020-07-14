@@ -102,13 +102,13 @@ if Meteor.isServer
         send_gift: (gift_id)->
             gift = Docs.findOne gift_id
             recipient = Meteor.users.findOne gift.recipient_id
-            sender = Meteor.users.findOne gift._author_id
+            gifter = Meteor.users.findOne gift._author_id
 
             console.log 'sending gift', gift
             Meteor.users.update recipient._id,
                 $inc:
                     points: gift.amount
-            Meteor.users.update sender._id,
+            Meteor.users.update gifter._id,
                 $inc:
                     points: -gift.amount
             Docs.update gift_id,

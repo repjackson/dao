@@ -26,7 +26,7 @@ if Meteor.isClient
         user_credits: ->
             target_user = Meteor.users.findOne({username:Router.current().params.username})
             Docs.find {
-                model:'debit'
+                model:'gift'
                 recipient_id: target_user._id
             },
                 sort:_timestamp:-1
@@ -38,5 +38,5 @@ if Meteor.isServer
     Meteor.publish 'user_credits', (username)->
         user = Meteor.users.findOne username:username
         Docs.find
-            model:'debit'
+            model:'gift'
             recipient_id:user._id

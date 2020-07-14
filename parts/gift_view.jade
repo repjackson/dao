@@ -18,7 +18,7 @@ template(name='gift_view')
                     .ui.segment
                         .ui.inline.header 
                             i.chevron.up.icon
-                            |sender
+                            |gifter
                         a.ui.inline.header(href="/user/#{_author.username}") 
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}

@@ -1,4 +1,4 @@
-template(name='user_debits')  
+template(name='user_gifts')  
     .ui.header 
         +icon name='sprout'
         |sent
@@ -12,7 +12,7 @@ template(name='user_debits')
                 a(href="/user/#{target.username}")
                     |#{target.username}
                 .content
-                    a(href="/debit/#{_id}/view")
+                    a(href="/gift/#{_id}/view")
                         |#{when} 
                     .description
                         |#{description}

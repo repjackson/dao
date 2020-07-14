@@ -3,12 +3,17 @@ template(name='request_view')
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
-                    //- .ui.button.delete_item
-                    //-     |delete
-                    //-     i.large.red.remove.icon
+                    // if can_edit
+                    if is_admin
+                        .ui.button.delete_request
+                            |delete
+                            i.large.red.remove.icon
+                        a.ui.button.edit_request(href="/request/#{_id}/edit")
+                            i.blue.pencil.icon
+                            |edit
                 
                 .eight.wide.column
-                    .ui.header 
+                    .ui.center.aligned.header 
                         +icon name='hand-planting'
                         |view request
                 .four.wide.column
@@ -24,12 +29,13 @@ template(name='request_view')
                                 |#{_author.username}
                         .column
                             .ui.header
-                                |recipient
-                            a.ui.header(href="/user/#{target.username}")
-                                img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{target.username}
+                                |audience
                             
-                    +number_view key='amount' label='amount' direct=true
+                            // a.ui.header(href="/user/#{target.username}")
+                            //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            //     |#{target.username}
+                            
+                    +number_view key='bounty' label='bounty' direct=true
                     +textarea_view key='description' label='description' direct=true
                     +image_view key='image_id' label='image' direct=true
                     div 
@@ -50,37 +56,47 @@ template(name='request_edit')
             .row 
                 .four.wide.column
                     .ui.button.delete_item
-                        |delete
-                        i.large.red.remove.icon
+                        i.large.red.ban.icon
+                        |cancel
                 .eight.wide.column
-                    .ui.header 
+                    .ui.center.aligned.header 
                         +icon name='hand-planting'
                         |edit request
                 .four.wide.column
+                    .ui.header 
+                        small author
+                        |#{_author.username}
             .row 
                 .four.wide.column
                 .eight.wide.column
-                    .ui.stackable.two.column.grid
-                        .column
-                            .ui.header 
-                                small author
-                                |#{_author.username}
-                        .column
-                            .ui.header 
-                                |recipient
-                                |#{target.username}
-                            
-                    +number_edit key='amount' label='amount' direct=true
-                    +key_value_edit key='amount' value=1
-                    +key_value_edit key='amount' value=5
-                    +key_value_edit key='amount' value=10
-                    +key_value_edit key='amount' value=20
+                    .ui.header 
+                        |audience
+                    .ui.disabled.button
+                        |everyone
+                    .ui.disabled.button
+                        |groups
+                    .ui.disabled.button
+                        |specific people
+                    +number_edit key='bounty' label='bounty' direct=true
+                    +key_value_edit key='bounty' value=1
+                    +key_value_edit key='bounty' value=5
+                    +key_value_edit key='bounty' value=10
+                    +key_value_edit key='bounty' value=20
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.fluid.green.button.submit
-                        i.checkmark.icon
-                        |submit
+                    .ui.header your points: #{currentUser.points}
+                    .ui.small.header publishing request holds points from your balance and dispenses them when request is verified complete
+                    if published
+                        .ui.inline.header status:
+                        .ui.green.inline.header published
+                        .ui.fluid.teal.button.unpublish
+                            i.undo.icon
+                            |unpublish
+                    else
+                        .ui.fluid.green.button.publish
+                            i.checkmark.icon
+                            |publish
