@@ -19,6 +19,7 @@ if Meteor.isClient
                 slug:Router.current().params.slug
     Template.page.helpers
         page_doc: ->
+            console.log 'looking for '
             Docs.findOne
                 model:'page'
                 slug:Router.current().params.slug

@@ -1,3 +1,28 @@
+template(name='html_edit')
+    .ui.header html edit
+    .ui.form
+        .field
+            label 
+                if icon
+                    i.icon(class=icon)
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else if key
+                    |#{key}
+                else
+                    |#{this}
+    .froala-container
+        +froalaReactive getFEContext
+    //- if is_dev
+    //- +call_watson mode='html' key=key
+    //- div
+    //- //- +tone mode='html'
+    //- if watson
+    //-     +watson_view
+        
+
 template(name='price_edit')
     div
     .ui.fluid.input

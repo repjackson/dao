@@ -37,3 +37,5 @@ lepozepo:cloudinary
 dburles:collection-helpers
 mrgalaxy:stripe
 yasinuslu:json-view
+froala:editor-reactive@=2.4.2
+lookback:emails

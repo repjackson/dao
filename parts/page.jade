@@ -5,19 +5,26 @@ template(name='media')
 template(name='team')
     +page slug='team'
     
+    
+template(name='page_edit')
+    with page_doc 
+        +html_edit key='content' direct=true
 
 template(name='page')
     .ui.padded.stackable.grid
         .centered.row
             .fourteen.wide.column
                 with page_doc
-                    if is_admin
-                        a.ui.button(href="/m/page/#{_id}/edit")
-                            i.shield.icon
-                            |edit page
+                    // if is_admin
+                    //     a.ui.button(href="/m/page/#{_id}/edit")
+                    //         i.shield.icon
+                    //         |edit page
                     if show_title
                         .ui.center.aligned.header #{title}
-                    +html_view key='content'
+                    // +html_view key='content' direct=true
+                    |!{content}
+                    if is_admin
+                        +html_edit key='content' direct=true
                     //- .ui.fluid.accordion 
                     //-     .title 
                     //-         .ui.header 
