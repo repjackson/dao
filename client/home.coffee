@@ -25,8 +25,12 @@ if Meteor.isClient
             Session.get('view_purchased')
             # Session.get('view_incomplete')
             )
+        @autorun => Meteor.subscribe 'model_docs', 'home_doc'
 
     Template.home.helpers
+        home_doc: ->
+            Docs.findOne 
+                model:'home_doc'
         stats_doc: ->
             Docs.findOne 
                 model:'global_stats'
