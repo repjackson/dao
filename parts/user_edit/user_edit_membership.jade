@@ -5,13 +5,16 @@ template(name='user_edit_membership')
     .ui.grid 
         .row 
             .sixteen.wide.column
-                .ui.big.button.pay_membership
-                    |pay for membership
+                .ui.big.green.button.pay_membership
+                    |pay $250 for membership
                 each transactions
                     .ui.segment
                         .ui.header #{when}
                         |#{amount} amount
-                        |#{charge}
+                        if charge 
+                            .ui.header charge
+                        |#{charge.result.id}
+                        +jsonView(json=charge.result)
                 // +user_edit_finance
                 if is_admin
                     .ui.header

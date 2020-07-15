@@ -4,9 +4,6 @@ if Meteor.isClient
         @render 'user_edit_membership'
         ), name:'user_edit_membership'
 
-    Template.user_edit_membership.onCreated ->
-        # @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'thought'
-
 
     Template.user_edit_membership.onCreated ->
         @autorun => Meteor.subscribe 'user_edit_membership', Router.current().params.username
@@ -35,10 +32,12 @@ if Meteor.isClient
 
         transactions: ->
             target_user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.find
+            Docs.find {
                 model:'transaction'
                 _author_id: target_user._id
-
+            }, 
+                sort:
+                    _timestamp:-1
     Template.user_edit_membership.onCreated ->
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
@@ -80,43 +79,43 @@ if Meteor.isClient
     Template.user_edit_membership.events
         'click .pay_membership': ->
             console.log Template.instance()
-            if confirm 'add 5 credits?'
-                # Session.set('topup_amount',5)
-                Template.instance().checkout.open
-                    name: 'Riverside Membership'
-                    # email:Meteor.user().emails[0].address
-                    description: 'monthly'
-                    amount: 250
+            # if confirm 'add 5 credits?'
+            # Session.set('topup_amount',5)
+            # Template.instance().checkout.open
+            #     name: 'Riverside Membership'
+            #     # email:Meteor.user().emails[0].address
+            #     description: 'monthly'
+            #     amount: 250
 
 
-            # instance = Template.instance()
+            instance = Template.instance()
 
 
-            # Swal.fire({
-            #     title: 'buy membership?'
-            #     text: "this will charge you $250"
-            #     icon: 'question'
-            #     showCancelButton: true,
-            #     confirmButtonText: 'confirm'
-            #     cancelButtonText: 'cancel'
-            # }).then((result)=>
-            #     if result.value
-            #         # Session.set('topup_amount',5)
-            #         # Template.instance().checkout.open
-            #         instance.checkout.open
-            #             name: 'Riverside Membership'
-            #             # email:Meteor.user().emails[0].address
-            #             description: 'monthly'
-            #             amount: 250
+            Swal.fire({
+                title: 'buy membership?'
+                text: "this will charge you $250"
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonText: 'confirm'
+                cancelButtonText: 'cancel'
+            }).then((result)=>
+                if result.value
+                    # Session.set('topup_amount',5)
+                    # Template.instance().checkout.open
+                    instance.checkout.open
+                        name: 'Riverside Membership'
+                        # email:Meteor.user().emails[0].address
+                        description: 'monthly'
+                        amount: 250
             
-            #         # Meteor.users.update @_author_id,
-            #         #     $inc:credit:@order_price
-            #         # Swal.fire(
-            #         #     'topup initiated',
-            #         #     ''
-            #         #     'success'
-            #         # )
-            # )
+                    # Meteor.users.update @_author_id,
+                    #     $inc:credit:@order_price
+                    # Swal.fire(
+                    #     'topup initiated',
+                    #     ''
+                    #     'success'
+                    # )
+            )
 
 if Meteor.isServer
     Meteor.publish 'user_edit_membership', (username)->
