@@ -15,7 +15,9 @@ template(name='home')
 
         if currentUser
             .centered.row
-                .six.wide.column
+                .four.wide.column
+                    +join_button
+                .five.wide.column
                     if can_gift
                         .ui.fluid.big.green.button.gift
                             i.gift.icon
@@ -24,7 +26,7 @@ template(name='home')
                         .ui.fluid.big.green.disabled.button
                             i.gift.icon
                             |not enough to gift
-                .six.wide.column
+                .five.wide.column
                     if can_gift
                         .ui.fluid.big.teal.button.request
                             i.hand.holding.heart.icon
@@ -139,3 +141,10 @@ template(name='home')
                                     // each tags 
                                     //     .ui.tiny.basic.circular.label #{this}
                                     
+                                    
+                                    
+                                    
+template(name='join_button')
+    .ui.fluid.big.green.button.join
+        i.checkmark.icon
+        |join

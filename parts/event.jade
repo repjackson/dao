@@ -27,12 +27,16 @@ template(name='events')
 template(name='event_item')
     .ui.card
         if image_id
-            img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+            a(href="/event/#{_id}/view")
+                img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
         .content
             a.ui.header(href="/event/#{_id}/view") #{title}
             |#{when}
             |{{from_now start_datetime}}
             |- {{from_now end_datetime}}
+        a.ui.button(href="/event/#{_id}/view")
+            |view
+            i.right.chevron.icon
 
 
 
@@ -49,7 +53,7 @@ template(name='event_view')
                         +icon name='hand-planting'
                         |view event
                 .four.wide.column
-                    if is_admin
+                    if can_edit
                         .ui.button.delete_item
                             |delete
                             i.large.red.remove.icon
@@ -84,6 +88,8 @@ template(name='event_view')
                             .item #{username}
                         
                 .eight.wide.column
+                    .ui.large.header #{title}
+                    +image_view key='image_id' label='image' direct=true
                     .ui.header
                         |attendees
                     // a.ui.header(href="/user/#{target.username}")
@@ -95,7 +101,6 @@ template(name='event_view')
                     .ui.big.green.button.purchase
                         |purchase for #{amount}p and $#{usd_price}
                     +textarea_view key='description' label='description' direct=true
-                    +image_view key='image_id' label='image' direct=true
                     div 
                     +array_view key='tags' label='tags' direct=true
                     .spacer

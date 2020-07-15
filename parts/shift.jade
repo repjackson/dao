@@ -84,6 +84,8 @@ template(name='shift_view')
                 .four.wide.center.aligned.column
             .row 
                 .four.wide.column
+                    a.ui.header(href="/job/#{_id}/view")
+                        |#{job.title} job
                 .eight.wide.column
                     .ui.header
                         |participants
