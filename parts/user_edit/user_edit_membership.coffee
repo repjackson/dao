@@ -49,11 +49,11 @@ if Meteor.isClient
             image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/wc_logo.png'
             locale: 'auto'
             zipCode: true
-            token: (token) ->
+            token: (token) =>
                 # amount = parseInt(Session.get('topup_amount'))
                 # product = Docs.findOne Router.current().params.doc_id
                 charge =
-                    amount: 250*100
+                    amount: 250
                     currency: 'usd'
                     source: token.id
                     description: token.description
@@ -61,6 +61,7 @@ if Meteor.isClient
                 Meteor.call 'buy_membership', charge, (err,res)=>
                     if err then alert err.reason, 'danger'
                     else
+                        console.log 'res', res
                         Swal.fire(
                             'membership purchased',
                             ''
@@ -68,7 +69,7 @@ if Meteor.isClient
                         Docs.insert
                             model:'transaction'
                             transaction_type:'membership'
-                            amount:amount
+                            amount:250
                         Meteor.users.update Meteor.userId(),
                             $inc: points:500
                         )
@@ -79,43 +80,43 @@ if Meteor.isClient
     Template.user_edit_membership.events
         'click .pay_membership': ->
             console.log Template.instance()
-            # if confirm 'add 5 credits?'
-            #     Session.set('topup_amount',5)
-            #     Template.instance().checkout.open
-            #         name: 'credit deposit'
-            #         # email:Meteor.user().emails[0].address
-            #         description: 'wc top up'
-            #         # amount: 500
+            if confirm 'add 5 credits?'
+                # Session.set('topup_amount',5)
+                Template.instance().checkout.open
+                    name: 'Riverside Membership'
+                    # email:Meteor.user().emails[0].address
+                    description: 'monthly'
+                    amount: 250
 
 
-            instance = Template.instance()
+            # instance = Template.instance()
 
 
-            Swal.fire({
-                title: 'buy membership?'
-                text: "this will charge you $250"
-                icon: 'question'
-                showCancelButton: true,
-                confirmButtonText: 'confirm'
-                cancelButtonText: 'cancel'
-            }).then((result)=>
-                if result.value
-                    # Session.set('topup_amount',5)
-                    # Template.instance().checkout.open
-                    instance.checkout.open
-                        name: 'Riverside Membership'
-                        # email:Meteor.user().emails[0].address
-                        description: 'monthly'
-                        amount: 25000
+            # Swal.fire({
+            #     title: 'buy membership?'
+            #     text: "this will charge you $250"
+            #     icon: 'question'
+            #     showCancelButton: true,
+            #     confirmButtonText: 'confirm'
+            #     cancelButtonText: 'cancel'
+            # }).then((result)=>
+            #     if result.value
+            #         # Session.set('topup_amount',5)
+            #         # Template.instance().checkout.open
+            #         instance.checkout.open
+            #             name: 'Riverside Membership'
+            #             # email:Meteor.user().emails[0].address
+            #             description: 'monthly'
+            #             amount: 250
             
-                    # Meteor.users.update @_author_id,
-                    #     $inc:credit:@order_price
-                    # Swal.fire(
-                    #     'topup initiated',
-                    #     ''
-                    #     'success'
-                    # )
-            )
+            #         # Meteor.users.update @_author_id,
+            #         #     $inc:credit:@order_price
+            #         # Swal.fire(
+            #         #     'topup initiated',
+            #         #     ''
+            #         #     'success'
+            #         # )
+            # )
 
 if Meteor.isServer
     Meteor.publish 'user_edit_membership', (username)->

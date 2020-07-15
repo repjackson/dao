@@ -101,4 +101,12 @@ Meteor.methods
             return
         new_charge = charge_card.wait()
         console.log new_charge
-        new_charge        
+        if new_charge
+            Docs.insert
+                model:'transaction'
+                transaction_type:'membership'
+                amount:250
+                charge: new_charge
+            Meteor.users.update Meteor.userId(),
+                $inc: points:500
+    
