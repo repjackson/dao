@@ -2,7 +2,7 @@ template(name='login')
     .ui.padded.stackable.grid
         .centered.row
             .eight.wide.column
-                .ui.center.aligned.segment
+                .ui.center.aligned.basic.segment
                     .ui.inline.header ONE|Riverside
                     .ui.inline.header login
                 div
@@ -33,13 +33,13 @@ template(name='login')
                         i.right.chevron.icon
                 else
                     if username
-                        .ui.center.aligned.segment
+                        .ui.center.aligned.basic.segment
                             .ui.header no '#{username}' user
                             a.ui.button(href='/register')
                                 i.user.plus.icon
                                 // +icon name='add-user-male' cl='ui mini inline image'
                                 | register
-                .ui.center.aligned.segment    
+                .ui.center.aligned.basic.segment    
                     a.ui.button(href='/forgot_password')
                         i.refresh.icon
                         // +icon name='forgot-password' cl='ui mini inline image'

@@ -1,10 +1,10 @@
 if Meteor.isClient
-    Router.route '/user/:username/finance', (->
+    Router.route '/user/:username/edit/finance', (->
         @layout 'profile_layout'
-        @render 'user_finance'
-        ), name:'user_finance'
+        @render 'user_edit_finance'
+        ), name:'user_edit_finance'
 
-    Template.user_finance.onCreated ->
+    Template.user_edit_finance.onCreated ->
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
         else if Meteor.isProduction
@@ -39,9 +39,9 @@ if Meteor.isClient
                         )
         )
 
-    Template.user_finance.onRendered ->
+    Template.user_edit_finance.onRendered ->
 
-    Template.user_finance.events
+    Template.user_edit_finance.events
         'click .add_five_credits': ->
             console.log Template.instance()
             if confirm 'add 5 credits?'

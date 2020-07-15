@@ -5,8 +5,13 @@ template(name='user_edit_membership')
     .ui.grid 
         .row 
             .sixteen.wide.column
-                .ui.big.disabled.button
+                .ui.big.button.pay_membership
                     |pay for membership
+                each transactions
+                    .ui.segment
+                        .ui.header #{when}
+                        |#{amount} amount
+                // +user_edit_finance
                 if is_admin
                     .ui.header
                         i.shield.icon
