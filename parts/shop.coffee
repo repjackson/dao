@@ -36,9 +36,18 @@ if Meteor.isClient
                 #     Router.go "/product/#{@_id}/view"
 
         'click .buy': ->
-            console.log 'hi'
-            if confirm "buy for #{@usd_price}?"
-                console.log 'yeah'
+            if confirm "buy for #{@point_price} points?"
+                Docs.insert 
+                    model:'transaction'
+                    transaction_type:'shop_purchase'
+                    payment_type:'points'
+                    is_points:true
+                    point_amount:@point_price
+                    product_id:@_id
+                Meteor.users.update Meteor.userId(),
+                    $inc:points:-@point_price
+                Meteor.users.update @_author_id, 
+                    $inc:points:@point_price
 
 
     Template.product_view.helpers
@@ -69,7 +78,7 @@ if Meteor.isClient
                     else
                         console.log 'res', res
                         Swal.fire(
-                            'membership purchased',
+                            'product purchased',
                             ''
                             'success'
                         # Meteor.users.update Meteor.userId(),
@@ -85,7 +94,7 @@ if Meteor.isClient
             # if confirm 'add 5 credits?'
             # Session.set('topup_amount',5)
             # Template.instance().checkout.open
-            #     name: 'Riverside Membership'
+            #     name: 'product purchase'
             #     # email:Meteor.user().emails[0].address
             #     description: 'monthly'
             #     amount: 250
@@ -108,7 +117,7 @@ if Meteor.isClient
                     instance.checkout.open
                         name: @title
                         # email:Meteor.user().emails[0].address
-                        description: 'monthly'
+                        description: 'product purchase'
                         amount: @usd_price*100
             
                     # Meteor.users.update @_author_id,

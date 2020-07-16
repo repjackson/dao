@@ -142,6 +142,8 @@ Meteor.methods
             Docs.insert
                 model:'transaction'
                 transaction_type:'shop_purchase'
+                payment_type:'usd'
+                is_usd:true
                 amount:charge.amount
                 product_id:charge.product_id
                 charge: new_charge

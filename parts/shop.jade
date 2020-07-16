@@ -116,7 +116,14 @@ template(name='product_view')
                             a.ui.item(href="/debit/#{_id}/view") 
                                 .content
                                     .header
+                                        if is_usd
+                                            .ui.inline.green.header $ #{amount}cents
+                                        else
+                                            .ui.inline.header #{point_amount}pts
+                                        
                                         |#{when} #{_author_username}
+                            if is_admin
+                                +remove_button
                 
                     .ui.small.grey.header 
                         i.line.chart.icon
