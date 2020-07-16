@@ -57,6 +57,30 @@ template(name='home')
         .row
             .four.wide.column
                 .ui.center.aligned.header
+                    i.shop.icon
+                    |featured products
+                if is_admin 
+                    i.circular.plus.icon.add_shift
+                .smallscroll
+                    .ui.selection.link.list
+                        each featured_products
+                            a.item(href="/product/#{_id}/view")
+                                img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                .content
+                                    .header
+                                        .ui.inline.small.header #{title}
+                                        if _author.profile_image_id
+                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        | #{_author_username}
+                                        |$#{usd_price}
+                                        |#{point_price}
+                                    // .meta #{when}
+                                    .description 
+                                        |#{description}
+                                    each tags 
+                                        .ui.tiny.basic.circular.label #{this}
+            .four.wide.column
+                .ui.center.aligned.header
                     i.clock.icon
                     |next shifts
                 if is_admin 
@@ -86,15 +110,16 @@ template(name='home')
                     i.calendar.icon
                     |next events
                 if is_admin 
-                    i.circular.plus.icon.add_shift
+                    i.circular.plus.icon.add_event
                     
-                .smallscrol
+                .smallscroll
                     .ui.selection.link.list
                         each next_events
-                            a.item(href="/shift/#{_id}/view")
+                            a.item(href="/event/#{_id}/view")
                                 .content
+                                    img.ui.medium.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                                     .header
-                                        .ui.inline.header #{title} 
+                                        .ui.inline.small.header #{title} 
                                         .ui.inline.header #{amount}p
                                         if _author.profile_image_id
                                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -105,8 +130,8 @@ template(name='home')
                                                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                                 |#{username}
                                     .meta #{when}
-                                    .description 
-                                        |#{description}
+                                    // .description 
+                                    //     |#{description}
                                     each tags 
                                         .ui.tiny.basic.circular.label #{this}
             .four.wide.column

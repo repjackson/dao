@@ -8,6 +8,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'gift'
         @autorun => Meteor.subscribe 'model_docs', 'offer'
         @autorun => Meteor.subscribe 'model_docs', 'shift'
+        @autorun => Meteor.subscribe 'model_docs', 'product'
         @autorun => Meteor.subscribe 'model_docs', 'event'
         @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         @autorun => Meteor.subscribe 'all_users'
@@ -28,6 +29,9 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'home_doc'
 
     Template.home.helpers
+        featured_products: ->
+            Docs.find
+                model:'product'
         home_doc: ->
             Docs.findOne 
                 model:'home_doc'
