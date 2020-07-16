@@ -24,7 +24,6 @@ if Meteor.isClient
                 sort:
                     start_datetime:-1
 
-    Template.product_view.events ->
     Template.product_view.events
         'click .delete_product': ->
             if confirm 'delete product?'
@@ -34,6 +33,11 @@ if Meteor.isClient
             # if confirm 'confirm?'
                 # Meteor.call 'send_product', @_id, =>
                 #     Router.go "/product/#{@_id}/view"
+
+        'click .buy': ->
+            console.log 'hi'
+            if confirm "buy for #{@usd_price}?"
+                console.log 'yeah'
 
 
     Template.product_view.helpers

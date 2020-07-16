@@ -49,9 +49,10 @@ template(name='product_view')
                         i.store.icon
                         |shop
                 .eight.wide.column
-                    .ui.header 
-                        +icon name='hand-planting'
+                    .ui.inline.header 
                         |view product
+                    .ui.large.inline.header #{title}
+                        
                 .four.wide.column
                     if can_edit
                         .ui.button.delete_item
@@ -60,6 +61,10 @@ template(name='product_view')
                         a.ui.button.edit_product(href="/product/#{_id}/edit")
                             i.large.pencil.icon
                             |product
+                    .ui.big.fluid.green.button.buy
+                        i.cart.icon
+                        |buy
+                        |#{usd_price}
 
             .row 
                 .four.wide.column
@@ -70,14 +75,13 @@ template(name='product_view')
                         |#{_author.username}
                         
                 .eight.wide.column
-                    .ui.large.header #{title}
                     +image_view key='image_id' label='image' direct=true
                     .ui.header
                         |attendees
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
-                    .ui.header $#{usd_price} per ticket
+                    .ui.header $#{usd_price} per item
                     +number_view key='usd_amount' label='usd amount' direct=true
                     +number_view key='inventory' label='inventory' direct=true
                     .ui.header your points #{currentUser.points}
