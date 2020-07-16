@@ -19,6 +19,8 @@ Template.registerHelper 'is_current_user', () ->
 
 Template.registerHelper 'recipient', () ->
     Meteor.users.findOne @recipient_id
+Template.registerHelper 'product', () ->
+    Docs.findOne @product_id
 Template.registerHelper 'upvote_class', () ->
     if Meteor.userId()
         if @upvoter_ids and Meteor.userId() in @upvoter_ids then 'green' else 'outline'

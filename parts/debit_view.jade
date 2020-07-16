@@ -1,0 +1,86 @@
+template(name='debits')
+    .ui.padded.stackable.grid
+        .sixteen.wide.column
+            // .ui.button 
+            //     |debit count
+            // .ui.button 
+            //     |debit amount
+            // .ui.button 
+            //     |credit count
+            // .ui.button 
+            //     |credit amount
+            .ui.header 
+                i.calendar.icon
+                |debits
+            if is_admin
+                .ui.button.add_debit
+                    i.plus.icon
+                    |add debit
+            .scrolling
+                .ui.stackable.six.cards
+                    each next_debits
+                        +debit_item
+        .sixteen.wide.column
+            // +debit_cloud
+
+
+template(name='debit_item')
+    .ui.card
+        .content
+            |#{when}
+
+
+
+
+
+template(name='debit_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .four.wide.column
+                    if is_admin
+                        .ui.button.delete_item
+                            |delete
+                            i.large.red.remove.icon
+                .eight.wide.column
+                    .ui.header
+                        i.debit.icon
+                        |#{amount} usd cents
+                        | debit
+                    .ui.small.header
+                        i.clock.icon
+                        | #{when}
+                    .ui.segment
+                        .ui.inline.header 
+                            i.chevron.up.icon
+                            |purchaser
+                        a.ui.inline.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{_author.username}
+                    .ui.segment
+                        .ui.inline.header
+                            i.chevron.down.icon
+                            |product
+                        a(href="/product/#{product._id}/view")
+                            img.ui.medium.image(src="{{c.url product.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        a.ui.header(href="/product/#{product._id}/view")
+                            |#{product.title}
+                            
+                    +number_view key='amount' label='amount' direct=true
+                    +textarea_view key='description' label='description' direct=true
+                    +image_view key='image_id' label='image' direct=true
+                    div 
+                    if tags
+                        i.tags.icon
+                        each tags 
+                            .ui.big.label #{this}
+                    .spacer
+                    .spacer
+                    +comments
+                    // +voting_full
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+
