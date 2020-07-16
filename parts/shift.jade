@@ -27,7 +27,7 @@ template(name='shifts')
 template(name='shift_item')
     a.card(href="/shift/#{_id}/view")
         .image
-            img.ui.raw.image(src="{{c.url job.image_id width=400 height=300 crop='fill'}}")    
+            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             a.ui.header(href="/shift/#{_id}/view")
                 |#{job.title}

@@ -25,7 +25,58 @@ if Meteor.isClient
                     start_datetime:-1
 
     Template.event_view.onRendered ->
+    Template.event_item.events
+        'click .pick_going': ->
+            console.log 'going'
+            Docs.update @_id,
+                $addToSet:
+                    going_user_ids: Meteor.userId()
+                $pull:
+                    maybe_user_ids: Meteor.userId()
+                    not_user_ids: Meteor.userId()
+    
+        'click .pick_maybe': ->
+            Docs.update @_id,
+                $addToSet:
+                    maybe_user_ids: Meteor.userId()
+                $pull:
+                    going_user_ids: Meteor.userId()
+                    not_user_ids: Meteor.userId()
+    
+        'click .pick_not': ->
+            Docs.update @_id,
+                $addToSet:
+                    not_user_ids: Meteor.userId()
+                $pull:
+                    going_user_ids: Meteor.userId()
+                    maybe_user_ids: Meteor.userId()
+    
     Template.event_view.events
+        'click .pick_going': ->
+            console.log 'going'
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    going_user_ids: Meteor.userId()
+                $pull:
+                    maybe_user_ids: Meteor.userId()
+                    not_user_ids: Meteor.userId()
+    
+        'click .pick_maybe': ->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    maybe_user_ids: Meteor.userId()
+                $pull:
+                    going_user_ids: Meteor.userId()
+                    not_user_ids: Meteor.userId()
+    
+        'click .pick_not': ->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    not_user_ids: Meteor.userId()
+                $pull:
+                    going_user_ids: Meteor.userId()
+                    maybe_user_ids: Meteor.userId()
+    
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -36,7 +87,32 @@ if Meteor.isClient
                     Router.go "/event/#{@_id}/view"
 
 
+    Template.event_item.helpers
+        going: ->
+            event = Docs.findOne @_id
+            Meteor.users.find 
+                _id:$in:event.going_user_ids
+        maybe_going: ->
+            event = Docs.findOne @_id
+            Meteor.users.find 
+                _id:$in:event.maybe_user_ids
+        not_going: ->
+            event = Docs.findOne @_id
+            Meteor.users.find 
+                _id:$in:event.not_user_ids
     Template.event_view.helpers
+        going: ->
+            event = Docs.findOne Router.current().params.doc_id
+            Meteor.users.find 
+                _id:$in:event.going_user_ids
+        maybe_going: ->
+            event = Docs.findOne Router.current().params.doc_id
+            Meteor.users.find 
+                _id:$in:event.maybe_user_ids
+        not_going: ->
+            event = Docs.findOne Router.current().params.doc_id
+            Meteor.users.find 
+                _id:$in:event.not_user_ids
     Template.event_view.events
 
 # if Meteor.isServer

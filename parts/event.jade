@@ -34,6 +34,24 @@ template(name='event_item')
             |#{when}
             |{{from_now start_datetime}}
             |- {{from_now end_datetime}}
+        .content
+            .ui.basic.green.button.pick_going(title='going')
+                i.thumbs.up.outline.icon
+                |#{going_user_ids.length}
+                each going
+                    |#{username}
+            .ui.basic.yellow.button.pick_maybe(title='maybe')
+                i.minus.icon
+                | #{maybe_user_ids.length}
+                each maybe_going
+                    |#{username}
+            .ui.basic.red.button.pick_not(title='not going')
+                i.thumbs.down.outline.icon
+                | #{not_user_ids.length}
+                each not_going
+                    | #{username}
+        
+            
         a.ui.button(href="/event/#{_id}/view")
             |view
             i.right.chevron.icon
@@ -45,13 +63,16 @@ template(name='event_view')
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
-                    a.ui.fluid.button(href="/events")
+                    a.ui.fluid.large.button(href="/events")
                         i.calendar.icon
                         |events
                 .eight.wide.column
-                    .ui.header 
-                        +icon name='hand-planting'
+                    .ui.small.inline.header 
+                        // +icon name='hand-planting'
+                        i.calendar.icon
                         |view event
+                    .ui.large.inline.header #{title}
+                    
                 .four.wide.column
                     if can_edit
                         .ui.button.delete_item
@@ -63,43 +84,43 @@ template(name='event_view')
 
             .row 
                 .four.wide.column
-                    .ui.header 
-                        small author
-                    a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.username}
-                    .ui.small.header 
+                    .ui.secondary.segment
+                        .ui.header 
+                            small author
+                        a.ui.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{_author.username}
+                    .ui.large.button.pick_going 
                         i.green.checkmark.icon
                         |going
                     .ui.big.list
                         each going 
-                            .item #{username}
-                    .ui.small.header 
+                            a.item(href="/user/#{username}") #{username}
+                    .ui.large.button.pick_maybe 
                         i.yellow.minus.icon
                         |maybe
                     .ui.big.list
-                        each maybe 
-                            .item #{username}
-                    .ui.small.header 
+                        each maybe_going
+                            a.item(href="/user/#{username}") #{username}
+                    .ui.large.button.pick_not
                         i.red.remove.icon
                         |not going
                     .ui.big.list
-                        each not_going 
-                            .item #{username}
+                        each not_going
+                            a.item(href="/user/#{username}") #{username}
+                    .ui.header $#{usd_price} per ticket
+                    +number_view key='amount' label='amount' direct=true
+                    .ui.header your points #{currentUser.points}
+                    .ui.big.green.button.purchase
+                        |purchase for #{amount}p and $#{usd_price}
                         
                 .eight.wide.column
-                    .ui.large.header #{title}
                     +image_view key='image_id' label='image' direct=true
                     .ui.header
                         |attendees
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
-                    .ui.header $#{usd_price} per ticket
-                    +number_view key='amount' label='amount' direct=true
-                    .ui.header your points #{currentUser.points}
-                    .ui.big.green.button.purchase
-                        |purchase for #{amount}p and $#{usd_price}
                     +textarea_view key='description' label='description' direct=true
                     div 
                     +array_view key='tags' label='tags' direct=true
@@ -142,7 +163,7 @@ template(name='event_edit')
                     +datetime_edit key='start_datetime' label='start' direct=true
                     +datetime_edit key='end_datetime' label='end' direct=true
                     
-                .eight.wide.column
+                .four.wide.column
                     +text_edit key='title' label='title' direct=true
                     .ui.header
                         |audience
@@ -152,6 +173,7 @@ template(name='event_edit')
                     +key_value_edit key='amount' value=5
                     +key_value_edit key='amount' value=10
                     +key_value_edit key='amount' value=20
+                .four.wide.column
                     +number_edit key='usd_price' label='usd price' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
