@@ -13,27 +13,27 @@ if Meteor.isClient
     Template.products.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'product'
     Template.products.events
-        'click .add_event': ->
+        'click .add_product': ->
             new_id = 
                 Docs.insert
-                    model:'event'
-            Router.go "/event/#{new_id}/edit"
+                    model:'product'
+            Router.go "/product/#{new_id}/edit"
     Template.products.helpers
-        next_events: ->
-            Docs.find {model:'event'}, 
+        product_docs: ->
+            Docs.find {model:'product'}, 
                 sort:
                     start_datetime:-1
 
-    Template.product_view.onRendered ->
+    Template.product_view.events ->
     Template.product_view.events
-        'click .delete_item': ->
-            if confirm 'delete item?'
+        'click .delete_product': ->
+            if confirm 'delete product?'
                 Docs.remove @_id
 
         'click .submit': ->
-            if confirm 'confirm?'
-                Meteor.call 'send_event', @_id, =>
-                    Router.go "/event/#{@_id}/view"
+            # if confirm 'confirm?'
+                # Meteor.call 'send_product', @_id, =>
+                #     Router.go "/product/#{@_id}/view"
 
 
     Template.product_view.helpers
@@ -41,19 +41,19 @@ if Meteor.isClient
 
 # if Meteor.isServer
 #     Meteor.methods
-        # send_event: (event_id)->
-        #     event = Docs.findOne event_id
-        #     target = Meteor.users.findOne event.recipient_id
-        #     gifter = Meteor.users.findOne event._author_id
+        # send_product: (product_id)->
+        #     product = Docs.findOne product_id
+        #     target = Meteor.users.findOne product.recipient_id
+        #     gifter = Meteor.users.findOne product._author_id
         #
-        #     console.log 'sending event', event
+        #     console.log 'sending product', product
         #     Meteor.users.update target._id,
         #         $inc:
-        #             points: event.amount
+        #             points: product.amount
         #     Meteor.users.update gifter._id,
         #         $inc:
-        #             points: -event.amount
-        #     Docs.update event_id,
+        #             points: -product.amount
+        #     Docs.update product_id,
         #         $set:
         #             submitted:true
         #             submitted_timestamp:Date.now()
@@ -65,54 +65,54 @@ if Meteor.isClient
         #             submitted:true
 
 
-# if Meteor.isClient
-#     Router.route '/event/:doc_id/edit', (->
-#         @layout 'layout'
-#         @render 'event_edit'
-#         ), name:'event_edit'
+if Meteor.isClient
+    Router.route '/product/:doc_id/edit', (->
+        @layout 'layout'
+        @render 'product_edit'
+        ), name:'product_edit'
 
-#     Template.event_edit.onCreated ->
-#         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-#     Template.event_edit.onRendered ->
-
-
-#     Template.event_edit.events
-#         'click .delete_item': ->
-#             if confirm 'delete item?'
-#                 Docs.remove @_id
-
-#         'click .submit': ->
-#             Docs.update Router.current().params.doc_id,
-#                 $set:published:true
-#             if confirm 'confirm?'
-#                 Meteor.call 'send_event', @_id, =>
-#                     Router.go "/event/#{@_id}/view"
+    Template.product_edit.onCreated ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+    Template.product_edit.onRendered ->
 
 
-#     Template.event_edit.helpers
-#     Template.event_edit.events
+    Template.product_edit.events
+        'click .delete_item': ->
+            if confirm 'delete item?'
+                Docs.remove @_id
 
-# if Meteor.isServer
-#     Meteor.methods
-#         send_event: (event_id)->
-#             event = Docs.findOne event_id
-#             target = Meteor.users.findOne event.recipient_id
-#             gifter = Meteor.users.findOne event._author_id
-
-#             console.log 'sending event', event
-#             Meteor.users.update target._id,
-#                 $inc:
-#                     points: event.amount
-#             Meteor.users.update gifter._id,
-#                 $inc:
-#                     points: -event.amount
-#             Docs.update event_id,
-#                 $set:
-#                     submitted:true
-#                     submitted_timestamp:Date.now()
+        'click .submit': ->
+            Docs.update Router.current().params.doc_id,
+                $set:published:true
+            if confirm 'confirm?'
+                Meteor.call 'send_product', @_id, =>
+                    Router.go "/product/#{@_id}/view"
 
 
+    Template.product_edit.helpers
+    Template.product_edit.events
 
-#             Docs.update Router.current().params.doc_id,
-#                 $set:
-#                     submitted:true
+if Meteor.isServer
+    Meteor.methods
+        send_product: (product_id)->
+            product = Docs.findOne product_id
+            target = Meteor.users.findOne product.recipient_id
+            gifter = Meteor.users.findOne product._author_id
+
+            console.log 'sending product', product
+            Meteor.users.update target._id,
+                $inc:
+                    points: product.amount
+            Meteor.users.update gifter._id,
+                $inc:
+                    points: -product.amount
+            Docs.update product_id,
+                $set:
+                    submitted:true
+                    submitted_timestamp:Date.now()
+
+
+
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    submitted:true

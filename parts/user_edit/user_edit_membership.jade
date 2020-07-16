@@ -9,12 +9,15 @@ template(name='user_edit_membership')
                     |pay $250 for membership
                 each transactions
                     .ui.segment
-                        .ui.header #{when}
+                        a.ui.header(href="/transaction/#{_id}/view") #{when}
                         |#{amount} amount
                         if charge 
                             .ui.header charge
                         |#{charge.result.id}
+                        .ui.header $#{charge.result.amount}
                         +jsonView(json=charge.result)
+                        if is_admin
+                            +remove_button
                 // +user_edit_finance
                 if is_admin
                     .ui.header

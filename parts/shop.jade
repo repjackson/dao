@@ -10,15 +10,15 @@ template(name='products')
             // .ui.button 
             //     |credit amount
             .ui.header 
-                i.calendar.icon
-                |products
+                i.shop.icon
+                |store
             if is_admin
                 .ui.button.add_product
                     i.plus.icon
                     |add product
             .scrolling
                 .ui.stackable.six.cards
-                    each next_products
+                    each product_docs
                         +product_item
         .sixteen.wide.column
             // +product_cloud
@@ -45,9 +45,9 @@ template(name='product_view')
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
-                    a.ui.fluid.button(href="/products")
-                        i.calendar.icon
-                        |products
+                    a.ui.fluid.button(href="/shop")
+                        i.store.icon
+                        |shop
                 .eight.wide.column
                     .ui.header 
                         +icon name='hand-planting'
@@ -68,24 +68,6 @@ template(name='product_view')
                     a.ui.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.username}
-                    .ui.small.header 
-                        i.green.checkmark.icon
-                        |going
-                    .ui.big.list
-                        each going 
-                            .item #{username}
-                    .ui.small.header 
-                        i.yellow.minus.icon
-                        |maybe
-                    .ui.big.list
-                        each maybe 
-                            .item #{username}
-                    .ui.small.header 
-                        i.red.remove.icon
-                        |not going
-                    .ui.big.list
-                        each not_going 
-                            .item #{username}
                         
                 .eight.wide.column
                     .ui.large.header #{title}
@@ -96,8 +78,14 @@ template(name='product_view')
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
                     .ui.header $#{usd_price} per ticket
-                    +number_view key='amount' label='amount' direct=true
+                    +number_view key='usd_amount' label='usd amount' direct=true
+                    +number_view key='inventory' label='inventory' direct=true
                     .ui.header your points #{currentUser.points}
+                    if can_buy
+                        .ui.big.green.button.buy_usd
+                            |buy #{usd_amount}
+                        .ui.big.green.button.buy_usd
+                            |buy #{}
                     .ui.big.green.button.purchase
                         |purchase for #{amount}p and $#{usd_price}
                     +textarea_view key='description' label='description' direct=true
@@ -139,9 +127,7 @@ template(name='product_edit')
                     .ui.header 
                         small author
                         |#{_author.username}
-                    +datetime_edit key='start_datetime' label='start' direct=true
-                    +datetime_edit key='end_datetime' label='end' direct=true
-                    
+                    +number_edit key='inventory' label='inventory' direct=true                    
                 .eight.wide.column
                     +text_edit key='title' label='title' direct=true
                     .ui.header
