@@ -13,7 +13,8 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'all_users'
 
     Template.shifts.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'shift'
+        @autorun => Meteor.subscribe 'model_docs', 'shift_instance'
+        @autorun => Meteor.subscribe 'model_docs', 'shift_template'
     Template.shifts.events
         'click .add_shift_instance': ->
             new_id = 
@@ -27,8 +28,13 @@ if Meteor.isClient
             Router.go "/shift_template/#{new_id}/edit"
   
     Template.shifts.helpers
-        next_shifts: ->
-            Docs.find {model:'shift'}, 
+        next_shift_instances: ->
+            Docs.find {model:'shift_instance'}, 
+                sort:
+                    start_datetime:-1
+
+        shift_templates: ->
+            Docs.find {model:'shift_template'}, 
                 sort:
                     start_datetime:-1
 
