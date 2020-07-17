@@ -38,10 +38,6 @@ if Meteor.isClient
                 Meteor.call 'send_shift', @_id, =>
                     Router.go "/shift/#{@_id}/view"
 
-    Template.shift_view.helpers
-        unseleted_stewards: ->
-            Meteor.users.find 
-                levels:$in:['steward']
 
 # if Meteor.isServer
 #     Meteor.methods
@@ -83,6 +79,14 @@ if Meteor.isClient
 
 
     Template.shift_edit.events
+        'click .select_leader': ->
+            Docs.update Router.current().params.doc_id,     
+                $set:leader_user_id:@_id
+                
+        'click .clear_leader': ->
+            Docs.update Router.current().params.doc_id,     
+                $unset:leader_user_id:1
+                
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -96,4 +100,10 @@ if Meteor.isClient
 
 
     Template.shift_edit.helpers
+        shift_leader: ->
+            Meteor.users.findOne 
+                _id:@leader_user_id
+        unselected_stewards: ->
+            Meteor.users.find 
+                levels:$in:['steward']
     Template.shift_edit.shifts

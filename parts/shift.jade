@@ -154,12 +154,19 @@ template(name='shift_edit')
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.header leader(s)
-                    each shift_leaders
-                        .ui.item #{username}
-                    .ui.segment
-                        .ui.small.header select steward as shift lead
-                        each unseleted_stewards
-                            .ui.button #{username}
+                    .ui.header 
+                        |leader
+                    with shift_leader
+                        a.ui.big.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{username}
+                        i.circular.remove.link.icon.clear_leader
+                    unless shift_leader
+                        .ui.segment
+                            .ui.small.header select steward as leader
+                            each unselected_stewards
+                                .ui.basic.circular.button.select_leader
+                                    img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{name}
                     +number_edit key='leader_bounty' label='leader bounty' direct=true
                     
