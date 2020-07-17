@@ -62,25 +62,21 @@ template(name='event_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
+                .four.wide.center.aligned.column
                     a.ui.fluid.large.button(href="/events")
                         i.calendar.icon
                         |events
-                .eight.wide.column
+                .eight.wide.center.aligned.column
                     .ui.small.inline.header 
                         // +icon name='hand-planting'
                         i.calendar.icon
                         |view event
                     .ui.large.inline.header #{title}
                     
-                .four.wide.column
+                .four.wide.center.aligned.column
                     if can_edit
-                        .ui.button.delete_item
-                            |delete
-                            i.large.red.remove.icon
-                        a.ui.button.edit_event(href="/event/#{_id}/edit")
-                            i.large.pencil.icon
-                            |event
+                        a.ui.circular.icon.button.edit_event(href="/event/#{_id}/edit" title='edit')
+                            i.big.blue.pencil.icon
 
             .row 
                 .four.wide.column
@@ -90,6 +86,8 @@ template(name='event_view')
                         a.ui.header(href="/user/#{_author.username}") 
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
+                    .ui.header
+                        |#{max_attendees} max attendees
                     .ui.large.button.pick_going 
                         i.green.checkmark.icon
                         |going
@@ -108,16 +106,17 @@ template(name='event_view')
                     .ui.big.list
                         each not_going
                             a.item(href="/user/#{username}") #{username}
-                    .ui.header $#{usd_price} per ticket
-                    +number_view key='amount' label='amount' direct=true
-                    .ui.header your points #{currentUser.points}
-                    .ui.big.green.button.purchase
-                        |purchase for #{amount}p and $#{usd_price}
                         
+                    .ui.small.grey.header 
+                        i.line.chart.icon
+                        |stats
+                    .ui.list
+                        .item #{views} views
+                    each viewers
+                        .ui.label #{username
+                    .ui.hidden.divider
                 .eight.wide.column
                     +image_view key='image_id' label='image' direct=true
-                    .ui.header
-                        |attendees
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
@@ -127,17 +126,38 @@ template(name='event_view')
                     .spacer
                     .spacer
                     +comments
-                    +voting_full
+                    // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.small.grey.header 
-                        i.line.chart.icon
-                        |stats
-                    .ui.list
-                        .item #{views} views
-                    each viewers
-                        .ui.label #{username
-                    
+                    .ui.small.header #{tickets_left} tickets left
+                    .ui.big.fluid.green.button.buy_for_usd
+                        i.cart.icon
+                        |buy for 
+                        |$#{usd_price}
+                    .ui.horizontal.divider or
+                    .ui.big.fluid.green.button.buy_for_points
+                        i.cart.icon
+                        |buy for 
+                        |#{point_price} points
+                    .ui.header your points #{currentUser.points}
+                
+                    .ui.header 
+                        i.clock.icon
+                        |#{ticket_purchases} purchased tickets
+                    .ui.large.link.selection.list
+                        each tickets
+                            a.ui.item(href="/ticket/#{_id}/view") 
+                                .content
+                                    .header
+                                        if is_usd
+                                            .ui.inline.green.header ${{money_format amount}}
+                                        else
+                                            .ui.inline.header #{point_amount}pts
+                                        
+                                        |#{when} #{_author_username}
+                            if is_admin
+                                +remove_button
+
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
@@ -152,7 +172,7 @@ template(name='event_edit')
                         i.large.red.remove.icon
                 .eight.wide.column
                     .ui.header 
-                        +icon name='hand-planting'
+                        i.calendar.icon
                         |edit event
                 .four.wide.column
             .row
@@ -167,14 +187,14 @@ template(name='event_edit')
                     +text_edit key='title' label='title' direct=true
                     .ui.header
                         |audience
-                            
-                    +number_edit key='amount' label='amount' direct=true
-                    +key_value_edit key='amount' value=1
-                    +key_value_edit key='amount' value=5
-                    +key_value_edit key='amount' value=10
-                    +key_value_edit key='amount' value=20
+                    +number_edit key='max_attendees' label='max attendees' direct=true
+                    +number_edit key='point_price' label='points per ticket' direct=true
+                    +key_value_edit key='point_price' value=1
+                    +key_value_edit key='point_price' value=5
+                    +key_value_edit key='point_price' value=10
+                    +key_value_edit key='point_price' value=20
                 .four.wide.column
-                    +number_edit key='usd_price' label='usd price' direct=true
+                    +number_edit key='usd_price' label='dollars per ticket' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 

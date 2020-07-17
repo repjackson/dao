@@ -9,6 +9,102 @@ if Meteor.isClient
         ), name:'event_view'
 
     Template.event_view.onCreated ->
+        @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id
+        
+        if Meteor.isDevelopment
+            pub_key = Meteor.settings.public.stripe_test_publishable
+        else if Meteor.isProduction
+            pub_key = Meteor.settings.public.stripe_live_publishable
+        Template.instance().checkout = StripeCheckout.configure(
+            key: pub_key
+            image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/wc_logo.png'
+            locale: 'auto'
+            zipCode: true
+            token: (token) =>
+                # amount = parseInt(Session.get('topup_amount'))
+                event = Docs.findOne Router.current().params.doc_id
+                charge =
+                    amount: event.usd_price*100
+                    event_id:event._id
+                    currency: 'usd'
+                    source: token.id
+                    description: token.description
+                    event_title:event.title
+                    # receipt_email: token.email
+                Meteor.call 'buy_ticket', charge, (err,res)=>
+                    if err then alert err.reason, 'danger'
+                    else
+                        console.log 'res', res
+                        Swal.fire(
+                            'ticket purchased',
+                            ''
+                            'success'
+                        # Meteor.users.update Meteor.userId(),
+                        #     $inc: points:500
+                        )
+        )
+
+    Template.event_view.onRendered ->
+
+    Template.event_view.events
+        'click .buy_for_points': ->
+            if confirm "buy for #{@point_price} points?"
+                Docs.insert 
+                    model:'transaction'
+                    transaction_type:'ticket_purchase'
+                    payment_type:'points'
+                    is_points:true
+                    point_amount:@point_price
+                    event_id:@_id
+                Meteor.users.update Meteor.userId(),
+                    $inc:points:-@point_price
+                Meteor.users.update @_author_id, 
+                    $inc:points:@point_price
+
+    
+        'click .buy_for_usd': ->
+            console.log Template.instance()
+            # if confirm 'add 5 credits?'
+            # Session.set('topup_amount',5)
+            # Template.instance().checkout.open
+            #     name: 'event purchase'
+            #     # email:Meteor.user().emails[0].address
+            #     description: 'monthly'
+            #     amount: 250
+
+
+            instance = Template.instance()
+
+
+            Swal.fire({
+                title: "buy ticket for #{@usd_price}?"
+                text: "for: #{@title}"
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonText: 'confirm'
+                cancelButtonText: 'cancel'
+            }).then((result)=>
+                if result.value
+                    # Session.set('topup_amount',5)
+                    # Template.instance().checkout.open
+                    instance.checkout.open
+                        name: @title
+                        # email:Meteor.user().emails[0].address
+                        description: 'ticket purchase'
+                        amount: @usd_price*100
+            
+                    # Meteor.users.update @_author_id,
+                    #     $inc:credit:@order_price
+                    # Swal.fire(
+                    #     'topup initiated',
+                    #     ''
+                    #     'success'
+                    # )
+            )
+
+
+
+    Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
     Template.events.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'event'
@@ -88,6 +184,7 @@ if Meteor.isClient
 
 
     Template.event_item.helpers
+        
         going: ->
             event = Docs.findOne @_id
             Meteor.users.find 
@@ -101,6 +198,19 @@ if Meteor.isClient
             Meteor.users.find 
                 _id:$in:event.not_user_ids
     Template.event_view.helpers
+        tickets_left: ->
+            ticket_count = 
+                Docs.find({ 
+                    model:'transaction'
+                    transaction_type:'ticket_purchase'
+                    event_id: Router.current().params.doc_id
+                }).count()
+            @max_attendees-ticket_count
+        tickets: ->
+            Docs.find 
+                model:'transaction'
+                transaction_type:'ticket_purchase'
+                event_id: Router.current().params.doc_id
         going: ->
             event = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
@@ -115,7 +225,12 @@ if Meteor.isClient
                 _id:$in:event.not_user_ids
     Template.event_view.events
 
-# if Meteor.isServer
+if Meteor.isServer
+    Meteor.publish 'event_tickets', (event_id)->
+        Docs.find
+            model:'transaction'
+            transaction_type:'ticket_purchase'
+            event_id:event_id
 #     Meteor.methods
         # send_event: (event_id)->
         #     event = Docs.findOne event_id

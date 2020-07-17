@@ -19,7 +19,7 @@ if Meteor.isClient
             if confirm 'delete item?'
                 Docs.remove @_id
 
-        'click .submit': ->
+        'click .publish': ->
             if confirm 'confirm?'
                 Meteor.call 'send_request', @_id, =>
                     Router.go "/request/#{@_id}/view"
@@ -44,7 +44,7 @@ if Meteor.isClient
         #             points: -request.amount
         #     Docs.update request_id,
         #         $set:
-        #             submitted:true
+        #             publishted:true
         #             submitted_timestamp:Date.now()
         #
         #
@@ -70,11 +70,11 @@ if Meteor.isClient
             if confirm 'delete item?'
                 Docs.remove @_id
 
-        'click .submit': ->
+        'click .publish': ->
             Docs.update Router.current().params.doc_id,
                 $set:published:true
             if confirm 'confirm?'
-                Meteor.call 'send_request', @_id, =>
+                Meteor.call 'publish_request', @_id, =>
                     Router.go "/request/#{@_id}/view"
 
 
@@ -83,25 +83,19 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.methods
-        send_request: (request_id)->
+        publish_request: (request_id)->
             request = Docs.findOne request_id
             target = Meteor.users.findOne request.recipient_id
-            gifter = Meteor.users.findOne request._author_id
+            author = Meteor.users.findOne request._author_id
 
             console.log 'sending request', request
             Meteor.users.update target._id,
                 $inc:
                     points: request.amount
-            Meteor.users.update gifter._id,
+            Meteor.users.update author._id,
                 $inc:
                     points: -request.amount
             Docs.update request_id,
                 $set:
-                    submitted:true
-                    submitted_timestamp:Date.now()
-
-
-
-            Docs.update Router.current().params.doc_id,
-                $set:
-                    submitted:true
+                    published:true
+                    published_timestamp:Date.now()

@@ -1,27 +1,27 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.large.inverted.menu.topnav
+    .ui.fluid.attached.borderless.inverted.menu.topnav
         a.item(href="/" class="{{isActivePath regex='home'}}")
             i.large.tree.green.icon
             span.mobile.hidden ONE|Riverside
         if currentUser
             a.item(href="/users" class="{{isActivePath regex='users'}}")
                 i.large.users.icon
-                span.mobile.hidden Members
+                span.mobile.hidden members
         a.item(href="/events" class="{{isActivePath regex='events'}}" title='events')
             i.large.calendar.icon
-            span.mobile.hidden Events
+            span.mobile.hidden events
         a.item(href="/shifts" class="{{isActivePath regex='shifts'}}" title='shifts')
             i.large.clock.icon
-            span.mobile.hidden Shifts
+            span.mobile.hidden shifts
         a.item(href="/shop" class="{{isActivePath regex='shop'}}" title='shifts')
             i.large.shop.icon
-            span.mobile.hidden Shop
+            span.mobile.hidden shop
         // a.item(href="/gifts" class="{{isActivePath regex='gifts'}}" title='gifts')
         //     i.large.gift.icon
         //     span.mobile.hidden gifts
-        // a.item(href="/requests" class="{{isActivePath regex='requests'}}" title='requests')
-        //     i.large.hand.holding.heart.icon
-        //     span.mobile.hidden requests
+        a.item(href="/requests" class="{{isActivePath regex='requests'}}" title='requests')
+            i.large.hand.holding.heart.icon
+            span.mobile.hidden requests
         .right.menu
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
             //     i.large.gift.icon
@@ -39,7 +39,7 @@ template(name='nav')
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActivePath regex='profile_layout'}}")
                     //- i.large.user.large.icon
                     if currentUser.profile_image_id
-                        img.ui.avatar.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     else 
                         i.large.user.large.icon
                     |#{currentUser.username}

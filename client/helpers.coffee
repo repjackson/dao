@@ -94,6 +94,7 @@ Template.registerHelper 'field_value', () ->
 
 
 Template.registerHelper 'lowered', (input)-> input.toLowerCase()
+Template.registerHelper 'money_format', (input)-> (input/100).toFixed()
 
 Template.registerHelper 'session_key_value_is', (key, value) ->
     # console.log 'key', key

@@ -84,6 +84,11 @@ if Meteor.isClient
                 Docs.insert
                     model:'gift'
             Router.go "/gift/#{new_gift_id}/edit"
+        'click .request': ->
+            new_request_id =
+                Docs.insert
+                    model:'request'
+            Router.go "/request/#{new_request_id}/edit"
 
         'keydown .find_username': (e,t)->
             # email = $('submit_email').val()

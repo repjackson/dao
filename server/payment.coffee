@@ -151,3 +151,48 @@ Meteor.methods
             #     $inc: points:500
             Docs.update charge.product_id, 
                 $inc:inventory:-1
+    
+    
+    
+    buy_ticket: (charge) ->
+        console.log 'charge', charge
+        # console.log 'user', user
+        if Meteor.isDevelopment
+            Stripe = StripeAPI(Meteor.settings.private.stripe_test_secret)
+        else
+            Stripe = StripeAPI(Meteor.settings.private.stripe_live_secret)
+        charge_card = new Future
+        # fee_addition = 0
+        # if account.profile.isJGFeesApply
+        #     fee_addition = Math.round(data.amount * 100 * 0.019 + 70)
+        # else
+        #     fee_addition = Math.round(data.amount * 100 * 0.019 + 30)
+        # #console.log(fee_addition);
+        charge_data =
+            amount: charge.amount
+            currency: 'usd'
+            source: charge.source
+            description: charge.event_title
+            # destination: account.stripe.stripeId
+        Stripe.charges.create charge_data, (error, result) ->
+            if error
+                charge_card.return error: error
+            else
+                charge_card.return result: result
+            return
+        new_charge = charge_card.wait()
+        console.log new_charge
+        if new_charge
+            Docs.insert
+                model:'transaction'
+                transaction_type:'ticket_purchase'
+                payment_type:'usd'
+                is_usd:true
+                amount:charge.amount
+                event_id:charge.event_id
+                charge: new_charge
+            # Meteor.users.update Meteor.userId(),
+            #     $inc: points:500
+            Docs.update charge.event_id, 
+                $inc:
+                    tickets_purchased:1

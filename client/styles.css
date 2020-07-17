@@ -427,6 +427,19 @@ input {
 	padding: .2em;
 	/*padding-left: 1em;*/
 }
+.medscroll{
+    /* padding: 5px !important;
+    border-radius: 10px !important;
+    border-width: 1px !important;
+    border-color: grey !important;
+    border-style: solid !important; */
+    max-height: 500px !important;
+    overflow-y:scroll;
+	overflow-x:hidden;
+	/* padding-top: .2em; */
+	padding: .2em;
+	/*padding-left: 1em;*/
+}
 .scrolling{
     max-height: 90vh !important;
     min-height: 50vh !important;
