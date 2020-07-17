@@ -21,6 +21,8 @@ Template.registerHelper 'is_current_user', () ->
 
 Template.registerHelper 'recipient', () ->
     Meteor.users.findOne @recipient_id
+Template.registerHelper 'shift_leader', () ->
+    Meteor.users.findOne @leader_user_id
 Template.registerHelper 'product', () ->
     Docs.findOne @product_id
 Template.registerHelper 'upvote_class', () ->

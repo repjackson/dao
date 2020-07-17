@@ -10,14 +10,22 @@ if Meteor.isClient
 
     Template.shift_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'all_users'
+
     Template.shifts.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'shift'
     Template.shifts.events
-        'click .add_shift': ->
+        'click .add_shift_instance': ->
             new_id = 
                 Docs.insert
-                    model:'shift'
-            Router.go "/shift/#{new_id}/edit"
+                    model:'shift_instance'
+            Router.go "/shift_instance/#{new_id}/edit"
+        'click .add_shift_template': ->
+            new_id = 
+                Docs.insert
+                    model:'shift_template'
+            Router.go "/shift_template/#{new_id}/edit"
+  
     Template.shifts.helpers
         next_shifts: ->
             Docs.find {model:'shift'}, 
@@ -73,7 +81,6 @@ if Meteor.isClient
 
     Template.shift_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'users'
         @autorun => Meteor.subscribe 'all_users'
     Template.shift_edit.onRendered ->
 
@@ -100,9 +107,6 @@ if Meteor.isClient
 
 
     Template.shift_edit.helpers
-        shift_leader: ->
-            Meteor.users.findOne 
-                _id:@leader_user_id
         unselected_stewards: ->
             Meteor.users.find 
                 levels:$in:['steward']
