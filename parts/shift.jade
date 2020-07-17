@@ -125,17 +125,16 @@ template(name='shift_edit')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.fluid.green.button(href="/shift/#{_id}/view")
+                    a.ui.big.circular.green.icon.button(href="/shift/#{_id}/view" title='save')
                         i.checkmark.big.icon
-                        |save
+                        // |save
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icon name='clock'
-                        |edit shift
+                        |edit shift instance
                 .four.wide.center.aligned.column
-                    .ui.small.basic.button.delete_item
-                        i.large.red.remove.icon
-                        |delete
+                    .ui.red.icon.circular.button.delete_item(title='delete shift')
+                        i.large.remove.icon
             .row 
                 .four.wide.column
                     +image_edit key='image_id' label='image' direct=true
@@ -158,8 +157,9 @@ template(name='shift_edit')
                     .ui.header leader(s)
                     each shift_leaders
                         .ui.item #{username}
+                    .ui.segment
+                        .ui.small.header select steward as shift lead
+                        each unseleted_stewards
+                            .ui.button #{username}
                     +number_edit key='leader_bounty' label='leader bounty' direct=true
-                    .ui.header contributers
-                    each shift_leaders
-                        .ui.item #{username}
                     

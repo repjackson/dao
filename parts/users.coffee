@@ -1,5 +1,6 @@
 if Meteor.isClient
     @selected_user_tags = new ReactiveArray []
+    @selected_user_levels = new ReactiveArray []
     @selected_user_roles = new ReactiveArray []
 
 
@@ -9,10 +10,11 @@ if Meteor.isClient
 
 
     Template.users.onCreated ->
-        @autorun -> Meteor.subscribe 'selected_users', selected_user_tags.array()
+        @autorun -> Meteor.subscribe 'selected_users', 
+            selected_user_tags.array() 
+            selected_user_levels.array()
 
     Template.users.helpers
-        
         users: ->
             match = {}
             unless 'admin' in Meteor.user().roles
@@ -79,16 +81,22 @@ if Meteor.isClient
     Template.user_cloud.onCreated ->
         @autorun -> Meteor.subscribe('user_tags',
             selected_user_tags.array()
+            selected_user_levels.array()
             selected_user_roles.array()
             Session.get('view_mode')
         )
-        Session.setDefault('view_mode', 'users')
 
     Template.user_cloud.helpers
         all_tags: ->
             user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
             if 0 < user_count < 3 then User_tags.find { count: $lt: user_count } else User_tags.find()
-
+        selected_user_tags: ->
+            # model = 'event'
+            # console.log "selected_#{model}_tags"
+            selected_user_tags.array()
+        all_tags: ->
+            user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
+            if 0 < user_count < 3 then User_tags.find { count: $lt: user_count } else User_tags.find()
         selected_user_tags: ->
             # model = 'event'
             # console.log "selected_#{model}_tags"

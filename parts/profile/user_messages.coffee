@@ -19,6 +19,16 @@ if Meteor.isClient
                     target_user_id: target_user._id
                 val = $('.new_message').val('')
 
+        'click .submit_message': (e,t)->
+            val = $('.new_message').val()
+            console.log val
+            target_user = Meteor.users.findOne(username:Router.current().params.username)
+            Docs.insert
+                model:'message'
+                body: val
+                target_user_id: target_user._id
+            val = $('.new_message').val('')
+
 
 
     Template.user_messages.helpers

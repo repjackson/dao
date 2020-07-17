@@ -3,31 +3,31 @@
 template(name='home')
     .ui.stackable.grid
         .two.column.middle.aligned.row
-            .column
-                img.ui.fluid.rounded.image(src="{{c.url 'river_small' crop='fill'}}")
-            .column
-                .ui.large.header #{home_doc.home_title}
-                if is_admin 
-                    with home_doc
-                        +textarea_edit key='home_title' direct=true
-                .ui.header
-                    with home_doc
-                        if is_admin
-                            +textarea_edit key='home_blurb' direct=true
-                        |#{home_blurb}
-                    // The Riverside’s diverse indoor-outdoor event spaces and farm-fresh catered tastes create unforgettable guest experiences.
-                    
-                    // Located alongside Boulder Creek, this rare and historic property provides eclectic Boulder vibes and local collective services for weddings, special occasions, and community events.
-
-
+            unless currentUser
+                unless is_admin
+                    .column
+                        img.ui.fluid.rounded.image(src="{{c.url 'river_small' crop='fill'}}")
+                    .column
+                        .ui.large.header #{home_doc.home_title}
+                        if is_admin 
+                            with home_doc
+                                +textarea_edit key='home_title' direct=true
+                        .ui.header
+                            with home_doc
+                                if is_admin
+                                    +textarea_edit key='home_blurb' direct=true
+                                |#{home_blurb}
+                            // The Riverside’s diverse indoor-outdoor event spaces and farm-fresh catered tastes create unforgettable guest experiences.
+                            
+                            // Located alongside Boulder Creek, this rare and historic property provides eclectic Boulder vibes and local collective services for weddings, special occasions, and community events.
         if currentUser
             .centered.row
-                .four.wide.column
-                    // +join_button
-                    a.ui.fluid.big.green.button(href="/join")
-                        i.checkmark.icon
-                        |join
-        
+                unless currentUser
+                    .four.wide.column
+                        // +join_button
+                        a.ui.fluid.big.green.button(href="/join")
+                            i.checkmark.icon
+                            |join
                 .five.wide.column
                     if can_gift
                         .ui.fluid.big.green.button.gift
@@ -98,7 +98,7 @@ template(name='home')
                                         // if _author.profile_image_id
                                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                         // | #{_author_username}
-                                        .ui.inline.header >
+                                        .item from {{from_now start_datetime}} > {{from_now end_datetime}}
                                         if shift_contributors 
                                             each shift_contributors
                                                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -123,17 +123,13 @@ template(name='home')
                                     img.ui.medium.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                                     .header
                                         .ui.inline.small.header #{title} 
-                                        .ui.inline.header #{amount}p
+                                        .ui.inline.header $#{usd_price} / #{point_price}p
                                         if _author.profile_image_id
                                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                         | #{_author_username}
-                                        .ui.inline.header >
-                                        if shift_contributors 
-                                            each shift_contributors
-                                                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                                |#{username}
                                     .meta #{when}
-                                    // .description 
+                                    .description 
+                                        |#{going_user_ids.length} going
                                     //     |#{description}
                                     each tags 
                                         .ui.tiny.basic.circular.label #{this}

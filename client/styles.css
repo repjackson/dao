@@ -62,7 +62,7 @@ body {
 }
 
 
-.segment {
+.segment:not(.raw) {
   transition: height 1s linear;
   border-radius: 10px !important;
 }
@@ -159,7 +159,6 @@ body {
     color: grey !important;
 }
 
-}
 .home {
     /* min-height:100% !important; */
     margin-bottom: 0 !important;
@@ -214,7 +213,7 @@ body {
 }
 
 .rounded {
-    /* border-radius: 5px !important; */
+     border-radius: 10px !important; 
 }
 
 .sadness {
@@ -231,12 +230,13 @@ a.goto_article {
     color: grey !important;
 }
 
-/* .ui.button:not(.circular)) { */
-.ui.button {
+.ui.button:not(.circular) { 
     border-radius: 10px !important;
+}
+.ui.button {
     margin: 2px !important;
     /* border-radius: 20px !important; */
-    /* transition: all .25s ease !important; */
+    transition: height .5s ease !important; 
     /* background-color: rgba(200, 200, 200, 0.2) !important; */
     /* padding: 12px !important; */
     /* font-weight: lighter !important; */
@@ -244,6 +244,7 @@ a.goto_article {
 }
 /*  */
 .pointer:hover {
+    transition: all .5s ease !important; 
     cursor: pointer !important;
 }
 
@@ -390,7 +391,7 @@ a.title, #title {
 
 input {
     margin: 5px !important;
-    /* border-radius: 20px !important; */
+    border-radius: 10px !important; 
 }
 
 ::-webkit-scrollbar {

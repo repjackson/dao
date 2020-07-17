@@ -17,64 +17,67 @@ template(name='profile_layout')
                 // .ui.small.inline.header {{fixed one_score}} one score
                 div
                 if is_admin
-                    a.ui.fluid.button(href="/user/#{username}/edit")
+                    a.ui.large.icon.button(href="/user/#{username}/edit" title='admin edit')
                         i.shield.icon
-                        |admin edit
                 if is_current_user
-                    a.ui.large.fluid.button(href="/user/#{username}/edit")
-                        i.cog.icon
-                        |account
-                    a.ui.large.fluid.button.logout(href="#")
-                        i.sign.out.alternate.icon
-                        |log out
+                    a.ui.big.icon.circular.button(href="/user/#{username}/edit" title='account')
+                        i.cog.large.icon
+                    a.ui.big.icon.circular.button.logout(href="#" title='log out')
+                        i.sign.out.alternate.large.icon
                 // .ui.header #{points}pts
                 
                 unless is_current_user
                     if currentUser
                         div
                         +user_friend_button 
-                a.ui.big.icon.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
-                    i.dashboard.large.icon
-                    // |dashboard
-                a.ui.big.icon.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
-                    i.chat.large.icon
-                    // |chat
-                if is_current_user
-                    a.ui.big.icon.button(href="/user/#{username}/edit/membership" class="{{isActivePath 'user_finance'}}")
-                        i.money.large.icon
+                // a.ui.big.icon.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
+                //     i.dashboard.large.icon
+                //     // |dashboard
+                // a.ui.big.icon.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                //     i.chat.large.icon
+                //     // |chat
+                // if is_current_user
+                //     a.ui.big.icon.button(href="/user/#{username}/edit/membership" class="{{isActivePath 'user_finance'}}")
+                //         i.money.large.icon
                 
 
             .thirteen.wide.column
-                // a.ui.big.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
-                //     i.info.icon
-                //     |about
-                // // a.ui.big.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
-                // //     i.chevron.down.icon
-                // //     |credits
-                // // a.ui.big.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
-                // //     i.chevron.up.icon
-                // //     |sent
-                // // a.ui.big.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
-                // //     +icon name='calendar' cl='ui inline mini image'
-                // //     |events
-                // a.ui.big.compact.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
-                //     i.users.icon
-                //     |friends
-                // .spacer
-                // .spacer
+                a.ui.big.compact.button(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}")
+                    i.dashboard.icon
+                    |dashboard
+                a.ui.big.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
+                    i.info.icon
+                    |about
+                a.ui.big.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
+                    i.donate.icon
+                    |credits
+                a.ui.big.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                    i.send.icon
+                    |sent
+                a.ui.big.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
+                    i.calendar.icon
+                    |events
+                a.ui.big.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                    i.chat.icon
+                    |chat
+                a.ui.big.compact.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
+                    i.users.icon
+                    |friends
+                .spacer
+                .spacer
                 +yield    
                       
 
 
 
 template(name='user_dashboard')
-    +user_about
-    .ui.hidden.divider
+    // +user_about
+    // .ui.hidden.divider
     .ui.two.column.grid 
         .column
-            .ui.huge.fluid.green.button.gift
-                i.gift.icon
-                |gift
+            .ui.huge.fluid.green.button.send
+                i.send.icon
+                |send
         .column
             .ui.huge.fluid.teal.button.request
                 i.hand.holding.heart.icon
@@ -85,11 +88,11 @@ template(name='user_dashboard')
             +user_credits_small
         .column
             .ui.inline.header 
-                i.gift.icon
-                |#{total_gift_amount}p
-                |gifted
-                small(title='gift count') (#{gift_count}x)
-                    .ui.circular.label ##{global_gift_count_rank}
+                i.send.icon
+                |#{total_send_amount}p
+                |sent
+                small(title='send count') (#{send_count}x)
+                    .ui.circular.label ##{global_send_count_rank}
             div
             .ui.link.large.list.scrolling
                 each sent_items
@@ -99,7 +102,7 @@ template(name='user_dashboard')
                         .content
                             .header
                                 strong #{amount}pt
-                                a(href="/gift/#{_id}/view")
+                                a(href="/send/#{_id}/view")
                                     |#{when}
                                     | to 
                                 a(href="/user/#{target.username}")

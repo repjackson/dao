@@ -1,27 +1,34 @@
 template(name='add')
     .ui.stackable.padded.grid
         .centered.row
-            .sixteen.wide.column
+            .sixteen.wide.center.aligned.column
                 .ui.header
                     i.big.plus.icon
                     |add
+        .centered.row
             .sixteen.wide.column
-                .ui.stackable.blue.cards
+                .ui.stackable.centered.cards
                     a.ui.teal.card.add_request
                         .content
                             .ui.icon.teal.header
                                 i.hand.holding.heart.icon
                                 |request
-                    a.ui.maroon.card.add_event
+                    a.ui.violet.card.add_event
                         .content
-                            .ui.icon.maroon.header
+                            .ui.icon.header
                                 i.calendar.icon
                                 |event
-                    a.ui.blue.card.add_shift
+                    a.ui.brown.card.add_product
                         .content
                             .ui.icon.orange.header
-                                i.clock.icon
-                                |shift
+                                i.cart.icon
+                                |product
+                    if is_in_levels 'steward'
+                        a.ui.blue.card.add_shift
+                            .content
+                                .ui.icon.orange.header
+                                    i.clock.icon
+                                    |shift
                     a.ui.yellow.card.add_gift
                         .content
                             .ui.icon.green.header

@@ -120,7 +120,8 @@ template(name='event_view')
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
-                    +textarea_view key='description' label='description' direct=true
+                    .scrolling
+                        +textarea_view key='description' label='description' direct=true
                     div 
                     +array_view key='tags' label='tags' direct=true
                     .spacer
@@ -175,15 +176,14 @@ template(name='event_edit')
                         i.calendar.icon
                         |edit event
                 .four.wide.column
-            .row
-                .four.wide.column
+            .three.column.row
+                .column
                     .ui.header 
                         small author
                         |#{_author.username}
                     +datetime_edit key='start_datetime' label='start' direct=true
                     +datetime_edit key='end_datetime' label='end' direct=true
-                    
-                .four.wide.column
+                .column
                     +text_edit key='title' label='title' direct=true
                     .ui.header
                         |audience
@@ -193,17 +193,16 @@ template(name='event_edit')
                     +key_value_edit key='point_price' value=5
                     +key_value_edit key='point_price' value=10
                     +key_value_edit key='point_price' value=20
-                .four.wide.column
+                .column
+                    a.ui.fluid.green.big.button(href="/event/#{_id}/view")
+                        i.checkmark.icon
+                        |save
                     +number_edit key='usd_price' label='dollars per ticket' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    a.ui.fluid.green.big.button(href="/event/#{_id}/view")
-                        i.checkmark.icon
-                        |save
                     // unless published
                     //     a.ui.fluid.green.button.submit(href="/save")
                     //         i.checkmark.icon

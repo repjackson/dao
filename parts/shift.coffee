@@ -24,7 +24,10 @@ if Meteor.isClient
                 sort:
                     start_datetime:-1
 
+
+
     Template.shift_view.onRendered ->
+        @autorun => Meteor.subscribe 'users'
     Template.shift_view.events
         'click .delete_item': ->
             if confirm 'delete item?'
@@ -35,9 +38,10 @@ if Meteor.isClient
                 Meteor.call 'send_shift', @_id, =>
                     Router.go "/shift/#{@_id}/view"
 
-
     Template.shift_view.helpers
-    Template.shift_view.events
+        unseleted_stewards: ->
+            Meteor.users.find 
+                levels:$in:['steward']
 
 # if Meteor.isServer
 #     Meteor.methods
@@ -73,6 +77,8 @@ if Meteor.isClient
 
     Template.shift_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'users'
+        @autorun => Meteor.subscribe 'all_users'
     Template.shift_edit.onRendered ->
 
 

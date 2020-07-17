@@ -9,7 +9,9 @@ Template.registerHelper 'in_role', (role)->
         false
 
 Template.registerHelper 'is_in_admin', () ->
-    Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt']
+    Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c']
+Template.registerHelper 'is_in_levels', (level) ->
+    Meteor.user() and Meteor.user().levels and level in Meteor.user().levels
 Template.registerHelper 'current_user', () ->
     Meteor.users.findOne username:Router.current().params.username
 

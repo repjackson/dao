@@ -1,32 +1,32 @@
 if Meteor.isClient
-    Router.route '/user/:username/gifted', (->
+    Router.route '/user/:username/events', (->
         @layout 'profile_layout'
-        @render 'user_gifts'
-        ), name:'user_gifts'
+        @render 'user_events'
+        ), name:'user_events'
 
-    Template.user_gifts.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'gift', Router.current().params.username
-        # @autorun => Meteor.subscribe 'user_gifts', Router.current().params.username
-        @autorun => Meteor.subscribe 'model_docs', 'gift'
+    Template.user_events.onCreated ->
+        @autorun -> Meteor.subscribe 'user_model_docs', 'event', Router.current().params.username
+        # @autorun => Meteor.subscribe 'user_events', Router.current().params.username
+        @autorun => Meteor.subscribe 'model_docs', 'event'
 
-    Template.user_gifts.events
-        'keyup .new_gift': (e,t)->
+    Template.user_events.events
+        'keyup .new_event': (e,t)->
             if e.which is 13
-                val = $('.new_gift').val()
+                val = $('.new_event').val()
                 console.log val
                 target_user = Meteor.users.findOne(username:Router.current().params.username)
                 Docs.insert
-                    model:'gift'
+                    model:'event'
                     body: val
                     target_user_id: target_user._id
 
 
 
-    Template.user_gifts.helpers
+    Template.user_events.helpers
         sent_items: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
-                model:'gift'
+                model:'event'
                 _author_id: current_user._id
                 # target_user_id: target_user._id
             },
@@ -39,6 +39,6 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'user_gifts', (username)->
+    Meteor.publish 'user_events', (username)->
         Docs.find
-            model:'gift'
+            model:'event'

@@ -39,8 +39,8 @@ if Meteor.isClient
                 model:'person'
                 contributor:true
 
-if Meteor.isServer
-    Meteor.publish 'page_doc', (page_slug)->
-        Docs.find
-            model:'page'
-            slug:page_slug
+# if Meteor.isServer
+#     Meteor.publish 'page_doc', (page_slug)->
+#         Docs.find
+#             model:'page'
+#             slug:page_slug
