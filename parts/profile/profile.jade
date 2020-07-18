@@ -42,37 +42,37 @@ template(name='profile_layout')
                     span(title="spirit animal #{spirit_animal}")
                         +icolor name=spirit_animal
 
-                a(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}")
-                    i.big.dashboard.circular.link.icon
-                    // |dashboard
-                a(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
-                    i.big.info.circular.link.icon
-                // |about
-                a(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
-                    i.big.donate.circular.black.link.icon
-                    // |credits
-                a(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
-                    i.big.send.circular.black.link.icon
-                    // |sent
-                a(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
-                    i.big.calendar.circular.black.link.icon
-                    // |events
-                a(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
-                    i.big.chat.circular.black.link.icon
-                    // |chat
-                a(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
-                    i.big.users.circular.black.link.icon
-                    // |friends
+            .twelve.wide.column
+                a.ui.circular.button(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}")
+                    i.big.dashboard.icon
+                    span.mobile.hidden dashboard
+                a.ui.circular.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
+                    i.big.info.blue.icon
+                    span.mobile.hidden about
+                a.ui.circular.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
+                    i.big.donate.green.icon
+                    span.mobile.hidden credits
+                a.ui.circular.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                    i.big.send.teal.icon
+                    span.mobile.hidden sent
+                a.ui.circular.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
+                    i.big.calendar.orange.icon
+                    span.mobile.hidden events
+                a.ui.circular.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                    i.big.chat.blue.icon
+                    span.mobile.hidden chat
+                a.ui.circular.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
+                    i.big.users.icon
+                    span.mobile.hidden friends
                 .ui.huge.green.circular.icon.button.send
                     i.send.icon
-                    // |send
+                    span.mobile.hidden send
                 .ui.huge.teal.circular.icon.button.request
                     i.hand.holding.heart.icon
-                    // |request
+                    span.mobile.hidden request
                     
                 // .spacer
                 // .spacer
-            .twelve.wide.column
                 +yield    
                       
 

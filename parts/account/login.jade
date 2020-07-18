@@ -3,21 +3,24 @@ template(name='login')
         .centered.row
             .eight.wide.column
                 .ui.center.aligned.basic.segment
-                    .ui.inline.header ONE|Riverside
-                    .ui.inline.header login
+                    .ui.inline.header 
+                        +icon name='circle' cl='ui image'
+                        |ONE|Riverside
+                    .ui.inline.grey.header login
+
                 div
                 if message
                     h4.ui.center.aligned.header #{message}
                 .ui.inline.small.header 
-                    i.user.outline.icon
-                    // +icon name='user'
+                    // i.user.outline.icon
+                    +icon name='user'
                     |username
                 .ui.fluid.large.input(class=login_class)
                     input.username(type='text')
                 .spacer
                 .ui.inline.small.header 
-                    // +icon name='password'
-                    i.lock.icon
+                    +icon name='password'
+                    // i.lock.icon
                     | password
                 .ui.fluid.large.input(class=login_class)
                     input.password(type='password')
@@ -29,23 +32,23 @@ template(name='login')
                         strong #{username}
                         |&nbsp;
                         //- i.sign.in.alternate.icon
-                        //- +icon name='login-rounded-right' cl='ui avatar image'
-                        i.right.chevron.icon
+                        +icon name='login-rounded-right' cl='ui avatar image'
+                        // i.right.chevron.icon
                 else
                     if username
                         .ui.center.aligned.basic.segment
                             .ui.header no '#{username}' user
                             a.ui.button(href='/register')
-                                i.user.plus.icon
-                                // +icon name='add-user-male' cl='ui mini inline image'
+                                // i.user.plus.icon
+                                +icon name='add-user-male' cl='ui mini inline image'
                                 | register
                 .ui.center.aligned.basic.segment    
                     a.ui.button(href='/forgot_password')
-                        i.refresh.icon
-                        // +icon name='forgot-password' cl='ui mini inline image'
+                        // i.refresh.icon
+                        +icon name='forgot-password' cl='ui mini inline image'
                         |forgot password
                     a.ui.button(href='/register') 
-                        i.user.plus.icon
-                        // +icon name='add-user-male' cl='ui mini inline image'
+                        // i.user.plus.icon
+                        +icon name='add-user-male' cl='ui mini inline image'
                         |register
                     //- .ui.center.aligned.inline.header see the front desk to register an account

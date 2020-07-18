@@ -140,19 +140,17 @@ template(name='product_view')
 template(name='product_edit')
     with current_doc
         .ui.stackable.padded.grid
-            .row 
-                .four.wide.column
-                    .ui.button.delete_item
-                        |delete
-                        i.large.red.remove.icon
-                .eight.wide.column
+            .centered.middle.aligned.row 
+                .four.wide.center.aligned.column
+                    a.ui.circular.green.big.icon.button(href="/product/#{_id}/view")
+                        i.checkmark.big.icon
+                .eight.wide.center.aligned.column
                     .ui.header 
-                        +icon name='hand-planting'
-                        |edit product
-                .four.wide.column
-                    .ui.circular.icon.button.delete_item
-                        // |delete
-                        i.large.red.remove.icon
+                        +icon name='product'
+                        |edit product: #{title}
+                .four.wide.center.aligned.column
+                    .ui.circular.red.icon.button.delete_item
+                        i.large.remove.icon
     
             .row
                 .four.wide.column
@@ -165,21 +163,14 @@ template(name='product_edit')
                     .ui.header
                         |audience
                             
-                    +number_edit key='point_price' label='point_price' direct=true
-                    +key_value_edit key='point_price' value=1
-                    +key_value_edit key='point_price' value=5
-                    +key_value_edit key='point_price' value=10
-                    +key_value_edit key='point_price' value=20
-                    +number_edit key='usd_price' label='usd price' direct=true
+                    +number_edit key='point_price' label='point price' icon='hashtag' direct=true
+                    +number_edit key='usd_price' label='usd price' icon='money' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    a.ui.fluid.green.big.button(href="/product/#{_id}/view")
-                        i.checkmark.icon
-                        |save
                     // unless published
                     //     a.ui.fluid.green.button.submit(href="/save")
                     //         i.checkmark.icon

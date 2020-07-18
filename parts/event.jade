@@ -10,8 +10,9 @@ template(name='events')
             // .ui.button 
             //     |credit amount
             .ui.inline.big.header 
-                i.calendar.big.icon
-                // |events
+                // i.calendar.big.icon
+                +icolor name='calendar'
+                span.mobile.hidden events
             if is_admin
                 .ui.icon.button.add_event
                     i.plus.large.icon
@@ -59,13 +60,14 @@ template(name='event_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.big.icon.circular.button(href="/events")
-                        i.calendar.big.icon
-                        // |events
+                    a.ui.big.circular.button(href="/events")
+                        i.chevron.left.icon
+                        +icolor name='calendar' cl='ui inline image'
+                        span.mobile.hidden events
                 .eight.wide.center.aligned.column
                     .ui.small.inline.header(title='viewing event')
-                        // +icon name='hand-planting'
-                        i.calendar.icon
+                        +icolor name='calendar'
+                        // i.calendar.icon
                         // |view event
                     .ui.large.inline.header #{title}
                     div

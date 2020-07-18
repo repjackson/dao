@@ -49,6 +49,8 @@ template(name='user_item')
             strong #{credit_count}/
             strong #{debit_count}
             strong {{credit_ratio}}
+            if spirit_animal
+                +icolor name=spirit_animal cl='ui avatar image'
             // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
             // .ui.small.header #{points} points
