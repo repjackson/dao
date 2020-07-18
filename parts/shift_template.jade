@@ -19,50 +19,23 @@ template(name='shift_templates')
             .scrolling
                 .ui.stackable.six.cards
                     each next_shift_templates
-                        +shift_template_item
+                        +shift_template_card
         .sixteen.wide.column
             // +shift_template_cloud
 
 
-template(name='shift_template_item')
+template(name='shift_template_card')
     a.card(href="/shift_template/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/shift_template/#{_id}/view")
-                |#{job.title}
-            .ui.list 
-                .item #{date} date
-                .item from {{from_now start_datetime}}
-                .item to {{from_now end_datetime}}
-                .item #{end_time} end time
-                .item #{steward.username} leader(s)
-            .ui.list
-                each contributers
-                    .item #{username} contributer
-                //- |#{username}
-        .content
-        
-
-
-template(name='shift_template_card')
-    .card
-        .image
-            img.ui.raw.image(src="{{c.url job.image_id width=400 height=300 crop='fill'}}")    
-        .content
-            a.ui.header(href="/shift_template/#{_id}/view")
-                |#{job.title}
+            .ui.header
                 |#{title}
-            .ui.basic.label from {{long_date start_datetime}}
-                small {{from_now start_datetime}}
-            .ui.basic.label to {{long_date end_datetime}}
-            .item to {{from_now end_datetime}}
-            .item #{end_time} end time
-            .item #{steward.username} leader(s)
-            .ui.list
-                each contributers
-                    .item #{username} contributer
-                //- |#{username}
+            .ui.header 
+                i.clock.icon
+                |{{start_time}} - {{end_time}}
+            if default_leader
+                .item #{default_shift_template_leader.name} default leader
         a.ui.button(href="/shift_template/#{_id}/view")
             |view
             i.right.chevron.icon
@@ -73,34 +46,31 @@ template(name='shift_template_view')
         .ui.stackable.padded.grid
             .center.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.fluid.big.compact.button(href="/shift_templates")
+                    a.ui.fluid.big.compact.button(href="/shifts")
                         i.chevron.left.icon
                         i.large.clock.icon
-                        |shift_templates
+                        |shifts
                 .eight.wide.center.aligned.column
                     .ui.header 
-                        +icon name='clock'
-                        |view shift_template 
+                        +icon name='invoice'
+                        |view shift template
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit 
                         a.ui.big.circular.blue.icon.button(href="/shift_template/#{_id}/edit" title='edit shift_template')
                             i.pencil.large.icon
-                
             .row 
                 .four.wide.column
-                    a.ui.header(href="/job/#{_id}/view")
-                        |#{job.title} job
+                    .ui.big.green.fluid.button.create_instance
+                        i.plus.icon
+                        |create instance
+                    .ui.header instances
+                    each instances
+                        a.ui.header(href="/shift") #{date}
                 .eight.wide.column
                     .ui.header
-                        |leader:
-                        |#{shift_template_leader.name}
-                    .ui.header
-                        |participants
-                    each recipients
-                        a.ui.header(href="/user/#{username}")
-                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{username}
+                        |default leader:
+                        |#{shift_default_template_leader.name}
                     +textarea_view key='description' label='description' direct=true
                     +image_view key='image_id' label='image' direct=true
                     div 
@@ -108,22 +78,13 @@ template(name='shift_template_view')
                     .spacer
                     .spacer
                     +comments
-                    +voting_full
+                    // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    a.ui.header(href="/shift_template/#{_id}/view")
-                        |#{job.title}
-                    .ui.basic.label from {{long_date start_datetime}}
-                        small {{from_now start_datetime}}
-                    .ui.basic.label to {{long_date end_datetime}}
-                    .item to {{from_now end_datetime}}
-                    .ui.list
-                        each contributers
-                            .item #{username} contributer
-                            
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
+                    .ui.header from {{start_time}}
+                        | to {{end_time}}
+
+
 template(name='shift_template_edit')
     with current_doc
         .ui.stackable.padded.grid
@@ -134,22 +95,22 @@ template(name='shift_template_edit')
                         // |save
                 .eight.wide.center.aligned.column
                     .ui.header 
-                        +icon name='clock'
-                        |edit shift_template instance
+                        +icon name='invoice'
+                        |edit shift template
                 .four.wide.center.aligned.column
                     .ui.red.icon.circular.button.delete_item(title='delete shift_template')
                         i.large.remove.icon
             .row 
                 .four.wide.column
                     +image_edit key='image_id' label='image' direct=true
+                    +time_edit key='start_time' label='start time' direct=true
+                    +time_edit key='end_time' label='end time' direct=true
                 .eight.wide.column
                     .ui.header 
                         small author
                         |#{_author.username}
                     
                     +text_edit key='title' label='title' direct=true
-                    +time_edit key='start_time' label='start time' direct=true
-                    +time_edit key='end_time' label='end time' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true

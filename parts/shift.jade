@@ -15,13 +15,13 @@ template(name='shifts')
                 if is_admin
                     |instances
             if is_admin
-                .ui.button.add_shift_instance
+                .ui.button.add_shift
                     i.plus.icon
                     |add shift
             .scrolling
                 .ui.stackable.six.cards
-                    each next_shift_instances
-                        +shift_instance_item
+                    each next_shifts
+                        +shift_item
             if is_admin
                 .ui.inline.header 
                     i.shield.icon
@@ -32,13 +32,13 @@ template(name='shifts')
                 .scrolling
                     .ui.stackable.six.cards
                         each shift_templates
-                            +shift_template_item
+                            +shift_template_card
 
         .sixteen.wide.column
             // +shift_cloud
 
 
-template(name='shift_instance_item')
+template(name='shift_item')
     a.card(href="/shift/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
@@ -98,13 +98,16 @@ template(name='shift_view')
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit 
-                        a.ui.big.circular.blue.icon.button(href="/shift/#{_id}/edit" title='edit shift')
+                        a.ui.big.circular.blue.icon.button(href="/shift/#{_id}/edit" title='edit shift instance')
                             i.pencil.large.icon
-                
             .row 
                 .four.wide.column
+                    .ui.header template #{template_id}
+                    if st.image_id
+                        img.ui.fluid.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
                     a.ui.header(href="/job/#{_id}/view")
-                        |#{job.title} job
+                        |#{shift_template.title} shift template
+                    +image_view key='image_id' label='image' direct=true
                 .eight.wide.column
                     .ui.header
                         |leader:
@@ -116,7 +119,6 @@ template(name='shift_view')
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{username}
                     +textarea_view key='description' label='description' direct=true
-                    +image_view key='image_id' label='image' direct=true
                     div 
                     +array_view key='tags' label='tags' direct=true
                     .spacer
@@ -143,8 +145,8 @@ template(name='shift_edit')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.big.circular.green.icon.button(href="/shift/#{_id}/view" title='save')
-                        i.checkmark.big.icon
+                    a.ui.circular.green.icon.button(href="/shift/#{_id}/view" title='save')
+                        i.checkmark.huge.icon
                         // |save
                 .eight.wide.center.aligned.column
                     .ui.header 
@@ -155,18 +157,13 @@ template(name='shift_edit')
                         i.large.remove.icon
             .row 
                 .four.wide.column
-                    +image_edit key='image_id' label='image' direct=true
-                    .ui.small.header #{job} job
+                    .ui.small.header #{shift_template.title} title
                 .eight.wide.column
                     .ui.header 
                         small author
                         |#{_author.username}
                     |#{target.username}
-                    //- +date_edit key='date' label='date' direct=true
-                    +datetime_edit key='start_datetime' label='start time' direct=true
-                    +datetime_edit key='end_datetime' label='end time' direct=true
-                    //- +multi_user_ref key=leader_ids direct=true
-                    .item #{leader.username} lead
+                    +date_edit key='date' label='date' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true

@@ -42,29 +42,30 @@ template(name='debit_view')
                         .ui.button.delete_item
                             |delete
                             i.large.red.remove.icon
-                .eight.wide.column
+                .four.wide.column
                     .ui.header
                         i.debit.icon
-                        |#{amount} usd cents
-                        | debit
+                        |#{amount}pts
                     .ui.small.header
                         i.clock.icon
                         | #{when}
                     .ui.segment
                         .ui.inline.header 
                             i.chevron.up.icon
-                            |purchaser
+                            |sender
                         a.ui.inline.header(href="/user/#{_author.username}") 
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
+                .four.wide.column
                     .ui.segment
                         .ui.inline.header
-                            i.chevron.down.icon
-                            |product
-                        a(href="/product/#{product._id}/view")
-                            img.ui.medium.image(src="{{c.url product.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        a.ui.header(href="/product/#{product._id}/view")
-                            |#{product.title}
+                            i.chevron.right.icon
+                            |recipient
+                        
+                        a(href="/user/#{recipient.username}")
+                            img.ui.medium.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        a.ui.header(href="/user/#{recipient.username}")
+                            |#{recipient.name}
                             
                     +number_view key='amount' label='amount' direct=true
                     +textarea_view key='description' label='description' direct=true

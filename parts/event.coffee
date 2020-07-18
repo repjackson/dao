@@ -77,7 +77,7 @@ if Meteor.isClient
 
 
             Swal.fire({
-                title: "buy ticket for #{@usd_price}?"
+                title: "buy ticket for $#{@usd_price}?"
                 text: "for: #{@title}"
                 icon: 'question'
                 showCancelButton: true,

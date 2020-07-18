@@ -27,7 +27,7 @@ if Meteor.isClient
 
     Template.profile_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
-        @autorun -> Meteor.subscribe 'user_gifts', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
         @autorun -> Meteor.subscribe 'all_users'
 
@@ -39,30 +39,26 @@ if Meteor.isClient
         user: -> Meteor.users.findOne username:Router.current().params.username
 
     Template.profile_layout.events
-        'click .give': ->
+        'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
-            new_gift_id =
+            new_debit_id =
                 Docs.insert
-                    model:'gift'
+                    model:'debit'
                     recipient_id: user._id
-            Router.go "/gift/#{new_gift_id}/edit"
+            Router.go "/debit/#{new_debit_id}/edit"
 
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             # Meteor.call 'calc_user_stats', user._id, ->
             Meteor.call 'recalc_one_stats', user._id, ->
 
-
-
-
-    Template.user_dashboard.events
-        'click .gift': ->
-            # user = Meteor.users.findOne(username:@username)
-            new_gift_id =
-                Docs.insert
-                    model:'gift'
-                    recipient_id: @_id
-            Router.go "/gift/#{new_gift_id}/edit"
+        # 'click .debit': ->
+        #     # user = Meteor.users.findOne(username:@username)
+        #     new_debit_id =
+        #         Docs.insert
+        #             model:'debit'
+        #             recipient_id: @_id
+        #     Router.go "/debit/#{new_debit_id}/edit"
 
         'click .request': ->
             # user = Meteor.users.findOne(username:@username)
@@ -79,14 +75,14 @@ if Meteor.isClient
         earned_items: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
-                model:'gift'
+                model:'debit'
                 recipient_id: current_user._id
             }, sort: _timestamp:-1
     Template.user_dashboard.helpers
         sent_items: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
-                model:'gift'
+                model:'debit'
                 _author_id: current_user._id
             }, sort: _timestamp:-1
 
@@ -342,19 +338,19 @@ if Meteor.isServer
             #         user_id: user_id
             #     student_stats_doc = Docs.findOne new_stats_doc_id
 
-            gifts = Docs.find({
-                model:'gift'
+            debits = Docs.find({
+                model:'debit'
                 amount:$exists:true
                 _author_id:user_id})
-            gift_count = gifts.count()
-            total_gift_amount = 0
-            for gift in gifts.fetch()
-                total_gift_amount += gift.amount
+            debit_count = debits.count()
+            total_debit_amount = 0
+            for debit in debits.fetch()
+                total_debit_amount += debit.amount
 
-            console.log 'total gift amount', total_gift_amount
+            console.log 'total debit amount', total_debit_amount
 
             credits = Docs.find({
-                model:'gift'
+                model:'debit'
                 amount:$exists:true
                 recipient_id:user_id})
             credit_count = credits.count()
@@ -363,31 +359,31 @@ if Meteor.isServer
                 total_credit_amount += credit.amount
 
             console.log 'total credit amount', total_credit_amount
-            calculated_user_balance = total_credit_amount-total_gift_amount
+            calculated_user_balance = total_credit_amount-total_debit_amount
 
             # average_credit_per_student = total_credit_amount/student_count
-            # average_gift_per_student = total_gift_amount/student_count
-            total_bandwith = Math.abs(total_credit_amount)+Math.abs(total_gift_amount)
-            if total_gift_amount is 0 then total_gift_amount++
+            # average_debit_per_student = total_debit_amount/student_count
+            total_bandwith = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
+            if total_debit_amount is 0 then total_debit_amount++
             if total_credit_amount is 0 then total_credit_amount++
-            gift_credit_ratio = total_gift_amount/total_credit_amount
-            dc_ratio_inverted = 1/gift_credit_ratio
+            debit_credit_ratio = total_debit_amount/total_credit_amount
+            dc_ratio_inverted = 1/debit_credit_ratio
 
-            credit_gift_ratio = total_credit_amount/total_gift_amount
-            cd_ratio_inverted = 1/credit_gift_ratio
+            credit_debit_ratio = total_credit_amount/total_debit_amount
+            cd_ratio_inverted = 1/credit_debit_ratio
 
             one_score = total_bandwith*dc_ratio_inverted
 
             Meteor.users.update user_id,
                 $set:
                     credit_count: credit_count
-                    gift_count: gift_count
+                    debit_count: debit_count
                     total_credit_amount: total_credit_amount
-                    total_gift_amount: total_gift_amount
+                    total_debit_amount: total_debit_amount
                     total_bandwith: total_bandwith
                     calculated_user_balance: calculated_user_balance
-                    gift_credit_ratio: gift_credit_ratio
-                    credit_gift_ratio: credit_gift_ratio
+                    debit_credit_ratio: debit_credit_ratio
+                    credit_debit_ratio: credit_debit_ratio
                     dc_ratio_inverted: dc_ratio_inverted
                     cd_ratio_inverted: cd_ratio_inverted
                     one_score: one_score

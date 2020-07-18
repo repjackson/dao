@@ -1,6 +1,6 @@
 template(name='products')
     .ui.padded.stackable.grid
-        .sixteen.wide.column
+        .four.wide.column
             // .ui.button 
             //     |debit count
             // .ui.button 
@@ -9,19 +9,20 @@ template(name='products')
             //     |credit count
             // .ui.button 
             //     |credit amount
-            .ui.header 
-                i.shop.icon
+            // i.shop.big.icon
+            // +product_cloud
+            .ui.header
+                +icolor name='shop'
                 |store
             if is_admin
-                .ui.button.add_product
+                .ui.icon.circular.button.add_product(title='add product')
                     i.plus.icon
-                    |add product
+                    // |add product
+        .twelve.wide.column
             .scrolling
-                .ui.stackable.six.cards
+                .ui.stackable.four.cards
                     each product_docs
                         +product_item
-        .sixteen.wide.column
-            // +product_cloud
 
 
 template(name='product_item')
@@ -43,33 +44,31 @@ template(name='product_item')
 template(name='product_view')
     with current_doc
         .ui.stackable.padded.grid
-            .row 
-                .four.wide.column
-                    a.ui.fluid.big.button(href="/shop")
-                        i.store.icon
-                        |shop
-                .eight.wide.column
+            .middle.aligned.row 
+                .four.wide.center.aligned.column
+                    a.ui.circular.big.button(href="/shop")
+                        // i.store.big.icon
+                        +icolor name='shop' cl='ui inline image'
+                        span.mobile.hidden shop
+                .eight.wide.center.aligned.column
                     .ui.inline.header 
                         |view product
                     .ui.large.inline.header #{title}
                         
-                .four.wide.column
+                .four.wide.center.aligned.column
                     if can_edit
-                        .ui.button.delete_item
-                            |delete
-                            i.large.red.remove.icon
-                        a.ui.button.edit_product(href="/product/#{_id}/edit")
+                        a.ui.circular.icon.button.edit_product(href="/product/#{_id}/edit")
                             i.large.pencil.icon
-                            |edit
+                            // |edit
             .row 
-                .four.wide.column
+                .five.wide.column
                     .ui.header 
                         small author
                     a.ui.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.username}
                         
-                .eight.wide.column
+                .six.wide.column
                     +image_view key='image_id' label='image' direct=true
                     .ui.header
                         |attendees
@@ -94,17 +93,18 @@ template(name='product_view')
                     +comments
                     +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    .ui.hidden.divider
-                    .ui.big.fluid.green.button.buy_for_usd
+                .five.wide.column
+                    .ui.header 
                         i.cart.icon
-                        |buy for 
+                        |buy
+                    .ui.big.circular.green.button.buy_for_usd
+                        // |buy for 
                         |$#{usd_price}
-                    .ui.horizontal.divider or
-                    .ui.big.fluid.green.button.buy
-                        i.cart.icon
-                        |buy for 
-                        |#{point_price} points
+                    .ui.inline.header or
+                    .ui.big.circular.green.button.buy
+                        // i.cart.icon
+                        // |buy for 
+                        |#{point_price}pts
                     .ui.header your points #{currentUser.points}
                 
                     .ui.header 
@@ -150,6 +150,10 @@ template(name='product_edit')
                         +icon name='hand-planting'
                         |edit product
                 .four.wide.column
+                    .ui.circular.icon.button.delete_item
+                        // |delete
+                        i.large.red.remove.icon
+    
             .row
                 .four.wide.column
                     .ui.header 

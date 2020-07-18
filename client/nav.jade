@@ -1,24 +1,30 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.inverted.menu.topnav
+    .ui.fluid.attached.borderless.inverted.big.menu.topnav
         a.item(href="/" class="{{isActivePath regex='home'}}")
-            i.large.tree.green.icon
+            +icon name='circle' cl='ui avatar image'
+            // i.large.tree.icon
             span.mobile.hidden ONE|Riverside
         if currentUser
             a.item(href="/users" class="{{isActivePath regex='users'}}")
+                // +icon name='groups' cl='ui avatar image'
                 i.large.users.icon
                 span.mobile.hidden members
         a.item(href="/events" class="{{isActivePath regex='events'}}" title='events')
+            // +icon name='calendar' cl='ui avatar image'
             i.large.calendar.icon
             span.mobile.hidden events
         a.item(href="/shifts" class="{{isActivePath regex='shifts'}}" title='shifts')
             i.large.clock.icon
+            // +icon name='clock' cl='ui avatar image'
             span.mobile.hidden shifts
         a.item(href="/shop" class="{{isActivePath regex='shop'}}" title='shifts')
-            i.large.shop.icon
+            // i.large.shop.icon
+            +icolor name='shop' cl='ui avatar image spaced'
+            
             span.mobile.hidden shop
         // a.item(href="/gifts" class="{{isActivePath regex='gifts'}}" title='gifts')
-        //     i.large.gift.icon
-        //     span.mobile.hidden gifts
+        //     i.big.gift.icon
+            // span.mobile.hidden gifts
         a.item(href="/requests" class="{{isActivePath regex='requests'}}" title='requests')
             i.large.hand.holding.heart.icon
             span.mobile.hidden requests

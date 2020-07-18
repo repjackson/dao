@@ -33,16 +33,20 @@ if Meteor.isClient
 
     Template.shift_template_view.onRendered ->
         @autorun => Meteor.subscribe 'users'
+    Template.shift_template_view.helpers
+        
+        
     Template.shift_template_view.events
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
 
-        'click .submit': ->
-            if confirm 'confirm?'
-                Meteor.call 'send_shift_template', @_id, =>
-                    Router.go "/shift_template/#{@_id}/view"
-
+        'click .create_instance': ->
+            new_shift_id = 
+                Docs.insert
+                    model:'shift'
+                    template_id:Router.current().params.doc_id
+            Router.go "/shift/#{new_shift_id}/edit"
 
 # if Meteor.isServer
 #     Meteor.methods

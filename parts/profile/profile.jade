@@ -3,19 +3,18 @@ template(name='profile_layout')
     +nav
     with user
         .ui.stackable.padded.grid
-            .three.wide.column
-                img.ui.centered.medium.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            .four.wide.column
+                span.mobile.only
+                    img.ui.centered.tiny.circular.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                span.mobile.hidden
+                    img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 a.ui.large.center.aligned.header.refresh_user_stats(href="/user/#{username}") 
                     |#{name}
-                a.ui.center.aligned.header.refresh_user_stats(href="/user/#{username}") 
+                a.ui.center.aligned.grey.inline.header.refresh_user_stats(href="/user/#{username}") 
                     |@#{username}
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
-                .spacer
-                .item #{total_bandwith} total bandwith
-                .item #{calculated_user_balance}p recorded balance
-                // .ui.small.inline.header {{fixed one_score}} one score
-                div
+                // div
                 if is_admin
                     a.ui.large.icon.button(href="/user/#{username}/edit" title='admin edit')
                         i.shield.icon
@@ -28,7 +27,7 @@ template(name='profile_layout')
                 
                 unless is_current_user
                     if currentUser
-                        div
+                        // div
                         +user_friend_button 
                 // a.ui.big.icon.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
                 //     i.dashboard.large.icon
@@ -39,32 +38,41 @@ template(name='profile_layout')
                 // if is_current_user
                 //     a.ui.big.icon.button(href="/user/#{username}/edit/membership" class="{{isActivePath 'user_finance'}}")
                 //         i.money.large.icon
-                
+                if spirit_animal
+                    span(title="spirit animal #{spirit_animal}")
+                        +icolor name=spirit_animal
 
-            .thirteen.wide.column
-                a.ui.big.compact.button(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}")
-                    i.dashboard.icon
-                    |dashboard
-                a.ui.big.compact.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
-                    i.info.icon
-                    |about
-                a.ui.big.compact.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
-                    i.donate.icon
-                    |credits
-                a.ui.big.compact.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                a(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}")
+                    i.big.dashboard.circular.link.icon
+                    // |dashboard
+                a(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
+                    i.big.info.circular.link.icon
+                // |about
+                a(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
+                    i.big.donate.circular.black.link.icon
+                    // |credits
+                a(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                    i.big.send.circular.black.link.icon
+                    // |sent
+                a(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
+                    i.big.calendar.circular.black.link.icon
+                    // |events
+                a(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                    i.big.chat.circular.black.link.icon
+                    // |chat
+                a(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
+                    i.big.users.circular.black.link.icon
+                    // |friends
+                .ui.huge.green.circular.icon.button.send
                     i.send.icon
-                    |sent
-                a.ui.big.compact.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
-                    i.calendar.icon
-                    |events
-                a.ui.big.compact.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
-                    i.chat.icon
-                    |chat
-                a.ui.big.compact.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
-                    i.users.icon
-                    |friends
-                .spacer
-                .spacer
+                    // |send
+                .ui.huge.teal.circular.icon.button.request
+                    i.hand.holding.heart.icon
+                    // |request
+                    
+                // .spacer
+                // .spacer
+            .twelve.wide.column
                 +yield    
                       
 
@@ -73,18 +81,11 @@ template(name='profile_layout')
 template(name='user_dashboard')
     // +user_about
     // .ui.hidden.divider
-    .ui.two.column.grid 
-        .column
-            .ui.huge.fluid.green.button.send
-                i.send.icon
-                |send
-        .column
-            .ui.huge.fluid.teal.button.request
-                i.hand.holding.heart.icon
-                |request
-    .ui.hidden.divider
     .ui.stackable.four.column.grid
         .column
+            .item #{total_bandwith} total bandwith
+            .item #{calculated_user_balance}p recorded balance
+            // .ui.small.inline.header {{fixed one_score}} one score
             +user_credits_small
         .column
             .ui.inline.header 
@@ -141,13 +142,8 @@ template(name='user_dashboard')
 
 template(name='user_friend_button')
     if is_friend
-        .ui.blue.fade.animated.fluid.button.unfriend
-            .visible.content
-                i.checkmark.icon
-                |friend
-            .hidden.content
-                i.minus.icon
+        .ui.blue.big.icon.circular.button.unfriend(title='unfriend')
+            i.checkmark.big.icon
     else
-        .ui.fluid.button.friend
-            i.plus.icon
-            |friend
+        .ui.big.icon.circular.button.friend(title='friend')
+            i.user.plus.big.icon

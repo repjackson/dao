@@ -11,27 +11,32 @@ template(name='add')
                     a.ui.teal.card.add_request
                         .content
                             .ui.icon.teal.header
-                                i.hand.holding.heart.icon
+                                // i.hand.holding.heart.icon
+                                +icon name='sell'
                                 |request
                     a.ui.violet.card.add_event
                         .content
                             .ui.icon.header
-                                i.calendar.icon
+                                // i.calendar.icon
+                                +icon name='calendar'
                                 |event
                     a.ui.brown.card.add_product
                         .content
                             .ui.icon.orange.header
-                                i.cart.icon
+                                // i.cart.icon
+                                +icon name='product'
                                 |product
                     if is_in_levels 'steward'
                         a.ui.blue.card.add_shift
                             .content
                                 .ui.icon.orange.header
-                                    i.clock.icon
+                                    // i.clock.icon
+                                    +icon name='clock'
                                     |shift
                     a.ui.yellow.card.add_gift
                         .content
                             .ui.icon.green.header
-                                i.gift.icon
+                                +icon name='gift'
+                                // i.gift.icon
                                 |gift
                     

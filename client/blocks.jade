@@ -6,9 +6,9 @@ template(name='ibig')
     //- img.ui.image(src="https://img.icons8.com/color/256/000000/#{name}.png" class=cl)
     //- img.ui.image(src="https://img.icons8.com/ios/256/000000/#{name}.png" class=cl)
 template(name='icon')    
-    //- img.ui.image(src="https://img.icons8.com/dusk/48/000000/#{name}.png" class=cl)
+    img.ui.image(src="https://img.icons8.com/dusk/48/000000/#{name}.png" class=cl)
     //- img.ui.image(src="https://img.icons8.com/plasticine/48/000000/#{name}.png" class=cl)
-    img.ui.image(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl)
+    // img.ui.image(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl)
     //- img.ui.image(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl)
     //- img.ui.image(src="https://img.icons8.com/fluent/48/000000/#{name}.png" class=cl)
     //- img.ui.image(src="https://img.icons8.com/cotton/48/000000/#{name}.png" class=cl)
@@ -372,9 +372,9 @@ template(name='view_button')
 
 
 template(name='remove_button')
-    .ui.icon.button.remove_doc(title='delete')
+    .ui.icon.circular.button.remove_doc(title='delete')
         i.red.remove.icon
-        |delete
+        // |delete
 
 template(name='remove_icon')
     i.remove.link.icon.remove_doc(title='delete')
@@ -461,7 +461,7 @@ template(name='user_string_toggle')
 
 
 template(name='key_value_edit')
-    .ui.compact.large.button.set_key_value(class=set_key_value_class title=value)
+    .ui.compact.big.circular.button.set_key_value(class=set_key_value_class title=value)
         if icon
             +icon name=icon cl='ui avatar image'
             //- i.icon(class=icon)

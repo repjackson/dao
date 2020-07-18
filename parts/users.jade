@@ -2,9 +2,9 @@ template(name='users')
     .ui.padded.stackable.grid
         .sixteen.wide.column
             // .ui.button 
-            //     |gift count
+            //     |debit count
             // .ui.button 
-            //     |gift amount
+            //     |debit amount
             // .ui.button 
             //     |credit count
             // .ui.button 
@@ -47,9 +47,9 @@ template(name='user_item')
             //     .ui.label #{this}
             // strong #{credit_count} credits
             strong #{credit_count}/
-            strong #{gift_count}
+            strong #{debit_count}
             strong {{credit_ratio}}
-            // span ##{global_gift_count_rank}
+            // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
             // .ui.small.header #{points} points
             // each first_five_tags
@@ -64,9 +64,9 @@ template(name='user_item')
                 +addtoset_user key='levels' value='steward'
         .content
             .ui.two.buttons
-                .ui.green.gift.icon.button.gift(title='gift')
-                    i.gift.large.icon
-                    // |gift
+                .ui.green.debit.icon.button.debit(title='debit')
+                    i.send.large.icon
+                    // |debit
                 .ui.teal.icon.button.request(title='request')
                     i.hand.holding.heart.large.icon
                     // |request

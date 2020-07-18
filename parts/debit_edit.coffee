@@ -1,12 +1,12 @@
 if Meteor.isClient
-    Router.route '/gift/:doc_id/edit', (->
+    Router.route '/debit/:doc_id/edit', (->
         @layout 'layout'
-        @render 'gift_edit'
-        ), name:'gift_edit'
+        @render 'debit_edit'
+        ), name:'debit_edit'
         
         
-    Template.gift_edit.onCreated ->
-        @autorun => Meteor.subscribe 'recipient_from_gift_id', Router.current().params.doc_id
+    Template.debit_edit.onCreated ->
+        @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'all_users'
@@ -14,29 +14,29 @@ if Meteor.isClient
 
 
 
-    Template.gift_edit.helpers
+    Template.debit_edit.helpers
         recipient: ->
-            gift = Docs.findOne Router.current().params.doc_id
-            if gift.recipient_id
+            debit = Docs.findOne Router.current().params.doc_id
+            if debit.recipient_id
                 Meteor.users.findOne
-                    _id: gift.recipient_id
+                    _id: debit.recipient_id
         members: ->
-            gift = Docs.findOne Router.current().params.doc_id
-            if gift.recipient_ids
+            debit = Docs.findOne Router.current().params.doc_id
+            if debit.recipient_ids
                 Meteor.users.find 
                     levels: $in: ['member']
-                    _id: $ne: gift.recipient_id
+                    _id: $ne: debit.recipient_id
             else
                 Meteor.users.find 
                     levels: $in: ['member']
         # subtotal: ->
-        #     gift = Docs.findOne Router.current().params.doc_id
-        #     gift.amount*gift.recipient_ids.length
+        #     debit = Docs.findOne Router.current().params.doc_id
+        #     debit.amount*debit.recipient_ids.length
         
         can_submit: ->
-            gift = Docs.findOne Router.current().params.doc_id
-            gift.amount and gift.recipient_id
-    Template.gift_edit.events
+            debit = Docs.findOne Router.current().params.doc_id
+            debit.amount and debit.recipient_id
+    Template.debit_edit.events
         'click .add_recipient': ->
             Docs.update Router.current().params.doc_id,
                 $set:
@@ -76,48 +76,62 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Template.gift_edit.onCreated ->
+    Template.debit_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'recipient_from_gift_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-    Template.gift_edit.onRendered ->
+    Template.debit_edit.onRendered ->
 
 
-    Template.gift_edit.events
+    Template.debit_edit.events
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
 
         'click .submit': ->
-            if confirm 'confirm?'
-                Meteor.call 'send_gift', @_id, =>
-                    Router.go "/gift/#{@_id}/view"
+            Swal.fire({
+                title: "confirm #{@amount}?"
+                text: ""
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonText: 'confirm'
+                cancelButtonText: 'cancel'
+            }).then((result)=>
+                if result.value
+                    Meteor.call 'send_debit', @_id, =>
+                        Swal.fire(
+                            "#{@amount} sent",
+                            ''
+                            'success'
+                        )
+                        Router.go "/debit/#{@_id}/view"
+            )
 
 
-    Template.gift_edit.helpers
-    Template.gift_edit.events
+    Template.debit_edit.helpers
+    Template.debit_edit.events
 
 if Meteor.isServer
     Meteor.methods
-        send_gift: (gift_id)->
-            gift = Docs.findOne gift_id
-            recipient = Meteor.users.findOne gift.recipient_id
-            gifter = Meteor.users.findOne gift._author_id
+        send_debit: (debit_id)->
+            debit = Docs.findOne debit_id
+            recipient = Meteor.users.findOne debit.recipient_id
+            debiter = Meteor.users.findOne debit._author_id
 
-            console.log 'sending gift', gift
+            console.log 'sending debit', debit
             Meteor.users.update recipient._id,
                 $inc:
-                    points: gift.amount
-            Meteor.users.update gifter._id,
+                    points: debit.amount
+            Meteor.users.update debiter._id,
                 $inc:
-                    points: -gift.amount
-            Docs.update gift_id,
+                    points: -debit.amount
+            Docs.update debit_id,
                 $set:
                     submitted:true
                     submitted_timestamp:Date.now()
 
 
 
-            Docs.update gift_id,
+            Docs.update debit_id,
                 $set:
                     submitted:true

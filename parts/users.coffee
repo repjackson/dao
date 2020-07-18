@@ -37,17 +37,17 @@ if Meteor.isClient
 
     Template.user_item.helpers
         credit_ratio: ->
-            unless @gift_count is 0
-                @gift_count/@gift_count
+            unless @debit_count is 0
+                @debit_count/@debit_count
 
     Template.user_item.events
-        'click .gift': ->
+        'click .debit': ->
             # user = Meteor.users.findOne(username:@username)
-            new_gift_id =
+            new_debit_id =
                 Docs.insert
-                    model:'gift'
+                    model:'debit'
                     recipient_id: @_id
-            Router.go "/gift/#{new_gift_id}/edit"
+            Router.go "/debit/#{new_debit_id}/edit"
 
         'click .request': ->
             # user = Meteor.users.findOne(username:@username)

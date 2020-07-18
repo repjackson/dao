@@ -8,19 +8,18 @@ template(name='user_edit_layout')
                     .ui.center.aligned.large.inline.header
                         +i name='settings'
                         | #{current_user.name}
+                    .ui.small.inline.header @#{current_user.username}
                     img.ui.centered.small.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         
-                    .ui.small.inline.center.aligned.header @#{current_user.username}
-                    a.ui.fluid.big.green.button(href="/user/#{current_user.username}/") 
-                        i.checkmark.icon
-                        strong save
-                    .spacer
-                    a.ui.fluid.large.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}") 
-                        i.info.icon 
-                        |info
-                    a.ui.fluid.large.button(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}") 
-                        i.cog.icon 
-                        |account
+                    a.ui.icon.big.green.circular.button(href="/user/#{current_user.username}/") 
+                        i.checkmark.big.icon
+                        // strong save
+                    a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
+                        i.info.large.blue.icon 
+                        // |info
+                    a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}" title='account') 
+                        i.cog.large.icon 
+                        // |account
                     // a.ui.button(href="/user/#{current_user.username}/edit/friends" class="{{isActivePath regex='user_edit_friends'}}") 
                     //     i.users.icon 
                     //     |friends
@@ -33,16 +32,16 @@ template(name='user_edit_layout')
                     // a.ui.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
                     //     i.lock.icon 
                     //     | privacy
-                    a.ui.fluid.large.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}") 
+                    a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
                         i.shield.icon 
-                        | membership
+                        // | membership
                 .twelve.wide.column
                     +yield
 
 template(name='user_edit_info')
     .ui.two.column.stackable.grid
         .column
-            +array_edit key='tags' label='tags' direct=true
+            +array_edit key='tags' label='tags' icon='tags' direct=true
             .spacer
             +text_edit key='city' label='city' direct=true
             .spacer
@@ -56,6 +55,10 @@ template(name='user_edit_info')
             .spacer
             
         .column
+            +text_edit key='spirit_animal' label='spirit animal' direct=true
+            if spirit_animal
+                +icolor name=spirit_animal
+            .spacer
             +textarea_edit key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
             .spacer
             +textarea_edit key='emergency_contact_name' label='emergency contact name' direct=true

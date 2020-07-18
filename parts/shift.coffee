@@ -1,4 +1,9 @@
 if Meteor.isClient
+    Template.registerHelper 'shift_template', () ->
+        Docs.findOne @template_id
+    Template.registerHelper 'st', () ->
+        Docs.findOne @template_id
+    
     Router.route '/shifts/', (->
         @layout 'layout'
         @render 'shifts'
@@ -11,16 +16,17 @@ if Meteor.isClient
     Template.shift_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'all_users'
+        @autorun => Meteor.subscribe 'shift_template_from_shift_id', Router.current().params.doc_id
 
     Template.shifts.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'shift_instance'
+        @autorun => Meteor.subscribe 'model_docs', 'shift'
         @autorun => Meteor.subscribe 'model_docs', 'shift_template'
     Template.shifts.events
-        'click .add_shift_instance': ->
+        'click .add_shift': ->
             new_id = 
                 Docs.insert
-                    model:'shift_instance'
-            Router.go "/shift_instance/#{new_id}/edit"
+                    model:'shift'
+            Router.go "/shift/#{new_id}/edit"
         'click .add_shift_template': ->
             new_id = 
                 Docs.insert
@@ -28,8 +34,8 @@ if Meteor.isClient
             Router.go "/shift_template/#{new_id}/edit"
   
     Template.shifts.helpers
-        next_shift_instances: ->
-            Docs.find {model:'shift_instance'}, 
+        next_shifts: ->
+            Docs.find {model:'shift'}, 
                 sort:
                     start_datetime:-1
 
@@ -42,6 +48,7 @@ if Meteor.isClient
 
     Template.shift_view.onRendered ->
         @autorun => Meteor.subscribe 'users'
+        @autorun => Meteor.subscribe 'shift_template_from_shift_id', Router.current().params.doc_id
     Template.shift_view.events
         'click .delete_item': ->
             if confirm 'delete item?'
@@ -53,7 +60,12 @@ if Meteor.isClient
                     Router.go "/shift/#{@_id}/view"
 
 
-# if Meteor.isServer
+if Meteor.isServer
+    Meteor.publish 'shift_template_from_shift_id', (shift_id)->
+        shift = Docs.findOne shift_id
+        Docs.find 
+            model:'shift_template'
+            _id:shift.template_id
 #     Meteor.methods
         # send_shift: (shift_id)->
         #     shift = Docs.findOne shift_id

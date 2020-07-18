@@ -1,18 +1,17 @@
-template(name='gift_edit')
+template(name='debit_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
+                .five.wide.column
                     .ui.large.basic.button.delete_item
                         i.large.red.remove.icon
                         |cancel
-                
                     .ui.segment
-                        .ui.header gifter
+                        .ui.header sender
                         .ui.header
                             img.ui.circular.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
-                .eight.wide.column
+                .six.wide.column
                     .ui.segment
                         .ui.header recipient
                         with recipient
@@ -48,19 +47,20 @@ template(name='gift_edit')
                             |#{this}
                     
                     //- +array_edit key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    .ui.big.inline.header #{amount}
-                    // .ui.big.input
-                    //     input(type='number' value=amount)
+                .five.wide.column
+                    .ui.big.header #{amount}pts
+                    .ui.big.input
+                        input(type='number' value=amount)
+                    div
                     +key_value_edit key='amount' value=1
                     +key_value_edit key='amount' value=5
                     +key_value_edit key='amount' value=10
                     +key_value_edit key='amount' value=20
                     if can_submit
-                        .ui.fluid.green.big.button.submit
-                            i.checkmark.icon
-                            |submit
+                        .ui.green.big.icon.button.submit
+                            i.big.checkmark.icon
+                            // |submit
                     else 
-                        .ui.fluid.green.big.disabled.button
+                        .ui.big.green.big.disabled.button
                             i.checkmark.icon
-                            |submit
+                            // |submit

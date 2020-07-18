@@ -31,16 +31,19 @@ template(name='home')
                 .five.wide.column
                     if can_gift
                         .ui.fluid.big.green.button.gift
-                            i.gift.icon
+                            +icon name='gift' cl='ui mini inline image'
+                            // i.gift.icon
                             |gift
                     else
                         .ui.fluid.big.green.disabled.button
-                            i.gift.icon
+                            // i.gift.icon
+                            +icon name='gift' cl='ui mini inline image'
                             |not enough to gift
                 .five.wide.column
                     if can_gift
                         .ui.fluid.big.teal.button.request
-                            i.hand.holding.heart.icon
+                            // i.hand.holding.heart.icon
+                            +icon name='sell' cl='ui mini inline image'
                             |request
                     else
                         .ui.fluid.big.teal.disabled.button
@@ -57,108 +60,108 @@ template(name='home')
         .row
             .four.wide.column
                 .ui.center.aligned.header
-                    i.shop.icon
+                    // i.shop.icon
+                    +icon name='shop' cl='ui image'
                     |featured products
                 if is_admin 
                     i.circular.plus.icon.add_shift
                 .medscroll
-                    .ui.link.items
-                        each featured_products
-                            a.item(href="/product/#{_id}/view")
-                                .image
-                                    img.ui.tiny.inline.rounded.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                .content
-                                    .header
-                                        |#{title}
-                                    .description
-                                        // if _author.profile_image_id
-                                        //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        // | #{_author_username}
-                                        // div
-                                        .ui.inline.header $#{usd_price}
-                                        .ui.inline.header #{point_price}
-                                    // .meta #{when}
-                                    // .description 
-                                    //     |#{description}
-                                    // each tags 
-                                    //     .ui.tiny.basic.circular.label #{this}
+                    each featured_products
+                        a.ui.fluid.card(href="/product/#{_id}/view")
+                            img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
+                            .content
+                                .header
+                                    |#{title}
+                                .description
+                                    // if _author.profile_image_id
+                                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                    // | #{_author_username}
+                                    // div
+                                    .ui.inline.header $#{usd_price}
+                                    .ui.inline.header #{point_price}
+                                // .meta #{when}
+                                // .description 
+                                //     |#{description}
+                                // each tags 
+                                //     .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    i.clock.icon
+                    // i.clock.icon
+                    +icon name='clock' cl='ui image'
                     |next shifts
                 if is_admin 
                     i.circular.plus.icon.add_shift
-                .smallscrol
-                    .ui.selection.link.list
-                        each next_shifts
-                            a.item(href="/shift/#{_id}/view")
-                                .content
-                                    .header
-                                        .ui.inline.header
-                                        // if _author.profile_image_id
-                                        //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        // | #{_author_username}
-                                        .item from {{from_now start_datetime}} > {{from_now end_datetime}}
-                                        if shift_contributors 
-                                            each shift_contributors
-                                                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                                |#{username}
-                                    .meta #{when}
-                                    .description 
-                                        |#{description}
-                                    each tags 
-                                        .ui.tiny.basic.circular.label #{this}
+                .medscroll
+                    each next_shifts
+                        a.ui.card(href="/shift/#{_id}/view")
+                            .content
+                                .header
+                                    .ui.inline.header
+                                    // if _author.profile_image_id
+                                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                    // | #{_author_username}
+                                    .item from {{from_now start_datetime}} > {{from_now end_datetime}}
+                                    if shift_contributors 
+                                        each shift_contributors
+                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                            |#{username}
+                                .meta #{when}
+                                .description 
+                                    |#{description}
+                                each tags 
+                                    .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    i.calendar.icon
+                    // i.calendar.icon
+                    +icon name='calendar' cl='ui image'
                     |next events
                 if is_admin 
                     i.circular.plus.icon.add_event
                     
                 .medscroll
-                    .ui.selection.link.list
-                        each next_events
-                            a.item(href="/event/#{_id}/view")
-                                .content
-                                    img.ui.medium.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                    .header
-                                        .ui.inline.small.header #{title} 
-                                        .ui.inline.header $#{usd_price} / #{point_price}p
-                                        if _author.profile_image_id
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        | #{_author_username}
-                                    .meta #{when}
-                                    .description 
-                                        |#{going_user_ids.length} going
-                                    //     |#{description}
-                                    each tags 
-                                        .ui.tiny.basic.circular.label #{this}
+                    each next_events
+                        a.ui.fluid.card(href="/event/#{_id}/view")
+                            img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
+                            .content
+                                .header
+                                    .ui.inline.small.header #{title} 
+                                    .ui.inline.header $#{usd_price} / #{point_price}p
+                                    if _author.profile_image_id
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                    | #{_author_username}
+                                .meta #{when}
+                                .description 
+                                    |#{going_user_ids.length} going
+                                //     |#{description}
+                                each tags 
+                                    .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    i.gift.icon
+                    // i.gift.icon
+                    +icon name='gift' cl='ui image'
                     |latest gifts
-                .smallscrol
-                    .ui.selection.link.list
-                        each latest_gifts
-                            a.item(href="/gift/#{_id}/view")
-                                .content
-                                    .header
-                                        .ui.inline.header #{amount}p
-                                        if _author.profile_image_id
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        | #{_author_username}
-                                        .ui.inline.header >
-                                        if recipient.profile_image_id
-                                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        |#{recipient.username}
-                                    .meta #{when}
-                                    .description 
-                                        |#{description}
-                                    each tags 
-                                        .ui.tiny.basic.circular.label #{this}
+                .medscroll
+                    each latest_gifts
+                        a.ui.card(href="/gift/#{_id}/view")
+                            .content
+                                .header
+                                    .ui.inline.header #{amount}p
+                                    if _author.profile_image_id
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                    | #{_author_username}
+                                    .ui.inline.header >
+                                    if recipient.profile_image_id
+                                        img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                    |#{recipient.username}
+                                .meta #{when}
+                                .description 
+                                    |#{description}
+                                each tags 
+                                    .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    i.hand.holding.heart.icon
+                    // i.hand.holding.heart.icon
+                    +icon name='sell' cl='ui image'
                     |latest requests
                 .smallscrol
                     .ui.selection.link.list
@@ -168,7 +171,7 @@ template(name='home')
                                     .header
                                         .ui.inline.header #{amount}p
                                         if _author.profile_image_id
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                                         | #{_author_username}
                                         .ui.inline.small.grey.header
                                             |#{description}
