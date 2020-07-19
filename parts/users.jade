@@ -1,6 +1,6 @@
 template(name='users')
     .ui.padded.stackable.grid
-        .sixteen.wide.column
+        .four.wide.column
             // .ui.button 
             //     |debit count
             // .ui.button 
@@ -10,12 +10,12 @@ template(name='users')
             // .ui.button 
             //     |credit amount
             .ui.header level filter
+            +user_cloud
+        .twelve.wide.column
             .scrolling
                 .ui.stackable.four.cards
                     each users
                         +user_item
-        .sixteen.wide.column
-            +user_cloud
 
 
 

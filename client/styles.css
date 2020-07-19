@@ -218,7 +218,7 @@ body {
 
 .card {
     /* background: black !important; */
-    /* border-radius: 10px !important; */
+     border-radius: 10px !important; 
 }
 
 a.goto_article {
@@ -246,7 +246,9 @@ a.goto_article {
     /*zoom: 120% !important;*/
     transform: scale(1.1) !important;
     /* padding-top: 5em !important; */
-     /*box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
+    /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
+    text-shadow: 0 0 3px grey !important;
+    filter: drop-shadow(5px 5px 4px grey);    
 }
 
 

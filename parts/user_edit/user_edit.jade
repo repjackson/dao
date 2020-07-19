@@ -14,11 +14,14 @@ template(name='user_edit_layout')
                     a.ui.icon.big.green.circular.button(href="/user/#{current_user.username}/") 
                         i.checkmark.big.icon
                         // strong save
-                    a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
-                        i.info.large.blue.icon 
+                    a(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
+                        +icolor name='info' cl='ui inline tiny spaced image pointer'
+                    // a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
+                    //     i.info.large.blue.icon 
                         // |info
-                    a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}" title='account') 
-                        i.cog.large.icon 
+                    a(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}" title='account') 
+                        +icolor name='settings' cl='ui inline tiny spaced image pointer'
+                        // i.cog.large.icon 
                         // |account
                     // a.ui.button(href="/user/#{current_user.username}/edit/friends" class="{{isActivePath regex='user_edit_friends'}}") 
                     //     i.users.icon 
@@ -26,35 +29,38 @@ template(name='user_edit_layout')
                     // a.ui.button(href="/user/#{current_user.username}/edit/levels" class="{{isActivePath regex='user_edit_alerts'}}") 
                     //     i.bell.icon 
                     //     |levels
-                    // a.ui.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActivePath regex='user_edit_alerts'}}") 
-                    //     i.bell.icon 
-                    //     |alerts
+                    a(href="/user/#{current_user.username}/edit/alerts" class="{{isActivePath regex='user_edit_alerts'}}") 
+                        // i.bell.big.yellow.icon 
+                        +icolor name='alarm' cl='ui inline tiny spaced image pointer'
+                        // |alerts
+                    a(href="/user/#{current_user.username}/edit/tags" class="{{isActivePath regex='user_edit_tags'}}") 
+                        // i.bell.big.yellow.icon 
+                        +icolor name='tags' cl='ui inline tiny spaced image pointer'
+                        // |alerts
+                    a(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
+                        +icolor name='privacy' cl='ui inline tiny spaced image pointer'
                     // a.ui.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
-                    //     i.lock.icon 
-                    //     | privacy
-                    a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
-                        i.shield.icon 
+                    //     i.lock.privacy.icon 
+                        // | privacy
+                    a(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
+                        +icolor name='badge' cl='ui inline tiny spaced image pointer'
+                    // a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
+                    //     i.shield.icon 
                         // | membership
                 .twelve.wide.column
                     +yield
 
 template(name='user_edit_info')
-    .ui.two.column.stackable.grid
+    .ui.one.column.stackable.grid
         .column
-            +array_edit key='tags' label='tags' icon='tags' direct=true
-            .spacer
             +text_edit key='city' label='city' direct=true
             .spacer
             +text_edit key='state' label='state' direct=true
-            .spacer
-            +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
             .spacer
             +textarea_edit key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
             .spacer
             +textarea_edit key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
             .spacer
-            
-        .column
             +text_edit key='spirit_animal' label='spirit animal' direct=true
             if spirit_animal
                 +icolor name=spirit_animal
@@ -64,6 +70,8 @@ template(name='user_edit_info')
             +textarea_edit key='emergency_contact_name' label='emergency contact name' direct=true
             .spacer
             +textarea_edit key='emergency_contact_number' label='emergency contact number' direct=true
+            .spacer
+            +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
      
 template(name='phone_editor')
     .ui.small.header    

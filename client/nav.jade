@@ -3,35 +3,35 @@ template(name='nav')
         a.item(href="/" class="{{isActivePath regex='home'}}")
             +icon name='circle' cl='ui avatar image'
             // i.large.tree.icon
-            span.mobile.hidden ne
         if currentUser
             a.item(href="/users" class="{{isActivePath regex='users'}}")
                 +icolor name='groups' cl='ui avatar image'
                 // i.large.users.icon
-                span.mobile.hidden members
+                // span.mobile.hidden members
         a.item(href="/events" class="{{isActivePath regex='events'}}" title='events')
             +icolor name='calendar' cl='ui avatar image'
             // i.large.calendar.icon
-            span.mobile.hidden events
+            // span.mobile.hidden events
         a.item(href="/shifts" class="{{isActivePath regex='shifts'}}" title='shifts')
             // i.large.clock.icon
             +icolor name='clock' cl='ui avatar image'
-            span.mobile.hidden shifts
+            // span.mobile.hidden shifts
         a.item(href="/shop" class="{{isActivePath regex='shop'}}" title='shifts')
             // i.large.shop.icon
             +icolor name='shop' cl='ui avatar image spaced'
             
-            span.mobile.hidden shop
+            // span.mobile.hidden shop
         // a.item(href="/gifts" class="{{isActivePath regex='gifts'}}" title='gifts')
         //     i.big.gift.icon
             // span.mobile.hidden gifts
         a.item(href="/requests" class="{{isActivePath regex='requests'}}" title='requests')
             // i.large.hand.holding.heart.icon
             +icolor name='sell'
-            span.mobile.hidden requests
+            // span.mobile.hidden requests
         .right.menu
             a.icon.item(href="/locations" class="{{isActivePath regex='locations'}}" title='locations')
-                i.large.marker.icon
+                +icolor name='marker'
+                // i.large.marker.icon
                 // span.mobile.hidden 
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
             //     i.large.gift.icon
