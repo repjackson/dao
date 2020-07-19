@@ -15,7 +15,7 @@ template(name='events')
                 span.mobile.hidden events
             if is_admin
                 .ui.icon.button.add_event
-                    i.plus.large.icon
+                    i.plus.big.green.icon
                     // |add event
             .scrolling
                 .ui.stackable.six.cards
@@ -81,7 +81,7 @@ template(name='event_view')
 
             .row 
                 .four.wide.column
-                    .ui.secondary.segment
+                    .ui.segment
                         .ui.header 
                             small author
                         a.ui.header(href="/user/#{_author.username}") 
@@ -89,25 +89,41 @@ template(name='event_view')
                             |#{_author.username}
                     .ui.header
                         |#{max_attendees} max attendees
-                    .ui.large.button.pick_going 
-                        i.green.checkmark.icon
-                        |going
-                    .ui.big.list
-                        each going 
-                            a.item(href="/user/#{username}") #{username}
-                    .ui.large.button.pick_maybe 
-                        i.yellow.minus.icon
-                        |maybe
-                    .ui.big.list
-                        each maybe_going
-                            a.item(href="/user/#{username}") #{username}
-                    .ui.large.button.pick_not
-                        i.red.remove.icon
-                        |not going
-                    .ui.big.list
-                        each not_going
-                            a.item(href="/user/#{username}") #{username}
-                        
+                    .ui.segment
+                        .ui.inline.header 
+                            +icolor name='event-accepted'
+                            |going
+                        .ui.icon.circular.button.pick_going 
+                            i.green.checkmark.big.icon
+                        .ui.big.list
+                            each going 
+                                a.ui.circular.button(href="/user/#{username}")    
+                                    img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{username}
+                    
+                    .ui.segment
+                        .ui.inline.header 
+                            +icolor name='event-accepted-tentatively'
+                            |maybe
+                        .ui.icon.circular.button.pick_maybe 
+                            i.yellow.minus.big.icon
+                        .ui.big.list
+                            each maybe_going
+                                a.ui.circular.button(href="/user/#{username}")    
+                                    img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{username}
+                    .ui.segment
+                        .ui.inline.header 
+                            +icolor name='event-declined'
+                            |not going
+                        .ui.circular.icon.button.pick_not
+                            i.red.big.ban.icon
+                        .ui.big.list
+                            each not_going
+                                a.ui.circular.button(href="/user/#{username}")    
+                                    img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{username}
+                            
                     .ui.small.grey.header 
                         i.line.chart.icon
                         |stats
@@ -177,6 +193,7 @@ template(name='event_edit')
                 .eight.wide.center.aligned.column
                     .ui.header 
                         i.calendar.icon
+                        
                         |edit event
                 .four.wide.center.aligned.column
                     .ui.red.circular.icon.button.delete_item(title='delete')
@@ -194,10 +211,10 @@ template(name='event_edit')
                         |audience
                     +number_edit key='max_attendees' label='max attendees' direct=true
                     +number_edit key='point_price' label='points per ticket' direct=true
-                    +key_value_edit key='point_price' value=1
-                    +key_value_edit key='point_price' value=5
-                    +key_value_edit key='point_price' value=10
-                    +key_value_edit key='point_price' value=20
+                    // +key_value_edit key='point_price' value=1
+                    // +key_value_edit key='point_price' value=5
+                    // +key_value_edit key='point_price' value=10
+                    // +key_value_edit key='point_price' value=20
                     +number_edit key='usd_price' label='dollars per ticket' direct=true
                 .column
                     +textarea_edit key='description' label='description' direct=true

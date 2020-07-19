@@ -1,4 +1,4 @@
-template(name='shifts')
+template(name='locations')
     .ui.padded.stackable.grid
         .sixteen.wide.column
             // .ui.button 
@@ -10,41 +10,28 @@ template(name='shifts')
             // .ui.button 
             //     |credit amount
             .ui.inline.header 
-                +icolor name='clock' 
-                |shifts
+                +icolor name='marker' 
+                |locations
             if is_admin
-                .ui.icon.circular.button.add_shift
+                .ui.icon.circular.button.add_location
                     i.plus.green.icon
-                    // |add shift
-        .sixteen.wide.column
+                    // |add location
             .scrolling
-                .ui.stackable.six.cards
-                    each next_shifts
-                        +shift_item
-            if is_admin
-                .ui.inline.header 
-                    i.shield.icon
-                    |shift templates
-                .ui.button.add_shift_template
-                    i.plus.icon
-                    |add shift template
-                .scrolling
-                    .ui.stackable.six.cards
-                        each shift_templates
-                            +shift_template_card
-
-        .sixteen.wide.column
-            // +shift_cloud
+                .ui.stackable.three.cards
+                    each locations
+                        +location_item
+        // .sixteen.wide.column
+            // +location_cloud
 
 
-template(name='shift_item')
-    a.card(href="/shift/#{_id}/view")
-        .image
-            if st.image_id
-                img.ui.raw.image(src="{{c.url st.image_id width=400 height=300 crop='fill'}}")    
+template(name='location_item')
+    a.card(href="/location/#{_id}/view")
+        if image
+            a(href="/location/#{_id}/view")
+                img.ui.image(src="{{c.url image height=500 width=500 gravity='face' crop='fill'}}")
         .content
-            a.ui.header(href="/shift/#{_id}/view")
-                |#{shift_template.title}
+            a.ui.header(href="/location/#{_id}/view") #{title}
+            |#{when}
             .ui.list 
                 .item #{date} date
                 .item from {{from_now st.start_datetime}}
@@ -59,12 +46,12 @@ template(name='shift_item')
         
         
         
-template(name='shift_card')
+template(name='location_card')
     .card
         .image
             img.ui.raw.image(src="{{c.url job.image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/shift/#{_id}/view")
+            a.ui.header(href="/location/#{_id}/view")
                 |#{job.title}
                 |#{title}
             .ui.basic.label from {{long_date start_datetime}}
@@ -77,29 +64,29 @@ template(name='shift_card')
                 each contributers
                     .item #{username} contributer
                 //- |#{username}
-        a.ui.button(href="/shift/#{_id}/view")
+        a.ui.button(href="/location/#{_id}/view")
             |view
             i.right.chevron.icon
 
 
-template(name='shift_view')
+template(name='location_view')
     with current_doc
         .ui.stackable.padded.grid
             .center.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.fluid.big.compact.button(href="/shifts")
+                    a.ui.fluid.big.compact.button(href="/locations")
                         // i.chevron.left.icon
                         // i.large.clock.icon
                         +icolor name='clock' cl='ui inline mini image'
-                        |shifts
+                        |locations
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icon name='clock'
-                        |view shift 
+                        |view location 
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit 
-                        a.ui.big.circular.blue.icon.button(href="/shift/#{_id}/edit" title='edit shift instance')
+                        a.ui.big.circular.blue.icon.button(href="/location/#{_id}/edit" title='edit location instance')
                             i.pencil.large.icon
             .row 
                 .four.wide.column
@@ -107,12 +94,13 @@ template(name='shift_view')
                     if st.image_id
                         img.ui.fluid.image(src="{{c.url st.image_id height=500 width=500 gravity='face' crop='fill'}}")
                     a.ui.header(href="/job/#{_id}/view")
-                        |#{shift_template.title} shift template
+                        |#{location_template.title} location template
                     +image_view key='image_id' label='image' direct=true
                 .eight.wide.column
                     .ui.header
                         |leader:
-                        |#{shift_leader.name}
+                        |#{location_leader.name}
+                    +image_view key='image' label='image' direct=true
                     .ui.header
                         |participants
                     each recipients
@@ -133,7 +121,7 @@ template(name='shift_view')
                     .ui.header workers
                     each workers 
                         .ui.header #{username}
-                    a.ui.header(href="/shift/#{_id}/view")
+                    a.ui.header(href="/location/#{_id}/view")
                         |#{job.title}
                     .ui.basic.label from {{long_date start_datetime}}
                         small {{from_now start_datetime}}
@@ -146,49 +134,33 @@ template(name='shift_view')
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
-template(name='shift_edit')
+                    
+                    
+                    
+template(name='location_edit')
     with current_doc
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.circular.green.icon.button(href="/shift/#{_id}/view" title='save')
+                    a.ui.circular.green.icon.button(href="/location/#{_id}/view" title='save')
                         i.checkmark.huge.icon
                         // |save
                 .eight.wide.center.aligned.column
-                    .ui.header 
+                    .ui.small.inline.header 
                         +icon name='clock'
-                        |edit shift instance
+                        |edit location
+                    .ui.inline.header #{title}
                 .four.wide.center.aligned.column
-                    .ui.red.icon.circular.button.delete_item(title='delete shift')
+                    .ui.red.icon.circular.button.delete_item(title='delete location')
                         i.large.remove.icon
             .row 
                 .four.wide.column
-                    .ui.small.header #{shift_template.title} title
                 .eight.wide.column
-                    .ui.header 
-                        small author
-                        |#{_author.username}
-                    |#{target.username}
-                    +date_edit key='date' label='date' direct=true
+                    +text_edit key='title' label='title' direct=true
+                    +image_edit key='image' label='image' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     div 
-                    +array_edit key='tags' label='tags' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    +array_edit key='tags' label='tags' icon='tags' direct=true
+                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .four.wide.column
-                    .ui.header
-                        i.user.tie.icon
-                        |leader
-                    with shift_leader
-                        a.ui.big.button(href="/user/#{username}") 
-                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{username}
-                        i.circular.remove.link.icon.clear_leader
-                    unless shift_leader
-                        .ui.segment
-                            .ui.small.header select steward as leader
-                            each unselected_stewards
-                                .ui.basic.circular.button.select_leader
-                                    img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                    |#{name}
-                    +number_edit key='leader_bounty' label='leader bounty' direct=true
                     
