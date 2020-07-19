@@ -48,19 +48,36 @@ if Meteor.isClient
 
     Template.event_view.events
         'click .buy_for_points': ->
-            if confirm "buy for #{@point_price} points?"
-                Docs.insert 
-                    model:'transaction'
-                    transaction_type:'ticket_purchase'
-                    payment_type:'points'
-                    is_points:true
-                    point_amount:@point_price
-                    event_id:@_id
-                Meteor.users.update Meteor.userId(),
-                    $inc:points:-@point_price
-                Meteor.users.update @_author_id, 
-                    $inc:points:@point_price
-
+            Swal.fire({
+                title: "buy ticket for #{@point_price}pts?"
+                text: "#{@title}"
+                icon: 'question'
+                confirmButtonText: 'purchase'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.insert 
+                        model:'transaction'
+                        transaction_type:'ticket_purchase'
+                        payment_type:'points'
+                        is_points:true
+                        point_amount:@point_price
+                        event_id:@_id
+                    Meteor.users.update Meteor.userId(),
+                        $inc:points:-@point_price
+                    Meteor.users.update @_author_id, 
+                        $inc:points:@point_price
+                    Swal.fire(
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'ticket purchased',
+                        showConfirmButton: false,
+                        timer: 1500
+                    )
+            )
     
         'click .buy_for_usd': ->
             console.log Template.instance()
@@ -81,8 +98,11 @@ if Meteor.isClient
                 text: "for: #{@title}"
                 icon: 'question'
                 showCancelButton: true,
-                confirmButtonText: 'confirm'
+                confirmButtonText: 'purchase'
+                confirmButtonColor: 'green'
+                showCancelButton: true
                 cancelButtonText: 'cancel'
+                reverseButtons: true
             }).then((result)=>
                 if result.value
                     # Session.set('topup_amount',5)

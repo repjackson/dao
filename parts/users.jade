@@ -10,8 +10,8 @@ template(name='users')
             // .ui.button 
             //     |credit amount
             .ui.header level filter
-            .scrollig
-                .ui.stackable.six.cards
+            .scrolling
+                .ui.stackable.four.cards
                     each users
                         +user_item
         .sixteen.wide.column
@@ -40,38 +40,36 @@ template(name='user_item')
         a(href="/user/#{username}")
             img.ui.raw.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/user/#{username}")
+            a.ui.inline.header(href="/user/#{username}")
                 |#{name}
                 //- |#{username}
+                if spirit_animal
+                    +icolor name=spirit_animal cl='ui avatar image'
             // each levels
             //     .ui.label #{this}
             // strong #{credit_count} credits
-            strong #{credit_count}/
-            strong #{debit_count}
-            strong {{credit_ratio}}
-            if spirit_animal
-                +icolor name=spirit_animal cl='ui avatar image'
+            // strong #{credit_count}/
+            // strong #{debit_count}
+            // strong {{credit_ratio}}
             // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
             // .ui.small.header #{points} points
             // each first_five_tags
             //     .ui.circular.basic.label #{this}
-            if is_admin
-                each levels
-                    .ui.label #{this}
-                +addtoset_user key='levels' value='member'
-                // +addtoset_user key='levels' value='contributor'
-                +addtoset_user key='levels' value='explorer'
-                +addtoset_user key='levels' value='regenerator'
-                +addtoset_user key='levels' value='steward'
-        .content
-            .ui.two.buttons
-                .ui.green.debit.icon.button.debit(title='debit')
-                    i.send.large.icon
-                    // |debit
-                .ui.teal.icon.button.request(title='request')
-                    i.hand.holding.heart.large.icon
-                    // |request
+            // if is_admin
+            //     each levels
+            //         .ui.label #{this}
+            //     +addtoset_user key='levels' value='member'
+            //     // +addtoset_user key='levels' value='contributor'
+            //     +addtoset_user key='levels' value='explorer'
+            //     +addtoset_user key='levels' value='regenerator'
+            //     +addtoset_user key='levels' value='steward'
+            .ui.green.icon.circular.button.debit(title='debit')
+                i.send.large.icon
+                // |debit
+            .ui.teal.icon.circular.button.request(title='request')
+                i.hand.holding.heart.large.icon
+                // |request
                     
 
 template(name='addtoset_user')

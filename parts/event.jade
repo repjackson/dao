@@ -66,7 +66,7 @@ template(name='event_view')
                         span.mobile.hidden events
                 .eight.wide.center.aligned.column
                     .ui.small.inline.header(title='viewing event')
-                        +icolor name='calendar'
+                        +icolor name='tear-off-calendar'
                         // i.calendar.icon
                         // |view event
                     .ui.large.inline.header #{title}
@@ -92,7 +92,7 @@ template(name='event_view')
                     .ui.segment
                         .ui.inline.header 
                             +icolor name='event-accepted'
-                            |going
+                            |#{going.count} going
                         .ui.icon.circular.button.pick_going 
                             i.green.checkmark.big.icon
                         .ui.big.list
@@ -104,7 +104,7 @@ template(name='event_view')
                     .ui.segment
                         .ui.inline.header 
                             +icolor name='event-accepted-tentatively'
-                            |maybe
+                            |#{maybe.count} maybe
                         .ui.icon.circular.button.pick_maybe 
                             i.yellow.minus.big.icon
                         .ui.big.list
@@ -115,7 +115,7 @@ template(name='event_view')
                     .ui.segment
                         .ui.inline.header 
                             +icolor name='event-declined'
-                            |not going
+                            |#{not_going.count} not going
                         .ui.circular.icon.button.pick_not
                             i.red.big.ban.icon
                         .ui.big.list
@@ -147,24 +147,27 @@ template(name='event_view')
                     // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.small.header #{tickets_left} tickets left
                     .ui.scondary.segment
-                        .ui.header 
-                            i.cart.icon
-                            |buy
+                        .ui.inline.header 
+                            // i.cart.icon
+                            +icolor name='buy'
+                            |buy ticket
+                        .ui.grey.small.inline.header #{tickets_left} left
+                        div
                         .ui.big.circular.green.button.buy_for_usd
                             // |buy for 
+                            // +icolor name='money' cl='ui inline image'
                             |$#{usd_price}
                         .ui.inline.header or
-                        .ui.big.circular.green.button.buy_for_points
+                        .ui.big.circular.teal.button.buy_for_points
                             // i.cart.icon
                             // |buy for 
                             |#{point_price}pts
                         .ui.header your points #{currentUser.points}
                 
                     .ui.header 
-                        i.clock.icon
-                        |#{ticket_purchases} purchased tickets
+                        +icolor name='activity-history' cl='ui inline image'
+                        |#{ticket.length} purchased tickets
                     .ui.large.link.selection.list
                         each tickets
                             a.ui.item(href="/ticket/#{_id}/view") 
@@ -176,8 +179,11 @@ template(name='event_view')
                                             .ui.inline.header #{point_amount}pts
                                         
                                         |#{when} #{_author_username}
-                            if is_admin
-                                +remove_button
+                                    if can_edit 
+                                        .ui.circular.icon.button.return
+                                            +icolor name='return-purchase' cl='ui mini inline image'
+                                    if is_admin
+                                        +remove_button
 
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon

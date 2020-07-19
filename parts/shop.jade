@@ -1,6 +1,6 @@
 template(name='products')
     .ui.padded.stackable.grid
-        .sixteen.wide.column
+        .four.wide.column
             // .ui.button 
             //     |debit count
             // .ui.button 
@@ -18,7 +18,7 @@ template(name='products')
                 .ui.icon.circular.button.add_product(title='add product')
                     i.plus.icon
                     // |add product
-        .sixteen.wide.column
+        .twelve.wide.column
             .scrolling
                 .ui.stackable.four.cards
                     each product_docs
@@ -29,15 +29,14 @@ template(name='product_item')
     .ui.card
         if image_id
             a(href="/product/#{_id}/view")
-                img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
         .content
             a.ui.header(href="/product/#{_id}/view") #{title}
-            |#{when}
-            .ui.header $#{usd_price}
-            .ui.header #{point_price}pts
-        a.ui.button(href="/product/#{_id}/view")
-            |view
-            i.right.chevron.icon
+            // |#{when}
+            .ui.circular.green.big.label
+                |$#{usd_price}
+            .ui.circular.teal.big.label 
+                |#{point_price}pts
 
 
 
