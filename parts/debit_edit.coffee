@@ -90,12 +90,13 @@ if Meteor.isClient
 
         'click .submit': ->
             Swal.fire({
-                title: "confirm #{@amount}?"
+                title: "confirm send #{@amount}pts?"
                 text: ""
                 icon: 'question'
                 showCancelButton: true,
                 confirmButtonText: 'confirm'
                 cancelButtonText: 'cancel'
+                reverseButtons: true
             }).then((result)=>
                 if result.value
                     Meteor.call 'send_debit', @_id, =>

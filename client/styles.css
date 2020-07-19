@@ -244,11 +244,11 @@ a.goto_article {
     /* color: black !important; */
     /* font-size: 130% !important; */
     /*zoom: 120% !important;*/
-    transform: scale(1.1) !important;
+    transform: scale(1.05) !important;
     /* padding-top: 5em !important; */
     /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
-    text-shadow: 0 0 3px grey !important;
-    filter: drop-shadow(5px 5px 4px grey);    
+    /*text-shadow: 0 0 3px grey !important;*/
+    filter: drop-shadow(2px 2px 4px grey);    
 }
 
 
