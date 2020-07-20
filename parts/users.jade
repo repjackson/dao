@@ -36,9 +36,9 @@ template(name='user_cloud')
         
 
 template(name='user_item')
-    .card.rounded
+    .card.rounded.pointer
         a(href="/user/#{username}")
-            img.ui.raw.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
+            img.ui.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
         .content
             a.ui.inline.header(href="/user/#{username}")
                 |#{name}

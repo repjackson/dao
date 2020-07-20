@@ -1,11 +1,11 @@
 template(name='nav')
     .ui.fluid.attached.borderless.inverted.menu.topnav
         a.item(href="/" class="{{isActivePath regex='home'}}")
-            +icon name='circle' cl='ui avatar image'
+            +icon name='circled' cl='ui avatar image'
             // i.large.tree.icon
         if currentUser
             a.item(href="/users" class="{{isActivePath regex='users'}}")
-                +icolor name='groups' cl='ui avatar image'
+                +icolor name='conference-call' cl='ui avatar image'
                 // i.large.users.icon
                 // span.mobile.hidden members
         a.item(href="/events" class="{{isActivePath regex='events'}}" title='events')

@@ -20,26 +20,27 @@ body {
 }
 
 .bg_overlay {
-  /* Set rules to fill background */
-  min-height: 100% !important;
-  min-width: 1024px !important;
-	
-  /* Set up proportionate scaling */
-  width: 100% !important;
-  height: auto !important;
-	
-  /* Set up positioning */
-  position: fixed;
-  top: 0 !important;
-  left: 0 !important;
-  opacity: .1 !important;
-  z-index: -100 !important;
+    /* Set rules to fill background */
+    min-height: 100% !important;
+    min-width: 1024px !important;
+    /*min-width: 100% !important;*/
+    
+    /* Set up proportionate scaling */
+    width: 100% !important;
+    height: auto !important;
+    
+    /* Set up positioning */
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    opacity: .1 !important;
+    z-index: -100 !important;
 }
 
 @media screen and (max-width: 1024px) { /* Specific to this particular image */
-  .bg_overlay {
-    left: 50%;
-    margin-left: -512px;   /* 50% */
+  /*.bg_overlay {*/
+  /*  left: 50%;*/
+    margin-left: -512px;   /* 50% 
   }
 }
 
@@ -454,8 +455,8 @@ input {
     border-style: solid !important; */
     overflow-y:scroll;
     overflow-x:hidden;
-    /* padding-top: .2em; */
-    padding: .2em;
+    padding-top: .5em; 
+    padding: .4em;
     /*padding-left: 1em;*/
 }
 .forty {

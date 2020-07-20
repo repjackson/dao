@@ -94,9 +94,9 @@ if Meteor.isClient
             # model = 'event'
             # console.log "selected_#{model}_tags"
             selected_user_tags.array()
-        all_tags: ->
+        all_levels: ->
             user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
-            if 0 < user_count < 3 then User_tags.find { count: $lt: user_count } else User_tags.find()
+            if 0 < user_count < 3 then Levels.find { count: $lt: user_count } else Levels.find()
         selected_user_tags: ->
             # model = 'event'
             # console.log "selected_#{model}_tags"
@@ -159,7 +159,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_user_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 42 }
+            { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
 

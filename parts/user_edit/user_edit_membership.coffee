@@ -34,6 +34,7 @@ if Meteor.isClient
             target_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
                 model:'transaction'
+                transaction_type:'membership'
                 _author_id: target_user._id
             }, 
                 sort:

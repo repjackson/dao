@@ -5,22 +5,23 @@ template(name='profile_layout')
         .ui.stackable.padded.grid
             .four.wide.column
                 span.mobile.only
-                    img.ui.centered.tiny.circular.inline.spaced.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    img.ui.centered.tiny.circular.inline.spaced.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                 span.mobile.hidden
-                    img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                a.ui.large.center.aligned.header.refresh_user_stats(href="/user/#{username}") 
+                    img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                a.ui.large.header.refresh_user_stats(href="/user/#{username}") 
                     |#{name}
-                a.ui.center.aligned.grey.inline.header.refresh_user_stats(href="/user/#{username}") 
+                div
+                a.ui.grey.header.refresh_user_stats(href="/user/#{username}") 
                     |@#{username}
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
-                // div
+                div
                 if is_admin
                     a.ui.large.icon.button(href="/user/#{username}/edit" title='admin edit')
                         i.shield.icon
                 if is_current_user
                     a.ui.big.icon.circular.button(href="/user/#{username}/edit" title='account')
-                        i.cog.big.icon
+                        i.cog.big.icon 
                     a.ui.big.icon.circular.button.logout(href="#" title='log out')
                         i.sign.out.alternate.large.icon
                 // .ui.header #{points}pts
@@ -72,6 +73,10 @@ template(name='profile_layout')
                 //     span.mobile.hidden sent
                 a(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
                     +icolor name='calendar' cl='ui inline spaced image pointer'
+                a(href="/user/#{username}/stats" class="{{isActivePath 'user_stats'}}")
+                    +icolor name='line-chart' cl='ui inline spaced image pointer'
+                a(href="/user/#{username}/requests" class="{{isActivePath 'user_requests'}}")
+                    +icolor name='sell' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
                 //     i.big.calendar.orange.icon
                 //     span.mobile.hidden events
@@ -86,8 +91,8 @@ template(name='profile_layout')
                 //     i.big.users.icon
                 //     span.mobile.hidden friends
                     
-                // .spacer
-                // .spacer
+                .spacer
+                .spacer
                 +yield    
                       
 
@@ -100,11 +105,11 @@ template(name='user_dashboard')
         .column
             .item #{total_bandwith} total bandwith
             .item #{calculated_user_balance}p recorded balance
-            // .ui.small.inline spaced.header {{fixed one_score}} one score
+            // .ui.small.inline.spaced.header {{fixed one_score}} one score
             +user_credits_small
         .column
-            .ui.inline spaced.header 
-                i.send.icon
+            .ui.inline.spaced.header 
+                +icolor name='filled-sent' 
                 |#{total_send_amount}p
                 |sent
                 small(title='send count') (#{send_count}x)
@@ -130,10 +135,10 @@ template(name='user_dashboard')
                                     .ui.mini.label #{this}
                             if is_admin
                                 +remove_button
-            +number_edit key='points' label='points' direct=true
         .column
             .ui.header 
-                i.hand.holding.heart.icon
+                // i.hand.holding.heart.icon
+                +icolor name='sell'
                 |requests
             .ui.link.list.smallscroll
                 each user_requests
@@ -144,7 +149,7 @@ template(name='user_dashboard')
                         |#{when}
         .column
             .ui.header 
-                i.calendar.icon
+                +icolor name='calendar' cl='ui inline spaced image'
                 |events
             .ui.link.list.smallscroll
                 each user_events

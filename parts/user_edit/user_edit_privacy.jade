@@ -1,0 +1,9 @@
+template(name='user_edit_privacy')
+    .ui.header
+        +icolor name='private' cl='ui image'
+        | privacy
+    .ui.grid 
+        .row 
+            .sixteen.wide.column
+                +array_edit key='tags' label='tags' icon='tags' direct=true
+                .spacer

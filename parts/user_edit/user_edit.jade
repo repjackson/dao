@@ -15,12 +15,12 @@ template(name='user_edit_layout')
                         i.checkmark.big.icon
                         // strong save
                     a(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
-                        +icolor name='info' cl='ui inline tiny spaced image pointer'
+                        +icolorlg name='info' cl='ui inline tiny spaced image pointer'
                     // a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
                     //     i.info.large.blue.icon 
                         // |info
                     a(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}" title='account') 
-                        +icolor name='settings' cl='ui inline tiny spaced image pointer'
+                        +icolorlg name='settings' cl='ui inline tiny spaced image pointer'
                         // i.cog.large.icon 
                         // |account
                     // a.ui.button(href="/user/#{current_user.username}/edit/friends" class="{{isActivePath regex='user_edit_friends'}}") 
@@ -31,19 +31,19 @@ template(name='user_edit_layout')
                     //     |levels
                     a(href="/user/#{current_user.username}/edit/alerts" class="{{isActivePath regex='user_edit_alerts'}}") 
                         // i.bell.big.yellow.icon 
-                        +icolor name='alarm' cl='ui inline tiny spaced image pointer'
+                        +icolorlg name='alarm' cl='ui inline tiny spaced image pointer'
                         // |alerts
                     a(href="/user/#{current_user.username}/edit/tags" class="{{isActivePath regex='user_edit_tags'}}") 
                         // i.bell.big.yellow.icon 
-                        +icolor name='tags' cl='ui inline tiny spaced image pointer'
+                        +icolorlg name='tags' cl='ui inline tiny spaced image pointer'
                         // |alerts
                     a(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
-                        +icolor name='privacy' cl='ui inline tiny spaced image pointer'
+                        +icolorlg name='privacy' cl='ui inline tiny spaced image pointer'
                     // a.ui.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
                     //     i.lock.privacy.icon 
                         // | privacy
                     a(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
-                        +icolor name='badge' cl='ui inline tiny spaced image pointer'
+                        +icolorlg name='badge' cl='ui inline tiny spaced image pointer'
                     // a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
                     //     i.shield.icon 
                         // | membership
@@ -53,9 +53,11 @@ template(name='user_edit_layout')
 template(name='user_edit_info')
     .ui.one.column.stackable.grid
         .column
-            +text_edit key='city' label='city' direct=true
+            +text_edit key='city' label='city' icon='city' direct=true
             .spacer
-            +text_edit key='state' label='state' direct=true
+            +text_edit key='state' label='state' icon='state' direct=true
+            .spacer
+            +link_edit key='website' label='website' icon='link' direct=true
             .spacer
             +textarea_edit key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
             .spacer
@@ -67,11 +69,11 @@ template(name='user_edit_info')
             .spacer
             +textarea_edit key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
             .spacer
-            +textarea_edit key='emergency_contact_name' label='emergency contact name' direct=true
-            .spacer
-            +textarea_edit key='emergency_contact_number' label='emergency contact number' direct=true
-            .spacer
             +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
+            .spacer
+            +textarea_edit key='emergency_contact_name' label='emergency contact name' icon='emergency' direct=true
+            .spacer
+            +textarea_edit key='emergency_contact_number' label='emergency contact number' icon='emergency' direct=true
      
 template(name='phone_editor')
     .ui.small.header    

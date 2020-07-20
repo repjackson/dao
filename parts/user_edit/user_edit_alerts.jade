@@ -1,27 +1,6 @@
 template(name='user_edit_alerts')
     .ui.header
-        i.id.badge.outline.icon
+        +icolor name='rss'
         | alerts
     .ui.grid 
         .row 
-            .sixteen.wide.column
-                .ui.big.green.button.pay_membership
-                    |pay $250 for membership
-                each transactions
-                    .ui.segment
-                        a.ui.header(href="/transaction/#{_id}/view") #{when}
-                        |#{amount} amount
-                        if charge 
-                            .ui.header charge
-                        |#{charge.result.id}
-                        .ui.header $#{charge.result.amount}
-                        +jsonView(json=charge.result)
-                        if is_admin
-                            +remove_button
-                // +user_edit_finance
-                if is_admin
-                    .ui.header
-                        i.shield.icon
-                        |admin
-                    +array_edit key='levels' label='levels' direct=true
-                +array_edit key='roles' label='roles' direct=true

@@ -135,6 +135,8 @@ template(name='ioffice')
     img(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl title=title)
 template(name='icolor')
     img(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl title=title)
+template(name='icolorlg')
+    img(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
 template(name='iios')
     img(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl title=title)
     //- img(src="https://img.icons8.com/ultraviolet/48/000000/#{name}.png" class=cl title=title)
@@ -266,9 +268,9 @@ template(name='textarea_edit')
     .ui.large.form
         .field
             label 
-                //- if icon
-                //-     i.icon(class=field_value)
-                    //- +i name=icon cl='ui avatar image'
+                if icon
+                    // i.icon(class=field_value)
+                    +i name=icon cl='ui avatar image'
                 if title
                     |#{title}
                 else if label
