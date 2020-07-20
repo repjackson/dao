@@ -1,4 +1,9 @@
 if Meteor.isClient
+    Router.route '/user/:username/friends', (->
+        @layout 'profile_layout'
+        @render 'user_friends'
+        ), name:'user_friends'
+    
     Template.user_friends.onCreated ->
         @autorun => Meteor.subscribe 'users'
 

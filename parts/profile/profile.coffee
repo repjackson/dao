@@ -15,14 +15,6 @@ if Meteor.isClient
         @layout 'profile_layout'
         @render 'user_contact'
         ), name:'user_contact'
-    Router.route '/user/:username/messages', (->
-        @layout 'profile_layout'
-        @render 'user_messages'
-        ), name:'user_messages'
-    Router.route '/user/:username/friends', (->
-        @layout 'profile_layout'
-        @render 'user_friends'
-        ), name:'user_friends'
 
 
     Template.profile_layout.onCreated ->
@@ -30,6 +22,12 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
         @autorun -> Meteor.subscribe 'all_users'
+    
+    Template.profile_layout.onRendered ->
+        Meteor.setTimeout ->
+            $('.profile_nav_item')
+                .popup()
+        , 1000
 
     Template.user_credits_small.onCreated ->
         @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username

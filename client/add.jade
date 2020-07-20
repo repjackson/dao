@@ -2,8 +2,8 @@ template(name='add')
     .ui.stackable.padded.grid
         .centered.row
             .sixteen.wide.center.aligned.column
-                .ui.header
-                    i.big.plus.icon
+                .ui.big.header
+                    +icon name='plus'
                     |add
         .centered.row
             .sixteen.wide.column
@@ -13,10 +13,10 @@ template(name='add')
                             .ui.icon.teal.header
                                 +icon name='sell'
                                 |request
-                    a.ui.violet.card.add_event
+                    a.ui.red.card.add_event
                         .content
                             .ui.icon.header
-                                +icon name='calendar'
+                                +icon name='calendar-plus'
                                 |event
                     a.ui.brown.card.add_product
                         .content

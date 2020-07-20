@@ -1,0 +1,10 @@
+template(name='user_badges')
+    //- .ui.center.aligned.header 
+    //-     +icon name='chat'
+    //-     |user badges
+    .ui.small.centered.five.cards
+        each user_badges
+            .ui.card
+                +icolorlg name=icon cl='ui fluid image'
+                .content
+                    .ui.header #{location}: #{title}

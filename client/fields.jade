@@ -1,5 +1,4 @@
 template(name='html_edit')
-    .ui.header html edit
     .ui.form
         .field
             label 
@@ -96,7 +95,7 @@ template(name='icon_edit')
             |#{this}    
     if field_value
         //- i.large.icon(class=field_value)
-        +icon name=field_value
+        +icon name=field_value cl='ui inline image'
     .ui.right.icon.input
         input.icon_val(type='text' value=field_value placeholder='icon8 class' autocomplete="off")
 

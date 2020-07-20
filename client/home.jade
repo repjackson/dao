@@ -57,8 +57,8 @@ template(name='home')
                     // i.shop.icon
                     +icolor name='shop' cl='ui image'
                     |featured products
-                if is_admin 
-                    i.circular.plus.icon.add_shift
+                // if is_admin 
+                //     i.circular.plus.icon.add_shift
                 .medscroll
                     each featured_products
                         a.ui.fluid.card(href="/product/#{_id}/view")
@@ -83,8 +83,8 @@ template(name='home')
                     // i.clock.icon
                     +icolor name='clock' cl='ui image'
                     |next shifts
-                if is_admin 
-                    i.circular.plus.icon.add_shift
+                // if is_admin 
+                //     i.circular.plus.icon.add_shift
                 .medscroll
                     each next_shifts
                         a.ui.card(href="/shift/#{_id}/view")
@@ -109,8 +109,8 @@ template(name='home')
                     // i.calendar.icon
                     +icolor name='calendar' cl='ui image'
                     |next events
-                if is_admin 
-                    i.circular.plus.icon.add_event
+                // if is_admin 
+                //     i.circular.plus.icon.add_event
                     
                 .medscroll
                     each next_events

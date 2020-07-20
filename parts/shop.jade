@@ -71,6 +71,7 @@ template(name='product_view')
                         |#{_author.username}
                         
                 .six.wide.column
+                    +boolean_view key='published' label='published' direct=true
                     +image_view key='image_id' label='image' direct=true
                     .ui.header
                         |attendees
@@ -153,7 +154,6 @@ template(name='product_edit')
                 .four.wide.center.aligned.column
                     .ui.circular.red.icon.button.delete_item
                         i.large.remove.icon
-    
             .row
                 .four.wide.column
                     .ui.header 
@@ -173,6 +173,7 @@ template(name='product_edit')
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
+                    +boolean_edit key='published' label='published' direct=true
                     // unless published
                     //     a.ui.fluid.green.button.submit(href="/save")
                     //         i.checkmark.icon

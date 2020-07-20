@@ -1,4 +1,9 @@
 if Meteor.isClient
+    Router.route '/user/:username/messages', (->
+        @layout 'profile_layout'
+        @render 'user_messages'
+        ), name:'user_messages'
+    
     Template.user_messages.onCreated ->
         @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'thought'
 

@@ -4,7 +4,7 @@ template(name='nav')
             +icon name='circled'
             // i.large.tree.icon
         if currentUser
-            a.item(href="/users" class="{{isActivePath regex='users'}}")
+            a.item(href="/users" class="{{isActivePath regex='users'}}" title='members')
                 +icolor name='conference-call'
                 // i.large.users.icon
                 // span.mobile.hidden members
@@ -31,11 +31,13 @@ template(name='nav')
             // i.large.hand.holding.heart.icon
             +icolor name='sell'
             // span.mobile.hidden requests
+        a.item(href="/badges" class="{{isActivePath regex='badges'}}" title='badges')
+            // i.large.hand.holding.heart.icon
+            +icolor name='prize'
+            // span.mobile.hidden badges
         a.icon.item(href="/locations" class="{{isActivePath regex='locations'}}" title='locations')
             +icolor name='marker'
         .right.menu
-                // i.large.marker.icon
-                // span.mobile.hidden 
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
             //     i.large.gift.icon
             //     span.mobile.hidden gift
@@ -58,11 +60,11 @@ template(name='nav')
                     |#{currentUser.username}
                     |#{currentUser.points}
             else
-                a.item(href="/register")
+                a.item(href="/register" title='register')
                     // |login
-                    +icon name='login-rounded-right'
+                    +icon name='add-user-female'
                     // i.large.chevron.right.icon
-                a.item(href="/login")
+                a.item(href="/login" title='login')
                     // |login
                     +icon name='login-rounded-right'
                     // i.large.chevron.right.icon

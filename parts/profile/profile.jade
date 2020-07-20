@@ -17,13 +17,14 @@ template(name='profile_layout')
                 //-     i.refresh.icon
                 div
                 if is_admin
-                    a.ui.large.icon.button(href="/user/#{username}/edit" title='admin edit')
-                        i.shield.icon
+                    a.ui.large.icon.circular.button(href="/user/#{username}/edit" title='admin edit account')
+                        i.shield.large.icon
                 if is_current_user
-                    a.ui.big.icon.circular.button(href="/user/#{username}/edit" title='account')
-                        i.cog.big.icon 
-                    a.ui.big.icon.circular.button.logout(href="#" title='log out')
-                        i.sign.out.alternate.large.icon
+                    a.profile_nav_item(href="/user/#{username}/edit" title='edit your account')
+                        +icon name='settings' cl='ui inline pointer image'
+                        
+                    a.profile_nav_item.logout(href="#" title='log out')
+                        +icon name='shutdown--v1' cl='ui inline pointer image'
                 // .ui.header #{points}pts
                 
                 unless is_current_user
@@ -42,51 +43,53 @@ template(name='profile_layout')
                 if spirit_animal
                     span(title="spirit animal #{spirit_animal}")
                         +icolor name=spirit_animal cl='ui inline image'
-                .ui.huge.green.circular.button.send
-                    i.send.icon
-                    span.mobile.hidden send
-                .ui.huge.teal.circular.button.request
-                    i.hand.holding.heart.icon
-                    span.mobile.hidden request
+                .ui.green.circular.icon.button.send(title='send points')
+                    i.send.large.icon
+                    // span.mobile.hidden send
+                .ui.teal.circular.icon.button.request(title='request points')
+                    i.hand.holding.heart.large.icon
+                    // span.mobile.hidden request
 
             .twelve.wide.column
-                a(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}")
+                a.profile_nav_item(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
                     +icolor name='dashboard' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}")
                 //     i.big.dashboard.icon
                 //     span.mobile.hidden dashboard
                 
-                a(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
+                a.profile_nav_item(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
                     +icolor name='info' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
                 //     i.big.info.blue.icon
                 //     span.mobile.hidden about
-                a(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
+                a.profile_nav_item(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
                     +icolor name='money' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
                 //     i.big.donate.green.icon
                 //     span.mobile.hidden credits
-                a(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
+                a.profile_nav_item(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
                     +icolor name='donate' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
                 //     i.big.send.teal.icon
                 //     span.mobile.hidden sent
-                a(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
+                a.profile_nav_item(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
                     +icolor name='calendar' cl='ui inline spaced image pointer'
-                a(href="/user/#{username}/stats" class="{{isActivePath 'user_stats'}}")
+                a.profile_nav_item(href="/user/#{username}/stats" class="{{isActivePath 'user_stats'}}" title="#{user.username} stats")
                     +icolor name='line-chart' cl='ui inline spaced image pointer'
-                a(href="/user/#{username}/requests" class="{{isActivePath 'user_requests'}}")
+                a.profile_nav_item(href="/user/#{username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
                     +icolor name='sell' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
                 //     i.big.calendar.orange.icon
                 //     span.mobile.hidden events
-                a(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                a.profile_nav_item(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
                     +icolor name='chat' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
                 //     i.big.chat.blue.icon
                 //     span.mobile.hidden chat
-                a(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
+                a(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}" title="#{user.username} friends")
                     +icolor name='groups' cl='ui inline spaced image pointer'
+                a(href="/user/#{username}/badges" class="{{isActivePath 'user_badges'}}" title="#{user.username} badges")
+                    +icolor name='prize' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
                 //     i.big.users.icon
                 //     span.mobile.hidden friends

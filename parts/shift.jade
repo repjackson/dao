@@ -1,22 +1,24 @@
 template(name='shifts')
     .ui.padded.stackable.grid
-        .sixteen.wide.column
-            // .ui.button 
-            //     |debit count
-            // .ui.button 
-            //     |debit amount
-            // .ui.button 
-            //     |credit count
-            // .ui.button 
-            //     |credit amount
+        .four.wide.column
             .ui.inline.header 
                 +icolor name='clock' 
                 |shifts
+            div
+            .ui.inline.header
+                i.marker.red.icon 
+                |location
+            .ui.button 
+                |farm 
+            .ui.button
+                | the stand
+            .ui.button
+                | riverside
             if is_admin
                 .ui.icon.circular.button.add_shift
                     i.plus.green.icon
                     // |add shift
-        .sixteen.wide.column
+        .twelve.wide.column
             .scrolling
                 .ui.stackable.six.cards
                     each next_shifts

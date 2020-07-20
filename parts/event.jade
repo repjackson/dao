@@ -12,11 +12,11 @@ template(name='events')
             // +event_cloud
             .ui.inline.big.header 
                 // i.calendar.big.icon
-                +icolor name='calendar'
+                +icolor name='calendar' cl='inline'
                 span.mobile.hidden events
-            if is_admin
-                .ui.icon.button.add_event
-                    i.plus.big.green.icon
+            if currentUser
+                span.add_event(title='add event')
+                    +icon name='calendar-plus' cl='inline pointer'
                     // |add event
         .twelve.wide.column
             .scrolling
@@ -36,22 +36,24 @@ template(name='event_item')
             |{{from_now start_datetime}}
             |- {{from_now end_datetime}}
         .content
-            .ui.basic.green.button.pick_going(title='going')
-                i.thumbs.up.outline.icon
-                |#{going_user_ids.length}
-                each going
-                    |#{username}
-            .ui.basic.yellow.button.pick_maybe(title='maybe')
-                i.minus.icon
-                | #{maybe_user_ids.length}
-                each maybe_going
-                    |#{username}
-            .ui.basic.red.button.pick_not(title='not going')
-                i.thumbs.down.outline.icon
-                | #{not_user_ids.length}
-                each not_going
-                    | #{username}
-        
+            if location
+                i.red.marker.icon 
+                |#{location}
+        .content
+            +icolor name='event-accepted' cl='ui mini image pick_going pointer' data=this
+            |#{going_user_ids.length}
+            each going
+                |#{username}
+            +icolor name='event-accepted-tentatively' cl='ui mini image pick_maybe pointer' data=this
+            | #{maybe_user_ids.length}
+            each maybe_going
+                |#{username}
+            +icolor name='event-declined' cl='ui mini image pick_not pointer' data=this
+            | #{not_user_ids.length}
+            each not_going
+                | #{username}
+        if is_admin 
+            +print_this
 
 
 
@@ -78,6 +80,9 @@ template(name='event_view')
 
             .row 
                 .five.wide.column
+                    if location 
+                        i.large.red.marker.icon(title='location')
+                        |#{location}
                     img.ui.fluid.rounded.image(src="{{c.url image_id }}")
                     .ui.tertiary.segment
                         .ui.header 
@@ -190,6 +195,7 @@ template(name='event_edit')
                 .eight.wide.center.aligned.column
                     .ui.header 
                         i.calendar.icon
+                        
                         
                         |edit event
                 .four.wide.center.aligned.column

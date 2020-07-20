@@ -75,19 +75,15 @@ template(name='location_view')
                             i.pencil.large.icon
             .row 
                 .four.wide.column
-                    .ui.header template #{template_id}
-                    if st.image_id
-                        img.ui.fluid.image(src="{{c.url st.image_id height=500 width=500 gravity='face' crop='fill'}}")
-                    a.ui.header(href="/job/#{_id}/view")
-                        |#{location_template.title} location template
+                    .ui.header
+                        +icon name='calendar'
+                        |#{title} events
                     +image_view key='image_id' label='image' direct=true
                 .eight.wide.column
                     .ui.header
                         |leader:
                         |#{location_leader.name}
                     +image_view key='image' label='image' direct=true
-                    .ui.header
-                        |participants
                     each recipients
                         a.ui.header(href="/user/#{username}")
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -103,15 +99,13 @@ template(name='location_view')
                 .four.wide.column
                     .ui.green.big.fluid.button.sign_up
                         |sign up
-                    .ui.header workers
-                    each workers 
-                        .ui.header #{username}
+                    .ui.header  
+                        +icolor name='prize'
+                        |badges
+                    each location_badges
+                        .ui.header #{title}
                     a.ui.header(href="/location/#{_id}/view")
                         |#{job.title}
-                    .ui.basic.label from {{long_date start_datetime}}
-                        small {{from_now start_datetime}}
-                    .ui.basic.label to {{long_date end_datetime}}
-                    .item to {{from_now end_datetime}}
                     .ui.list
                         each contributers
                             .item #{username} contributer

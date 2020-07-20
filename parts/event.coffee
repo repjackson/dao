@@ -144,7 +144,7 @@ if Meteor.isClient
     Template.event_item.events
         'click .pick_going': ->
             console.log 'going'
-            Docs.update @_id,
+            Docs.update @data._id,
                 $addToSet:
                     going_user_ids: Meteor.userId()
                 $pull:
@@ -152,7 +152,8 @@ if Meteor.isClient
                     not_user_ids: Meteor.userId()
     
         'click .pick_maybe': ->
-            Docs.update @_id,
+            console.log 'maybe', Template.parent
+            Docs.update @data._id,
                 $addToSet:
                     maybe_user_ids: Meteor.userId()
                 $pull:
@@ -160,7 +161,7 @@ if Meteor.isClient
                     not_user_ids: Meteor.userId()
     
         'click .pick_not': ->
-            Docs.update @_id,
+            Docs.update @data._id,
                 $addToSet:
                     not_user_ids: Meteor.userId()
                 $pull:
