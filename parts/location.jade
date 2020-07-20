@@ -34,29 +34,6 @@ template(name='location_item')
         
         
         
-template(name='location_card')
-    .card
-        .image
-            img.ui.raw.image(src="{{c.url job.image_id width=400 height=300 crop='fill'}}")    
-        .content
-            a.ui.header(href="/location/#{_id}/view")
-                |#{job.title}
-                |#{title}
-            .ui.basic.label from {{long_date start_datetime}}
-                small {{from_now start_datetime}}
-            .ui.basic.label to {{long_date end_datetime}}
-            .item to {{from_now end_datetime}}
-            .item #{end_time} end time
-            .item #{steward.username} leader(s)
-            .ui.list
-                each contributers
-                    .item #{username} contributer
-                //- |#{username}
-        a.ui.button(href="/location/#{_id}/view")
-            |view
-            i.right.chevron.icon
-
-
 template(name='location_view')
     with current_doc
         .ui.stackable.padded.grid
@@ -94,11 +71,8 @@ template(name='location_view')
                     .spacer
                     .spacer
                     +comments
-                    +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.green.big.fluid.button.sign_up
-                        |sign up
                     .ui.header  
                         +icolor name='prize'
                         |badges

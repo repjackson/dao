@@ -53,6 +53,9 @@ template(name='user_edit_layout')
 template(name='user_edit_info')
     .ui.one.column.stackable.grid
         .column
+            a.ui.small.inline.header(href="http://www.genekeys.com" target='_window') gene keys site
+            +image_edit key='genekeys_profile' label='gene keys pdf' icon='dna' direct=true
+            .spacer
             +text_edit key='city' label='city' icon='city' direct=true
             .spacer
             +text_edit key='state' label='state' icon='state' direct=true

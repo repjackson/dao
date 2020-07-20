@@ -20,7 +20,7 @@ template(name='shifts')
                     // |add shift
         .twelve.wide.column
             .scrolling
-                .ui.stackable.six.cards
+                .ui.stackable.cards
                     each next_shifts
                         +shift_item
             if is_admin
@@ -61,29 +61,6 @@ template(name='shift_item')
         
         
         
-template(name='shift_card')
-    .card
-        .image
-            img.ui.raw.image(src="{{c.url job.image_id width=400 height=300 crop='fill'}}")    
-        .content
-            a.ui.header(href="/shift/#{_id}/view")
-                |#{job.title}
-                |#{title}
-            .ui.basic.label from {{long_date start_datetime}}
-                small {{from_now start_datetime}}
-            .ui.basic.label to {{long_date end_datetime}}
-            .item to {{from_now end_datetime}}
-            .item #{end_time} end time
-            .item #{steward.username} leader(s)
-            .ui.list
-                each contributers
-                    .item #{username} contributer
-                //- |#{username}
-        a.ui.button(href="/shift/#{_id}/view")
-            |view
-            i.right.chevron.icon
-
-
 template(name='shift_view')
     with current_doc
         .ui.stackable.padded.grid
@@ -105,12 +82,13 @@ template(name='shift_view')
                             i.pencil.large.icon
             .row 
                 .four.wide.column
-                    .ui.header template #{template_id}
+                    if is_admin
+                        .ui.header template #{template_id}
                     if st.image_id
                         img.ui.fluid.image(src="{{c.url st.image_id height=500 width=500 gravity='face' crop='fill'}}")
                     a.ui.header(href="/job/#{_id}/view")
                         |#{shift_template.title} shift template
-                    +image_view key='image_id' label='image' direct=true
+                    +image_view key='image_id' label='image' direct=true cl='rounded'
                 .eight.wide.column
                     .ui.header
                         |leader:
@@ -127,13 +105,21 @@ template(name='shift_view')
                     .spacer
                     .spacer
                     +comments
-                    +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.green.big.fluid.button.sign_up
-                        |sign up
-                    .ui.header workers
-                    each workers 
+                    unless has_joined
+                        .ui.green.large.fluid.compact.circular.button.join_shift
+                            +icon name='joining-queue' cl='ui inline image'
+                            |join
+                    else 
+                        .ui.orange.large.fluid.compact.circular.button.leave_shift
+                            +icon name='leaving-queue' cl='ui inline image'
+                            |leave
+                    .ui.header 
+                        +icon name='workers-male--v1'
+                        |#{workers.count} workers
+                    each workers
+                        +user_button
                         .ui.header #{username}
                     a.ui.header(href="/shift/#{_id}/view")
                         |#{job.title}

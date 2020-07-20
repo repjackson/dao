@@ -3,6 +3,9 @@ template(name='user_about')
         i.info.blue.icon
         |user info
     with current_user
+        a.ui.compact.button(href="{{c.url genekeys_profile }}" target="_window")
+            +icon name='dna-helix' cl='ui inline mini image'
+            |view gene keys profile
         .ui.four.column.stackable.grid
             .column
                 .ui.small.header What do you hope to receive?

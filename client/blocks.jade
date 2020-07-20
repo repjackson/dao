@@ -14,6 +14,12 @@ template(name='icon')
     //- img.ui.image(src="https://img.icons8.com/cotton/48/000000/#{name}.png" class=cl)
     //- img.ui.image(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl)
 
+template(name='user_button')
+    a.ui.circular.button(href="/user/#{username}")
+        img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+        |#{name}
+
+
 template(name='print_this')
     .ui.icon.circular.basic.button.print_this
         i.orange.code.icon

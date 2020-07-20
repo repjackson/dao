@@ -1,4 +1,15 @@
 if Meteor.isClient
+    Template.registerHelper 'workers', () ->
+        shift = Docs.findOne Router.current().params.doc_id
+        if shift.worker_ids
+            Meteor.users.find   
+                _id:$in:shift.worker_ids
+    
+    Template.registerHelper 'has_joined', () ->
+        shift = Docs.findOne Router.current().params.doc_id
+        if shift.worker_ids
+            Meteor.userId() in shift.worker_ids
+    
     Template.registerHelper 'shift_template', () ->
         Docs.findOne @template_id
     Template.registerHelper 'st', () ->
@@ -8,15 +19,6 @@ if Meteor.isClient
         @layout 'layout'
         @render 'shifts'
         ), name:'shifts'
-    Router.route '/shift/:doc_id/view', (->
-        @layout 'layout'
-        @render 'shift_view'
-        ), name:'shift_view'
-
-    Template.shift_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'all_users'
-        @autorun => Meteor.subscribe 'shift_template_from_shift_id', Router.current().params.doc_id
 
     Template.shifts.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'shift'
@@ -45,6 +47,15 @@ if Meteor.isClient
                     start_datetime:-1
 
 
+    Router.route '/shift/:doc_id/view', (->
+        @layout 'layout'
+        @render 'shift_view'
+        ), name:'shift_view'
+
+    Template.shift_view.onCreated ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'all_users'
+        @autorun => Meteor.subscribe 'shift_template_from_shift_id', Router.current().params.doc_id
 
     Template.shift_view.onRendered ->
         @autorun => Meteor.subscribe 'users'
@@ -54,11 +65,15 @@ if Meteor.isClient
             if confirm 'delete item?'
                 Docs.remove @_id
 
-        'click .submit': ->
-            if confirm 'confirm?'
-                Meteor.call 'send_shift', @_id, =>
-                    Router.go "/shift/#{@_id}/view"
+        'click .join_shift': ->
+            Docs.update Router.current().params.doc_id, 
+                $addToSet: 
+                    worker_ids: Meteor.userId()
 
+        'click .leave_shift': ->
+            Docs.update Router.current().params.doc_id, 
+                $pull: 
+                    worker_ids: Meteor.userId()
 
 if Meteor.isServer
     Meteor.publish 'shift_template_from_shift_id', (shift_id)->
