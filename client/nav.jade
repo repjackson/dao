@@ -19,6 +19,9 @@ template(name='nav')
         a.item(href="/shop" class="{{isActivePath regex='shop'}}" title='shifts')
             // i.large.shop.icon
             +icolor name='shop'
+        a.item(href="/discussions" class="{{isActivePath regex='discussions'}}" title='discussions')
+            // i.large.shop.icon
+            +icolor name='speech-bubble-with-dots'
             
             // span.mobile.hidden shop
         // a.item(href="/gifts" class="{{isActivePath regex='gifts'}}" title='gifts')
@@ -28,9 +31,9 @@ template(name='nav')
             // i.large.hand.holding.heart.icon
             +icolor name='sell'
             // span.mobile.hidden requests
+        a.icon.item(href="/locations" class="{{isActivePath regex='locations'}}" title='locations')
+            +icolor name='marker'
         .right.menu
-            a.icon.item(href="/locations" class="{{isActivePath regex='locations'}}" title='locations')
-                +icolor name='marker'
                 // i.large.marker.icon
                 // span.mobile.hidden 
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
@@ -55,6 +58,11 @@ template(name='nav')
                     |#{currentUser.username}
                     |#{currentUser.points}
             else
+                a.item(href="/register")
+                    // |login
+                    +icon name='login-rounded-right'
+                    // i.large.chevron.right.icon
                 a.item(href="/login")
-                    |login
-                    i.large.chevron.right.icon
+                    // |login
+                    +icon name='login-rounded-right'
+                    // i.large.chevron.right.icon

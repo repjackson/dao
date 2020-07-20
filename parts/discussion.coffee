@@ -1,42 +1,42 @@
 if Meteor.isClient
-    Router.route '/posts/', (->
+    Router.route '/discussions/', (->
         @layout 'layout'
-        @render 'posts'
-        ), name:'posts'
-    Router.route '/post/:doc_id/view', (->
+        @render 'discussions'
+        ), name:'discussions'
+    Router.route '/discussion/:doc_id/view', (->
         @layout 'layout'
-        @render 'post_view'
-        ), name:'post_view'
+        @render 'discussion_view'
+        ), name:'discussion_view'
 
-    Template.post_view.onCreated ->
-        @autorun => Meteor.subscribe 'post_tickets', Router.current().params.doc_id
+    Template.discussion_view.onCreated ->
+        @autorun => Meteor.subscribe 'discussion_tickets', Router.current().params.doc_id
         
 
-    Template.post_view.onRendered ->
+    Template.discussion_view.onRendered ->
 
 
 
-    Template.post_view.onCreated ->
+    Template.discussion_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.posts.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'post'
-    Template.posts.events
-        'click .add_post': ->
+    Template.discussions.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'discussion'
+    Template.discussions.events
+        'click .add_discussion': ->
             new_id = 
                 Docs.insert
-                    model:'post'
-            Router.go "/post/#{new_id}/edit"
-    Template.posts.helpers
-        post_docs: ->
-            match = {model:'post'}
+                    model:'discussion'
+            Router.go "/discussion/#{new_id}/edit"
+    Template.discussions.helpers
+        discussion_docs: ->
+            match = {model:'discussion'}
             unless Meteor.user() and 'admin' in Meteor.user().roles
                 match.published = true
             Docs.find match, 
                 sort:
                     _timestamp:-1
 
-    Template.post_view.onRendered ->
-    Template.post_item.events
+    Template.discussion_view.onRendered ->
+    Template.discussion_item.events
         # 'click .pick_going': ->
         #     console.log 'going'
         #     Docs.update @_id,
@@ -62,7 +62,7 @@ if Meteor.isClient
         #             going_user_ids: Meteor.userId()
         #             maybe_user_ids: Meteor.userId()
     
-    Template.post_view.events
+    Template.discussion_view.events
         'click .pick_going': ->
             console.log 'going'
             Docs.update Router.current().params.doc_id,
@@ -94,71 +94,71 @@ if Meteor.isClient
 
         'click .submit': ->
             if confirm 'confirm?'
-                Meteor.call 'send_post', @_id, =>
-                    Router.go "/post/#{@_id}/view"
+                Meteor.call 'send_discussion', @_id, =>
+                    Router.go "/discussion/#{@_id}/view"
 
 
-    Template.post_item.helpers
+    Template.discussion_item.helpers
         
         going: ->
-            post = Docs.findOne @_id
+            discussion = Docs.findOne @_id
             Meteor.users.find 
-                _id:$in:post.going_user_ids
+                _id:$in:discussion.going_user_ids
         maybe_going: ->
-            post = Docs.findOne @_id
+            discussion = Docs.findOne @_id
             Meteor.users.find 
-                _id:$in:post.maybe_user_ids
+                _id:$in:discussion.maybe_user_ids
         not_going: ->
-            post = Docs.findOne @_id
+            discussion = Docs.findOne @_id
             Meteor.users.find 
-                _id:$in:post.not_user_ids
-    Template.post_view.helpers
+                _id:$in:discussion.not_user_ids
+    Template.discussion_view.helpers
         tickets_left: ->
             ticket_count = 
                 Docs.find({ 
                     model:'transaction'
                     transaction_type:'ticket_purchase'
-                    post_id: Router.current().params.doc_id
+                    discussion_id: Router.current().params.doc_id
                 }).count()
             @max_attendees-ticket_count
         tickets: ->
             Docs.find 
                 model:'transaction'
                 transaction_type:'ticket_purchase'
-                post_id: Router.current().params.doc_id
+                discussion_id: Router.current().params.doc_id
         going: ->
-            post = Docs.findOne Router.current().params.doc_id
+            discussion = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
-                _id:$in:post.going_user_ids
+                _id:$in:discussion.going_user_ids
         maybe_going: ->
-            post = Docs.findOne Router.current().params.doc_id
+            discussion = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
-                _id:$in:post.maybe_user_ids
+                _id:$in:discussion.maybe_user_ids
         not_going: ->
-            post = Docs.findOne Router.current().params.doc_id
+            discussion = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
-                _id:$in:post.not_user_ids
+                _id:$in:discussion.not_user_ids
 
 if Meteor.isServer
-    Meteor.publish 'post_tickets', (post_id)->
+    Meteor.publish 'discussion_tickets', (discussion_id)->
         Docs.find
             model:'transaction'
             transaction_type:'ticket_purchase'
-            post_id:post_id
+            discussion_id:discussion_id
 #     Meteor.methods
-        # send_post: (post_id)->
-        #     post = Docs.findOne post_id
-        #     target = Meteor.users.findOne post.recipient_id
-        #     gifter = Meteor.users.findOne post._author_id
+        # send_discussion: (discussion_id)->
+        #     discussion = Docs.findOne discussion_id
+        #     target = Meteor.users.findOne discussion.recipient_id
+        #     gifter = Meteor.users.findOne discussion._author_id
         #
-        #     console.log 'sending post', post
+        #     console.log 'sending discussion', discussion
         #     Meteor.users.update target._id,
         #         $inc:
-        #             points: post.amount
+        #             points: discussion.amount
         #     Meteor.users.update gifter._id,
         #         $inc:
-        #             points: -post.amount
-        #     Docs.update post_id,
+        #             points: -discussion.amount
+        #     Docs.update discussion_id,
         #         $set:
         #             submitted:true
         #             submitted_timestamp:Date.now()
@@ -171,17 +171,17 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-    Router.route '/post/:doc_id/edit', (->
+    Router.route '/discussion/:doc_id/edit', (->
         @layout 'layout'
-        @render 'post_edit'
-        ), name:'post_edit'
+        @render 'discussion_edit'
+        ), name:'discussion_edit'
 
-    Template.post_edit.onCreated ->
+    Template.discussion_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.post_edit.onRendered ->
+    Template.discussion_edit.onRendered ->
 
 
-    Template.post_edit.events
+    Template.discussion_edit.events
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -190,27 +190,27 @@ if Meteor.isClient
             Docs.update Router.current().params.doc_id,
                 $set:published:true
             if confirm 'confirm?'
-                Meteor.call 'send_post', @_id, =>
-                    Router.go "/post/#{@_id}/view"
+                Meteor.call 'send_discussion', @_id, =>
+                    Router.go "/discussion/#{@_id}/view"
 
 
-    Template.post_edit.helpers
+    Template.discussion_edit.helpers
 
 if Meteor.isServer
     Meteor.methods
-        send_post: (post_id)->
-            post = Docs.findOne post_id
-            target = Meteor.users.findOne post.recipient_id
-            gifter = Meteor.users.findOne post._author_id
+        send_discussion: (discussion_id)->
+            discussion = Docs.findOne discussion_id
+            target = Meteor.users.findOne discussion.recipient_id
+            gifter = Meteor.users.findOne discussion._author_id
 
-            console.log 'sending post', post
+            console.log 'sending discussion', discussion
             Meteor.users.update target._id,
                 $inc:
-                    points: post.amount
+                    points: discussion.amount
             Meteor.users.update gifter._id,
                 $inc:
-                    points: -post.amount
-            Docs.update post_id,
+                    points: -discussion.amount
+            Docs.update discussion_id,
                 $set:
                     submitted:true
                     submitted_timestamp:Date.now()
