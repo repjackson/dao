@@ -11,6 +11,14 @@ if Meteor.isClient
 
     Template.request_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+   
+    Template.requests.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'request'
+    Template.requests.helpers
+        requests: ->
+            Docs.find 
+                model:'request'
+   
     Template.request_view.onRendered ->
 
 

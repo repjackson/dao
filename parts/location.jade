@@ -31,18 +31,6 @@ template(name='location_item')
                 img.ui.image(src="{{c.url image height=500 width=500 gravity='face' crop='fill'}}")
         .content
             a.ui.header(href="/location/#{_id}/view") #{title}
-            |#{when}
-            .ui.list 
-                .item #{date} date
-                .item from {{from_now st.start_datetime}}
-                .item to {{from_now st.end_datetime}}
-                // .item #{end_time} end time
-                .item #{leader.username} leader
-            .ui.list
-                each contributers
-                    .item #{username} contributer
-                //- |#{username}
-        .content
         
         
         
@@ -72,13 +60,10 @@ template(name='location_card')
 template(name='location_view')
     with current_doc
         .ui.stackable.padded.grid
-            .center.aligned.row 
+            .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.fluid.big.compact.button(href="/locations")
-                        // i.chevron.left.icon
-                        // i.large.clock.icon
-                        +icolor name='clock' cl='ui inline mini image'
-                        |locations
+                    a(href="/locations")
+                        +icolor name='marker' cl='ui centered image pointer'
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icon name='clock'

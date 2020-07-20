@@ -9,16 +9,15 @@ template(name='requests')
             //     |credit count
             // .ui.button 
             //     |credit amount
-            .ui.header
+            .ui.inline.header
                 +icolor name='sell'
                 |requests
             if is_admin
-                .ui.button.add_request
-                    i.plus.icon
-                    |add request
+                .ui.icon.big.circular.button.add_request
+                    i.plus.green.icon
             .scrolling
                 .ui.stackable.six.cards
-                    each next_requests
+                    each requests
                         +request_item
         .sixteen.wide.column
             // +request_cloud
@@ -27,21 +26,11 @@ template(name='requests')
 template(name='request_item')
     a.card(href="/request/#{_id}/view")
         .image
-            img.ui.raw.image(src="{{c.url job.image_id width=400 height=300 crop='fill'}}")    
+            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             a.ui.header(href="/request/#{_id}/view")
-                |#{job.title}
-            .ui.list 
-                .item #{date} date
-                .item from {{from_now start_datetime}}
-                .item to {{from_now end_datetime}}
-                .item #{end_time} end time
-                .item #{steward.username} leader(s)
-            .ui.list
-                each contributers
-                    .item #{username} contributer
-                //- |#{username}
-        .content
+                |#{title}
+            |#{description}
         
 
 
@@ -51,25 +40,19 @@ template(name='request_view')
             .row 
                 .four.wide.column
                     // if can_edit
-                    a(href="/shop" title='shop')
-                        +icolor name='shop' cl='ui inline image pointer'
-                        // i.store.big.icon
-                        // span.mobile.hidden shop
-                    .ui.inline.header 
-                        |product
-                    .ui.large.inline.header #{title}
+                    a(href="/requests" title='requests')
+                        +icolor name='sell' cl='ui inline image pointer'
                 .eight.wide.column
                     .ui.center.aligned.header 
-                        +icon name='hand-planting'
-                        |view request
+                        +icon name='sell'
+                        small viewing request: 
+                        |#{title}
                 .four.wide.column
                     if is_admin
-                        .ui.button.delete_request
-                            |delete
+                        .ui.big.circular.icon.button.delete_request
                             i.large.red.remove.icon
-                        a.ui.button.edit_request(href="/request/#{_id}/edit")
+                        a.ui.big.icon.circular.button.edit_request(href="/request/#{_id}/edit")
                             i.blue.pencil.icon
-                            |edit
             .row 
                 .four.wide.column
                 .eight.wide.column
@@ -107,21 +90,21 @@ template(name='request_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
-                    .ui.button.delete_item
+                .sixteen.wide.column
+                    .ui.large.circular.icon.button.delete_item(title='cancel')
                         i.large.red.ban.icon
-                        |cancel
-                .eight.wide.column
-                    .ui.center.aligned.header 
-                        +icon name='hand-planting'
-                        |edit request
-                .four.wide.column
+                    .ui.inline.header 
+                        +icon name='sell'
+                        small edit request
+                        |#{title}
                     .ui.header 
                         small author
                         |#{_author.username}
             .row 
                 .four.wide.column
+                    +date_edit key='date' label='date (optional)' icon='calendar' direct=true
                 .eight.wide.column
+                    +text_edit key='title' icon='header' direct=true
                     .ui.header 
                         |audience
                     .ui.disabled.button
@@ -130,7 +113,9 @@ template(name='request_edit')
                         |groups
                     .ui.disabled.button
                         |specific people
-                    +number_edit key='bounty' label='bounty' direct=true
+                    +number_edit key='point_bounty' label='point bounty' direct=true
+                    div
+                    i.yellow.lightning.icon
                     +key_value_edit key='bounty' value=1
                     +key_value_edit key='bounty' value=5
                     +key_value_edit key='bounty' value=10
@@ -149,6 +134,10 @@ template(name='request_edit')
                         .ui.fluid.teal.button.unpublish
                             i.undo.icon
                             |unpublish
+                        a.ui.fluid.green.big.button(href="/request/#{_id}/view")
+                            i.checkmark.icon
+                            |save
+                            
                     else
                         .ui.fluid.green.button.publish
                             i.checkmark.icon

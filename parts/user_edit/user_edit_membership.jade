@@ -15,9 +15,9 @@ template(name='user_edit_membership')
                             .ui.header charge
                         |#{charge.result.id}
                         .ui.header $#{charge.result.amount}
-                        +jsonView(json=charge.result)
                         if is_admin
                             +remove_button
+                            +print_this
                 // +user_edit_finance
                 if is_admin
                     .ui.header

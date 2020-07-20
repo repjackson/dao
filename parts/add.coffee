@@ -40,6 +40,12 @@ if Meteor.isClient
                     model:'product'
             Router.go "/product/#{new_id}/edit"
             
+        'click .add_post': ->
+            new_id = 
+                Docs.insert 
+                    model:'post'
+            Router.go "/post/#{new_id}/edit"
+            
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
