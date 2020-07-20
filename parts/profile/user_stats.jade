@@ -2,13 +2,7 @@ template(name='user_stats')
     .ui.center.aligned.header 
         +icon name='line-chart'
         |user stats
-    each user_events
-        .ui.segment
-            .ui.small.header #{date} #{start_time}
-            div
-            +user_list_toggle key='read_by_ids' label='mark read' icon='eye'
-            if can_edit
-                +remove_button
-            //- div
-            +author_info
-            +creation_info
+    with user
+        .item #{total_bandwith} total bandwith
+        .item #{calculated_user_balance}p recorded balance
+        // .ui.small.inline.spaced.header {{fixed one_score}} one score

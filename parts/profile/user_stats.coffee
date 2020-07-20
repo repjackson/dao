@@ -9,7 +9,7 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'user_stats', Router.current().params.username
         @autorun => Meteor.subscribe 'model_docs', 'event'
 
-    Template.user_stats.stats
+    Template.user_stats.events
         'keyup .new_event': (e,t)->
             if e.which is 13
                 val = $('.new_event').val()

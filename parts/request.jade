@@ -9,8 +9,8 @@ template(name='requests')
             //     |credit count
             // .ui.button 
             //     |credit amount
-            .ui.header 
-                i.calendar.icon
+            .ui.header
+                +icolor name='sell'
                 |requests
             if is_admin
                 .ui.button.add_request
@@ -51,6 +51,18 @@ template(name='request_view')
             .row 
                 .four.wide.column
                     // if can_edit
+                    a(href="/shop" title='shop')
+                        +icolor name='shop' cl='ui inline image pointer'
+                        // i.store.big.icon
+                        // span.mobile.hidden shop
+                    .ui.inline.header 
+                        |product
+                    .ui.large.inline.header #{title}
+                .eight.wide.column
+                    .ui.center.aligned.header 
+                        +icon name='hand-planting'
+                        |view request
+                .four.wide.column
                     if is_admin
                         .ui.button.delete_request
                             |delete
@@ -58,12 +70,6 @@ template(name='request_view')
                         a.ui.button.edit_request(href="/request/#{_id}/edit")
                             i.blue.pencil.icon
                             |edit
-                
-                .eight.wide.column
-                    .ui.center.aligned.header 
-                        +icon name='hand-planting'
-                        |view request
-                .four.wide.column
             .row 
                 .four.wide.column
                 .eight.wide.column

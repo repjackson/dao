@@ -98,66 +98,6 @@ template(name='profile_layout')
 
 
 
-template(name='user_dashboard')
-    // +user_about
-    // .ui.hidden.divider
-    .ui.stackable.four.column.grid
-        .column
-            .item #{total_bandwith} total bandwith
-            .item #{calculated_user_balance}p recorded balance
-            // .ui.small.inline.spaced.header {{fixed one_score}} one score
-            +user_credits_small
-        .column
-            .ui.inline.spaced.header 
-                +icolor name='filled-sent' 
-                |#{total_send_amount}p
-                |sent
-                small(title='send count') (#{send_count}x)
-                    .ui.circular.label ##{global_send_count_rank}
-            div
-            .ui.link.large.list.scrolling
-                each sent_items
-                    .item 
-                        if target.profile_image_id
-                            img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        .content
-                            .header
-                                strong #{amount}pt
-                                a(href="/send/#{_id}/view")
-                                    |#{when}
-                                    | to 
-                                a(href="/user/#{target.username}")
-                                    |#{target.username}
-                            .description
-                                |#{description}
-                            .description
-                                each tags
-                                    .ui.mini.label #{this}
-                            if is_admin
-                                +remove_button
-        .column
-            .ui.header 
-                // i.hand.holding.heart.icon
-                +icolor name='sell'
-                |requests
-            .ui.link.list.smallscroll
-                each user_requests
-                    a.item(href="/request/#{_id}/view")
-                        .header #{amount}pts
-                        |#{_author.username}
-                        |#{description}
-                        |#{when}
-        .column
-            .ui.header 
-                +icolor name='calendar' cl='ui inline spaced image'
-                |events
-            .ui.link.list.smallscroll
-                each user_events
-                    a.item(href="/event/#{_id}/view")
-                        .header #{title} #{amount}pts
-                        |#{_author.username}
-                        |#{description}
-                        |#{when}
 
 
 template(name='user_friend_button')
