@@ -19,6 +19,7 @@ Meteor.methods
     add_user: (username)->
         options = {}
         options.username = username
+        options.levels = ['explorer']
 
         res= Accounts.createUser options
         if res

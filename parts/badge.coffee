@@ -1,4 +1,6 @@
 if Meteor.isClient
+    @selected_user_levels = new ReactiveArray []
+    
     Router.route '/badges/', (->
         @layout 'layout'
         @render 'badges'
@@ -99,19 +101,11 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.methods
-        publish_badge: (badge_id)->
+        reward_badge: (badge_id, target_id)->
             badge = Docs.findOne badge_id
-            target = Meteor.users.findOne badge.recipient_id
-            author = Meteor.users.findOne badge._author_id
+            target = Meteor.users.findOne target_id
 
-            console.log 'sending badge', badge
+            console.log 'rewarding badge', badge
             Meteor.users.update target._id,
-                $inc:
-                    points: badge.amount
-            Meteor.users.update author._id,
-                $inc:
-                    points: -badge.amount
-            Docs.update badge_id,
-                $set:
-                    published:true
-                    published_timestamp:Date.now()
+                $addToSet:
+                    rewarded_badge_ids: badge._id

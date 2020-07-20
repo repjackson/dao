@@ -4,9 +4,6 @@ if Meteor.isClient
         @render 'user_badges'
         ), name:'user_badges'
     
-    Template.user_badges.onCreated ->
-        @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'thought'
-
 
     Template.user_badges.onCreated ->
         @autorun => Meteor.subscribe 'user_badges', Router.current().params.username

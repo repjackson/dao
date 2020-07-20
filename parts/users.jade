@@ -9,7 +9,6 @@ template(name='users')
             //     |credit count
             // .ui.button 
             //     |credit amount
-            .ui.header level filter
             +user_cloud
         .twelve.wide.column
             .scrolling
@@ -21,7 +20,18 @@ template(name='users')
 
 
 template(name='user_cloud')
-    i.tags.icon
+    i.shield.blue.large.icon
+    if selected_user_levels
+        #clear_levels.ui.primary.icon.compact.button
+            i.remove.icon
+        each selected_user_levels
+            .unselect_level.ui.primary.compact.button
+                strong #{this}
+    each all_levels
+        .ui.compact.basic.button.select_level(class=cloud_tag_class) 
+            strong #{this.name}
+    div
+    i.tags.large.red.icon
     if selected_user_tags
         #clear_tags.ui.primary.icon.compact.button
             i.remove.icon
@@ -54,8 +64,8 @@ template(name='user_item')
             // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
             // .ui.small.header #{points} points
-            // each first_five_tags
-            //     .ui.circular.basic.label #{this}
+            each levels
+                .ui.circular.basic.small.label #{this}
             // if is_admin
             //     each levels
             //         .ui.label #{this}
@@ -64,12 +74,8 @@ template(name='user_item')
             //     +addtoset_user key='levels' value='explorer'
             //     +addtoset_user key='levels' value='regenerator'
             //     +addtoset_user key='levels' value='steward'
-            .ui.green.icon.circular.button.debit(title='debit')
-                i.send.large.icon
-                // |debit
-            .ui.teal.icon.circular.button.request(title='request')
-                i.hand.holding.heart.large.icon
-                // |request
+            +icolor name='gift' cl='ui inline image pointer debit'
+            +icolor name='sell' cl='ui inline image pointer request'
                     
 
 template(name='addtoset_user')

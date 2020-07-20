@@ -102,18 +102,41 @@ if Meteor.isClient
             # console.log "selected_#{model}_tags"
             selected_user_tags.array()
 
+        all_levels: ->
+            user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
+            if 0 < user_count < 3 then User_levels.find { count: $lt: user_count } else User_levels.find()
+        selected_user_levels: ->
+            # model = 'event'
+            # console.log "selected_#{model}_levels"
+            selected_user_levels.array()
+        all_levels: ->
+            user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
+            if 0 < user_count < 3 then Level_results.find { count: $lt: user_count } else Level_results.find()
+        selected_user_levels: ->
+            # model = 'event'
+            # console.log "selected_#{model}_levels"
+            selected_user_levels.array()
+
 
     Template.user_cloud.events
         'click .select_tag': -> selected_user_tags.push @name
         'click .unselect_tag': -> selected_user_tags.remove @valueOf()
         'click #clear_tags': -> selected_user_tags.clear()
 
+        'click .select_level': -> selected_user_levels.push @name
+        'click .unselect_level': -> selected_user_levels.remove @valueOf()
+        'click #clear_levels': -> selected_user_levels.clear()
+
 
 
 if Meteor.isServer
-    Meteor.publish 'selected_users', (selected_user_tags)->
+    Meteor.publish 'selected_users', (
+        selected_user_tags
+        selected_user_levels
+        )->
         match = {}
         if selected_user_tags.length > 0 then match.tags = $all: selected_user_tags
+        if selected_user_levels.length > 0 then match.levels = $all: selected_user_levels
         Meteor.users.find match
         # if Meteor.user()
         #     if 'admin' in Meteor.user().roles
@@ -132,12 +155,14 @@ if Meteor.isServer
 
     Meteor.publish 'user_tags', (
         selected_user_tags,
+        selected_user_levels,
         view_mode
         limit
     )->
         self = @
         match = {}
         if selected_user_tags.length > 0 then match.tags = $all: selected_user_tags
+        if selected_user_levels.length > 0 then match.levels = $all: selected_user_levels
         # match.model = 'item'
         # if view_mode is 'users'
         #     match.bought = $ne:true
@@ -159,7 +184,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_user_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
 
@@ -170,6 +195,27 @@ if Meteor.isServer
             self.added 'user_tags', Random.id(),
                 name: user_tag.name
                 count: user_tag.count
+                index: i
+    
+    
+        level_cloud = Meteor.users.aggregate [
+            { $match: match }
+            { $project: "levels": 1 }
+            { $unwind: "$levels" }
+            { $group: _id: "$levels", count: $sum: 1 }
+            { $match: _id: $nin: selected_user_levels }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+
+        # console.log 'filter: ', filter
+        # console.log 'level_cloud: ', level_cloud
+
+        level_cloud.forEach (level_result, i) ->
+            self.added 'level_results', Random.id(),
+                name: level_result.name
+                count: level_result.count
                 index: i
 
         self.ready()
