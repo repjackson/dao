@@ -12,7 +12,7 @@ template(name='discussions')
             // +discussion_cloud
             .ui.inline.big.header 
                 // i.calendar.big.icon
-                +icolor name='blog'
+                +icolor name='speech-bubble-with-dots'
                 span.mobile.hidden discussions
             if is_admin
                 .ui.icon.button.add_discussion
@@ -44,7 +44,7 @@ template(name='discussion_view')
             .middle.aligned.row 
                 .sixteen.wide.column
                     a(href="/discussions")
-                        +icolor name='blog' cl='ui image inline pointer'
+                        +icolor name='speech-bubble-with-dots' cl='ui image inline pointer'
                     .ui.small.inline.header(title='viewing discussion')
                         +icolor name='paper'
                         // i.calendar.icon
@@ -101,8 +101,7 @@ template(name='discussion_edit')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.header 
-                        i.calendar.icon
-                        
+                        +icolor name='speech-bubble-with-dots' cl='ui image inline pointer'
                         |edit discussion
                 .four.wide.center.aligned.column
                     .ui.red.circular.icon.button.delete_item(title='delete')

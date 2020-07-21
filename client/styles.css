@@ -143,7 +143,7 @@ body {
     /* z-index: 2000 !important; */
 }
 .global_container{
-    transition: transform .5s; /* Animation */
+    transition: transform .25s; /* Animation */
     /* padding-top: 5em !important; */
     /* box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
 }
@@ -179,7 +179,7 @@ body {
 }
 
 .ui.button.result:hover{
-    transition: transform .5s; /* Animation */
+    transition: transform .25s; /* Animation */
     /* color: black !important; */
     /* font-size: 120% !important; */
     /* : 130% !important; */
@@ -232,7 +232,7 @@ a.goto_article {
 .ui.button {
     margin: 2px !important;
     /* border-radius: 20px !important; */
-    transition: height .5s ease !important; 
+    transition: height .25s ease !important; 
     /* background-color: rgba(200, 200, 200, 0.2) !important; */
     /* padding: 12px !important; */
     /* font-weight: lighter !important; */
@@ -240,7 +240,7 @@ a.goto_article {
 }
 /*  */
 .pointer:hover {
-    transition: all .5s ease !important; 
+    transition: all .25s ease !important; 
     cursor: pointer !important;
     /* color: black !important; */
     /* font-size: 130% !important; */
@@ -249,7 +249,7 @@ a.goto_article {
     /* padding-top: 5em !important; */
     /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
     /*text-shadow: 0 0 3px grey !important;*/
-    filter: drop-shadow(2px 2px 4px grey);    
+    filter: drop-shadow(1px 1px 4px grey);    
 }
 
 
@@ -390,7 +390,7 @@ a.title, #title {
 
 .label {
     margin: 2px !important;
-    /* border-radius: 10px !important; */
+    border-radius: 10px !important; 
 }
 
 input {
@@ -474,18 +474,18 @@ body {
 
 
 
-/* .button:active{
-    -webkit-transform: translate(0, 2px) !important; /* depth of button press */
+.button:active{
     /* transition: all .25s !important; */
-    /* transform: translate(0, 2px) !important; /* depth of button press */ */
-} */
+    transform: translate(0, 1px) !important; 
+    -webkit-transform: translate(0, 1px) !important;
+} 
 
 
 .button, .selector, .card, .dark_mode, .header, i, .icon, .item{
-    animation: fadein .25s;
-    -webkit-transition: opacity .5s ease-in;
-    /* -webkit-transition: opacity .5s ease-out; */
-    /* animation: fadeout .5s; */
+    animation: fadein .25s !important;
+    -webkit-transition: opacity .25s ease-in !important;
+    /* -webkit-transition: opacity .25s ease-out; */
+    /* animation: fadeout .25s; */
 }
 
 

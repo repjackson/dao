@@ -46,9 +46,11 @@ template(name='shift_item')
                 img.ui.raw.image(src="{{c.url st.image_id width=400 height=300 crop='fill'}}")    
         .content
             a.ui.header(href="/shift/#{_id}/view")
-                |#{shift_template.title}
+                |{{short_date date}}
+                |#{title}
+            i.marker.red.icon
+            |#{location}
             .ui.list 
-                .item #{date} date
                 .item from {{from_now st.start_datetime}}
                 .item to {{from_now st.end_datetime}}
                 // .item #{end_time} end time
@@ -64,18 +66,17 @@ template(name='shift_item')
 template(name='shift_view')
     with current_doc
         .ui.stackable.padded.grid
-            .center.aligned.row 
+            .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.fluid.big.compact.button(href="/shifts")
+                    a.pointer(href="/shifts" title='shifts')
                         // i.chevron.left.icon
                         // i.large.clock.icon
-                        +icolor name='clock' cl='ui inline mini image'
-                        |shifts
+                        +icolorlg name='clock' cl='ui inline image'
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icon name='clock'
-                        |view shift 
-                        |#{title}
+                        small viewing shift 
+                        |#{date} #{title}
                 .four.wide.center.aligned.column
                     if can_edit 
                         a.ui.big.circular.blue.icon.button(href="/shift/#{_id}/edit" title='edit shift instance')
@@ -145,19 +146,36 @@ template(name='shift_edit')
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icon name='clock'
-                        |edit shift instance
+                        small edit shift instance
+                        |#{title}
                 .four.wide.center.aligned.column
                     .ui.red.icon.circular.button.delete_item(title='delete shift')
                         i.large.remove.icon
             .row 
                 .four.wide.column
-                    .ui.small.header #{shift_template.title} title
-                .eight.wide.column
+                    if shift_template_id
+                        .ui.small.header 
+                            small shift template:
+                            |#{shift_template.title}
+                    // else 
+                    if session_key_value_is 'applying_template' false
+                        .ui.fluid.header.pointer.apply_template
+                            |apply template
+                    if session_key_value_is 'applying_template' true
+                        .ui.fluid.header.pointer.apply_template
+                            |applying template
+                            i.chevron.down.icon
+                        each shift_templates
+                            .ui.button.set_template #{title}
+                    div
+                    +date_edit key='date' label='date' direct=true
+                    +time_edit key='start_time' label='start time' direct=true
+                    +time_edit key='end_time' label='end time' direct=true
                     .ui.header 
                         small author
                         |#{_author.username}
-                    |#{target.username}
-                    +date_edit key='date' label='date' direct=true
+                .eight.wide.column
+                    +text_edit key='title' label='title' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
@@ -169,7 +187,7 @@ template(name='shift_edit')
                     with shift_leader
                         a.ui.big.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{username}
+                            |#{name}
                         i.circular.remove.link.icon.clear_leader
                     unless shift_leader
                         .ui.segment

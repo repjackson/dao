@@ -20,8 +20,6 @@ template(name='badges')
                 .ui.stackable.six.cards
                     each badges
                         +badge_item
-        .sixteen.wide.column
-            // +badge_cloud
 
 
 template(name='badge_item')
@@ -84,7 +82,6 @@ template(name='badge_view')
                     .spacer
                     .spacer
                     +comments
-                    +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     .ui.header 
