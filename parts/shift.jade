@@ -42,8 +42,7 @@ template(name='shifts')
 template(name='shift_item')
     a.card(href="/shift/#{_id}/view")
         .image
-            if st.image_id
-                img.ui.raw.image(src="{{c.url st.image_id width=400 height=300 crop='fill'}}")    
+            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             a.ui.header(href="/shift/#{_id}/view")
                 |{{short_date date}}
@@ -69,14 +68,12 @@ template(name='shift_view')
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
                     a.pointer(href="/shifts" title='shifts')
-                        // i.chevron.left.icon
-                        // i.large.clock.icon
                         +icolorlg name='clock' cl='ui inline image'
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icon name='clock'
                         small viewing shift 
-                        |#{date} #{title}
+                        |{{short_date date}} #{title}
                 .four.wide.center.aligned.column
                     if can_edit 
                         a.ui.big.circular.blue.icon.button(href="/shift/#{_id}/edit" title='edit shift instance')
@@ -84,18 +81,16 @@ template(name='shift_view')
             .row 
                 .four.wide.column
                     if is_admin
-                        .ui.header template #{template_id}
-                    if st.image_id
-                        img.ui.fluid.image(src="{{c.url st.image_id height=500 width=500 gravity='face' crop='fill'}}")
+                        .ui.header 
+                            small template
+                            |#{shift_template.title}
+                    img.ui.fluid.rounded.image(src="{{c.url image_id }}")
                     a.ui.header(href="/job/#{_id}/view")
                         |#{shift_template.title} shift template
-                    +image_view key='image_id' label='image' direct=true cl='rounded'
                 .eight.wide.column
                     .ui.header
                         |leader:
                         |#{shift_leader.name}
-                    .ui.header
-                        |participants
                     each recipients
                         a.ui.header(href="/user/#{username}")
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -124,17 +119,15 @@ template(name='shift_view')
                         .ui.header #{username}
                     a.ui.header(href="/shift/#{_id}/view")
                         |#{job.title}
-                    .ui.basic.label from {{long_date start_datetime}}
-                        small {{from_now start_datetime}}
-                    .ui.basic.label to {{long_date end_datetime}}
-                    .item to {{from_now end_datetime}}
-                    .ui.list
-                        each contributers
-                            .item #{username} contributer
+                    // .ui.basic.label from {{long_date start_datetime}}
+                    //     small {{from_now start_datetime}}
+                    // .ui.basic.label to {{long_date end_datetime}}
+                    // .item to {{from_now end_datetime}}
                             
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
+                    
 template(name='shift_edit')
     with current_doc
         .ui.stackable.padded.grid
@@ -158,7 +151,7 @@ template(name='shift_edit')
                             small shift template:
                             |#{shift_template.title}
                     // else 
-                    if session_key_value_is 'applying_template' false
+                    unless session_key_value_is 'applying_template' true
                         .ui.fluid.header.pointer.apply_template
                             |apply template
                     if session_key_value_is 'applying_template' true
@@ -181,6 +174,7 @@ template(name='shift_edit')
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
+                    +image_edit key='image_id' label='image' direct=true
                     .ui.header
                         i.user.tie.icon
                         |leader
