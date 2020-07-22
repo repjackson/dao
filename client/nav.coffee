@@ -47,3 +47,7 @@ Template.nav.events
                 model:'request'
                 recipient_id: @_id
         Router.go "/request/#{new_id}/edit"
+
+
+    'click .view_profile': ->
+        Meteor.call 'calc_user_points', Meteor.userId()

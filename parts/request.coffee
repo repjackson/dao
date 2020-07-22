@@ -14,6 +14,12 @@ if Meteor.isClient
    
     Template.requests.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'request'
+    Template.requests.events
+        'click .add_request': ->
+            rid = 
+                Docs.insert
+                    model:'request'
+            Router.go "/request/#{rid}/edit"
     Template.requests.helpers
         requests: ->
             Docs.find 

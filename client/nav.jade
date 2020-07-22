@@ -1,46 +1,46 @@
 template(name='nav')
     .ui.fluid.attached.borderless.inverted.menu.topnav
-        a.item(href="/" class="{{isActivePath regex='home'}}")
+        a.item(href="/" class="{{isActivePath 'home'}}")
             +icon name='circled'
             // i.large.tree.icon
         if currentUser
-            a.item(href="/users" class="{{isActivePath regex='users'}}" title='members')
+            a.item(href="/users" class="{{isActiveRoute 'users'}}" title='members')
                 +icolor name='conference-call'
                 // i.large.users.icon
                 // span.mobile.hidden members
-        a.item(href="/events" class="{{isActivePath regex='events'}}" title='events')
-            +icolor name='calendar'
-            // i.large.calendar.icon
-            // span.mobile.hidden events
-        a.item(href="/shifts" class="{{isActivePath regex='shifts'}}" title='shifts')
-            // i.large.clock.icon
-            +icolor name='clock'
-            // span.mobile.hidden shifts
-        a.item(href="/shop" class="{{isActivePath regex='shop'}}" title='shifts')
-            // i.large.shop.icon
-            +icolor name='shop'
-        a.item(href="/discussions" class="{{isActivePath regex='discussions'}}" title='discussions')
-            // i.large.shop.icon
-            +icolor name='speech-bubble-with-dots'
-            
-            // span.mobile.hidden shop
-        // a.item(href="/gifts" class="{{isActivePath regex='gifts'}}" title='gifts')
-        //     i.big.gift.icon
-            // span.mobile.hidden gifts
-        a.item(href="/requests" class="{{isActivePath regex='requests'}}" title='requests')
-            // i.large.hand.holding.heart.icon
-            +icolor name='sell'
-            // span.mobile.hidden requests
-        a.item(href="/badges" class="{{isActivePath regex='badges'}}" title='badges')
-            // i.large.hand.holding.heart.icon
-            +icolor name='prize'
-            // span.mobile.hidden badges
-        a.item(href="/projects" class="{{isActivePath regex='projects'}}" title='projects')
-            // i.large.hand.holding.heart.icon
-            +icolor name='project'
-            // span.mobile.hidden projects
-        a.icon.item(href="/locations" class="{{isActivePath regex='locations'}}" title='locations')
-            +icolor name='marker'
+            a.item(href="/events" class="{{isActiveRoute 'events'}}" title='events')
+                +icolor name='calendar'
+                // i.large.calendar.icon
+                // span.mobile.hidden events
+            a.item(href="/shifts" class="{{isActiveRoute 'shifts'}}" title='shifts')
+                // i.large.clock.icon
+                +icolor name='clock'
+                // span.mobile.hidden shifts
+            a.item(href="/shop" class="{{isActiveRoute 'shop'}}" title='shifts')
+                // i.large.shop.icon
+                +icolor name='shop'
+            a.item(href="/discussions" class="{{isActiveRoute 'discussions'}}" title='discussions')
+                // i.large.shop.icon
+                +icolor name='speech-bubble-with-dots'
+                
+                // span.mobile.hidden shop
+            // a.item(href="/gifts" class="{{isActiveRoute 'gifts'}}" title='gifts')
+            //     i.big.gift.icon
+                // span.mobile.hidden gifts
+            a.item(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
+                // i.large.hand.holding.heart.icon
+                +icolor name='sell'
+                // span.mobile.hidden requests
+            a.item(href="/badges" class="{{isActivePath 'badges'}}" title='badges')
+                // i.large.hand.holding.heart.icon
+                +icolor name='prize'
+                // span.mobile.hidden badges
+            a.item(href="/projects" class="{{isActivePath regex='projects'}}" title='projects')
+                // i.large.hand.holding.heart.icon
+                +icolor name='project'
+                // span.mobile.hidden projects
+            a.icon.item(href="/locations" class="{{isActivePath regex='locations'}}" title='locations')
+                +icolor name='marker'
         .right.menu
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
             //     i.large.gift.icon
@@ -55,7 +55,7 @@ template(name='nav')
                 a.icon.item.toggle_admin
                     i.shield.icon
             if currentUser
-                a.large.item(href="/user/#{currentUser.username}" class="{{isActivePath regex='profile_layout'}}")
+                a.large.item.view_profile(href="/user/#{currentUser.username}" class="{{isActivePath regex='profile_layout'}}")
                     //- i.large.user.large.icon
                     if currentUser.profile_image_id
                         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")

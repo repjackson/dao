@@ -13,6 +13,7 @@ template(name='profile_layout')
                 div
                 a.ui.grey.header.refresh_user_stats(href="/user/#{username}") 
                     |@#{username}
+                .ui.header #{calculated_user_balance}
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
                 div

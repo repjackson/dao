@@ -1,6 +1,6 @@
 template(name='requests')
     .ui.padded.stackable.grid
-        .sixteen.wide.column
+        .four.wide.column
             // .ui.button 
             //     |debit count
             // .ui.button 
@@ -15,6 +15,7 @@ template(name='requests')
             if is_admin
                 .ui.icon.big.circular.button.add_request
                     i.plus.green.icon
+        .twelve.wide.column
             .scrolling
                 .ui.stackable.six.cards
                     each requests
@@ -71,7 +72,7 @@ template(name='request_view')
                             //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             //     |#{target.username}
                             
-                    +number_view key='bounty' label='bounty' direct=true
+                    +number_view key='point_bounty' label='point bounty' direct=true
                     +textarea_view key='description' label='description' direct=true
                     +image_view key='image_id' label='image' direct=true
                     div 
@@ -115,11 +116,6 @@ template(name='request_edit')
                         |specific people
                     +number_edit key='point_bounty' label='point bounty' direct=true
                     div
-                    i.yellow.lightning.icon
-                    +key_value_edit key='bounty' value=1
-                    +key_value_edit key='bounty' value=5
-                    +key_value_edit key='bounty' value=10
-                    +key_value_edit key='bounty' value=20
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 

@@ -1,8 +1,4 @@
 if Meteor.isClient
-    Router.route '/user/:username/dashboard', (->
-        @layout 'profile_layout'
-        @render 'user_dashboard'
-        ), name:'user_dashboard'
     Router.route '/user/:username', (->
         @layout 'profile_layout'
         @render 'user_dashboard'
@@ -29,8 +25,6 @@ if Meteor.isClient
                 .popup()
         , 1000
 
-    Template.user_credits_small.onCreated ->
-        @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
 
     Template.profile_layout.helpers
         route_slug: -> "user_#{@slug}"
@@ -69,20 +63,6 @@ if Meteor.isClient
         # 'click .recalc_user_cloud': ->
         #     Meteor.call 'recalc_user_cloud', Router.current().params.username, ->
 
-    Template.user_credits_small.helpers
-        earned_items: ->
-            current_user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.find {
-                model:'debit'
-                recipient_id: current_user._id
-            }, sort: _timestamp:-1
-    Template.user_dashboard.helpers
-        sent_items: ->
-            current_user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.find {
-                model:'debit'
-                _author_id: current_user._id
-            }, sort: _timestamp:-1
 
 
     Template.profile_layout.events
@@ -97,149 +77,149 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.methods
-        calc_test_sessions: (user_id)->
-            user = Meteor.users.findOne user_id
-            now = Date.now()
-            console.log now
-            past_24_hours = now-(24*60*60*1000)
-            past_week = now-(7*24*60*60*1000)
-            past_month = now-(30*7*24*60*60*1000)
-            console.log past_24_hours
-            all_sessions_count =
-                Docs.find({
-                    model:'test_session'
-                    _author_id:username
-                    }).count()
-            todays_sessions_count =
-                Docs.find({
-                    model:'test_session'
-                    _author_id:username
-                    _timestamp:
-                        $gt:past_24_hours
-                    }).count()
-            weeks_sessions_count =
-                Docs.find({
-                    model:'test_session'
-                    _author_id:username
-                    _timestamp:
-                        $gt:past_week
-                    }).count()
-            months_sessions_count =
-                Docs.find({
-                    model:'test_session'
-                    _author_id:username
-                    _timestamp:
-                        $gt:past_month
-                    }).count()
-            console.log 'all session count', all_sessions_count
-            console.log 'today sessions count', todays_sessions_count
-            Meteor.users.update user_id,
-                $set:
-                    all_sessions_count:all_sessions_count
-                    todays_sessions_count: todays_sessions_count
-                    weeks_sessions_count: weeks_sessions_count
-                    months_sessions_count: months_sessions_count
+        # calc_test_sessions: (user_id)->
+        #     user = Meteor.users.findOne user_id
+        #     now = Date.now()
+        #     console.log now
+        #     past_24_hours = now-(24*60*60*1000)
+        #     past_week = now-(7*24*60*60*1000)
+        #     past_month = now-(30*7*24*60*60*1000)
+        #     console.log past_24_hours
+        #     all_sessions_count =
+        #         Docs.find({
+        #             model:'test_session'
+        #             _author_id:username
+        #             }).count()
+        #     todays_sessions_count =
+        #         Docs.find({
+        #             model:'test_session'
+        #             _author_id:username
+        #             _timestamp:
+        #                 $gt:past_24_hours
+        #             }).count()
+        #     weeks_sessions_count =
+        #         Docs.find({
+        #             model:'test_session'
+        #             _author_id:username
+        #             _timestamp:
+        #                 $gt:past_week
+        #             }).count()
+        #     months_sessions_count =
+        #         Docs.find({
+        #             model:'test_session'
+        #             _author_id:username
+        #             _timestamp:
+        #                 $gt:past_month
+        #             }).count()
+        #     console.log 'all session count', all_sessions_count
+        #     console.log 'today sessions count', todays_sessions_count
+        #     Meteor.users.update user_id,
+        #         $set:
+        #             all_sessions_count:all_sessions_count
+        #             todays_sessions_count: todays_sessions_count
+        #             weeks_sessions_count: weeks_sessions_count
+        #             months_sessions_count: months_sessions_count
 
-            # this_week = moment().startOf('isoWeek')
-            # this_week = moment().startOf('isoWeek')
-
-
-        recalc_user_act_stats: (user_id)->
-            user = Meteor.users.findOne user_id
-            test_session_cursor =
-                Docs.find
-                    model:'test_session'
-                    _author_id: user_id
-            site_test_cursor =
-                Docs.find(
-                    model:'test'
-                )
-            site_test_count = site_test_cursor.count()
-            answered_tests = 0
-            for test in site_test_cursor.fetch()
-                user_test_session =
-                    Docs.findOne
-                        model:'test_session'
-                        test_id: test._id
-                        _author_id:username
-                if user_test_session
-                    answered_tests++
-            console.log 'answered tests', answered_tests
-            global_section_percent = 0
-
-            session_count = test_session_cursor.count()
-            for section in ['english', 'math', 'science', 'reading']
-                section_test_cursor =
-                    Docs.find {
-                        model:'test'
-                        tags: $in: [section]
-                    }
-                section_count = section_test_cursor.count()
-                section_tests = section_test_cursor.fetch()
-                section_test_ids = []
-                for section_test in section_tests
-                    section_test_ids.push section_test._id
-
-                # console.log section
-                # console.log section_test_ids
-                user_section_test_sessions =
-                    Docs.find {
-                        model:'test_session'
-                        test_id: $in: section_test_ids
-                        _author_id: user_id
-                    }
-                # console.log user_section_test_sessions.fetch()
-                user_section_test_session_count = user_section_test_sessions.count()
-                total_section_average = 0
-                for test_session in user_section_test_sessions.fetch()
-                    if test_session.correct_percent
-                        total_section_average += parseInt(test_session.correct_percent)
-                user_section_average = total_section_average/user_section_test_session_count
-                # console.log 'user section average', section, user_section_average
-                if user_section_average
-                    Meteor.users.update user_id,
-                        $set:
-                            "#{section}_average": user_section_average.toFixed()
-                    global_section_percent += user_section_average
-                else
-                    Meteor.users.update user_id,
-                        $set:
-                            "#{section}_average": 0
-            site_percent_complete = parseInt((answered_tests/site_test_count)*100)
-            global_section_average = global_section_percent/4
+        #     # this_week = moment().startOf('isoWeek')
+        #     # this_week = moment().startOf('isoWeek')
 
 
+        # recalc_user_act_stats: (user_id)->
+        #     user = Meteor.users.findOne user_id
+        #     test_session_cursor =
+        #         Docs.find
+        #             model:'test_session'
+        #             _author_id: user_id
+        #     site_test_cursor =
+        #         Docs.find(
+        #             model:'test'
+        #         )
+        #     site_test_count = site_test_cursor.count()
+        #     answered_tests = 0
+        #     for test in site_test_cursor.fetch()
+        #         user_test_session =
+        #             Docs.findOne
+        #                 model:'test_session'
+        #                 test_id: test._id
+        #                 _author_id:username
+        #         if user_test_session
+        #             answered_tests++
+        #     console.log 'answered tests', answered_tests
+        #     global_section_percent = 0
 
-            Meteor.users.update user_id,
-                $set:
-                    session_count:session_count
-                    site_percent_complete:site_percent_complete
-                    global_section_average:global_section_average.toFixed()
+        #     session_count = test_session_cursor.count()
+        #     for section in ['english', 'math', 'science', 'reading']
+        #         section_test_cursor =
+        #             Docs.find {
+        #                 model:'test'
+        #                 tags: $in: [section]
+        #             }
+        #         section_count = section_test_cursor.count()
+        #         section_tests = section_test_cursor.fetch()
+        #         section_test_ids = []
+        #         for section_test in section_tests
+        #             section_test_ids.push section_test._id
+
+        #         # console.log section
+        #         # console.log section_test_ids
+        #         user_section_test_sessions =
+        #             Docs.find {
+        #                 model:'test_session'
+        #                 test_id: $in: section_test_ids
+        #                 _author_id: user_id
+        #             }
+        #         # console.log user_section_test_sessions.fetch()
+        #         user_section_test_session_count = user_section_test_sessions.count()
+        #         total_section_average = 0
+        #         for test_session in user_section_test_sessions.fetch()
+        #             if test_session.correct_percent
+        #                 total_section_average += parseInt(test_session.correct_percent)
+        #         user_section_average = total_section_average/user_section_test_session_count
+        #         # console.log 'user section average', section, user_section_average
+        #         if user_section_average
+        #             Meteor.users.update user_id,
+        #                 $set:
+        #                     "#{section}_average": user_section_average.toFixed()
+        #             global_section_percent += user_section_average
+        #         else
+        #             Meteor.users.update user_id,
+        #                 $set:
+        #                     "#{section}_average": 0
+        #     site_percent_complete = parseInt((answered_tests/site_test_count)*100)
+        #     global_section_average = global_section_percent/4
 
 
-            section_average_ranking =
-                Meteor.users.find(
-                    {},
-                    sort:
-                        global_section_average: -1
-                    fields:
-                        username: 1
-                ).fetch()
-            section_average_ranking_ids = _.pluck section_average_ranking, '_id'
 
-            console.log 'section average ranking', section_average_ranking
-            console.log 'section average ranking ids', section_average_ranking_ids
-            my_rank = _.indexOf(section_average_ranking_ids, user_id)+1
-            console.log 'my rank', my_rank
-            Meteor.users.update user_id,
-                $set:
-                    global_section_average_rank:my_rank
+        #     Meteor.users.update user_id,
+        #         $set:
+        #             session_count:session_count
+        #             site_percent_complete:site_percent_complete
+        #             global_section_average:global_section_average.toFixed()
 
 
-            # average_english_percent
-            # average_math_percent
-            # average_science_percent
-            # average_reading_percent
+        #     section_average_ranking =
+        #         Meteor.users.find(
+        #             {},
+        #             sort:
+        #                 global_section_average: -1
+        #             fields:
+        #                 username: 1
+        #         ).fetch()
+        #     section_average_ranking_ids = _.pluck section_average_ranking, '_id'
+
+        #     console.log 'section average ranking', section_average_ranking
+        #     console.log 'section average ranking ids', section_average_ranking_ids
+        #     my_rank = _.indexOf(section_average_ranking_ids, user_id)+1
+        #     console.log 'my rank', my_rank
+        #     Meteor.users.update user_id,
+        #         $set:
+        #             global_section_average_rank:my_rank
+
+
+        #     # average_english_percent
+        #     # average_math_percent
+        #     # average_science_percent
+        #     # average_reading_percent
 
 
         recalc_user_cloud: (user_id)->

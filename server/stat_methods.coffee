@@ -57,6 +57,39 @@ Meteor.methods
                 global_credit_count_rank:my_rank
 
 
+    calc_user_points: (user_id)->
+        user = Meteor.users.findOne user_id
+        debits = Docs.find({
+            model:'debit'
+            amount:$exists:true
+            _author_id:user_id})
+        debit_count = debits.count()
+        total_debit_amount = 0
+        for debit in debits.fetch()
+            total_debit_amount += debit.amount
+
+        console.log 'total debit amount', total_debit_amount
+
+        credits = Docs.find({
+            model:'debit'
+            amount:$exists:true
+            recipient_id:user_id})
+        credit_count = credits.count()
+        total_credit_amount = 0
+        for credit in credits.fetch()
+            total_credit_amount += credit.amount
+
+        console.log 'total credit amount', total_credit_amount
+        calculated_user_balance = total_credit_amount-total_debit_amount
+
+        Meteor.users.update user_id,
+            $set:
+                points:calculated_user_balance
+                total_credit_amount: total_credit_amount
+                total_debit_amount: total_debit_amount
+
+
+
 
 
 

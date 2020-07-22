@@ -3,7 +3,34 @@ template(name='user_dashboard')
     // .ui.hidden.divider
     .ui.stackable.four.column.grid
         .column
-            +user_credits_small
+            .ui.inline.header 
+                i.minus.icon
+                |#{total_credit_amount}p
+                |received
+                .ui.basic.circular.label #{credit_count} credits
+                    | ##{global_credit_count_rank}
+            div
+            .ui.link.list.scrolling
+                each user_credits
+                    .item
+                        if author.profile_image_id
+                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                strong #{amount}pt 
+                                |from 
+                                a(href="/user/#{author.username}")
+                                    |#{author.username}
+                            .description
+                                a(href="/gift/#{_id}/view")
+                                    |#{when}
+                        .content
+                            .description
+                                |#{description}
+                                each tags
+                                    .ui.mini.basic.label #{this}
+                        if is_admin
+                            +remove_button
         .column
             .ui.inline.spaced.header 
                 +icolor name='filled-sent' 
@@ -13,7 +40,7 @@ template(name='user_dashboard')
                     .ui.circular.label ##{global_send_count_rank}
             div
             .ui.link.large.list.scrolling
-                each sent_items
+                each user_debits
                     .item 
                         if target.profile_image_id
                             img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
