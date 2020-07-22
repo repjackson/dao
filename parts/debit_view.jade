@@ -51,7 +51,7 @@ template(name='debit_view')
                         | #{when}
                     .ui.segment
                         .ui.inline.header 
-                            i.chevron.up.icon
+                            +icon name='donate'
                             |sender
                         a.ui.inline.header(href="/user/#{_author.username}") 
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -59,7 +59,7 @@ template(name='debit_view')
                 .four.wide.column
                     .ui.segment
                         .ui.inline.header
-                            i.chevron.right.icon
+                            +icon name='receive-cash'
                             |recipient
                         
                         a(href="/user/#{recipient.username}")

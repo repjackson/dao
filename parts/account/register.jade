@@ -51,10 +51,10 @@ template(name='register')
                         +icon name='reviewer-female' cl='ui inline image'
                         |register '#{username}'
                 else
-                    .ui.small.header username "#{username}" found
+                    // .ui.small.header username "#{username}" found
                     a.ui.basic.fluid.button(href='/login') 
                         // i.right.chevron.icon
-                        +icon name='internal'
+                        +icon name='internal' cl='ui inline image'
                         |login
                 .ui.center.aligned.basic.segment    
                     // .ui.small.header by registering you agree to our 

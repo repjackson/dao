@@ -43,16 +43,19 @@ template(name='project_view')
                 .four.wide.center.aligned.column
                     // if can_edit
                     a(href="/projects" title='projects')
-                        +icolorlg name='prize' cl='ui inline image pointer'
+                        +icolorlg name='project' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
-                    +icolorlg name=icon cl='ui inline image'
+                    if icon
+                        +icolorlg name=icon cl='ui inline image'
+                    else
+                        +icolorlg name='project' cl='ui inline image'
                     .ui.center.aligned.inline.header 
                         small viewing project: 
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit
-                        a.ui.big.icon.circular.button.edit_project(href="/project/#{_id}/edit")
-                            i.large.blue.pencil.icon
+                        a.edit_project(href="/project/#{_id}/edit")
+                            i.big.blue.pencil.icon
             .row 
                 .four.wide.column
                     .ui.header
@@ -85,8 +88,8 @@ template(name='project_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     .ui.header 
-                        +icon name='projectr'
-                        |projectrs
+                        +icon name='project'
+                        |projects
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
@@ -100,22 +103,21 @@ template(name='project_edit')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.inline.header 
-                        +icon name='prize'
+                        +icon name='project'
                         small edit project
                         |#{title}
                 .four.wide.center.aligned.column
-                    .ui.large.circular.icon.button.delete_item(title='cancel')
-                        i.large.red.remove.icon
+                    i.link.big.red.remove.icon.delete_item(title='delete project')
             .row 
-                .four.wide.column
-                .eight.wide.column
+                .five.wide.column
                     +text_edit key='title' icon='header' direct=true
+                    +image_edit key='image_id' label='image' direct=true
                     +text_edit key='location' label='location' icon='marker' direct=true
                     +icon_edit key='icon' label='icon' direct=true
-                    +textarea_edit key='description' label='description' direct=true
-                    +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
+                .six.wide.column
+                    +textarea_edit key='description' label='description' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
-                .four.wide.column
+                .five.wide.column
                     +boolean_edit key='published' direct=true

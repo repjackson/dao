@@ -52,16 +52,16 @@ template(name='gift_view')
                         | #{when}
                     .ui.segment
                         .ui.inline.header 
-                            i.chevron.up.icon
+                            +icon name='donate'
                             |gifter
-                        a.ui.inline.header(href="/user/#{_author.username}") 
+                        a.ui.inline.pointer.header(href="/user/#{_author.username}") 
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
                     .ui.segment
                         .ui.inline.header
-                            i.chevron.down.icon
+                            +icon name='receive-cash'
                             |recipient
-                        a.ui.inline.header(href="/user/#{recipient.username}")
+                        a.ui.inline.pointer.header(href="/user/#{recipient.username}")
                             img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{recipient.username}
                             
