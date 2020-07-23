@@ -1,4 +1,9 @@
 if Meteor.isClient
+    Template.registerHelper 'claimer', () ->
+            Meteor.users.findOne @claimed_user_id
+    Template.registerHelper 'completer', () ->
+        Meteor.users.findOne @completed_by_user_id
+    
     Router.route '/requests/', (->
         @layout 'layout'
         @render 'requests'
@@ -49,11 +54,22 @@ if Meteor.isClient
         'click .mark_complete': ->
             Docs.update Router.current().params.doc_id,
                 $set:
-                    complate: true
+                    complete: true
                     completed_by_user_id:@claimed_user_id
                     status:'complete'
+                    completed_timestamp:Date.now()
             Meteor.users.update @claimed_user_id,
                 $inc:points:@point_bounty
+                            
+        'click .mark_incomplete': ->
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    complete: false
+                    completed_by_user_id: null
+                    status:'claimed'
+                    completed_timestamp:null
+            Meteor.users.update @claimed_user_id,
+                $inc:points:-@point_bounty
                             
 
     Template.request_view.helpers
@@ -63,8 +79,6 @@ if Meteor.isClient
             else 
                 true
 
-        claimer: ->
-            Meteor.users.findOne @claimed_user_id
 
 
 # if Meteor.isServer

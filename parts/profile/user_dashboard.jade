@@ -59,13 +59,15 @@ template(name='user_dashboard')
                 // i.hand.holding.heart.icon
                 +icolor name='request-service'
                 |requests
-            .ui.link.list.smallscroll
+            .smallscroll
                 each user_requests
-                    a.item(href="/request/#{_id}/view")
-                        .header #{amount}pts
-                        |#{_author.username}
-                        |#{description}
-                        |#{when}
+                    a(href="/request/#{_id}/view")
+                        .ui.segment
+                            .header #{point_bounty}pts: #{title}
+                            |#{description}
+                            |status: #{status}
+                            if complete 
+                                |completed by #{completer.name}
         .column
             .ui.header 
                 +icolor name='calendar' cl='ui inline spaced image'
