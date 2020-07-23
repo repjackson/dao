@@ -27,6 +27,7 @@ Router.onBeforeAction(force_loggedin, {
         'register'
         'login'
         'verify-email'
+        'forgot_password'
     ]
     })
 

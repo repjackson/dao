@@ -19,6 +19,8 @@ if Meteor.isClient
             rid = 
                 Docs.insert
                     model:'request'
+                    point_bounty:0
+                    published:false
             Router.go "/request/#{rid}/edit"
     Template.requests.helpers
         requests: ->
@@ -29,18 +31,41 @@ if Meteor.isClient
 
 
     Template.request_view.events
-        'click .delete_item': ->
-            if confirm 'delete item?'
-                Docs.remove @_id
-
-        'click .publish': ->
-            if confirm 'confirm?'
-                Meteor.call 'send_request', @_id, =>
-                    Router.go "/request/#{@_id}/view"
-
+        'click .claim': ->
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    claimed_user_id: Meteor.userId()
+                    status:'claimed'
+            
+                            
+        'click .unclaim': ->
+            Docs.update Router.current().params.doc_id,
+                $unset:
+                    claimed_user_id: 1
+                $set:
+                    status:'unclaimed'
+            
+                            
+        'click .mark_complete': ->
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    complate: true
+                    completed_by_user_id:@claimed_user_id
+                    status:'complete'
+            Meteor.users.update @claimed_user_id,
+                $inc:points:@point_bounty
+                            
 
     Template.request_view.helpers
-    Template.request_view.events
+        can_claim: ->
+            if @claimed_user_id
+                false
+            else 
+                true
+
+        claimer: ->
+            Meteor.users.findOne @claimed_user_id
+
 
 # if Meteor.isServer
 #     Meteor.methods
@@ -80,16 +105,72 @@ if Meteor.isClient
 
 
     Template.request_edit.events
-        'click .delete_item': ->
-            if confirm 'delete item?'
-                Docs.remove @_id
+        'click .delete_request': ->
+            Swal.fire({
+                title: "delete request?"
+                text: "point bounty will be returned to your account"
+                icon: 'question'
+                confirmButtonText: 'delete'
+                confirmButtonColor: 'red'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.remove @_id
+                    Swal.fire(
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'request removed',
+                        showConfirmButton: false,
+                        timer: 1500
+                    )
+                    Router.go "/requests"
+            )
 
         'click .publish': ->
-            Docs.update Router.current().params.doc_id,
-                $set:published:true
-            if confirm 'confirm?'
-                Meteor.call 'publish_request', @_id, =>
-                    Router.go "/request/#{@_id}/view"
+            Swal.fire({
+                title: "publish request?"
+                text: "point bounty will be held from your account"
+                icon: 'question'
+                confirmButtonText: 'publish'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Meteor.call 'publish_request', @_id, =>
+                        Swal.fire(
+                            position: 'bottom-end',
+                            icon: 'success',
+                            title: 'request published',
+                            showConfirmButton: false,
+                            timer: 1000
+                        )
+            )
+
+        'click .unpublish': ->
+            Swal.fire({
+                title: "unpublish request?"
+                text: "point bounty will be returned to your account"
+                icon: 'question'
+                confirmButtonText: 'unpublish'
+                confirmButtonColor: 'orange'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Meteor.call 'unpublish_request', @_id, =>
+                        Swal.fire(
+                            position: 'bottom-end',
+                            icon: 'success',
+                            title: 'request unpublished',
+                            showConfirmButton: false,
+                            timer: 1000
+                        )
+            )
 
 
     Template.request_edit.helpers
@@ -99,17 +180,32 @@ if Meteor.isServer
     Meteor.methods
         publish_request: (request_id)->
             request = Docs.findOne request_id
-            target = Meteor.users.findOne request.recipient_id
+            # target = Meteor.users.findOne request.recipient_id
             author = Meteor.users.findOne request._author_id
 
-            console.log 'sending request', request
-            Meteor.users.update target._id,
-                $inc:
-                    points: request.amount
+            console.log 'publishing request', request
             Meteor.users.update author._id,
                 $inc:
-                    points: -request.amount
+                    points: -request.point_bounty
             Docs.update request_id,
                 $set:
                     published:true
                     published_timestamp:Date.now()
+                    
+                    
+        unpublish_request: (request_id)->
+            request = Docs.findOne request_id
+            # target = Meteor.users.findOne request.recipient_id
+            author = Meteor.users.findOne request._author_id
+
+            console.log 'unpublishing request', request
+            Meteor.users.update author._id,
+                $inc:
+                    points: request.point_bounty
+            Docs.update request_id,
+                $set:
+                    published:false
+                    published_timestamp:null
+                    
+                    
+                    

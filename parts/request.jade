@@ -10,14 +10,14 @@ template(name='requests')
             // .ui.button 
             //     |credit amount
             .ui.inline.header
-                +icolor name='sell'
+                +icolor name='request-service'
                 |requests
             if is_admin
                 .ui.icon.big.circular.button.add_request
                     i.plus.green.icon
         .twelve.wide.column
             .scrolling
-                .ui.stackable.six.cards
+                .ui.stackable.cards
                     each requests
                         +request_item
         .sixteen.wide.column
@@ -32,28 +32,32 @@ template(name='request_item')
             a.ui.header(href="/request/#{_id}/view")
                 |#{title}
             |#{description}
+            |by 
+            if _author.profile_image_id
+                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            |#{_author.name}
+            .ui.big.basic.circular.label
+                |#{point_bounty}pts
         
 
 
 template(name='request_view')
     with current_doc
         .ui.stackable.padded.grid
-            .row 
-                .four.wide.column
+            .middle.aligned.row 
+                .four.wide.center.aligned.column
                     // if can_edit
                     a(href="/requests" title='requests')
-                        +icolor name='sell' cl='ui inline image pointer'
-                .eight.wide.column
+                        +icolor name='request-service' cl='ui inline image pointer'
+                .eight.wide.center.aligned.column
                     .ui.center.aligned.header 
-                        +icon name='sell'
+                        +icon name='request-service'
                         small viewing request: 
                         |#{title}
-                .four.wide.column
-                    if is_admin
-                        .ui.big.circular.icon.button.delete_request
-                            i.large.red.remove.icon
-                        a.ui.big.icon.circular.button.edit_request(href="/request/#{_id}/edit")
-                            i.blue.pencil.icon
+                .four.wide.center.aligned.column
+                    if can_edit
+                        a.edit_request(href="/request/#{_id}/edit")
+                            i.big.blue.pencil.circular.icon
             .row 
                 .four.wide.column
                 .eight.wide.column
@@ -80,12 +84,25 @@ template(name='request_view')
                     .spacer
                     .spacer
                     +comments
-                    +voting_full
+                    // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
+                    .ui.header status: #{status}
+                    if can_claim
+                        .ui.fluid.green.button.claim
+                            +icon name='grab' cl='ui inline image'
+                            |claim
+                    if claimer
+                        .ui.header claimed by
+                        .ui.header #{claimer.name}
+                        unless complete
+                            .ui.button.unclaim
+                                i.undo.icon
+                                |unclaim
+                        if can_edit
+                            .ui.big.button.mark_complete
+                                |mark complete
+                    
 
 template(name='request_edit')
     with current_doc
@@ -95,18 +112,18 @@ template(name='request_edit')
                     .ui.large.circular.icon.button.delete_item(title='cancel')
                         i.large.red.ban.icon
                     .ui.inline.header 
-                        +icon name='sell'
+                        +icon name='request-service'
                         small edit request
                         |#{title}
                     .ui.header 
                         small author
                         |#{_author.username}
             .row 
-                .four.wide.column
-                    +date_edit key='date' label='date (optional)' icon='calendar' direct=true
-                .eight.wide.column
+                .five.wide.column
                     +text_edit key='title' icon='header' direct=true
-                    .ui.header 
+                    +date_edit key='date' label='date' icon='calendar' direct=true
+                    .ui.header
+                        +icon name='audience'
                         |audience
                     .ui.disabled.button
                         |everyone
@@ -114,27 +131,36 @@ template(name='request_edit')
                         |groups
                     .ui.disabled.button
                         |specific people
-                    +number_edit key='point_bounty' label='point bounty' direct=true
+                    .ui.header
+                        +icon name='warranty'
+                        |badges
+                .six.wide.column
+                    +number_edit key='point_bounty' label='point bounty' icon='paper-bag-with-seeds' direct=true
                     div
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
-                    +array_edit key='tags' label='tags' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    +array_edit key='tags' label='tags' icon='tags' direct=true
+                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .four.wide.column
                     .ui.header your points: #{currentUser.points}
                     .ui.small.header publishing request holds points from your balance and dispenses them when request is verified complete
+                    .ui.inline.header status:
                     if published
-                        .ui.inline.header status:
                         .ui.green.inline.header published
-                        .ui.fluid.teal.button.unpublish
+                    else
+                        .ui.orange.inline.header unpublished
+                    if published
+                        .ui.fluid.orange.basic.large.button.unpublish
                             i.undo.icon
                             |unpublish
-                        a.ui.fluid.green.big.button(href="/request/#{_id}/view")
-                            i.checkmark.icon
-                            |save
-                            
                     else
-                        .ui.fluid.green.button.publish
+                        .ui.fluid.teal.big.button.publish
                             i.checkmark.icon
                             |publish
+                    .spacer
+                    .spacer
+                    a.ui.fluid.green.big.button(href="/request/#{_id}/view")
+                        i.checkmark.icon
+                        |save
+                            

@@ -78,7 +78,7 @@ template(name='profile_layout')
                 a.profile_nav_item(href="/user/#{username}/stats" class="{{isActivePath 'user_stats'}}" title="#{user.username} stats")
                     +icolor name='line-chart' cl='ui inline spaced image pointer'
                 a.profile_nav_item(href="/user/#{username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
-                    +icolor name='sell' cl='ui inline spaced image pointer'
+                    +icolor name='request-service' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
                 //     i.big.calendar.orange.icon
                 //     span.mobile.hidden events

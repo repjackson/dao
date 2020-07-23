@@ -5,52 +5,55 @@ template(name='home')
         // .one.column.middle.aligned.row
         //     .column
         //         .ui.header welcome to one riverside
-        .two.column.middle.aligned.row
-            unless currentUser
-                unless is_admin
-                    .column
-                        img.ui.fluid.rounded.image(src="{{c.url 'river_small' crop='fill'}}")
-                    .column
-                        .ui.large.header #{home_doc.home_title}
-                        if is_admin 
-                            with home_doc
-                                +textarea_edit key='home_title' direct=true
-                        .ui.header
-                            with home_doc
-                                if is_admin
-                                    +textarea_edit key='home_blurb' direct=true
-                                |#{home_blurb}
-                            // The Riverside’s diverse indoor-outdoor event spaces and farm-fresh catered tastes create unforgettable guest experiences.
+        // .two.column.middle.aligned.row
+        //     unless currentUser
+        //         unless is_admin
+        //             .column
+        //                 img.ui.fluid.rounded.image(src="{{c.url 'river_small' crop='fill'}}")
+        //             .column
+        //                 .ui.large.header #{home_doc.home_title}
+        //                 if is_admin 
+        //                     with home_doc
+        //                         +textarea_edit key='home_title' direct=true
+        //                 .ui.header
+        //                     with home_doc
+        //                         if is_admin
+        //                             +textarea_edit key='home_blurb' direct=true
+        //                         |#{home_blurb}
+        //                     // The Riverside’s diverse indoor-outdoor event spaces and farm-fresh catered tastes create unforgettable guest experiences.
                             
-                            // Located alongside Boulder Creek, this rare and historic property provides eclectic Boulder vibes and local collective services for weddings, special occasions, and community events.
-        if currentUser
-            .centered.row
-                unless currentUser
-                    .four.wide.column
-                        // +join_button
-                        a.ui.fluid.big.green.button(href="/join")
-                            i.checkmark.icon
-                            |join
-                .five.wide.column
-                    if can_gift
-                        .ui.fluid.big.green.button.gift
-                            +icolor name='gift' cl='ui mini inline image'
-                            // i.gift.icon
-                            |gift
-                .five.wide.column
-                    if can_gift
-                        .ui.fluid.big.teal.button.request
-                            // i.hand.holding.heart.icon
-                            +icolor name='sell' cl='ui mini inline image'
-                            |request
-                // .two.wide.column
-                //     // .ui.center.aligned.grey.header.refresh_stats
-                //     //     i.line.chart.icon
-                //     //     |stats
-                //     with stats_doc
-                //         .ui.list
-                //             .item #{total_points} system points
-                            
+        //                     // Located alongside Boulder Creek, this rare and historic property provides eclectic Boulder vibes and local collective services for weddings, special occasions, and community events.
+        .centered.row
+            .five.wide.column
+                if can_debit
+                    .ui.fluid.big.green.button.debit
+                        +icolor name='debit' cl='ui mini inline image'
+                        // i.debit.icon
+                        |send
+                else
+                    .ui.fluid.big.green.disabled.button
+                        +icolor name='debit' cl='ui mini inline image'
+                        // i.debit.icon
+                        |send
+            .five.wide.column
+                if can_debit
+                    .ui.fluid.big.teal.button.request
+                        // i.hand.holding.heart.icon
+                        +icolor name='request-service' cl='ui mini inline image'
+                        |request
+                else
+                    .ui.fluid.big.teal.disabled.button
+                        // i.hand.holding.heart.icon
+                        +icolor name='request-service' cl='ui mini inline image'
+                        |request
+            // .two.wide.column
+            //     // .ui.center.aligned.grey.header.refresh_stats
+            //     //     i.line.chart.icon
+            //     //     |stats
+            //     with stats_doc
+            //         .ui.list
+            //             .item #{total_points} system points
+                        
         .row
             .four.wide.column
                 .ui.center.aligned.header
@@ -131,12 +134,12 @@ template(name='home')
                                     .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    // i.gift.icon
-                    +icolor name='gift' cl='ui image'
-                    |latest gifts
+                    // i.debit.icon
+                    +icolor name='handshake' cl='ui image'
+                    |latest transfers
                 .medscroll
-                    each latest_gifts
-                        a.ui.card(href="/gift/#{_id}/view")
+                    each latest_debits
+                        a.ui.card(href="/debit/#{_id}/view")
                             .content
                                 .header
                                     .ui.inline.header #{amount}p
@@ -156,7 +159,7 @@ template(name='home')
             .four.wide.column
                 .ui.center.aligned.header
                     // i.hand.holding.heart.icon
-                    +icolor name='sell' cl='ui image'
+                    +icolor name='request-service' cl='ui image'
                     |latest requests
                 .smallscrol
                     .ui.selection.link.list

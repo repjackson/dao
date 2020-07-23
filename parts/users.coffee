@@ -41,6 +41,8 @@ if Meteor.isClient
                 @debit_count/@debit_count
 
     Template.user_item.events
+        'click .calc_points': ->
+            Meteor.call 'calc_user_points', @_id, ->
         'click .debit': ->
             # user = Meteor.users.findOne(username:@username)
             new_debit_id =

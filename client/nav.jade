@@ -4,7 +4,7 @@ template(name='nav')
             +icon name='circled'
             // i.large.tree.icon
         if currentUser
-            a.item(href="/users" class="{{isActiveRoute 'users'}}" title='members')
+            a.item(href="/users" class="{{isActiveRoute 'users'}}" title='players')
                 +icolor name='conference-call'
                 // i.large.users.icon
                 // span.mobile.hidden members
@@ -29,7 +29,7 @@ template(name='nav')
                 // span.mobile.hidden gifts
             a.item(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
                 // i.large.hand.holding.heart.icon
-                +icolor name='sell'
+                +icolor name='request-service'
                 // span.mobile.hidden requests
             a.item(href="/badges" class="{{isActivePath 'badges'}}" title='badges')
                 // i.large.hand.holding.heart.icon

@@ -46,7 +46,7 @@ template(name='user_cloud')
         
 
 template(name='user_item')
-    .card.rounded.pointer
+    .card.rounded.pointer.calc_points
         a(href="/user/#{username}")
             img.ui.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
         .content
@@ -63,7 +63,7 @@ template(name='user_item')
             // strong {{credit_ratio}}
             // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
-            // .ui.small.header #{points} points
+            .ui.small.inline.header #{points}pts
             each levels
                 .ui.circular.basic.small.label #{this}
             // if is_admin
@@ -75,7 +75,7 @@ template(name='user_item')
             //     +addtoset_user key='levels' value='regenerator'
             //     +addtoset_user key='levels' value='steward'
             +icolor name='gift' cl='ui inline image pointer debit'
-            +icolor name='sell' cl='ui inline image pointer request'
+            +icolor name='request-service' cl='ui inline image pointer request'
                     
 
 template(name='addtoset_user')

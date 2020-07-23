@@ -39,7 +39,7 @@ if Meteor.isClient
                 alert 'passwords need to be at least 6 characters long'
 
     Template.forgot_password.onCreated ->
-        @autorun -> Meteor.subscribe 'users'
+        @autorun -> Meteor.subscribe 'all_users'
 
     Template.forgot_password.events
         'click .submit_email': (e, t) ->

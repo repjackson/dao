@@ -9,10 +9,9 @@ template(name='user_dashboard')
                 |received
                 .ui.basic.circular.label #{credit_count} credits
                     | ##{global_credit_count_rank}
-            div
-            .ui.link.list.scrolling
+            .scrolling
                 each user_credits
-                    .item
+                    .ui.segment
                         if author.profile_image_id
                             img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         .content
@@ -22,15 +21,13 @@ template(name='user_dashboard')
                                 a(href="/user/#{author.username}")
                                     |#{author.username}
                             .description
-                                a(href="/gift/#{_id}/view")
+                                a(href="/debit/#{_id}/view")
                                     |#{when}
                         .content
                             .description
                                 |#{description}
                                 each tags
                                     .ui.mini.basic.label #{this}
-                        if is_admin
-                            +remove_button
         .column
             .ui.inline.spaced.header 
                 +icolor name='filled-sent' 
@@ -39,30 +36,28 @@ template(name='user_dashboard')
                 small(title='send count') (#{send_count}x)
                     .ui.circular.label ##{global_send_count_rank}
             div
-            .ui.link.large.list.scrolling
+            .scrolling
                 each user_debits
-                    .item 
-                        if target.profile_image_id
-                            img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        .content
+                    .ui.segment
+                        a(href="/debit/#{_id}/view")
+                            if recipient.profile_image_id
+                                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             .header
                                 strong #{amount}pt
-                                a(href="/send/#{_id}/view")
-                                    |#{when}
-                                    | to 
-                                a(href="/user/#{target.username}")
-                                    |#{target.username}
+                                |#{when}
+                                | to 
+                                a(href="/user/#{recipient.username}")
+                                    |#{recipient.username}
                             .description
                                 |#{description}
-                            .description
                                 each tags
                                     .ui.mini.label #{this}
-                            if is_admin
-                                +remove_button
+                                if is_admin
+                                    +remove_button
         .column
             .ui.header 
                 // i.hand.holding.heart.icon
-                +icolor name='sell'
+                +icolor name='request-service'
                 |requests
             .ui.link.list.smallscroll
                 each user_requests
@@ -75,9 +70,9 @@ template(name='user_dashboard')
             .ui.header 
                 +icolor name='calendar' cl='ui inline spaced image'
                 |events
-            .ui.link.list.smallscroll
+            .smallscroll
                 each user_events
-                    a.item(href="/event/#{_id}/view")
+                    a.ui.segment(href="/event/#{_id}/view")
                         .header #{title} #{amount}pts
                         |#{_author.username}
                         |#{description}

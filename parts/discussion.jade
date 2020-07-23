@@ -1,23 +1,13 @@
 template(name='discussions')
     .ui.padded.stackable.grid
         .four.wide.column
-            // .ui.button 
-            //     |debit count
-            // .ui.button 
-            //     |debit amount
-            // .ui.button 
-            //     |credit count
-            // .ui.button 
-            //     |credit amount
-            // +discussion_cloud
             .ui.inline.big.header 
                 // i.calendar.big.icon
                 +icolor name='speech-bubble-with-dots'
                 span.mobile.hidden discussions
-            if is_admin
-                .ui.icon.button.add_discussion
-                    i.plus.big.green.icon
-                    // |add discussion
+            .ui.icon.button.add_discussion
+                i.plus.big.green.icon
+                // |add discussion
         .twelve.wide.column
             .scrolling
                 .ui.stackable.four.cards
