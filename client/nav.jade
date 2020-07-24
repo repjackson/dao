@@ -4,22 +4,23 @@ template(name='nav')
             +icon name='circled'
             // i.large.tree.icon
         if currentUser
-            a.item(href="/users" class="{{isActiveRoute 'users'}}" title='players')
+            a.item.set_user(href="/users" class="{{isActiveRoute 'users'}}" title='players')
                 +icolor name='conference-call'
                 // i.large.users.icon
                 // span.mobile.hidden members
-            a.item(href="/events" class="{{isActiveRoute 'events'}}" title='events')
+            a.item.set_event(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
                 +icolor name='calendar'
                 // i.large.calendar.icon
                 // span.mobile.hidden events
-            a.item(href="/shifts" class="{{isActiveRoute 'shifts'}}" title='shifts')
+            a.item.set_shift(href="/m/shift" class="{{isActiveRoute 'shifts'}}" title='shifts')
                 // i.large.clock.icon
                 +icolor name='clock'
                 // span.mobile.hidden shifts
-            a.item(href="/shop" class="{{isActiveRoute 'shop'}}" title='shifts')
+            // a.item(href="/shop" class="{{isActiveRoute 'shop'}}" title='shop')
+            a.item.set_product(href="/m/product" class="{{isActiveRoute 'shop'}}" title='shop')
                 // i.large.shop.icon
                 +icolor name='shop'
-            a.item(href="/discussions" class="{{isActiveRoute 'discussions'}}" title='discussions')
+            a.item.set_discussion(href="/discussions" class="{{isActiveRoute 'discussions'}}" title='discussions')
                 // i.large.shop.icon
                 +icolor name='speech-bubble-with-dots'
                 
@@ -27,19 +28,20 @@ template(name='nav')
             // a.item(href="/gifts" class="{{isActiveRoute 'gifts'}}" title='gifts')
             //     i.big.gift.icon
                 // span.mobile.hidden gifts
-            a.item(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
+            // a.item(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
+            a.item.set_request(href="/m/request" class="{{isActiveRoute 'requests'}}" title='requests')
                 // i.large.hand.holding.heart.icon
                 +icolor name='request-service'
                 // span.mobile.hidden requests
-            a.item(href="/badges" class="{{isActivePath 'badges'}}" title='badges')
+            a.item.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}" title='badges')
                 // i.large.hand.holding.heart.icon
                 +icolor name='prize'
                 // span.mobile.hidden badges
-            a.item(href="/projects" class="{{isActivePath regex='projects'}}" title='projects')
+            a.item.set_project(href="/m/project" class="{{isActivePath regex='projects'}}" title='projects')
                 // i.large.hand.holding.heart.icon
                 +icolor name='project'
                 // span.mobile.hidden projects
-            a.icon.item(href="/locations" class="{{isActivePath regex='locations'}}" title='locations')
+            a.icon.item(href="/m/location" class="{{isActivePath regex='locations'}}" title='locations')
                 +icolor name='marker'
         .right.menu
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')

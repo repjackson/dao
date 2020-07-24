@@ -94,7 +94,7 @@ Docs.before.insert (userId, doc)->
 
 
 
-
+Meteor.methods
     add_facet_filter: (delta_id, key, filter)->
         if key is '_keys'
             new_facet_ob = {

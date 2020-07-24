@@ -24,13 +24,25 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'shift', ->
             Session.set 'loading', false
+    'click .set_request': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'request', ->
+            Session.set 'loading', false
     'click .set_model': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'model', ->
             Session.set 'loading', false
     'click .set_shop': ->
         Session.set 'loading', true
-        Meteor.call 'set_facets', 'shop', ->
+        Meteor.call 'set_facets', 'product', ->
+            Session.set 'loading', false
+    'click .set_event': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'event', ->
+            Session.set 'loading', false
+    'click .set_badge': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'badge', ->
             Session.set 'loading', false
     'click .add_gift': ->
         # user = Meteor.users.findOne(username:@username)

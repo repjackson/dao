@@ -37,12 +37,11 @@ template(name='debit_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
+                .eight.wide.column
                     if is_admin
                         .ui.button.delete_item
                             |delete
                             i.large.red.remove.icon
-                .four.wide.column
                     .ui.header
                         i.debit.icon
                         |#{amount}pts
@@ -56,7 +55,6 @@ template(name='debit_view')
                         a.ui.inline.header(href="/user/#{_author.username}") 
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
-                .four.wide.column
                     .ui.segment
                         .ui.inline.header
                             +icon name='receive-cash'
@@ -67,7 +65,7 @@ template(name='debit_view')
                         a.ui.header(href="/user/#{recipient.username}")
                             |#{recipient.name}
                             
-                    +number_view key='amount' label='amount' direct=true
+                .eight.wide.column
                     +textarea_view key='description' label='description' direct=true
                     +image_view key='image_id' label='image' direct=true
                     div 
@@ -78,10 +76,6 @@ template(name='debit_view')
                     .spacer
                     .spacer
                     +comments
-                    // +voting_full
+                    +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
 

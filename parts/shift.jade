@@ -22,7 +22,7 @@ template(name='shifts')
             .scrolling
                 .ui.stackable.cards
                     each next_shifts
-                        +shift_item
+                        +shift_card
             if is_admin
                 .ui.inline.header 
                     i.shield.icon
@@ -39,7 +39,7 @@ template(name='shifts')
             // +shift_cloud
 
 
-template(name='shift_item')
+template(name='shift_card')
     a.card(href="/shift/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    

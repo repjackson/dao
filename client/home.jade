@@ -1,5 +1,3 @@
-
-
 template(name='home')
     .ui.stackable.grid
         // .one.column.middle.aligned.row
@@ -25,27 +23,27 @@ template(name='home')
         //                     // Located alongside Boulder Creek, this rare and historic property provides eclectic Boulder vibes and local collective services for weddings, special occasions, and community events.
         .centered.row
             .five.wide.column
-                if can_debit
-                    .ui.fluid.big.green.button.debit
-                        +icolor name='debit' cl='ui mini inline image'
-                        // i.debit.icon
-                        |send
-                else
-                    .ui.fluid.big.green.disabled.button
-                        +icolor name='debit' cl='ui mini inline image'
-                        // i.debit.icon
-                        |send
+                // if can_debit
+                .ui.fluid.big.green.button.debit
+                    +icolor name='send' cl='ui mini inline image'
+                    // i.debit.icon
+                    |send
+                // else
+                //     .ui.fluid.big.green.disabled.button
+                //         +icolor name='debit' cl='ui mini inline image'
+                //         // i.debit.icon
+                //         |send
             .five.wide.column
-                if can_debit
-                    .ui.fluid.big.teal.button.request
-                        // i.hand.holding.heart.icon
-                        +icolor name='request-service' cl='ui mini inline image'
-                        |request
-                else
-                    .ui.fluid.big.teal.disabled.button
-                        // i.hand.holding.heart.icon
-                        +icolor name='request-service' cl='ui mini inline image'
-                        |request
+                // if can_debit
+                .ui.fluid.big.teal.button.request
+                    // i.hand.holding.heart.icon
+                    +icolor name='request-service' cl='ui mini inline image'
+                    |request
+                // else
+                //     .ui.fluid.big.teal.disabled.button
+                //         // i.hand.holding.heart.icon
+                //         +icolor name='request-service' cl='ui mini inline image'
+                //         |request
             // .two.wide.column
             //     // .ui.center.aligned.grey.header.refresh_stats
             //     //     i.line.chart.icon

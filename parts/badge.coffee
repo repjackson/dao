@@ -1,11 +1,6 @@
 if Meteor.isClient
     @selected_user_levels = new ReactiveArray []
     
-    Router.route '/badges/', (->
-        @layout 'layout'
-        @render 'badges'
-        ), name:'badges'
-    
     Router.route '/badge/:doc_id/view', (->
         @layout 'layout'
         @render 'badge_view'
@@ -13,21 +8,6 @@ if Meteor.isClient
 
     Template.badge_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-   
-    Template.badges.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'badge'
-    Template.badges.events
-        'click .add_badge': ->
-            new_id = 
-                Docs.insert
-                    model:'badge'
-            Router.go "/badge/#{new_id}/edit"
-    
-    
-    Template.badges.helpers
-        badges: ->
-            Docs.find 
-                model:'badge'
    
     Template.badge_view.onRendered ->
 

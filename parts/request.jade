@@ -19,12 +19,12 @@ template(name='requests')
             .scrolling
                 .ui.stackable.cards
                     each requests
-                        +request_item
+                        +request_card
         .sixteen.wide.column
             // +request_cloud
 
 
-template(name='request_item')
+template(name='request_card')
     a.card(href="/request/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
@@ -135,11 +135,13 @@ template(name='request_edit')
                         +icon name='request-service'
                         small edit request
                         |#{title}
+                    a.ui.green.circular.icon.button(href="/request/#{_id}/view" title='save')
+                        i.checkmark.big.icon
+            .row 
+                .five.wide.column
                     .ui.header 
                         small author
                         |#{_author.username}
-            .row 
-                .five.wide.column
                     +text_edit key='title' icon='header' direct=true
                     +date_edit key='date' label='date' icon='calendar' direct=true
                     .ui.header
@@ -178,9 +180,4 @@ template(name='request_edit')
                         .ui.fluid.teal.big.button.publish
                             i.checkmark.icon
                             |publish
-                    .spacer
-                    .spacer
-                    a.ui.fluid.green.big.button(href="/request/#{_id}/view")
-                        i.checkmark.icon
-                        |save
                             

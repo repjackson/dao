@@ -29,10 +29,10 @@ template(name='products')
             .scrolling
                 .ui.stackable.four.cards
                     each product_docs
-                        +product_item
+                        +product_card
 
 
-template(name='product_item')
+template(name='product_card')
     .ui.card.pointer
         if image_id
             a.image(href="/product/#{_id}/view")

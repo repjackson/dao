@@ -1,8 +1,4 @@
 if Meteor.isClient
-    Router.route '/events/', (->
-        @layout 'layout'
-        @render 'events'
-        ), name:'events'
     Router.route '/event/:doc_id/view', (->
         @layout 'layout'
         @render 'event_view'
@@ -205,7 +201,6 @@ if Meteor.isClient
 
 
     Template.event_item.helpers
-        
         going: ->
             event = Docs.findOne @_id
             Meteor.users.find 

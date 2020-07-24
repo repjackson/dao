@@ -1,5 +1,5 @@
 template(name='delta')
-    .ui.stackable.padded.grid
+    .ui.stackable.grid
         with current_model
             .row
                 .four.wide.column
@@ -107,8 +107,8 @@ template(name='delta')
                         //- with delta
                         //-     +key_value_edit key='view_mode' value='list'
                         //-     +key_value_edit key='view_mode' value='cards'
-                        +set_view_mode title='list' icon='list'
-                        +set_view_mode title='cards' icon='clone'
+                        // +set_view_mode title='list' icon='list'
+                        // +set_view_mode title='cards' icon='clone'
                         //- .ui.inline.small.grey.header view
                         //- .ui.simple.dropdown.item
                         //-     |#{current_delta.view_mode}
@@ -125,25 +125,35 @@ template(name='delta')
                         //- each current_delta.result_ids
                         //-     .ui.header #{this}
                         if delta_key_value_is 'view_mode' 'cards'
-                            .ui.three.stackable.cards
-                                each current_delta.result_ids
-                                    +delta_result_card
-                        else if delta_key_value_is 'view_mode' 'list'
-                            //- .ui.segments
-                            each current_delta.result_ids
+                            .ui.stackable.four.cards
                                 if is_loading
-                                    .ui.basic.segment
-                                        .ui.fluid.placeholder
-                                            .line
-                                            .line
-                                            .line
-                                            .line
-                                            //- .line
-                                            //- .line
-                                            //- .line
-                                else 
-                                    +delta_list_result
-                                    //- .ui.divider
+                                    each current_delta.result_ids
+                                        .ui.card
+                                            .content
+                                                .ui.fluid.placeholder
+                                                    .line
+                                                    .line
+                                                    .line
+                                                    .line
+                                else
+                                    each current_delta.result_ids
+                                        +delta_result_card
+                        // else if delta_key_value_is 'view_mode' 'list'
+                        //     //- .ui.segments
+                        //     each current_delta.result_ids
+                        //         if is_loading
+                        //             .ui.basic.segment
+                        //                 .ui.fluid.placeholder
+                        //                     .line
+                        //                     .line
+                        //                     .line
+                        //                     .line
+                        //                     //- .line
+                        //                     //- .line
+                        //                     //- .line
+                        //         else 
+                        //             +delta_list_result
+                        //             //- .ui.divider
                     //- +Template.dynamic template=view_mode_template
             //- .row 
             //-     .sixteen.wide.column

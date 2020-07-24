@@ -1,11 +1,6 @@
 if Meteor.isClient
     @selected_user_levels = new ReactiveArray []
     
-    Router.route '/projects/', (->
-        @layout 'layout'
-        @render 'projects'
-        ), name:'projects'
-    
     Router.route '/project/:doc_id/view', (->
         @layout 'layout'
         @render 'project_view'
@@ -14,20 +9,6 @@ if Meteor.isClient
     Template.project_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
    
-    Template.projects.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'project'
-    Template.projects.events
-        'click .add_project': ->
-            new_id = 
-                Docs.insert
-                    model:'project'
-            Router.go "/project/#{new_id}/edit"
-    
-    
-    Template.projects.helpers
-        projects: ->
-            Docs.find 
-                model:'project'
    
     Template.project_view.onRendered ->
 

@@ -174,6 +174,13 @@ body {
     /* padding: 5px !important; */
 }
 
+
+.field_segment {
+    transition: all 1 ease !important;
+    /*display: inline !important;*/
+    /* padding: 5px !important; */
+}
+
 .tone_item {
     transition: all .25s ease !important;
 }

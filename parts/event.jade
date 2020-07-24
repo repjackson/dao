@@ -1,22 +1,4 @@
-template(name='events')
-    .ui.padded.stackable.grid
-        .four.wide.column
-            .ui.inline.big.header 
-                // i.calendar.big.icon
-                +icolor name='calendar' cl='inline'
-                span.mobile.hidden events
-            if currentUser
-                span.add_event(title='add event')
-                    +icon name='calendar-plus' cl='inline pointer'
-                    // |add event
-        .twelve.wide.column
-            .scrolling
-                .ui.stackable.four.cards
-                    each next_events
-                        +event_item
-
-
-template(name='event_item')
+template(name='event_card')
     .ui.card
         if image_id
             a.pointer(href="/event/#{_id}/view")

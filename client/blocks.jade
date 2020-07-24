@@ -345,11 +345,11 @@ template(name='voting_small')
 template(name='voting_full')
     //- .ui.inline.header 
     //-     |voting
-    .ui.large.icon.button.upvote(title='upvote')
-        i.thumbs.up.icon(class=upvote_class)
+    .ui.large.icon.circular.basic.button.upvote(title='upvote')
+        i.thumbs.up.large.icon(class=upvote_class)
         //- |like
-    .ui.large.icon.button.downvote(title='downvote')
-        i.thumbs.down.icon(class=downvote_class)
+    .ui.large.icon.circular.basic.button.downvote(title='downvote')
+        i.thumbs.down.large.icon(class=downvote_class)
         //- |dislike
     if points
         |&nbsp;
