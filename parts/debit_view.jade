@@ -1,29 +1,3 @@
-template(name='debits')
-    .ui.padded.stackable.grid
-        .sixteen.wide.column
-            // .ui.button 
-            //     |debit count
-            // .ui.button 
-            //     |debit amount
-            // .ui.button 
-            //     |credit count
-            // .ui.button 
-            //     |credit amount
-            .ui.header 
-                i.calendar.icon
-                |debits
-            if is_admin
-                .ui.button.add_debit
-                    i.plus.icon
-                    |add debit
-            .scrolling
-                .ui.stackable.six.cards
-                    each next_debits
-                        +debit_item
-        .sixteen.wide.column
-            // +debit_cloud
-
-
 template(name='debit_item')
     .ui.card
         .content

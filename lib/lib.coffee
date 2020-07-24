@@ -53,7 +53,8 @@ Meteor.users.helpers
     first_five_tags: ->
         if @tags
             @tags[..5]
-
+    has_points: ->
+        @points > 0
 
 
 

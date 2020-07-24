@@ -15,37 +15,6 @@ if Meteor.isClient
     Template.registerHelper 'st', () ->
         Docs.findOne @shift_template_id
     
-    Router.route '/shifts/', (->
-        @layout 'layout'
-        @render 'shifts'
-        ), name:'shifts'
-
-    Template.shifts.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'shift'
-        @autorun => Meteor.subscribe 'model_docs', 'shift_template'
-    Template.shifts.events
-        'click .add_shift': ->
-            new_id = 
-                Docs.insert
-                    model:'shift'
-            Router.go "/shift/#{new_id}/edit"
-        'click .add_shift_template': ->
-            new_id = 
-                Docs.insert
-                    model:'shift_template'
-            Router.go "/shift_template/#{new_id}/edit"
-  
-    Template.shifts.helpers
-        next_shifts: ->
-            Docs.find {model:'shift'}, 
-                sort:
-                    start_datetime:-1
-
-        shift_templates: ->
-            Docs.find {model:'shift_template'}, 
-                sort:
-                    start_datetime:-1
-
 
     Router.route '/shift/:doc_id/view', (->
         @layout 'layout'

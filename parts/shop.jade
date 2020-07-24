@@ -1,37 +1,3 @@
-template(name='products')
-    .ui.padded.stackable.grid
-        .four.wide.column
-            .ui.header
-                +icolor name='shop'
-                |shop
-            .ui.button 
-                +icolor name='shop' cl='ui inline image'
-                |stand
-            .ui.button 
-                +icolor name='groups' cl='ui inline image'
-                |community
-            
-            // .ui.button 
-            //     |debit count
-            // .ui.button 
-            //     |debit point_price
-            // .ui.button 
-            //     |credit count
-            // .ui.button 
-            //     |credit amount
-            i.shop.big.icon
-            // +product_cloud
-            if is_admin
-                .ui.icon.circular.button.add_product(title='add product')
-                    i.plus.icon
-                    // |add product
-        .twelve.wide.column
-            .scrolling
-                .ui.stackable.four.cards
-                    each product_docs
-                        +product_card
-
-
 template(name='product_card')
     .ui.card.pointer
         if image_id
@@ -52,7 +18,7 @@ template(name='product_view')
         .ui.stackable.padded.grid
             .row 
                 .five.wide.column
-                    a(href="/shop" title='shop')
+                    a(href="/m/product" title='shop')
                         +icolor name='shop' cl='ui inline image pointer'
                         // i.store.big.icon
                         // span.mobile.hidden shop

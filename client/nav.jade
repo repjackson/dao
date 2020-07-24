@@ -43,6 +43,9 @@ template(name='nav')
                 // span.mobile.hidden projects
             a.icon.item(href="/m/location" class="{{isActivePath regex='locations'}}" title='locations')
                 +icolor name='marker'
+            if is_admin
+                a.icon.item(href="/m/model" class="{{isActivePath regex='model'}}" title='models')
+                    +icolor name='database'
         .right.menu
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
             //     i.large.gift.icon

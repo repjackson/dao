@@ -1,29 +1,3 @@
-template(name='requests')
-    .ui.padded.stackable.grid
-        .four.wide.column
-            // .ui.button 
-            //     |debit count
-            // .ui.button 
-            //     |debit amount
-            // .ui.button 
-            //     |credit count
-            // .ui.button 
-            //     |credit amount
-            .ui.inline.header
-                +icolor name='request-service'
-                |requests
-            if is_admin
-                .ui.icon.big.circular.button.add_request
-                    i.plus.green.icon
-        .twelve.wide.column
-            .scrolling
-                .ui.stackable.cards
-                    each requests
-                        +request_card
-        .sixteen.wide.column
-            // +request_cloud
-
-
 template(name='request_card')
     a.card(href="/request/#{_id}/view")
         .image
@@ -31,6 +5,8 @@ template(name='request_card')
         .content
             a.ui.header(href="/request/#{_id}/view")
                 |#{title}
+                if complete
+                    i.green.checkmark.icon
             |#{description}
             |by 
             if _author.profile_image_id
@@ -52,7 +28,7 @@ template(name='request_view')
             .middle.aligned.row 
                 .four.wide.center.aligned.column
                     // if can_edit
-                    a(href="/requests" title='requests')
+                    a(href="/m/request" title='requests')
                         +icolor name='request-service' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
                     .ui.center.aligned.header 
@@ -166,7 +142,7 @@ template(name='request_edit')
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .four.wide.column
                     .ui.header your points: #{currentUser.points}
-                    .ui.small.header publishing request holds points from your balance and dispenses them when request is verified complete
+                    .ui.small.header.thin publishing request holds points from your balance and dispenses them when request is marked complete
                     .ui.inline.header status:
                     if published
                         .ui.green.inline.header published

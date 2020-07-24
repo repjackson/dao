@@ -3,6 +3,8 @@ if Meteor.isClient
         @layout 'layout'
         @render 'event_view'
         ), name:'event_view'
+    Template.event_view.onCreated ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id
@@ -41,6 +43,12 @@ if Meteor.isClient
         )
 
     Template.event_view.onRendered ->
+
+
+    Template.event_view.helpers 
+        can_buy: ->
+            now = Date.now()
+            
 
     Template.event_view.events
         'click .buy_for_points': ->
@@ -120,24 +128,9 @@ if Meteor.isClient
 
 
 
-    Template.event_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.events.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'event'
-    Template.events.events
-        'click .add_event': ->
-            new_id = 
-                Docs.insert
-                    model:'event'
-            Router.go "/event/#{new_id}/edit"
-    Template.events.helpers
-        next_events: ->
-            Docs.find {model:'event'}, 
-                sort:
-                    start_datetime:-1
 
     Template.event_view.onRendered ->
-    Template.event_item.events
+    Template.event_card.events
         'click .pick_going': ->
             console.log 'going'
             Docs.update @data._id,
@@ -200,7 +193,7 @@ if Meteor.isClient
                     Router.go "/event/#{@_id}/view"
 
 
-    Template.event_item.helpers
+    Template.event_card.helpers
         going: ->
             event = Docs.findOne @_id
             Meteor.users.find 

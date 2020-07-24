@@ -7,7 +7,9 @@ template(name='badge_card')
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             a.ui.header(href="/badge/#{_id}/view")
-                |#{location}: #{title}
+                |#{title}
+            i.red.marker.icon
+            |#{location} 
             |!{description}
         
 
@@ -18,7 +20,7 @@ template(name='badge_view')
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
                     // if can_edit
-                    a(href="/badges" title='badges')
+                    a(href="/m/badge" title='badges')
                         +icolorlg name='prize' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
                     +icolorlg name=icon cl='ui inline image'
@@ -28,27 +30,18 @@ template(name='badge_view')
                 .four.wide.center.aligned.column
                     if can_edit
                         a.pointer.edit_badge(href="/badge/#{_id}/edit")
-                            i.big.blue.pencil.icon
+                            i.big.blue.pencil.circular.big.icon
             .row 
                 .four.wide.column
                     .ui.header
                         i.marker.icon 
                         |#{location}
                 .eight.wide.column
-                    .ui.stackable.two.column.grid
-                        .column
-                            .ui.header 
-                                small author
-                            a.ui.header(href="/user/#{_author.username}") 
-                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{_author.username}
-                        .column
-                            .ui.header
-                                |audience
-                            
-                            // a.ui.header(href="/user/#{target.username}")
-                            //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            //     |#{target.username}
+                    .ui.header 
+                        small author
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.username}
                             
                     +number_view key='bounty' label='bounty' direct=true
                     +textarea_view key='description' label='description' direct=true
@@ -63,6 +56,9 @@ template(name='badge_view')
                     .ui.header 
                         +icon name='badger'
                         |badgers
+                    .ui.header 
+                        +honey_badger
+                        |honey badgers
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit

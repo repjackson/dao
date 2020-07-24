@@ -1,8 +1,4 @@
 if Meteor.isClient
-    Router.route '/shop/', (->
-        @layout 'layout'
-        @render 'products'
-        ), name:'products'
     Router.route '/product/:doc_id/view', (->
         @layout 'layout'
         @render 'product_view'
@@ -11,19 +7,6 @@ if Meteor.isClient
     Template.product_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'model_docs', 'transaction'
-    Template.products.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'product'
-    Template.products.events
-        'click .add_product': ->
-            new_id = 
-                Docs.insert
-                    model:'product'
-            Router.go "/product/#{new_id}/edit"
-    Template.products.helpers
-        product_docs: ->
-            Docs.find {model:'product'}, 
-                sort:
-                    start_datetime:-1
 
     Template.product_view.events
         'click .delete_product': ->

@@ -1,42 +1,42 @@
-template(name='shifts')
-    .ui.padded.stackable.grid
-        .four.wide.column
-            .ui.inline.header 
-                +icolor name='clock' 
-                |shifts
-            div
-            .ui.inline.header
-                i.marker.red.icon 
-                |location
-            .ui.button 
-                |farm 
-            .ui.button
-                | the stand
-            .ui.button
-                | riverside
-            if is_admin
-                .ui.icon.circular.button.add_shift
-                    i.plus.green.icon
-                    // |add shift
-        .twelve.wide.column
-            .scrolling
-                .ui.stackable.cards
-                    each next_shifts
-                        +shift_card
-            if is_admin
-                .ui.inline.header 
-                    i.shield.icon
-                    |shift templates
-                .ui.button.add_shift_template
-                    i.plus.icon
-                    |add shift template
-                .scrolling
-                    .ui.stackable.six.cards
-                        each shift_templates
-                            +shift_template_card
+// template(name='shifts')
+//     .ui.padded.stackable.grid
+//         .four.wide.column
+//             .ui.inline.header 
+//                 +icolor name='clock' 
+//                 |shifts
+//             div
+//             .ui.inline.header
+//                 i.marker.red.icon 
+//                 |location
+//             .ui.button 
+//                 |farm 
+//             .ui.button
+//                 | the stand
+//             .ui.button
+//                 | riverside
+//             if is_admin
+//                 .ui.icon.circular.button.add_shift
+//                     i.plus.green.icon
+//                     // |add shift
+//         .twelve.wide.column
+//             .scrolling
+//                 .ui.stackable.cards
+//                     each next_shifts
+//                         +shift_card
+//             if is_admin
+//                 .ui.inline.header 
+//                     i.shield.icon
+//                     |shift templates
+//                 .ui.button.add_shift_template
+//                     i.plus.icon
+//                     |add shift template
+//                 .scrolling
+//                     .ui.stackable.six.cards
+//                         each shift_templates
+//                             +shift_template_card
 
-        .sixteen.wide.column
-            // +shift_cloud
+//         .sixteen.wide.column
+//             // +shift_cloud
 
 
 template(name='shift_card')
@@ -67,7 +67,7 @@ template(name='shift_view')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.pointer(href="/shifts" title='shifts')
+                    a.pointer(href="/m/shift" title='shifts')
                         +icolorlg name='clock' cl='ui inline image'
                 .eight.wide.center.aligned.column
                     .ui.header 

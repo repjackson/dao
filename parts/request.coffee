@@ -4,11 +4,6 @@ if Meteor.isClient
     Template.registerHelper 'completer', () ->
         Meteor.users.findOne @completed_by_user_id
     
-    Router.route '/requests/', (->
-        @layout 'layout'
-        @render 'requests'
-        ), name:'requests'
-    
     Router.route '/request/:doc_id/view', (->
         @layout 'layout'
         @render 'request_view'
@@ -17,20 +12,6 @@ if Meteor.isClient
     Template.request_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
    
-    Template.requests.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'request'
-    Template.requests.events
-        'click .add_request': ->
-            rid = 
-                Docs.insert
-                    model:'request'
-                    point_bounty:0
-                    published:false
-            Router.go "/request/#{rid}/edit"
-    Template.requests.helpers
-        requests: ->
-            Docs.find 
-                model:'request'
    
     Template.request_view.onRendered ->
 
@@ -77,7 +58,10 @@ if Meteor.isClient
             if @claimed_user_id
                 false
             else 
-                true
+                if @_author_id is Meteor.userId()
+                    false
+                else
+                    true
 
 
 

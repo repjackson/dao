@@ -10,9 +10,9 @@ template(name='model_edit_layout')
                     |created
                     +creation_info
                     div
-                    a.ui.big.icon.green.button(href="/m/#{slug}")
+                    a.ui.big.icon.green.circular.button(href="/m/#{slug}")
                         i.big.checkmark.icon
-                    #delete_model.ui.icon.button
+                    #delete_model.ui.icon.circular.button
                         i.trash.red.icon
                 .twelve.wide.column
                     a.ui.compact.large.circular.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActivePath 'model_edit_dashboard'}}")

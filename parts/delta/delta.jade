@@ -34,7 +34,7 @@ template(name='delta')
                                     i.remove.icon
                                 .ui.icon.button.print_delta(title='print delta')
                                     i.code.large.icon
-                            //- i.refresh.link.reset.circular.large.icon(title='reload session')
+                            i.refresh.link.reset.circular.large.icon(title='reload session')
                             if is_dev
                                 i.code.link.icon.print_delta(title='print session doc')
                                 i.trash.delete_delta.link.icon(title='delete session')
@@ -125,7 +125,7 @@ template(name='delta')
                         //- each current_delta.result_ids
                         //-     .ui.header #{this}
                         if delta_key_value_is 'view_mode' 'cards'
-                            .ui.stackable.four.cards
+                            .ui.stackable.five.cards
                                 if is_loading
                                     each current_delta.result_ids
                                         .ui.card
@@ -220,18 +220,18 @@ template(name='facet')
         if icon
             +icon name=icon cl='ui avatar image'
             //- i.grey.icon(class=icon)
-        else
-            .ui.grey.inline.header 
-                if title
-                    |#{title}
-                else 
-                    |#{key}
-                    //- i.dropdown.icon
-                    //- .ui.icon.small.transparent.input
-                    //-     i.search.icon
-                    //-     input.add_filter(type='text')
-                //- .active.content
-                    //- div
+        // else
+        .ui.grey.inline.header 
+            if title
+                |#{title}
+            else 
+                |#{key}
+                //- i.dropdown.icon
+                //- .ui.icon.small.transparent.input
+                //-     i.search.icon
+                //-     input.add_filter(type='text')
+            //- .active.content
+                //- div
         each filtering_res
             if name
                 .selector.ui.compact.basic.circular.button.toggle_selection(class=toggle_value_class title=count)
