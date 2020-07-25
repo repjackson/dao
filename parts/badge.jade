@@ -11,6 +11,10 @@ template(name='badge_card')
             i.red.marker.icon
             |#{location} 
             |!{description}
+            +icolor name='badger' cl='ui avatar image'
+            +honey_badger
+            each honey_badgers
+                .ui.label #{username}
         
 
 
@@ -56,9 +60,18 @@ template(name='badge_view')
                     .ui.header 
                         +icon name='badger'
                         |badgers
+                    each badgers
+                        a.ui.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{name}
+        
                     .ui.header 
                         +honey_badger
                         |honey badgers
+                    each honey_badgers
+                        a.ui.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{name}
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
@@ -90,3 +103,33 @@ template(name='badge_edit')
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     +boolean_edit key='published' direct=true
+                    .ui.header
+                        +icolor name='badger'
+                        |badgers
+                    each badgers
+                        a.ui.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{name}
+                        i.circular.remove.link.icon.remove_badger
+                    .ui.segment
+                        .ui.small.header add badgers
+                        each unselected_badgers
+                            .ui.basic.circular.button.add_badger
+                                img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{name}
+                    
+                    .ui.header
+                        +honey_badger
+                        |honey badgers
+                    each honey_badgers
+                        a.ui.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{name}
+                        i.circular.remove.link.icon.remove_honey_badger
+                    .ui.segment
+                        .ui.small.header add honey badgers
+                        each unselected_honey_badgers
+                            .ui.basic.circular.button.add_honey_badger
+                                img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{name}
+                    

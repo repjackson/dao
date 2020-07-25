@@ -28,6 +28,8 @@ Router.onBeforeAction(force_loggedin, {
         'login'
         'verify-email'
         'forgot_password'
+        'event_view'
+        'delta'
     ]
     })
 

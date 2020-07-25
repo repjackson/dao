@@ -1,6 +1,17 @@
 if Meteor.isClient
     @selected_user_levels = new ReactiveArray []
+    Template.registerHelper 'badgers', () ->
+        badge = Docs.findOne Router.current().params.doc_id
+        if badge.badger_ids
+            Meteor.users.find   
+                _id:$in:badge.badger_ids
     
+    Template.registerHelper 'honey_badgers', () ->
+        badge = Docs.findOne Router.current().params.doc_id
+        if badge.honey_badger_ids
+            Meteor.users.find   
+                _id:$in:badge.honey_badger_ids
+
     Router.route '/badge/:doc_id/view', (->
         @layout 'layout'
         @render 'badge_view'
@@ -8,6 +19,7 @@ if Meteor.isClient
 
     Template.badge_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'all_users'
    
     Template.badge_view.onRendered ->
 
@@ -25,6 +37,7 @@ if Meteor.isClient
 
     Template.badge_view.helpers
     Template.badge_view.events
+    
 
 # if Meteor.isServer
 #     Meteor.methods
@@ -60,6 +73,7 @@ if Meteor.isClient
 
     Template.badge_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'all_users'
     Template.badge_edit.onRendered ->
 
 
@@ -75,9 +89,39 @@ if Meteor.isClient
                 Meteor.call 'publish_badge', @_id, =>
                     Router.go "/badge/#{@_id}/view"
 
+        'click .add_badger': ->
+            Docs.update Router.current().params.doc_id, 
+                $addToSet: 
+                    badger_ids: @_id
+
+        'click .remove_badger': ->
+            Docs.update Router.current().params.doc_id, 
+                $pull: 
+                    badger_ids: @_id
+        
+        'click .add_honey_badger': ->
+            Docs.update Router.current().params.doc_id, 
+                $addToSet: 
+                    honey_badger_ids: @_id
+
+        'click .remove_honey_badger': ->
+            Docs.update Router.current().params.doc_id, 
+                $pull: 
+                    honey_badger_ids: @_id
 
     Template.badge_edit.helpers
-    Template.badge_edit.events
+        unselected_badgers: ->
+            badge = Docs.findOne Router.current().params.doc_id
+            Meteor.users.find {}, 
+                limit:10
+                sort:points:-1
+                # _id:$nin:badge.badger_ids
+        unselected_honey_badgers: ->
+            badge = Docs.findOne Router.current().params.doc_id
+            Meteor.users.find {},
+                limit:10
+                sort:points:-1
+                # _id:$nin:badge.honey_badger_ids
 
 if Meteor.isServer
     Meteor.methods

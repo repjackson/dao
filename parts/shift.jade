@@ -1,44 +1,3 @@
-// template(name='shifts')
-//     .ui.padded.stackable.grid
-//         .four.wide.column
-//             .ui.inline.header 
-//                 +icolor name='clock' 
-//                 |shifts
-//             div
-//             .ui.inline.header
-//                 i.marker.red.icon 
-//                 |location
-//             .ui.button 
-//                 |farm 
-//             .ui.button
-//                 | the stand
-//             .ui.button
-//                 | riverside
-//             if is_admin
-//                 .ui.icon.circular.button.add_shift
-//                     i.plus.green.icon
-//                     // |add shift
-//         .twelve.wide.column
-//             .scrolling
-//                 .ui.stackable.cards
-//                     each next_shifts
-//                         +shift_card
-//             if is_admin
-//                 .ui.inline.header 
-//                     i.shield.icon
-//                     |shift templates
-//                 .ui.button.add_shift_template
-//                     i.plus.icon
-//                     |add shift template
-//                 .scrolling
-//                     .ui.stackable.six.cards
-//                         each shift_templates
-//                             +shift_template_card
-
-//         .sixteen.wide.column
-//             // +shift_cloud
-
-
 template(name='shift_card')
     a.card(href="/shift/#{_id}/view")
         .image
@@ -176,7 +135,7 @@ template(name='shift_edit')
                 .four.wide.column
                     +image_edit key='image_id' label='image' direct=true
                     .ui.header
-                        i.user.tie.icon
+                        +icolor name='leader'
                         |leader
                     with shift_leader
                         a.ui.big.button(href="/user/#{username}") 
