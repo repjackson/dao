@@ -57,26 +57,33 @@ template(name='event_view')
                         i.large.red.marker.icon(title='location')
                         |#{location}
                     img.ui.fluid.rounded.image(src="{{c.url image_id }}")
-                    .ui.tertiary.segment
-                        .ui.header 
-                            small author
-                        a.ui.header(href="/user/#{_author.username}") 
-                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{_author.username}
+                    if is_admin
+                        .ui.tertiary.segment
+                            .ui.header 
+                                small author
+                            a.ui.header(href="/user/#{_author.username}") 
+                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{_author.username}
+                    .ui.dividing.header 
+                        |facilitator
+                        |#{facilitator.name}
                     .ui.header
                         |#{max_attendees} max attendees
                     .ui.inline.header 
-                        +icolor name='event-accepted' cl='pick_going pointer'
-                        |#{going.count} going
+                        +icolor name='event-accepted'
+                        |#{ticket.length} going
                     // .ui.icon.circular.button.pick_going 
                     //     i.green.checkmark.big.icon
-                    each going 
-                        a.ui.circular.button(href="/user/#{username}")    
-                            img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{username}
+                    // each going 
+                    //     a.ui.circular.button(href="/user/#{username}")    
+                    //         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //         |#{username}
                     
                     .ui.inline.header 
-                        +icolor name='event-accepted-tentatively' cl='pick_maybe pointer'
+                        if currentUser
+                            +icolor name='event-accepted-tentatively' cl='pick_maybe pointer'
+                        else
+                            +icolor name='event-accepted-tentatively'
                         |#{maybe_going.count} maybe
                     // .ui.icon.circular.button.pick_maybe 
                     //     i.yellow.minus.big.icon
@@ -85,7 +92,10 @@ template(name='event_view')
                             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{username}
                     .ui.inline.header 
-                        +icolor name='event-declined' cl='pick_not pointer'
+                        if currentUser
+                            +icolor name='event-declined' cl='pick_not pointer'
+                        else
+                            +icolor name='event-declined'
                         |#{not_going.count} not going
                     // .ui.circular.icon.button.pick_not
                         // i.red.big.ban.icon
@@ -93,14 +103,12 @@ template(name='event_view')
                         a.ui.circular.button(href="/user/#{username}")    
                             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{username}
-                            
-                    .ui.small.grey.header 
-                        i.line.chart.icon
-                        |stats
-                    .ui.list
-                        .item #{views} views
+                    // .ui.small.grey.header 
+                    //     i.line.chart.icon
+                    //     |stats
+                    .ui.small.header #{views} views
                     each viewers
-                        .ui.label #{username
+                        .ui.label #{username}
                     with current_doc
                         +gcal_button
                     .ui.hidden.divider
@@ -123,19 +131,19 @@ template(name='event_view')
                         |buy ticket
                     .ui.grey.small.inline.header #{tickets_left} left
                     div
-                    .ui.big.circular.green.button.buy_for_usd
+                    .ui.big.circular.green.fluid.button.buy_for_usd
                         // |buy for 
                         // +icolor name='money' cl='ui inline image'
                         |$#{usd_price}
                     if currentUser
-                        .ui.inline.header or
+                        .ui.horizontal.divider or
                         if has_points
-                            .ui.big.circular.teal.button.buy_for_points
+                            .ui.big.circular.teal.flud.button.buy_for_points
                                 // i.cart.icon
                                 // |buy for 
                                 |#{point_price}pts
                         else
-                            .ui.big.circular.teal.disabled.button
+                            .ui.big.circular.teal.disabled.fluid.button
                                 // i.cart.icon
                                 // |buy for 
                                 |#{point_price}pts

@@ -78,7 +78,7 @@ template(name='model_edit_permissions')
 
 template(name='field_edit')
     .ui.segment.field_segment
-        .title.field_edit.pointer
+        a.title.field_edit(href="#")
             |#{rank}
             if icon
                 +icon name=icon cl='ui mini inline image'
@@ -115,6 +115,8 @@ template(name='field_edit')
                 +key_value_edit key='field_type' value='float' icon='hashtag'
                 +key_value_edit key='field_type' value='textarea' icon='list'
                 +key_value_edit key='field_type' value='image' icon='picture'
+                +key_value_edit key='field_type' value='date' icon='calendar'
+                +key_value_edit key='field_type' value='time' icon='clock'
                 //- if is_admin
                 //- +single_doc_edit key='field_type' ref_model='field_type' label='field type' direct=true        
                 //- .spacer

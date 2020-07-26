@@ -43,7 +43,8 @@ if Meteor.isClient
         )
 
     Template.event_view.onRendered ->
-
+        Docs.update Router.current().params.doc_id, 
+            $inc: views: 1
 
     Template.event_view.helpers 
         can_buy: ->

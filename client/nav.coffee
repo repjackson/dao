@@ -32,6 +32,10 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'model', ->
             Session.set 'loading', false
+    'click .set_rental': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'rental', ->
+            Session.set 'loading', false
     'click .set_shop': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'product', ->

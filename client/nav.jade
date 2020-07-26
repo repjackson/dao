@@ -41,6 +41,10 @@ template(name='nav')
                 // i.large.hand.holding.heart.icon
                 +icolor name='project'
                 // span.mobile.hidden projects
+            a.item.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}" title='rentals')
+                // i.large.hand.holding.heart.icon
+                +icolor name='key-exchange'
+                // span.mobile.hidden projects
             a.icon.item(href="/m/location" class="{{isActivePath regex='locations'}}" title='locations')
                 +icolor name='marker'
             if is_admin
@@ -71,7 +75,7 @@ template(name='nav')
             else
                 a.item(href="/register" title='register')
                     // |login
-                    +icon name='add-user-female'
+                    +icon name='plus'
                     // i.large.chevron.right.icon
                 a.item(href="/login" title='login')
                     // |login

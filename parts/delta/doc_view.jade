@@ -6,21 +6,20 @@ template(name='model_doc_view')
             .ui.stackable.padded.grid
                 .row
                     .four.wide.column
-                        .ui.basic.circular.button.back_to_model
+                        .ui.circular.button.back_to_model
                             i.chevron.left.icon
                             +icon name=current_model.color_icon cl='ui inline mini image'
                             //- i.icon(class=current_model.icon)
                             |#{current_model.title}
                         if can_edit
-                            a.ui.large.icon.basic.circular.button(href="/m/#{current_model.slug}/#{_id}/edit" title='Edit')
+                            a.ui.large.icon.circular.button(href="/m/#{current_model.slug}/#{_id}/edit" title='Edit')
                                 i.pencil.blue.icon
                         if is_admin
                             .ui.header 
-                                //- +i name='clock'
-                                i.clock.icon
+                                +i name='clock'
                                 |timestamp tags
                             each _timestamp_tags
-                                .ui.basic.inverted.label #{this}
+                                .ui.inverted.label #{this}
                         +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark'
                         div
                         .ui.small.header #{views} views

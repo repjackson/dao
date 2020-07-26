@@ -104,11 +104,11 @@ template(name='delta')
                         .ui.small.inline.header(title='total results') #{current_delta.total}
                         |&nbsp;
                         |&nbsp;
-                        //- with delta
-                        //-     +key_value_edit key='view_mode' value='list'
-                        //-     +key_value_edit key='view_mode' value='cards'
-                        // +set_view_mode title='list' icon='list'
-                        // +set_view_mode title='cards' icon='clone'
+                        // - with delta
+                        // -     +key_value_edit key='view_mode' value='list'
+                        // -     +key_value_edit key='view_mode' value='cards'
+                        +set_view_mode title='list' icon='list'
+                        +set_view_mode title='cards' icon='clone'
                         //- .ui.inline.small.grey.header view
                         //- .ui.simple.dropdown.item
                         //-     |#{current_delta.view_mode}
@@ -125,7 +125,7 @@ template(name='delta')
                         //- each current_delta.result_ids
                         //-     .ui.header #{this}
                         if delta_key_value_is 'view_mode' 'cards'
-                            .ui.stackable.five.cards
+                            .ui.stackable.cards
                                 if is_loading
                                     each current_delta.result_ids
                                         .ui.card
