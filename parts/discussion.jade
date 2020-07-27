@@ -1,20 +1,3 @@
-template(name='discussions')
-    .ui.padded.stackable.grid
-        .four.wide.column
-            .ui.inline.big.header 
-                // i.calendar.big.icon
-                +icolor name='speech-bubble-with-dots'
-                span.mobile.hidden discussions
-            .ui.icon.button.add_discussion
-                i.plus.big.green.icon
-                // |add discussion
-        .twelve.wide.column
-            .scrolling
-                .ui.stackable.four.cards
-                    each discussion_docs
-                        +discussion_item
-
-
 template(name='discussion_item')
     .ui.card
         if image_id

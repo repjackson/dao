@@ -1,8 +1,4 @@
 if Meteor.isClient
-    Router.route '/discussions/', (->
-        @layout 'layout'
-        @render 'discussions'
-        ), name:'discussions'
     Router.route '/discussion/:doc_id/view', (->
         @layout 'layout'
         @render 'discussion_view'
@@ -20,20 +16,6 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
     Template.discussions.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'discussion'
-    Template.discussions.events
-        'click .add_discussion': ->
-            new_id = 
-                Docs.insert
-                    model:'discussion'
-            Router.go "/discussion/#{new_id}/edit"
-    Template.discussions.helpers
-        discussion_docs: ->
-            match = {model:'discussion'}
-            unless Meteor.user() and 'admin' in Meteor.user().roles
-                match.published = true
-            Docs.find match, 
-                sort:
-                    _timestamp:-1
 
     Template.discussion_view.onRendered ->
     Template.discussion_item.events

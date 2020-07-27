@@ -1,13 +1,13 @@
 if Meteor.isClient
-    Router.route '/event/:doc_id/view', (->
+    Router.route '/rental/:doc_id/view', (->
         @layout 'layout'
-        @render 'event_view'
-        ), name:'event_view'
-    Template.event_view.onCreated ->
+        @render 'rental_view'
+        ), name:'rental_view'
+    Template.rental_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
-    Template.event_view.onCreated ->
-        @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id
+    Template.rental_view.onCreated ->
+        @autorun => Meteor.subscribe 'rental_tickets', Router.current().params.doc_id
         
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
@@ -20,14 +20,14 @@ if Meteor.isClient
             zipCode: true
             token: (token) =>
                 # amount = parseInt(Session.get('topup_amount'))
-                event = Docs.findOne Router.current().params.doc_id
+                rental = Docs.findOne Router.current().params.doc_id
                 charge =
-                    amount: event.usd_price*100
-                    event_id:event._id
+                    amount: rental.usd_price*100
+                    rental_id:rental._id
                     currency: 'usd'
                     source: token.id
                     description: token.description
-                    event_title:event.title
+                    rental_title:rental.title
                     # receipt_email: token.email
                 Meteor.call 'buy_ticket', charge, (err,res)=>
                     if err then alert err.reason, 'danger'
@@ -42,16 +42,16 @@ if Meteor.isClient
                         )
         )
 
-    Template.event_view.onRendered ->
+    Template.rental_view.onRendered ->
         Docs.update Router.current().params.doc_id, 
             $inc: views: 1
 
-    Template.event_view.helpers 
+    Template.rental_view.helpers 
         can_buy: ->
             now = Date.now()
             
 
-    Template.event_view.events
+    Template.rental_view.rentals
         'click .buy_for_points': ->
             Swal.fire({
                 title: "buy ticket for #{@point_price}pts?"
@@ -70,7 +70,7 @@ if Meteor.isClient
                         payment_type:'points'
                         is_points:true
                         point_amount:@point_price
-                        event_id:@_id
+                        rental_id:@_id
                     Meteor.users.update Meteor.userId(),
                         $inc:points:-@point_price
                     Meteor.users.update @_author_id, 
@@ -89,7 +89,7 @@ if Meteor.isClient
             # if confirm 'add 5 credits?'
             # Session.set('topup_amount',5)
             # Template.instance().checkout.open
-            #     name: 'event purchase'
+            #     name: 'rental purchase'
             #     # email:Meteor.user().emails[0].address
             #     description: 'monthly'
             #     amount: 250
@@ -130,8 +130,8 @@ if Meteor.isClient
 
 
 
-    Template.event_view.onRendered ->
-    Template.event_card.events
+    Template.rental_view.onRendered ->
+    Template.rental_card.rentals
         'click .pick_going': ->
             console.log 'going'
             Docs.update @data._id,
@@ -158,7 +158,7 @@ if Meteor.isClient
                     going_user_ids: Meteor.userId()
                     maybe_user_ids: Meteor.userId()
     
-    Template.event_view.events
+    Template.rental_view.rentals
         'click .pick_going': ->
             console.log 'going'
             Docs.update Router.current().params.doc_id,
@@ -190,71 +190,71 @@ if Meteor.isClient
 
         'click .submit': ->
             if confirm 'confirm?'
-                Meteor.call 'send_event', @_id, =>
-                    Router.go "/event/#{@_id}/view"
+                Meteor.call 'send_rental', @_id, =>
+                    Router.go "/rental/#{@_id}/view"
 
 
-    Template.event_card.helpers
+    Template.rental_card.helpers
         going: ->
-            event = Docs.findOne @_id
+            rental = Docs.findOne @_id
             Meteor.users.find 
-                _id:$in:event.going_user_ids
+                _id:$in:rental.going_user_ids
         maybe_going: ->
-            event = Docs.findOne @_id
+            rental = Docs.findOne @_id
             Meteor.users.find 
-                _id:$in:event.maybe_user_ids
+                _id:$in:rental.maybe_user_ids
         not_going: ->
-            event = Docs.findOne @_id
+            rental = Docs.findOne @_id
             Meteor.users.find 
-                _id:$in:event.not_user_ids
-    Template.event_view.helpers
+                _id:$in:rental.not_user_ids
+    Template.rental_view.helpers
         tickets_left: ->
             ticket_count = 
                 Docs.find({ 
                     model:'transaction'
                     transaction_type:'ticket_purchase'
-                    event_id: Router.current().params.doc_id
+                    rental_id: Router.current().params.doc_id
                 }).count()
             @max_attendees-ticket_count
         tickets: ->
             Docs.find 
                 model:'transaction'
                 transaction_type:'ticket_purchase'
-                event_id: Router.current().params.doc_id
+                rental_id: Router.current().params.doc_id
         going: ->
-            event = Docs.findOne Router.current().params.doc_id
+            rental = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
-                _id:$in:event.going_user_ids
+                _id:$in:rental.going_user_ids
         maybe_going: ->
-            event = Docs.findOne Router.current().params.doc_id
+            rental = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
-                _id:$in:event.maybe_user_ids
+                _id:$in:rental.maybe_user_ids
         not_going: ->
-            event = Docs.findOne Router.current().params.doc_id
+            rental = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
-                _id:$in:event.not_user_ids
-    Template.event_view.events
+                _id:$in:rental.not_user_ids
+    Template.rental_view.rentals
 
 if Meteor.isServer
-    Meteor.publish 'event_tickets', (event_id)->
+    Meteor.publish 'rental_tickets', (rental_id)->
         Docs.find
             model:'transaction'
             transaction_type:'ticket_purchase'
-            event_id:event_id
+            rental_id:rental_id
 #     Meteor.methods
-        # send_event: (event_id)->
-        #     event = Docs.findOne event_id
-        #     target = Meteor.users.findOne event.recipient_id
-        #     gifter = Meteor.users.findOne event._author_id
+        # send_rental: (rental_id)->
+        #     rental = Docs.findOne rental_id
+        #     target = Meteor.users.findOne rental.recipient_id
+        #     gifter = Meteor.users.findOne rental._author_id
         #
-        #     console.log 'sending event', event
+        #     console.log 'sending rental', rental
         #     Meteor.users.update target._id,
         #         $inc:
-        #             points: event.amount
+        #             points: rental.amount
         #     Meteor.users.update gifter._id,
         #         $inc:
-        #             points: -event.amount
-        #     Docs.update event_id,
+        #             points: -rental.amount
+        #     Docs.update rental_id,
         #         $set:
         #             submitted:true
         #             submitted_timestamp:Date.now()
@@ -267,17 +267,17 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-    Router.route '/event/:doc_id/edit', (->
+    Router.route '/rental/:doc_id/edit', (->
         @layout 'layout'
-        @render 'event_edit'
-        ), name:'event_edit'
+        @render 'rental_edit'
+        ), name:'rental_edit'
 
-    Template.event_edit.onCreated ->
+    Template.rental_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.event_edit.onRendered ->
+    Template.rental_edit.onRendered ->
 
 
-    Template.event_edit.events
+    Template.rental_edit.rentals
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -286,28 +286,28 @@ if Meteor.isClient
             Docs.update Router.current().params.doc_id,
                 $set:published:true
             if confirm 'confirm?'
-                Meteor.call 'send_event', @_id, =>
-                    Router.go "/event/#{@_id}/view"
+                Meteor.call 'send_rental', @_id, =>
+                    Router.go "/rental/#{@_id}/view"
 
 
-    Template.event_edit.helpers
-    Template.event_edit.events
+    Template.rental_edit.helpers
+    Template.rental_edit.rentals
 
 if Meteor.isServer
     Meteor.methods
-        send_event: (event_id)->
-            event = Docs.findOne event_id
-            target = Meteor.users.findOne event.recipient_id
-            gifter = Meteor.users.findOne event._author_id
+        send_rental: (rental_id)->
+            rental = Docs.findOne rental_id
+            target = Meteor.users.findOne rental.recipient_id
+            gifter = Meteor.users.findOne rental._author_id
 
-            console.log 'sending event', event
+            console.log 'sending rental', rental
             Meteor.users.update target._id,
                 $inc:
-                    points: event.amount
+                    points: rental.amount
             Meteor.users.update gifter._id,
                 $inc:
-                    points: -event.amount
-            Docs.update event_id,
+                    points: -rental.amount
+            Docs.update rental_id,
                 $set:
                     submitted:true
                     submitted_timestamp:Date.now()

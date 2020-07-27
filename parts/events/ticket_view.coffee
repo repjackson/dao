@@ -1,14 +1,13 @@
 if Meteor.isClient
-    Router.route '/tickets/', (->
-        @layout 'layout'
-        @render 'tickets'
-        ), name:'tickets'
-    
-
     Router.route '/ticket/:doc_id/view', (->
         @layout 'layout'
         @render 'ticket_view'
         ), name:'ticket_view'
+
+    Template.registerHelper 'ticket_event', () ->
+        Docs.findOne @event_id
+
+
 
     Template.ticket_view.onCreated ->
         @autorun => Meteor.subscribe 'event_from_ticket_id', Router.current().params.doc_id
