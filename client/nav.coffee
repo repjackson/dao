@@ -48,6 +48,18 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'badge', ->
             Session.set 'loading', false
+    'click .set_location': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'location', ->
+            Session.set 'loading', false
+    'click .set_discussion': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'discussion', ->
+            Session.set 'loading', false
+    'click .set_project': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'project', ->
+            Session.set 'loading', false
     'click .add_gift': ->
         # user = Meteor.users.findOne(username:@username)
         new_gift_id =

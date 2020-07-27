@@ -45,7 +45,7 @@ template(name='nav')
                 // i.large.hand.holding.heart.icon
                 +icolor name='key-exchange'
                 // span.mobile.hidden projects
-            a.icon.item(href="/m/location" class="{{isActivePath regex='locations'}}" title='locations')
+            a.icon.item.set_location(href="/m/location" class="{{isActivePath regex='locations'}}" title='locations')
                 +icolor name='marker'
             if is_admin
                 a.icon.item(href="/m/model" class="{{isActivePath regex='model'}}" title='models')

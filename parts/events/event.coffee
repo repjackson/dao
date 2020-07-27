@@ -3,6 +3,22 @@ if Meteor.isClient
         @layout 'layout'
         @render 'event_view'
         ), name:'event_view'
+        
+    Template.registerHelper 'going', () ->
+        event = Docs.findOne @_id
+        Meteor.users.find 
+            _id:$in:event.going_user_ids
+    Template.registerHelper 'maybe_going', () ->
+        event = Docs.findOne @_id
+        Meteor.users.find 
+            _id:$in:event.maybe_user_ids
+    Template.registerHelper 'not_going', () ->
+        event = Docs.findOne @_id
+        Meteor.users.find 
+            _id:$in:event.not_user_ids
+
+        
+        
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
@@ -26,7 +42,8 @@ if Meteor.isClient
                     event_id:event._id
                     currency: 'usd'
                     source: token.id
-                    description: token.description
+                    # description: token.description
+                    description: "One Becomeing One"
                     event_title:event.title
                     # receipt_email: token.email
                 Meteor.call 'buy_ticket', charge, (err,res)=>
@@ -130,60 +147,52 @@ if Meteor.isClient
 
 
 
-    Template.event_view.onRendered ->
-    Template.event_card.events
-        'click .pick_going': ->
-            console.log 'going'
-            Docs.update @data._id,
-                $addToSet:
-                    going_user_ids: Meteor.userId()
-                $pull:
-                    maybe_user_ids: Meteor.userId()
-                    not_user_ids: Meteor.userId()
-    
-        'click .pick_maybe': ->
-            console.log 'maybe', Template.parent
-            Docs.update @data._id,
-                $addToSet:
-                    maybe_user_ids: Meteor.userId()
-                $pull:
-                    going_user_ids: Meteor.userId()
-                    not_user_ids: Meteor.userId()
-    
-        'click .pick_not': ->
-            Docs.update @data._id,
-                $addToSet:
-                    not_user_ids: Meteor.userId()
-                $pull:
-                    going_user_ids: Meteor.userId()
-                    maybe_user_ids: Meteor.userId()
     
     Template.attendance.events
-        'click .pick_going': ->
-            console.log 'going'
-            Docs.update Router.current().params.doc_id,
-                $addToSet:
-                    going_user_ids: Meteor.userId()
-                $pull:
-                    maybe_user_ids: Meteor.userId()
-                    not_user_ids: Meteor.userId()
-    
         'click .pick_maybe': ->
-            Docs.update Router.current().params.doc_id,
-                $addToSet:
-                    maybe_user_ids: Meteor.userId()
-                $pull:
-                    going_user_ids: Meteor.userId()
-                    not_user_ids: Meteor.userId()
+            event = Docs.findOne Router.current().params.doc_id
+            Swal.fire({
+                title: "mark yourself as maybe?"
+                text: "for #{event.title}"
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonText: 'confirm'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.update Router.current().params.doc_id,
+                        $addToSet:
+                            maybe_user_ids: Meteor.userId()
+                        $pull:
+                            going_user_ids: Meteor.userId()
+                            not_user_ids: Meteor.userId()
+            )
     
         'click .pick_not': ->
-            Docs.update Router.current().params.doc_id,
-                $addToSet:
-                    not_user_ids: Meteor.userId()
-                $pull:
-                    going_user_ids: Meteor.userId()
-                    maybe_user_ids: Meteor.userId()
-    
+            event = Docs.findOne Router.current().params.doc_id
+
+            Swal.fire({
+                title: "mark yourself as no?"
+                text: "for #{event.title}"
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonText: 'confirm'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.update Router.current().params.doc_id,
+                        $addToSet:
+                            not_user_ids: Meteor.userId()
+                        $pull:
+                            going_user_ids: Meteor.userId()
+                            maybe_user_ids: Meteor.userId()
+            )
     Template.event_view.events
         'click .delete_item': ->
             if confirm 'delete item?'
@@ -196,18 +205,6 @@ if Meteor.isClient
 
 
     Template.event_card.helpers
-        going: ->
-            event = Docs.findOne @_id
-            Meteor.users.find 
-                _id:$in:event.going_user_ids
-        maybe_going: ->
-            event = Docs.findOne @_id
-            Meteor.users.find 
-                _id:$in:event.maybe_user_ids
-        not_going: ->
-            event = Docs.findOne @_id
-            Meteor.users.find 
-                _id:$in:event.not_user_ids
     Template.event_view.helpers
         tickets_left: ->
             ticket_count = 

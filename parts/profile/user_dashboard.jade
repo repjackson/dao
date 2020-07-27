@@ -4,7 +4,7 @@ template(name='user_dashboard')
     .ui.stackable.four.column.grid
         .column
             .ui.inline.header 
-                i.minus.icon
+                +icon name='deposit'
                 |#{total_credit_amount}p
                 |received
                 .ui.basic.circular.label #{credit_count} credits
