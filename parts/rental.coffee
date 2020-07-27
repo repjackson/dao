@@ -51,7 +51,7 @@ if Meteor.isClient
             now = Date.now()
             
 
-    Template.rental_view.rentals
+    Template.rental_view.events
         'click .buy_for_points': ->
             Swal.fire({
                 title: "buy ticket for #{@point_price}pts?"
@@ -131,7 +131,7 @@ if Meteor.isClient
 
 
     Template.rental_view.onRendered ->
-    Template.rental_card.rentals
+    Template.rental_card.events
         'click .pick_going': ->
             console.log 'going'
             Docs.update @data._id,
@@ -158,7 +158,7 @@ if Meteor.isClient
                     going_user_ids: Meteor.userId()
                     maybe_user_ids: Meteor.userId()
     
-    Template.rental_view.rentals
+    Template.rental_view.events
         'click .pick_going': ->
             console.log 'going'
             Docs.update Router.current().params.doc_id,
@@ -277,7 +277,7 @@ if Meteor.isClient
     Template.rental_edit.onRendered ->
 
 
-    Template.rental_edit.rentals
+    Template.rental_edit.events
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -291,7 +291,6 @@ if Meteor.isClient
 
 
     Template.rental_edit.helpers
-    Template.rental_edit.rentals
 
 if Meteor.isServer
     Meteor.methods

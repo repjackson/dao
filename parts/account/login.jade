@@ -34,21 +34,21 @@ template(name='login')
                         //- i.sign.in.alternate.icon
                         +icon name='login-rounded-right' cl='ui avatar image'
                         // i.right.chevron.icon
-                else
-                    if username
-                        .ui.center.aligned.basic.segment
-                            .ui.header no '#{username}' user
-                            a.ui.large.button(href='/register')
-                                // i.user.plus.icon
-                                +icon name='add-user-male' cl='ui mini inline image'
-                                | register
+                // else
+                //     if username
+                //         .ui.center.aligned.basic.segment
+                //             .ui.header no '#{username}' user
+                //             a.ui.large.button(href='/register')
+                //                 // i.user.plus.icon
+                //                 +icon name='add-user-male' cl='ui mini inline image'
+                //                 | register
                 .ui.center.aligned.basic.segment    
                     a.ui.big.button(href='/forgot_password')
                         // i.refresh.icon
                         +icon name='forgot-password' cl='ui mini inline image'
                         |forgot password
-                    a.ui.big.button(href='/register') 
-                        // i.user.plus.icon
-                        +icon name='add-user-male' cl='ui mini inline image'
-                        |register
+                    // a.ui.big.button(href='/register') 
+                    //     // i.user.plus.icon
+                    //     +icon name='add-user-male' cl='ui mini inline image'
+                    //     |register
                     //- .ui.center.aligned.inline.header see the front desk to register an account

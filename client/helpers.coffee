@@ -9,7 +9,7 @@ Template.registerHelper 'in_role', (role)->
         false
 
 Template.registerHelper 'is_in_admin', () ->
-    Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c']
+    Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
 Template.registerHelper 'is_in_levels', (level) ->
     Meteor.user() and Meteor.user().levels and level in Meteor.user().levels
 Template.registerHelper 'current_user', () ->
@@ -188,6 +188,8 @@ Template.registerHelper 'is_eric', ()-> if Meteor.userId() and Meteor.userId() i
 Template.registerHelper 'publish_when', ()-> moment(@publish_date).fromNow()
 
 
+Template.registerHelper 'is_one', ()-> 
+    if Meteor.userId() and Meteor.userId() in ['YFPxjXCgjhMYEPADS'] then true else false
 
 
 

@@ -18,6 +18,7 @@ template(name='profile_layout')
                 //-     i.refresh.icon
                 div
                 if is_admin
+                    .ui.small.header #{_id}
                     a.ui.large.icon.circular.button(href="/user/#{username}/edit" title='admin edit account')
                         i.shield.large.icon
                 if is_current_user

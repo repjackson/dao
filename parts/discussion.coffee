@@ -14,8 +14,6 @@ if Meteor.isClient
 
     Template.discussion_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.discussions.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'discussion'
 
     Template.discussion_view.onRendered ->
     Template.discussion_item.events

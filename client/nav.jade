@@ -4,7 +4,7 @@ template(name='nav')
             +icon name='circled'
             // i.large.tree.icon
         if currentUser
-            a.item.set_user(href="/users" class="{{isActiveRoute 'users'}}" title='players')
+            a.item.set_user(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
                 +icolor name='conference-call'
                 // i.large.users.icon
                 // span.mobile.hidden members
@@ -20,7 +20,7 @@ template(name='nav')
             a.item.set_product(href="/m/product" class="{{isActiveRoute 'shop'}}" title='shop')
                 // i.large.shop.icon
                 +icolor name='shop'
-            a.item.set_discussion(href="/discussions" class="{{isActiveRoute 'discussions'}}" title='discussions')
+            a.item.set_discussion(href="/m/discussion" class="{{isActiveRoute 'discussions'}}" title='discussions')
                 // i.large.shop.icon
                 +icolor name='speech-bubble-with-dots'
                 
@@ -62,7 +62,10 @@ template(name='nav')
                     i.plus.large.icon
             if is_in_admin
                 a.icon.item.toggle_admin
-                    i.shield.large.icon
+                    if is_admin
+                        i.shield.blue.large.icon
+                    else
+                        i.shield.large.icon
             if currentUser
                 a.large.item.view_profile(href="/user/#{currentUser.username}" class="{{isActivePath regex='profile_layout'}}")
                     //- i.large.user.large.icon
