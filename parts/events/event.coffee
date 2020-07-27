@@ -17,7 +17,12 @@ if Meteor.isClient
         Meteor.users.find 
             _id:$in:event.not_user_ids
 
-        
+    Template.registerHelper 'event_tickets', () ->
+            Docs.find 
+                model:'transaction'
+                transaction_type:'ticket_purchase'
+                event_id: Router.current().params.doc_id
+
         
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
@@ -177,7 +182,7 @@ if Meteor.isClient
             Swal.fire({
                 title: "mark yourself as no?"
                 text: "for #{event.title}"
-                icon: 'question'
+                icon: 'error'
                 showCancelButton: true,
                 confirmButtonText: 'confirm'
                 confirmButtonColor: 'green'
@@ -214,23 +219,7 @@ if Meteor.isClient
                     event_id: Router.current().params.doc_id
                 }).count()
             @max_attendees-ticket_count
-        tickets: ->
-            Docs.find 
-                model:'transaction'
-                transaction_type:'ticket_purchase'
-                event_id: Router.current().params.doc_id
-        going: ->
-            event = Docs.findOne Router.current().params.doc_id
-            Meteor.users.find 
-                _id:$in:event.going_user_ids
-        maybe_going: ->
-            event = Docs.findOne Router.current().params.doc_id
-            Meteor.users.find 
-                _id:$in:event.maybe_user_ids
-        not_going: ->
-            event = Docs.findOne Router.current().params.doc_id
-            Meteor.users.find 
-                _id:$in:event.not_user_ids
+
     Template.event_view.events
 
 if Meteor.isServer

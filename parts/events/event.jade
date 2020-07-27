@@ -38,10 +38,6 @@ template(name='event_view')
                     a.ui.compact.circular.button(href="/m/event")
                         i.chevron.left.icon
                         +icolor name='calendar' cl='ui inline image'
-                    .ui.small.inline.header(title='viewing event')
-                        +icolor name='tear-off-calendar'
-                        // i.calendar.icon
-                        // |view event
                     .ui.large.inline.header #{title}
                     // div
                     .ui.inline.header {{long_date start_datetime}}
@@ -52,7 +48,7 @@ template(name='event_view')
                             i.large.blue.link.pencil.circular.icon
 
             .row 
-                .five.wide.column
+                .four.wide.column
                     if location 
                         i.large.red.marker.icon(title='location')
                         |#{location}
@@ -64,11 +60,13 @@ template(name='event_view')
                             a.ui.header(href="/user/#{_author.username}") 
                                 img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{_author.username}
-                    .ui.dividing.header 
-                        |facilitator
-                        |#{facilitator.name}
-                    .ui.header
-                        |#{max_attendees} max attendees
+                    if facilitator
+                        .ui.dividing.header 
+                            |facilitator
+                            |#{facilitator.name}
+                    if max_attendees
+                        .ui.header
+                            |#{max_attendees} max attendees
                     // .ui.small.grey.header 
                     //     i.line.chart.icon
                     //     |stats
@@ -78,25 +76,26 @@ template(name='event_view')
                     with current_doc
                         +gcal_button
                     .ui.hidden.divider
-                .six.wide.column
+                    +array_view key='tags' label='tags' icon='tags red' direct=true
+                .eight.wide.column
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     .f12
                         |!{description}
                     div 
-                    +array_view key='tags' label='tags' direct=true
                     .spacer
                     .spacer
                     +comments
                     // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .five.wide.column
+                .four.wide.column
                     .ui.inline.header 
                         // i.cart.icon
                         +icolor name='buy'
                         |buy ticket
-                    .ui.grey.small.inline.header #{tickets_left} left
-                    div
+                    if tickets_left
+                        .ui.grey.small.inline.header #{tickets_left} left
+                        div
                     .ui.big.circular.green.fluid.button.buy_for_usd
                         // |buy for 
                         // +icolor name='money' cl='ui inline image'
@@ -116,9 +115,9 @@ template(name='event_view')
                     +attendance
                     .ui.dividing.header 
                         +icolor name='activity-history' cl='ui inline image'
-                        |#{ticket.length} purchased tickets
+                        |#{event_tickets.count} purchased tickets
                     .ui.large.link.selection.list
-                        each tickets
+                        each event_tickets
                             a.ui.item(href="/ticket/#{_id}/view") 
                                 .content
                                     .header
