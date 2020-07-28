@@ -27,7 +27,6 @@ template(name='request_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    // if can_edit
                     a(href="/m/request" title='requests')
                         +icolor name='request-service' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
@@ -105,14 +104,13 @@ template(name='request_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    .ui.large.circular.icon.button.delete_item(title='cancel')
-                        i.large.red.ban.icon
+                    a.ui.green.circular.icon.button(href="/request/#{_id}/view" title='save')
+                        i.checkmark.big.icon
                     .ui.inline.header 
                         +icon name='request-service'
                         small edit request
                         |#{title}
-                    a.ui.green.circular.icon.button(href="/request/#{_id}/view" title='save')
-                        i.checkmark.big.icon
+                    i.large.red.remove.circular.link.icon.delete_request(title='cancel')
             .row 
                 .five.wide.column
                     .ui.header 
@@ -133,7 +131,7 @@ template(name='request_edit')
                         +icon name='warranty'
                         |badges
                 .six.wide.column
-                    +number_edit key='point_bounty' label='point bounty' icon='paper-bag-with-seeds' direct=true
+                    +number_edit key='point_bounty' label='point bounty' icon='paper-bag-with-seeds' min='0' direct=true
                     div
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true

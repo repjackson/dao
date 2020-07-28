@@ -16,9 +16,9 @@ Template.nav.events
         else
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'admin'
-    'click .set_user': ->
+    'click .set_member': ->
         Session.set 'loading', true
-        Meteor.call 'set_facets', 'user', ->
+        Meteor.call 'set_facets', 'member', ->
             Session.set 'loading', false
     'click .set_shift': ->
         Session.set 'loading', true
@@ -36,7 +36,7 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'rental', ->
             Session.set 'loading', false
-    'click .set_shop': ->
+    'click .set_product': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'product', ->
             Session.set 'loading', false

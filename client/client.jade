@@ -28,8 +28,10 @@ template(name='layout')
     img.bg_overlay(src="{{c.url 'nightbg' width=1000 height=1000 crop='crop'}}")
     // .uni
     //     +icolor name='vominitg-unicorn' class='uni'
-    +nav
-    #main_area.scrolling.global_container
+    if currentUser
+        +nav
+    // #main_area.scrolling.global_container
+    #main_area.global_container
         +yield
     
     

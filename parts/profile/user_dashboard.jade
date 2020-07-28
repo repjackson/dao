@@ -73,9 +73,10 @@ template(name='user_dashboard')
                 +icolor name='calendar' cl='ui inline spaced image'
                 |events
             .smallscroll
-                each user_events
-                    a.ui.segment(href="/event/#{_id}/view")
-                        .header #{title} #{amount}pts
-                        |#{_author.username}
-                        |#{description}
-                        |#{when}
+                each user_event_tickets
+                    a(href="/event/#{event_id}/view")
+                        .ui.segment
+                            .header #{ticket_event.title}
+                                |#{_author.username}
+                                |#{description}
+                                |#{when}

@@ -4,6 +4,20 @@ if Meteor.isClient
         @render 'event_view'
         ), name:'event_view'
         
+    # Router.route '/e/:doc_slug/', (->
+    #     @layout 'layout'
+    #     @render 'event_view'
+    #     ), name:'event_view_by_slug'
+        
+    # Template.registerHelper 'current_event', () ->
+    #     if Router.current().params.doc_id
+    #         Docs.findOne
+    #             _id:Router.current().params.doc_id
+    #     else
+    #         Docs.findOne
+    #             model:'event'
+    #             slug:Router.current().params.doc_slug
+            
     Template.registerHelper 'going', () ->
         event = Docs.findOne @_id
         Meteor.users.find 
@@ -18,14 +32,17 @@ if Meteor.isClient
             _id:$in:event.not_user_ids
 
     Template.registerHelper 'event_tickets', () ->
-            Docs.find 
-                model:'transaction'
-                transaction_type:'ticket_purchase'
-                event_id: Router.current().params.doc_id
+        Docs.find 
+            model:'transaction'
+            transaction_type:'ticket_purchase'
+            event_id: Router.current().params.doc_id
 
         
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc_by_slug', Router.current().params.doc_slug
+        @autorun => Meteor.subscribe 'author_by_doc_id', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'author_by_doc_slug', Router.current().params.doc_slug
 
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id
@@ -198,15 +215,6 @@ if Meteor.isClient
                             going_user_ids: Meteor.userId()
                             maybe_user_ids: Meteor.userId()
             )
-    Template.event_view.events
-        'click .delete_item': ->
-            if confirm 'delete item?'
-                Docs.remove @_id
-
-        'click .submit': ->
-            if confirm 'confirm?'
-                Meteor.call 'send_event', @_id, =>
-                    Router.go "/event/#{@_id}/view"
 
 
     Template.event_card.helpers
@@ -228,6 +236,32 @@ if Meteor.isServer
             model:'transaction'
             transaction_type:'ticket_purchase'
             event_id:event_id
+            
+    # Meteor.publish 'doc_by_slug', (slug)->
+    #     Docs.find
+    #         slug:slug
+            
+    # Meteor.publish 'author_by_doc_id', (doc_id)->
+    #     doc_by_id =
+    #         Docs.findOne doc_id
+    #     doc_by_slug =
+    #         Docs.findOne slug:doc_id
+    #     if doc_by_id
+    #         Meteor.users.findOne 
+    #             _id:doc_by_id._author_id
+    #     else
+    #         Meteor.users.findOne 
+    #             _id:doc_by_slug._author_id
+            
+            
+    # Meteor.publish 'author_by_doc_slug', (slug)->
+    #     doc = 
+    #         Docs.findOne
+    #             slug:slug
+    #     Meteor.users.findOne 
+    #         _id:doc._author_id
+
+
 #     Meteor.methods
         # send_event: (event_id)->
         #     event = Docs.findOne event_id

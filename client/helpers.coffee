@@ -67,11 +67,14 @@ Template.registerHelper 'can_edit', () ->
 
 
 Template.registerHelper 'current_doc', () ->
-    found_doc = Docs.findOne Router.current().params.doc_id
-    # if found_doc
-    #     found_doc
-    # else
-    #     Meteor.users.findOne Router.current().params.doc_id
+    found_doc_by_id = Docs.findOne Router.current().params.doc_id
+    found_doc_by_slug = Docs.findOne Router.current().params.doc_slug
+    if found_doc_by_id
+        found_doc_by_id
+    else if found_doc_by_slug
+        found_doc_by_slug
+    else
+        Meteor.users.findOne Router.current().params.doc_id
 
 Template.registerHelper 'lowered_title', ()-> @title.toLowerCase()
 

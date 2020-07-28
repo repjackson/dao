@@ -1,5 +1,5 @@
 template(name='event_card')
-    .ui.card
+    a.ui.card(href="/event/#{_id}/view")
         if image_id
             a.image.pointer(href="/event/#{_id}/view")
                 img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
@@ -12,16 +12,16 @@ template(name='event_card')
             if location
                 i.red.marker.icon 
                 |#{location}
-        .content
-            +icolor name='event-accepted' cl='ui mini image pick_going pointer' data=this
+            .ui.inline.header #{_author_username}
+            +icolor name='event-accepted' cl='ui mini image' data=this
             |#{going_user_ids.length}
             each going
                 |#{username}
-            +icolor name='event-accepted-tentatively' cl='ui mini image pick_maybe pointer' data=this
+            +icolor name='event-accepted-tentatively' cl='ui mini image' data=this
             | #{maybe_user_ids.length}
             each maybe_going
                 |#{username}
-            +icolor name='event-declined' cl='ui mini image pick_not pointer' data=this
+            +icolor name='event-declined' cl='ui mini image' data=this
             | #{not_user_ids.length}
             each not_going
                 | #{username}
@@ -35,9 +35,10 @@ template(name='event_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.compact.circular.button(href="/m/event")
-                        i.chevron.left.icon
-                        +icolor name='calendar' cl='ui inline image'
+                    if currentUser
+                        a.ui.compact.circular.button(href="/m/event")
+                            i.chevron.left.icon
+                            +icolor name='calendar' cl='ui inline image'
                     .ui.large.inline.header #{title}
                     // div
                     .ui.inline.header {{long_date start_datetime}}
@@ -82,17 +83,17 @@ template(name='event_view')
                     //     |#{target.username}
                     .f12
                         |!{description}
-                    div 
-                    .spacer
-                    .spacer
-                    +comments
+                    // div 
+                    // .spacer
+                    // .spacer
+                    // +comments
                     // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
-                    .ui.inline.header 
+                    .ui.inline.large.header 
                         // i.cart.icon
                         +icolor name='buy'
-                        |buy ticket
+                        |RSVP
                     if tickets_left
                         .ui.grey.small.inline.header #{tickets_left} left
                         div
@@ -112,25 +113,26 @@ template(name='event_view')
                                 // i.cart.icon
                                 // |buy for 
                                 |#{point_price}pts
-                    +attendance
-                    .ui.dividing.header 
-                        +icolor name='activity-history' cl='ui inline image'
-                        |#{event_tickets.count} purchased tickets
-                    .ui.large.link.selection.list
-                        each event_tickets
-                            a.ui.item(href="/ticket/#{_id}/view") 
-                                .content
-                                    .header
-                                        if is_usd
-                                            .ui.inline.green.header ${{money_format amount}}
-                                        else
-                                            .ui.inline.header #{point_amount}pts
-                                        
-                                        |#{when} #{_author_username}
-                                    if can_edit 
-                                        +icolor name='return-purchase' cl='ui mini inline image return pointer'
-                                    if is_admin
-                                        +remove_button
+                    if currentUser
+                        +attendance
+                        .ui.dividing.header 
+                            +icolor name='activity-history' cl='ui inline image'
+                            |#{event_tickets.count} purchased tickets
+                        .ui.large.link.selection.list
+                            each event_tickets
+                                a.ui.item(href="/ticket/#{_id}/view") 
+                                    .content
+                                        .header
+                                            if is_usd
+                                                .ui.inline.green.header ${{money_format amount}}
+                                            else
+                                                .ui.inline.header #{point_amount}pts
+                                            
+                                            |#{when} #{_author_username}
+                                        if can_edit 
+                                            +icolor name='return-purchase' cl='ui mini inline image return pointer'
+                                        if is_admin
+                                            +remove_button
 
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
@@ -154,6 +156,7 @@ template(name='event_edit')
                         small author
                         |#{_author.username}
                     +text_edit key='title' label='title' direct=true
+                    +slug_edit key='slug' label='slug' icon='slug' direct=true
                     +datetime_edit key='start_datetime' label='start' direct=true
                     +datetime_edit key='end_datetime' label='end' direct=true
                     .ui.header
