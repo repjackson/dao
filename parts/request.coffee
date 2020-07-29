@@ -1,9 +1,32 @@
 if Meteor.isClient
     Template.registerHelper 'claimer', () ->
-            Meteor.users.findOne @claimed_user_id
+        Meteor.users.findOne @claimed_user_id
     Template.registerHelper 'completer', () ->
         Meteor.users.findOne @completed_by_user_id
     
+    
+    Router.route '/requests', (->
+        @layout 'layout'
+        @render 'requests'
+        ), name:'requests'
+    Template.requests.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'request'
+        @autorun => Meteor.subscribe 'all_users'
+    Template.requests.helpers
+        requests: ->
+            Docs.find 
+                model:'request'
+                complete:$ne:true
+
+
+    Template.request_card.events
+        'click .request_card': ->
+            Router.go "/request/#{@_id}/view"
+            Docs.update @_id,
+                $inc: views:1
+
+
+
     Router.route '/request/:doc_id/view', (->
         @layout 'layout'
         @render 'request_view'

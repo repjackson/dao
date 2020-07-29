@@ -2,7 +2,7 @@ template(name='delta')
     .ui.stackable.grid
         with current_model
             .row
-                .four.wide.column
+                .three.wide.column
                     if is_loading
                         .ui.inline.header.pulsing
                             //- +icon name=color_icon cl='pulsing'
@@ -45,7 +45,7 @@ template(name='delta')
                     div
                     each sorted_facets
                         +facet
-                .twelve.wide.column
+                .thirteen.wide.column
                     |&nbsp;
                     .ui.icon.input(class=query_class)
                         if current_delta.search_query
@@ -54,9 +54,9 @@ template(name='delta')
                             i.search.icon
                         input#search(type='text' autocomplete="off" val=current_delta.search_query)
                     unless single_doc
-                        //- .ui.segment(class=loading_class)
-                        //- .ui.inline.small.grey.header(title='change sort direction')
-                        //-     |sort by
+                        // - .ui.segment(class=loading_class)
+                        .ui.inline.small.grey.header(title='change sort direction')
+                            |sort by
                         if sortable_fields.count
                             .ui.simple.dropdown(title='sort by')
                                 strong #{current_delta.sort_key}
@@ -107,8 +107,8 @@ template(name='delta')
                         // - with delta
                         // -     +key_value_edit key='view_mode' value='list'
                         // -     +key_value_edit key='view_mode' value='cards'
-                        +set_view_mode title='list' icon='list'
-                        +set_view_mode title='cards' icon='clone'
+                        // +set_view_mode title='list' icon='list'
+                        // +set_view_mode title='cards' icon='clone'
                         //- .ui.inline.small.grey.header view
                         //- .ui.simple.dropdown.item
                         //-     |#{current_delta.view_mode}

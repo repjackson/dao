@@ -1,17 +1,24 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.inverted.small.menu.topnav
+    .ui.fluid.attached.borderless.inverted.large.menu.topnav
         a.item(href="/" class="{{isActivePath 'home'}}")
-            +icon name='circled'
+            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             // i.large.tree.icon
         if currentUser
             a.item.set_member(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
                 +icolor name='conference-call' cl='ui mini image'
                 // i.large.users.icon
                 span.mobile.hidden members
-            a.item.set_event(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
+            // a.item.set_event(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
+            //     +icolor name='calendar'
+            //     // i.large.calendar.icon
+            //     span.mobile.hidden events
+            a.item(href="/events" class="{{isActiveRoute 'events'}}" title='requests')
+                // i.large.hand.holding.heart.icon
                 +icolor name='calendar'
-                // i.large.calendar.icon
-                span.mobile.hidden events
+                span.mobile.hidden
+                    |&nbsp;
+                    |events
+                
             // a.item.set_shift(href="/m/shift" class="{{isActiveRoute 'shifts'}}" title='shifts')
             //     // i.large.clock.icon
             //     +icolor name='clock'
@@ -23,15 +30,25 @@ template(name='nav')
             a.item.set_discussion(href="/m/discussion" class="{{isActiveRoute 'discussions'}}" title='discussions')
                 // i.large.shop.icon
                 +icolor name='speech-bubble-with-dots'
-                span.mobile.hidden discussions
+                span.mobile.hidden
+                    &nbsp;
+                    |discussions
             // a.item(href="/gifts" class="{{isActiveRoute 'gifts'}}" title='gifts')
             //     i.big.gift.icon
                 // span.mobile.hidden gifts
             // a.item(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
-            a.item.set_request(href="/m/request" class="{{isActiveRoute 'requests'}}" title='requests')
+            
+            
+            // a.item.set_request(href="/m/request" title='requests')
+            //     // i.large.hand.holding.heart.icon
+            //     +icolor name='request-service'
+            //     span.mobile.hidden requests
+            a.item(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
                 // i.large.hand.holding.heart.icon
                 +icolor name='request-service'
-                span.mobile.hidden requests
+                span.mobile.hidden 
+                    &nbsp;
+                    |requests
             // a.item.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}" title='badges')
             //     // i.large.hand.holding.heart.icon
             //     +icolor name='prize'
@@ -56,9 +73,10 @@ template(name='nav')
             // a.item.add_request(class="{{isActivePath regex='request_edit'}}" title='request')
             //     i.large.hand.holding.heart.icon
             //     span.mobile.hidden request
-            if currentUser
-                a.icon.item.add(href="/add" title='add') 
-                    i.plus.large.icon
+            a.icon.item.add(href="/add" title='add') 
+                i.plus.large.icon
+            a.icon.item(href="/chat" title='chat') 
+                i.chat.large.icon
             if is_in_admin
                 a.icon.item.toggle_admin
                     if is_admin

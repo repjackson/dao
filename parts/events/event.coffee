@@ -4,6 +4,11 @@ if Meteor.isClient
         @render 'event_view'
         ), name:'event_view'
         
+    Router.route '/events', (->
+        @layout 'layout'
+        @render 'events'
+        ), name:'events'
+        
     # Router.route '/e/:doc_slug/', (->
     #     @layout 'layout'
     #     @render 'event_view'
@@ -38,6 +43,19 @@ if Meteor.isClient
             event_id: Router.current().params.doc_id
 
         
+    Template.events.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'event'
+        
+    Template.events.helpers
+        events: ->
+            Docs.find {
+                model:'event'
+                published:true
+            }, 
+                sort:start_datetime:-1
+    
+    
+    
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc_by_slug', Router.current().params.doc_slug

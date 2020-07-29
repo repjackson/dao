@@ -1,13 +1,26 @@
+template(name='requests')
+    .ui.stackable.padded.grid 
+        .row
+            .sixteen.wide.column
+                .ui.header 
+                    +icon name='sell'
+                    |requests
+                .ui.stackable.cards
+                    each requests
+                        +request_card
+
+
 template(name='request_card')
-    a.card(href="/request/#{_id}/view")
+    .card.pointer.request_card
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/request/#{_id}/view")
+            .ui.header
                 |#{title}
                 if complete
                     i.green.checkmark.icon
             |#{description}
+        .content
             |by 
             if _author.profile_image_id
                 img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -27,7 +40,8 @@ template(name='request_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a(href="/m/request" title='requests')
+                    a.ui.circular.button(href="/m/request" title='requests')
+                        i.chevron.left.icon
                         +icolor name='request-service' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
                     .ui.center.aligned.header 

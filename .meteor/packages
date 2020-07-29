@@ -38,3 +38,5 @@ dburles:collection-helpers
 mrgalaxy:stripe
 froala:editor-reactive@=2.4.2
 lookback:emails
+perak:codemirror
+reywood:publish-composite

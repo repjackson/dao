@@ -24,29 +24,29 @@ template(name='home')
         .centered.row
             .five.wide.column
                 // if can_debit
-                .ui.fluid.big.green.button.debit
+                .ui.fluid.green.button.debit
                     +icolor name='send' cl='ui mini inline image'
                     // i.debit.icon
                     |send points
                 // else
-                //     .ui.fluid.big.green.disabled.button
+                //     .ui.fluid.green.disabled.button
                 //         +icolor name='debit' cl='ui mini inline image'
                 //         // i.debit.icon
                 //         |send
             .five.wide.column
                 // if can_debit
-                .ui.fluid.big.teal.button.request
+                .ui.fluid.teal.button.request
                     // i.hand.holding.heart.icon
                     +icolor name='request-service' cl='ui mini inline image'
                     |request
             .five.wide.column
                 // if can_debit
-                .ui.fluid.big.teal.button.request
+                .ui.fluid.teal.button.request
                     // i.hand.holding.heart.icon
                     +icolor name='compass' cl='ui mini inline image'
                     |add explorer
                 // else
-                //     .ui.fluid.big.teal.disabled.button
+                //     .ui.fluid.teal.disabled.button
                 //         // i.hand.holding.heart.icon
                 //         +icolor name='request-service' cl='ui mini inline image'
                 //         |request
@@ -213,6 +213,6 @@ template(name='home')
                                     
                                     
 template(name='join_button')
-    .ui.fluid.big.green.button.join
+    .ui.fluid.green.button.join
         i.checkmark.icon
         |join
