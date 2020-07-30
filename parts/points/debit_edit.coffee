@@ -22,13 +22,9 @@ if Meteor.isClient
                     _id: debit.recipient_id
         members: ->
             debit = Docs.findOne Router.current().params.doc_id
-            if debit.recipient_ids
-                Meteor.users.find 
-                    levels: $in: ['member']
-                    _id: $ne: debit.recipient_id
-            else
-                Meteor.users.find 
-                    levels: $in: ['member']
+            Meteor.users.find 
+                levels: $in: ['member']
+                _id: $ne: Meteor.userId()
         # subtotal: ->
         #     debit = Docs.findOne Router.current().params.doc_id
         #     debit.amount*debit.recipient_ids.length
@@ -112,9 +108,10 @@ if Meteor.isClient
                 if result.value
                     Meteor.call 'send_debit', @_id, =>
                         Swal.fire(
-                            "#{@amount} sent",
-                            ''
-                            'success'
+                            title:"#{@amount} sent"
+                            icon:'success'
+                            showConfirmButton: false
+                            timer: 1500
                         )
                         Router.go "/debit/#{@_id}/view"
             )

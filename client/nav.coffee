@@ -3,10 +3,10 @@ Template.nav.onCreated ->
     # @autorun => Meteor.subscribe 'all_users'
 
 Template.nav.onRendered ->
-    Meteor.setTimeout ->
-        $('.menu .item')
-            .popup()
-    , 1000
+    # Meteor.setTimeout ->
+    #     $('.menu .item')
+    #         .popup()
+    # , 1000
 
 Template.nav.events
     'click .toggle_admin': ->

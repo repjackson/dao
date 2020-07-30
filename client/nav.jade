@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.inverted.large.menu.topnav
+    .ui.fluid.attached.borderless.inverted.menu.topnav
         a.item(href="/" class="{{isActivePath 'home'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             // i.large.tree.icon
@@ -12,9 +12,9 @@ template(name='nav')
             //     +icolor name='calendar'
             //     // i.large.calendar.icon
             //     span.mobile.hidden events
-            a.item(href="/events" class="{{isActiveRoute 'events'}}" title='requests')
-                // i.large.hand.holding.heart.icon
-                +icolor name='calendar'
+            a.icon.item(href="/events" class="{{isActiveRoute 'events'}}" title='events')
+                i.large.calendar.icon
+                // +icolor name='calendar'
                 span.mobile.hidden
                     |&nbsp;
                     |events
@@ -27,9 +27,9 @@ template(name='nav')
             // a.item.set_product(href="/m/product" class="{{isActiveRoute 'shop'}}" title='shop')
             //     // i.large.shop.icon
             //     +icolor name='shop'
-            a.item.set_discussion(href="/feed" class="{{isActiveRoute 'feed'}}" title='discussions')
-                // i.large.shop.icon
-                +icolor name='news'
+            a.item.set_discussion(href="/feed" class="{{isActiveRoute 'feed'}}" title='feed')
+                i.large.blog.icon
+                // +icolor name='news'
                 span.mobile.hidden
                     &nbsp;
                     |feed
@@ -44,8 +44,8 @@ template(name='nav')
             //     +icolor name='request-service'
             //     span.mobile.hidden requests
             a.item(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
-                // i.large.hand.holding.heart.icon
-                +icolor name='request-service'
+                i.large.hand.holding.heart.icon
+                // +icolor name='request-service'
                 span.mobile.hidden 
                     &nbsp;
                     |requests
@@ -73,8 +73,8 @@ template(name='nav')
             // a.item.add_request(class="{{isActivePath regex='request_edit'}}" title='request')
             //     i.large.hand.holding.heart.icon
             //     span.mobile.hidden request
-            a.icon.item.add(href="/add" title='add') 
-                i.plus.large.icon
+            // a.icon.item.add(href="/add" title='add') 
+            //     i.plus.large.icon
             a.icon.item(href="/chat" title='chat') 
                 i.chat.large.icon
             if is_in_admin

@@ -22,14 +22,15 @@ template(name='debit_edit')
                         unless recipient
                             .ui.divider
                             i.large.user.plus.icon
-                            .ui.icon.input
-                                i.search.icon
-                                input.search_username(type='text' placeholder='username')
+                            // .ui.icon.input
+                            //     i.search.icon
+                            //     input.search_username(type='text' placeholder='username')
                             each members
-                                .ui.basic.small.compact.button.add_recipient
+                                .ui.compact.basic.circular.button.add_recipient
                                     // i.plus.icon
                                     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                    |#{username}
+                                    |#{name}
+                                    small #{points}p
                                     
                 .six.wide.column
                     +textarea_edit key='description' label='description' direct=true
@@ -37,7 +38,7 @@ template(name='debit_edit')
                     div 
                     div
                     .ui.inline.header
-                        i.tags.icon
+                        i.tags.red.icon
                         |tags
                     .ui.input
                         input.new_element(type='text' placeholder='+' autocomplete="off")

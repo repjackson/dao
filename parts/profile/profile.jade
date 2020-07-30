@@ -13,12 +13,11 @@ template(name='profile_layout')
                 div
                 a.ui.grey.header.refresh_user_stats(href="/user/#{username}") 
                     |@#{username}
-                .ui.header #{calculated_user_balance}
+                .ui.inline.header #{points}pts
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
-                div
                 if is_admin
-                    .ui.small.header #{_id}
+                    .ui.small.inline.header #{_id}
                     a.ui.large.icon.circular.button(href="/user/#{username}/edit" title='admin edit account')
                         i.shield.large.icon
                 if is_current_user
@@ -26,7 +25,8 @@ template(name='profile_layout')
                         +icon name='settings' cl='ui inline pointer image'
                         
                     a.profile_nav_item.logout(href="#" title='log out')
-                        +icon name='shutdown--v1' cl='ui inline pointer image'
+                        +icon name='exit-sign' cl='ui inline pointer image'
+                        // +icon name='shutdown--v1' cl='ui inline pointer image'
                 // .ui.header #{points}pts
                 
                 // unless is_current_user
@@ -60,9 +60,9 @@ template(name='profile_layout')
                         .ui.teal.circular.disabled.button(title='request points')
                             i.hand.holding.heart.large.icon
                             span request
-                if is_tech_admin
-                    .ui.button.switch_to_one
-                        |switch to one
+                // if is_tech_admin
+                //     .ui.button.switch_to_one
+                //         |switch to one
 
 
             .twelve.wide.column
@@ -89,8 +89,8 @@ template(name='profile_layout')
                 //     span.mobile.hidden sent
                 a.profile_nav_item(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
                     +icolor name='calendar' cl='ui inline spaced image pointer'
-                a.profile_nav_item(href="/user/#{username}/stats" class="{{isActivePath 'user_stats'}}" title="#{user.username} stats")
-                    +icolor name='line-chart' cl='ui inline spaced image pointer'
+                // a.profile_nav_item(href="/user/#{username}/stats" class="{{isActivePath 'user_stats'}}" title="#{user.username} stats")
+                //     +icolor name='line-chart' cl='ui inline spaced image pointer'
                 a.profile_nav_item(href="/user/#{username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
                     +icolor name='request-service' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
@@ -101,10 +101,10 @@ template(name='profile_layout')
                 // a.ui.circular.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
                 //     i.big.chat.blue.icon
                 //     span.mobile.hidden chat
-                a(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}" title="#{user.username} friends")
-                    +icolor name='groups' cl='ui inline spaced image pointer'
-                a(href="/user/#{username}/badges" class="{{isActivePath 'user_badges'}}" title="#{user.username} badges")
-                    +icolor name='prize' cl='ui inline spaced image pointer'
+                // a(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}" title="#{user.username} friends")
+                //     +icolor name='groups' cl='ui inline spaced image pointer'
+                // a(href="/user/#{username}/badges" class="{{isActivePath 'user_badges'}}" title="#{user.username} badges")
+                //     +icolor name='prize' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
                 //     i.big.users.icon
                 //     span.mobile.hidden friends
