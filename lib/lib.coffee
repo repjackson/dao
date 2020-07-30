@@ -53,8 +53,10 @@ Meteor.users.helpers
     first_five_tags: ->
         if @tags
             @tags[..5]
-    has_points: ->
-        @points > 0
+    has_points: -> @points > 0
+    is_tech_admin: ->
+        @_id in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
+
 
 
 

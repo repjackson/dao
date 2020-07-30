@@ -46,6 +46,13 @@ Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
 #     if parent
 #         parent["#{@key}"]
 
+Template.registerHelper 'i_have_points', () ->
+    if Meteor.user().username is 'one'
+        true
+    else
+        Meteor.user().points > 0
+
+
 Template.registerHelper 'is_admin', () ->
     # Meteor.users.findOne username:Router.current().params.username
     if Meteor.user() and Meteor.user().roles

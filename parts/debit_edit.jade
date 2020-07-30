@@ -51,7 +51,7 @@ template(name='debit_edit')
                 .five.wide.column
                     .ui.big.header #{amount}pts
                     .ui.big.input
-                        input(type='number' value=amount)
+                        input.point_amount(type='number' value=amount min='1' max=point_max)
                     div
                     +key_value_edit key='amount' value=1
                     +key_value_edit key='amount' value=5

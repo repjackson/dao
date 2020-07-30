@@ -29,10 +29,10 @@ template(name='profile_layout')
                         +icon name='shutdown--v1' cl='ui inline pointer image'
                 // .ui.header #{points}pts
                 
-                unless is_current_user
-                    if currentUser
-                        // div
-                        +user_friend_button 
+                // unless is_current_user
+                //     if currentUser
+                //         // div
+                //         +user_friend_button 
                 // a.ui.big.icon.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
                 //     i.dashboard.large.icon
                 //     // |dashboard
@@ -46,12 +46,24 @@ template(name='profile_layout')
                     span(title="spirit animal #{spirit_animal}")
                         +icolor name=spirit_animal cl='ui inline image'
                 unless is_current_user
-                    .ui.green.circular.button.send(title='send points')
-                        i.send.large.icon
-                        span.mobile.hidden send
-                    .ui.teal.circular.button.request(title='request points')
-                        i.hand.holding.heart.large.icon
-                        span.mobile.hidden request
+                    if i_have_points
+                        .ui.green.circular.button.send(title='send points')
+                            i.send.large.icon
+                            span.mobile.hidden send
+                        .ui.teal.circular.button.request(title='request points')
+                            i.hand.holding.heart.large.icon
+                            span.mobile.hidden request
+                    else
+                        .ui.green.circular.disabled.button(title='send points')
+                            i.send.large.icon
+                            span.mobile.hidden send
+                        .ui.teal.circular.disabled.button(title='request points')
+                            i.hand.holding.heart.large.icon
+                            span.mobile.hidden request
+                if is_tech_admin
+                    .ui.button.switch_to_one
+                        |switch to one
+
 
             .twelve.wide.column
                 a.profile_nav_item(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")

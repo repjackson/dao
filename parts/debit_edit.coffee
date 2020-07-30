@@ -33,6 +33,12 @@ if Meteor.isClient
         #     debit = Docs.findOne Router.current().params.doc_id
         #     debit.amount*debit.recipient_ids.length
         
+        point_max: ->
+            if Meteor.user().username is 'one'
+                1000
+            else 
+                Meteor.user().points
+        
         can_submit: ->
             debit = Docs.findOne Router.current().params.doc_id
             debit.amount and debit.recipient_id
@@ -73,6 +79,11 @@ if Meteor.isClient
                 $set:"#{@key}":val
     
     
+        'blur .point_amount': (e,t)->
+            # console.log @
+            val = parseInt t.$('.point_amount').val()
+            Docs.update Router.current().params.doc_id,
+                $set:amount:val
 
 
 if Meteor.isClient

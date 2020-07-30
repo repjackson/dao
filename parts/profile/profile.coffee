@@ -36,6 +36,7 @@ if Meteor.isClient
             new_debit_id =
                 Docs.insert
                     model:'debit'
+                    amount:1
                     recipient_id: user._id
             Router.go "/debit/#{new_debit_id}/edit"
 
@@ -58,6 +59,7 @@ if Meteor.isClient
                 Docs.insert
                     model:'request'
                     recipient_id: @_id
+                    amount:1
             Router.go "/request/#{new_id}/edit"
     
         # 'click .recalc_user_cloud': ->
