@@ -22,6 +22,13 @@ template(name='home')
                             
         //                     // Located alongside Boulder Creek, this rare and historic property provides eclectic Boulder vibes and local collective services for weddings, special occasions, and community events.
         .centered.row
+            .sixteen.wide.column
+                each members 
+                    if profile_image_id
+                        a(href="/user/#{username}")
+                            img.ui.tiny.pointer.circular.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+
+        .centered.row
             .five.wide.column
                 // if can_debit
                 .ui.fluid.green.button.debit

@@ -37,22 +37,6 @@ body {
     z-index: -100 !important;
 }
 
-@media screen and (max-width: 1024px) { /* Specific to this particular image */
-  /*.bg_overlay {*/
-  /*  left: 50%;*/
-    margin-left: -512px;   /* 50% 
-  }
-}
-
-
-.result_segment {
-    border-radius: 10px !important;
-}
-.result_segment:hover {
-    /* background-color: green !important; */
-    transition: all .25s ease;
-    box-shadow: 0 0 3px grey !important;
-}
 
 #iron-router-progress.spinner:before {
 	border-color : green;

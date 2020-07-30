@@ -75,7 +75,8 @@ if Meteor.isClient
         debits: ->
             Docs.find
                 model:'debit'
-
+        members: ->
+            Meteor.users.find()
     Template.home.events
         'click .refresh_stats': ->
             Meteor.call 'calc_global_stats'

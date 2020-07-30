@@ -42,7 +42,8 @@ template(name='debit_view')
                         i.clock.icon
                         | #{when}
                 .eight.wide.column
-                    +textarea_view key='description' label='description' direct=true
+                    .f12
+                        |#{description}
                     +image_view key='image_id' label='image' direct=true
                     div 
                     if tags

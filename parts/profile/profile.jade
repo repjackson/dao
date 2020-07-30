@@ -49,17 +49,17 @@ template(name='profile_layout')
                     if i_have_points
                         .ui.green.circular.button.send(title='send points')
                             i.send.large.icon
-                            span.mobile.hidden send
+                            span send
                         .ui.teal.circular.button.request(title='request points')
                             i.hand.holding.heart.large.icon
-                            span.mobile.hidden request
+                            span request
                     else
                         .ui.green.circular.disabled.button(title='send points')
                             i.send.large.icon
-                            span.mobile.hidden send
+                            span send
                         .ui.teal.circular.disabled.button(title='request points')
                             i.hand.holding.heart.large.icon
-                            span.mobile.hidden request
+                            span request
                 if is_tech_admin
                     .ui.button.switch_to_one
                         |switch to one
