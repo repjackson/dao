@@ -7,7 +7,7 @@ if Meteor.isClient
 
     Template.user_credits.onCreated ->
         @autorun => Meteor.subscribe 'user_credits', Router.current().params.username
-        @autorun => Meteor.subscribe 'model_docs', 'credit'
+        @autorun => Meteor.subscribe 'model_docs', 'debit'
 
     Template.user_credits.events
         # 'keyup .new_credit': (e,t)->
@@ -23,6 +23,15 @@ if Meteor.isClient
 
 
     Template.user_credits_small.helpers
+        user_credits: ->
+            target_user = Meteor.users.findOne({username:Router.current().params.username})
+            Docs.find {
+                model:'debit'
+                recipient_id: target_user._id
+            },
+                sort:_timestamp:-1
+
+    Template.user_credits.helpers
         user_credits: ->
             target_user = Meteor.users.findOne({username:Router.current().params.username})
             Docs.find {

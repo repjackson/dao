@@ -5,10 +5,11 @@ if Meteor.isClient
         ), name:'home'
 
     Template.home.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'debit'
+        @autorun => Meteor.subscribe 'latest_debits'
+        
         @autorun => Meteor.subscribe 'model_docs', 'offer'
         @autorun => Meteor.subscribe 'model_docs', 'shift'
-        @autorun => Meteor.subscribe 'model_docs', 'product'
+        # @autorun => Meteor.subscribe 'model_docs', 'product'
         @autorun => Meteor.subscribe 'model_docs', 'event'
         @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         @autorun => Meteor.subscribe 'all_users'
@@ -76,7 +77,8 @@ if Meteor.isClient
             Docs.find
                 model:'debit'
         members: ->
-            Meteor.users.find()
+            Meteor.users.find({},
+                sort:points:1)
     Template.home.events
         'click .refresh_stats': ->
             Meteor.call 'calc_global_stats'
