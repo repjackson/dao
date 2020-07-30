@@ -9,6 +9,9 @@ if Meteor.isClient
         @render 'events'
         ), name:'events'
         
+        
+        
+        
     # Router.route '/e/:doc_slug/', (->
     #     @layout 'layout'
     #     @render 'event_view'
@@ -46,6 +49,15 @@ if Meteor.isClient
     Template.events.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'event'
         
+    Template.events.events
+        'click .add_event': ->
+            new_id = 
+                Docs.insert 
+                    model:'event'
+                    published:false
+            Router.go "/event/#{new_id}/edit"
+            
+            
     Template.events.helpers
         events: ->
             # console.log moment().format()
@@ -73,7 +85,7 @@ if Meteor.isClient
             pub_key = Meteor.settings.public.stripe_live_publishable
         Template.instance().checkout = StripeCheckout.configure(
             key: pub_key
-            image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/wc_logo.png'
+            image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/one_logo.png'
             locale: 'auto'
             zipCode: true
             token: (token) =>

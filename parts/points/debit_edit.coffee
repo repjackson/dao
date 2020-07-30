@@ -49,7 +49,7 @@ if Meteor.isClient
                     recipient_id:1
         'keyup .new_element': (e,t)->
             if e.which is 13
-                element_val = t.$('.new_element').val().trim()
+                element_val = t.$('.new_element').val().toLowerCase().trim()
                 Docs.update Router.current().params.doc_id,
                     $addToSet:tags:element_val
                 t.$('.new_element').val('')
@@ -62,6 +62,22 @@ if Meteor.isClient
             t.$('.new_element').focus()
             t.$('.new_element').val(element)
     
+    
+        'click .result': (e,t)->
+            Meteor.call 'log_term', @title, ->
+            selected_tags.push @title
+            $('#search').val('')
+            Meteor.call 'call_wiki', @title, ->
+            Meteor.call 'calc_term', @title, ->
+            Meteor.call 'omega', @title, ->
+            Session.set('current_query', '')
+            Session.set('searching', false)
+    
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+            # Meteor.setTimeout ->
+            #     Session.set('dummy', !Session.get('dummy'))
+            # , 7000
+
     
         'blur .edit_description': (e,t)->
             textarea_val = t.$('.edit_textarea').val()

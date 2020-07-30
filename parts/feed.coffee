@@ -13,6 +13,12 @@ if Meteor.isClient
         
 
 
+    Template.post_segment.events
+        'click .view_post': ->
+            Router.go "/event/#{@_id}/view"
+        
+        
+        
     Template.feed.events
         'click .add_post': ->
             new_id = 

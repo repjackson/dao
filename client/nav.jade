@@ -1,8 +1,8 @@
 template(name='nav')
     .ui.fluid.attached.borderless.inverted.menu.topnav
         a.item(href="/" class="{{isActivePath 'home'}}")
-            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-            // i.large.tree.icon
+            // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            i.large.home.icon
         if currentUser
             // a.item.set_member(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             //     +icolor name='conference-call' cl='ui mini image'
@@ -27,11 +27,11 @@ template(name='nav')
             // a.item.set_product(href="/m/product" class="{{isActiveRoute 'shop'}}" title='shop')
             //     // i.large.shop.icon
             //     +icolor name='shop'
+            // if is_admin
             a.item.set_discussion(href="/feed" class="{{isActiveRoute 'feed'}}" title='feed')
                 i.large.blog.icon
                 // +icolor name='news'
                 span.mobile.hidden
-                    &nbsp;
                     |feed
             // a.item(href="/gifts" class="{{isActiveRoute 'gifts'}}" title='gifts')
             //     i.big.gift.icon
@@ -44,11 +44,15 @@ template(name='nav')
             //     +icolor name='request-service'
             //     span.mobile.hidden requests
             a.item(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
-                i.large.hand.holding.heart.icon
+                i.large.concierge.bell.icon
                 // +icolor name='request-service'
                 span.mobile.hidden 
-                    &nbsp;
                     |requests
+            a.item(href="/bugs" class="{{isActiveRoute 'bugs'}}" title='bugs')
+                i.large.bug.icon
+                // +icolor name='request-service'
+                span.mobile.hidden 
+                    |bugs
             // a.item.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}" title='badges')
             //     // i.large.hand.holding.heart.icon
             //     +icolor name='prize'

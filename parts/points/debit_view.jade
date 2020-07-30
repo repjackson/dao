@@ -5,33 +5,30 @@ template(name='debit_item')
 
 
 
-
-
 template(name='debit_view')
     with current_doc
         .ui.stackable.padded.grid
             .centered.row 
                 .five.wide.column
                     a(href="/user/#{_author.username}") 
-                        .ui.segment
+                        .ui.center.aligned.segment
                             .ui.header 
                                 +icon name='donate'
                                 |sender
-                            img.ui.small.rounded.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.rounded.centered.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             .ui.header 
                                 |#{_author.username}
                 .five.wide.column
                     a(href="/user/#{recipient.username}")
-                        .ui.segment
+                        .ui.center.aligned.segment
                             .ui.header
                                 +icon name='receive-cash'
                                 |recipient
-                            
-                            img.ui.small.rounded.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.rounded.centered.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             .ui.header
                                 |#{recipient.name}
                             
-            .row 
+            .row
                 .eight.wide.column
                     if is_dev
                         +remove_button

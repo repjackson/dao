@@ -30,9 +30,9 @@ template(name='home')
         .centered.row
             .five.wide.column
                 // if can_debit
-                .ui.fluid.green.large.compact.button.debit
-                    +icolor name='gift' cl='ui mini inline image'
-                    // i.debit.icon
+                .ui.fluid.basic.big.compact.button.debit
+                    // +icolor name='gift' cl='ui mini inline image'
+                    i.gift.icon
                     |send points
                 // else
                 //     .ui.fluid.green.disabled.button
@@ -41,9 +41,9 @@ template(name='home')
                 //         |send
             .five.wide.column
                 // if can_debit
-                .ui.fluid.teal.large.compact.button.request
-                    // i.hand.holding.heart.icon
-                    +icolor name='request-service' cl='ui mini inline image'
+                .ui.fluid.basic.big.compact.button.request
+                    i.concierge.bell.icon
+                    // +icolor name='request-service' cl='ui mini inline image'
                     |request
             // .five.wide.column
             //     // if can_debit
@@ -120,8 +120,8 @@ template(name='home')
             //                         .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    // i.calendar.icon
-                    +icolor name='calendar' cl='ui image'
+                    i.calendar.icon
+                    // +icolor name='calendar' cl='ui image'
                     |next events
                 // if is_admin 
                 //     i.circular.plus.icon.add_event
@@ -138,16 +138,19 @@ template(name='home')
                                     if _author.profile_image_id
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                                     | #{_author_username}
-                                .meta #{when}
+                                // .meta #{when}
                                 .description 
                                     |#{going_user_ids.length} going
+                                    each attendees
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                        |#{name}
                                 //     |#{description}
-                                each tags 
-                                    .ui.tiny.basic.circular.label #{this}
+                                // each tags 
+                                //     .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    // i.debit.icon
-                    +icolor name='gift' cl='ui image'
+                    i.gift.icon
+                    // +icolor name='gift' cl='ui image'
                     |latest gifts
                 .medscroll
                     each latest_debits
@@ -169,8 +172,8 @@ template(name='home')
                                     .ui.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    // i.debit.icon
-                    +icolor name='chat' cl='ui image'
+                    i.chat.icon
+                    // +icolor name='chat' cl='ui image'
                     |latest discussions
                     
                 .ui.small.grey.header anouncements
@@ -196,8 +199,8 @@ template(name='home')
                     //                 .ui.tiny.basic.circular.label #{this}
             .four.wide.column
                 .ui.center.aligned.header
-                    // i.hand.holding.heart.icon
-                    +icolor name='request-service' cl='ui image'
+                    i.concierge.bell.icon
+                    // +icolor name='request-service' cl='ui image'
                     |latest requests
                 .smallscrol
                     .ui.selection.link.list

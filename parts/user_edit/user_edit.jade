@@ -44,6 +44,8 @@ template(name='user_edit_layout')
                         // | privacy
                     a(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
                         +icolorlg name='badge' cl='ui inline tiny spaced image pointer'
+                    a(href="/user/#{current_user.username}/edit/alterego" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
+                        +icolorlg name='anonymous' cl='ui inline tiny spaced image pointer'
                     // a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
                     //     i.shield.icon 
                         // | membership
@@ -53,8 +55,12 @@ template(name='user_edit_layout')
 template(name='user_edit_info')
     .ui.one.column.stackable.grid
         .column
-            a.ui.small.inline.header(href="https://genekeys.com/" target='_window') gene keys site
-            +image_edit key='genekeys_profile' label='gene keys pdf' icon='dna-helix' direct=true
+            +text_edit key='spirit_animal' label='spirit animal' direct=true
+            if spirit_animal
+                +icolor name=spirit_animal
+
+            // a.ui.small.inline.header(href="https://genekeys.com/" target='_window') gene keys site
+            // +image_edit key='genekeys_profile' label='gene keys pdf' icon='dna-helix' direct=true
             .spacer
             +text_edit key='city' label='city' icon='city' direct=true
             .spacer
@@ -66,17 +72,16 @@ template(name='user_edit_info')
             .spacer
             +textarea_edit key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
             .spacer
-            +text_edit key='spirit_animal' label='spirit animal' direct=true
-            if spirit_animal
-                +icolor name=spirit_animal
-            .spacer
             +textarea_edit key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
             .spacer
             +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
             .spacer
-            +textarea_edit key='emergency_contact_name' label='emergency contact name' icon='emergency' direct=true
+            .ui.divider
+            +array_edit key='pet_peeves' label='pet peeves' icon='annoyance' direct=true
             .spacer
-            +textarea_edit key='emergency_contact_number' label='emergency contact number' icon='emergency' direct=true
+            +textarea_edit key='emergency_contact_name' label='emergency contact name' icon='alert' direct=true
+            .spacer
+            +textarea_edit key='emergency_contact_number' label='emergency contact number' icon='alert' direct=true
      
 template(name='phone_editor')
     .ui.small.header    

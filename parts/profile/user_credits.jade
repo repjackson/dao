@@ -2,9 +2,9 @@ template(name='user_credits')
     .ui.header 
         i.minus.icon
         |earned
-    .ui.link.list.scrolling
+    .scrolling
         each user_credits
-            .item
+            .ui.segment
                 if author.profile_image_id
                     img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 strong #{amount}pt 

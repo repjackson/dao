@@ -7,7 +7,7 @@ body {
     /* line-height: 200% !important; */
     /* background: rgba(0,0,0,.8) !important; */
     scroll-behavior: smooth;
-    background: rgba(225,225,225,.01) !important;
+    background: rgba(250,250,250,1) !important;
     /* filter: invert(1) !important; */
     /* overscroll-behavior: none; */
     transition: all 1s ease !important;
@@ -33,7 +33,7 @@ body {
     position: fixed;
     top: 0 !important;
     left: 0 !important;
-    opacity: .1 !important;
+    opacity: .08 !important;
     z-index: -100 !important;
 }
 
@@ -49,7 +49,7 @@ body {
 
 .segment:not(.raw) {
   transition: height 1s linear;
-  border-radius: 10px !important;
+  /*border-radius: 10px !important;*/
 }
 
 .topnav.menu {
@@ -95,7 +95,7 @@ body {
 }
 
 .result_column {
-  animation: fadein .25s;
+  animation: fadein .5s;
 }
 
 @media screen and (max-width: 1100px) {
@@ -478,7 +478,7 @@ body {
 
 
 .button, .selector, .card, .dark_mode, .header, i, .icon, .item{
-    animation: fadein .25s !important;
+    animation: fadein .5s !important;
     -webkit-transition: opacity .25s ease-in !important;
     /* -webkit-transition: opacity .25s ease-out; */
     /* animation: fadeout .25s; */
@@ -510,10 +510,10 @@ body {
     /* font-family: 'Montserrat', sans-serif !important; */
     /* font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Lato+Mono', sans-serif !important; */
-    font-family: 'Ubuntu', sans-serif !important;
+    /*font-family: 'Ubuntu', sans-serif !important;*/
 }
 .segment, .input, .header, .button {
-  animation: fadein .25s;
+  animation: fadein .5s;
 }
 
 @keyframes fadein {
@@ -522,7 +522,7 @@ body {
 }
 
 .result_column {
-  /* animation: fadein .25s; */
+  /* animation: fadein .5s; */
 }
 
 @media screen and (max-width: 1100px) {
