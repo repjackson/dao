@@ -45,12 +45,13 @@ template(name='profile_layout')
                 if spirit_animal
                     span(title="spirit animal #{spirit_animal}")
                         +icolor name=spirit_animal cl='ui inline image'
-                .ui.green.circular.icon.button.send(title='send points')
-                    i.send.large.icon
-                    // span.mobile.hidden send
-                .ui.teal.circular.icon.button.request(title='request points')
-                    i.hand.holding.heart.large.icon
-                    // span.mobile.hidden request
+                unless is_current_user
+                    .ui.green.circular.button.send(title='send points')
+                        i.send.large.icon
+                        span.mobile.hidden send
+                    .ui.teal.circular.button.request(title='request points')
+                        i.hand.holding.heart.large.icon
+                        span.mobile.hidden request
 
             .twelve.wide.column
                 a.profile_nav_item(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
@@ -69,7 +70,7 @@ template(name='profile_layout')
                 // a.ui.circular.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
                 //     i.big.donate.green.icon
                 //     span.mobile.hidden credits
-                a.profile_nav_item(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
+                a.profile_nav_item(href="/user/#{username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
                     +icolor name='donate' cl='ui inline spaced image pointer'
                 // a.ui.circular.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
                 //     i.big.send.teal.icon

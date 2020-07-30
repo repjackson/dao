@@ -66,7 +66,7 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "r d"
 	callback: ->
-        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
+        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c']
             if Meteor.user().roles and 'dev' in Meteor.user().roles
                 Meteor.users.update Meteor.userId(), $pull:roles:'dev'
             else

@@ -13,6 +13,15 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_event_tickets', Router.current().params.username
         @autorun -> Meteor.subscribe 'model_docs', 'event'
         
+    Template.user_dashboard.events
+        'click .user_credit_segment': ->
+            Router.go "/debit/#{@_id}/view"
+            
+        'click .user_debit_segment': ->
+            Router.go "/debit/#{@_id}/view"
+            
+            
+            
     Template.user_dashboard.helpers
         user_debits: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)

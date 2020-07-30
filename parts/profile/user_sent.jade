@@ -2,17 +2,17 @@ template(name='user_sent')
     .ui.header 
         i.send.icon
         |sent
-    .ui.link.list.scrolling
+    .scrolling
         each sent_items
-            .item
-                if target.profile_image_id
-                    img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            .ui.segment
+                if recipient.profile_image_id
+                    img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 strong #{amount}pt
                 |to
-                a(href="/user/#{target.username}")
-                    |#{target.username}
+                a(href="/user/#{recipient.username}")
+                    |#{recipient.username}
                 .content
-                    a(href="/gift/#{_id}/view")
+                    a(href="/debit/#{_id}/view")
                         |#{when} 
                     .description
                         |#{description}

@@ -3,7 +3,7 @@ template(name='user_dashboard')
     // .ui.hidden.divider
     .ui.stackable.four.column.grid
         .column
-            .ui.inline.header 
+            a.ui.inline.header(href="/user/#{username}/credits")
                 +icon name='deposit'
                 |#{total_credit_amount}p
                 |received
@@ -11,25 +11,19 @@ template(name='user_dashboard')
                     | ##{global_credit_count_rank}
             .scrolling
                 each user_credits
-                    .ui.segment
-                        if author.profile_image_id
-                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        .content
-                            .header
-                                strong #{amount}pt 
-                                |from 
-                                a(href="/user/#{author.username}")
-                                    |#{author.username}
-                            .description
-                                a(href="/debit/#{_id}/view")
-                                    |#{when}
-                        .content
-                            .description
-                                |#{description}
-                                each tags
-                                    .ui.mini.basic.label #{this}
+                    .ui.segment.user_credit_segment.pointer
+                        .header
+                            strong #{amount}pt 
+                            |from 
+                            if author.profile_image_id
+                                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{author.username}
+                            |#{when}
+                        |#{description}
+                        each tags
+                            .ui.mini.basic.label #{this}
         .column
-            .ui.inline.spaced.header 
+            a.ui.inline.spaced.header(href="/user/#{username}/debits")
                 +icolor name='filled-sent' 
                 |#{total_send_amount}p
                 |sent
@@ -38,22 +32,17 @@ template(name='user_dashboard')
             div
             .scrolling
                 each user_debits
-                    .ui.segment
-                        a(href="/debit/#{_id}/view")
+                    .ui.segment.user_debit_segment.pointer
+                        .header
+                            strong #{amount}pt
+                            |#{when}
+                            | to 
                             if recipient.profile_image_id
                                 img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            .header
-                                strong #{amount}pt
-                                |#{when}
-                                | to 
-                                a(href="/user/#{recipient.username}")
-                                    |#{recipient.username}
-                            .description
-                                |#{description}
-                                each tags
-                                    .ui.mini.label #{this}
-                                if is_admin
-                                    +remove_button
+                            |#{recipient.username}
+                        |#{description}
+                        each tags
+                            .ui.mini.label #{this}
         .column
             .ui.header 
                 // i.hand.holding.heart.icon

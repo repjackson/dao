@@ -48,9 +48,11 @@ if Meteor.isClient
         
     Template.events.helpers
         events: ->
+            # console.log moment().format()
             Docs.find {
                 model:'event'
                 published:true
+                start_datetime:$lt:moment().format()
             }, 
                 sort:start_datetime:-1
     

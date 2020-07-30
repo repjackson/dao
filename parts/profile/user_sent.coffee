@@ -3,6 +3,10 @@ if Meteor.isClient
         @layout 'profile_layout'
         @render 'user_sent'
         ), name:'user_sent'
+    Router.route '/user/:username/debits', (->
+        @layout 'profile_layout'
+        @render 'user_sent'
+        ), name:'user_debits'
 
     Template.user_sent.onCreated ->
         @autorun -> Meteor.subscribe 'user_model_docs', 'debit', Router.current().params.username

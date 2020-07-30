@@ -259,7 +259,12 @@ a.goto_article {
     filter: drop-shadow(1px 1px 4px grey);    
 }
 
-
+.pointer:active {
+  box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
+}
+.menu > a.item :active {
+  box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
+}
 a.title, #title {
     color: black !important;
 }
