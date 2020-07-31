@@ -132,7 +132,7 @@ template(name='badge_edit')
                         +icolor name='badger'
                         |badgers
                     each badgers
-                        a.ui.button(href="/user/#{username}") 
+                        a.ui.compact.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
                         i.remove.link.icon.remove_badger
@@ -147,7 +147,7 @@ template(name='badge_edit')
                         +honey_badger
                         |honey badgers
                     each honey_badgers
-                        a.ui.button(href="/user/#{username}") 
+                        a.ui.compact.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
                         i.remove.link.icon.remove_honey_badger

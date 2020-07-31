@@ -3,7 +3,7 @@ template(name='feed')
         .row
             .four.wide.column
                 .ui.inline.header 
-                    +icon name='news'
+                    i.blog.icon
                     |feed
                 .ui.icon.button.add_post 
                     i.plus.icon
@@ -35,19 +35,15 @@ template(name='post_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a(href="/feed")
-                        +icolor name='news' cl='ui image inline pointer'
-                    .ui.small.inline.header(title='viewing post')
-                        +icolor name='paper'
-                        // i.calendar.icon
-                        // |view post
+                    a.ui.icon.button(href="/feed")
+                        i.large.blog.icon
                     .ui.large.inline.header #{title}
                     // div
                     // .ui.inline.grey.header {{from_now start_datetime}}
                     
                     if can_edit
-                        a.edit_post(href="/m/post/#{_id}/edit" title='edit')
-                            i.large.blue.link.pencil.icon
+                        a.ui.icon.button.edit_post(href="/m/post/#{_id}/edit" title='edit')
+                            i.large.pencil.icon
 
             .row 
                 .four.wide.column
@@ -65,14 +61,13 @@ template(name='post_view')
                         .item #{views} views
                     each viewers
                         .ui.label #{username
-                    .ui.hidden.divider
+                    +array_view key='tags' label='tags' direct=true
                 .twelve.wide.column
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     .ui.segment
                         |!{content}
                     div 
-                    +array_view key='tags' label='tags' direct=true
                     .spacer
                     .spacer
                     +comments

@@ -15,7 +15,7 @@ if Meteor.isClient
 
     Template.post_segment.events
         'click .view_post': ->
-            Router.go "/event/#{@_id}/view"
+            Router.go "/post/#{@_id}/view"
         
         
         

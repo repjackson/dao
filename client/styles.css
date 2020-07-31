@@ -146,6 +146,10 @@ body {
     color: grey !important;
 }
 
+[data-f-id="pbf"] {
+  display:none !important;
+}
+
 .home {
     /* min-height:100% !important; */
     margin-bottom: 0 !important;
