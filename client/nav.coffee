@@ -3,12 +3,21 @@ Template.nav.onCreated ->
     # @autorun => Meteor.subscribe 'all_users'
 
 Template.nav.onRendered ->
-    # Meteor.setTimeout ->
-    #     $('.menu .item')
-    #         .popup()
-    # , 1000
+    Meteor.setTimeout ->
+        $('.menu .item')
+            .popup()
+        $('.ui.sidebar')
+        .sidebar({
+            context: $('.bottom.segment')
+        })
+        .sidebar('attach events', '.toggle_sidebar')
+    , 1000
 
 Template.nav.events
+    # 'click .toggle_sidebar': ->
+    #     $('.ui.sidebar')
+    #         .sidebar('setting', 'transition', 'overlay')
+    #         .sidebar('toggle')
     'click .toggle_admin': ->
         if 'admin' in Meteor.user().roles
             Meteor.users.update Meteor.userId(),

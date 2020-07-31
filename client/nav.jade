@@ -1,5 +1,7 @@
 template(name='nav')
     .ui.fluid.attached.borderless.inverted.menu.topnav
+        a.icon.item.toggle_sidebar(href="/" class="{{isActivePath 'home'}}")
+            i.large.bars.icon
         a.icon.item(href="/" class="{{isActivePath 'home'}}")
             // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             i.large.home.icon
@@ -73,7 +75,7 @@ template(name='nav')
             //     +icolor name='marker'
             if is_admin
                 a.icon.item(href="/m/model" class="{{isActivePath regex='model'}}" title='models')
-                    +icolor name='database'
+                    i.database.icon
         .right.menu
             // a.item.add_gift(class="{{isActivePath regex='gift_edit'}}" title='gift')
             //     i.large.gift.icon

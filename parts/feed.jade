@@ -7,13 +7,6 @@ template(name='feed')
                     |feed
                 .ui.icon.button.add_post 
                     i.plus.icon
-                .ui.header 
-                    i.grey.users.icon
-                    |members
-                each members 
-                    if profile_image_id
-                        a(href="/user/#{username}")
-                            img.ui.tiny.pointer.inline.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             .twelve.wide.column
                 // .ui.segment
                 //     .ui.big.fluid.input

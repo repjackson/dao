@@ -31,6 +31,9 @@ head
         gtag('js', new Date());
         gtag('config', 'UA-156965333-1');
 
+body
+
+
 template(name='layout')
     // img.bg_overlay(src="{{c.url 'nightbg' width=1000 height=1000 crop='crop'}}")
     // .uni
@@ -38,8 +41,12 @@ template(name='layout')
     if currentUser
         +nav
     // #main_area.scrolling.global_container
-    #main_area.global_container
-        +yield
+    .ui.bottom.attached.pushable.segment
+        .ui.sidebar.inverted.vertical.menu
+            .item hi
+        // #main_area.global_container
+        .pusher
+            +yield
     
     
     
