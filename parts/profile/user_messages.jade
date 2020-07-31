@@ -6,7 +6,7 @@ template(name='user_messages')
         .ui.fluid.icon.big.input
             i.plus.link.submit_message
             input.new_message(type='text' placeholder='new message...')
-    .ui.small.segments
+    .ui.small.basic.segments
         each user_messages
             .ui.segment.raw
                 .ui.small.inline.header #{body}

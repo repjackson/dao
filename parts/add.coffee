@@ -32,7 +32,7 @@ if Meteor.isClient
             new_id = 
                 Docs.insert 
                     model:'gift'
-            Router.go "/gift/#{new_id}/edit"
+            Router.go "/debit/#{new_id}/edit"
             
         'click .add_product': ->
             new_id = 

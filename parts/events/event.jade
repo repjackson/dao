@@ -27,15 +27,12 @@ template(name='event_card')
                 i.marker.icon 
                 |#{location}
             .ui.inline.header #{_author_username}
-            // +icolor name='event-accepted' cl='ui mini image' data=this
             |#{going_user_ids.length}
             each going
                 |#{username}
-            // +icolor name='event-accepted-tentatively' cl='ui mini image' data=this
             | #{maybe_user_ids.length}
             each maybe_going
                 |#{username}
-            // +icolor name='event-declined' cl='ui mini image' data=this
             | #{not_user_ids.length}
             each not_going
                 | #{username}
@@ -106,18 +103,15 @@ template(name='event_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     .ui.inline.large.header 
-                        // i.cart.icon
-                        // +icolor name='buy'
                         |RSVP
                     if tickets_left
                         .ui.grey.small.inline.header #{tickets_left} available
                         div
-                    .ui.input
+                    .ui.big.fluid.action.left.icon.input
+                        i.dollar.icon
                         input(type='number' min=usd_price value=usd_price)
-                    .ui.big.green.fluid.button.buy_for_usd
-                        // |buy for 
-                        // +icolor name='money' cl='ui inline image'
-                        |$#{usd_price}
+                        .ui.green.icon.button.buy_for_usd
+                            i.checkmark.large.icon
                     if currentUser
                         .ui.horizontal.divider or
                         if currentUser.has_points
@@ -131,7 +125,9 @@ template(name='event_view')
                                 // |buy for 
                                 |#{point_price}pts
                     if currentUser
+                        .spacer
                         +attendance
+                        .spacer
                         .ui.dividing.header 
                             // +icolor name='activity-history' cl='ui inline image'
                             |#{event_tickets.count} purchased tickets
@@ -201,8 +197,7 @@ template(name='gcal_button')
         
         
 template(name='attendance')
-    .ui.inline.header 
-        +icolor name='checkmark'
+    .ui.inline.green.header 
         |#{ticket.length} going
     .ui.inline.small.grey.header ticket required
     // .ui.icon.button.pick_going 
@@ -212,7 +207,7 @@ template(name='attendance')
     //         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
     //         |#{username}
     
-    .ui.yellow.header.pointer.pick_maybe
+    .ui.orange.header.pointer.pick_maybe
         // if currentUser
         //     +icolor name='clock' cl='pick_maybe pointer'
         // else
@@ -224,7 +219,7 @@ template(name='attendance')
         a.ui.button(href="/user/#{username}")    
             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{username}
-    .ui.header.pointer.pick_not
+    .ui.red.header.pointer.pick_not
         // if currentUser
         //     +icolor name='cancel' cl='pick_not pointer'
         // else

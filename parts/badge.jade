@@ -29,10 +29,7 @@ template(name='badges')
 template(name='badge_card')
     a.card(href="/badge/#{_id}/view")
         .image
-            if icon 
-                +icolorlg name=icon
-            else
-                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             a.ui.header(href="/badge/#{_id}/view")
                 |#{title}

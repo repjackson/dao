@@ -35,19 +35,15 @@ template(name='bug_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a(href="/bugs")
-                        i.link.bug.icon
-                    .ui.small.inline.header(title='viewing bug')
-                        +icolor name='paper'
-                        // i.calendar.icon
-                        // |view bug
+                    a.ui.basic.icon.button(href="/bugs")
+                        i.large.bug.icon
                     .ui.large.inline.header #{title}
                     // div
                     // .ui.inline.grey.header {{from_now start_datetime}}
                     
                     if can_edit
-                        a.edit_bug(href="/m/bug/#{_id}/edit" title='edit')
-                            i.large.blue.link.pencil.icon
+                        a.ui.icon.button.edit_bug(href="/m/bug/#{_id}/edit" title='edit')
+                            i.large.pencil.icon
 
             .row 
                 .four.wide.column
@@ -89,18 +85,14 @@ template(name='bug_edit')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
-                .four.wide.center.aligned.column
+                .four.wide.column
                     a.ui.icon.green.big.button(href="/m/bug/#{_id}/view" title='save')
                         i.checkmark.big.icon
-                .eight.wide.center.aligned.column
-                    .ui.header 
+                    .ui.inline.header 
                         +icolor name='news' cl='ui image inline pointer'
                         |edit bug
-                .four.wide.center.aligned.column
                     .ui.icon.button.delete_item(title='delete')
                         i.large.remove.icon
-            .row
-                .four.wide.column
                     .ui.header 
                         small author
                         |#{_author.username}

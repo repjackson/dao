@@ -24,7 +24,7 @@ if Meteor.isClient
             new_id = 
                 Docs.insert 
                     model:'bug'
-            Router.go "/bug/#{new_id}/edit"
+            Router.go "/m/bug/#{new_id}/edit"
             
     Template.bugs.helpers
         bugs: ->

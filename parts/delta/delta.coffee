@@ -310,7 +310,7 @@ if Meteor.isClient
             # else if model.slug is 'gift'
             #     new_doc_id = Docs.insert
             #         model:model.slug
-            #     Router.go "/gift/#{new_doc_id}/edit"
+            #     Router.go "/debit/#{new_doc_id}/edit"
             else if model.slug is 'model'
                 new_doc_id = Docs.insert
                     model:'model'

@@ -211,7 +211,14 @@ if Meteor.isClient
                 icon: 'question'
                 showCancelButton: true,
                 confirmButtonText: 'confirm'
-                confirmButtonColor: 'green'
+                confirmButtonColor: 'orange'
+                # grow:'fullscreen'
+                showClass:
+                    popup: 'swal2-noanimation',
+                    backdrop: 'swal2-noanimation'
+                hideClass:
+                    popup: '',
+                    backdrop: ''
                 showCancelButton: true
                 cancelButtonText: 'cancel'
                 reverseButtons: true
@@ -234,7 +241,7 @@ if Meteor.isClient
                 icon: 'error'
                 showCancelButton: true,
                 confirmButtonText: 'confirm'
-                confirmButtonColor: 'green'
+                confirmButtonColor: 'red'
                 showCancelButton: true
                 cancelButtonText: 'cancel'
                 reverseButtons: true

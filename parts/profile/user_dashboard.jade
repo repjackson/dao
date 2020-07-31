@@ -4,7 +4,7 @@ template(name='user_dashboard')
     .ui.stackable.four.column.grid
         .column
             a.ui.inline.header(href="/user/#{username}/credits")
-                +icon name='deposit'
+                i.chevron.down.large.icon
                 |#{total_credit_amount}p
                 |received
                 .ui.basic.label #{credit_count} credits
@@ -18,13 +18,13 @@ template(name='user_dashboard')
                             if author.profile_image_id
                                 img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{author.username}
-                            |#{when}
+                        small #{when}
+                        div
                         |#{description}
                         each tags
                             .ui.mini.basic.label #{this}
         .column
             a.ui.inline.spaced.header(href="/user/#{username}/debits")
-                +icolor name='filled-sent' 
                 i.chevron.up.icon
                 |#{total_send_amount}p
                 |sent
