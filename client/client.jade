@@ -42,8 +42,53 @@ template(name='layout')
         +nav
     // #main_area.scrolling.global_container
     .ui.bottom.attached.pushable.segment
-        .ui.sidebar.inverted.vertical.menu
-            .item hi
+        .ui.sidebar.inverted.vertical.thin.menu
+            a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
+                img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+                |One
+            a.item.toggle_sidebar(href="/feed" class="{{isActiveRoute 'feed'}}")
+                i.blog.icon
+                // +icolor name='news'
+                |feed
+            // a.item.toggle_sidebar(href="/gifts" class="{{isActiveRoute 'gifts'}}")
+            //     i.big.gift.icon
+                // span gifts
+            // a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
+            
+            
+            // a.item.toggle_sidebar.set_request(href="/m/request")
+            //     // i.hand.holding.heart.icon
+            //     +icolor name='request-service'
+            //     span requests
+            a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
+                i.concierge.bell.icon
+                // +icolor name='request-service'
+                |requests
+            a.item.toggle_sidebar(href="/bugs" class="{{isActiveRoute 'bugs'}}")
+                i.bug.icon
+                // +icolor name='request-service'
+                |bugs
+            a.item.toggle_sidebar(href="/badges" class="{{isActivePath 'badges'}}")
+                i.certificate.icon
+                | badges
+                // +icolor name='prize'
+            a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
+                i.tasks.icon
+                span projects
+            // a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
+            //     // i.hand.holding.heart.icon
+            //     +icolor name='key-exchange'
+            //     // span projects
+            // a.icon.item.set_location(href="/m/location" class="{{isActivePath regex='locations'}}")
+            //     +icolor name='marker'
+            if is_admin
+                a.icon.item(href="/m/model" class="{{isActivePath regex='model'}}")
+                    |admin
+                    i.database.icon
+            a.icon.item.mobile.hidden(href="/chat" title='chat') 
+                |chat
+                i.chat.icon
+                
         // #main_area.global_container
         .pusher
             +yield
