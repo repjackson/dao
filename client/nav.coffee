@@ -4,13 +4,20 @@ Template.nav.onCreated ->
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
-        $('.menu .item')
-            .popup()
-        $('.ui.sidebar')
-        .sidebar({
-            context: $('.bottom.segment')
-        })
-        .sidebar('attach events', '.toggle_sidebar')
+        # $('.menu .item')
+        #     .popup()
+        $('.ui.left.sidebar')
+            .sidebar({
+                context: $('.bottom.segment')
+            })
+            .sidebar('attach events', '.toggle_sidebar')
+    , 1000
+    Meteor.setTimeout ->
+        $('.ui.right.sidebar')
+            .sidebar({
+                context: $('.bottom.segment')
+            })
+            .sidebar('attach events', '.profile_sidebar')
     , 1000
 
 Template.nav.events

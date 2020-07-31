@@ -1,6 +1,6 @@
 template(name='nav')
     .ui.fluid.attached.borderless.inverted.menu.topnav
-        a.icon.item.toggle_sidebar(href="/" class="{{isActivePath 'home'}}")
+        a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.icon.item(href="/" class="{{isActivePath 'home'}}")
             // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
@@ -93,7 +93,7 @@ template(name='nav')
                     else
                         i.shield.large.icon
             if currentUser
-                a.large.item.view_profile(href="/user/#{currentUser.username}" class="{{isActivePath regex='profile_layout'}}")
+                a.large.item.profile_sidebar(class="{{isActivePath regex='profile_layout'}}")
                     //- i.large.user.large.icon
                     if currentUser.profile_image_id
                         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
