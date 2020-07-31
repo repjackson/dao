@@ -9,6 +9,7 @@ Template.nav.onRendered ->
         $('.ui.left.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
+                transition:'overlay'
             })
             .sidebar('attach events', '.toggle_sidebar')
     , 1000
@@ -16,6 +17,7 @@ Template.nav.onRendered ->
         $('.ui.right.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
+                transition:'overlay'
             })
             .sidebar('attach events', '.profile_sidebar')
     , 1000

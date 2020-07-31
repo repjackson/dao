@@ -25,8 +25,12 @@ template(name='bugs')
                     
                     
 template(name='bug_segment')
-    .ui.fluid.segment.view_bug.pointer
-        a.ui.header(href="/m/bug/#{_id}/view") #{title}
+    .ui.fluid.segment
+        a.ui.header.view_bug.pointer(href="/m/bug/#{_id}/view") #{title}
+        |!{content}
+        each tags
+            .ui.label #{this}
+        +voting_full
         
         
 

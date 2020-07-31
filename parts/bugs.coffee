@@ -31,7 +31,9 @@ if Meteor.isClient
             ticket_count = 
                 Docs.find({ 
                     model:'bug'
-                })
+                }, 
+                    sort:points:-1
+                )
                 
                 
         members: ->

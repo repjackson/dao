@@ -7,7 +7,7 @@
 	# progressDelay : 100
 
 Template.body.events
-    'click a': ->
-        $('.global_container')
-        .transition('fade out', 250)
-        .transition('fade in', 250)
+    # 'click a': ->
+    #     $('.global_container')
+    #     .transition('fade out', 250)
+    #     .transition('fade in', 250)

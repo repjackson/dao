@@ -42,7 +42,7 @@ template(name='layout')
         +nav
     // #main_area.scrolling.global_container
     .ui.bottom.attached.pushable.segment
-        .ui.left.sidebar.inverted.vertical.thin.menu
+        .ui.left.sidebar.inverted.vertical.thin.borderless.menu
             a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
                 img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
                 |One
@@ -89,42 +89,50 @@ template(name='layout')
                 |chat
                 i.chat.icon
                 
-        .ui.right.sidebar.inverted.vertical.thin.menu
+        .ui.right.sidebar.inverted.vertical.thin.borderless.menu
             a.item.toggle_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
-            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-            |profile
-            a.item(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
+                img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+                |profile
+            a.item(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
                 | dashboard
                 i.dashboard.icon
             
-            a.item(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
+            a.item(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
                 | about
                 i.info.icon
-            a.item(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
+            a.item(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
                 | credits
                 i.chevron.down.icon
-            a.item(href="/user/#{username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
+            a.item(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
                 | sent
                 i.chevron.up.icon
-            a.item(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
+            a.item(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
                 | events
                 i.calendar.icon
-            // a(href="/user/#{username}/stats" class="{{isActivePath 'user_stats'}}" title="#{user.username} stats")
-            //     +icolor name='line-chart' cl='ui inline spaced image pointer'
-            a.item(href="/user/#{username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
+            a.item(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
+                | requests
                 i.concierge.bell.icon
-            // a.ui.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
-            //     i.calendar.orange.icon
-            //     span.mobile.hidden events
-            a.item(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+            a.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+                | chat
                 i.chat.icon
                 
-        // #main_area.global_container
-        .pusher
+        #main_area.global_container.pusher
             +yield
-    
-    
-    
+        // if currentUser
+        //     +bottom_nav
+
+
+template(name='bottom_nav')
+    .ui.bottom.fixed.borderless.inverted.menu
+        a.icon.item.toggle_sidebar
+            i.bars.icon
+        a.icon.item(href="/" class="{{isActivePath 'home'}}")
+            // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            i.home.icon
+        if currentUser
+            // a.item.set_member(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
+            //     +icolor name='conference-call' cl='ui mini image'
+            //     // i.users.icon
 
     
     
