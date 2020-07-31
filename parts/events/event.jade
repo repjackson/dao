@@ -6,7 +6,7 @@ template(name='events')
                     +icon name='calendar'
                     |events
                 if is_admin
-                    i.circular.plus.icon.add_event
+                    i.plus.icon.add_event
                 .ui.stackable.four.cards
                     each events
                         +event_card
@@ -24,18 +24,18 @@ template(name='event_card')
             .ui.small.grey.inline.header {{from_now start_datetime}}
         .content
             if location
-                i.red.marker.icon 
+                i.marker.icon 
                 |#{location}
             .ui.inline.header #{_author_username}
-            +icolor name='event-accepted' cl='ui mini image' data=this
+            // +icolor name='event-accepted' cl='ui mini image' data=this
             |#{going_user_ids.length}
             each going
                 |#{username}
-            +icolor name='event-accepted-tentatively' cl='ui mini image' data=this
+            // +icolor name='event-accepted-tentatively' cl='ui mini image' data=this
             | #{maybe_user_ids.length}
             each maybe_going
                 |#{username}
-            +icolor name='event-declined' cl='ui mini image' data=this
+            // +icolor name='event-declined' cl='ui mini image' data=this
             | #{not_user_ids.length}
             each not_going
                 | #{username}
@@ -50,9 +50,8 @@ template(name='event_view')
             .middle.aligned.row 
                 .sixteen.wide.column
                     if currentUser
-                        a.ui.compact.circular.button(href="/events")
-                            i.chevron.left.icon
-                            +icolor name='calendar' cl='ui inline image'
+                        a.ui.compact.icon.button(href="/events")
+                            i.calendar.big.icon
                     a.pointer(href="http://oneboulder.one" target="_window")
                         img.ui.inline.tiny.image(src="{{c.url 'one_logo' }}")
                 
@@ -63,11 +62,11 @@ template(name='event_view')
                     
                     if can_edit
                         a.edit_event(href="/event/#{_id}/edit" title='edit')
-                            i.large.blue.link.pencil.circular.icon
+                            i.large.blue.link.pencil.icon
             .row 
                 .four.wide.column
                     if location 
-                        i.large.red.marker.icon(title='location')
+                        i.large.marker.icon(title='location')
                         |#{location}
                     img.ui.fluid.rounded.image(src="{{c.url image_id }}")
                     if is_admin
@@ -115,26 +114,26 @@ template(name='event_view')
                         div
                     .ui.input
                         input(type='number' min=usd_price value=usd_price)
-                    .ui.big.circular.green.fluid.button.buy_for_usd
+                    .ui.big.green.fluid.button.buy_for_usd
                         // |buy for 
                         // +icolor name='money' cl='ui inline image'
                         |$#{usd_price}
                     if currentUser
                         .ui.horizontal.divider or
                         if currentUser.has_points
-                            .ui.big.circular.teal.fluid.button.buy_for_points
+                            .ui.big.teal.fluid.button.buy_for_points
                                 // i.cart.icon
                                 // |buy for 
                                 |#{point_price}pts
                         else
-                            .ui.big.circular.teal.disabled.fluid.button
+                            .ui.big.teal.disabled.fluid.button
                                 // i.cart.icon
                                 // |buy for 
                                 |#{point_price}pts
                     if currentUser
                         +attendance
                         .ui.dividing.header 
-                            +icolor name='activity-history' cl='ui inline image'
+                            // +icolor name='activity-history' cl='ui inline image'
                             |#{event_tickets.count} purchased tickets
                         .ui.large.link.selection.list
                             each event_tickets
@@ -147,8 +146,9 @@ template(name='event_view')
                                                 .ui.inline.header #{point_amount}pts
                                             
                                             |#{when} #{_author_username}
-                                        if can_edit 
-                                            +icolor name='return-purchase' cl='ui mini inline image return pointer'
+                                        // if can_edit 
+                                        //     i.
+                                        //     +icolor name='return-purchase' cl='ui mini inline image return pointer'
                                         if is_admin
                                             +remove_button
 
@@ -161,12 +161,12 @@ template(name='event_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .sixteeen.wide.column
-                    a.ui.circular.icon.green.big.button(href="/event/#{_id}/view" title='save')
+                    a.ui.icon.green.big.button(href="/event/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
                         +icolor name='tear-off-calendar'
                         |edit event
-                    .ui.red.circular.icon.button.delete_item(title='delete')
+                    .ui.icon.button.delete_item(title='delete')
                         i.large.remove.icon
             .row
                 .six.wide.column
@@ -179,7 +179,7 @@ template(name='event_edit')
                     +datetime_edit key='start_datetime' label='start' direct=true
                     +datetime_edit key='end_datetime' label='end' direct=true
                     .ui.header
-                        +icon name='audience'
+                        i.users.icon
                         |audience
                     +number_edit key='max_attendees' label='max attendees' min='0' max='100' direct=true
                     +number_edit key='point_price' label='points per ticket' min='0' max='100' direct=true
@@ -205,34 +205,34 @@ template(name='attendance')
         +icolor name='checkmark'
         |#{ticket.length} going
     .ui.inline.small.grey.header ticket required
-    // .ui.icon.circular.button.pick_going 
+    // .ui.icon.button.pick_going 
     //     i.green.checkmark.big.icon
     // each going 
-    //     a.ui.circular.button(href="/user/#{username}")    
+    //     a.ui.button(href="/user/#{username}")    
     //         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
     //         |#{username}
     
-    .ui.header 
-        if currentUser
-            +icolor name='clock' cl='pick_maybe pointer'
-        else
-            +icolor name='event-accepted-tentatively'
+    .ui.yellow.header.pointer.pick_maybe
+        // if currentUser
+        //     +icolor name='clock' cl='pick_maybe pointer'
+        // else
+        //     +icolor name='event-accepted-tentatively'
         |#{maybe_going.count} maybe
-    // .ui.icon.circular.button.pick_maybe 
+    // .ui.icon.button.pick_maybe 
     //     i.yellow.minus.big.icon
     each maybe_going
-        a.ui.circular.button(href="/user/#{username}")    
+        a.ui.button(href="/user/#{username}")    
             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{username}
-    .ui.header 
-        if currentUser
-            +icolor name='cancel' cl='pick_not pointer'
-        else
-            +icolor name='event-declined'
+    .ui.header.pointer.pick_not
+        // if currentUser
+        //     +icolor name='cancel' cl='pick_not pointer'
+        // else
+        //     +icolor name='event-declined'
         |#{not_going.count} not going
-    // .ui.circular.icon.button.pick_not
-        // i.red.big.ban.icon
+    // .ui.icon.button.pick_not
+        // i.big.ban.icon
     each not_going
-        a.ui.circular.button(href="/user/#{username}")    
+        a.ui.button(href="/user/#{username}")    
             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{username}

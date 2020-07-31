@@ -57,7 +57,7 @@ template(name='shift_template_view')
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit 
-                        a.ui.big.circular.blue.icon.button(href="/shift_template/#{_id}/edit" title='edit shift_template')
+                        a.ui.big.blue.icon.button(href="/shift_template/#{_id}/edit" title='edit shift_template')
                             i.pencil.large.icon
             .row 
                 .four.wide.column
@@ -90,7 +90,7 @@ template(name='shift_template_edit')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.big.circular.green.icon.button(href="/shift_template/#{_id}/view" title='save')
+                    a.ui.big.green.icon.button(href="/shift_template/#{_id}/view" title='save')
                         i.checkmark.big.icon
                         // |save
                 .eight.wide.center.aligned.column
@@ -99,7 +99,7 @@ template(name='shift_template_edit')
                         small edit shift template
                         |#{title}
                 .four.wide.center.aligned.column
-                    .ui.red.icon.circular.button.delete_item(title='delete shift_template')
+                    .ui.icon.button.delete_item(title='delete shift_template')
                         i.large.remove.icon
             .row 
                 .four.wide.column
@@ -124,12 +124,12 @@ template(name='shift_template_edit')
                         a.ui.big.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{username}
-                        i.circular.remove.link.icon.clear_default_leader
+                        i.remove.link.icon.clear_default_leader
                     unless default_shift_template_leader
                         .ui.segment
                             .ui.small.header select steward as default leader
                             each unselected_stewards
-                                .ui.basic.circular.button.select_default_leader
+                                .ui.basic.button.select_default_leader
                                     img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                     |#{name}
                     +number_edit key='default_leader_bounty' label='default leader bounty' direct=true

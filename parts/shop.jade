@@ -6,9 +6,9 @@ template(name='product_card')
         .content
             a.ui.header(href="/product/#{_id}/view") #{title}
             // |#{when}
-            .ui.circular.green.big.label
+            .ui.green.big.label
                 |$#{usd_price}
-            .ui.circular.teal.big.label 
+            .ui.teal.big.label 
                 |#{point_price}pts
 
 
@@ -27,7 +27,7 @@ template(name='product_view')
                     .ui.large.inline.header #{title}
                         
                     if can_edit
-                        a.ui.circular.icon.button.edit_product(href="/product/#{_id}/edit")
+                        a.ui.icon.button.edit_product(href="/product/#{_id}/edit")
                             i.large.pencil.icon
                             // |edit
                     .ui.header 
@@ -64,11 +64,11 @@ template(name='product_view')
                     .ui.header 
                         +icolor name='shopping-cart-loaded'
                         |buy
-                    .ui.big.circular.green.button.buy_for_usd
+                    .ui.big.green.button.buy_for_usd
                         // |buy for 
                         |$#{usd_price}
                     .ui.inline.header or
-                    .ui.big.circular.teal.button.buy
+                    .ui.big.teal.button.buy
                         // i.cart.icon
                         // |buy for 
                         |#{point_price}pts
@@ -109,14 +109,14 @@ template(name='product_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.circular.green.big.icon.button(href="/product/#{_id}/view")
+                    a.ui.green.big.icon.button(href="/product/#{_id}/view")
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icon name='product'
                         |edit product: #{title}
                 .four.wide.center.aligned.column
-                    .ui.circular.red.icon.button.delete_item
+                    .ui.icon.button.delete_item
                         i.large.remove.icon
             .row
                 .four.wide.column

@@ -1,6 +1,6 @@
 template(name='nav')
     .ui.fluid.attached.borderless.inverted.menu.topnav
-        a.item(href="/" class="{{isActivePath 'home'}}")
+        a.icon.item(href="/" class="{{isActivePath 'home'}}")
             // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             i.large.home.icon
         if currentUser
@@ -57,6 +57,10 @@ template(name='nav')
             //     // i.large.hand.holding.heart.icon
             //     +icolor name='prize'
             //     // span.mobile.hidden badges
+            a.item(href="/badges" class="{{isActivePath 'badges'}}" title='badges')
+                i.large.certificate.icon
+                // +icolor name='prize'
+                span.mobile.hidden badges
             // a.item.set_project(href="/m/project" class="{{isActivePath regex='projects'}}" title='projects')
             //     // i.large.hand.holding.heart.icon
             //     +icolor name='project'
@@ -94,8 +98,9 @@ template(name='nav')
                         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     else 
                         i.large.user.large.icon
-                    |#{currentUser.username}
-                    |#{currentUser.points}
+                    strong #{currentUser.username}
+                    small
+                        |#{currentUser.points}p
             else
                 // a.item(href="/register" title='register')
                 //     // |login

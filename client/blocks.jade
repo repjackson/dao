@@ -16,17 +16,17 @@ template(name='icon')
     //- img.ui.image(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl)
 
 template(name='user_button')
-    a.ui.circular.button(href="/user/#{username}")
+    a.ui.button(href="/user/#{username}")
         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
         |#{name}
 
 
 template(name='print_this')
-    .ui.icon.circular.basic.button.print_this
+    .ui.icon.basic.button.print_this
         i.orange.code.icon
 
 template(name='session_boolean_toggle')
-    .ui.circular.compact.button.toggle_session_key(class=calculated_class)
+    .ui.compact.button.toggle_session_key(class=calculated_class)
         +icolor name=icon classes='ui avatar image'
         |#{label}
         //- if icon_view 
@@ -335,9 +335,10 @@ template(name='voting_small')
     if points
         strong #{points}
     i.thumbs.up.link.icon.upvote(class=upvote_class)
+    |#{upvoter_ids.length}
     //- each upvoter_ids
     //-     +user_info
-    i.thumbs.down.link.icon.downvote(class=downvote_class)
+    // i.thumbs.down.link.icon.downvote(class=downvote_class)
     //- each downvoter_ids
     //-     +user_info
 
@@ -357,10 +358,10 @@ template(name='honey_badger')
 template(name='voting_full')
     //- .ui.inline.header 
     //-     |voting
-    .ui.large.icon.circular.basic.button.upvote(title='upvote')
+    .ui.large.icon.basic.button.upvote(title='upvote')
         i.thumbs.up.large.icon(class=upvote_class)
         //- |like
-    .ui.large.icon.circular.basic.button.downvote(title='downvote')
+    .ui.large.icon.basic.button.downvote(title='downvote')
         i.thumbs.down.large.icon(class=downvote_class)
         //- |dislike
     if points
@@ -377,7 +378,7 @@ template(name='voting_full')
     if downvoter_ids
         div
         .ui.small.grey.inline.header(title='downvoters')
-            i.thumbs.down.outline.red.icon
+            i.thumbs.down.outline.icon
             //- |downvoters
         each downvoter_ids
             +user_info
@@ -390,8 +391,8 @@ template(name='view_button')
 
 
 template(name='remove_button')
-    .ui.icon.circular.button.remove_doc(title='delete')
-        i.red.remove.icon
+    .ui.icon.button.remove_doc(title='delete')
+        i.remove.icon
         // |delete
 
 template(name='remove_icon')
@@ -479,7 +480,7 @@ template(name='user_string_toggle')
 
 
 template(name='key_value_edit')
-    .ui.compact.circular.button.set_key_value(class=set_key_value_class title=value)
+    .ui.compact.button.set_key_value(class=set_key_value_class title=value)
         if icon
             +icon name=icon cl='ui avatar image'
             //- i.icon(class=icon)

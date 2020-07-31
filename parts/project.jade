@@ -35,7 +35,7 @@ template(name='project_view')
             .row 
                 .four.wide.column
                     .ui.header
-                        i.marker.red.icon 
+                        i.marker.icon 
                         |#{location}
                     .ui.header 
                         small leader
@@ -65,7 +65,7 @@ template(name='project_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.green.big.icon.circular.button(href="/project/#{_id}/view" title='save')
+                    a.ui.green.big.icon.button(href="/project/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.inline.header 
@@ -73,7 +73,7 @@ template(name='project_edit')
                         small edit project
                         |#{title}
                 .four.wide.center.aligned.column
-                    i.link.big.red.remove.icon.delete_item(title='delete project')
+                    i.link.big.remove.icon.delete_item(title='delete project')
             .row 
                 .five.wide.column
                     +text_edit key='title' icon='header' direct=true

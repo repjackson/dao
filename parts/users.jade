@@ -31,7 +31,7 @@ template(name='user_cloud')
         .ui.compact.basic.button.select_level(class=cloud_tag_class) 
             strong #{this.name}
     div
-    i.tags.large.red.icon
+    i.tags.large.icon
     if selected_user_tags
         #clear_tags.ui.primary.icon.compact.button
             i.remove.icon
@@ -65,7 +65,7 @@ template(name='member_card')
             // span ##{global_credit_count_rank}
             .ui.small.inline.header #{points}pts
             each levels
-                .ui.circular.basic.small.label #{this}
+                .ui.basic.small.label #{this}
             // if is_admin
             //     each levels
             //         .ui.label #{this}

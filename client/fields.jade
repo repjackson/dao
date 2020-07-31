@@ -224,7 +224,7 @@ template(name='image_edit')
                 //- label Image
                 img.ui.large.centered.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}")
                 a#remove_photo.ui.right.corner.link.label
-                    i.remove.red.link.icon
+                    i.remove.link.icon
             else
                 if is_frontdesk
                     .upload-btn-wrapper            
@@ -714,7 +714,7 @@ template(name='child_view')
         //     .ui.header field template #{field_template}
         // else 
 
-        // .ui.red.segment
+        // .ui.segment
         //     +text_edit key='key'
         //     // +text_edit key='field'
         //     +single_doc_edit key='field' ref_model='field' ref_key='slug' label='Field Type'
@@ -761,7 +761,7 @@ template(name='boolean_edit')
         //-         |yes
         //- else
         //-     if false_icon
-        //-         i.large.red.icon(class=false_icon)
+        //-         i.large.icon(class=false_icon)
         //-     else
         //-         |no
 

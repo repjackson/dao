@@ -6,7 +6,7 @@ template(name='shift_card')
             a.ui.header(href="/shift/#{_id}/view")
                 |{{short_date date}}
                 |#{title}
-            i.marker.red.icon
+            i.marker.icon
             |#{location}
             .ui.list 
                 .item from {{from_now st.start_datetime}}
@@ -35,7 +35,7 @@ template(name='shift_view')
                         |{{short_date date}} #{title}
                 .four.wide.center.aligned.column
                     if can_edit 
-                        a.ui.big.circular.blue.icon.button(href="/shift/#{_id}/edit" title='edit shift instance')
+                        a.ui.big.blue.icon.button(href="/shift/#{_id}/edit" title='edit shift instance')
                             i.pencil.large.icon
             .row 
                 .four.wide.column
@@ -63,11 +63,11 @@ template(name='shift_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     unless has_joined
-                        .ui.green.large.fluid.compact.circular.button.join_shift
+                        .ui.green.large.fluid.compact.button.join_shift
                             +icon name='joining-queue' cl='ui inline image'
                             |join
                     else 
-                        .ui.orange.large.fluid.compact.circular.button.leave_shift
+                        .ui.orange.large.fluid.compact.button.leave_shift
                             +icon name='leaving-queue' cl='ui inline image'
                             |leave
                     .ui.header 
@@ -92,7 +92,7 @@ template(name='shift_edit')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.circular.green.icon.button(href="/shift/#{_id}/view" title='save')
+                    a.ui.green.icon.button(href="/shift/#{_id}/view" title='save')
                         i.checkmark.huge.icon
                         // |save
                 .eight.wide.center.aligned.column
@@ -101,7 +101,7 @@ template(name='shift_edit')
                         small edit shift instance
                         |#{title}
                 .four.wide.center.aligned.column
-                    .ui.red.icon.circular.button.delete_item(title='delete shift')
+                    .ui.icon.button.delete_item(title='delete shift')
                         i.large.remove.icon
             .row 
                 .four.wide.column
@@ -141,12 +141,12 @@ template(name='shift_edit')
                         a.ui.big.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
-                        i.circular.remove.link.icon.clear_leader
+                        i.remove.link.icon.clear_leader
                     unless shift_leader
                         .ui.segment
                             .ui.small.header select steward as leader
                             each unselected_stewards
-                                .ui.basic.circular.button.select_leader
+                                .ui.basic.button.select_leader
                                     img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                     |#{name}
                     +number_edit key='leader_bounty' label='leader bounty' direct=true

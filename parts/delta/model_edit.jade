@@ -10,21 +10,21 @@ template(name='model_edit_layout')
                     |created
                     +creation_info
                     div
-                    a.ui.big.icon.green.circular.button(href="/m/#{slug}")
+                    a.ui.big.icon.green.button(href="/m/#{slug}")
                         i.big.checkmark.icon
-                    #delete_model.ui.icon.circular.button
-                        i.trash.red.icon
+                    #delete_model.ui.icon.button
+                        i.trash.icon
                 .twelve.wide.column
-                    a.ui.compact.large.circular.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActivePath 'model_edit_dashboard'}}")
+                    a.ui.compact.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActivePath 'model_edit_dashboard'}}")
                         +icon name='dashboard' cl='ui avatar image'
                         |dashboard
-                    a.ui.compact.large.circular.basic.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActivePath 'model_edit_fields'}}")
+                    a.ui.compact.large.basic.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActivePath 'model_edit_fields'}}")
                         +icon name='list' cl='ui avatar image'
                         |fields
-                    a.ui.compact.large.circular.basic.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActivePath 'model_edit_modules'}}")
+                    a.ui.compact.large.basic.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActivePath 'model_edit_modules'}}")
                         +icon name='module' cl='ui avatar image'
                         |modules
-                    a.ui.compact.large.circular.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActivePath 'model_edit_permissions'}}")
+                    a.ui.compact.large.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActivePath 'model_edit_permissions'}}")
                         +icon name='shield' cl='ui avatar image'
                         |permissions
                     +yield

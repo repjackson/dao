@@ -16,7 +16,15 @@ if Meteor.isClient
         @layout 'layout'
         @render 'badge_view'
         ), name:'badge_view'
+        
+    Router.route '/badges', (->
+        @layout 'layout'
+        @render 'badges'
+        ), name:'badges'
 
+    Template.badges.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'badge'
+   
     Template.badge_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'all_users'
@@ -35,6 +43,11 @@ if Meteor.isClient
                     Router.go "/badge/#{@_id}/view"
 
 
+    Template.badges.helpers
+        badges: ->
+            Docs.find   
+                model:'badge'
+    
     Template.badge_view.helpers
     Template.badge_view.events
     

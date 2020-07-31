@@ -13,7 +13,7 @@ template(name='debit_view')
                     a(href="/user/#{_author.username}") 
                         .ui.center.aligned.segment
                             .ui.header 
-                                +icon name='donate'
+                                i.chevron.up.icon
                                 |sender
                             img.ui.rounded.centered.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             .ui.header 
@@ -22,7 +22,7 @@ template(name='debit_view')
                     a(href="/user/#{recipient.username}")
                         .ui.center.aligned.segment
                             .ui.header
-                                +icon name='receive-cash'
+                                i.chevron.down.icon
                                 |recipient
                             img.ui.rounded.centered.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             .ui.header

@@ -28,7 +28,7 @@ template(name='discussion_view')
                     
                     if can_edit
                         a.edit_discussion(href="/discussion/#{_id}/edit" title='edit')
-                            i.large.blue.link.pencil.circular.icon
+                            i.large.blue.link.pencil.icon
 
             .row 
                 .four.wide.column
@@ -70,14 +70,14 @@ template(name='discussion_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.circular.icon.green.big.button(href="/discussion/#{_id}/view" title='save')
+                    a.ui.icon.green.big.button(href="/discussion/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icolor name='speech-bubble-with-dots' cl='ui image inline pointer'
                         |edit discussion
                 .four.wide.center.aligned.column
-                    .ui.red.circular.icon.button.delete_item(title='delete')
+                    .ui.icon.button.delete_item(title='delete')
                         i.large.remove.icon
             .row
                 .four.wide.column

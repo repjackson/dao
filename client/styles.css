@@ -1,6 +1,6 @@
 body {
     /* font-family: 'Raleway', sans-serif !important; */
-    font-family: 'Ubuntu', sans-serif !important;
+    /*font-family: 'Ubuntu', sans-serif !important;*/
     /* font-family: 'Lato+Mono', sans-serif !important; */
     /* font-family: 'Lato', sans-serif !important; */
     /* font-size: 110% !important; */
@@ -82,11 +82,11 @@ body {
 
 .secnav::-webkit-scrollbar {
     height: 1px !important;
-  /* border-radius: 10px !important; */
+   /*border-radius: 10px !important; */
 }
 .topnav::-webkit-scrollbar {
     height: 1px !important;
-  /* border-radius: 10px !important; */
+   /*border-radius: 10px !important; */
 }
 
 @keyframes fadein {
@@ -118,7 +118,7 @@ body {
     z-index: 2000 !important;
 } */
 .menu:not(.topnav) {
-    /* border-radius: 10px !important; */
+     /*border-radius: 10px !important; */
     transition: background-color 3s ease !important;
 }
 
@@ -200,7 +200,7 @@ body {
 }
 
 .rounded {
-     border-radius: 10px !important; 
+     /*border-radius: 10px !important; */
 }
 
 .sadness {
@@ -210,7 +210,7 @@ body {
 
 .card {
     /* background: black !important; */
-     border-radius: 10px !important; 
+     /*border-radius: 10px !important; */
 }
 
 a.goto_article {
@@ -218,7 +218,7 @@ a.goto_article {
 }
 
 .ui.button:not(.circular) { 
-    border-radius: 10px !important;
+    /*border-radius: 10px !important;*/
 }
 .ui.button {
     margin: 2px !important;
@@ -231,18 +231,20 @@ a.goto_article {
 }
 /*  */
 .pointer:hover {
-    transition: all .25s ease !important; 
+    transition: all .5s ease !important; 
     cursor: pointer !important;
     /* color: black !important; */
     /* font-size: 130% !important; */
     /*zoom: 120% !important;*/
-    transform: scale(1.05) !important;
     /* padding-top: 5em !important; */
     /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
     /*text-shadow: 0 0 3px grey !important;*/
     filter: drop-shadow(1px 1px 4px grey);    
 }
 
+.zoom:hover {
+    transform: scale(1.05) !important;
+}
 .pointer:active {
   box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
 }
@@ -386,12 +388,12 @@ a.title, #title {
 
 .label {
     margin: 2px !important;
-    border-radius: 10px !important; 
+    /*border-radius: 10px !important; */
 }
 
 input {
     margin: 5px !important;
-    border-radius: 10px !important; 
+    /*border-radius: 10px !important; */
 }
 
 ::-webkit-scrollbar {

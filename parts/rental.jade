@@ -10,7 +10,7 @@ template(name='rental_card')
             .ui.inline.header #{points_per_hour}pts/hour
         .content
             if location
-                i.red.marker.icon 
+                i.marker.icon 
                 |#{location}
         if is_admin 
             +print_this
@@ -22,7 +22,7 @@ template(name='rental_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.compact.circular.button(href="/m/rental")
+                    a.ui.compact.button(href="/m/rental")
                         i.chevron.left.icon
                         +icolor name='calendar' cl='ui inline image'
                     .ui.small.inline.header(title='viewing rental')
@@ -33,12 +33,12 @@ template(name='rental_view')
                     // div
                     if can_edit
                         a.edit_rental(href="/m/rental/#{_id}/edit" title='edit')
-                            i.large.blue.link.pencil.circular.icon
+                            i.large.blue.link.pencil.icon
 
             .row 
                 .five.wide.column
                     if location 
-                        i.large.red.marker.icon(title='location')
+                        i.large.marker.icon(title='location')
                         |#{location}
                     each location_tags
                         .ui.basic.label #{this}
@@ -80,19 +80,19 @@ template(name='rental_view')
                         +icolor name='buy'
                         |reserve
                     div
-                    .ui.big.circular.green.fluid.button.reserve_for_usd
+                    .ui.big.green.fluid.button.reserve_for_usd
                         // |buy for 
                         // +icolor name='money' cl='ui inline image'
                         |$#{usd_price}
                     if currentUser
                         .ui.horizontal.divider or
                         if has_points
-                            .ui.big.circular.teal.flud.button.buy_for_points
+                            .ui.big.teal.flud.button.buy_for_points
                                 // i.cart.icon
                                 // |buy for 
                                 |#{point_price}pts
                         else
-                            .ui.big.circular.teal.disabled.fluid.button
+                            .ui.big.teal.disabled.fluid.button
                                 // i.cart.icon
                                 // |buy for 
                                 |#{point_price}pts
@@ -123,12 +123,12 @@ template(name='rental_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .sixteeen.wide.column
-                    a.ui.circular.icon.green.big.button(href="/rental/#{_id}/view" title='save')
+                    a.ui.icon.green.big.button(href="/rental/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
                         +icolor name='tear-off-calendar'
                         |edit rental
-                    .ui.red.circular.icon.button.delete_item(title='delete')
+                    .ui.icon.button.delete_item(title='delete')
                         i.large.remove.icon
             .three.column.row
                 .column

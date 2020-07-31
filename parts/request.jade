@@ -3,7 +3,7 @@ template(name='requests')
         .row
             .sixteen.wide.column
                 .ui.header 
-                    +icon name='sell'
+                    i.concierge.bell.icon
                     |requests
                 .ui.stackable.cards
                     each requests
@@ -25,7 +25,7 @@ template(name='request_card')
             if _author.profile_image_id
                 img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{_author.name}
-            .ui.big.basic.circular.label
+            .ui.big.basic.label
                 |#{point_bounty}pts
             .ui.small.inline.header status:#{status}
             if complete
@@ -39,25 +39,24 @@ template(name='request_view')
     with current_doc
         .ui.stackable.padded.grid
             .middle.aligned.row 
-                .four.wide.center.aligned.column
-                    a.ui.circular.button(href="/m/request" title='requests')
+                .sixteen.wide.column
+                    a.ui.button(href="/m/request" title='requests')
                         i.chevron.left.icon
-                        +icolor name='request-service' cl='ui inline image pointer'
-                .eight.wide.center.aligned.column
-                    .ui.center.aligned.header 
-                        +icon name='request-service'
-                        small viewing request: 
+                        i.concierge.bell.icon
+                    .ui.inline.header 
+                        // +icon name='request-service'
+                        small viewing request 
                         |#{title}
-                .four.wide.center.aligned.column
                     if can_edit
                         a.edit_request(href="/request/#{_id}/edit")
-                            i.big.blue.pencil.circular.icon
+                            i.large.blue.pencil.icon
             .row 
                 .four.wide.column
                     .ui.header
                         |#{point_bounty}pts offered
                     .ui.header
-                        +icon name='warranty'
+                        // +icon name='warranty'
+                        i.certificate.icon
                         |required badges
                     .ui.header 
                         small posted by
@@ -66,7 +65,7 @@ template(name='request_view')
                         |#{_author.username}
                     .ui.header #{when}
                     .ui.header
-                        +icon name='audience'
+                        i.users.icon
                         |audience
                 .eight.wide.column
                     .f13
@@ -77,7 +76,7 @@ template(name='request_view')
                             
                     +image_view key='image_id' label='image' direct=true
                     .spacer
-                    i.large.red.tags.icon
+                    i.large.tags.icon
                     each tags 
                         .ui.basic.large.label #{this}
                     .spacer
@@ -101,12 +100,12 @@ template(name='request_view')
                         if can_edit
                             div
                             unless complete
-                                .ui.big.basic.green.button.mark_complete
-                                    i.checkmark.icon
+                                .ui.big.basic.button.mark_complete
+                                    i.checkmark.green.icon
                                     |mark complete
                             else 
-                                .ui.big.orange.basic.button.mark_incomplete
-                                    i.undo.icon
+                                .ui.big.basic.button.mark_incomplete
+                                    i.undo.orange.icon
                                     |mark incomplete
                         if complete
                             .ui.segment
@@ -118,13 +117,13 @@ template(name='request_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.circular.icon.button(href="/request/#{_id}/view" title='save')
+                    a.ui.green.icon.button(href="/request/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
                         +icon name='request-service'
                         small edit request
                         |#{title}
-                    i.large.red.remove.circular.link.icon.delete_request(title='cancel')
+                    i.large.remove.link.icon.delete_request(title='cancel')
             .row 
                 .five.wide.column
                     .ui.header 

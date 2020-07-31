@@ -1,6 +1,6 @@
 template(name='user_about')
-    .ui.center.aligned.header 
-        i.info.blue.icon
+    .ui.header 
+        i.info.icon
         |user info
     with current_user
         a.ui.compact.button(href="{{c.url genekeys_profile }}" target="_window")
@@ -25,9 +25,9 @@ template(name='user_about')
                 .smallscroll
                     |#{profile_contribute_blurb}
         if tags 
-            i.blue.large.tags.icon
+            i.large.tags.icon
             each tags
-                .ui.basic.circular.large.label
+                .ui.basic.large.label
                     |#{this}
                 // +user_info_tag
         div

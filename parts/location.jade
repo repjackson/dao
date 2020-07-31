@@ -13,7 +13,7 @@ template(name='locations')
                 +icolor name='marker' 
                 |locations
             if is_admin
-                .ui.icon.circular.button.add_location
+                .ui.icon.button.add_location
                     i.plus.green.icon
                     // |add location
             .scrolling
@@ -48,7 +48,7 @@ template(name='location_view')
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit 
-                        a.ui.big.circular.blue.icon.button(href="/location/#{_id}/edit" title='edit location instance')
+                        a.ui.big.blue.icon.button(href="/location/#{_id}/edit" title='edit location instance')
                             i.pencil.large.icon
             .row 
                 .four.wide.column
@@ -95,7 +95,7 @@ template(name='location_edit')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.circular.green.icon.button(href="/location/#{_id}/view" title='save')
+                    a.ui.green.icon.button(href="/location/#{_id}/view" title='save')
                         i.checkmark.huge.icon
                         // |save
                 .eight.wide.center.aligned.column
@@ -104,7 +104,7 @@ template(name='location_edit')
                         |edit location
                     .ui.inline.header #{title}
                 .four.wide.center.aligned.column
-                    .ui.red.icon.circular.button.delete_item(title='delete location')
+                    .ui.icon.button.delete_item(title='delete location')
                         i.large.remove.icon
             .row 
                 .four.wide.column

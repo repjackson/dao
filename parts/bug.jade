@@ -5,7 +5,7 @@ template(name='bugs')
                 .ui.inline.header 
                     +icon name='bug'
                     |bugs
-                .ui.circular.icon.button.add_bug 
+                .ui.icon.button.add_bug 
                     i.plus.icon
                 // .ui.header 
                 //     i.grey.users.icon
@@ -13,7 +13,7 @@ template(name='bugs')
                 // each members 
                 //     if profile_image_id
                 //         a(href="/user/#{username}")
-                //             img.ui.tiny.pointer.circular.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //             img.ui.tiny.pointer.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             .twelve.wide.column
                 // .ui.segment
                 //     .ui.big.fluid.input
@@ -36,7 +36,7 @@ template(name='bug_view')
             .middle.aligned.row 
                 .sixteen.wide.column
                     a(href="/bugs")
-                        i.circular.link.bug.icon
+                        i.link.bug.icon
                     .ui.small.inline.header(title='viewing bug')
                         +icolor name='paper'
                         // i.calendar.icon
@@ -47,7 +47,7 @@ template(name='bug_view')
                     
                     if can_edit
                         a.edit_bug(href="/m/bug/#{_id}/edit" title='edit')
-                            i.large.blue.link.pencil.circular.icon
+                            i.large.blue.link.pencil.icon
 
             .row 
                 .four.wide.column
@@ -90,14 +90,14 @@ template(name='bug_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.circular.icon.green.big.button(href="/m/bug/#{_id}/view" title='save')
+                    a.ui.icon.green.big.button(href="/m/bug/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icolor name='news' cl='ui image inline pointer'
                         |edit bug
                 .four.wide.center.aligned.column
-                    .ui.red.circular.icon.button.delete_item(title='delete')
+                    .ui.icon.button.delete_item(title='delete')
                         i.large.remove.icon
             .row
                 .four.wide.column

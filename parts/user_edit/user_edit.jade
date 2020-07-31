@@ -9,14 +9,14 @@ template(name='user_edit_layout')
                         +i name='settings'
                         | #{current_user.name}
                     .ui.small.inline.header @#{current_user.username}
-                    img.ui.centered.small.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    img.ui.centered.small.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         
-                    a.ui.icon.big.green.circular.button(href="/user/#{current_user.username}/") 
+                    a.ui.icon.big.green.button(href="/user/#{current_user.username}/") 
                         i.checkmark.big.icon
                         // strong save
                     a(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
                         +icolorlg name='info' cl='ui inline tiny spaced image pointer'
-                    // a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
+                    // a.ui.big.icon.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
                     //     i.info.large.blue.icon 
                         // |info
                     a(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}" title='account') 
@@ -46,7 +46,7 @@ template(name='user_edit_layout')
                         +icolorlg name='badge' cl='ui inline tiny spaced image pointer'
                     a(href="/user/#{current_user.username}/edit/alterego" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
                         +icolorlg name='anonymous' cl='ui inline tiny spaced image pointer'
-                    // a.ui.big.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
+                    // a.ui.big.icon.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
                     //     i.shield.icon 
                         // | membership
                 .twelve.wide.column
@@ -151,7 +151,7 @@ template(name='emails_edit')
                             |verify
                             i.caret.right.icon
                     .ui.small.icon.basic.button.remove_email
-                        i.remove.red.icon
+                        i.remove.icon
     .ui.action.large.fluid.action.input
         input#new_email(type='email' placeholder='add new address' autocomplete="off")
         #add_email.ui.submit.compact.button 
@@ -179,7 +179,7 @@ template(name='user_edit_account')
             +password_edit
             if is_admin
                 with current_user
-                    .ui.red.button.remove_user 
+                    .ui.button.remove_user 
                         i.remove.icon
                         |delete user
         .column

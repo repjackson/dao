@@ -7,7 +7,7 @@ template(name='user_dashboard')
                 +icon name='deposit'
                 |#{total_credit_amount}p
                 |received
-                .ui.basic.circular.label #{credit_count} credits
+                .ui.basic.label #{credit_count} credits
                     | ##{global_credit_count_rank}
             .scrolling
                 each user_credits
@@ -25,10 +25,11 @@ template(name='user_dashboard')
         .column
             a.ui.inline.spaced.header(href="/user/#{username}/debits")
                 +icolor name='filled-sent' 
+                i.chevron.up.icon
                 |#{total_send_amount}p
                 |sent
                 small(title='send count') (#{send_count}x)
-                    .ui.circular.label ##{global_send_count_rank}
+                    .ui.label ##{global_send_count_rank}
             div
             .scrolling
                 each user_debits
@@ -45,8 +46,7 @@ template(name='user_dashboard')
                             .ui.mini.label #{this}
         .column
             .ui.header 
-                // i.hand.holding.heart.icon
-                +icolor name='request-service'
+                i.concierge.bell.icon
                 |requests
             .smallscroll
                 each user_requests
@@ -59,7 +59,7 @@ template(name='user_dashboard')
                                 |completed by #{completer.name}
         .column
             .ui.header 
-                +icolor name='calendar' cl='ui inline spaced image'
+                i.calendar.icon
                 |events
             .smallscroll
                 each user_event_tickets
