@@ -42,84 +42,95 @@ template(name='layout')
         +nav
     // #main_area.scrolling.global_container
     .ui.bottom.attached.pushable.segment
-        .ui.left.sidebar.inverted.vertical.thin.borderless.menu
-            a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
-                img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-                |One
-            a.item.toggle_sidebar(href="/feed" class="{{isActiveRoute 'feed'}}")
-                i.blog.icon
-                // +icolor name='news'
-                |feed
-            // a.item.toggle_sidebar(href="/gifts" class="{{isActiveRoute 'gifts'}}")
-            //     i.gift.icon
-                // span gifts
-            // a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
-            
-            
-            // a.item.toggle_sidebar.set_request(href="/m/request")
-            //     // i.hand.holding.heart.icon
-            //     +icolor name='request-service'
-            //     span requests
-            a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
-                i.concierge.bell.icon
-                // +icolor name='request-service'
-                |requests
-            a.item.toggle_sidebar(href="/bugs" class="{{isActiveRoute 'bugs'}}")
-                i.bug.icon
-                // +icolor name='request-service'
-                |bugs
-            a.item.toggle_sidebar(href="/badges" class="{{isActivePath 'badges'}}")
-                i.certificate.icon
-                | badges
-                // +icolor name='prize'
-            a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
-                i.tasks.icon
-                span projects
-            // a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
-            //     // i.hand.holding.heart.icon
-            //     +icolor name='key-exchange'
-            //     // span projects
-            // a.icon.item.set_location(href="/m/location" class="{{isActivePath regex='locations'}}")
-            //     +icolor name='marker'
-            if is_admin
-                a.icon.item(href="/m/model" class="{{isActivePath regex='model'}}")
-                    |admin
-                    i.database.icon
-            a.icon.item.mobile.hidden(href="/chat" title='chat') 
-                |chat
-                i.chat.icon
-                
-        .ui.right.sidebar.inverted.vertical.thin.borderless.menu
-            a.item.toggle_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
-                img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-                |profile
-            a.item(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
-                | dashboard
-                i.dashboard.icon
-            
-            a.item(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
-                | about
-                i.info.icon
-            a.item(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
-                | credits
-                i.chevron.down.icon
-            a.item(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
-                | sent
-                i.chevron.up.icon
-            a.item(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
-                | events
-                i.calendar.icon
-            a.item(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
-                | requests
-                i.concierge.bell.icon
-            a.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
-                | chat
-                i.chat.icon
+        +left_sidebar
+        +right_sidebar
                 
         #main_area.global_container.pusher
             +yield
         // if currentUser
         //     +bottom_nav
+
+
+template(name='right_sidebar')
+    .ui.right.sidebar.inverted.vertical.thin.borderless.menu
+        a.item.toggle_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
+            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            |profile
+        a.item(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
+            | dashboard
+            i.dashboard.icon
+        
+        a.item(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
+            | about
+            i.info.icon
+        a.item(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
+            | credits
+            i.chevron.down.icon
+        a.item(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
+            | sent
+            i.chevron.up.icon
+        a.item(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
+            | events
+            i.calendar.icon
+        a.item(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
+            | requests
+            i.concierge.bell.icon
+        a.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+            | chat
+            i.chat.icon
+
+
+
+template(name='left_sidebar')
+    .ui.left.sidebar.inverted.vertical.thin.borderless.menu
+        a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
+            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            |One
+        a.item.toggle_sidebar(href="/feed" class="{{isActiveRoute 'feed'}}")
+            i.blog.icon
+            // +icolor name='news'
+            |feed
+        // a.item.toggle_sidebar(href="/gifts" class="{{isActiveRoute 'gifts'}}")
+        //     i.gift.icon
+            // span gifts
+        // a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
+        
+        
+        // a.item.toggle_sidebar.set_request(href="/m/request")
+        //     // i.hand.holding.heart.icon
+        //     +icolor name='request-service'
+        //     span requests
+        a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
+            i.concierge.bell.icon
+            // +icolor name='request-service'
+            |requests
+        a.item.toggle_sidebar(href="/m/bug" class="{{isActiveRoute 'bugs'}}")
+            i.bug.icon
+            // +icolor name='request-service'
+            |bugs
+        a.item.toggle_sidebar(href="/m/badge" class="{{isActivePath 'badges'}}")
+            i.certificate.icon
+            | badges
+            // +icolor name='prize'
+        a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
+            i.tasks.icon
+            span projects
+        // a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
+        //     // i.hand.holding.heart.icon
+        //     +icolor name='key-exchange'
+        //     // span projects
+        // a.icon.item.set_location(href="/m/location" class="{{isActivePath regex='locations'}}")
+        //     +icolor name='marker'
+        if is_admin
+            a.icon.item(href="/m/model" class="{{isActivePath regex='model'}}")
+                |admin
+                i.database.icon
+        a.icon.item.mobile.hidden(href="/chat" title='chat') 
+            |chat
+            i.chat.icon
+            
+
+
 
 
 template(name='bottom_nav')

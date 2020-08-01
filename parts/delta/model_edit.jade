@@ -1,5 +1,10 @@
 template(name='model_edit_layout')
     +nav
+    .spacer
+    .spacer
+    .spacer
+    .spacer
+    .spacer
     with current_doc
         .ui.stackable.padded.grid            
             .centered.row
@@ -35,7 +40,7 @@ template(name='model_edit_dashboard')
     .ui.form
         +text_edit key='title' label='title' direct=true
         +slug_edit key='slug' label='slug' direct=true
-        +color_icon_edit key='color_icon' label='icons8 icon' direct=true
+        +icon_edit key='icon' label='icon' direct=true
         +textarea_edit key='description' label='description' direct=true
         +array_edit key='tags' label='tags' direct=true
         //- +text_edit key='collection' label='collection' direct=true
@@ -104,16 +109,16 @@ template(name='field_edit')
                 +text_edit key='title' label='label' direct=true
                 +slug_edit key='key' label='key' direct=true
                 +number_edit key='rank' label='rank' direct=true      
-                +color_icon_edit key='icon' label='color icon' direct=true       
+                +icon_edit key='icon' label='icon' direct=true       
                 //- +textarea_edit key='description' label='description' direct=true
                 .spacer
                 +text_edit key='field_type' label='field type' direct=true
-                +key_value_edit key='field_type' value='text' icon='text'
+                +key_value_edit key='field_type' value='text' icon='header'
                 +key_value_edit key='field_type' value='array' icon='list'
-                +key_value_edit key='field_type' value='boolean' icon='toggle-on'
+                +key_value_edit key='field_type' value='boolean' icon='toggle'
                 +key_value_edit key='field_type' value='number' icon='hashtag'
                 +key_value_edit key='field_type' value='float' icon='hashtag'
-                +key_value_edit key='field_type' value='textarea' icon='list'
+                +key_value_edit key='field_type' value='textarea' icon='content'
                 +key_value_edit key='field_type' value='image' icon='picture'
                 +key_value_edit key='field_type' value='date' icon='calendar'
                 +key_value_edit key='field_type' value='time' icon='clock'

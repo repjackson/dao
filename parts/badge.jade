@@ -59,7 +59,7 @@ template(name='badge_view')
                 .four.wide.center.aligned.column
                     if can_edit
                         a.pointer.edit_badge(href="/badge/#{_id}/edit")
-                            i.big.blue.pencil.big.icon
+                            i.big.pencil.big.icon
             .row 
                 .four.wide.column
                     .ui.header
@@ -86,7 +86,7 @@ template(name='badge_view')
                         +icon name='badger'
                         |badgers
                     each badgers
-                        a.ui.button(href="/user/#{username}") 
+                        a.ui.basic.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
         
@@ -94,7 +94,7 @@ template(name='badge_view')
                         +honey_badger
                         |honey badgers
                     each honey_badgers
-                        a.ui.button(href="/user/#{username}") 
+                        a.ui.basic.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
                     //- .ui.fluid.green.button.submit

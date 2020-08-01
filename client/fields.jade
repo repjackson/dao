@@ -97,7 +97,11 @@ template(name='icon_edit')
         //- i.large.icon(class=field_value)
         +icon name=field_value cl='ui inline image'
     .ui.right.icon.input
-        input.icon_val(type='text' value=field_value placeholder='icon8 class' autocomplete="off")
+        input.icon_val(type='text' value=field_value placeholder='fa class' autocomplete="off")
+    div
+    a(href="https://fomantic-ui.com/elements/icon.html" target='_window')
+        i.external.icon
+        |icons
 
 
 template(name='color_icon_view')
