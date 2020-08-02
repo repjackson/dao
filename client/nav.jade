@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.fluid.borderless.inverted.fixed.menu.topnav
+    .ui.fluid.borderless.inverted.fixed.menu.topnav(class=currentUser.nav_color)
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.icon.item(href="/" class="{{isActivePath 'home'}}")
@@ -29,7 +29,7 @@ template(name='nav')
             // +icolor name='request-service'
             |requests
         if is_admin
-            a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='models')
+            a.icon.blue.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='models')
                 i.database.icon
         .right.menu
             a.icon.item.toggle_top_sidebar(href="#")
@@ -68,7 +68,7 @@ template(name='nav')
 
 
 template(name='top_sidebar')
-    .ui.top.sidebar.inverted.vertical.large.borderless.menu
+    .ui.top.sidebar.inverted.vertical.large.borderless.menu(class=currentUser.nav_color)
         .spacer
         .spacer
         .spacer
@@ -78,7 +78,7 @@ template(name='top_sidebar')
         .item.header notifications
 
 template(name='right_sidebar')
-    .ui.right.sidebar.inverted.vertical.large.borderless.menu
+    .ui.right.sidebar.inverted.vertical.large.borderless.menu(class=currentUser.nav_color)
         a.item.profile_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             |profile
@@ -115,7 +115,7 @@ template(name='right_sidebar')
 
 
 template(name='left_sidebar')
-    .ui.left.sidebar.inverted.vertical.large.borderless.menu
+    .ui.left.sidebar.inverted.vertical.large.borderless.menu(class=currentUser.nav_color)
         a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             |One
@@ -144,11 +144,15 @@ template(name='left_sidebar')
         a.item.toggle_sidebar(href="/events" class="{{isActivePath regex='events'}}")
             i.calendar.icon
             |events
-        if is_admin
-            a.icon.item.set_model(href="/m/model" class="{{isActivePath regex='model'}}")
-                |admin
-                i.database.icon
         a.icon.item.mobile.hidden(href="/chat" title='chat') 
             |chat
             i.chat.icon
-            
+        if is_admin
+            .divider
+            a.icon.blue.item.set_model(href="/m/model" class="{{isActivePath regex='model'}}")
+                |admin
+                i.database.blue.icon
+            a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
+                i.blue.users.icon
+                | all users
+

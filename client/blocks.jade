@@ -489,7 +489,10 @@ template(name='user_key_value_edit')
     .ui.compact.button.set_key_value(class=set_key_value_class)
         if icon 
             i.icon(class=icon)
-        |#{label}
+        if label
+            |#{label}
+        else 
+            |#{value}
 
 
 template(name='session_key_value')

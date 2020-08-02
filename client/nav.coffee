@@ -9,9 +9,10 @@ Template.nav.onRendered ->
         $('.ui.left.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
-                transition:'push'
+                transition:'overlay'
                 exclusive:true
                 duration:250
+                scrollLock:true
             })
             .sidebar('attach events', '.toggle_sidebar')
     , 1000
@@ -19,9 +20,10 @@ Template.nav.onRendered ->
         $('.ui.right.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
-                transition:'push'
+                transition:'overlay'
                 exclusive:true
                 duration:250
+                scrollLock:true
             })
             .sidebar('attach events', '.profile_sidebar')
     , 1000
@@ -29,9 +31,10 @@ Template.nav.onRendered ->
         $('.ui.top.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
-                transition:'push'
+                transition:'overlay'
                 exclusive:true
                 duration:250
+                scrollLock:true
             })
             .sidebar('attach events', '.toggle_top_sidebar')
     , 1000

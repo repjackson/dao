@@ -25,10 +25,11 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe 'user_from_id', Router.current().params.user_id
 
     Template.user_edit_layout.onRendered ->
-        Meteor.setTimeout ->
-            $('.button').popup()
-        , 2000
+        # Meteor.setTimeout ->
+        #     $('.button').popup()
+        # , 2000
 
+    Template.registerHelper 'current_user', () -> Meteor.users.findOne username:Router.current().params.username
 
     # Template.phone_editor.helpers
     #     'newNumber': ->
@@ -99,8 +100,6 @@ if Meteor.isClient
 
 
     Template.emails_edit.helpers
-        current_user: ->
-            Meteor.users.findOne username:Router.current().params.username
 
     Template.emails_edit.events
         'click #add_email': ->

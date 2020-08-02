@@ -48,24 +48,26 @@ template(name='user_dashboard')
             .ui.header 
                 i.concierge.bell.icon
                 |requests
-            .smallscroll
+            .scrolling
                 each user_requests
-                    a(href="/request/#{_id}/view")
-                        .ui.segment
-                            .header #{point_bounty}pts: #{title}
-                            |#{description}
-                            |status: #{status}
-                            if complete 
-                                |completed by #{completer.name}
+                    .ui.segment
+                        a.header(href="/request/#{_id}/view")
+                            |#{point_bounty}pts: #{title}
+                        |#{description}
+                        |status: #{status}
+                        if complete 
+                            |completed by #{completer.name}
         .column
             .ui.header 
                 i.calendar.icon
                 |events
-            .smallscroll
+            .scrolling
                 each user_event_tickets
-                    a(href="/event/#{event_id}/view")
                         .ui.segment
-                            .header #{ticket_event.title}
-                                |#{_author.username}
-                                |#{description}
-                                |#{when}
+                            if ticket_event.image_id
+                                img.ui.fluid.image(src="{{c.url ticket_event.image_id height=100 width=200}}")
+                            a.header(href="/event/#{event_id}/view")
+                                |#{ticket_event.title}
+                            |#{_author.username}
+                            |#{description}
+                            |#{when}

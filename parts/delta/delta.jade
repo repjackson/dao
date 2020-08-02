@@ -215,8 +215,7 @@ template(name='facet')
         //- .ui.fluid.rounded.accordion
             //- .active.title
         if icon
-            +icon name=icon cl='ui avatar image'
-            //- i.grey.icon(class=icon)
+            i.grey.icon(class=icon)
         // else
         .ui.grey.inline.header 
             if title
@@ -224,9 +223,9 @@ template(name='facet')
             else 
                 |#{key}
                 //- i.dropdown.icon
-        .ui.icon.tiny.input
-            i.search.icon
-            input.add_filter(type='text')
+        // .ui.icon.tiny.input
+        //     i.search.icon
+        //     input.add_filter(type='text')
             //- .active.content
                 //- div
         each filtering_res
