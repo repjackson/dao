@@ -19,6 +19,10 @@ Template.registerHelper 'is_current_user', () ->
     if Meteor.user()
         Meteor.user().username is Router.current().params.username
 
+
+Template.registerHelper 'user_class', () ->
+    if @online then 'user_online'
+
 Template.registerHelper 'recipient', () ->
     Meteor.users.findOne @recipient_id
 Template.registerHelper 'shift_leader', () ->

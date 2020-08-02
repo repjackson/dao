@@ -24,7 +24,7 @@ template(name='home')
                 each members 
                     if profile_image_id
                         a(href="/user/#{username}" title="{{name}} {{points}}")
-                            img.ui.tiny.pointer.inline.circular.spaced_image.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.tiny.pointer.inline.circular.spaced_image.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
         .centered.row
             .sixteen.wide.center.aligned.column
                .ui.basic.big.button.debit
@@ -81,7 +81,7 @@ template(name='home')
             //                         |#{title}
             //                     .description
             //                         // if _author.profile_image_id
-            //                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+            //                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
             //                         // | #{_author_username}
             //                         // div
             //                         .ui.inline.header $#{usd_price}
@@ -105,12 +105,12 @@ template(name='home')
             //                     .header
             //                         .ui.inline.header
             //                         // if _author.profile_image_id
-            //                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+            //                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
             //                         // | #{_author_username}
             //                         .item from {{from_now start_datetime}} > {{from_now end_datetime}}
             //                         if shift_contributors 
             //                             each shift_contributors
-            //                                 img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+            //                                 img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
             //                                 |#{username}
             //                     .meta #{when}
             //                     .description 
@@ -134,14 +134,15 @@ template(name='home')
                                 .meta    
                                     .ui.inline.header $#{usd_price} / #{point_price}p
                                     if _author.profile_image_id
-                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                        with _author
+                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                                     | #{_author_username}
                                 // .meta #{when}
                                 .description 
                                     if going_user_ids.length
                                         |#{going_user_ids.length} going
                                     each attendees
-                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                                         |#{name}
                                 //     |#{description}
                                 // each tags 
@@ -156,11 +157,13 @@ template(name='home')
                             .content
                                 .description 
                                     if _author.profile_image_id
-                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                        with _author
+                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                                     | #{_author_username}
                                     .ui.inline.header >
                                     if recipient.profile_image_id
-                                        img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                        with recipient
+                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                                     |#{recipient.username}
                                     .ui.inline.header #{amount}p
                                 .meta #{when}
@@ -188,11 +191,11 @@ template(name='home')
                     //         .content
                     //             .description 
                     //                 if _author.profile_image_id
-                    //                     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                    //                     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                     //                 | #{_author_username}
                     //                 .ui.inline.header >
                     //                 if recipient.profile_image_id
-                    //                     img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                    //                     img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                     //                 |#{recipient.username}
                     //                 .ui.inline.header #{amount}p
                     //             .meta #{when}
@@ -212,7 +215,8 @@ template(name='home')
                                     .header
                                         .ui.inline.header #{point_bounty}p: #{title}
                                         if _author.profile_image_id
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                            with _author
+                                                img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                                         | #{_author.name}
                                     |#{description}
                                     .meta #{when}

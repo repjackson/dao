@@ -80,15 +80,15 @@ if Meteor.isServer
         })
         
         
-    Meteor.publish 'user_requests', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find({
-            model:'request'
-            completed_by_user_id:user._id
-        },{
-            limit:20
-            sort: _timestamp:-1
-        })
+    # Meteor.publish 'user_requests', (username)->
+    #     user = Meteor.users.findOne username:username
+    #     Docs.find({
+    #         model:'request'
+    #         completed_by_user_id:user._id
+    #     },{
+    #         limit:20
+    #         sort: _timestamp:-1
+    #     })
         
     Meteor.publish 'user_event_tickets', (username)->
         user = Meteor.users.findOne username:username

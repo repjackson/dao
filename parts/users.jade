@@ -53,9 +53,9 @@ template(name='member_card')
             a.ui.inline.header(href="/user/#{username}" style="color:#{theme_color};")
                 |#{name}
                 //- |#{username}
-                if spirit_animal
-                    +icolor name=spirit_animal cl='ui avatar image'
             .ui.small.inline.header(style="color:#{theme_color};") #{points}pts
+            if online
+                .ui.green.label online
             if current_status
                 .ui.small.header(title='status' style="color:#{theme_color};")
                     i.clock.icon
@@ -69,12 +69,12 @@ template(name='member_card')
             // strong {{credit_ratio}}
             // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
-            i.line.chart.icon(title='levels')
-            each levels
-                .ui.basic.small.label(style="color:#{theme_color};") #{this}
-            i.shield.icon(title='roles')
-            each roles
-                .ui.basic.small.label(style="color:#{theme_color};") #{this}
+            // i.line.chart.icon(title='levels')
+            // each levels
+            //     .ui.basic.small.label(style="color:#{theme_color};") #{this}
+            // i.shield.icon(title='roles')
+            // each roles
+            //     .ui.basic.small.label(style="color:#{theme_color};") #{this}
             // if is_admin
             //     each levels
             //         .ui.label #{this}
