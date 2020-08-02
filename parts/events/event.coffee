@@ -48,6 +48,7 @@ if Meteor.isClient
         
     Template.events.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'event'
+        @autorun => Meteor.subscribe 'model_docs', 'badge'
         
     Template.events.events
         'click .add_event': ->
@@ -55,6 +56,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'event'
                     published:false
+                    purchased:false
             Router.go "/event/#{new_id}/edit"
             
             
@@ -68,6 +70,14 @@ if Meteor.isClient
             }, 
                 sort:start_datetime:-1
     
+    
+        can_add_event: ->
+            facilitator_badge = 
+                Docs.findOne    
+                    model:'badge'
+                    slug:'facilitator'
+            Meteor.userId() in facilitator_badge.badger_ids
+            
     
     
     Template.event_view.onCreated ->
@@ -267,7 +277,13 @@ if Meteor.isClient
                 }).count()
             @max_attendees-ticket_count
 
-    Template.event_view.events
+    Template.event_edit.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'room'
+    Template.event_edit.helpers
+        rooms: ->
+            Docs.find   
+                model:'room'
+
 
 if Meteor.isServer
     Meteor.publish 'event_tickets', (event_id)->

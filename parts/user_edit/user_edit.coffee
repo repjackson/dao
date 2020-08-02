@@ -7,10 +7,10 @@ if Meteor.isClient
         @layout 'user_edit_layout'
         @render 'user_edit_info'
         ), name:'user_edit_info'
-    Router.route '/user/:username/edit/friends', (->
+    Router.route '/user/:username/edit/badges', (->
         @layout 'user_edit_layout'
-        @render 'user_edit_friends'
-        ), name:'user_edit_friends'
+        @render 'user_edit_badges'
+        ), name:'user_edit_badges'
     Router.route '/user/:username/edit/payment', (->
         @layout 'user_edit_layout'
         @render 'user_edit_payment'

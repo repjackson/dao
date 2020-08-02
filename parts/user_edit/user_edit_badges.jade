@@ -1,0 +1,15 @@
+template(name='user_edit_badges')
+    .ui.header
+        i.certificate.icon
+        | badges
+    .ui.grid 
+        .row 
+            .sixteen.wide.column
+                if is_admin
+                    +array_edit key='badges' label='badges' icon='certificate' direct=true
+                
+                .ui.divider
+                each badges
+                    a.ui.button(href="/badge/#{this}/view")
+                
+                .spacer

@@ -82,13 +82,13 @@ Meteor.methods
                 model:'field'
                 parent_id:model._id
         if model.collection and model.collection is 'users'
-            # unless delta.model_filter is 'user'
-            #     built_query.roles = $in:[delta.model_filter]
+            unless delta.model_filter is 'user'
+                built_query.roles = $in:[delta.model_filter]
         else
             # unless delta.model_filter is 'post'
             built_query.model = delta.model_filter
-        unless Meteor.user() and 'admin' in Meteor.user().roles
-            built_query.app = 'stand'
+        # unless Meteor.user() and 'admin' in Meteor.user().roles
+        #     built_query.app = 'stand'
 
         # if delta.model_filter is 'model'
         #     unless 'dev' in Meteor.user().roles
@@ -188,7 +188,7 @@ Meteor.methods
         # delta = Docs.findOne delta_id
 
     agg: (query, key, collection)->
-        # console.log 'running agg', query
+        console.log 'running agg', query
         limit=20
         options = { explain:false }
         pipe =  [

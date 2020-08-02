@@ -1,50 +1,34 @@
 template(name='home')
     .ui.stackable.padded.grid
-        // .one.column.middle.aligned.row
-        //     .column
-        //         .ui.header welcome to one riverside
-        // .two.column.middle.aligned.row
-        //     unless currentUser
-        //         unless is_admin
-        //             .column
-        //                 img.ui.fluid.rounded.image(src="{{c.url 'river_small' crop='fill'}}")
-        //             .column
-        //                 .ui.large.header #{home_doc.home_title}
-        //                 if is_admin 
-        //                     with home_doc
-        //                         +textarea_edit key='home_title' direct=true
-        //                 .ui.header
-        //                     with home_doc
-        //                         if is_admin
-        //                             +textarea_edit key='home_blurb' direct=true
-        //                         |#{home_blurb}
-        //                     // The Riverside’s diverse indoor-outdoor event spaces and farm-fresh catered tastes create unforgettable guest experiences.
-                            
-        //                     // Located alongside Boulder Creek, this rare and historic property provides eclectic Boulder vibes and local collective services for weddings, special occasions, and community events.
+        .row 
+            .sixteen.wide.column
+                .ui.green.progress.bar(data-percent="74")
+                    .bar
+                    .label
+                        |monthly budget progress / 20k
         .centered.row
             .sixteen.wide.center.aligned.column
                 each members 
                     if profile_image_id
                         a(href="/user/#{username}" title="{{name}} {{points}}")
                             img.ui.tiny.pointer.inline.circular.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-        .centered.row
-            .five.wide.column
-                // if can_debit
-                .ui.fluid.basic.big.compact.button.debit
-                    // +icolor name='gift' cl='ui mini inline image'
-                    i.gift.icon
-                    |send points
+           .ui.basic.big.compact.button.debit
+                i.gift.icon
+                |send points
                 // else
-                //     .ui.fluid.green.disabled.button
+                //     .ui.green.disabled.button
                 //         +icolor name='debit' cl='ui mini inline image'
                 //         // i.debit.icon
                 //         |send
-            .five.wide.column
+            .ui.basic.big.compact.button.request
+                i.concierge.bell.icon
+                // +icolor name='request-service' cl='ui mini inline image'
+                |request
+
+       
+        // .centered.row
+        //     .five.wide.column
                 // if can_debit
-                .ui.fluid.basic.big.compact.button.request
-                    i.concierge.bell.icon
-                    // +icolor name='request-service' cl='ui mini inline image'
-                    |request
             // .five.wide.column
             //     // if can_debit
             //     .ui.fluid.teal.button.request
@@ -118,10 +102,9 @@ template(name='home')
             //                         |#{description}
             //                     each tags 
             //                         .ui.tiny.basic.label #{this}
-            .four.wide.column
+            .five.wide.column
                 .ui.center.aligned.header
-                    i.calendar.icon
-                    // +icolor name='calendar' cl='ui image'
+                    i.calendar.teal.icon
                     |next events
                 // if is_admin 
                 //     i.plus.icon.add_event
@@ -140,17 +123,17 @@ template(name='home')
                                     | #{_author_username}
                                 // .meta #{when}
                                 .description 
-                                    |#{going_user_ids.length} going
+                                    if going_user_ids.length
+                                        |#{going_user_ids.length} going
                                     each attendees
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                                         |#{name}
                                 //     |#{description}
                                 // each tags 
                                 //     .ui.tiny.basic.label #{this}
-            .four.wide.column
+            .five.wide.column
                 .ui.center.aligned.header
-                    i.gift.icon
-                    // +icolor name='gift' cl='ui image'
+                    i.gift.red.icon
                     |latest gifts
                 .medscroll
                     each latest_debits
@@ -170,16 +153,15 @@ template(name='home')
                                     |#{description}
                                 each tags 
                                     .ui.basic.label #{this}
-            .four.wide.column
-                .ui.center.aligned.header
-                    i.chat.icon
-                    // +icolor name='chat' cl='ui image'
-                    |latest discussions
+                // .ui.center.aligned.header
+                //     i.chat.icon
+                //     // +icolor name='chat' cl='ui image'
+                //     |latest discussions
                     
-                .ui.small.grey.header anouncements
-                .ui.small.grey.header dms
+                // .ui.small.grey.header anouncements
+                // .ui.small.grey.header dms
                 
-                .medscroll
+                // .medscroll
                     // each latest_debits
                     //     a.ui.card(href="/debit/#{_id}/view")
                     //         .content
@@ -200,7 +182,6 @@ template(name='home')
             .four.wide.column
                 .ui.center.aligned.header
                     i.concierge.bell.icon
-                    // +icolor name='request-service' cl='ui image'
                     |latest requests
                 .smallscrol
                     .ui.selection.link.list

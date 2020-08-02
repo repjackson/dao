@@ -7,8 +7,7 @@ template(name='nav')
             i.large.home.icon
         if currentUser
             a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
-                +icolor name='conference-call' cl='ui mini image'
-                // i.large.users.icon
+                i.large.users.icon
                 | members
             // a.item.set_event(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
             //     +icolor name='calendar'

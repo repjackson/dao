@@ -52,6 +52,8 @@ Template.registerHelper 'i_have_points', () ->
     else
         Meteor.user().points > 0
 
+Template.registerHelper 'is_logging_out', () -> Session.get('logging_out')
+
 
 Template.registerHelper 'is_admin', () ->
     # Meteor.users.findOne username:Router.current().params.username

@@ -5,8 +5,11 @@ template(name='events')
                 .ui.inline.header
                     +icon name='calendar'
                     |events
-                if is_admin
-                    i.plus.circular.link.icon.add_event
+                if can_add_event
+                    .ui.circular.button.add_event
+                        i.plus.icon
+                        |add event
+                        
                 .spacer
                 .spacer
                 .ui.stackable.four.cards
@@ -32,8 +35,8 @@ template(name='event_card')
                 |#{location}
             .ui.inline.header #{_author_username}
             |#{going_user_ids.length}
-            each going
-                |#{username}
+            // each going
+            //     |#{username}
             | #{maybe_user_ids.length}
             each maybe_going
                 |#{username}
@@ -185,6 +188,9 @@ template(name='event_edit')
                     +number_edit key='point_price' label='points per ticket' min='0' max='100' direct=true
                     +number_edit key='usd_price' label='dollars per ticket' min='0' max='100' direct=true
                 .ten.wide.column
+                    .ui.header room
+                    each rooms 
+                        .ui.button #{title} 
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
@@ -201,8 +207,9 @@ template(name='gcal_button')
         
         
 template(name='attendance')
-    .ui.inline.green.header 
-        |#{ticket.length} going
+    if ticket.length
+        .ui.inline.green.header 
+            |#{ticket.length} going
     .ui.inline.small.grey.header ticket required
     // .ui.icon.button.pick_going 
     //     i.green.checkmark.big.icon

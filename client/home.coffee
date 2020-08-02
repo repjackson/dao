@@ -4,6 +4,11 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
 
+    Template.home.onRendered ->
+        $('.progress').progress({
+              percent: 22
+        });
+    
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_debits'
         

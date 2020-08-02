@@ -1,10 +1,10 @@
 if Meteor.isClient
     @selected_user_levels = new ReactiveArray []
     Template.registerHelper 'badgers', () ->
-        badge = Docs.findOne Router.current().params.doc_id
-        if badge.badger_ids
+        # badge = Docs.findOne Router.current().params.doc_id
+        if @badger_ids
             Meteor.users.find   
-                _id:$in:badge.badger_ids
+                _id:$in:@badger_ids
     
     Template.registerHelper 'honey_badgers', () ->
         badge = Docs.findOne Router.current().params.doc_id
@@ -12,11 +12,6 @@ if Meteor.isClient
             Meteor.users.find   
                 _id:$in:badge.honey_badger_ids
 
-    Router.route '/badge/:doc_id/view', (->
-        @layout 'layout'
-        @render 'badge_view'
-        ), name:'badge_view'
-        
     Router.route '/badges', (->
         @layout 'layout'
         @render 'badges'
@@ -79,10 +74,6 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Router.route '/badge/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'badge_edit'
-        ), name:'badge_edit'
 
     Template.badge_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
@@ -92,8 +83,9 @@ if Meteor.isClient
 
     Template.badge_edit.events
         'click .delete_item': ->
-            if confirm 'delete item?'
+            if confirm 'delete badge?'
                 Docs.remove @_id
+                Router.go "/m/badge"
 
         'click .publish': ->
             Docs.update Router.current().params.doc_id,
@@ -125,16 +117,18 @@ if Meteor.isClient
     Template.badge_edit.helpers
         unselected_badgers: ->
             badge = Docs.findOne Router.current().params.doc_id
-            Meteor.users.find {}, 
+            Meteor.users.find({
+                _id:$nin:@badger_ids
+            }, 
                 limit:10
                 sort:points:-1
-                # _id:$nin:badge.badger_ids
+            )
         unselected_honey_badgers: ->
             badge = Docs.findOne Router.current().params.doc_id
             Meteor.users.find {},
                 limit:10
                 sort:points:-1
-                # _id:$nin:badge.honey_badger_ids
+                _id:$nin:badge.honey_badger_ids
 
 if Meteor.isServer
     Meteor.methods

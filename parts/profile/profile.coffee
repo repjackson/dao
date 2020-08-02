@@ -20,10 +20,10 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'all_users'
     
     Template.profile_layout.onRendered ->
-        Meteor.setTimeout ->
-            $('.profile_nav_item')
-                .popup()
-        , 1000
+        # Meteor.setTimeout ->
+        #     $('.profile_nav_item')
+        #         .popup()
+        # , 1000
 
 
     Template.profile_layout.helpers
@@ -70,8 +70,10 @@ if Meteor.isClient
     Template.profile_layout.events
         'click .logout_other_clients': -> Meteor.logoutOtherClients()
         'click .logout': ->
-            Router.go '/login'
-            Meteor.logout()
+            # Router.go '/login'
+            Session.set 'logging_out', true
+            Meteor.logout ->
+                Session.set 'logging_out', false
 
 
 

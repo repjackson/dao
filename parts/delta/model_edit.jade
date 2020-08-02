@@ -20,17 +20,17 @@ template(name='model_edit_layout')
                     #delete_model.ui.icon.button
                         i.trash.icon
                 .twelve.wide.column
-                    a.ui.compact.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActivePath 'model_edit_dashboard'}}")
-                        +icon name='dashboard' cl='ui avatar image'
+                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActivePath 'model_edit_dashboard'}}")
+                        i.dashboard.icon
                         |dashboard
-                    a.ui.compact.large.basic.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActivePath 'model_edit_fields'}}")
-                        +icon name='list' cl='ui avatar image'
+                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActivePath 'model_edit_fields'}}")
+                        i.list.icon
                         |fields
-                    a.ui.compact.large.basic.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActivePath 'model_edit_modules'}}")
-                        +icon name='module' cl='ui avatar image'
+                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActivePath 'model_edit_modules'}}")
+                        i.cubes.icon
                         |modules
-                    a.ui.compact.large.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActivePath 'model_edit_permissions'}}")
-                        +icon name='shield' cl='ui avatar image'
+                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActivePath 'model_edit_permissions'}}")
+                        i.shield.icon
                         |permissions
                     +yield
                     

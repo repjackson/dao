@@ -10,6 +10,7 @@ Template.nav.onRendered ->
             .sidebar({
                 context: $('.bottom.segment')
                 transition:'overlay'
+                exclusive:true
             })
             .sidebar('attach events', '.toggle_sidebar')
     , 1000
@@ -18,9 +19,17 @@ Template.nav.onRendered ->
             .sidebar({
                 context: $('.bottom.segment')
                 transition:'overlay'
+                exclusive:true
             })
             .sidebar('attach events', '.profile_sidebar')
     , 1000
+
+Template.right_sidebar.events
+    'click .logout': ->
+        Session.set 'logging_out', true
+        Meteor.logout ->
+            Session.set 'logging_out', false
+            Router.go '/login'
 
 Template.nav.events
     # 'click .toggle_sidebar': ->

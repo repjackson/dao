@@ -123,7 +123,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug
         @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug
         @autorun -> Meteor.subscribe 'my_delta'
-        # @autorun -> Meteor.subscribe 'model_docs', 'field_type'
+        @autorun -> Meteor.subscribe 'all_users'
 
         Session.set 'loading', true
         Meteor.call 'set_facets', Router.current().params.model_slug, ->

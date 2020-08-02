@@ -8,14 +8,15 @@ template(name='profile_layout')
                 .ui.stackable.padded.grid
                     .four.wide.column
                         span.mobile.only
-                            img.ui.centered.tiny.inline.spaced.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                            img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                         span.mobile.hidden
-                            img.ui.centered.fluid.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                            img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                         a.ui.large.header.refresh_user_stats(href="/user/#{username}") 
                             |#{name}
                         div
                         a.ui.grey.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
+                        div
                         .ui.inline.header #{points}pts
                         //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                         //-     i.refresh.icon
@@ -24,27 +25,30 @@ template(name='profile_layout')
                         else 
                             div #{current_status}
                         if is_admin
-                            .ui.small.inline.header #{_id}
-                            a.ui.large.icon.button(href="/user/#{username}/edit" title='admin edit account')
+                            // .ui.small.inline.header #{_id}
+                            a.ui.large.button(href="/user/#{username}/edit" title='admin edit account')
                                 i.shield.large.icon
+                                |account
                         if is_current_user
-                            a.ui.icon.button(href="/user/#{username}/edit" title='edit your account')
-                                i.cog.big.icon
-                            a.ui.icon.button.logout(href="#" title='log out')
-                                i.sign.out.big.icon
+                            a.ui.button(href="/user/#{username}/edit" title='edit your account')
+                                i.cog.large.icon
+                                |account
+                            a.ui.button.logout(href="#" title='log out')
+                                i.sign.out.large.icon
+                                |log out
                         
                         // unless is_current_user
                         //     if currentUser
                         //         // div
                         //         +user_friend_button 
-                        // a.ui.big.icon.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
+                        // a.ui.large.icon.button(href="/user/#{username}/dashboard" class="{{isActivePath 'user_dashboard'}}")
                         //     i.dashboard.large.icon
                         //     // |dashboard
-                        // a.ui.big.icon.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
+                        // a.ui.large.icon.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
                         //     i.chat.large.icon
                         //     // |chat
                         // if is_current_user
-                        //     a.ui.big.icon.button(href="/user/#{username}/edit/membership" class="{{isActivePath 'user_finance'}}")
+                        //     a.ui.large.icon.button(href="/user/#{username}/edit/membership" class="{{isActivePath 'user_finance'}}")
                         //         i.money.large.icon
                         // if spirit_animal
                         //     span(title="spirit animal #{spirit_animal}")
@@ -71,49 +75,29 @@ template(name='profile_layout')
         
                     .twelve.wide.column
                         a.ui.icon.basic.button.profile_nav_item(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
-                            i.big.dashboard.icon
-                        // a.ui.basic.button(href="/user/#{username}/" class="{{isActivePath 'user_dashboard'}}")
-                        //     i.big.dashboard.icon
-                        //     span.mobile.hidden dashboard
-                        
+                            i.large.dashboard.icon
+                            span.mobile.hidden dashboard
                         a.ui.icon.basic.button.profile_nav_item(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
-                            // +icolor name='info' cl='ui inline spaced image pointer'
-                            i.info.big.icon
-                        // a.ui.basic.button(href="/user/#{username}/about" class="{{isActivePath 'user_about'}}")
-                        //     i.big.info.blue.icon
-                        //     span.mobile.hidden about
+                            i.info.large.icon
+                            span.mobile.hidden about
                         a.ui.icon.basic.button.profile_nav_item(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
-                            i.big.chevron.down.icon
-                        // a.ui.basic.button(href="/user/#{username}/credits" class="{{isActivePath 'user_credits'}}")
-                        //     i.big.donate.green.icon
-                        //     span.mobile.hidden credits
+                            i.large.chevron.down.icon
+                            span.mobile.hidden credits
                         a.ui.icon.basic.button.profile_nav_item(href="/user/#{username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
-                            i.big.chevron.up.icon
-                        // a.ui.basic.button(href="/user/#{username}/sent" class="{{isActivePath 'user_sent'}}")
-                        //     i.big.send.teal.icon
-                        //     span.mobile.hidden sent
+                            i.large.chevron.up.icon
+                            span.mobile.hidden sent
                         a.ui.icon.basic.button.profile_nav_item(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
-                            i.calendar.big.icon
-                        // a.profile_nav_item(href="/user/#{username}/stats" class="{{isActivePath 'user_stats'}}" title="#{user.username} stats")
-                        //     +icolor name='line-chart' cl='ui inline spaced image pointer'
+                            i.calendar.large.icon
+                            span.mobile.hidden events
                         a.ui.icon.basic.button.profile_nav_item(href="/user/#{username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
-                            i.big.concierge.bell.icon
-                        // a.ui.button(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}")
-                        //     i.big.calendar.orange.icon
-                        //     span.mobile.hidden events
+                            i.large.concierge.bell.icon
+                            span.mobile.hidden requests
                         a.ui.icon.basic.button.profile_nav_item(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
-                            i.chat.big.icon
-                        // a.ui.button(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}")
-                        //     i.big.chat.blue.icon
-                        //     span.mobile.hidden chat
-                        // a(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}" title="#{user.username} friends")
-                        //     +icolor name='groups' cl='ui inline spaced image pointer'
-                        // a(href="/user/#{username}/badges" class="{{isActivePath 'user_badges'}}" title="#{user.username} badges")
-                        //     +icolor name='prize' cl='ui inline spaced image pointer'
-                        // a.ui.button(href="/user/#{username}/friends" class="{{isActivePath 'user_friends'}}")
-                        //     i.big.users.icon
-                        //     span.mobile.hidden friends
-                            
+                            i.chat.large.icon
+                            span.mobile.hidden chat
+                        a.ui.icon.basic.button(href="/user/#{username}/badges" class="{{isActivePath 'user_badges'}}" title="#{user.username} badges")
+                            i.certificate.large.icon
+                            span.mobile.hidden badges
                         .spacer
                         .spacer
                         +yield    
@@ -125,8 +109,8 @@ template(name='profile_layout')
 
 template(name='user_friend_button')
     if is_friend
-        .ui.blue.big.icon.button.unfriend(title='unfriend')
-            i.checkmark.big.icon
+        .ui.blue.large.icon.button.unfriend(title='unfriend')
+            i.checkmark.large.icon
     else
-        .ui.big.icon.button.friend(title='friend')
-            i.user.plus.big.icon
+        .ui.large.icon.button.friend(title='friend')
+            i.user.plus.large.icon

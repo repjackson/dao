@@ -27,44 +27,37 @@ template(name='badges')
 
 
 template(name='badge_card')
-    a.card(href="/badge/#{_id}/view")
+    a.card(href="/m/badge/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/badge/#{_id}/view")
+            .ui.header
                 |#{title}
-            i.marker.icon
-            |#{location} 
+            // i.marker.icon
+            // |#{location} 
             |!{description}
-            // +icolor name='badger' cl='ui avatar image'
-            // +honey_badger
-            each honey_badgers
-                .ui.label #{username}
-        
+            each badgers
+                .ui.basic.small.compact.label
+                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    |#{name}
 
 
 template(name='badge_view')
     with current_doc
         .ui.stackable.padded.grid
-            .centered.middle.aligned.row
-                .four.wide.center.aligned.column
+            .row
+                .sixteen.wide.column
                     // if can_edit
-                    a(href="/m/badge" title='badges')
-                        +icolorlg name='prize' cl='ui inline image pointer'
-                .eight.wide.center.aligned.column
+                    a.ui.icon.button(href="/m/badge")
+                        i.large.certificate.icon
                     +icolorlg name=icon cl='ui inline image'
                     .ui.center.aligned.inline.header 
                         small viewing badge: 
                         |#{title}
-                .four.wide.center.aligned.column
                     if can_edit
-                        a.pointer.edit_badge(href="/badge/#{_id}/edit")
+                        a.ui.icon.button.edit_badge(href="/m/badge/#{_id}/edit")
                             i.big.pencil.big.icon
             .row 
-                .four.wide.column
-                    .ui.header
-                        i.marker.icon 
-                        |#{location}
                 .eight.wide.column
                     .ui.header 
                         small author
@@ -81,53 +74,49 @@ template(name='badge_view')
                     .spacer
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .four.wide.column
+                .eight.wide.column
                     .ui.header 
-                        +icon name='badger'
                         |badgers
                     each badgers
                         a.ui.basic.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
         
-                    .ui.header 
-                        +honey_badger
-                        |honey badgers
-                    each honey_badgers
-                        a.ui.basic.button(href="/user/#{username}") 
-                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{name}
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
+                    // .ui.header 
+                    //     +honey_badger
+                    //     |honey badgers
+                    // each honey_badgers
+                    //     a.ui.basic.button(href="/user/#{username}") 
+                    //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //         |#{name}
+                    // //- .ui.fluid.green.button.submit
+                    // //-     i.checkmark.icon
+                    // //-     |submit
 
 template(name='badge_edit')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
-                .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/badge/#{_id}/view" title='save')
+                .sixteen.wide.column
+                    a.ui.green.cicular.icon.button(href="/m/badge/#{_id}/view" title='save')
                         i.checkmark.big.icon
-                .eight.wide.center.aligned.column
-                    .ui.inline.header 
-                        +icon name='prize'
+                    .ui.inline.header
                         small edit badge
                         |#{title}
-                .four.wide.center.aligned.column
-                    +icon name='delete-forever' cl='pointer delete_item'
+                    i.remove.circular.link.icon.delete_item
             .row 
-                .four.wide.column
                 .eight.wide.column
                     +text_edit key='title' icon='header' direct=true
-                    +text_edit key='location' label='location' icon='marker' direct=true
+                    +slug_edit key='slug' icon='slug' direct=true
+                    // +text_edit key='location' label='location' icon='marker' direct=true
                     +icon_edit key='icon' label='icon' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    +boolean_edit key='published' direct=true
+                .eight.wide.column
+                    // +boolean_edit key='published' direct=true
                     .ui.header
                         +icolor name='badger'
                         |badgers
@@ -143,18 +132,18 @@ template(name='badge_edit')
                                 img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{name}
                     
-                    .ui.header
-                        +honey_badger
-                        |honey badgers
-                    each honey_badgers
-                        a.ui.compact.button(href="/user/#{username}") 
-                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{name}
-                        i.remove.link.icon.remove_honey_badger
-                    .ui.segment
-                        .ui.small.header add honey badgers
-                        each unselected_honey_badgers
-                            .ui.basic.button.add_honey_badger
-                                img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{name}
+                    // .ui.header
+                    //     +honey_badger
+                    //     |honey badgers
+                    // each honey_badgers
+                    //     a.ui.compact.button(href="/user/#{username}") 
+                    //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //         |#{name}
+                    //     i.remove.link.icon.remove_honey_badger
+                    // .ui.segment
+                    //     .ui.small.header add honey badgers
+                    //     each unselected_honey_badgers
+                    //         .ui.basic.button.add_honey_badger
+                    //             img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //             |#{name}
                     
