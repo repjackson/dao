@@ -11,7 +11,7 @@ template(name='debit_view')
             .centered.row 
                 .five.wide.column
                     a(href="/user/#{_author.username}") 
-                        .ui.center.aligned.segment
+                        .ui.center.aligned.segment.pointer
                             .ui.header 
                                 i.chevron.up.icon
                                 |sender
@@ -20,7 +20,7 @@ template(name='debit_view')
                                 |#{_author.username}
                 .five.wide.column
                     a(href="/user/#{recipient.username}")
-                        .ui.center.aligned.segment
+                        .ui.center.aligned.segment.pointer
                             .ui.header
                                 i.chevron.down.icon
                                 |recipient
@@ -28,7 +28,7 @@ template(name='debit_view')
                             .ui.header
                                 |#{recipient.name}
                             
-            .row
+            .centered.row
                 .eight.wide.column
                     if is_dev
                         +remove_button
@@ -38,7 +38,6 @@ template(name='debit_view')
                     .ui.small.header
                         i.clock.icon
                         | #{when}
-                .eight.wide.column
                     .f12
                         |#{description}
                     +image_view key='image_id' label='image' direct=true

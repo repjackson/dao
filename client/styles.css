@@ -14,6 +14,10 @@ body {
     /* background: #0e0e44 !important; */
 }
 
+.spaced_image {
+  margin: 1px !important;
+}
+
 
 .pushable.segment {
     background: rgba(245,245,245,1) !important;
@@ -65,9 +69,9 @@ html.ios body {
 }
 
 
-.segment:not(.raw) {
+.segment:not(.pushable) {
   transition: height 1s linear;
-  /*border-radius: 10px !important;*/
+  border-radius: 10px !important;
 }
 
 .topnav.menu {

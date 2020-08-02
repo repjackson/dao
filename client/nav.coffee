@@ -9,8 +9,9 @@ Template.nav.onRendered ->
         $('.ui.left.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
-                transition:'overlay'
+                transition:'push'
                 exclusive:true
+                duration:250
             })
             .sidebar('attach events', '.toggle_sidebar')
     , 1000
@@ -18,10 +19,21 @@ Template.nav.onRendered ->
         $('.ui.right.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
-                transition:'overlay'
+                transition:'push'
                 exclusive:true
+                duration:250
             })
             .sidebar('attach events', '.profile_sidebar')
+    , 1000
+    Meteor.setTimeout ->
+        $('.ui.top.sidebar')
+            .sidebar({
+                context: $('.bottom.segment')
+                transition:'push'
+                exclusive:true
+                duration:250
+            })
+            .sidebar('attach events', '.toggle_top_sidebar')
     , 1000
 
 Template.right_sidebar.events
@@ -34,7 +46,7 @@ Template.right_sidebar.events
 Template.nav.events
     # 'click .toggle_sidebar': ->
     #     $('.ui.sidebar')
-    #         .sidebar('setting', 'transition', 'overlay')
+    #         .sidebar('setting', 'transition', 'push')
     #         .sidebar('toggle')
     'click .toggle_admin': ->
         if 'admin' in Meteor.user().roles
@@ -111,7 +123,7 @@ Template.nav.events
 Template.left_sidebar.events
     # 'click .toggle_sidebar': ->
     #     $('.ui.sidebar')
-    #         .sidebar('setting', 'transition', 'overlay')
+    #         .sidebar('setting', 'transition', 'push')
     #         .sidebar('toggle')
     'click .toggle_admin': ->
         if 'admin' in Meteor.user().roles

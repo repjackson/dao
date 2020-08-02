@@ -35,13 +35,11 @@ body
 
 
 template(name='layout')
-    // img.bg_overlay(src="{{c.url 'nightbg' width=1000 height=1000 crop='crop'}}")
-    // .uni
-    //     +icolor name='vominitg-unicorn' class='uni'
     if currentUser
         +nav
     // #main_area.scrolling.global_container
     .ui.bottom.attached.pushable.segment
+        +top_sidebar
         +left_sidebar
         +right_sidebar
                 

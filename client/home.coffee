@@ -35,6 +35,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'home_doc'
 
     Template.home.helpers
+        viewing_finance_details: -> Session.get('view_finance_details')
         featured_products: ->
             Docs.find
                 model:'product'
@@ -85,6 +86,9 @@ if Meteor.isClient
             Meteor.users.find({},
                 sort:points:1)
     Template.home.events
+        'click .toggle_finance_details': ->
+            Session.set('view_finance_details', !Session.get('view_finance_details'))
+
         'click .refresh_stats': ->
             Meteor.call 'calc_global_stats'
         'click .debit': ->

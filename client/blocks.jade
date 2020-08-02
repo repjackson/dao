@@ -169,18 +169,18 @@ template(name='user_status')
     // else 
     //     |Offline
 
-template(name='user_card')
-    with user
-        .ui.small.horizontal.card
-            .image
-                img.ui.rounded.mini.image(src="{{c.url profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
-            .content    
-                a.header(href="/user/#{username}") #{first_name} #{last_name} 
-                //- .meta @#{username}
-                strong $#{credit}
-                small credit
-                //- +emails_edit    
-        //- +user_status user
+// template(name='user_card')
+//     with user
+//         .ui.small.horizontal.card
+//             .image
+//                 img.ui.rounded.mini.image(src="{{c.url profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
+//             .content    
+//                 a.header(href="/user/#{username}") #{first_name} #{last_name} 
+//                 //- .meta @#{username}
+//                 strong $#{credit}
+//                 small credit
+//                 //- +emails_edit    
+//         //- +user_status user
 
 
 template(name='small_horizontal_user_card')

@@ -13,17 +13,18 @@ template(name='profile_layout')
                             img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                         a.ui.large.header.refresh_user_stats(href="/user/#{username}") 
                             |#{name}
-                        div
+                        // div
                         a.ui.grey.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
-                        div
-                        .ui.inline.header #{points}pts
+                        .ui.big.basic.label #{points}pts
                         //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                         //-     i.refresh.icon
                         if is_current_user
                             +text_edit key='current_status' label='status' direct=true
                         else 
-                            div #{current_status}
+                            .ui.basic.label 
+                                i.grey.clock.icon
+                                |#{current_status}
                         if is_admin
                             // .ui.small.inline.header #{_id}
                             a.ui.large.button(href="/user/#{username}/edit" title='admin edit account')
