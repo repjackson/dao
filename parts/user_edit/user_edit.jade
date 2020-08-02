@@ -8,8 +8,8 @@ template(name='user_edit_layout')
                 .ui.stackable.padded.grid
                     .row
                         .four.wide.column
-                            .ui.center.aligned.large.inline.header
-                                +i name='settings'
+                            .ui.center.aligned.large.inline.header(style="color:#{current_user.theme_color};")
+                                i.big.cog.icon(style="color:#{current_user.theme_color};")
                                 | #{current_user.name}
                             .ui.small.inline.header @#{current_user.username}
                             img.ui.centered.small.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")

@@ -2,15 +2,22 @@ template(name='home')
     .ui.stackable.padded.grid
         .row 
             .sixteen.wide.column.toggle_finance_details
-                .ui.green.small.progress.bar.pointer(data-percent="74")
+                .ui.green.small.progress.bar.pointer
                     .bar
                     .label
                         |monthly budget progress / 20k
                 if viewing_finance_details
-                    .ui.header finance details
-                    .ui.header income from events
-                    .ui.header most generative event
-                    .ui.header most generative member
+                    .ui.stackable.grid
+                        .three.column.row
+                            .column
+                                .ui.header finance details
+                                .ui.header income from events
+                                .ui.header most generative event
+                            .column
+                                .ui.header coolest member
+                            .column
+                                .ui.header most generative member
+                                .ui.header sexiest member
                     
         .centered.row
             .sixteen.wide.center.aligned.column
@@ -112,7 +119,7 @@ template(name='home')
             //                         .ui.tiny.basic.label #{this}
             .four.wide.column
                 a.ui.center.aligned.header(href="/events")
-                    i.calendar.teal.icon
+                    i.calendar.orange.icon
                     |next events
                 // if is_admin 
                 //     i.plus.icon.add_event
@@ -140,12 +147,12 @@ template(name='home')
                                 // each tags 
                                 //     .ui.tiny.basic.label #{this}
             .four.wide.column
-                a.ui.center.aligned.header(href="/gifts")
+                .ui.center.aligned.header.mobile.hidden
                     i.gift.red.icon
                     |gifts
                 .medscroll.mobile.hidden
                     each latest_debits
-                        a.ui.card(href="/debit/#{_id}/view")
+                        .ui.card.pointer.view_debit
                             .content
                                 .description 
                                     if _author.profile_image_id
@@ -157,17 +164,23 @@ template(name='home')
                                     |#{recipient.username}
                                     .ui.inline.header #{amount}p
                                 .meta #{when}
-                                .description 
+                                .description.f11
                                     |#{description}
                                 each tags 
                                     .ui.basic.label #{this}
+                                if doc_comments.count
+                                    .meta
+                                        i.grey.chat.icon
+                                        each doc_comments 
+                                            |#{body}
             .four.wide.column
                 .ui.center.aligned.header
                     i.newspaper.icon
                     |news
                 .ui.large.link.selection.list
                     each latest_posts
-                        a.item(href="/m/post/#{_id}/view") #{title}
+                        a.item(href="/m/post/#{_id}/view")
+                            .header #{title}
                 
                 // .medscroll
                     // each latest_debits
@@ -197,12 +210,11 @@ template(name='home')
                             a.item(href="/request/#{_id}/view")
                                 .content
                                     .header
-                                        .ui.inline.header #{amount}p
+                                        .ui.inline.header #{point_bounty}p: #{title}
                                         if _author.profile_image_id
                                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
-                                        | #{_author_username}
-                                        .ui.inline.small.grey.header
-                                            |#{description}
+                                        | #{_author.name}
+                                    |#{description}
                                     .meta #{when}
                                     // each tags 
                                     //     .ui.tiny.basic.label #{this}

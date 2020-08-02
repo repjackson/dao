@@ -4,34 +4,23 @@ template(name='nav')
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.icon.item(href="/" class="{{isActivePath 'home'}}")
-            // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-            i.large.home.icon
+            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            // i.large.home.icon
         a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.large.users.icon
             | members
-        // a.item.set_event(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
-        //     +icolor name='calendar'
-        //     // i.large.calendar.icon
-        //     span.mobile.hidden events
-        a.icon.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
+        a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
             i.large.calendar.icon
-            // +icolor name='calendar'
-            span.mobile.hidden
-                |&nbsp;
-                |events
-            
+            |events
         a.item.mobile.hidden(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
             i.large.blog.icon
-            // +icolor name='news'
-            span.mobile.hidden
-                |feed
+            |feed
         a.item.mobile.hidden(href="/m/request" class="{{isActiveRoute 'requests'}}" title='requests')
             i.large.concierge.bell.icon
-            // +icolor name='request-service'
             |requests
         if is_admin
-            a.icon.blue.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='models')
-                i.database.icon
+            a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
+                i.database.large.icon
         .right.menu
             a.icon.item.toggle_top_sidebar(href="#")
                 // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
@@ -85,37 +74,37 @@ template(name='right_sidebar')
             |profile
         a.item.profile_sidebar(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
             | dashboard
-            i.dashboard.large.icon
+            i.dashboard.icon
         
         a.item.profile_sidebar(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
             | about
-            i.info.large.icon
+            i.info.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
             | received
-            i.chevron.down.large.icon
+            i.chevron.down.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
             | sent
-            i.chevron.up.large.icon
+            i.chevron.up.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
             | events
-            i.calendar.large.icon
+            i.calendar.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
             | requests
-            i.concierge.bell.large.icon
+            i.concierge.bell.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
             | chat
-            i.chat.large.icon
+            i.chat.icon
         .ui.divider
         a.item.profile_sidebar(href="/user/#{currentUser.username}/edit" title='edit your account')
-            i.cog.large.large.icon
+            i.cog.large.icon
             |settings
 
         a.item.logout(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
             |logout
             if is_logging_out
-                i.refresh.loading.large.icon
+                i.refresh.loading.icon
             else
-                i.sign.out.large.icon
+                i.sign.out.icon
 
 
 

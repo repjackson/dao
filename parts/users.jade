@@ -69,7 +69,11 @@ template(name='member_card')
             // strong {{credit_ratio}}
             // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
+            i.line.chart.icon(title='levels')
             each levels
+                .ui.basic.small.label(style="color:#{theme_color};") #{this}
+            i.shield.icon(title='roles')
+            each roles
                 .ui.basic.small.label(style="color:#{theme_color};") #{this}
             // if is_admin
             //     each levels
@@ -92,7 +96,6 @@ template(name='user_card')
                 //- |#{username}
                 // if spirit_animal
                 //     +icolor name=spirit_animal cl='ui avatar image'
-            .ui.header #{theme_color}
             // each levels
             //     .ui.label #{this}
             // strong #{credit_count} credits
@@ -101,9 +104,14 @@ template(name='user_card')
             // strong {{credit_ratio}}
             // span ##{global_debit_count_rank}
             // span ##{global_credit_count_rank}
+            
             .ui.small.inline.header #{points}pts
+            i.line.chart.icon(title='levels')
             each levels
-                .ui.basic.small.label #{this}
+                .ui.basic.small.label(style="color:#{theme_color};") #{this}
+            i.shield.icon(title='roles')
+            each roles
+                .ui.basic.small.label(style="color:#{theme_color};") #{this}
             // if is_admin
             //     each levels
             //         .ui.label #{this}

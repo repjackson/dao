@@ -12,9 +12,9 @@ if Meteor.isClient
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_debits'
         
-        @autorun => Meteor.subscribe 'model_docs', 'offer'
+        @autorun => Meteor.subscribe 'model_docs', 'request'
         @autorun => Meteor.subscribe 'model_docs', 'shift'
-        # @autorun => Meteor.subscribe 'model_docs', 'product'
+        @autorun => Meteor.subscribe 'model_docs', 'comment'
         @autorun => Meteor.subscribe 'model_docs', 'event'
         @autorun => Meteor.subscribe 'model_docs', 'post'
         @autorun => Meteor.subscribe 'model_docs', 'global_stats'
@@ -68,7 +68,7 @@ if Meteor.isClient
                 limit:10
         latest_requests: ->
             Docs.find {
-                model:'offer'
+                model:'request'
             },
                 sort:
                     _timestamp: -1
@@ -94,6 +94,9 @@ if Meteor.isClient
             Meteor.users.find({},
                 sort:points:1)
     Template.home.events
+        'click .view_debit': ->
+            Router.go "/debit/#{@_id}/view"
+    
         'click .toggle_finance_details': ->
             Session.set('view_finance_details', !Session.get('view_finance_details'))
 

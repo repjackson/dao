@@ -52,6 +52,12 @@ Template.registerHelper 'i_have_points', () ->
     else
         Meteor.user().points > 0
 
+
+Template.registerHelper 'doc_comments', () ->
+    Docs.find
+        model:'comment'
+        parent_id:@_id
+
 Template.registerHelper 'is_logging_out', () -> Session.get('logging_out')
 
 
