@@ -1,10 +1,9 @@
 template(name='user_edit_style')
     .ui.header
-        i.rss.icon
-        | alerts
+        i.paint.brush.icon
+        | styles
     .ui.header nav color
-    +user_key_value_edit key='nav_color' value='green' direct=true
-    +user_key_value_edit key='nav_color' value='blue' direct=true
-    +user_key_value_edit key='nav_color' value='black' direct=true
-    +user_key_value_edit key='nav_color' value='pink' direct=true
-    .ui.header nav color #{nav_color}
+    +text_edit key='theme_color' label='theme color' direct=true
+    a.ui.big.button(href='https://www.w3schools.com/cssref/css_colors.asp' target='_window')
+        i.external.icon
+        |color list

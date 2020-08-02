@@ -11,27 +11,28 @@ template(name='profile_layout')
                             img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                         span.mobile.hidden
                             img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
-                        a.ui.large.header.refresh_user_stats(href="/user/#{username}") 
+                        a.ui.large.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};") 
                             |#{name}
                         // div
-                        a.ui.grey.header.refresh_user_stats(href="/user/#{username}") 
+                        a.ui.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};") 
                             |@#{username}
-                        .ui.big.basic.label #{points}pts
+                        .ui.big.basic.label(style="color:#{current_user.theme_color};") #{points}pts
                         //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                         //-     i.refresh.icon
                         if is_current_user
                             +text_edit key='current_status' label='status' direct=true
                         else 
-                            .ui.basic.label 
-                                i.grey.clock.icon
-                                |#{current_status}
+                            if current_status
+                                .ui.basic.big.label(title='status' style="color:#{current_user.theme_color};")
+                                    i.grey.clock.icon
+                                    |#{current_status}
                         if is_admin
                             // .ui.small.inline.header #{_id}
-                            a.ui.large.button(href="/user/#{username}/edit" title='admin edit account')
+                            a.ui.large.button(href="/user/#{username}/edit" title='admin edit account' style="color:#{current_user.theme_color};")
                                 i.shield.large.icon
                                 |account
                         if is_current_user
-                            a.ui.button(href="/user/#{username}/edit" title='edit your account')
+                            a.ui.button(href="/user/#{username}/edit" title='edit your account' style="color:#{current_user.theme_color};")
                                 i.cog.large.icon
                                 |account
                             a.ui.button.logout(href="#" title='log out')

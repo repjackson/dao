@@ -18,24 +18,26 @@ template(name='home')
                     if profile_image_id
                         a(href="/user/#{username}" title="{{name}} {{points}}")
                             img.ui.tiny.pointer.inline.circular.spaced_image.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-           .ui.basic.big.compact.button.debit
-                i.gift.red.icon
-                |send points
-                // else
-                //     .ui.green.disabled.button
-                //         +icolor name='debit' cl='ui mini inline image'
-                //         // i.debit.icon
-                //         |send
-            .ui.basic.big.compact.button.request
-                i.concierge.bell.teal.icon
-                // +icolor name='request-service' cl='ui mini inline image'
-                |request
+        .centered.row
+            .sixteen.wide.center.aligned.column
+               .ui.basic.big.button.debit
+                    i.gift.red.icon
+                    |send points
+                    // else
+                    //     .ui.green.disabled.button
+                    //         +icolor name='debit' cl='ui mini inline image'
+                    //         // i.debit.icon
+                    //         |send
+                .ui.basic.big.button.request
+                    i.concierge.bell.teal.icon
+                    // +icolor name='request-service' cl='ui mini inline image'
+                    |request
 
        
         // .centered.row
-        //     .five.wide.column
+        //     .four.wide.column
                 // if can_debit
-            // .five.wide.column
+            // .four.wide.column
             //     // if can_debit
             //     .ui.fluid.teal.button.request
             //         // i.hand.holding.heart.icon
@@ -108,7 +110,7 @@ template(name='home')
             //                         |#{description}
             //                     each tags 
             //                         .ui.tiny.basic.label #{this}
-            .five.wide.column
+            .four.wide.column
                 a.ui.center.aligned.header(href="/events")
                     i.calendar.teal.icon
                     |next events
@@ -137,7 +139,7 @@ template(name='home')
                                 //     |#{description}
                                 // each tags 
                                 //     .ui.tiny.basic.label #{this}
-            .five.wide.column
+            .four.wide.column
                 a.ui.center.aligned.header(href="/gifts")
                     i.gift.red.icon
                     |gifts
@@ -159,13 +161,13 @@ template(name='home')
                                     |#{description}
                                 each tags 
                                     .ui.basic.label #{this}
-                // .ui.center.aligned.header
-                //     i.chat.icon
-                //     // +icolor name='chat' cl='ui image'
-                //     |latest discussions
-                    
-                // .ui.small.grey.header anouncements
-                // .ui.small.grey.header dms
+            .four.wide.column
+                .ui.center.aligned.header
+                    i.newspaper.icon
+                    |news
+                .ui.large.link.selection.list
+                    each latest_posts
+                        a.item(href="/m/post/#{_id}/view") #{title}
                 
                 // .medscroll
                     // each latest_debits

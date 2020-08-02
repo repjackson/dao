@@ -16,6 +16,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'shift'
         # @autorun => Meteor.subscribe 'model_docs', 'product'
         @autorun => Meteor.subscribe 'model_docs', 'event'
+        @autorun => Meteor.subscribe 'model_docs', 'post'
         @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         @autorun => Meteor.subscribe 'all_users'
         @autorun -> Meteor.subscribe('home_tag_results',
@@ -54,6 +55,13 @@ if Meteor.isClient
             Docs.find {
                 model:'debit'
                 submitted:true
+            },
+                sort:
+                    _timestamp: -1
+                limit:10
+        latest_posts: ->
+            Docs.find {
+                model:'post'
             },
                 sort:
                     _timestamp: -1

@@ -1,5 +1,6 @@
 template(name='nav')
-    .ui.fluid.borderless.inverted.fixed.menu.topnav(class=currentUser.nav_color)
+    // .ui.fluid.inverted.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
+    .ui.fluid.inverted.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.icon.item(href="/" class="{{isActivePath 'home'}}")
@@ -68,7 +69,7 @@ template(name='nav')
 
 
 template(name='top_sidebar')
-    .ui.top.sidebar.inverted.vertical.large.borderless.menu(class=currentUser.nav_color)
+    .ui.top.sidebar.inverted.vertical.large.menu(style="background-color:#{currentUser.theme_color};")
         .spacer
         .spacer
         .spacer
@@ -78,51 +79,54 @@ template(name='top_sidebar')
         .item.header notifications
 
 template(name='right_sidebar')
-    .ui.right.sidebar.inverted.vertical.large.borderless.menu(class=currentUser.nav_color)
+    .ui.right.sidebar.inverted.vertical.large.menu(style="background-color:#{currentUser.theme_color};")
         a.item.profile_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             |profile
         a.item.profile_sidebar(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
             | dashboard
-            i.dashboard.icon
+            i.dashboard.large.icon
         
         a.item.profile_sidebar(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
             | about
-            i.info.icon
+            i.info.large.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
             | received
-            i.chevron.down.icon
+            i.chevron.down.large.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
             | sent
-            i.chevron.up.icon
+            i.chevron.up.large.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
             | events
-            i.calendar.icon
+            i.calendar.large.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
             | requests
-            i.concierge.bell.icon
+            i.concierge.bell.large.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
             | chat
-            i.chat.icon
-        .divider
+            i.chat.large.icon
+        .ui.divider
+        a.item.profile_sidebar(href="/user/#{currentUser.username}/edit" title='edit your account')
+            i.cog.large.large.icon
+            |settings
+
         a.item.logout(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
             |logout
             if is_logging_out
-                i.refresh.loading.icon
+                i.refresh.loading.large.icon
             else
-                i.sign.out.icon
+                i.sign.out.large.icon
 
 
 
 template(name='left_sidebar')
-    .ui.left.sidebar.inverted.vertical.large.borderless.menu(class=currentUser.nav_color)
+    .ui.left.sidebar.inverted.vertical.large.menu(style="background-color:#{currentUser.theme_color};")
         a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             |One
         a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
-            i.large.users.icon
+            i.users.icon
             | members
-            
         a.item.toggle_sidebar(href="/feed" class="{{isActiveRoute 'feed'}}")
             i.blog.icon
             |feed
@@ -144,15 +148,15 @@ template(name='left_sidebar')
         a.item.toggle_sidebar(href="/events" class="{{isActivePath regex='events'}}")
             i.calendar.icon
             |events
-        a.icon.item.mobile.hidden(href="/chat" title='chat') 
+        a.item.mobile.hidden(href="/chat" title='chat') 
             |chat
             i.chat.icon
         if is_admin
             .divider
-            a.icon.blue.item.set_model(href="/m/model" class="{{isActivePath regex='model'}}")
+            a.blue.item.set_model(href="/m/model" class="{{isActivePath regex='model'}}")
                 |admin
                 i.database.blue.icon
-            a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
+            a.item.set_member.mobile.hidden(href="/m/user" class="{{isActiveRoute 'users'}}")
                 i.blue.users.icon
                 | all users
 

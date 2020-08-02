@@ -1,23 +1,9 @@
-template(name='feed')
-    .ui.stackable.padded.grid
-        .row
-            .four.wide.column
-                .ui.inline.header 
-                    i.blog.icon
-                    |feed
-                .ui.icon.button.add_post 
-                    i.plus.icon
-            .twelve.wide.column
-                // .ui.segment
-                //     .ui.big.fluid.input
-                //         input(type='text' placeholder='write something...')
-                each posts 
-                    +post_segment
-                    
-                    
-                    
-                    
-template(name='post_segment')
+template(name='post_card')
+    .ui.card.view_post.pointer
+        .content
+            a.ui.header(href="/m/post/#{_id}/view") #{title}
+        
+template(name='post_item')
     .ui.fluid.segment.view_post.pointer
         a.ui.header(href="/m/post/#{_id}/view") #{title}
         
@@ -28,7 +14,7 @@ template(name='post_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.icon.button(href="/feed")
+                    a.ui.icon.button(href="/m/post")
                         i.large.blog.icon
                     .ui.large.inline.header #{title}
                     // div
