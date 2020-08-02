@@ -126,8 +126,14 @@ if Meteor.isClient
                         Swal.fire(
                             title:"#{@amount} sent"
                             icon:'success'
+                            showClass:
+                                popup: 'swal2-noanimation',
+                                backdrop: 'swal2-noanimation'
+                            hideClass:
+                                popup: '',
+                                backdrop: ''
                             showConfirmButton: false
-                            timer: 1500
+                            timer: 1000
                         )
                         Router.go "/debit/#{@_id}/view"
             )

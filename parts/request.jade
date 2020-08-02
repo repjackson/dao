@@ -42,14 +42,14 @@ template(name='request_view')
                 .sixteen.wide.column
                     a.ui.button(href="/m/request" title='requests')
                         i.chevron.left.icon
-                        i.concierge.bell.icon
+                        i.concierge.bell.big.icon
                     .ui.inline.header 
                         // +icon name='request-service'
                         small viewing request 
                         |#{title}
                     if can_edit
-                        a.edit_request(href="/request/#{_id}/edit")
-                            i.large.blue.pencil.icon
+                        a.ui.circular.icon.button.edit_request(href="/request/#{_id}/edit")
+                            i.large.pencil.icon
             .row 
                 .four.wide.column
                     .ui.header

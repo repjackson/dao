@@ -42,13 +42,13 @@ template(name='nav')
                     else
                         i.shield.large.icon
             if currentUser
-                a.large.item.profile_sidebar(class="{{isActivePath regex='profile_layout'}}")
+                a.large.item.profile_sidebar(class="{{isActiveRoute 'user_dashboard'}}")
                     //- i.large.user.large.icon
                     if currentUser.profile_image_id
                         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     else 
                         i.large.user.large.icon
-                    strong #{currentUser.username}
+                    strong #{currentUser.name}
                     small
                         |#{currentUser.points}p
             else
@@ -60,3 +60,82 @@ template(name='nav')
                     // |login
                     +icon name='login-rounded-right'
                     // i.large.chevron.right.icon
+
+
+
+
+template(name='right_sidebar')
+    .ui.right.thin.sidebar.inverted.vertical.large.borderless.menu
+        a.item.toggle_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
+            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            |profile
+        a.item(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
+            | dashboard
+            i.dashboard.icon
+        
+        a.item(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
+            | about
+            i.info.icon
+        a.item(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
+            | received
+            i.chevron.down.icon
+        a.item(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
+            | sent
+            i.chevron.up.icon
+        a.item(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
+            | events
+            i.calendar.icon
+        a.item(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
+            | requests
+            i.concierge.bell.icon
+        a.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+            | chat
+            i.chat.icon
+        .divider
+        a.item.logout(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+            |logout
+            if is_logging_out
+                i.refresh.loading.icon
+            else
+                i.sign.out.icon
+
+
+
+template(name='left_sidebar')
+    .ui.left.thin.sidebar.inverted.vertical.large.borderless.menu
+        a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
+            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            |One
+        a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
+            i.large.users.icon
+            | members
+            
+        a.item.toggle_sidebar(href="/feed" class="{{isActiveRoute 'feed'}}")
+            i.blog.icon
+            |feed
+        a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
+            i.concierge.bell.icon
+            |requests
+        a.item.toggle_sidebar.set_bug(href="/m/bug" class="{{isActiveRoute 'bugs'}}")
+            i.bug.icon
+            |bugs
+        a.item.toggle_sidebar.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}")
+            i.certificate.icon
+            | badges
+        a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
+            i.tasks.icon
+            | projects
+        a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
+            i.clock.icon
+            |rentals
+        a.item.toggle_sidebar(href="/events" class="{{isActivePath regex='events'}}")
+            i.calendar.icon
+            |events
+        if is_admin
+            a.icon.item.set_model(href="/m/model" class="{{isActivePath regex='model'}}")
+                |admin
+                i.database.icon
+        a.icon.item.mobile.hidden(href="/chat" title='chat') 
+            |chat
+            i.chat.icon
+            

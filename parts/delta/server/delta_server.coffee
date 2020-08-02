@@ -75,7 +75,10 @@ Meteor.methods
         # console.log 'running fum,', delta, model
         built_query = {}
         if delta.search_query
-            built_query.title = {$regex:"#{delta.search_query}", $options: 'i'}
+            if model.collection and model.collection is 'users'
+                built_query.username = {$regex:"#{delta.search_query}", $options: 'i'}
+            else
+                built_query.title = {$regex:"#{delta.search_query}", $options: 'i'}
 
         fields =
             Docs.find

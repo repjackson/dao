@@ -13,7 +13,7 @@ template(name='delta')
                         //-     a.ui.icon.basic.compact.tertiary.button.go_home
                         //-         +icon name='home' cl='ui inline image'
                         a.ui.inline.header.reset(title="#{description}, #{views} views")
-                            +icon name=icon
+                            i.large.loading.icon(class=icon)
                             | #{title}
                     unless is_loading
                         if currentUser
@@ -34,7 +34,7 @@ template(name='delta')
                                     i.remove.icon
                                 .ui.icon.button.print_delta(title='print delta')
                                     i.code.large.icon
-                            i.refresh.link.reset.grey.icon(title='reload session')
+                            i.refresh.link.reset.grey.circular.icon(title='reload session')
                             if is_dev
                                 i.code.link.icon.print_delta(title='print session doc')
                                 i.trash.delete_delta.link.icon(title='delete session')
@@ -49,10 +49,10 @@ template(name='delta')
                     |&nbsp;
                     .ui.icon.input(class=query_class)
                         if current_delta.search_query
-                            i.link.remove.icon.clear_query
+                            i.link.remove.large.icon.clear_query
                         else
                             i.search.icon
-                        input#search(type='text' autocomplete="off" val=current_delta.search_query)
+                        input#search(type='text' autocomplete="off" value=current_delta.search_query)
                     unless single_doc
                         // - .ui.segment(class=loading_class)
                         .ui.inline.small.grey.header(title='change sort direction')
@@ -96,7 +96,7 @@ template(name='delta')
                                 +set_limit amount=5
                                 +set_limit amount=10
                                 +set_limit amount=20
-                                +set_limit amount=50
+                                // +set_limit amount=50
                         |&nbsp;
                         |&nbsp;
                         |&nbsp;
@@ -107,8 +107,8 @@ template(name='delta')
                         // - with delta
                         // -     +key_value_edit key='view_mode' value='list'
                         // -     +key_value_edit key='view_mode' value='cards'
-                        // +set_view_mode title='list' icon='list'
-                        // +set_view_mode title='cards' icon='clone'
+                        +set_view_mode title='list' icon='list'
+                        +set_view_mode title='cards' icon='clone'
                         //- .ui.inline.small.grey.header view
                         //- .ui.simple.dropdown.item
                         //-     |#{current_delta.view_mode}
@@ -138,22 +138,19 @@ template(name='delta')
                                 else
                                     each current_delta.result_ids
                                         +delta_result_card
-                        // else if delta_key_value_is 'view_mode' 'list'
-                        //     //- .ui.segments
-                        //     each current_delta.result_ids
-                        //         if is_loading
-                        //             .ui.basic.segment
-                        //                 .ui.fluid.placeholder
-                        //                     .line
-                        //                     .line
-                        //                     .line
-                        //                     .line
-                        //                     //- .line
-                        //                     //- .line
-                        //                     //- .line
-                        //         else 
-                        //             +delta_list_result
-                        //             //- .ui.divider
+                        else if delta_key_value_is 'view_mode' 'list'
+                            //- .ui.segments
+                            each current_delta.result_ids
+                                if is_loading
+                                    .ui.basic.segment
+                                        .ui.fluid.placeholder
+                                            .line
+                                            .line
+                                            .line
+                                            .line
+                                else 
+                                    +delta_list_result
+                                    .ui.divider
                     //- +Template.dynamic template=view_mode_template
             //- .row 
             //-     .sixteen.wide.column

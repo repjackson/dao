@@ -263,7 +263,7 @@ if Meteor.isClient
             console.log 'create delta'
             Docs.insert
                 model:'delta'
-                view_mode:'list'
+                view_mode:'cards'
                 app:'stand'
                 model_filter: Router.current().params.model_slug
 
