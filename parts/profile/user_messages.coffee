@@ -76,6 +76,7 @@ if Meteor.isClient
                 model:'message'
                 target_user_id: target_user._id
                 is_private:true
+                _author_id:Meteor.userId()
 
 
 
@@ -93,6 +94,7 @@ if Meteor.isServer
             model:'message'
             target_user_id: target_user._id
             is_private:true
+            _author_id:Meteor.userId()
 
 
 
