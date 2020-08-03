@@ -49,6 +49,7 @@ if Meteor.isClient
     Template.events.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'event'
         @autorun => Meteor.subscribe 'model_docs', 'badge'
+        @autorun => Meteor.subscribe 'all_users'
         
     Template.events.events
         'click .add_event': ->

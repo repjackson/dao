@@ -1,6 +1,12 @@
 template(name='home')
     .ui.stackable.padded.grid
         .row 
+            if is_admin
+                .ui.big.button.check_notifications
+                    |check
+                .ui.big.button.send_notification
+                    |send
+                
             .sixteen.wide.column.toggle_finance_details
                 .ui.green.small.progress.bar.pointer
                     .bar
