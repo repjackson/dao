@@ -28,9 +28,16 @@ template(name='bug_card')
     .ui.card
         .content
             a.ui.header.view_bug.pointer(href="/m/bug/#{_id}/view") #{title}
-            |!{content}
+            |!{description}
+            div
+            i.tag.icon
             each tags
-                .ui.label #{this}
+                .ui.basic.small.label #{this}
+            if location_tags
+                i.marker.icon
+                each location_tags
+                    .ui.basic.small.label #{this}
+            div
             +voting
             div
             a.ui.basic.button(href="/m/bug/#{_id}/view")
@@ -45,8 +52,8 @@ template(name='bug_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.basic.icon.button(href="/m/bug")
-                        i.large.bug.icon
+                    a(href="/m/bug")
+                        i.big.circular.link.bug.icon
                     .ui.large.inline.header #{title}
                     // div
                     // .ui.inline.grey.header {{from_now start_datetime}}
@@ -70,20 +77,20 @@ template(name='bug_view')
                     .ui.list
                         .item #{views} views
                     each viewers
-                        .ui.label #{username
+                        .ui.label #{username}
                     .ui.hidden.divider
+                    +voting_full
+                    +array_view key='location_tags' label='location_tags' direct=true
                 .twelve.wide.column
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     .ui.segment
-                        |!{content}
+                        |!{description}
                     div 
                     +array_view key='tags' label='tags' direct=true
                     .spacer
                     .spacer
                     +comments
-                    // +voting_full
-                    //- +array_view key='location_tags' label='location_tags' direct=true
                 // .four.wide.column
                 
 

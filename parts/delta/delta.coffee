@@ -77,6 +77,8 @@ if Meteor.isClient
             model:'model'
             slug: Router.current().params.model_slug
 
+    Template.registerHelper 'is_loading', () ->
+        Session.get('loading')
     Template.registerHelper 'field_value', () ->
         # console.log @
         parent = Template.parentData()
@@ -140,7 +142,6 @@ if Meteor.isClient
             else
                 'sixteen wide column'
     
-        is_loading: -> Session.get('loading')
         subs_ready: ->
             Template.instance().subscriptionsReady()
         table_header_column: ->

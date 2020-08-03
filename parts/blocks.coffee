@@ -275,7 +275,7 @@ if Meteor.isClient
             readers = []
             if @read_ids
                 for reader_id in @read_ids
-                    unless reader_id is @author_id
+                    unless reader_id is @_author_id
                         readers.push Meteor.users.findOne reader_id
             readers
 #

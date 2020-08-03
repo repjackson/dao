@@ -1,10 +1,10 @@
 Template.html_edit.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
-        # if @direct
-        parent = Template.parentData()
-        # else
-        #     parent = Template.parentData(5)
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
         doc = Docs.findOne parent._id
         user = Meteor.users.findOne parent._id
         if doc
@@ -78,7 +78,7 @@ Template.html_edit.helpers
             # toolbarButtonsMD: ['bold', 'italic', 'underline']
             # toolbarButtonsSM: ['bold', 'italic', 'underline']
             toolbarButtonsXS: ['bold', 'italic', 'underline']
-            imageInsertButtons: ['imageBack', '|', 'imageByURL']
+            # imageInsertButtons: ['imageBack', '|', 'imageByURL']
             tabSpaces: false
             height: 200
         }

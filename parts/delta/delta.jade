@@ -1,50 +1,19 @@
 template(name='delta')
     .ui.stackable.grid
         with current_model
-            .middle.aligned.row
-                .sixteen.wide.column
-                    if is_loading
-                        .ui.inline.header.pulsing
-                            //- +icon name=color_icon cl='pulsing'
-                            i.grey.loading.yin.yang.icon
-                            | #{title}...
-                    else
-                        //- unless key_value_is current_delta.model_filter 'model'
-                        //-     a.ui.icon.basic.compact.tertiary.button.go_home
-                        //-         +icon name='home' cl='ui inline image'
-                        a.ui.inline.header.reset(title="#{description}, #{views} views")
-                            i.large.loading.icon(class=icon)
-                            | #{title}
-                    unless is_loading
-                        if currentUser
-                            unless key_value_is current_delta.model_filter 'model'
-                                i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
-                            else 
-                                if is_admin
-                                    .ui.icon.basic.button.add_model_doc(title="add #{slug}")
-                                        i.plus.large.green.icon
-                        //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
-                        if is_admin
-                            i.cog.large.circular.link.icon.edit_model(title='edit model')
-                        if current_delta
-                            // if is_admin
-                            if is_dev
-                                i.refresh.link.reset.grey.circular.icon(title='reload session')
-                                .ui.icon.button.delete_delta(title='delete session document')
-                                    i.remove.icon
-                                i.code.link.icon.print_delta(title='print session doc')
-                                i.trash.delete_delta.link.icon(title='delete session')
-                        else
-                            .create_delta.ui.big.green.circular.button(title='new session')
-                                i.plus.icon
-                                |session
-                    div
+            // unless current_model.show_facets
+            //     .middle.aligned.row
+            //         .sixteen.wide.column
+            //             +model_top
             .row
                 if current_model.show_facets
                     .four.wide.column
+                        +model_top
                         each sorted_facets
                             +facet
                 div(class=result_column_class)
+                    unless current_model.show_facets
+                        +model_top
                     if current_model.show_filter_bar
                         |&nbsp;
                         .ui.icon.input(class=query_class)
@@ -168,6 +137,45 @@ template(name='delta')
             .ui.hidden.divider
             .ui.header
                 i.big.loading.grey.yin.yang.icon
+            
+            
+template(name='model_top')
+    if is_loading
+        .ui.inline.header.pulsing
+            //- +icon name=color_icon cl='pulsing'
+            i.grey.loading.yin.yang.icon
+            | #{title}...
+    else
+        //- unless key_value_is current_delta.model_filter 'model'
+        //-     a.ui.icon.basic.compact.tertiary.button.go_home
+        //-         +icon name='home' cl='ui inline image'
+        a.ui.inline.header.reset(title="#{description}, #{views} views")
+            i.large.loading.icon(class=icon)
+            | #{title}
+    unless is_loading
+        if currentUser
+            unless key_value_is current_delta.model_filter 'model'
+                i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
+            else 
+                if is_admin
+                    .ui.icon.basic.button.add_model_doc(title="add #{slug}")
+                        i.plus.large.green.icon
+        //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
+        if is_admin
+            i.cog.large.circular.link.icon.edit_model(title='edit model')
+        if current_delta
+            // if is_admin
+            if is_dev
+                i.refresh.link.reset.grey.circular.icon(title='reload session')
+                .ui.icon.button.delete_delta(title='delete session document')
+                    i.remove.icon
+                i.code.link.icon.print_delta(title='print session doc')
+                i.trash.delete_delta.link.icon(title='delete session')
+        else
+            .create_delta.ui.big.green.circular.button(title='new session')
+                i.plus.icon
+                |session
+            
             
             
 template(name='toggle_visible_field')            
