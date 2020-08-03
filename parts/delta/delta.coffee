@@ -443,6 +443,9 @@ if Meteor.isClient
 
 
 
+    Template.facet.onCreated ->
+        @viewing_facet = new ReactiveVar true
+    
     Template.facet.onRendered ->
         Meteor.setTimeout ->
             $('.accordion').accordion()
@@ -451,6 +454,8 @@ if Meteor.isClient
     Template.facet.events
         # 'click .ui.accordion': ->
         #     $('.accordion').accordion()
+        'click .toggle_view_facet': (e,t)->
+            t.viewing_facet.set !t.viewing_facet.get()
 
         'click .toggle_selection': ->
             delta = Docs.findOne model:'delta'
@@ -482,6 +487,8 @@ if Meteor.isClient
 
 
     Template.facet.helpers
+        viewing_results: ->
+            Template.instance().viewing_facet.get()
         filtering_res: ->
             delta = Docs.findOne model:'delta'
             filtering_res = []

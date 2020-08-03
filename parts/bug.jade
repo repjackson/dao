@@ -40,6 +40,8 @@ template(name='bug_card')
             div
             +voting
             div
+            if is_dev
+                +print_this
             a.ui.basic.button(href="/m/bug/#{_id}/view")
                 |view
                 i.right.chevron.icon
