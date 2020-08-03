@@ -14,7 +14,10 @@ template(name='requests')
 template(name='request_card')
     .card.pointer.request_card
         .image
-            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+            if youtube_id
+                +youtube_view key='youtube_id' direct=true
+            else if image_id
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             .ui.header
                 |#{title}
@@ -53,6 +56,8 @@ template(name='request_view')
                 .four.wide.column
                     .ui.header
                         |#{point_bounty}pts offered
+                    if image_id
+                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
                     .ui.header 
                         small posted by
                     a.ui.header(href="/user/#{_author.username}") 
@@ -65,14 +70,17 @@ template(name='request_view')
                     .ui.header
                         i.users.icon
                         |audience
+                    +array_view key='location_tags' label='location_tags' direct=true
+                    +voting_full
                 .eight.wide.column
+
                     .f13
                         |!{description}
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
-                            
-                    +image_view key='image_id' label='image' direct=true
+                    if youtube_id
+                        +youtube_view key='youtube_id' direct=true
                     .spacer
                     i.large.tags.icon
                     each tags 
@@ -80,8 +88,6 @@ template(name='request_view')
                     .spacer
                     .spacer
                     +comments
-                    // +voting_full
-                    //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     .ui.header status: #{status}
                     if can_claim
@@ -118,7 +124,7 @@ template(name='request_edit')
                     a.ui.green.icon.button(href="/request/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
-                        +icon name='request-service'
+                        i.concierge.bell.icon
                         small edit request
                         |#{title}
                     i.large.remove.link.circular.icon.delete_request(title='cancel')
@@ -129,6 +135,7 @@ template(name='request_edit')
                         |#{_author.username}
                     +text_edit key='title' icon='header' direct=true
                     +date_edit key='date' label='date' icon='calendar' direct=true
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
                     .ui.header
                         +icon name='audience'
                         |audience

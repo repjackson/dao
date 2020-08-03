@@ -170,6 +170,11 @@ template(name='home')
                     each latest_requests
                         .ui.segment.view_request
                             .content
+                                if youtube_id
+                                    +youtube_view key='youtube_id' direct=true
+                                else if image_id
+                                    img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+
                                 .header
                                     .ui.inline.header #{point_bounty}p: #{title}
                                     if _author.profile_image_id

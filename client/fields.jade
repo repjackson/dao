@@ -1,3 +1,60 @@
+template(name='youtube_edit')
+    .ui.labeled.fluid.icon.input
+        .ui.smoothed.label 
+            // if icon
+            //     i.icon(class=icon)
+            |Youtube Id
+        input.youtube_id(type='text' value=field_value placeholder=placeholder autocomplete="off")
+    if field_value
+        iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+
+template(name='youtube_view')
+    if field_value
+        if icon
+            +i name=icon
+            //- i.icon(class=icon)
+        .ui.embed(data-source="youtube" data-id=field_value)
+
+        //- // iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+        //- iframe(src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+
+
+
+template(name='color_edit')
+    .ui.large.form
+        .field
+            label 
+                if icon
+                    +i name=icon
+                    //- i.grey.icon(class=icon)
+                if title
+                    |#{title}
+                else if key
+                    |#{key}
+                else
+                    |#{this}
+            input.edit_color(type='color' value=field_value placeholder='color' autocomplete="off")
+
+
+
+template(name='color_view')
+    .ui.form
+        .field
+            label 
+                if icon
+                    //- +i name=icon
+                    i.grey.icon(class=icon)
+                if title
+                    |#{title}
+                else if key
+                    |#{key}
+                else
+                    |#{this}
+            .ui.large.label(style="background:#{field_value}")
+            |#{field_value}
+
+
+
 template(name='html_edit')
     .ui.form
         .field
@@ -135,12 +192,12 @@ template(name='i')
 template(name='ioffice')
     img(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl title=title)
 template(name='icolor')
-    i.icon(name=name)
-    // img(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl title=title)
+    // i.icon(name=name)
+    img(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl title=title)
     // img(src="https://img.icons8.com/dusk/48/000000/#{name}.png" class=cl title=title)
 template(name='icolorlg')
-    i.icon(name=name)
-    // img(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
+    // i.icon(name=name)
+    img(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
 template(name='iios')
     img(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl title=title)
     //- img(src="https://img.icons8.com/ultraviolet/48/000000/#{name}.png" class=cl title=title)
@@ -285,6 +342,51 @@ template(name='textarea_edit')
                 //-     |#{this}
             textarea.edit_textarea(rows='7') #{field_value}
 
+template(name='pdf_edit')
+    .ui.form
+        .ui.inline.small.header
+            if icon
+                +i name=icon
+                //- i.grey.icon(class=icon)
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else if key
+                |#{key}
+            else
+                |#{this}            
+        .field
+            if field_value
+                label Uploaded PDF
+                a.ui.circular.button(href="{{c.url field_value gravity='face' crop='fit'}}")
+                    |Download PDF
+                #remove_photo.ui.icon.circular.button
+                    i.remove.red.icon
+            else
+                //- if icon
+                //-     i.icon(class=icon)
+                //- |#{title}
+                //- if is_dev
+                //-     input.cloudinary_id(type='text' value=field_value placeholder='cloudinary_id' autocomplete="off")
+                // else
+                //     label Upload Image
+                input(type='file' name='upload_pdf' accept='application/pdf')
+
+template(name='pdf_view')
+    if field_value
+        if icon
+            +i name=icon
+            //- i.icon(class=icon)
+        if title
+            |#{title}
+        //- else if key
+        //-     |#{key}
+        //- else
+        //-     |#{this}
+        a(href="{{c.url field_value gravity='face' crop='fit'}}")
+            |download pdf
+    //- +call_visual
 
         
 template(name='text_edit')
@@ -306,8 +408,7 @@ template(name='text_edit')
 
 template(name='slug_edit')
     if icon
-        //- i.grey.icon(class=icon)
-        +icon name=icon cl='ui avatar image'
+        i.grey.icon(class=icon)
     .ui.inline.header.pointer.slugify_title
         if title
             |#{title}
@@ -315,6 +416,7 @@ template(name='slug_edit')
             |#{label}
         else if key
             |#{key}
+        small (click to auto slugify)
     //- +clear_value
     .ui.icon.fluid.input
         input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")

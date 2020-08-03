@@ -85,7 +85,7 @@ html.ios body {
 }
 
 .topnav.menu {
-    /* border-radius: 0 0 10px 10px !important; */
+    border-radius: 0 0 10px 10px !important; 
     transition: background-color 2s ease !important;
     /* background-color: rgba(250,250,250,.6) !important; */
     /*background-color: rgba(50,110,100,1) !important; */
@@ -151,7 +151,7 @@ html.ios body {
 } */
 .menu:not(.topnav) {
      /*border-radius: 10px !important; */
-    transition: background-color 3s ease !important;
+    transition: background-color 2s ease !important;
 }
 
 .topnav > .item {
@@ -236,7 +236,7 @@ html.ios body {
 }
 
 .rounded {
-     /*border-radius: 10px !important; */
+     border-radius: 10px !important; 
 }
 
 .sadness {
@@ -461,10 +461,10 @@ input {
     border-style: solid !important; */
     max-height: 300px !important;
     overflow-y:scroll;
-	overflow-x:hidden;
-	/* padding-top: .2em; */
-	padding: .2em;
-	/*padding-left: 1em;*/
+    overflow-x:hidden;
+    /* padding-top: .2em; */
+    padding: .2em;
+    /*padding-left: 1em;*/
 }
 .medscroll{
     /* padding: 5px !important;

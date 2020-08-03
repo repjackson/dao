@@ -9,9 +9,11 @@ template(name='model_edit_layout')
         .ui.stackable.padded.grid            
             .centered.row
                 .four.wide.column
-                    .ui.header
-                        small editing model
-                        strong #{title}
+                    small editing model
+                    .ui.inline.header
+                        i.icon(class=icon)
+                        |#{title}
+                    div
                     |created
                     +creation_info
                     div

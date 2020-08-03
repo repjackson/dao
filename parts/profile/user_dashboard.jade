@@ -54,7 +54,7 @@ template(name='user_dashboard')
                     .ui.segment
                         a.header(href="/request/#{_id}/view")
                             |#{point_bounty}pts: #{title}
-                        |#{description}
+                        |!{description}
                         |status: #{status}
                         if complete 
                             |completed by #{completer.name}

@@ -16,7 +16,7 @@ template(name='event_view')
                     
                     if can_edit
                         a.edit_event(href="/event/#{_id}/edit" title='edit')
-                            i.large.blue.link.pencil.icon
+                            i.large.blue.link.pencil.circular.icon
             .row 
                 .four.wide.column
                     if location 
@@ -24,7 +24,7 @@ template(name='event_view')
                         |#{location}
                     img.ui.fluid.rounded.image(src="{{c.url image_id }}")
                     if is_admin
-                        .ui.tertiary.segment
+                        .ui.segment
                             .ui.header 
                                 small author
                             a.ui.header(href="/user/#{_author.username}") 
@@ -47,6 +47,8 @@ template(name='event_view')
                         +gcal_button
                     .ui.hidden.divider
                     +array_view key='tags' label='tags' icon='tags red' direct=true
+                    +voting_full
+                    +array_view key='location_tags' label='location_tags' direct=true
                 .eight.wide.column
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
@@ -55,9 +57,7 @@ template(name='event_view')
                     // div 
                     // .spacer
                     // .spacer
-                    // +comments
-                    // +voting_full
-                    //- +array_view key='location_tags' label='location_tags' direct=true
+                    +comments
                 .four.wide.column
                     .ui.inline.large.header 
                         |RSVP

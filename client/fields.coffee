@@ -1,3 +1,50 @@
+Template.youtube_edit.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.embed').embed();
+    , 1000
+
+Template.youtube_view.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.embed').embed();
+    , 1000
+
+
+Template.youtube_edit.events
+    'blur .youtube_id': (e,t)->
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+        val = t.$('.youtube_id').val()
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":val
+        else if user
+            Meteor.users.update parent._id,
+                $set:"#{@key}":val
+
+
+
+Template.color_edit.events
+    'blur .edit_color': (e,t)->
+        val = t.$('.edit_color').val()
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":val
+        else if user
+            Meteor.users.update parent._id,
+                $set:"#{@key}":val
+
+
+
 Template.html_edit.events
     'blur .froala-container': (e,t)->
         html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)

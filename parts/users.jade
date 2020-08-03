@@ -46,11 +46,13 @@ template(name='user_cloud')
         
 
 template(name='member_card')
-    .card.rounded.pointer.calc_points
-        a(href="/user/#{username}")
-            img.ui.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
+    .card.rounded.calc_points
+        a.pointer(href="/user/#{username}")
+            img.ui.zoom.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.inline.header(href="/user/#{username}" style="color:#{theme_color};")
+            a.ui.inline.header.pointer(href="/user/#{username}" style="color:#{theme_color};")
+                if spirit_animal
+                    +icolor name=spirit_animal cl='ui avatar image'
                 |#{name}
                 //- |#{username}
             .ui.small.inline.header(style="color:#{theme_color};") #{points}pts
@@ -58,9 +60,9 @@ template(name='member_card')
                 .ui.green.label online
             if current_status
                 .ui.small.header(title='status' style="color:#{theme_color};")
-                    i.clock.icon
+                    i.small.clock.icon
                     |#{current_status}
-                
+
             // each levels
             //     .ui.label #{this}
             // strong #{credit_count} credits
@@ -94,8 +96,8 @@ template(name='user_card')
             a.ui.header(href="/user/#{username}" class=theme_color) 
                 |#{name}
                 //- |#{username}
-                // if spirit_animal
-                //     +icolor name=spirit_animal cl='ui avatar image'
+                if spirit_animal
+                    +icolor name=spirit_animal cl='ui avatar image'
             // each levels
             //     .ui.label #{this}
             // strong #{credit_count} credits

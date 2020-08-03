@@ -7,7 +7,7 @@ template(name='delta_result_card')
                 .content
                     if key_value_is 'model' 'model'
                         .ui.header
-                            +icon name=color_icon
+                            i.icon(class=icon)
                             |#{title}
                     else
                         each fields
@@ -62,14 +62,12 @@ template(name='delta_list_result')
                 .content
                     if key_value_is 'model' 'model'
                         a.ui.inline.header.route_model(href="/m/#{slug}")
-                            +icon name=color_icon
+                            i.icon(class=icon)
                             |#{title}
                     else
                         //- each visible_fields
                         each fields
-                            //- .ui.header vis field
                             +Template.dynamic template=view_template
-                            //- div
                     span.extra
                         if key_value_is 'model' 'model'
                             //- +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark' color='red'
