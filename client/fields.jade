@@ -640,13 +640,12 @@ template(name='array_view')
     if field_value
         div
         if icon
-            i.grey.icon(class=icon)
-            //- +icon name=icon cl='ui avatar image' title=title
+            i.icon(class=icon)
         if label
             .ui.inline.small.grey.header(title=title)
                 |#{label}
         each field_value
-            .ui.label #{this}
+            .ui.basic.label #{this}
 
 
 template(name='children_edit')

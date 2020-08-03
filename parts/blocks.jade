@@ -325,6 +325,8 @@ template(name='voting')
     i.thumbs.down.large.link.circular.icon.downvote(class=downvote_class title='downvote')
     each downvoter_ids
         +user_info_small
+    if is_dev
+        +number_edit key='points' label='edit points' direct=true
     if points
         strong #{points} pts
     if anon_points

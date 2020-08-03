@@ -27,7 +27,10 @@ template(name='bugs')
 template(name='bug_card')
     .ui.card
         .content
-            a.ui.header.view_bug.pointer(href="/m/bug/#{_id}/view") #{title}
+            a.ui.header.view_bug.pointer(href="/m/bug/#{_id}/view")
+                if complete
+                    i.green.checkmark.icon(title='complete')
+                |#{title}
             |!{description}
             div
             i.tag.icon
@@ -73,23 +76,21 @@ template(name='bug_view')
                         a.ui.header(href="/user/#{_author.username}") 
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
-                    .ui.small.grey.header 
-                        i.line.chart.icon
-                        |stats
                     .ui.list
                         .item #{views} views
                     each viewers
                         .ui.label #{username}
                     .ui.hidden.divider
+                    +array_view key='tags' label='tags' icon='red tags' direct=true
+                    +array_view key='location_tags' label='location tags' icon='brown marker' direct=true
+                    div 
                     +voting_full
-                    +array_view key='location_tags' label='location_tags' direct=true
                 .twelve.wide.column
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     .ui.segment
                         |!{description}
                     div 
-                    +array_view key='tags' label='tags' direct=true
                     .spacer
                     .spacer
                     +comments
