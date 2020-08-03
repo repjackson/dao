@@ -37,9 +37,8 @@ template(name='badge_card')
             // |#{location} 
             |!{description}
             each badgers
-                .ui.basic.small.compact.label
-                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    |#{name}
+                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
+                // |#{name}
 
 
 template(name='badge_view')
@@ -49,7 +48,7 @@ template(name='badge_view')
                 .sixteen.wide.column
                     // if can_edit
                     a.ui.icon.button(href="/m/badge")
-                        i.large.certificate.icon
+                        i.big.certificate.icon
                     +icolorlg name=icon cl='ui inline image'
                     .ui.center.aligned.inline.header 
                         small viewing badge: 
@@ -128,8 +127,8 @@ template(name='badge_edit')
                     .ui.segment
                         .ui.small.header add badgers
                         each unselected_badgers
-                            .ui.basic.button.add_badger
-                                img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            .ui.basic.circular.compact.button.add_badger
+                                img.ui.avatar.circular.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{name}
                     
                     // .ui.header

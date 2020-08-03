@@ -3,9 +3,10 @@ template(name='user_about')
         i.info.icon
         |user info
     with current_user
-        a.ui.compact.button(href="{{c.url genekeys_profile }}" target="_window")
-            +icon name='dna-helix' cl='ui inline mini image'
-            |view gene keys profile
+        // a.ui.compact.button(href="{{c.url genekeys_profile }}" target="_window")
+        //     +icon name='dna-helix' cl='ui inline mini image'
+            
+        //     |view gene keys profile
         .ui.four.column.stackable.grid
             .column
                 .ui.small.header What do you hope to receive?
@@ -31,16 +32,21 @@ template(name='user_about')
                     |#{this}
                 // +user_info_tag
         div
-        .ui.small.inline.header levels
+        .ui.inline.header 
+            i.line.chart.icon
+            |levels
         each levels
             .ui.basic.label #{this}
-               
-        //- a.ui.basic.compact.button.logout_other_clients(href="#")
-        //-     //- i.globe.icon
-        //-     |log out other clients
         div
-        .ui.small.inline.header 
-            //- +icon name='shield'
+        .ui.inline.header 
+            |city:
+            |#{city}               
+        div
+        .ui.inline.header 
+            |state:
+            |#{state}               
+        div
+        .ui.inline.header 
             i.shield.icon
             |roles
         each roles

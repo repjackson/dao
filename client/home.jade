@@ -1,17 +1,17 @@
 template(name='home')
     .ui.stackable.padded.grid
         .row 
-            if is_admin
-                .ui.big.button.check_notifications
-                    |check
-                .ui.big.button.send_notification
-                    |send
+            // if is_admin
+            //     .ui.big.button.check_notifications
+            //         |check
+            //     .ui.big.button.send_notification
+            //         |send
                 
             .sixteen.wide.column.toggle_finance_details
                 .ui.green.small.progress.bar.pointer
                     .bar
-                    .label
-                        |monthly budget progress / 20k
+                    // .label
+                    //     |monthly budget progress / 20k
                 if viewing_finance_details
                     .ui.stackable.grid
                         .three.column.row
@@ -23,7 +23,6 @@ template(name='home')
                                 .ui.header coolest member
                             .column
                                 .ui.header most generative member
-                                .ui.header sexiest member
                     
         .centered.row
             .sixteen.wide.center.aligned.column
@@ -43,8 +42,11 @@ template(name='home')
                     //         |send
                 .ui.basic.big.button.request
                     i.concierge.bell.teal.icon
-                    // +icolor name='request-service' cl='ui mini inline image'
                     |request
+                if is_admin
+                    a.ui.basic.big.button(href='/register')
+                        i.plus.icon
+                        |add member
 
        
         // .centered.row
@@ -130,7 +132,7 @@ template(name='home')
                 // if is_admin 
                 //     i.plus.icon.add_event
                     
-                .medscroll.mobile.hidden
+                .smallscroll
                     each next_events
                         a.ui.fluid.card(href="/event/#{_id}/view")
                             img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
@@ -142,7 +144,7 @@ template(name='home')
                                     if _author.profile_image_id
                                         with _author
                                             img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                                    | #{_author_username}
+                                    | #{_author.name}
                                 // .meta #{when}
                                 .description 
                                     if going_user_ids.length
@@ -154,39 +156,36 @@ template(name='home')
                                 // each tags 
                                 //     .ui.tiny.basic.label #{this}
             .four.wide.column
-                .ui.center.aligned.header.mobile.hidden
+                a.ui.center.aligned.header(href="/m/debit")
                     i.gift.red.icon
                     |gifts
-                .medscroll.mobile.hidden
+                .smallscroll
                     each latest_debits
-                        .ui.card.pointer.view_debit
+                        +debit_card
+            .four.wide.column
+                a.ui.center.aligned.header(href="/requests")
+                    i.concierge.bell.icon
+                    |requests
+                .smallscroll
+                    each latest_requests
+                        .ui.segment.view_request
                             .content
-                                .description 
+                                .header
+                                    .ui.inline.header #{point_bounty}p: #{title}
                                     if _author.profile_image_id
                                         with _author
                                             img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                                    | #{_author_username}
-                                    .ui.inline.header >
-                                    if recipient.profile_image_id
-                                        with recipient
-                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                                    |#{recipient.username}
-                                    .ui.inline.header #{amount}p
+                                    | #{_author.name}
+                                |!{description}
                                 .meta #{when}
-                                .description.f11
-                                    |#{description}
-                                each tags 
-                                    .ui.basic.label #{this}
-                                if doc_comments.count
-                                    .meta
-                                        i.grey.chat.icon
-                                        each doc_comments 
-                                            |#{body}
+                                // each tags 
+                                //     .ui.tiny.basic.label #{this}
+                                            
             .four.wide.column
-                .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/m/post")
                     i.newspaper.icon
                     |news
-                .ui.large.link.selection.list
+                .ui.large.link.selection.list.smallscroll
                     each latest_posts
                         a.item(href="/m/post/#{_id}/view")
                             .header #{title}
@@ -209,28 +208,34 @@ template(name='home')
                     //                 |#{description}
                     //             each tags 
                     //                 .ui.tiny.basic.label #{this}
-            .four.wide.column
-                a.ui.center.aligned.header(href="/requests")
-                    i.concierge.bell.icon
-                    |requests
-                .medscroll.mobile.hidden
-                    .ui.selection.link.list
-                        each latest_requests
-                            a.item(href="/request/#{_id}/view")
-                                .content
-                                    .header
-                                        .ui.inline.header #{point_bounty}p: #{title}
-                                        if _author.profile_image_id
-                                            with _author
-                                                img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                                        | #{_author.name}
-                                    |#{description}
-                                    .meta #{when}
-                                    // each tags 
-                                    //     .ui.tiny.basic.label #{this}
                                     
                                     
-                                    
+template(name='debit_card')
+    .ui.card.pointer.view_debit
+        .content
+            .description 
+                if _author.profile_image_id
+                    with _author
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                | #{_author_username}
+                .ui.inline.header >
+                if recipient.profile_image_id
+                    with recipient
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                |#{recipient.username}
+                .ui.inline.header #{amount}p
+            .meta #{when}
+            .description.f11
+                |#{description}
+            .spacer
+            each tags 
+                .ui.basic.label #{this}
+            if doc_comments.count
+                .meta
+                    each doc_comments 
+                        i.grey.chat.icon
+                        |#{body}
+
                                     
 template(name='join_button')
     .ui.fluid.green.button.join

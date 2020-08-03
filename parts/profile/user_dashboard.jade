@@ -21,15 +21,16 @@ template(name='user_dashboard')
                         small #{when}
                         div
                         |#{description}
+                        .spacer
                         each tags
                             .ui.mini.basic.label #{this}
         .column
             a.ui.inline.spaced.header(href="/user/#{username}/debits")
                 i.chevron.up.icon
-                |#{total_send_amount}p
+                |#{total_debit_amount}p
                 |sent
-                small(title='send count') (#{send_count}x)
-                    .ui.label ##{global_send_count_rank}
+                small(title='debit count') (#{debit_count}x)
+                .ui.label(title='rank') ##{global_debit_count_rank}
             div
             .scrolling
                 each user_debits

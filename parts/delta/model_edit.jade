@@ -19,6 +19,9 @@ template(name='model_edit_layout')
                         i.big.checkmark.icon
                     #delete_model.ui.icon.button
                         i.trash.icon
+                    .ui.divider
+                    +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
+                    +boolean_edit key='show_facets' label='show facets' direct=true
                 .twelve.wide.column
                     a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActivePath 'model_edit_dashboard'}}")
                         i.dashboard.icon

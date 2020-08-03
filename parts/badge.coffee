@@ -117,12 +117,13 @@ if Meteor.isClient
     Template.badge_edit.helpers
         unselected_badgers: ->
             badge = Docs.findOne Router.current().params.doc_id
-            Meteor.users.find({
-                _id:$nin:@badger_ids
-            }, 
-                limit:10
-                sort:points:-1
-            )
+            if @badger_ids
+                Meteor.users.find({
+                    _id:$nin:@badger_ids
+                })
+            else
+                Meteor.users.find({
+                })
         unselected_honey_badgers: ->
             badge = Docs.findOne Router.current().params.doc_id
             Meteor.users.find {},

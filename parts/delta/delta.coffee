@@ -132,6 +132,14 @@ if Meteor.isClient
     #     Meteor.call 'log_view', @_id, ->
 
     Template.delta.helpers
+        result_column_class: ->
+            delta = Docs.findOne model:'delta'
+            model = Docs.findOne model:'model'
+            if model.show_facets
+                'twelve wide column'
+            else
+                'sixteen wide column'
+    
         is_loading: -> Session.get('loading')
         subs_ready: ->
             Template.instance().subscriptionsReady()

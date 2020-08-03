@@ -48,6 +48,13 @@ Meteor.users.helpers
             "#{@first_name} #{@last_name}"
         else
             "#{@username}"
+    shortname: ->
+        if @nickname
+            "#{@nickname}"
+        else if @first_name
+            "#{@first_name}"
+        else
+            "#{@username}"
     email_address: -> if @emails and @emails[0] then @emails[0].address
     email_verified: -> if @emails and @emails[0] then @emails[0].verified
     first_five_tags: ->
@@ -153,16 +160,19 @@ Meteor.methods
                         credit:.02
                         upvotes:1
                         downvotes:-1
+                        points:1
             else if doc.upvoter_ids and Meteor.userId() in doc.upvoter_ids
                 Docs.update doc._id,
                     $pull: upvoter_ids:Meteor.userId()
                     $inc:
                         credit:-.01
                         upvotes:-1
+                        points:-1
             else
                 Docs.update doc._id,
                     $addToSet: upvoter_ids:Meteor.userId()
                     $inc:
+                        points:1
                         upvotes:1
                         credit:.01
             Meteor.users.update doc._author_id,
@@ -183,18 +193,21 @@ Meteor.methods
                     $addToSet: downvoter_ids:Meteor.userId()
                     $inc:
                         credit:-.02
+                        points:-2
                         downvotes:1
                         upvotes:-1
             else if doc.downvoter_ids and Meteor.userId() in doc.downvoter_ids
                 Docs.update doc._id,
                     $pull: downvoter_ids:Meteor.userId()
                     $inc:
+                        points:1
                         credit:.01
                         downvotes:-1
             else
                 Docs.update doc._id,
                     $addToSet: downvoter_ids:Meteor.userId()
                     $inc:
+                        points:-1
                         credit:-.01
                         downvotes:1
             Meteor.users.update doc._author_id,

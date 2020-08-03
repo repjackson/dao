@@ -31,7 +31,8 @@ template(name='bug_card')
             |!{content}
             each tags
                 .ui.label #{this}
-            +voting_full
+            +voting
+            div
             a.ui.basic.button(href="/m/bug/#{_id}/view")
                 |view
                 i.right.chevron.icon

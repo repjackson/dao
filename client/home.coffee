@@ -96,6 +96,8 @@ if Meteor.isClient
     Template.home.events
         'click .view_debit': ->
             Router.go "/debit/#{@_id}/view"
+        'click .view_request': ->
+            Router.go "/request/#{@_id}/view"
     
         'click .toggle_finance_details': ->
             Session.set('view_finance_details', !Session.get('view_finance_details'))

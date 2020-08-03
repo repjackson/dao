@@ -62,10 +62,10 @@ template(name='comments')
         each doc_comments
             .comment
                 .content
-                    .ui.inline.header #{body}
+                    .ui.inline.small.header #{body}
                     span.meta #{when}
                         |by 
-                        a(href="/user/#{author.username}") #{author.first_name} #{author.last_name}
+                        a(href="/user/#{_author.username}") #{_author.name}
                         if currentUser
                             +voting_small
                             if can_edit
@@ -237,13 +237,20 @@ template(name='big_user_card')
 
 
 template(name='user_info')
-    a.ui.compact.basic.button(href="/user/#{user.username}/")
+    a.ui.compact.basic.circular.button(href="/user/#{user.username}/")
         if user.profile_image_id
-            img.ui.avatar.inline.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
+            img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
         //- .visible.content
-        |#{user.name}
-        |@#{user.username}
-        +user_status user
+        |#{user.shortname}
+        // |@#{user.username}
+        // +user_status user
+
+template(name='user_info_small')
+    a(href="/user/#{user.username}/")
+        if user.profile_image_id
+            img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
+        else
+            i.circular.user.outline.icon(title=user.name)
 
 
 template(name='username_info')
@@ -314,12 +321,12 @@ template(name='bookmark_button')
 template(name='voting')
     .ui.icon.button.upvote(title='upvote')
         i.thumbs.up.icon(class=upvote_class)
-    //- each upvoter_ids
-    //-     +user_info
+    each upvoter_ids
+        +user_info_small
     .ui.icon.button.downvote(title='downvote')
         i.thumbs.down.icon(class=downvote_class)
-    //- each downvoter_ids
-    //-     +user_info
+    each downvoter_ids
+        +user_info_small
     if points
         strong #{points} pts
     if anon_points

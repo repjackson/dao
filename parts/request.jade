@@ -2,9 +2,10 @@ template(name='requests')
     .ui.stackable.padded.grid 
         .row
             .sixteen.wide.column
-                .ui.header 
+                .ui.inline.header 
                     i.concierge.bell.icon
                     |requests
+                i.circular.link.large.plus.icon.add_request
                 .ui.stackable.cards
                     each requests
                         +request_card
@@ -19,7 +20,7 @@ template(name='request_card')
                 |#{title}
                 if complete
                     i.green.checkmark.icon
-            |#{description}
+            |!{description}
         .content
             |by 
             if _author.profile_image_id
@@ -40,36 +41,33 @@ template(name='request_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.button(href="/m/request" title='requests')
-                        i.chevron.left.icon
-                        i.concierge.bell.big.icon
+                    a(href="/m/request" title='requests')
+                        i.concierge.bell.big.circular.link.icon
                     .ui.inline.header 
-                        // +icon name='request-service'
                         small viewing request 
                         |#{title}
                     if can_edit
-                        a.ui.circular.icon.button.edit_request(href="/request/#{_id}/edit")
-                            i.large.pencil.icon
+                        a.edit_request(href="/request/#{_id}/edit")
+                            i.large.pencil.circular.link.icon
             .row 
                 .four.wide.column
                     .ui.header
                         |#{point_bounty}pts offered
-                    .ui.header
-                        // +icon name='warranty'
-                        i.certificate.icon
-                        |required badges
                     .ui.header 
                         small posted by
                     a.ui.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.username}
+                        |#{_author.name}
                     .ui.header #{when}
+                    .ui.header
+                        i.certificate.icon
+                        |required badges
                     .ui.header
                         i.users.icon
                         |audience
                 .eight.wide.column
                     .f13
-                        |#{description}
+                        |!{description}
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
@@ -87,8 +85,8 @@ template(name='request_view')
                 .four.wide.column
                     .ui.header status: #{status}
                     if can_claim
-                        .ui.fluid.green.button.claim
-                            +icon name='grab' cl='ui inline image'
+                        .ui.fluid.green.big.button.claim
+                            i.grab.large.icon
                             |claim
                     if claimer
                         .ui.header claimed by
@@ -123,9 +121,9 @@ template(name='request_edit')
                         +icon name='request-service'
                         small edit request
                         |#{title}
-                    i.large.remove.link.icon.delete_request(title='cancel')
+                    i.large.remove.link.circular.icon.delete_request(title='cancel')
             .row 
-                .five.wide.column
+                .four.wide.column
                     .ui.header 
                         small author
                         |#{_author.username}
@@ -143,10 +141,10 @@ template(name='request_edit')
                     .ui.header
                         +icon name='warranty'
                         |badges
-                .six.wide.column
+                .eight.wide.column
                     +number_edit key='point_bounty' label='point bounty' icon='paper-bag-with-seeds' min='0' direct=true
                     div
-                    +textarea_edit key='description' label='description' direct=true
+                    +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' icon='tags' direct=true

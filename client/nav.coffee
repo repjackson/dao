@@ -1,6 +1,6 @@
 Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
-    # @autorun => Meteor.subscribe 'all_users'
+    @autorun => Meteor.subscribe 'all_users'
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->

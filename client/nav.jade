@@ -1,6 +1,6 @@
 template(name='nav')
     // .ui.fluid.inverted.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
-    .ui.fluid.inverted.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
+    .ui.fluid.inverted.fixed.borderless.menu.topnav(style="background-color:#{currentUser.theme_color};")
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.icon.item(href="/" class="{{isActivePath 'home'}}")
@@ -9,13 +9,14 @@ template(name='nav')
         a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.large.users.icon
             | members
-        a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
+        // a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
+        a.item.mobile.hidden(href="/events" class="{{isActiveRoute 'events'}}" title='events')
             i.large.calendar.icon
             |events
         a.item.mobile.hidden(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
             i.large.blog.icon
             |feed
-        a.item.mobile.hidden(href="/m/request" class="{{isActiveRoute 'requests'}}" title='requests')
+        a.item.mobile.hidden(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
             i.large.concierge.bell.icon
             |requests
         if is_admin
@@ -68,7 +69,7 @@ template(name='top_sidebar')
         .item.header notifications
 
 template(name='right_sidebar')
-    .ui.right.sidebar.inverted.vertical.large.menu(style="background-color:#{currentUser.theme_color};")
+    .ui.right.sidebar.inverted.vertical.large.borderless.menu(style="background-color:#{currentUser.theme_color};")
         a.item.profile_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             |profile
@@ -113,7 +114,7 @@ template(name='left_sidebar')
         a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             |One
-        a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
+        a.item.set_member.toggle_sidebar(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.users.icon
             | members
         a.item.toggle_sidebar(href="/feed" class="{{isActiveRoute 'feed'}}")
@@ -131,21 +132,24 @@ template(name='left_sidebar')
         a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
             i.tasks.icon
             | projects
-        a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
-            i.clock.icon
-            |rentals
+        // a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
+        //     i.clock.icon
+        //     |rentals
+        a.item.toggle_sidebar.set_debit(href="/m/debit" class="{{isActivePath regex='rentals'}}")
+            i.gift.icon
+            |gifts
         a.item.toggle_sidebar(href="/events" class="{{isActivePath regex='events'}}")
             i.calendar.icon
             |events
-        a.item.mobile.hidden(href="/chat" title='chat') 
+        a.item(href="/chat" title='chat') 
             |chat
             i.chat.icon
         if is_admin
             .divider
-            a.blue.item.set_model(href="/m/model" class="{{isActivePath regex='model'}}")
+            a.blue.item.set_model.toggle_sidebar(href="/m/model" class="{{isActivePath regex='model'}}")
                 |admin
                 i.database.blue.icon
-            a.item.set_member.mobile.hidden(href="/m/user" class="{{isActiveRoute 'users'}}")
+            a.item.set_user.toggle_sidebar(href="/m/user" class="{{isActiveRoute 'users'}}")
                 i.blue.users.icon
                 | all users
 
