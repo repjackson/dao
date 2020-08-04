@@ -345,16 +345,17 @@ if Meteor.isServer
 
             # average_credit_per_student = total_credit_amount/student_count
             # average_debit_per_student = total_debit_amount/student_count
-            total_bandwith = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
+            flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
             if total_debit_amount is 0 then total_debit_amount++
             if total_credit_amount is 0 then total_credit_amount++
-            debit_credit_ratio = total_debit_amount/total_credit_amount
-            dc_ratio_inverted = 1/debit_credit_ratio
+            # debit_credit_ratio = total_debit_amount/total_credit_amount
+            one_ratio = total_debit_amount/total_credit_amount
+            # dc_ratio_inverted = 1/debit_credit_ratio
 
-            credit_debit_ratio = total_credit_amount/total_debit_amount
-            cd_ratio_inverted = 1/credit_debit_ratio
+            # credit_debit_ratio = total_credit_amount/total_debit_amount
+            # cd_ratio_inverted = 1/credit_debit_ratio
 
-            one_score = total_bandwith*dc_ratio_inverted
+            # one_score = total_bandwith*dc_ratio_inverted
 
             Meteor.users.update user_id,
                 $set:
@@ -362,10 +363,10 @@ if Meteor.isServer
                     debit_count: debit_count
                     total_credit_amount: total_credit_amount
                     total_debit_amount: total_debit_amount
-                    total_bandwith: total_bandwith
-                    calculated_user_balance: calculated_user_balance
-                    debit_credit_ratio: debit_credit_ratio
-                    credit_debit_ratio: credit_debit_ratio
-                    dc_ratio_inverted: dc_ratio_inverted
-                    cd_ratio_inverted: cd_ratio_inverted
-                    one_score: one_score
+                    flow_volume: flow_volume
+                    # calculated_user_balance: calculated_user_balance
+                    # debit_credit_ratio: debit_credit_ratio
+                    # credit_debit_ratio: credit_debit_ratio
+                    # dc_ratio_inverted: dc_ratio_inverted
+                    # cd_ratio_inverted: cd_ratio_inverted
+                    one_ratio: one_ratio

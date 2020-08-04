@@ -8,15 +8,14 @@ template(name='model_doc_view')
                     .four.wide.column
                         .ui.button.back_to_model
                             i.chevron.left.icon
-                            +icon name=current_model.color_icon cl='ui inline mini image'
-                            //- i.icon(class=current_model.icon)
+                            i.icon(class=current_model.icon)
                             |#{current_model.title}
                         if can_edit
                             a.ui.large.icon.button(href="/m/#{current_model.slug}/#{_id}/edit" title='Edit')
                                 i.pencil.blue.icon
                         if is_admin
                             .ui.header 
-                                +i name='clock'
+                                i.clock.icon
                                 |timestamp tags
                             each _timestamp_tags
                                 .ui.inverted.label #{this}

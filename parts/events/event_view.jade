@@ -4,8 +4,8 @@ template(name='event_view')
             .middle.aligned.row 
                 .sixteen.wide.column
                     if currentUser
-                        a.ui.compact.icon.button(href="/events")
-                            i.calendar.big.icon
+                        a(href="/events")
+                            i.calendar.big.circular.link.icon
                     a.pointer(href="http://oneboulder.one" target="_window")
                         img.ui.inline.tiny.image(src="{{c.url 'one_logo' }}")
                 

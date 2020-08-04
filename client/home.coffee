@@ -58,7 +58,7 @@ if Meteor.isClient
             },
                 sort:
                     _timestamp: -1
-                limit:10
+                limit:25
         latest_posts: ->
             Docs.find {
                 model:'post'
@@ -69,6 +69,7 @@ if Meteor.isClient
         latest_requests: ->
             Docs.find {
                 model:'request'
+                published:true
             },
                 sort:
                     _timestamp: -1

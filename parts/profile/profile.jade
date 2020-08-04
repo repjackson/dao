@@ -14,9 +14,11 @@ template(name='profile_layout')
                         a.ui.large.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};") 
                             |#{name}
                         // div
-                        a.ui.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};") 
-                            |@#{username}
-                        .ui.big.basic.label(style="color:#{current_user.theme_color};") #{points}pts
+                        // a.ui.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};") 
+                        //     |@#{username}
+                        .ui.inline.header(style="color:#{current_user.theme_color};") #{points}pts
+                        .ui.big.basic.label(style="color:#{current_user.theme_color};") {{fixed one_ratio}} ONE|Ratio
+                        .ui.large.basic.label(style="color:#{current_user.theme_color};") #{flow_volume} volume
                         //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                         //-     i.refresh.icon
                         if is_current_user
@@ -106,6 +108,9 @@ template(name='profile_layout')
                         a.ui.icon.large.compact.basic.button.profile_nav_item(href="/user/#{username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
                             i.large.concierge.bell.icon
                             span.mobile.hidden requests
+                        a.ui.icon.large.compact.basic.button.profile_nav_item(href="/user/#{username}/offers" class="{{isActivePath 'user_offers'}}" title="#{user.username} offers")
+                            i.large.hand.holding.heart.icon
+                            span.mobile.hidden offers
                         a.ui.icon.large.compact.basic.button.profile_nav_item(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
                             i.chat.large.icon
                             span.mobile.hidden chat

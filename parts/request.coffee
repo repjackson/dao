@@ -23,6 +23,7 @@ if Meteor.isClient
             Docs.find 
                 model:'request'
                 complete:$ne:true
+                published:true
 
 
     Template.request_card.events

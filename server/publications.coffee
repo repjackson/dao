@@ -60,7 +60,7 @@ Meteor.publish 'latest_debits', ()->
         # match.app = 'stand'
     Docs.find match,
         sort:_timestamp:-1
-        limit:10
+        limit:25
 
 
 Meteor.publish 'all_users', ()->

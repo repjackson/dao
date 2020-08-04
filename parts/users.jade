@@ -55,36 +55,18 @@ template(name='member_card')
                     +icolor name=spirit_animal cl='ui avatar image'
                 |#{name}
                 //- |#{username}
-            .ui.small.inline.header(style="color:#{theme_color};") #{points}pts
+            .ui.inline.header(style="color:#{current_user.theme_color};") #{points}pts
+            .ui.large.basic.label(style="color:#{current_user.theme_color};") {{fixed one_ratio}} ONE|Ratio
+            .ui.large.basic.label(style="color:#{current_user.theme_color};") #{flow_volume} volume
             if online
                 .ui.green.label online
             if current_status
                 .ui.small.header(title='status' style="color:#{theme_color};")
                     i.small.clock.icon
                     |#{current_status}
-
-            // each levels
-            //     .ui.label #{this}
-            // strong #{credit_count} credits
-            // strong #{credit_count}/
-            // strong #{debit_count}
-            // strong {{credit_ratio}}
-            // span ##{global_debit_count_rank}
-            // span ##{global_credit_count_rank}
-            // i.line.chart.icon(title='levels')
-            // each levels
-            //     .ui.basic.small.label(style="color:#{theme_color};") #{this}
-            // i.shield.icon(title='roles')
-            // each roles
-            //     .ui.basic.small.label(style="color:#{theme_color};") #{this}
-            // if is_admin
-            //     each levels
-            //         .ui.label #{this}
-            //     +addtoset_user key='levels' value='member'
-            //     // +addtoset_user key='levels' value='contributor'
-            //     +addtoset_user key='levels' value='explorer'
-            //     +addtoset_user key='levels' value='regenerator'
-            //     +addtoset_user key='levels' value='steward'
+            i.line.chart.icon(title='levels')
+            each levels
+                .ui.basic.small.label(style="color:#{theme_color};") #{this}
             +icolor name='gift' cl='ui inline image pointer debit'
             +icolor name='request-service' cl='ui inline image pointer request'
                     

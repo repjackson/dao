@@ -49,7 +49,7 @@ template(name='model_edit_dashboard')
         +array_edit key='tags' label='tags' direct=true
         //- +text_edit key='collection' label='collection' direct=true
         +key_value_edit key='collection' value='docs' icon='document'
-        +key_value_edit key='collection' value='users' icon='groups'
+        +key_value_edit key='collection' value='users' icon='users'
 
         //- +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
         //- +text_edit key='app' label='app' direct=true
@@ -93,7 +93,7 @@ template(name='field_edit')
                 +icon name=icon cl='ui mini inline image'
                 //- i.icon(class=icon)
             .ui.inline.header #{title}
-            .ui.basic.label #{field_type}
+            .ui.label #{field_type}
             if faceted
                 i.filter.icon(title='faceted')
             if sortable
@@ -128,6 +128,9 @@ template(name='field_edit')
                 +key_value_edit key='field_type' value='image' icon='picture'
                 +key_value_edit key='field_type' value='date' icon='calendar'
                 +key_value_edit key='field_type' value='time' icon='clock'
+                +key_value_edit key='field_type' value='link' icon='linkify'
+                +key_value_edit key='field_type' value='youtube' icon='video'
+                +key_value_edit key='field_type' value='color' icon='paint brush'
                 //- if is_admin
                 //- +single_doc_edit key='field_type' ref_model='field_type' label='field type' direct=true        
                 //- .spacer

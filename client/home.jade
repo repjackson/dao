@@ -43,6 +43,9 @@ template(name='home')
                 .ui.basic.big.button.request
                     i.concierge.bell.teal.icon
                     |request
+                .ui.basic.big.button.request
+                    i.hand.holding.heart.olive.icon
+                    |offer
                 if is_admin
                     a.ui.basic.big.button(href='/register')
                         i.plus.icon
@@ -126,7 +129,8 @@ template(name='home')
             //                     each tags 
             //                         .ui.tiny.basic.label #{this}
             .four.wide.column
-                a.ui.center.aligned.header(href="/events")
+                // a.ui.center.aligned.header(href="/events")
+                .ui.center.aligned.header
                     i.calendar.orange.icon
                     |next events
                 // if is_admin 
@@ -156,14 +160,16 @@ template(name='home')
                                 // each tags 
                                 //     .ui.tiny.basic.label #{this}
             .four.wide.column
-                a.ui.center.aligned.header(href="/m/debit")
+                // a.ui.center.aligned.header(href="/m/debit")
+                .ui.center.aligned.header
                     i.gift.red.icon
                     |gifts
                 .smallscroll
                     each latest_debits
                         +debit_card
             .four.wide.column
-                a.ui.center.aligned.header(href="/requests")
+                // a.ui.center.aligned.header(href="/requests")
+                .ui.center.aligned.header
                     i.concierge.bell.icon
                     |requests
                 .smallscroll
@@ -187,7 +193,8 @@ template(name='home')
                                 //     .ui.tiny.basic.label #{this}
                                             
             .four.wide.column
-                a.ui.center.aligned.header(href="/m/post")
+                // a.ui.center.aligned.header(href="/m/post")
+                .ui.center.aligned.header
                     i.newspaper.icon
                     |news
                 .ui.large.link.selection.list.smallscroll

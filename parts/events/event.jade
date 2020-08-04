@@ -25,8 +25,8 @@ template(name='event_card')
                 img.ui.image(src="{{c.url image_id height=200 width=500 gravity='center' crop='fill'}}")
         .content
             a.ui.header(href="/event/#{_id}/view") #{title} 
-            |{{med_date start_datetime}}
-            |- {{med_date end_datetime}}
+            |{{long_date start_datetime}}
+            |- {{long_date end_datetime}}
             .ui.small.grey.inline.header {{from_now start_datetime}}
         .content
             if location
@@ -34,21 +34,21 @@ template(name='event_card')
                 |#{location}
             div 
             small added by
-            strong #{_author.name}
+            strong #{_author.shortname}
             |#{when}
         .content
             |#{going_user_ids.length}
             i.checkmark.green.icon
             each going
-                |#{username}
+                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             i.question.orange.icon
             | #{maybe_user_ids.length}
             each maybe_going
-                |#{username}
+                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             | #{not_user_ids.length}
             i.remove.red.icon
             each not_going
-                | #{username}
+                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             if is_admin 
                 +print_this
 

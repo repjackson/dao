@@ -9,7 +9,7 @@ template(name='user_dashboard')
                 |received
                 .ui.basic.label #{credit_count} credits
                     | ##{global_credit_count_rank}
-            .scrolling
+            .smallscroll
                 each user_credits
                     .ui.segment.user_credit_segment.pointer
                         .header
@@ -32,7 +32,7 @@ template(name='user_dashboard')
                 small(title='debit count') (#{debit_count}x)
                 .ui.label(title='rank') ##{global_debit_count_rank}
             div
-            .scrolling
+            .smallscroll
                 each user_debits
                     .ui.segment.user_debit_segment.pointer
                         .header
@@ -49,7 +49,7 @@ template(name='user_dashboard')
             .ui.header 
                 i.concierge.bell.icon
                 |requests
-            .scrolling
+            .smallscroll
                 each user_requests
                     .ui.segment
                         a.header(href="/request/#{_id}/view")
@@ -62,7 +62,7 @@ template(name='user_dashboard')
             .ui.header 
                 i.calendar.icon
                 |events
-            .scrolling
+            .smallscroll
                 each user_event_tickets
                         .ui.segment
                             if ticket_event.image_id

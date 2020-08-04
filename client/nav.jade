@@ -8,35 +8,31 @@ template(name='nav')
             // i.large.home.icon
         a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.large.users.icon
-            | members
-        // a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
+            | directory
         a.item.mobile.hidden(href="/events" class="{{isActiveRoute 'events'}}" title='events')
             i.large.calendar.icon
             |events
+        // a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
         a.item.mobile.hidden(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
-            i.large.blog.icon
-            |feed
+            i.large.newspaper.icon
+            |news
         a.item.mobile.hidden(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
             i.large.concierge.bell.icon
             |requests
-        if is_admin
-            a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
-                i.database.large.icon
+        // if is_admin
+        //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
+        //         i.database.large.icon
         .right.menu
             a.icon.item.toggle_top_sidebar(href="#")
                 // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
                 i.large.bell.icon
         
-            a.icon.item.mobile.hidden(href="/chat" title='chat') 
+            // a.icon.item(href="/chat" title='chat') 
+            a.icon.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
                 i.chat.large.icon
-            if is_in_admin
-                a.icon.item.toggle_admin
-                    if is_admin
-                        i.shield.blue.large.icon
-                    else
-                        i.shield.large.icon
             if currentUser
-                a.large.item.profile_sidebar(class="{{isActiveRoute 'user_dashboard'}}")
+                // a.large.item.profile_sidebar(class="{{isActiveRoute 'user_dashboard'}}")
+                a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                     //- i.large.user.large.icon
                     if currentUser.profile_image_id
                         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -92,6 +88,9 @@ template(name='right_sidebar')
         a.item.profile_sidebar(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
             | requests
             i.concierge.bell.icon
+        a.item.profile_sidebar(href="/user/#{currentUser.username}/offers" class="{{isActivePath 'user_offers'}}" title="#{user.username} requests")
+            | offers
+            i.hand.holding.heart.icon
         a.item.profile_sidebar(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
             | chat
             i.chat.icon
@@ -116,36 +115,51 @@ template(name='left_sidebar')
             |One
         a.item.set_member.toggle_sidebar(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.users.icon
-            | members
-        a.item.toggle_sidebar(href="/feed" class="{{isActiveRoute 'feed'}}")
-            i.blog.icon
-            |feed
+            | directory
+        a.item.toggle_sidebar(href="/events" class="{{isActivePath regex='events'}}")
+            i.calendar.icon
+            |events
+        a.item.toggle_sidebar.set_post(href="/m/post" class="{{isActiveRoute 'feed'}}")
+            i.newspaper.icon
+            |news
+        a.item.toggle_sidebar(href="/m/offer" class="{{isActiveRoute 'requests'}}")
+            i.hand.holding.heart.icon
+            |offers
         a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
             i.concierge.bell.icon
             |requests
         a.item.toggle_sidebar.set_bug(href="/m/bug" class="{{isActiveRoute 'bugs'}}")
             i.bug.icon
             |bugs
-        a.item.toggle_sidebar.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}")
-            i.certificate.icon
-            | badges
-        a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
-            i.tasks.icon
-            | projects
         // a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
         //     i.clock.icon
         //     |rentals
-        a.item.toggle_sidebar.set_debit(href="/m/debit" class="{{isActivePath regex='rentals'}}")
-            i.gift.icon
-            |gifts
-        a.item.toggle_sidebar(href="/events" class="{{isActivePath regex='events'}}")
-            i.calendar.icon
-            |events
+        // if has_badge 'facilitator'
         a.item(href="/chat" title='chat') 
             |chat
             i.chat.icon
+        if is_in_admin
+            a.icon.item.toggle_admin
+                |toggle admin
+                if is_admin
+                    i.shield.blue.large.icon
+                else
+                    i.shield.large.icon
+            
         if is_admin
+            a.item.toggle_sidebar.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}")
+                i.certificate.icon
+                | badges
+            a.item.toggle_sidebar.set_debit(href="/m/debit" class="{{isActivePath regex='rentals'}}")
+                i.gift.icon
+                |gifts
             .divider
+            a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
+                i.tasks.icon
+                | projects
+            a.item.toggle_sidebar(href="/m/room" class="{{isActiveRoute 'requests'}}")
+                i.building.icon
+                |rooms
             a.blue.item.set_model.toggle_sidebar(href="/m/model" class="{{isActivePath regex='model'}}")
                 |admin
                 i.database.blue.icon
