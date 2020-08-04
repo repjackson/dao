@@ -1,9 +1,9 @@
 template(name='youtube_edit')
     .ui.labeled.fluid.icon.input
-        .ui.smoothed.label 
+        .ui.basic.label 
             // if icon
             //     i.icon(class=icon)
-            |Youtube Id
+            |youtube id
         input.youtube_id(type='text' value=field_value placeholder=placeholder autocomplete="off")
     if field_value
         iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
@@ -436,7 +436,7 @@ template(name='slug_edit')
             |#{label}
         else if key
             |#{key}
-        small (click to auto slugify)
+        small (auto slugify)
     //- +clear_value
     .ui.icon.fluid.input
         input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")

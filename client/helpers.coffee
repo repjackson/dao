@@ -9,7 +9,7 @@ Template.registerHelper 'in_role', (role)->
         false
 
 Template.registerHelper 'is_in_admin', () ->
-    Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
+    Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ','EYGz4bDSAdWF3W4wi']
 Template.registerHelper 'is_this_user', () ->
     Meteor.userId() is @_id
 Template.registerHelper 'is_in_levels', (level) ->
