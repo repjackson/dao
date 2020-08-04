@@ -51,6 +51,7 @@ template(name='request_view')
                         i.concierge.bell.big.circular.link.icon
                     .ui.inline.header 
                         small viewing request 
+                    .ui.inline.large.header 
                         |#{title}
                     if can_edit
                         a.edit_request(href="/request/#{_id}/edit")
@@ -74,6 +75,7 @@ template(name='request_view')
                         i.users.icon
                         |audience
                     +array_view key='location_tags' label='location_tags' direct=true
+                    div
                     +voting_full
                 .eight.wide.column
 

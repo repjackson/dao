@@ -10,6 +10,8 @@ Template.registerHelper 'in_role', (role)->
 
 Template.registerHelper 'is_in_admin', () ->
     Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
+Template.registerHelper 'is_this_user', () ->
+    Meteor.userId() is @_id
 Template.registerHelper 'is_in_levels', (level) ->
     Meteor.user() and Meteor.user().levels and level in Meteor.user().levels
 Template.registerHelper 'current_user', () ->

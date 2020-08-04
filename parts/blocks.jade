@@ -71,9 +71,10 @@ template(name='comments')
                     .text
                         | #{body}
                     span.meta
-                        +voting_small
                         if can_edit
                             +remove_icon
+                        else
+                            +voting_small
 
 
 
@@ -262,7 +263,7 @@ template(name='user_info_tiny')
         //     img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
         // else
         //     i.circular.user.outline.icon(title=user.name)
-        |#{user.shortname}
+        .ui.basic.tiny.label #{user.shortname}
 
 
 template(name='username_info')
@@ -291,12 +292,9 @@ template(name='creation_info')
 
 template(name='user_list_toggle')
     if currentUser
-        .ui.icon.compact.button.toggle(class=user_list_toggle_class title=label)
-            //- if in_list
-            //-     i.large.icon(class=remove_icon)
-            //- else
-            //-     i.large.icon(class=add_icon)
-            |#{label}
+        .ui.icon.compact.circular.button.toggle(class=user_list_toggle_class title=label)
+            i.large.icon(class=icon)
+            // |#{label}
         //- each list_users
         //-     +user_info
 
@@ -331,10 +329,10 @@ template(name='bookmark_button')
 
 
 template(name='voting')
-    i.thumbs.up.large.link.circular.icon.upvote(class=upvote_class title='upvote')
+    i.thumbs.up.large.link.icon.upvote(class=upvote_class title='upvote')
     each upvoter_ids
         +user_info_small
-    i.thumbs.down.large.link.circular.icon.downvote(class=downvote_class title='downvote')
+    i.thumbs.down.large.link.icon.downvote(class=downvote_class title='downvote')
     each downvoter_ids
         +user_info_small
     if is_dev
@@ -349,12 +347,12 @@ template(name='voting_small')
     if points
         strong #{points}
     i.thumbs.up.link.icon.upvote(class=upvote_class)
-    |#{upvoter_ids.length}
+    // |#{upvoter_ids.length}
     each upvoter_ids
-        +user_info_small
+        +user_info_tiny
     i.thumbs.down.link.icon.downvote(class=downvote_class)
     each downvoter_ids
-        +user_info_small
+        +user_info_tiny
 
 
 template(name='honey_badger')

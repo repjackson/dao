@@ -53,6 +53,23 @@ template(name='color_view')
             .ui.large.label(style="background:#{field_value}")
             |#{field_value}
 
+template(name='html_view')
+    if field_value
+        .spacer
+        // .ui.small.inline.header
+        //     if icon
+        //         i.icon(class=icon)
+        //     if title
+        //         |#{title}
+        //     else if label
+        //         |#{label}
+        //     else if key
+        //         |#{key}
+        //     else
+        //         |#{this}
+        .f12 
+            !{field_value}
+
 
 
 template(name='html_edit')

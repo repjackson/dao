@@ -21,7 +21,7 @@ template(name='user_dashboard')
                         small #{when}
                         div
                         |#{description}
-                        .spacer
+                        div
                         each tags
                             .ui.mini.basic.label #{this}
         .column
@@ -42,7 +42,9 @@ template(name='user_dashboard')
                                 img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{recipient.username}
                         small #{when}
+                        div
                         |#{description}
+                        div
                         each tags
                             .ui.mini.basic.label #{this}
         .column

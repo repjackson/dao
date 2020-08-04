@@ -231,32 +231,32 @@ if Meteor.isClient
 #
 #
 #
-#     Template.user_list_toggle.onCreated ->
-#         @autorun => Meteor.subscribe 'user_list', Template.parentData(),@key
-#     Template.user_list_toggle.events
-#         'click .toggle': (e,t)->
-#             parent = Template.parentData()
-#             # $(e.currentTarget).closest('.button').transition('pulse',200)
-#             if parent["#{@key}"] and Meteor.userId() in parent["#{@key}"]
-#                 Docs.update parent._id,
-#                     $pull:"#{@key}":Meteor.userId()
-#             else
-#                 Docs.update parent._id,
-#                     $addToSet:"#{@key}":Meteor.userId()
-#     Template.user_list_toggle.helpers
-#         user_list_toggle_class: ->
-#             if Meteor.user()
-#                 parent = Template.parentData()
-#                 if parent["#{@key}"] and Meteor.userId() in parent["#{@key}"] then '' else 'basic'
-#             else
-#                 'disabled'
-#         in_list: ->
-#             parent = Template.parentData()
-#             if parent["#{@key}"] and Meteor.userId() in parent["#{@key}"] then true else false
-#         list_users: ->
-#             parent = Template.parentData()
-#             Meteor.users.find _id:$in:parent["#{@key}"]
-#
+    Template.user_list_toggle.onCreated ->
+        @autorun => Meteor.subscribe 'user_list', Template.parentData(),@key
+    Template.user_list_toggle.events
+        'click .toggle': (e,t)->
+            parent = Template.parentData()
+            # $(e.currentTarget).closest('.button').transition('pulse',200)
+            if parent["#{@key}"] and Meteor.userId() in parent["#{@key}"]
+                Docs.update parent._id,
+                    $pull:"#{@key}":Meteor.userId()
+            else
+                Docs.update parent._id,
+                    $addToSet:"#{@key}":Meteor.userId()
+    Template.user_list_toggle.helpers
+        user_list_toggle_class: ->
+            if Meteor.user()
+                parent = Template.parentData()
+                if parent["#{@key}"] and Meteor.userId() in parent["#{@key}"] then 'blue' else 'basic'
+            else
+                'disabled'
+        in_list: ->
+            parent = Template.parentData()
+            if parent["#{@key}"] and Meteor.userId() in parent["#{@key}"] then true else false
+        list_users: ->
+            parent = Template.parentData()
+            Meteor.users.find _id:$in:parent["#{@key}"]
+
 #
 #
 #

@@ -13,6 +13,10 @@ template(name='profile_layout')
                         span.mobile.hidden
                             img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class) 
                         a.ui.large.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};") 
+                            if spirit_animal
+                                span(title="spirit animal #{spirit_animal}")
+                                    +icolor name=spirit_animal cl='ui inline image'
+
                             |#{name}
                         // div
                         // a.ui.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};") 
@@ -24,7 +28,7 @@ template(name='profile_layout')
                         //-     i.refresh.icon
                         if is_current_user
                             +boolean_edit key='online' label='online' direct=true
-                            +text_edit key='current_status' label='status' direct=true
+                            +text_edit key='current_status' label='status' icon='clock' direct=true
                         else 
                             if online 
                                 .ui.green.large.label 
@@ -40,16 +44,16 @@ template(name='profile_layout')
                         if is_dev
                             .ui.small.inline.header #{_id}
                         if is_admin
-                            a.ui.large.button(href="/user/#{username}/edit" title='admin edit account' style="color:#{current_user.theme_color};")
+                            a.ui.large.icon.circular.basic.button(href="/user/#{username}/edit" title='admin edit account' style="color:#{current_user.theme_color};")
                                 i.shield.large.icon
-                                |account
+                                // |account
                         if is_current_user
-                            a.ui.button(href="/user/#{username}/edit" title='edit your account' style="color:#{current_user.theme_color};")
-                                i.cog.large.icon
-                                |account
-                            a.ui.button.logout(href="#" title='log out')
-                                i.sign.out.large.icon
-                                |log out
+                            a.ui.circular.icon.basic.button(href="/user/#{username}/edit" title='edit your account' style="color:#{current_user.theme_color};")
+                                i.cog.big.icon
+                                // |account
+                            a.ui.circular.icon.basic.button.logout(href="#" title='log out')
+                                i.sign.out.big.icon
+                                // |log out
                         
                         // unless is_current_user
                         //     if currentUser
@@ -64,9 +68,6 @@ template(name='profile_layout')
                         // if is_current_user
                         //     a.ui.large.icon.button(href="/user/#{username}/edit/membership" class="{{isActivePath 'user_finance'}}")
                         //         i.money.large.icon
-                        if spirit_animal
-                            span(title="spirit animal #{spirit_animal}")
-                                +icolor name=spirit_animal cl='ui inline image'
                         unless is_current_user
                             if i_have_points
                                 .ui.basic.button.send(title='send points')
