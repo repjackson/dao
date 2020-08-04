@@ -112,9 +112,9 @@ template(name='right_sidebar')
 
 template(name='left_sidebar')
     .ui.left.sidebar.inverted.vertical.large.menu(style="background-color:#{currentUser.theme_color};")
-        a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
-            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-            |One
+        // a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
+        //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+        //     |One
         a.item.set_member.toggle_sidebar(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.users.icon
             | directory
@@ -137,7 +137,7 @@ template(name='left_sidebar')
         //     i.clock.icon
         //     |rentals
         // if has_badge 'facilitator'
-        a.item(href="/chat" title='chat') 
+        a.item.toggle_sidebar(href="/chat" title='chat') 
             |chat
             i.chat.icon
         if is_in_admin

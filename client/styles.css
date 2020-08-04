@@ -15,6 +15,9 @@ body {
     /* background: #0e0e44 !important; */
 }
 
+.form {
+  border-radius: 10px !important;
+}
 
 .user_online {
   border-style: solid !important;
