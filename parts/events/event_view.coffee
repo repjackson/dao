@@ -59,7 +59,7 @@ if Meteor.isClient
                 title: "buy ticket for #{@point_price}pts?"
                 text: "#{@title}"
                 icon: 'question'
-                input:'number'
+                # input:'number'
                 confirmButtonText: 'purchase'
                 confirmButtonColor: 'green'
                 showCancelButton: true
@@ -107,7 +107,7 @@ if Meteor.isClient
                 icon: 'question'
                 showCancelButton: true,
                 confirmButtonText: 'purchase'
-                input:'number'
+                # input:'number'
                 confirmButtonColor: 'green'
                 showCancelButton: true
                 cancelButtonText: 'cancel'

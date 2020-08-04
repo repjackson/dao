@@ -67,7 +67,7 @@ if Meteor.isClient
             Docs.find {
                 model:'event'
                 published:true
-                start_datetime:$lt:moment().format()
+                start_datetime:$gt:moment().format()
             }, 
                 sort:start_datetime:-1
     

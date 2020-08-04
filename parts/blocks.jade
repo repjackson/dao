@@ -358,14 +358,8 @@ template(name='honey_badger')
 
 
 template(name='voting_full')
-    //- .ui.inline.header 
-    //-     |voting
-    .ui.large.icon.basic.button.upvote(title='upvote')
-        i.thumbs.up.large.icon(class=upvote_class)
-        //- |like
-    .ui.large.icon.basic.button.downvote(title='downvote')
-        i.thumbs.down.large.icon(class=downvote_class)
-        //- |dislike
+    i.thumbs.up.large.big.circular.link.icon.upvote(class=upvote_class title='upvote')
+    i.thumbs.down.large.big.circular.link.icon.downvote(class=downvote_class title='downvote')
     if points
         |&nbsp;
         span(title='points') #{points} pts

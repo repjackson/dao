@@ -370,7 +370,7 @@ a.title, #title {
 }
 .f11 {
   font-size: 110% !important;
-  line-height: 110% !important;
+  line-height: 120% !important;
   /* margin-bottom: 10px !important;  */
 }
 .f10 {
@@ -486,7 +486,7 @@ input {
 	/*padding-left: 1em;*/
 }
 .scrolling{
-    max-height: 90vh !important;
+    /*max-height: 90vh !important;*/
     /*min-height: 50vh !important;*/
     /* padding: 5px !important;
     border-radius: 10px !important;

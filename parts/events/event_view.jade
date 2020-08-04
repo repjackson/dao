@@ -10,6 +10,10 @@ template(name='event_view')
                         img.ui.inline.tiny.image(src="{{c.url 'one_logo' }}")
                 
                     .ui.large.inline.header #{title}
+                    if published 
+                        i.big.eye.green.icon(title='published')
+                    else 
+                        i.big.eye.red.slash.icon(title='unpublished')
                     // div
                     .ui.inline.header {{long_date start_datetime}}
                     .ui.inline.grey.header {{from_now start_datetime}}
@@ -47,6 +51,7 @@ template(name='event_view')
                         +gcal_button
                     .ui.hidden.divider
                     +array_view key='tags' label='tags' icon='tags red' direct=true
+                    div
                     +voting_full
                     +array_view key='location_tags' label='location_tags' direct=true
                 .eight.wide.column
@@ -97,7 +102,6 @@ template(name='event_view')
                                 |#{point_price}pts
                     if currentUser
                         .spacer
-                        +attendance
                         .spacer
                         .ui.dividing.header 
                             // +icolor name='activity-history' cl='ui inline image'
@@ -118,6 +122,7 @@ template(name='event_view')
                                         //     +icolor name='return-purchase' cl='ui mini inline image return pointer'
                                         if is_admin
                                             +remove_button
+                        +attendance
     .ui.modal
         i.close.icon
         .header buy ticket for #{current_doc.point_price}pts?
@@ -129,3 +134,46 @@ template(name='event_view')
         .actions
             .ui.red.cancel.button cancel
             .ui.green.big.ok.button ok
+
+
+
+
+
+
+
+template(name='attendance')
+    if event_tickets.length
+        .ui.inline.green.header 
+            |#{ticket.length} going
+    // .ui.inline.small.grey.header ticket required
+    // .ui.icon.button.pick_going 
+    //     i.green.checkmark.big.icon
+    // each going 
+    //     a.ui.circular.basic.circular.button(href="/user/#{username}")    
+    //         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+    //         |#{username}
+    
+    .ui.orange.header.pointer.pick_maybe
+        // if currentUser
+        //     +icolor name='clock' cl='pick_maybe pointer'
+        // else
+        //     +icolor name='event-accepted-tentatively'
+        |#{maybe_going.count} maybe
+    // .ui.icon.button.pick_maybe 
+    //     i.yellow.minus.big.icon
+    each maybe_going
+        a.ui.circular.basic.circular.button(href="/user/#{username}")    
+            img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            |#{username}
+    .ui.red.header.pointer.pick_not
+        // if currentUser
+        //     +icolor name='cancel' cl='pick_not pointer'
+        // else
+        //     +icolor name='event-declined'
+        |#{not_going.count} not going
+    // .ui.icon.button.pick_not
+        // i.big.ban.icon
+    each not_going
+        a.ui.circular.basic.circular.button(href="/user/#{username}")    
+            img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            |#{username}

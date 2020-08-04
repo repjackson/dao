@@ -27,7 +27,7 @@ template(name='home')
                 each members 
                     if profile_image_id
                         a(href="/user/#{username}" title="{{name}} {{points}}")
-                            img.ui.tiny.pointer.inline.circular.spaced_image.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                            img.ui.tiny.pointer.inline.circular.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
         .centered.row
             .sixteen.wide.center.aligned.column
                .ui.basic.big.button.debit
@@ -45,12 +45,12 @@ template(name='home')
                     i.hand.holding.heart.olive.icon
                     |offer
                 .ui.basic.big.button.add_bug
-                    i.bug.icon
-                    |add bug
+                    i.bug.red.icon
+                    |+ bug
                 if is_admin
                     a.ui.basic.big.button(href='/register')
-                        i.plus.icon
-                        |add member
+                        i.user.plus.green.icon
+                        |member
 
        
         // .centered.row
@@ -139,27 +139,7 @@ template(name='home')
                     
                 .smallscroll
                     each next_events
-                        a.ui.fluid.card(href="/event/#{_id}/view")
-                            img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
-                            .content
-                                .header
-                                    | #{title} 
-                                .meta    
-                                    .ui.inline.header $#{usd_price} / #{point_price}p
-                                    if _author.profile_image_id
-                                        with _author
-                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                                    | #{_author.name}
-                                // .meta #{when}
-                                .description 
-                                    if going_user_ids.length
-                                        |#{going_user_ids.length} going
-                                    each attendees
-                                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                                        |#{name}
-                                //     |#{description}
-                                // each tags 
-                                //     .ui.tiny.basic.label #{this}
+                        +home_event_card
             .four.wide.column
                 // a.ui.center.aligned.header(href="/m/debit")
                 .ui.center.aligned.header
@@ -175,7 +155,7 @@ template(name='home')
                     |requests
                 .smallscroll
                     each latest_requests
-                        .ui.segment.view_request
+                        .ui.segment.view_request.pointer
                             .content
                                 if youtube_id
                                     +youtube_view key='youtube_id' direct=true
@@ -186,7 +166,7 @@ template(name='home')
                                     .ui.inline.header #{point_bounty}p: #{title}
                                     if _author.profile_image_id
                                         with _author
-                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
                                     | #{_author.name}
                                 |!{description}
                                 .meta #{when}
@@ -222,6 +202,45 @@ template(name='home')
                     //             each tags 
                     //                 .ui.tiny.basic.label #{this}
                                     
+template(name='home_event_card')
+    a.ui.fluid.card(href="/event/#{_id}/view")
+        img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
+        .content
+            .header
+                | #{title} 
+            .meta    
+                |{{home_long_date start_datetime}}
+                .ui.small.grey.inline.header {{from_now start_datetime}}
+            
+            .meta    
+                .ui.inline.small.header $#{usd_price} / #{point_price}p
+                if _author.profile_image_id
+                    with _author
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
+                | #{_author.shortname}
+            // .meta #{when}
+            .description 
+            if location
+                i.marker.icon 
+                |#{location}
+            div 
+        .content
+            |#{going_user_ids.length}
+            i.checkmark.green.large.icon
+            each going
+                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
+            i.question.orange.large.icon
+            | #{maybe_user_ids.length}
+            each maybe_going
+                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
+            | #{not_user_ids.length}
+            i.remove.red.large.icon
+            each not_going
+                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
+               
+                               
+                               
+                               
                                     
 template(name='debit_card')
     .ui.card.pointer.view_debit
@@ -246,8 +265,9 @@ template(name='debit_card')
             if doc_comments.count
                 .meta
                     each doc_comments 
-                        i.grey.chat.icon
+                        i.grey.chat.outline.icon
                         |#{body}
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
 
                                     
 template(name='join_button')
