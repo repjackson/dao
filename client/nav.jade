@@ -11,16 +11,16 @@ template(name='nav')
             | directory
         a.item.mobile.hidden(href="/events" class="{{isActiveRoute 'events'}}" title='events')
             i.large.calendar.icon
-            |events
+            | events
         // a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
         a.item.mobile.hidden(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
             i.large.newspaper.icon
             // em(data-emoji='newspaper')
-            |news
+            | news
         a.item.mobile.hidden(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
             i.large.concierge.bell.icon
             // em(data-emoji='bellhop')
-            |requests
+            | requests
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
@@ -32,26 +32,32 @@ template(name='nav')
             // a.icon.item(href="/chat" title='chat') 
             a.icon.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
                 i.chat.large.icon
-            if currentUser
-                // a.large.item.profile_sidebar(class="{{isActiveRoute 'user_dashboard'}}")
-                a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
-                    //- i.large.user.large.icon
-                    if currentUser.profile_image_id
+            if is_dev 
+                .icon.item
+                    i.large.code.icon
+            // if currentUser
+            // a.large.item.profile_sidebar(class="{{isActiveRoute 'user_dashboard'}}")
+            a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
+                //- i.large.user.large.icon
+                if currentUser.profile_image_id
+                    if is_admin
+                        i.large.user.shield.icon(title='admin mode on')
+                    else
                         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    else 
-                        i.large.user.large.icon
-                    strong #{currentUser.name}
-                    small
-                        |#{currentUser.points}p
-            else
-                // a.item(href="/register" title='register')
-                //     // |login
-                //     +icon name='plus'
-                //     // i.large.chevron.right.icon
-                a.item(href="/login" title='login')
-                    // |login
-                    +icon name='login-rounded-right'
-                    // i.large.chevron.right.icon
+                else 
+                    i.large.user.large.icon
+                strong #{currentUser.name}
+                small
+                    |#{currentUser.points}p
+            // else
+            //     // a.item(href="/register" title='register')
+            //     //     // |login
+            //     //     +icon name='plus'
+            //     //     // i.large.chevron.right.icon
+            //     a.item(href="/login" title='login')
+            //         // |login
+            //         +icon name='login-rounded-right'
+            //         // i.large.chevron.right.icon
 
 
 
@@ -127,6 +133,9 @@ template(name='left_sidebar')
         a.item.toggle_sidebar(href="/m/offer" class="{{isActiveRoute 'requests'}}")
             i.hand.holding.heart.icon
             |offers
+        a.item.toggle_sidebar(href="/m/collective" class="{{isActiveRoute 'requests'}}")
+            i.users.icon
+            |collectives
         a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
             i.concierge.bell.icon
             |requests

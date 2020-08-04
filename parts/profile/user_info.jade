@@ -4,7 +4,7 @@ template(name='user_about')
         |user info
     with current_user
         // a.ui.compact.button(href="{{c.url genekeys_profile }}" target="_window")
-        //     +icon name='dna-helix' cl='ui inline mini image'
+        //     +icon name='dna-helix' cl='ui mini image'
             
         //     |view gene keys profile
         .ui.four.column.stackable.grid
@@ -32,21 +32,21 @@ template(name='user_about')
                     |#{this}
                 // +user_info_tag
         div
-        .ui.inline.header 
+        .ui.header 
             i.line.chart.icon
             |levels
         each levels
             .ui.basic.label #{this}
         div
-        .ui.inline.header 
+        .ui.header 
             |city:
             |#{city}               
         div
-        .ui.inline.header 
+        .ui.header 
             |state:
             |#{state}               
         div
-        .ui.inline.header 
+        .ui.header 
             i.shield.icon
             |roles
         each roles
@@ -56,5 +56,5 @@ template(name='user_info_tag')
     .ui.basic.tertiary.button 
         if term 
             if term.image 
-                img.ui.tiny.inline.image(src=term.image)
+                img.ui.tiny.image(src=term.image)
         |#{this}

@@ -176,6 +176,11 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'user_from_id', @data
     Template.user_info_small.helpers
         user: -> Meteor.users.findOne @valueOf()
+    
+    Template.user_info_tiny.onCreated ->
+        @autorun => Meteor.subscribe 'user_from_id', @data
+    Template.user_info_tiny.helpers
+        user: -> Meteor.users.findOne @valueOf()
 
 #
 #     Template.toggle_edit.events

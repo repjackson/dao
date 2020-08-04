@@ -79,7 +79,7 @@ if Meteor.isClient
                 model:'event'
             },
                 sort:
-                    _timestamp: -1
+                    sort:start_datetime:1
                 limit:10
         next_shifts: ->
             Docs.find {

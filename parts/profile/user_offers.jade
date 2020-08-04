@@ -1,0 +1,17 @@
+template(name='user_offers')  
+    .ui.center.aligned.header 
+        +icon name='request-service'
+        |user offers
+    .scrolling
+        each requests
+            .ui.segment
+                a.ui.header(href="/request/#{_id}/view") #{bounty}pts: #{title}
+                | #{description}
+                div
+                if is_admin
+                    +remove_button
+                    +print_this
+                
+                //- div
+                +author_info
+                +creation_info

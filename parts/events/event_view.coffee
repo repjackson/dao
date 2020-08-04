@@ -54,7 +54,7 @@ if Meteor.isClient
 
     Template.event_view.events
         'click .buy_for_points': ->
-            # $('.ui.modal').modal('show')
+            $('.ui.modal').modal('show')
             Swal.fire({
                 title: "buy ticket for #{@point_price}pts?"
                 text: "#{@title}"

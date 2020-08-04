@@ -2,11 +2,14 @@ template(name='post_card')
     .ui.card.view_post.pointer
         .content
             a.ui.header(href="/m/post/#{_id}/view") #{title}
+            .ui.small.grey.header #{when}
+            +author_info
         
 template(name='post_item')
     .ui.fluid.segment.view_post.pointer
         a.ui.header(href="/m/post/#{_id}/view") #{title}
-        
+        each tags 
+            .ui.basic.label #{this}
         
 
 template(name='post_view')
@@ -27,7 +30,7 @@ template(name='post_view')
             .row 
                 .four.wide.column
                     img.ui.fluid.rounded.image(src="{{c.url image_id }}")
-                    .ui.tertiary.segment
+                    .ui.segment
                         .ui.header 
                             small author
                         a.ui.header(href="/user/#{_author.username}") 

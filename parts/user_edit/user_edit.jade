@@ -53,13 +53,19 @@ template(name='user_edit_layout')
 template(name='user_edit_info')
     .ui.one.column.stackable.grid
         .column
-            +text_edit key='spirit_animal' label='spirit animal' direct=true
-            if spirit_animal
-                +icolor name=spirit_animal
-            a(href="https://icons8.com/icons/color" target="_window")
-                |color icons lookup
-            a.ui.small.inline.header(href="https://genekeys.com/" target='_window') gene keys site
-            +image_edit key='genekeys_profile' label='gene keys pdf' icon='dna-helix' direct=true
+            .ui.header edit user info
+            .ui.segment
+                +text_edit key='spirit_animal' label='spirit animal' direct=true
+                if spirit_animal
+                    +icolor name=spirit_animal
+                a(href="https://icons8.com/icons/color" target="_window")
+                    |color icons lookup
+            div
+            .ui.segment
+                a.ui.small.inline.header(href="https://genekeys.com/" target='_window') 
+                    i.external.icon
+                    |gene keys site
+                +image_edit key='genekeys_profile' label='gene keys pdf' icon='dna-helix' direct=true
             .spacer
             +text_edit key='city' label='city' icon='city' direct=true
             .spacer

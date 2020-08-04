@@ -69,7 +69,7 @@ if Meteor.isClient
                 published:true
                 start_datetime:$gt:moment().format()
             }, 
-                sort:start_datetime:-1
+                sort:start_datetime:1
     
     
         can_add_event: ->

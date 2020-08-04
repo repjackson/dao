@@ -172,6 +172,13 @@ template(name='home')
                                 .meta #{when}
                                 // each tags 
                                 //     .ui.tiny.basic.label #{this}
+                                if doc_comments.count
+                                    .meta
+                                        each doc_comments 
+                                            i.grey.chat.outline.icon
+                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                                            |#{body}
+                
                                             
             .four.wide.column
                 // a.ui.center.aligned.header(href="/m/post")
@@ -237,7 +244,13 @@ template(name='home_event_card')
             i.remove.red.large.icon
             each not_going
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
-               
+            if doc_comments.count
+                .meta
+                    each doc_comments 
+                        i.grey.chat.outline.icon
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                        |#{body}
+           
                                
                                
                                

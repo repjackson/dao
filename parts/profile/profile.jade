@@ -70,14 +70,14 @@ template(name='profile_layout')
                         unless is_current_user
                             if i_have_points
                                 .ui.basic.button.send(title='send points')
-                                    i.chevron.up.large.green.icon
-                                    span send
+                                    i.red.gift.large.green.icon
+                                    span gift
                                 .ui.basic.button.request(title='request points')
                                     i.concierge.bell.large.teal.icon
                                     span request
                             else
                                 .ui.disabled.basic.button(title='send points')
-                                    i.chevron.up.large.green.icon
+                                    i.red.gift.large.green.icon
                                     span send
                                 .ui.disabled.basic.button(title='request points')
                                     i.concierge.bell.teal.icon
@@ -101,7 +101,7 @@ template(name='profile_layout')
                             i.large.chevron.down.icon
                             span.mobile.hidden credits
                         a.ui.icon.large.compact.basic.button.profile_nav_item(href="/user/#{username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
-                            i.large.chevron.up.icon
+                            i.large.red.gift.icon
                             span.mobile.hidden sent
                         a.ui.icon.large.compact.basic.button.profile_nav_item(href="/user/#{username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
                             i.calendar.large.icon
