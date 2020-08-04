@@ -14,14 +14,12 @@ template(name='home')
                     //     |monthly budget progress / 20k
                 if viewing_finance_details
                     .ui.stackable.grid
-                        .three.column.row
+                        .two.column.row
                             .column
                                 .ui.header finance details
                                 .ui.header income from events
+                            .column
                                 .ui.header most generative event
-                            .column
-                                .ui.header coolest member
-                            .column
                                 .ui.header most generative member
                     
         .centered.row
@@ -43,9 +41,12 @@ template(name='home')
                 .ui.basic.big.button.request
                     i.concierge.bell.teal.icon
                     |request
-                .ui.basic.big.button.request
+                .ui.basic.big.button.offer
                     i.hand.holding.heart.olive.icon
                     |offer
+                .ui.basic.big.button.add_bug
+                    i.bug.icon
+                    |add bug
                 if is_admin
                     a.ui.basic.big.button(href='/register')
                         i.plus.icon

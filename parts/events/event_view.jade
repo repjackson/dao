@@ -29,7 +29,7 @@ template(name='event_view')
                                 small author
                             a.ui.header(href="/user/#{_author.username}") 
                                 img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{_author.username}
+                                |#{_author.name}
                     if facilitator
                         .ui.dividing.header 
                             |facilitator

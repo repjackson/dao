@@ -279,6 +279,7 @@ a.goto_article {
 }
 
 .zoom:hover {
+    transition: all .5s ease !important; 
     transform: scale(1.05) !important;
 }
 .pointer:active {

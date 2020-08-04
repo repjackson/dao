@@ -9,7 +9,6 @@ template(name='events')
                     .ui.circular.button.add_event
                         i.plus.icon
                         |add event
-                        
                 .spacer
                 .spacer
                 .ui.stackable.four.cards
@@ -71,7 +70,7 @@ template(name='event_edit')
                 .six.wide.column
                     .ui.header 
                         small author
-                        |#{_author.username}
+                        |#{_author.name}
                     +text_edit key='title' label='title' direct=true
                     +slug_edit key='slug' label='slug' icon='slug' direct=true
                     +boolean_edit key='published' label='published' direct=true
@@ -86,7 +85,7 @@ template(name='event_edit')
                 .ten.wide.column
                     .ui.header room
                     each rooms 
-                        .ui.button #{title} 
+                        .ui.circular.basic.circular.button #{title} 
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
@@ -95,7 +94,7 @@ template(name='event_edit')
 
 
 template(name='gcal_button')
-    a.ui.button(href="http://www.google.com/calendar/event?action=TEMPLATE&text=#{title}&dates=#{start_datetime}/#{end_datetime}&details=#{description}&location=#{location}" target="_window")
+    a.ui.circular.basic.circular.large.button(href="http://www.google.com/calendar/event?action=TEMPLATE&text=#{title}&dates=#{start_datetime}/#{end_datetime}&details=#{description}&location=#{location}" target="_window")
         i.calendar.icon
         |add to gcal
         
@@ -110,8 +109,8 @@ template(name='attendance')
     // .ui.icon.button.pick_going 
     //     i.green.checkmark.big.icon
     // each going 
-    //     a.ui.button(href="/user/#{username}")    
-    //         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+    //     a.ui.circular.basic.circular.button(href="/user/#{username}")    
+    //         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
     //         |#{username}
     
     .ui.orange.header.pointer.pick_maybe
@@ -123,8 +122,8 @@ template(name='attendance')
     // .ui.icon.button.pick_maybe 
     //     i.yellow.minus.big.icon
     each maybe_going
-        a.ui.button(href="/user/#{username}")    
-            img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+        a.ui.circular.basic.circular.button(href="/user/#{username}")    
+            img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{username}
     .ui.red.header.pointer.pick_not
         // if currentUser
@@ -135,6 +134,6 @@ template(name='attendance')
     // .ui.icon.button.pick_not
         // i.big.ban.icon
     each not_going
-        a.ui.button(href="/user/#{username}")    
-            img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+        a.ui.circular.basic.circular.button(href="/user/#{username}")    
+            img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{username}

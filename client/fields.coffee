@@ -45,9 +45,20 @@ Template.color_edit.events
 
 
 
+Template.html_edit.onRendered ->
+    @editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
+        # // All of the plugins are loaded in the "window.SUNEDITOR" object in dist/suneditor.min.js file
+        # // Insert options
+        # // Language global object (default: en)
+        lang: SUNEDITOR_LANG['en']
+    });
+
 Template.html_edit.events
-    'blur .froala-container': (e,t)->
-        html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
+    # 'blur .froala-container': (e,t)->
+    'blur .testsun': (e,t)->
+        html = t.editor.getContents(onlyContents: Boolean);
+
+        # html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         if @direct
             parent = Template.parentData()
         else

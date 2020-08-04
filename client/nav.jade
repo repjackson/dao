@@ -15,9 +15,11 @@ template(name='nav')
         // a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
         a.item.mobile.hidden(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
             i.large.newspaper.icon
+            // em(data-emoji='newspaper')
             |news
         a.item.mobile.hidden(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
             i.large.concierge.bell.icon
+            // em(data-emoji='bellhop')
             |requests
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
@@ -148,17 +150,17 @@ template(name='left_sidebar')
             
         if is_admin
             a.item.toggle_sidebar.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}")
-                i.certificate.icon
+                i.certificate.blue.icon
                 | badges
             a.item.toggle_sidebar.set_debit(href="/m/debit" class="{{isActivePath regex='rentals'}}")
-                i.gift.icon
+                i.gift.blue.icon
                 |gifts
             .divider
             a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
-                i.tasks.icon
+                i.tasks.blue.icon
                 | projects
             a.item.toggle_sidebar(href="/m/room" class="{{isActiveRoute 'requests'}}")
-                i.building.icon
+                i.building.blue.icon
                 |rooms
             a.blue.item.set_model.toggle_sidebar(href="/m/model" class="{{isActivePath regex='model'}}")
                 |admin

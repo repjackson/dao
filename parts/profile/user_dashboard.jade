@@ -7,9 +7,9 @@ template(name='user_dashboard')
                 i.chevron.down.large.icon
                 |#{total_credit_amount}p
                 |received
-                .ui.basic.label #{credit_count} credits
-                    | ##{global_credit_count_rank}
-            .smallscroll
+                small(title='received count') (#{credit_count}x) 
+                small(title='rank') ##{global_credit_count_rank}
+            .medscroll
                 each user_credits
                     .ui.segment.user_credit_segment.pointer
                         .header
@@ -30,26 +30,26 @@ template(name='user_dashboard')
                 |#{total_debit_amount}p
                 |sent
                 small(title='debit count') (#{debit_count}x)
-                .ui.label(title='rank') ##{global_debit_count_rank}
+                small(title='rank') ##{global_debit_count_rank}
             div
-            .smallscroll
+            .medscroll
                 each user_debits
                     .ui.segment.user_debit_segment.pointer
                         .header
                             strong #{amount}pt
-                            |#{when}
                             | to 
                             if recipient.profile_image_id
                                 img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{recipient.username}
+                        small #{when}
                         |#{description}
                         each tags
-                            .ui.mini.label #{this}
+                            .ui.mini.basic.label #{this}
         .column
             .ui.header 
                 i.concierge.bell.icon
                 |requests
-            .smallscroll
+            .medscroll
                 each user_requests
                     .ui.segment
                         a.header(href="/request/#{_id}/view")
@@ -62,7 +62,7 @@ template(name='user_dashboard')
             .ui.header 
                 i.calendar.icon
                 |events
-            .smallscroll
+            .medscroll
                 each user_event_tickets
                         .ui.segment
                             if ticket_event.image_id

@@ -114,7 +114,17 @@ if Meteor.isClient
             new_request_id =
                 Docs.insert
                     model:'request'
-            Router.go "/request/#{new_request_id}/edit"
+            Router.go "/m/request/#{new_request_id}/edit"
+        'click .offer': ->
+            new_offer_id =
+                Docs.insert
+                    model:'offer'
+            Router.go "/m/offer/#{new_offer_id}/edit"
+        'click .add_bug': ->
+            new_bug_id =
+                Docs.insert
+                    model:'bug'
+            Router.go "/m/bug/#{new_bug_id}/edit"
 
         'keydown .find_username': (e,t)->
             # email = $('submit_email').val()
