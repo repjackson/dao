@@ -1,6 +1,6 @@
 template(name='nav')
     // .ui.fluid.inverted.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
-    .ui.fluid.inverted.fixed.borderless.menu.topnav(style="background-color:#{currentUser.theme_color};")
+    .ui.fluid.inverted.attached.borderless.menu.topnav(style="background-color:#{currentUser.theme_color};")
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.icon.item(href="/" class="{{isActivePath 'home'}}")

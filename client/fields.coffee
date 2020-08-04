@@ -47,18 +47,60 @@ Template.color_edit.events
 
 Template.html_edit.onRendered ->
     @editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
-        # // All of the plugins are loaded in the "window.SUNEDITOR" object in dist/suneditor.min.js file
-        # // Insert options
-        # // Language global object (default: en)
+        codeMirror: CodeMirror
+        buttonList: [
+            ['undo', 'redo'],
+            [':p-More Paragraph-default.more_paragraph', 'font', 'fontSize', 'formatBlock', 'paragraphStyle', 'blockquote'],
+            ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+            ['fontColor', 'hiliteColor', 'textStyle'],
+            ['removeFormat'],
+            ['outdent', 'indent'],
+            ['align', 'horizontalRule', 'list', 'lineHeight'],
+            # ['-right', ':i-More Misc-default.more_vertical', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save', 'template'],
+            ['fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save', 'template'],
+            ['table', 'imageGallery'],
+            ['image', 'video', 'audio', 'link'],
+            # // (min-width: 992)
+            # ['%992', [
+            #     ['undo', 'redo'],
+            #     [':p-More Paragraph-default.more_paragraph', 'font', 'fontSize', 'formatBlock', 'paragraphStyle', 'blockquote'],
+            #     ['bold', 'underline', 'italic', 'strike'],
+            #     [':t-More Text-default.more_text', 'subscript', 'superscript', 'fontColor', 'hiliteColor', 'textStyle'],
+            #     ['removeFormat'],
+            #     ['outdent', 'indent'],
+            #     ['align', 'horizontalRule', 'list', 'lineHeight'],
+            #     ['-right', ':i-More Misc-default.more_vertical', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save', 'template'],
+            #     ['-right', ':r-More Rich-default.more_plus', 'table', 'link', 'image', 'video', 'audio', 'math', 'imageGallery']
+            # ]],
+            # # // (min-width: 767)
+            # ['%767', [
+            #     ['undo', 'redo'],
+            #     [':p-More Paragraph-default.more_paragraph', 'font', 'fontSize', 'formatBlock', 'paragraphStyle', 'blockquote'],
+            #     [':t-More Text-default.more_text', 'bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'fontColor', 'hiliteColor', 'textStyle'],
+            #     ['removeFormat'],
+            #     ['outdent', 'indent'],
+            #     [':e-More Line-default.more_horizontal', 'align', 'horizontalRule', 'list', 'lineHeight'],
+            #     [':r-More Rich-default.more_plus', 'table', 'link', 'image', 'video', 'audio', 'math', 'imageGallery'],
+            #     ['-right', ':i-More Misc-default.more_vertical', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save', 'template']
+            # ]],
+            # # // (min-width: 480)
+            # ['%480', [
+            #     ['undo', 'redo'],
+            #     [':p-More Paragraph-default.more_paragraph', 'font', 'fontSize', 'formatBlock', 'paragraphStyle', 'blockquote'],
+            #     [':t-More Text-default.more_text', 'bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'fontColor', 'hiliteColor', 'textStyle', 'removeFormat'],
+            #     [':e-More Line-default.more_horizontal', 'outdent', 'indent', 'align', 'horizontalRule', 'list', 'lineHeight'],
+            #     [':r-More Rich-default.more_plus', 'table', 'link', 'image', 'video', 'audio', 'math', 'imageGallery'],
+            #     ['-right', ':i-More Misc-default.more_vertical', 'fullScreen', 'showBlocks', 'codeView', 'preview', 'print', 'save', 'template']
+            # ]]
+        ]
+        
         lang: SUNEDITOR_LANG['en']
     });
 
 Template.html_edit.events
-    # 'blur .froala-container': (e,t)->
     'blur .testsun': (e,t)->
         html = t.editor.getContents(onlyContents: Boolean);
 
-        # html = t.$('div.froala-reactive-meteorized-override').froalaEditor('html.get', true)
         if @direct
             parent = Template.parentData()
         else
@@ -74,72 +116,6 @@ Template.html_edit.events
 
 
 Template.html_edit.helpers
-    getFEContext: ->
-        if @direct
-            parent = Template.parentData()
-        else
-            parent = Template.parentData(5)
-        # @current_doc = Docs.findOne Router.current().params.doc_id
-        console.log @
-        self = @
-        {
-            _value: parent["#{@key}"]
-            _keepMarkers: true
-            _className: 'froala-reactive-meteorized-override'
-            toolbarInline: false
-            initOnClick: false
-            toolbarButtons:
-                [
-                  'fullscreen'
-                  'bold'
-                  'italic'
-                  'underline'
-                  'strikeThrough'
-                  'subscript'
-                  'superscript'
-                  '|'
-                #   'fontFamily'
-                  'fontSize'
-                  'color'
-                #   'inlineStyle'
-                #   'paragraphStyle'
-                  '|'
-                  'paragraphFormat'
-                  'align'
-                  'formatOL'
-                  'formatUL'
-                  'outdent'
-                  'indent'
-                  # 'quote'
-                #   '-'
-                  'insertLink'
-                #   'insertImage'
-                #   'insertVideo'
-                #   'embedly'
-                #   'insertFile'
-                  'insertTable'
-                #   '|'
-                  # 'emoticons'
-                #   'specialCharacters'
-                #   'insertHR'
-                  'selectAll'
-                  'clearFormatting'
-                  '|'
-                #   'print'
-                #   'spellChecker'
-                #   'help'
-                  'html'
-                #   '|'
-                  'undo'
-                  'redo'
-                ]
-            # toolbarButtonsMD: ['bold', 'italic', 'underline']
-            # toolbarButtonsSM: ['bold', 'italic', 'underline']
-            toolbarButtonsXS: ['bold', 'italic', 'underline']
-            # imageInsertButtons: ['imageBack', '|', 'imageByURL']
-            tabSpaces: false
-            height: 200
-        }
         
 
 
