@@ -1010,8 +1010,8 @@ template(name='single_user_edit')
                     each user_results
                         .select_user.item
                             .ui.small.inline.header
-                                img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                |#{first_name} #{last_name} #{username}
+                                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                |#{name}
                             //- .ui.mini.grey.inline.header 
                             //-     |#{username}
     if field_value
@@ -1068,9 +1068,9 @@ template(name='multi_user_edit')
                 each user_results
                     .select_user.item
                         .ui.header
-                            img.ui.avatar.image(src="{{c.url kiosk_photo width=100 height=100 gravity='face' crop='fill'}}")
-                            strong #{first_name} #{last_name}
-                            small @#{username}
+                            img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            strong #{username}
+                            // small @#{username}
     +clear_value                
     .ui.list
         each field_value
