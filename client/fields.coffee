@@ -804,21 +804,25 @@ Template.single_user_edit.events
         page_doc = Docs.findOne Router.current().params.doc_id
         field = Template.currentData()
 
+        console.log @
+        console.log Template.currentData()
+        console.log Template.parentData()
+        console.log Template.parentData(1)
+        console.log Template.parentData(2)
+        console.log Template.parentData(3)
+        console.log Template.parentData(4)
+
+
         val = t.$('.edit_text').val()
-        # if field.direct
-        #     parent = Template.parentData()
-        # else
-        #     parent = Template.parentData(5)
+        if field.direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
 
 
         doc = Docs.findOne parent._id
-        user = Meteor.users.findOne parent._id
-        if page_doc
-            Docs.update page_doc._id,
-                $set:"#{field.key}":@_id
-        else if user
-            Meteor.users.update parent._id,
-                $set:"#{field.key}":@_id
+        Docs.update parent._id,
+            $set:"#{field.key}":@_id
 
         t.user_results.set null
         $('#single_user_select_input').val ''
@@ -833,7 +837,7 @@ Template.single_user_edit.events
         # console.log Template.parentData(5)
         # console.log Template.parentData(6)
         # console.log Template.parentData(7)
-        if confirm "Remove #{@username}?"
+        if confirm "remove #{@username}?"
             parent = Template.parentData(1)
             field = Template.currentData()
             Docs.update parent._id,

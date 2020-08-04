@@ -1,10 +1,5 @@
 template(name='model_edit_layout')
     +nav
-    .spacer
-    .spacer
-    .spacer
-    .spacer
-    .spacer
     with current_doc
         .ui.stackable.padded.grid            
             .centered.row
@@ -74,8 +69,8 @@ template(name='model_edit_modules')
         .ui.header
             +icon name='module'
             |modules
-        +boolean_edit key='show_comments' label='comments' color_icon='chat' direct=true
-        +boolean_edit key='show_voting' label='voting' color_icon='elections' direct=true
+        +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
+        +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
     .spacer
     +comments
 
@@ -131,25 +126,29 @@ template(name='field_edit')
                 +key_value_edit key='field_type' value='link' icon='linkify'
                 +key_value_edit key='field_type' value='youtube' icon='video'
                 +key_value_edit key='field_type' value='color' icon='paint brush'
-                //- if is_admin
-                //- +single_doc_edit key='field_type' ref_model='field_type' label='field type' direct=true        
-                //- .spacer
-                //- +text_edit key='field_type_id' label='field type id' direct=true        
-                //- +single_doc_edit key='field_type_id' ref_model_slug='field_type' label='field type id' direct=true        
-                //- .spacer
-                //- +multi_doc_edit key='view_roles' ref_model_slug='role' label='view roles' direct=true icon='eye'          
-                //- .spacer
-                //- +multi_doc_edit key='edit_roles' ref_model_slug='role' label='edit roles' direct=true icon='pencil'        
-                //- +text_edit key='ref_model' label='Reference Model' direct=true
+                +key_value_edit key='field_type' value='single_doc' icon='clone'
+                +key_value_edit key='field_type' value='multi_doc' icon='clone'
+                +key_value_edit key='field_type' value='single_user' icon='clone'
+                +key_value_edit key='field_type' value='multi_user' icon='clone'
+                if is_admin
+                    +single_doc_edit key='field_type' ref_model='field_type' label='field type' direct=true        
+                    .spacer
+                    // +text_edit key='field_type_id' label='field type id' direct=true        
+                    // +single_doc_edit key='field_type_id' ref_model_slug='field_type' label='field type id' direct=true        
+                    .spacer
+                    +multi_doc_edit key='view_roles' ref_model_slug='role' label='view roles' direct=true icon='eye'          
+                    .spacer
+                    +multi_doc_edit key='edit_roles' ref_model_slug='role' label='edit roles' direct=true icon='pencil'        
+                    +text_edit key='ref_model' label='reference model' direct=true
                 .spacer
-                +boolean_edit key='faceted' label='faceted' color_icon='diamond' direct=true
-                +boolean_edit key='sortable' label='sortable' color_icon='chevron-down' direct=true
-                //- .spacer
-                //- if is_ref  
-                //-     +single_doc_edit key='ref_model' ref_model_slug='model' label='reference model' direct=true
-                //- else if is_user_ref
-                //-     +single_doc_edit key='role_filter' ref_model_slug='role' label='role filter' direct=true
-                //- div             
+                +boolean_edit key='faceted' label='faceted' icon='diamond' direct=true
+                +boolean_edit key='sortable' label='sortable' icon='chevron-down' direct=true
+                .spacer
+                if is_ref  
+                    +single_doc_edit key='ref_model' ref_model_slug='model' label='reference model' direct=true
+                else if is_user_ref
+                    +single_doc_edit key='role_filter' ref_model_slug='role' label='role filter' direct=true
+                div             
                 +remove_button
                 if is_admin
                     +print_this

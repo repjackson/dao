@@ -54,6 +54,8 @@ template(name='user_dashboard')
             .medscroll
                 each user_requests
                     .ui.segment
+                        if image_id
+                            img.ui.image(src="{{c.url image_id height=100 width=200}}")
                         a.header(href="/request/#{_id}/view")
                             |#{point_bounty}pts: #{title}
                         |!{description}

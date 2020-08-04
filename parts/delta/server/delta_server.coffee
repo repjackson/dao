@@ -191,7 +191,7 @@ Meteor.methods
         # delta = Docs.findOne delta_id
 
     agg: (query, key, collection)->
-        console.log 'running agg', query
+        # console.log 'running agg', query
         limit=20
         options = { explain:false }
         pipe =  [
