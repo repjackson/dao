@@ -145,9 +145,9 @@ template(name='model_top')
             i.grey.loading.yin.yang.icon
             | loading #{current_model.title}...
     else
-        //- unless key_value_is current_delta.model_filter 'model'
-        //-     a.ui.icon.basic.compact.tertiary.button.go_home
-        //-         +icon name='home' cl='ui inline image'
+        unless key_value_is current_delta.model_filter 'model'
+            a.ui.icon.basic.compact.circular.button.go_home
+                i.big.home.icon
         a.ui.inline.large.header.reset(title="#{description}, #{views} views")
             i.large.icon(class=icon)
             | #{current_model.title}
@@ -158,7 +158,7 @@ template(name='model_top')
                     i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
             else 
                 if is_admin
-                    .ui.icon.basic.button.add_model_doc(title="add #{slug}")
+                    .ui.icon.basic.circular.button.add_model_doc(title="add #{slug}")
                         i.plus.large.green.icon
         //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
         if is_admin
@@ -221,7 +221,7 @@ template(name='facet')
     if filtering_res
         .ui.inline.header.pointer.toggle_view_facet
             if icon
-                i.icon(class=icon)
+                i.small.icon(class=icon)
             if title
                 |#{title}
             else 

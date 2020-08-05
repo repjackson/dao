@@ -1,6 +1,6 @@
 body {
     /* font-family: 'Raleway', sans-serif !important; */
-    /*font-family: 'Ubuntu', sans-serif !important;*/
+    font-family: 'Ubuntu', sans-serif !important;
     /* font-family: 'Lato+Mono', sans-serif !important; */
     /* font-family: 'Lato', sans-serif !important; */
     /* font-size: 110% !important; */
@@ -13,6 +13,10 @@ body {
     /* overscroll-behavior: none; */
     /*transition: all .5s ease !important;*/
     /* background: #0e0e44 !important; */
+}
+
+.reset:hover {
+  cursor:help;
 }
 
 .form {
@@ -272,7 +276,7 @@ a.goto_article {
 }
 /*  */
 .pointer:hover {
-    transition: all .5s ease !important; 
+    transition: all .25s ease !important; 
     cursor: pointer !important;
     /* color: black !important; */
     /* font-size: 130% !important; */
@@ -553,7 +557,7 @@ body {
     /* text-transform: capitalize !important; */
     /* font-family: 'Raleway', sans-serif !important; */
     /* font-family: 'Montserrat', sans-serif !important; */
-    /* font-family: 'Roboto', sans-serif !important; */
+     /*font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Lato+Mono', sans-serif !important; */
     /*font-family: 'Ubuntu', sans-serif !important;*/
 }
