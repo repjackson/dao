@@ -279,7 +279,8 @@ template(name='image_view')
         //- if classes
         //-     img(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
         //- else 
-        img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}")
+        a(href="{{c.url field_value }}" target='_window')
+            img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}")
         //- a(href="{{c.url field_value gravity='face' crop='fit'}}")
         //-     |download
     //- +call_visual
@@ -301,11 +302,12 @@ template(name='image_edit')
         .field
             if field_value
                 //- label Image
-                img.ui.large.centered.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}")
+                a(href="{{c.url field_value }}" target='_window')
+                    img.ui.large.centered.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}")
                 a#remove_photo.ui.right.corner.link.label
                     i.remove.link.icon
             else
-                if is_frontdesk
+                if is_admin
                     .upload-btn-wrapper            
                         .btn Take Photo (switch camera to front)
                             input(type='file' name='upload_image' accept='image/*' capture='user')

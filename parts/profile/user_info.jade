@@ -51,6 +51,14 @@ template(name='user_about')
             |roles
         each roles
             .ui.label #{this}
+        .ui.stackable.three.column.grid
+            .column
+                +image_view key='gene1' label='gene keys 1' icon='dna' direct=true
+            .column
+                +image_view key='gene2' label='gene keys 2' icon='dna' direct=true
+            .column
+                +image_view key='gene3' label='gene keys 3' icon='dna' direct=true
+            
 
 template(name='user_info_tag')
     .ui.basic.tertiary.button 
