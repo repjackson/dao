@@ -30,21 +30,21 @@ template(name='home')
                             img.ui.tiny.pointer.inline.circular.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
         .centered.row
             .sixteen.wide.center.aligned.column
-               .ui.basic.big.button.debit
+               .ui.basic.big.compact.circular.button.debit
                     i.gift.red.icon
                     |send points
                     // else
-                    //     .ui.green.disabled.button
+                    //     .ui.green.disabled.compact.circular.button
                     //         +icolor name='debit' cl='ui mini inline image'
                     //         // i.debit.icon
                     //         |send
-                .ui.basic.big.button.request
+                .ui.basic.big.compact.circular.button.request
                     i.concierge.bell.teal.icon
                     |request
-                .ui.basic.big.button.offer
+                .ui.basic.big.compact.circular.button.offer
                     i.hand.holding.heart.olive.icon
                     |offer
-                .ui.basic.big.button.add_bug
+                .ui.basic.big.compact.circular.button.add_bug
                     i.bug.red.icon
                     |+ bug
                 if is_admin
@@ -151,34 +151,11 @@ template(name='home')
             .four.wide.column
                 // a.ui.center.aligned.header(href="/requests")
                 .ui.center.aligned.header
-                    i.concierge.bell.icon
+                    i.concierge.bell.teal.icon
                     |requests
                 .smallscroll
                     each latest_requests
-                        .ui.segment.view_request.pointer
-                            .content
-                                if youtube_id
-                                    +youtube_view key='youtube_id' direct=true
-                                else if image_id
-                                    img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
-
-                                .header
-                                    .ui.inline.header #{point_bounty}p: #{title}
-                                    if _author.profile_image_id
-                                        with _author
-                                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
-                                    | #{_author.name}
-                                |!{description}
-                                .meta #{when}
-                                // each tags 
-                                //     .ui.tiny.basic.label #{this}
-                                if doc_comments.count
-                                    .meta
-                                        each doc_comments 
-                                            i.grey.chat.outline.icon
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-                                            |#{body}
-                
+                        +home_request_card
                                             
             .four.wide.column
                 // a.ui.center.aligned.header(href="/m/post")
@@ -209,6 +186,35 @@ template(name='home')
                     //             each tags 
                     //                 .ui.tiny.basic.label #{this}
                                     
+                                    
+template(name='home_request_card')
+    .ui.segment.view_request.pointer
+        .content
+            if youtube_id
+                +youtube_view key='youtube_id' direct=true
+            else if image_id
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+
+            .header
+                .ui.inline.header #{point_bounty}p: #{title}
+                if _author.profile_image_id
+                    with _author
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
+                | #{_author.name}
+            |!{description}
+            .meta #{when}
+            // each tags 
+            //     .ui.tiny.basic.label #{this}
+            if doc_comments.count
+                .meta
+                    each doc_comments 
+                        i.grey.chat.outline.icon
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                        |#{body}
+
+
+                                    
+                                    
 template(name='home_event_card')
     a.ui.fluid.card(href="/event/#{_id}/view")
         img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
@@ -236,14 +242,14 @@ template(name='home_event_card')
             i.checkmark.green.large.icon
             each going
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
-            i.question.orange.large.icon
-            | #{maybe_user_ids.length}
-            each maybe_going
-                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
-            | #{not_user_ids.length}
-            i.remove.red.large.icon
-            each not_going
-                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
+            // i.question.orange.large.icon
+            // | #{maybe_user_ids.length}
+            // each maybe_going
+            //     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
+            // | #{not_user_ids.length}
+            // i.remove.red.large.icon
+            // each not_going
+            //     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
             if doc_comments.count
                 .meta
                     each doc_comments 

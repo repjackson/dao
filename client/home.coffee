@@ -12,6 +12,7 @@ if Meteor.isClient
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_debits'
         
+        @autorun => Meteor.subscribe 'model_docs', 'transaction'
         @autorun => Meteor.subscribe 'model_docs', 'request'
         @autorun => Meteor.subscribe 'model_docs', 'shift'
         @autorun => Meteor.subscribe 'model_docs', 'comment'

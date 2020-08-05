@@ -8,7 +8,7 @@ template(name='nav')
             // i.large.home.icon
         a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.large.users.icon
-            | directory
+            | players
         a.item.mobile.hidden(href="/events" class="{{isActiveRoute 'events'}}" title='events')
             i.large.calendar.icon
             | events
@@ -26,9 +26,7 @@ template(name='nav')
         //         i.database.large.icon
         .right.menu
             a.icon.item.toggle_top_sidebar(href="#")
-                // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
                 i.large.bell.icon
-        
             // a.icon.item(href="/chat" title='chat') 
             a.icon.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
                 i.chat.large.icon

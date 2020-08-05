@@ -9,9 +9,6 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'all_users'
-
-
 
 
     Template.debit_edit.helpers
@@ -23,7 +20,7 @@ if Meteor.isClient
         members: ->
             debit = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
-                levels: $in: ['member']
+                # levels: $in: ['member']
                 _id: $ne: Meteor.userId()
         # subtotal: ->
         #     debit = Docs.findOne Router.current().params.doc_id

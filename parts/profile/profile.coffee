@@ -349,7 +349,14 @@ if Meteor.isServer
             if total_debit_amount is 0 then total_debit_amount++
             if total_credit_amount is 0 then total_credit_amount++
             # debit_credit_ratio = total_debit_amount/total_credit_amount
-            one_ratio = total_debit_amount/total_credit_amount
+            unless total_debit_amount is 1
+                unless total_credit_amount is 1
+                    one_ratio = total_debit_amount/total_credit_amount
+                else
+                    one_ratio = 0
+            else
+                one_ratio = 0
+                    
             # dc_ratio_inverted = 1/debit_credit_ratio
 
             # credit_debit_ratio = total_credit_amount/total_debit_amount

@@ -10,14 +10,14 @@ template(name='debit_edit')
                         .ui.header sender
                         .ui.header
                             img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{_author.username}
+                            |#{_author.name}
                     .ui.segment
                         .ui.header recipient
                         with recipient
                             i.large.remove.link.icon.remove_recipient
-                            a.pointer(href="/user/#{username}")
+                            a.pointer(href="/user/#{name}")
                                 img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
-                                .ui.inline.header #{username}
+                                .ui.inline.header #{name}
                                 .ui.small.grey.inline.header #{points}
                         unless recipient
                             .ui.divider
