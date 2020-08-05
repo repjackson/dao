@@ -265,6 +265,12 @@ template(name='user_info_tiny')
         //     i.circular.user.outline.icon(title=user.name)
         .ui.basic.tiny.label #{user.shortname}
 
+template(name='user_avatar')
+    if user.profile_image_id
+        img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
+    else
+        i.circular.user.outline.icon(title=user.name)
+
 
 template(name='username_info')
     .ui.small.compact.basic.button.goto_profile
@@ -353,6 +359,12 @@ template(name='voting_small')
     i.thumbs.down.link.icon.downvote(class=downvote_class)
     each downvoter_ids
         +user_info_tiny
+
+template(name='voting_tiny')
+    i.thumbs.up.icon(class=upvote_class)
+    // |#{upvoter_ids.length}
+    each upvoter_ids
+        +user_avatar
 
 
 template(name='honey_badger')

@@ -35,15 +35,17 @@ if Meteor.isClient
         room_button_class: ->
             event = Docs.findOne Router.current().params.doc_id
             if event.room_id is @_id
-                'blue'
+                'blue inverted'
             else 
                 'basic'
     
         room_reservations: ->
             event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
             Docs.find 
                 model:'reservation'
-                room_id: event.room_id
+                room_id:event.room_id 
+                date:event.date
                 
     
     

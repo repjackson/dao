@@ -268,6 +268,9 @@ template(name='home_event_card')
                                     
 template(name='debit_card')
     .ui.card.pointer.view_debit
+        if image_id
+            img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
+
         .content
             .description 
                 if _author.profile_image_id
@@ -285,7 +288,8 @@ template(name='debit_card')
                 |#{description}
             .spacer
             each tags 
-                .ui.basic.label #{this}
+                .ui.small.basic.label #{this}
+            +voting_tiny
             if doc_comments.count
                 .meta
                     each doc_comments 

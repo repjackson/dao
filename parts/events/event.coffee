@@ -25,7 +25,12 @@ if Meteor.isClient
     #         Docs.findOne
     #             model:'event'
     #             slug:Router.current().params.doc_slug
-            
+   
+    Template.registerHelper 'event_room', () ->
+        event = Docs.findOne @_id
+        Docs.findOne 
+            _id:event.room_id
+
     Template.registerHelper 'going', () ->
         event = Docs.findOne @_id
         event_tickets = 

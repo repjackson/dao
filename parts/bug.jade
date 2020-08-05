@@ -101,38 +101,38 @@ template(name='bug_view')
                     //-     i.checkmark.icon
                     //-     |submit
 
-// template(name='bug_edit')
-//     with current_doc
-//         .ui.stackable.padded.grid
-//             .centered.middle.aligned.row 
-//                 .four.wide.column
-//                     a.ui.icon.green.big.button(href="/m/bug/#{_id}/view" title='save')
-//                         i.checkmark.big.icon
-//                     .ui.inline.header 
-//                         +icolor name='news' cl='ui image inline pointer'
-//                         |edit bug
-//                     .ui.icon.button.delete_item(title='delete')
-//                         i.large.remove.icon
-//                     .ui.header 
-//                         small author
-//                         |#{_author.username}
-//                     +image_edit key='image_id' label='image' direct=true
-//                     div 
-//                     +array_edit key='tags' label='tags' direct=true
-//                     +boolean_edit key='published' icon='visible' direct=true
-//                     if is_admin 
-//                         +text_edit key='model' label='model' direct=true
-//                     //- +array_edit key='location_tags' label='location_tags' direct=true
-//                     // unless published
-//                     //     a.ui.fluid.green.button.submit(href="/save")
-//                     //         i.checkmark.icon
-//                     //         |publish
-//                     // else
-//                     //     .ui.basic.button.unpublish 
-//                     //         |unpublish
-//                     .ui.header
-//                         |audience
-//                 .twelve.wide.column
-//                     +text_edit key='title' label='title' direct=true
-//                     +html_edit key='content' label='content' direct=true
+template(name='bug_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row 
+                .four.wide.column
+                    a.ui.icon.green.big.button(href="/m/bug/#{_id}/view" title='save')
+                        i.checkmark.big.icon
+                    .ui.inline.header 
+                        +icolor name='news' cl='ui image inline pointer'
+                        |edit bug
+                    .ui.icon.button.delete_item(title='delete')
+                        i.large.remove.icon
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                    +boolean_edit key='published' icon='visible' direct=true
+                    if is_admin 
+                        +text_edit key='model' label='model' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    // unless published
+                    //     a.ui.fluid.green.button.submit(href="/save")
+                    //         i.checkmark.icon
+                    //         |publish
+                    // else
+                    //     .ui.basic.button.unpublish 
+                    //         |unpublish
+                    .ui.header
+                        |audience
+                .twelve.wide.column
+                    +text_edit key='title' label='title' direct=true
+                    +html_edit key='content' label='content' direct=true
         

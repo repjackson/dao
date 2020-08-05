@@ -146,16 +146,17 @@ template(name='model_top')
             | loading #{current_model.title}...
     else
         unless key_value_is current_delta.model_filter 'model'
-            a.ui.icon.basic.compact.circular.button.go_home
-                i.big.home.icon
+            if is_admin
+                a.ui.icon.basic.compact.circular.button.go_home
+                    i.big.home.icon
         a.ui.inline.large.header.reset(title="#{description}, #{views} views")
             i.large.icon(class=icon)
             | #{current_model.title}
     unless is_loading
         if currentUser
             unless key_value_is current_delta.model_filter 'model'
-                if is_admin
-                    i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
+                // if is_admin
+                i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
             else 
                 if is_admin
                     .ui.icon.basic.circular.button.add_model_doc(title="add #{slug}")

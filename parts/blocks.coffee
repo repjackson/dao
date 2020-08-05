@@ -183,6 +183,12 @@ if Meteor.isClient
         user: -> Meteor.users.findOne @valueOf()
 
 #
+    Template.user_avatar.onCreated ->
+        @autorun => Meteor.subscribe 'user_from_id', @data
+    Template.user_avatar.helpers
+        user: -> Meteor.users.findOne @valueOf()
+
+#
 #     Template.toggle_edit.events
 #         'click .toggle_edit': ->
 #             console.log @

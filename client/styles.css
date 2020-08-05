@@ -6,8 +6,8 @@ body {
     /* font-size: 110% !important; */
     /* line-height: 200% !important; */
     /* background: rgba(0,0,0,.8) !important; */
-    scroll-behavior: smooth;
-    /*margin-top: 4em;*/
+    /*scroll-behavior: smooth;*/
+    margin-top: 5em;
     /*background: rgba(200,200,200,1) !important;*/
     /* filter: invert(1) !important; */
     /* overscroll-behavior: none; */
@@ -103,8 +103,7 @@ html.ios body {
     overflow-x:scroll;
     /* padding-top: .2em; */
     /* padding: .2em; */
-    margin-bottom: 2em; 
-
+    /*margin-bottom: 4em; */
 }
 
 
