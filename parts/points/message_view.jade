@@ -1,11 +1,11 @@
-template(name='debit_item')
+template(name='message_item')
     .ui.card
         .content
             |#{when}
 
 
 
-template(name='debit_view')
+template(name='message_view')
     with current_doc
         .ui.stackable.padded.grid
             .centered.row 
@@ -34,7 +34,7 @@ template(name='debit_view')
                         +remove_button
                 .eight.wide.column
                     .ui.header
-                        i.debit.icon
+                        i.message.icon
                         |#{amount}pts
                     .ui.small.header
                         i.clock.icon

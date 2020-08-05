@@ -126,6 +126,12 @@ if Meteor.isClient
                 Docs.insert
                     model:'bug'
             Router.go "/m/bug/#{new_bug_id}/edit"
+        
+        'click .add_message': ->
+            new_message_id =
+                Docs.insert
+                    model:'message'
+            Router.go "/m/message/#{new_message_id}/edit"
 
         'keydown .find_username': (e,t)->
             # email = $('submit_email').val()

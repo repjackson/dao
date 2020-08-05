@@ -25,12 +25,12 @@ template(name='login')
                 //- if username
                 if logging_in
                     .spacer
-                    .ui.fluid.big.button.enter(title="login #{username}" class=enter_class)
+                    .ui.fluid.big.basic.button.enter(title="login #{username}" class=enter_class)
                         |login
                         strong #{username}
                         |&nbsp;
                         i.sign.in.alternate.icon
                 .ui.center.aligned.basic.segment    
-                    a.ui.button(href='/forgot_password')
+                    a.ui.basic.button(href='/forgot_password')
                         i.refresh.icon
                         |forgot password
