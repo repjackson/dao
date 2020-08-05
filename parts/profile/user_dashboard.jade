@@ -68,11 +68,11 @@ template(name='user_dashboard')
                 |events
             .medscroll
                 each user_event_tickets
-                        .ui.segment
-                            if ticket_event.image_id
-                                img.ui.fluid.image(src="{{c.url ticket_event.image_id height=100 width=200}}")
-                            a.header(href="/event/#{event_id}/view")
-                                |#{ticket_event.title}
-                            |#{_author.username}
-                            |#{description}
-                            |#{when}
+                    .ui.segment
+                        if ticket_event.image_id
+                            img.ui.fluid.image(src="{{c.url ticket_event.image_id height=100 width=200}}")
+                        a.header(href="/event/#{event_id}/view")
+                            |#{ticket_event.title}
+                        |#{_author.shortname}
+                        |#{description}
+                        |#{when}

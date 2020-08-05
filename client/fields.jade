@@ -289,7 +289,7 @@ template(name='image_view')
 template(name='image_edit')
     .ui.form
         if icon
-            +icon name=icon cl='ui avatar image'
+            i.icon(class=icon)
         .ui.inline.header
             if title
                 |#{title}
@@ -307,12 +307,7 @@ template(name='image_edit')
                 a#remove_photo.ui.right.corner.link.label
                     i.remove.link.icon
             else
-                if is_admin
-                    .upload-btn-wrapper            
-                        .btn Take Photo (switch camera to front)
-                            input(type='file' name='upload_image' accept='image/*' capture='user')
-                else            
-                    input(type='file' name='upload_image' accept='image/*' )
+                input(type='file' name='upload_image' accept='image/*' )
 
 template(name='image_link_edit')
     .ui.fluid.input
@@ -438,7 +433,7 @@ template(name='slug_edit')
             |#{label}
         else if key
             |#{key}
-        small (auto slugify)
+        // small (auto slugify)
     //- +clear_value
     .ui.icon.fluid.input
         input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")

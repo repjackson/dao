@@ -148,7 +148,7 @@ template(name='left_sidebar')
             |chat
             i.chat.icon
         if is_in_admin
-            a.icon.item.toggle_admin
+            a.icon.item.toggle_admin.toggle_sidebar
                 |toggle admin
                 if is_admin
                     i.shield.blue.large.icon
@@ -156,19 +156,19 @@ template(name='left_sidebar')
                     i.shield.large.icon
             
         if is_admin
-            a.item.toggle_sidebar.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}")
-                i.certificate.blue.icon
-                | badges
-            a.item.toggle_sidebar.set_debit(href="/m/debit" class="{{isActivePath regex='rentals'}}")
-                i.gift.blue.icon
-                |gifts
+            // a.item.toggle_sidebar.set_badge(href="/m/badge" class="{{isActivePath 'badges'}}")
+            //     i.certificate.blue.icon
+            //     | badges
+            // a.item.toggle_sidebar.set_debit(href="/m/debit" class="{{isActivePath regex='rentals'}}")
+            //     i.gift.blue.icon
+            //     |gifts
             .divider
-            a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
-                i.tasks.blue.icon
-                | projects
-            a.item.toggle_sidebar(href="/m/room" class="{{isActiveRoute 'requests'}}")
-                i.building.blue.icon
-                |rooms
+            // a.item.toggle_sidebar.set_project(href="/m/project" class="{{isActivePath regex='projects'}}")
+            //     i.tasks.blue.icon
+            //     | projects
+            // a.item.toggle_sidebar(href="/m/room" class="{{isActiveRoute 'requests'}}")
+            //     i.building.blue.icon
+            //     |rooms
             a.blue.item.set_model.toggle_sidebar(href="/m/model" class="{{isActivePath regex='model'}}")
                 |admin
                 i.database.blue.icon

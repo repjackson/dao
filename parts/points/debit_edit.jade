@@ -3,12 +3,12 @@ template(name='debit_edit')
         .ui.stackable.padded.grid
             .row 
                 .five.wide.column
-                    .ui.large.fluid.button.delete_item
-                        i.large.remove.icon
+                    .ui.large.fluid.basic.circular.button.cancel_debit
+                        i.large.remove.red.icon
                         |cancel
                     .ui.segment
-                        .ui.header sender
-                        .ui.header
+                        .ui.inline.grey.header sender
+                        .ui.inline.header
                             img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.name}
                     .ui.segment
@@ -26,7 +26,7 @@ template(name='debit_edit')
                             //     i.search.icon
                             //     input.search_username(type='text' placeholder='username')
                             each members
-                                .ui.compact.basic.button.add_recipient
+                                .ui.compact.basic.circular.button.add_recipient
                                     // i.plus.icon
                                     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                     |#{name}
@@ -58,13 +58,14 @@ template(name='debit_edit')
                     +key_value_edit key='amount' value=5
                     +key_value_edit key='amount' value=10
                     +key_value_edit key='amount' value=20
+                    +key_value_edit key='amount' value=50
                     .spacer
                     .ui.center.aligned.basic.segment
                         if can_submit
-                            .ui.green.big.icon.button.submit
-                                i.big.checkmark.icon
-                                // |submit
+                            .ui.green.huge.circular.button.submit
+                                i.big.send.icon
+                                |send
                         else 
-                            .ui.big.green.big.icon.disabled.button
-                                i.checkmark.big.icon
-                                // |submit
+                            .ui.green.huge.disabled.button
+                                i.send.big.icon
+                                |send

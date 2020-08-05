@@ -9,6 +9,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+    Template.debit_edit.onRendered ->
 
 
     Template.debit_edit.helpers
@@ -19,9 +20,13 @@ if Meteor.isClient
                     _id: debit.recipient_id
         members: ->
             debit = Docs.findOne Router.current().params.doc_id
-            Meteor.users.find 
-                # levels: $in: ['member']
+            Meteor.users.find({
+                levels: $in: ['member','domain']
                 _id: $ne: Meteor.userId()
+                username: $ne: Meteor.userId()
+            }, {
+                sort:points:-1
+                })
         # subtotal: ->
         #     debit = Docs.findOne Router.current().params.doc_id
         #     debit.amount*debit.recipient_ids.length
@@ -60,20 +65,20 @@ if Meteor.isClient
             t.$('.new_element').val(element)
     
     
-        'click .result': (e,t)->
-            Meteor.call 'log_term', @title, ->
-            selected_tags.push @title
-            $('#search').val('')
-            Meteor.call 'call_wiki', @title, ->
-            Meteor.call 'calc_term', @title, ->
-            Meteor.call 'omega', @title, ->
-            Session.set('current_query', '')
-            Session.set('searching', false)
+        # 'click .result': (e,t)->
+        #     Meteor.call 'log_term', @title, ->
+        #     selected_tags.push @title
+        #     $('#search').val('')
+        #     Meteor.call 'call_wiki', @title, ->
+        #     Meteor.call 'calc_term', @title, ->
+        #     Meteor.call 'omega', @title, ->
+        #     Session.set('current_query', '')
+        #     Session.set('searching', false)
     
-            Meteor.call 'search_reddit', selected_tags.array(), ->
-            # Meteor.setTimeout ->
-            #     Session.set('dummy', !Session.get('dummy'))
-            # , 7000
+        #     Meteor.call 'search_reddit', selected_tags.array(), ->
+        #     # Meteor.setTimeout ->
+        #     #     Session.set('dummy', !Session.get('dummy'))
+        #     # , 7000
 
     
         'blur .edit_description': (e,t)->
@@ -95,25 +100,36 @@ if Meteor.isClient
                 $set:amount:val
 
 
-if Meteor.isClient
-    Template.debit_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-    Template.debit_edit.onRendered ->
 
-
-    Template.debit_edit.events
-        'click .delete_item': ->
-            if confirm 'delete item?'
-                Docs.remove @_id
-
+        'click .cancel_debit': ->
+            Swal.fire({
+                title: "confirm cancel?"
+                text: ""
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonColor: 'red'
+                confirmButtonText: 'confirm'
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+                showClass:
+                    popup: 'swal2-noanimation',
+                    backdrop: 'swal2-noanimation'
+                hideClass:
+                    popup: '',
+                    backdrop: ''
+            }).then((result)=>
+                if result.value
+                    Docs.remove @_id
+                    Router.go '/'
+            )
+            
         'click .submit': ->
             Swal.fire({
                 title: "confirm send #{@amount}pts?"
                 text: ""
                 icon: 'question'
                 showCancelButton: true,
+                confirmButtonColor: 'green'
                 confirmButtonText: 'confirm'
                 cancelButtonText: 'cancel'
                 reverseButtons: true

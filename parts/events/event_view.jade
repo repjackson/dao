@@ -53,8 +53,9 @@ template(name='event_view')
                     .ui.hidden.divider
                     +array_view key='tags' label='tags' icon='tags red' direct=true
                     div
-                    +voting_full
-                    +array_view key='location_tags' label='location_tags' direct=true
+                    if currentUser
+                        +voting_full
+                    +array_view key='location_tags' label='location tags' icon='marker' direct=true
                 .eight.wide.column
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
@@ -117,11 +118,13 @@ template(name='event_view')
                                             else
                                                 .ui.inline.header #{point_amount}pts
                                             
-                                            |#{when} #{_author_username}
+                                            |#{when} 
+                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                            |#{_author.name}
                                         // if can_edit 
                                         //     i.
                                         //     +icolor name='return-purchase' cl='ui mini inline image return pointer'
-                                        if is_admin
+                                        if is_dev
                                             +remove_button
                         +attendance
     .ui.modal
