@@ -1,0 +1,23 @@
+template(name='user_edit_genekeys')
+    .ui.header
+        +icolor name='dna-helix' cl='ui image'
+        | genekeys
+    .ui.grid 
+        .row 
+            .sixteen.wide.column
+                +link_edit key='genekeys_link' label='report url' direct=true
+                .ui.segment
+                    a.ui.button(href="https://genekeys.com/" target='_window') 
+                        |1) get gene keys pdf report here (toggle everything)
+                    a.ui.button(href="https://pdf2png.com/" target='_window') 
+                        |2) convert to png here
+                    .ui.small.inline.header 
+                        |3) upload
+                    .ui.stackable.three.column.grid
+                        .column
+                            +image_edit key='gene1' label='gene keys 1' icon='dna' direct=true
+                        .column
+                            +image_edit key='gene2' label='gene keys 2' icon='dna' direct=true
+                        .column
+                            +image_edit key='gene3' label='gene keys 3' icon='dna' direct=true
+                +html_edit key='genekeys_report' label='report' direct=true

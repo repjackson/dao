@@ -98,7 +98,16 @@ if Meteor.isClient
     
     
 
-            
+if Meteor.isServer
+    Meteor.publish 'future_events', ()->
+        Docs.find {
+            model:'event'
+            published:true
+            start_datetime:$gt:moment().format()
+        }, 
+            sort:start_datetime:1
+    
+
     # Meteor.publish 'doc_by_slug', (slug)->
     #     Docs.find
     #         slug:slug

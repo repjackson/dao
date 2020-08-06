@@ -7,6 +7,7 @@ if Meteor.isClient
 
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'model_docs', 'room'
         
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
@@ -21,7 +22,7 @@ if Meteor.isClient
                 # amount = parseInt(Session.get('topup_amount'))
                 event = Docs.findOne Router.current().params.doc_id
                 charge =
-                    amount: event.usd_price*100
+                    amount: Session.get('usd_paying')*100
                     event_id:event._id
                     currency: 'usd'
                     source: token.id
@@ -53,7 +54,9 @@ if Meteor.isClient
             
 
     Template.event_view.events
-        'click .buy_for_points': ->
+        'click .buy_for_points': (e,t)->
+            val = t.$('.point_input').val()
+            Session.set('point_paying')
             # $('.ui.modal').modal('show')
             Swal.fire({
                 title: "buy ticket for #{@point_price}pts?"
@@ -87,23 +90,17 @@ if Meteor.isClient
                     )
             )
     
-        'click .buy_for_usd': ->
+        'click .buy_for_usd': (e,t)->
             console.log Template.instance()
-            # if confirm 'add 5 credits?'
-            # Session.set('topup_amount',5)
-            # Template.instance().checkout.open
-            #     name: 'event purchase'
-            #     # email:Meteor.user().emails[0].address
-            #     description: 'monthly'
-            #     amount: 250
-
+            val = parseInt t.$('.usd_input').val()
+            Session.set('usd_paying',val)
 
             instance = Template.instance()
 
-
             Swal.fire({
-                title: "buy ticket for $#{@usd_price} or more!"
-                text: "for: #{@title}"
+                # title: "buy ticket for $#{@usd_price} or more!"
+                title: "buy ticket for $#{Session.get('usd_paying')}?"
+                text: "for #{@title}"
                 icon: 'question'
                 showCancelButton: true,
                 confirmButtonText: 'purchase'
@@ -117,10 +114,10 @@ if Meteor.isClient
                     # Session.set('topup_amount',5)
                     # Template.instance().checkout.open
                     instance.checkout.open
-                        name: @title
+                        name: 'One Boulder One'
                         # email:Meteor.user().emails[0].address
-                        description: 'ticket purchase'
-                        amount: @usd_price*100
+                        description: "#{@title} ticket purchase"
+                        amount: Session.get('usd_paying')*100
             
                     # Meteor.users.update @_author_id,
                     #     $inc:credit:@order_price

@@ -1,0 +1,23 @@
+template(name='user_genekeys')
+    .ui.header 
+        +icolor name='dna-helix'
+        |user genekeys
+    with current_user
+        if genekeys_link
+            a.ui.basic.button(href=genekeys_link target="_window")
+                |view gene keys link
+        .ui.stackable.three.column.grid
+            .column
+                +image_view key='gene1' label='gene keys 1' icon='dna' direct=true
+            .column
+                +image_view key='gene2' label='gene keys 2' icon='dna' direct=true
+            .column
+                +image_view key='gene3' label='gene keys 3' icon='dna' direct=true
+        |!{genekeys_report}
+
+// template(name='user_info_tag')
+//     .ui.basic.tertiary.button 
+//         if term 
+//             if term.image 
+//                 img.ui.tiny.image(src=term.image)
+//         |#{this}

@@ -24,6 +24,8 @@ template(name='event_view')
                             i.large.blue.link.pencil.circular.icon
             .row 
                 .five.wide.column
+                    .ui.header room: #{event_room.title}
+                    .ui.header date: {{medium_date date}}
                     if location 
                         i.large.marker.icon(title='location')
                         |#{location}
@@ -76,33 +78,35 @@ template(name='event_view')
                         // .spacer
                         // .ui.grey.small.inline.header (give more if you want to)
                         div
-                    // .ui.big.fluid.action.left.icon.input
-                    //     i.dollar.icon
-                    //     input(type='number' min=usd_price value=usd_price)
-                    //     .ui.green.icon.button.buy_for_usd
-                    //         i.checkmark.large.icon
-                    // .ui.big.fluid.action.left.icon.input
-                    //     i.hashtag.icon
-                    //     input(type='number' min=point_price value=point_price)
-                    //     .ui.teal.icon.button.buy_for_points
-                    //         i.checkmark.large.icon
-                    .ui.big.green.fluid.button.buy_for_usd
-                        i.cart.icon
-                        |buy for min
-                        |$#{usd_price} 
-
+                    .ui.big.fluid.action.left.icon.input
+                        i.dollar.icon
+                        input.usd_input(type='number' min=usd_price value=usd_price)
+                        .ui.green.icon.button.buy_for_usd
+                            i.checkmark.large.icon
                     if currentUser
                         .ui.horizontal.divider or
-                        if currentUser.has_points
-                            .ui.big.teal.fluid.button.buy_for_points
-                                // i.cart.icon
-                                // |buy for 
-                                |#{point_price}pts
-                        else
-                            .ui.big.teal.disabled.fluid.button
-                                // i.cart.icon
-                                // |buy for 
-                                |#{point_price}pts
+                        .ui.big.fluid.action.left.icon.input
+                            i.hashtag.icon
+                            input.point_input(type='number' min=point_price value=point_price)
+                            .ui.teal.icon.button.buy_for_points
+                                i.checkmark.large.icon
+                    // .ui.big.green.fluid.button.buy_for_usd
+                    //     i.cart.icon
+                    //     |buy for min
+                    //     |$#{usd_price} 
+
+                    // if currentUser
+                    //     .ui.horizontal.divider or
+                    //     if currentUser.has_points
+                    //         .ui.big.teal.fluid.button.buy_for_points
+                    //             // i.cart.icon
+                    //             // |buy for 
+                    //             |#{point_price}pts
+                    //     else
+                    //         .ui.big.teal.disabled.fluid.button
+                    //             // i.cart.icon
+                    //             // |buy for 
+                    //             |#{point_price}pts
                     if currentUser
                         .spacer
                         .spacer

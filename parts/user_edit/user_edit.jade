@@ -35,9 +35,9 @@ template(name='user_edit_layout')
                             a.ui.large.button(href="/user/#{current_user.username}/edit/style" class="{{isActivePath regex='user_edit_style'}}") 
                                 i.paint.brush.icon 
                                 |style
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/tags" class="{{isActivePath regex='user_edit_tags'}}") 
-                                i.tags.icon 
-                                |tags
+                            a.ui.large.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActivePath regex='user_edit_genekeys'}}") 
+                                i.dna.icon 
+                                |genekeys
                             a.ui.large.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
                                 i.lock.privacy.icon 
                                 | privacy
@@ -50,55 +50,6 @@ template(name='user_edit_layout')
                         .twelve.wide.column
                             +yield
 
-template(name='user_edit_info')
-    .ui.one.column.stackable.grid
-        .column
-            .ui.header edit user info
-            .ui.segment
-                +text_edit key='spirit_animal' label='spirit animal' direct=true
-                if spirit_animal
-                    +icolor name=spirit_animal
-                a(href="https://icons8.com/icons/color" target="_window")
-                    |color icons lookup
-            div
-            .ui.segment
-                a.ui.small.inline.header(href="https://genekeys.com/" target='_window') 
-                    |1) get gene keys pdf report here:
-                    i.external.icon
-                    |gene keys site
-                
-                a.ui.small.inline.header(href="https://pdf2png.com/" target='_window') 
-                    |2) convert to png here
-                .ui.small.inline.header 
-                    |3) upload
-                .ui.stackable.three.column.grid
-                    .column
-                        +image_edit key='gene1' label='gene keys 1' icon='dna' direct=true
-                    .column
-                        +image_edit key='gene2' label='gene keys 2' icon='dna' direct=true
-                    .column
-                        +image_edit key='gene3' label='gene keys 3' icon='dna' direct=true
-            .spacer
-            +text_edit key='city' label='city' icon='city' direct=true
-            .spacer
-            +text_edit key='state' label='state' icon='country' direct=true
-            .spacer
-            +link_edit key='website' label='website' icon='link' direct=true
-            .spacer
-            +textarea_edit key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
-            .spacer
-            +textarea_edit key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
-            .spacer
-            +textarea_edit key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
-            .spacer
-            +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
-            .spacer
-            .ui.divider
-            +array_edit key='pet_peeves' label='pet peeves' icon='annoyance' direct=true
-            .spacer
-            +textarea_edit key='emergency_contact_name' label='emergency contact name' icon='alert' direct=true
-            .spacer
-            +textarea_edit key='emergency_contact_number' label='emergency contact number' icon='alert' direct=true
      
 template(name='phone_editor')
     .ui.small.header    

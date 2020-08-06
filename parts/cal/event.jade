@@ -39,13 +39,16 @@ template(name='event_card')
             |#{event_tickets.count}
             a(href="/m/event/#{_id}/view" title='ticket purchase required')
                 i.checkmark.green.link.icon
+            | #{going.count}
             each going
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             i.question.orange.link.icon(title='call yourself maybe')
+            div
             | #{maybe_user_ids.length}
             each maybe_going
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             | #{not_user_ids.length}
+            div
             i.remove.red.link.icon(title='mark yourself not')
             each not_going
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -55,8 +58,6 @@ template(name='event_card')
                         i.grey.chat.outline.icon
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
                         |#{body}
-
-           
             if is_dev
                 +print_this
 

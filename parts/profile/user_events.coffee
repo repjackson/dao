@@ -20,7 +20,7 @@ if Meteor.isClient
                     body: val
                     target_user_id: target_user._id
 
-
+        'click .toggle_maybe': -> Session.set('view_maybe',!Session.get('view_maybe'))
 
     Template.user_events.helpers
         sent_items: ->
@@ -32,10 +32,11 @@ if Meteor.isClient
             },
                 sort:_timestamp:-1
 
-        slots: ->
+        user_maybe_events: ->
+            current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find
-                model:'slot'
-                _author_id: Router.current().params.user_id
+                model:'event'
+                maybe_user_ids: $in:[current_user._id]
 
 
 if Meteor.isServer

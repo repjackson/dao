@@ -92,7 +92,7 @@ Template.registerHelper 'can_edit', () ->
     # @_author_id is Meteor.userId()
     # if Meteor.user().roles
     if Meteor.user()
-        if Meteor.user().roles and 'admin' in Meteor.user().roles or @_author_id is Meteor.userId() then true else false
+        if Meteor.user().roles and 'dev' in Meteor.user().roles or @_author_id is Meteor.userId() then true else false
 
 
 
@@ -190,8 +190,8 @@ Template.registerHelper 'has_enough', ()->
 
 
 
-Template.registerHelper 'session_is', (key, value)->
-    Session.equals(key, value)
+Template.registerHelper 'session_is', (key)->
+    Session.get(key)
 
 Template.registerHelper 'is_loading', -> Session.get 'loading'
 Template.registerHelper 'long_time', (input)-> moment(input).format("h:mm a")
@@ -199,7 +199,7 @@ Template.registerHelper 'long_date', (input)-> moment(input).format("dddd, MMMM 
 Template.registerHelper 'home_long_date', (input)-> moment(input).format("dd, MMM Do h:mm a")
 Template.registerHelper 'short_date', (input)-> moment(input).format("dddd, MMMM Do")
 Template.registerHelper 'med_date', (input)-> moment(input).format("MMM D 'YY")
-Template.registerHelper 'medium_date', (input)-> moment(input).format("MMMM Do YYYY")
+# Template.registerHelper 'medium_date', (input)-> moment(input).format("MMMM Do YYYY")
 Template.registerHelper 'medium_date', (input)-> moment(input).format("dddd, MMMM Do YYYY")
 Template.registerHelper 'today', -> moment(Date.now()).format("dddd, MMMM Do a")
 Template.registerHelper 'int', (input)-> input.toFixed(0)

@@ -109,7 +109,7 @@ template(name='bug_edit')
                     a.ui.icon.green.big.button(href="/m/bug/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
-                        +icolor name='news' cl='ui image inline pointer'
+                        i.bug.icon
                         |edit bug
                     .ui.icon.button.delete_item(title='delete')
                         i.large.remove.icon
@@ -130,9 +130,9 @@ template(name='bug_edit')
                     // else
                     //     .ui.basic.button.unpublish 
                     //         |unpublish
-                    .ui.header
-                        |audience
+                    // .ui.header
+                    //     |audience
                 .twelve.wide.column
                     +text_edit key='title' label='title' direct=true
-                    +html_edit key='content' label='content' direct=true
+                    +html_edit key='description' label='description' direct=true
         

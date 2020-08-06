@@ -16,7 +16,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'request'
         @autorun => Meteor.subscribe 'model_docs', 'shift'
         @autorun => Meteor.subscribe 'model_docs', 'comment'
-        @autorun => Meteor.subscribe 'model_docs', 'event'
+        @autorun => Meteor.subscribe 'future_events'
         @autorun => Meteor.subscribe 'model_docs', 'post'
         @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         @autorun => Meteor.subscribe 'all_users'
@@ -80,7 +80,7 @@ if Meteor.isClient
                 model:'event'
             },
                 sort:
-                    sort:start_datetime:1
+                    sort:date:-1
                 limit:10
         next_shifts: ->
             Docs.find {

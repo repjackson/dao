@@ -1,6 +1,6 @@
 template(name='nav')
     // .ui.fluid.inverted.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
-    .ui.fluid.inverted.borderless.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
+    .ui.fluid.inverted.borderless.attached.menu.topnav(style="background-color:#{currentUser.theme_color};")
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.icon.item(href="/" class="{{isActivePath 'home'}}")
@@ -62,14 +62,14 @@ template(name='nav')
 
 template(name='top_sidebar')
     .ui.top.sidebar.inverted.vertical.large.menu(style="background-color:#{currentUser.theme_color};")
-        .spacer
-        .spacer
-        .spacer
-        .spacer
-        .spacer
-        .spacer
         .item.header notifications
-
+        .spacer
+        .spacer
+        a.ui.button(href="/inbox")
+            i.inbox.icon
+            |inbox
+            
+            
 template(name='right_sidebar')
     .ui.right.sidebar.inverted.vertical.large.borderless.menu(style="background-color:#{currentUser.theme_color};")
         a.item.profile_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")

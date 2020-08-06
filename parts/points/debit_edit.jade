@@ -47,18 +47,17 @@ template(name='debit_edit')
                         .ui.big.basic.label
                             i.delete.icon.remove_element
                             |#{this}
-                    
                     //- +array_edit key='location_tags' label='location_tags' direct=true
-                .five.wide.column
+                .five.wide.center.aligned.column
                     .ui.big.header #{amount}pts
                     .ui.big.input
                         input.point_amount(type='number' value=amount min='1' max=point_max)
                     div
                     +key_value_edit key='amount' value=1
-                    +key_value_edit key='amount' value=5
-                    +key_value_edit key='amount' value=10
-                    +key_value_edit key='amount' value=20
-                    +key_value_edit key='amount' value=50
+                    +key_value_edit key='amount' value=6
+                    +key_value_edit key='amount' value=12
+                    +key_value_edit key='amount' value=22
+                    +key_value_edit key='amount' value=55
                     .spacer
                     .ui.center.aligned.basic.segment
                         if can_submit

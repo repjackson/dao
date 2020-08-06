@@ -17,7 +17,7 @@ template(name='user_dashboard')
                             |from 
                             if author.profile_image_id
                                 img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{author.username}
+                            |#{_author.shortname}
                         small #{when}
                         div
                         |#{description}
@@ -40,7 +40,7 @@ template(name='user_dashboard')
                             | to 
                             if recipient.profile_image_id
                                 img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{recipient.username}
+                            |#{recipient.shortname}
                         small #{when}
                         div
                         |#{description}

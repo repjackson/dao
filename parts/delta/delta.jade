@@ -1,5 +1,5 @@
 template(name='delta')
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         with current_model
             // unless current_model.show_facets
             //     .middle.aligned.row
@@ -65,7 +65,7 @@ template(name='delta')
                                     +set_limit amount=5
                                     +set_limit amount=10
                                     +set_limit amount=20
-                                    // +set_limit amount=50
+                                    +set_limit amount=50
                             |&nbsp;
                             |&nbsp;
                             |&nbsp;
@@ -129,7 +129,7 @@ template(name='delta')
             //-         .ui.button rerun calculations
         unless current_model
             if subs_ready
-                if is_admin
+                if is_dev
                     .ui.big.button.create_model create model
                 //- else 
                     //- .ui.header model not found
@@ -155,8 +155,9 @@ template(name='model_top')
     unless is_loading
         if currentUser
             unless key_value_is current_delta.model_filter 'model'
-                // if is_admin
-                i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
+                unless key_value_is current_model.collection 'user'
+                    // if is_admin
+                    i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
             else 
                 if is_admin
                     .ui.icon.basic.circular.button.add_model_doc(title="add #{slug}")
@@ -175,7 +176,7 @@ template(name='model_top')
         else
             .create_delta.ui.big.green.circular.button(title='new session')
                 i.plus.icon
-                |session
+                |start your session
             
             
             

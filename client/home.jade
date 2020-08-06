@@ -48,7 +48,7 @@ template(name='home')
                     i.bug.red.icon
                     |+ bug
                 .ui.basic.big.compact.circular.button.add_message
-                    i.chat.red.icon
+                    i.chat.blue.icon
                     |+ message
                 if is_admin
                     a.ui.basic.big.button(href='/register')
@@ -115,23 +115,7 @@ template(name='home')
             //     //     i.plus.icon.add_shift
             //     .medscroll
             //         each next_shifts
-            //             a.ui.card(href="/shift/#{_id}/view")
-            //                 .content
-            //                     .header
-            //                         .ui.inline.header
-            //                         // if _author.profile_image_id
-            //                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-            //                         // | #{_author_username}
-            //                         .item from {{from_now start_datetime}} > {{from_now end_datetime}}
-            //                         if shift_contributors 
-            //                             each shift_contributors
-            //                                 img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-            //                                 |#{username}
-            //                     .meta #{when}
-            //                     .description 
-            //                         |#{description}
-            //                     each tags 
-            //                         .ui.tiny.basic.label #{this}
+                            +home_shift_card
             .four.wide.column
                 // a.ui.center.aligned.header(href="/events")
                 .ui.center.aligned.header
@@ -302,3 +286,25 @@ template(name='join_button')
     .ui.fluid.green.button.join
         i.checkmark.icon
         |join
+
+
+
+
+template(name='home_shift_card')
+    a.ui.card(href="/shift/#{_id}/view")
+        .content
+            .header
+                .ui.inline.header
+                // if _author.profile_image_id
+                //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                // | #{_author_username}
+                .item from {{from_now start_datetime}} > {{from_now end_datetime}}
+                if shift_contributors 
+                    each shift_contributors
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                        |#{username}
+            .meta #{when}
+            .description 
+                |#{description}
+            each tags 
+                .ui.tiny.basic.label #{this}

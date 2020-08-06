@@ -30,15 +30,15 @@ template(name='debit_view')
                             
             .centered.row
                 .four.wide.column
+                    .ui.huge.center.aligned.header
+                        |#{amount}pts
                     if is_dev
                         +remove_button
-                .eight.wide.column
-                    .ui.header
-                        i.debit.icon
-                        |#{amount}pts
+                    +voting_full
                     .ui.small.header
                         i.clock.icon
                         | #{when}
+                .ten.wide.column
                     .f12
                         |#{description}
                     +image_view key='image_id' label='image' direct=true
@@ -50,7 +50,5 @@ template(name='debit_view')
                     .spacer
                     .spacer
                     +comments
-                    +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .four.wide.column
 

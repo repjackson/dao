@@ -12,3 +12,14 @@ template(name='user_events')
             //- div
             +author_info
             +creation_info
+    .ui.segment
+        .ui.header.pointer.toggle_maybe
+            i.question.orange.icon
+            |maybe
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/view") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info

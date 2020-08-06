@@ -1,15 +1,15 @@
 if Meteor.isClient
-    Router.route '/admin', (->
+    Router.route '/inbox', (->
         @layout 'layout'
-        @render 'admin'
-        ), name:'admin'
+        @render 'inbox'
+        ), name:'inbox'
 
-    Template.admin.onCreated ->
+    Template.inbox.onCreated ->
         @autorun -> Meteor.subscribe 'user_model_docs', 'offer', Router.current().params.username
-        # @autorun => Meteor.subscribe 'admin', Router.current().params.username
+        # @autorun => Meteor.subscribe 'inbox', Router.current().params.username
         @autorun => Meteor.subscribe 'model_docs', 'stat'
 
-    Template.admin.events
+    Template.inbox.events
         'keyup .new_offer': (e,t)->
             if e.which is 13
                 val = $('.new_offer').val()
@@ -22,7 +22,7 @@ if Meteor.isClient
 
 
 
-    Template.admin.helpers
+    Template.inbox.helpers
         offers: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
@@ -35,6 +35,6 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'admin', (username)->
+    Meteor.publish 'inbox', (username)->
         Docs.find
             model:'offer'
