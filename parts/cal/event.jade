@@ -8,9 +8,11 @@ template(name='events')
                 if can_add_event
                     .ui.circular.basic.icon.button.add_event(title='add event')
                         i.plus.big.green.icon
-                .ui.button.toggle_past
+                .ui.large.basic.circular.button.toggle_past
                     if viewing_past
                         i.checkmark.large.green.icon
+                    else
+                        i.circle.outline.large.icon
                     |past
                 .spacer
                 .spacer
@@ -36,9 +38,9 @@ template(name='event_card')
                 i.marker.icon 
                 |#{location}
             div 
-            small added by
-            strong #{_author.shortname}
-            |#{when}
+            small led by
+            img.ui.avatar.image(src="{{c.url fac.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            strong #{fac.name}
         .content
             |#{event_tickets.count}
             a(href="/m/event/#{_id}/view" title='ticket purchase required')

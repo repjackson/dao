@@ -16,17 +16,17 @@ Template.nav.onRendered ->
             })
             .sidebar('attach events', '.toggle_sidebar')
     , 1000
-    # Meteor.setTimeout ->
-    #     $('.ui.right.sidebar')
-    #         .sidebar({
-    #             context: $('.bottom.segment')
-    #             transition:'overlay'
-    #             exclusive:true
-    #             duration:250
-    #             scrollLock:true
-    #         })
-    #         .sidebar('attach events', '.profile_sidebar')
-    # , 1000
+    Meteor.setTimeout ->
+        $('.ui.right.sidebar')
+            .sidebar({
+                context: $('.bottom.segment')
+                transition:'overlay'
+                exclusive:true
+                duration:250
+                scrollLock:true
+            })
+            .sidebar('attach events', '.toggle_rightbar')
+    , 1000
     # Meteor.setTimeout ->
     #     $('.ui.top.sidebar')
     #         .sidebar({
@@ -68,6 +68,10 @@ Template.nav.events
     'click .set_request': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'request', ->
+            Session.set 'loading', false
+    'click .set_offer': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'offer', ->
             Session.set 'loading', false
     'click .set_model': ->
         Session.set 'loading', true

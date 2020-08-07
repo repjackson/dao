@@ -5,12 +5,6 @@ if Meteor.isClient
         Meteor.users.findOne @completed_by_user_id
     
     
-    Router.route '/offers', (->
-        @layout 'layout'
-        @render 'offers'
-        ), name:'offers'
-    Template.offers.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'offer'
     Template.offers.events
         'click .add_offer': ->
             new_id = 
@@ -28,21 +22,11 @@ if Meteor.isClient
 
     Template.offer_card.events
         'click .offer_card': ->
-            Router.go "/offer/#{@_id}/view"
+            Router.go "/m/offer/#{@_id}/view"
             Docs.update @_id,
                 $inc: views:1
 
 
-
-    Router.route '/offer/:doc_id/view', (->
-        @layout 'layout'
-        @render 'offer_view'
-        ), name:'offer_view'
-
-    Template.offer_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-   
-   
     Template.offer_view.onRendered ->
 
 
@@ -122,13 +106,6 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Router.route '/offer/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'offer_edit'
-        ), name:'offer_edit'
-
-    Template.offer_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
     Template.offer_edit.onRendered ->
 
 
@@ -136,7 +113,7 @@ if Meteor.isClient
         'click .delete_offer': ->
             Swal.fire({
                 title: "delete offer?"
-                text: "point bounty will be returned to your account"
+                text: "cannot be undone"
                 icon: 'question'
                 confirmButtonText: 'delete'
                 confirmButtonColor: 'red'
@@ -153,52 +130,10 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/offers"
+                    Router.go "/m/offer"
             )
 
-        'click .publish': ->
-            Swal.fire({
-                title: "publish offer?"
-                text: "point bounty will be held from your account"
-                icon: 'question'
-                confirmButtonText: 'publish'
-                confirmButtonColor: 'green'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'publish_offer', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'offer published',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
 
-        'click .unpublish': ->
-            Swal.fire({
-                title: "unpublish offer?"
-                text: "point bounty will be returned to your account"
-                icon: 'question'
-                confirmButtonText: 'unpublish'
-                confirmButtonColor: 'orange'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'unpublish_offer', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'offer unpublished',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
 
 
     Template.offer_edit.helpers
@@ -220,20 +155,6 @@ if Meteor.isServer
                     published:true
                     published_timestamp:Date.now()
                     
-                    
-        unpublish_offer: (offer_id)->
-            offer = Docs.findOne offer_id
-            # target = Meteor.users.findOne offer.recipient_id
-            author = Meteor.users.findOne offer._author_id
-
-            console.log 'unpublishing offer', offer
-            Meteor.users.update author._id,
-                $inc:
-                    points: offer.point_bounty
-            Docs.update offer_id,
-                $set:
-                    published:false
-                    published_timestamp:null
                     
                     
                     

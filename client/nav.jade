@@ -1,6 +1,6 @@
 template(name='nav')
     // .ui.fluid.inverted.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
-    .ui.fluid.inverted.borderless.attached.large.menu.topnav(style="background-color:#{currentUser.theme_color};")
+    .ui.fluid.inverted.borderless.attached.menu.topnav(style="background-color:#{currentUser.theme_color};")
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.item(href="/" class="{{isActivePath 'home'}}")
@@ -18,10 +18,14 @@ template(name='nav')
             i.large.newspaper.icon
             // em(data-emoji='newspaper')
             | news
-        a.item.mobile.hidden(href="/requests" class="{{isActiveRoute 'requests'}}" title='requests')
+        a.item.mobile.hidden.set_request(href="/m/request" class="{{isActiveRoute 'requests'}}" title='requests')
             i.large.concierge.bell.icon
             // em(data-emoji='bellhop')
             | requests
+        a.item.mobile.hidden.set_offer(href="/m/offer" class="{{isActiveRoute 'offers'}}" title='offers')
+            i.large.hand.holding.heart.icon
+            // em(data-emoji='bellhop')
+            | offers
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
@@ -45,9 +49,11 @@ template(name='nav')
                         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 else 
                     i.large.user.large.icon
-                strong #{currentUser.name}
-                small
+                strong.mobile.hidden #{currentUser.name}
+                small.mobile.hidden
                     |#{currentUser.points}p
+            a.icon.item.toggle_rightbar
+                i.bars.icon
             // else
             //     // a.item(href="/register" title='register')
             //     //     // |login

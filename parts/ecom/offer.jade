@@ -3,7 +3,7 @@ template(name='offers')
         .row
             .sixteen.wide.column
                 .ui.inline.header 
-                    i.concierge.bell.icon
+                    i.hand.holding.heart.icon
                     |offers
                 i.circular.link.large.plus.icon.add_offer
                 .spacer
@@ -16,10 +16,8 @@ template(name='offers')
 
 template(name='offer_card')
     .card.pointer.offer_card
-        .image
-            if youtube_id
-                +youtube_view key='youtube_id' direct=true
-            else if image_id
+        if image_id
+            .image
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             .ui.header
@@ -27,6 +25,7 @@ template(name='offer_card')
                 if complete
                     i.green.checkmark.icon
             |!{description}
+            +comments_view_small    
         .content
             |by 
             if _author.profile_image_id
@@ -48,13 +47,13 @@ template(name='offer_view')
             .middle.aligned.row 
                 .sixteen.wide.column
                     a(href="/m/offer" title='offers')
-                        i.concierge.bell.big.circular.link.icon
+                        i.hand.holding.heart.big.circular.link.icon
                     .ui.inline.header 
                         small viewing offer 
                     .ui.inline.large.header 
                         |#{title}
                     if can_edit
-                        a.edit_offer(href="/offer/#{_id}/edit")
+                        a.edit_offer(href="/m/offer/#{_id}/edit")
                             i.large.pencil.circular.link.icon
             .row 
                 .four.wide.column
@@ -94,31 +93,37 @@ template(name='offer_view')
                     .spacer
                     +comments
                 .four.wide.column
-                    .ui.header status: #{status}
-                    if can_claim
-                        .ui.fluid.green.big.button.claim
-                            i.grab.large.icon
-                            |claim
-                    if claimer
-                        .ui.header claimed by
-                        .ui.header #{claimer.name}
-                        unless complete
-                            .ui.button.unclaim
-                                i.undo.icon
-                                |unclaim
-                        if can_edit
-                            div
-                            unless complete
-                                .ui.big.basic.button.mark_complete
-                                    i.checkmark.green.icon
-                                    |mark complete
-                            else 
-                                .ui.big.basic.button.mark_incomplete
-                                    i.undo.orange.icon
-                                    |mark incomplete
-                        if complete
-                            .ui.segment
-                                .ui.header completed by #{completer.name} {{from_now completed_timestamp}}
+                    .ui.header inventory: #{inventory}
+                    .ui.header point price: #{point_price}pts
+                    .ui.header dollar price: $#{usd_price}
+                    .ui.header rentable: #{rentable}
+                    if rentable
+                        .ui.header rentable unit #{renting_time_unit}
+                    // if can_buy
+                    .ui.fluid.disabled.green.big.button.buy
+                        i.cart.large.icon
+                        |buy
+                    .ui.dividing.header 
+                        // +icolor name='activity-history' cl='ui inline image'
+                        |#{offer_purchases.count} purchases
+                    .ui.large.link.selection.list
+                        each offer_purchases
+                            a.ui.item(href="/m/receipt/#{_id}/view") 
+                                .content
+                                    .header
+                                        if is_usd
+                                            .ui.inline.green.header ${{money_format amount}}
+                                        else
+                                            .ui.inline.header #{point_amount}pts
+                                        
+                                        |#{when} 
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        |#{_author.name}
+                                    // if can_edit 
+                                    //     i.
+                                    //     +icolor name='return-purchase' cl='ui mini inline image return pointer'
+                                    if is_dev
+                                        +remove_button
                     
 
 template(name='offer_edit')
@@ -126,21 +131,19 @@ template(name='offer_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.icon.button(href="/offer/#{_id}/view" title='save')
+                    a.ui.green.icon.button(href="/m/offer/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
-                        i.concierge.bell.icon
+                        i.hand.holding.heart.icon
                         small edit offer
                         |#{title}
-                    i.large.remove.link.circular.icon.delete_offer(title='cancel')
+                    i.large.remove.link.circular.icon.delete_offer(title='delete offer')
             .row 
                 .four.wide.column
                     .ui.header 
                         small author
                         |#{_author.username}
                     +text_edit key='title' icon='header' direct=true
-                    +date_edit key='date' label='date' icon='calendar' direct=true
-                    +youtube_edit key='youtube_id' label='youtube id' direct=true
                     .ui.header
                         +icon name='audience'
                         |audience
@@ -154,7 +157,6 @@ template(name='offer_edit')
                         +icon name='warranty'
                         |badges
                 .eight.wide.column
-                    +number_edit key='point_bounty' label='point bounty' icon='paper-bag-with-seeds' min='0' direct=true
                     div
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
@@ -163,18 +165,10 @@ template(name='offer_edit')
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .four.wide.column
                     .ui.header your points: #{currentUser.points}
-                    .ui.small.header.thin publishing offer holds points from your balance and dispenses them when offer is marked complete
-                    .ui.inline.header status:
-                    if published
-                        .ui.green.inline.header published
-                    else
-                        .ui.orange.inline.header unpublished
-                    if published
-                        .ui.fluid.orange.basic.large.button.unpublish
-                            i.undo.icon
-                            |unpublish
-                    else
-                        .ui.fluid.teal.big.button.publish
-                            i.checkmark.icon
-                            |publish
-                            
+                    +number_edit key='usd_price' label='usd price' direct=true
+                    +number_edit key='point_price' label='point price' direct=true
+                    +number_edit key='inventory' label='inventory' direct=true
+                    +boolean_edit key='rentable' label='rentable' direct=true
+                    if rentable 
+                        +text_edit key='renting_time_unit' label='renting time unit' direct=true
+                    

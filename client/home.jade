@@ -117,8 +117,8 @@ template(name='home')
             //         each next_shifts
                             +home_shift_card
             .four.wide.column
-                // a.ui.center.aligned.header(href="/events")
-                .ui.center.aligned.header
+                // .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/events")
                     i.calendar.orange.icon
                     |next events
                 // if is_admin 
@@ -136,8 +136,8 @@ template(name='home')
                     each latest_debits
                         +debit_card
             .four.wide.column
-                // a.ui.center.aligned.header(href="/requests")
-                .ui.center.aligned.header
+                // .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/m/request")
                     i.concierge.bell.teal.icon
                     |requests
                 .medscroll
@@ -211,7 +211,7 @@ template(name='home_request_card')
 
                                     
 template(name='home_offer_card')
-    .ui.segment.view_request.pointer
+    .ui.segment.view_offer.pointer
         .content
             if youtube_id
                 +youtube_view key='youtube_id' direct=true
@@ -231,13 +231,17 @@ template(name='home_offer_card')
                 |$#{dollar_price}
             // each tags 
             //     .ui.tiny.basic.label #{this}
-            if doc_comments.count
-                .meta
-                    each doc_comments 
-                        i.grey.chat.outline.icon
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-                        |#{body}
-                        div
+            +comments_view_small
+            
+            
+template(name='comments_view_small')            
+    if doc_comments.count
+        .meta
+            each doc_comments 
+                i.grey.chat.outline.icon
+                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                |#{body}
+                div
 
 
                                     
@@ -254,10 +258,13 @@ template(name='home_event_card')
             
             .meta    
                 .ui.inline.small.header $#{usd_price} / #{point_price}p
-                if _author.profile_image_id
-                    with _author
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
-                | #{fac.shortname}
+            .meta
+                if fac
+                    |led by
+                    if fac.profile_image_id
+                        with fac
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
+                    | #{fac.name}
             // .meta #{when}
             .description 
             if location
@@ -277,14 +284,7 @@ template(name='home_event_card')
             // i.remove.red.large.icon
             // each not_going
             //     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
-            if doc_comments.count
-                .meta
-                    each doc_comments 
-                        i.grey.chat.outline.icon
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-                        |#{body}
-                        div
-           
+            +comments_view_small
                                
                                
                                
@@ -313,13 +313,7 @@ template(name='debit_card')
                 .ui.small.basic.label #{this}
             if upvoter_ids
                 +voting_tiny
-            if doc_comments.count
-                .meta
-                    each doc_comments 
-                        i.grey.chat.outline.icon
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-                        |#{body}
-                        div
+            +comments_view_small
                                     
 template(name='join_button')
     .ui.fluid.green.button.join

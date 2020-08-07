@@ -24,15 +24,17 @@ template(name='event_view')
                             i.large.blue.link.pencil.circular.icon
             .row 
                 .five.wide.column
-                    a.ui.header(href="/room/#{event_room._id/view")
-                        img.ui.small.image(src="{{c.url event_room.image_id }}")
-                        |#{event_room.title}
                     .ui.header date: {{medium_date date}}
                     if location 
                         i.large.marker.icon(title='location')
                         |#{location}
                     a(href="{{c.url image_id }}")
                         img.ui.fluid.rounded.image(src="{{c.url image_id }}")
+                    .spacer
+                    a(href="/m/room/#{event_room._id}/view")
+                        img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}")
+                        .ui.inline.header.pointer.zoom
+                            |#{event_room.title}
                     if is_admin
                         .ui.segment
                             .ui.header 
@@ -43,8 +45,18 @@ template(name='event_view')
                                 |#{_author.name}
                     if facilitator
                         .ui.dividing.header 
+                            i.chess.king.icon
                             |facilitator
-                            |#{facilitator.name}
+                        a.ui.header(href="/user/#{fac.username}") 
+                            img.ui.avatar.image(src="{{c.url fac.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{fac.name}
+                    if support
+                        .ui.dividing.header 
+                            i.chess.queen.icon
+                            |support
+                        a.ui.header(href="/user/#{support.username}") 
+                            img.ui.avatar.image(src="{{c.url support.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{support.name}
                     if is_admin
                         .ui.header
                             |#{max_attendees} max attendees

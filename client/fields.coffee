@@ -819,11 +819,14 @@ Template.single_user_edit.events
         else
             parent = Template.parentData(5)
 
-
         doc = Docs.findOne parent._id
-        Docs.update parent._id,
-            $set:"#{field.key}":@_id
-
+        if doc
+            Docs.update parent._id,
+                $set:"#{field.key}":@_id
+        else
+            Meteor.users.update parent._id,
+                $set:"#{field.key}":@_id
+            
         t.user_results.set null
         $('#single_user_select_input').val ''
         # Docs.update page_doc._id,

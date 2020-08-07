@@ -3,7 +3,7 @@ template(name='event_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .sixteeen.wide.column
-                    a.ui.icon.green.big.button(href="/event/#{_id}/view" title='save')
+                    a.ui.icon.green.big.circular.button(href="/event/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
                         +icolor name='tear-off-calendar'
@@ -19,7 +19,8 @@ template(name='event_edit')
                     +text_edit key='title' label='title' direct=true
                     // +slug_edit key='slug' label='slug' icon='slug' direct=true
                     +date_edit key='date' label='date' direct=true
-                    +single_user_edit key='facilitator_id' direct=true
+                    +single_user_edit key='facilitator_id' label='facilitator' icon='chess king' direct=true
+                    +single_user_edit key='support_id' label='support' icon='chess queen' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
                     .ui.header

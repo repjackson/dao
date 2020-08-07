@@ -18,7 +18,7 @@ template(name='post_view')
             .middle.aligned.row 
                 .sixteen.wide.column
                     a(href="/m/post")
-                        i.newspaper.circular.link.icon
+                        i.newspaper.circular.link.big.icon
                     .ui.large.inline.header #{title}
                     // div
                     // .ui.inline.grey.header {{from_now start_datetime}}
@@ -67,20 +67,21 @@ template(name='post_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.icon.green.big.button(href="/m/post/#{_id}/view" title='save')
+                    a.ui.icon.green.big.circular.button(href="/m/post/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.header 
                         +icolor name='news' cl='ui image inline pointer'
                         |edit post
                 .four.wide.center.aligned.column
-                    .ui.icon.button.delete_item(title='delete')
-                        i.large.remove.icon
+                    i.large.link.circular.red.remove.icon.delete_post
             .row
                 .four.wide.column
                     .ui.header 
                         small author
                         |#{_author.username}
+                    if is_admin
+                        +single_user_edit key='_author_id' label='author' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true

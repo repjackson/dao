@@ -17,34 +17,34 @@ template(name='user_edit_layout')
                             a.ui.big.green.button(href="/user/#{current_user.username}/") 
                                 i.checkmark.big.icon
                                 strong save
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/info" class="{{isActivePath regex='user_edit_info'}}" title='info') 
-                                i.info.large.blue.icon 
-                                |info
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/account" class="{{isActivePath regex='user_edit_account'}}" title='account') 
+                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
                                 i.cog.large.icon 
                                 |account
-                            // a.ui.large.button(href="/user/#{current_user.username}/edit/friends" class="{{isActivePath regex='user_edit_friends'}}") 
+                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
+                                i.info.large.blue.icon 
+                                |info
+                            // a.ui.large.basic.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
                             //     i.users.icon 
                             //     |friends
-                            // a.ui.large.button(href="/user/#{current_user.username}/edit/levels" class="{{isActivePath regex='user_edit_alerts'}}") 
+                            // a.ui.large.basic.button(href="/user/#{current_user.username}/edit/levels" class="{{isActiveRoute 'user_edit_alerts'}}") 
                             //     i.shield.icon 
                             //     |levels
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActivePath regex='user_edit_alerts'}}") 
+                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
                                 i.bell.yellow.icon 
                                 |alerts
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/style" class="{{isActivePath regex='user_edit_style'}}") 
+                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/style" class="{{isActiveRoute 'user_edit_style'}}") 
                                 i.paint.brush.icon 
                                 |style
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActivePath regex='user_edit_genekeys'}}") 
+                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
                                 i.dna.icon 
                                 |genekeys
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActivePath regex='user_edit_privacy'}}") 
+                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
                                 i.lock.privacy.icon 
                                 | privacy
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/badges" class="{{isActivePath regex='user_edit_badges'}}" title='badges') 
+                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
                                 i.certificate.icon
                                 |badges
-                            a.ui.large.button(href="/user/#{current_user.username}/edit/membership" class="{{isActivePath regex='user_edit_membership'}}" title='membership') 
+                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
                                 i.shield.icon 
                                 | membership
                         .twelve.wide.column
@@ -144,6 +144,7 @@ template(name='user_edit_account')
     .ui.two.column.stackable.grid
         .column
             +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true
+            +image_edit key='avatar_image_id' icon='picture' title='avatar image' direct=true
             +password_edit
             if is_admin
                 with current_user
