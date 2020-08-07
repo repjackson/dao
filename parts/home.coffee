@@ -12,7 +12,7 @@ if Meteor.isClient
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_debits'
         
-        @autorun => Meteor.subscribe 'model_docs', 'transaction'
+        # @autorun => Meteor.subscribe 'model_docs', 'transaction'
         @autorun => Meteor.subscribe 'model_docs', 'request'
         @autorun => Meteor.subscribe 'model_docs', 'offer'
         @autorun => Meteor.subscribe 'model_docs', 'comment'
@@ -20,20 +20,20 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'post'
         @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         @autorun => Meteor.subscribe 'all_users'
-        @autorun -> Meteor.subscribe('home_tag_results',
-            selected_tags.array()
-            selected_location_tags.array()
-            selected_authors.array()
-            Session.get('view_purchased')
-            # Session.get('view_incomplete')
-            )
-        @autorun -> Meteor.subscribe('home_results',
-            selected_tags.array()
-            selected_location_tags.array()
-            selected_authors.array()
-            Session.get('view_purchased')
-            # Session.get('view_incomplete')
-            )
+        # @autorun -> Meteor.subscribe('home_tag_results',
+        #     selected_tags.array()
+        #     selected_location_tags.array()
+        #     selected_authors.array()
+        #     Session.get('view_purchased')
+        #     # Session.get('view_incomplete')
+        #     )
+        # @autorun -> Meteor.subscribe('home_results',
+        #     selected_tags.array()
+        #     selected_location_tags.array()
+        #     selected_authors.array()
+        #     Session.get('view_purchased')
+        #     # Session.get('view_incomplete')
+        #     )
         @autorun => Meteor.subscribe 'model_docs', 'home_doc'
 
     Template.home.helpers
@@ -80,7 +80,8 @@ if Meteor.isClient
                 model:'event'
             },
                 sort:
-                    sort:date:-1
+                    sort:date:1
+                    sort:start_time:1
                 limit:10
         next_shifts: ->
             Docs.find {
@@ -159,6 +160,9 @@ if Meteor.isClient
                     $('.submit_email').val('')
 
 
+    Template.home_event_card.onCreated ->
+        # console.log @
+        @autorun => Meteor.subscribe 'event_transactions', @data
 
 
     # Template.home_card.events
@@ -172,3 +176,11 @@ if Meteor.isClient
     #         Docs.insert
     #             model:'home_item'
     #             parent_id: @_id
+
+
+if Meteor.isServer
+    Meteor.publish 'event_transactions', (event)->
+        # console.log event
+        Docs.find 
+            model:'transaction'
+            event_id:event._id

@@ -83,16 +83,16 @@ if Meteor.isClient
                 Docs.find {
                     model:'event'
                     published:true
-                    start_datetime:$lt:moment().add(1,'days').format()
+                    date:$lt:moment().subtract(1,'days').format("YYYY-MM-DD")
                 }, 
                     sort:start_datetime:-1
             else
                 Docs.find {
                     model:'event'
                     published:true
-                    start_datetime:$gt:moment().format()
+                    date:$gt:moment().subtract(1,'days').format("YYYY-MM-DD")
                 }, 
-                    sort:start_datetime:1
+                    sort:date:1
     
     
         can_add_event: ->

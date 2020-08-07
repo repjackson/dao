@@ -31,6 +31,8 @@ body {
 
 .spaced_image {
   margin: 1px !important;
+  display: inline !important;
+  
 }
 
 .darkblue {

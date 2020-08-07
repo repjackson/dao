@@ -134,7 +134,7 @@ template(name='event_view')
                         .spacer
                         .ui.dividing.header 
                             // +icolor name='activity-history' cl='ui inline image'
-                            |#{event_tickets.count} purchased tickets
+                            |#{event_tickets.count} spots reserved
                         .ui.large.link.selection.list
                             each event_tickets
                                 a.ui.item(href="/ticket/#{_id}/view") 
@@ -144,7 +144,6 @@ template(name='event_view')
                                                 .ui.inline.green.header ${{money_format amount}}
                                             else
                                                 .ui.inline.header #{point_amount}pts
-                                            
                                             |#{when} 
                                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                             |#{_author.name}
