@@ -107,7 +107,7 @@ if Meteor.isClient
             Router.go "/m/debit/#{@_id}/view"
         'click .view_request': ->
             Router.go "/m/request/#{@_id}/view"
-        'click .view_request': ->
+        'click .view_offer': ->
             Router.go "/m/offer/#{@_id}/view"
     
         'click .toggle_finance_details': ->

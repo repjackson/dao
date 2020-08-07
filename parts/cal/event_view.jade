@@ -22,6 +22,9 @@ template(name='event_view')
                     if can_edit
                         a.edit_event(href="/event/#{_id}/edit" title='edit')
                             i.large.blue.link.pencil.circular.icon
+                    if is_admin
+                        a.edit_event(href="/event/#{_id}/edit" title='edit')
+                            i.large.blue.link.pencil.circular.icon
             .row 
                 .five.wide.column
                     .ui.header date: {{medium_date date}}
@@ -88,16 +91,20 @@ template(name='event_view')
                         |RSVP
                     if tickets_left
                         .ui.grey.small.inline.header #{tickets_left} available
-                        // .spacer
-                        // .ui.grey.small.inline.header  minimum amount requested 
-                        // .spacer
-                        // .ui.grey.small.inline.header (give more if you want to)
+                        .spacer
+                        .ui.grey.small.inline.header  minimum amount requested 
+                        .spacer
+                        .ui.grey.small.inline.header (give more if you want to)
                         div
-                    .ui.big.fluid.action.left.icon.input
+                    .ui.huge.fluid.action.left.icon.input
                         i.dollar.icon
                         input.usd_input(type='number' min=usd_price value=usd_price)
                         .ui.green.icon.button.buy_for_usd
                             i.checkmark.large.icon
+                    unless currentUser
+                        .ui.green.large.fluid.button
+                            i.sun.icon
+                            |add on day membership +$10
                     if currentUser
                         .ui.horizontal.divider or
                         .ui.big.fluid.action.left.icon.input

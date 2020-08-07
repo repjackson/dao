@@ -9,15 +9,11 @@ template(name='nav')
             // i.large.home.icon
         a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.large.users.icon
-            | players
+            | directory
         a.item.mobile.hidden(href="/events" class="{{isActiveRoute 'events'}}" title='events')
             i.large.calendar.icon
             | events
         // a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
-        a.item.mobile.hidden.set_post(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
-            i.large.newspaper.icon
-            // em(data-emoji='newspaper')
-            | news
         a.item.mobile.hidden.set_request(href="/m/request" class="{{isActiveRoute 'requests'}}" title='requests')
             i.large.concierge.bell.icon
             // em(data-emoji='bellhop')
@@ -26,6 +22,10 @@ template(name='nav')
             i.large.hand.holding.heart.icon
             // em(data-emoji='bellhop')
             | offers
+        a.item.mobile.hidden.set_post(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
+            i.large.newspaper.icon
+            // em(data-emoji='newspaper')
+            | news
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
@@ -133,18 +133,18 @@ template(name='left_sidebar')
         a.item.toggle_sidebar(href="/events" class="{{isActivePath regex='events'}}")
             i.calendar.icon
             |events
-        a.item.toggle_sidebar.set_post(href="/m/post" class="{{isActiveRoute 'feed'}}")
-            i.newspaper.icon
-            |news
-        a.item.toggle_sidebar(href="/m/offer" class="{{isActiveRoute 'requests'}}")
-            i.hand.holding.heart.icon
-            |offers
-        a.item.toggle_sidebar(href="/m/collective" class="{{isActiveRoute 'requests'}}")
-            i.users.icon
-            |collectives
         a.item.toggle_sidebar(href="/requests" class="{{isActiveRoute 'requests'}}")
             i.concierge.bell.icon
             |requests
+        a.item.toggle_sidebar(href="/m/offer" class="{{isActiveRoute 'requests'}}")
+            i.hand.holding.heart.icon
+            |offers
+        a.item.toggle_sidebar.set_post(href="/m/post" class="{{isActiveRoute 'feed'}}")
+            i.newspaper.icon
+            |news
+        // a.item.toggle_sidebar(href="/m/collective" class="{{isActiveRoute 'requests'}}")
+        //     i.users.icon
+        //     |collectives
         a.item.toggle_sidebar.set_bug(href="/m/bug" class="{{isActiveRoute 'bugs'}}")
             i.bug.icon
             |bugs

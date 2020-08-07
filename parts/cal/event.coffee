@@ -71,7 +71,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'event'
                     published:false
-                    purchased:false
+                    # purchased:false
             Router.go "/event/#{new_id}/edit"
             
             
@@ -83,7 +83,7 @@ if Meteor.isClient
                 Docs.find {
                     model:'event'
                     published:true
-                    start_datetime:$lt:moment().format()
+                    start_datetime:$lt:moment().add(1,'days').format()
                 }, 
                     sort:start_datetime:-1
             else
@@ -107,12 +107,13 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'future_events', ()->
+        console.log moment().subtract(1,'days').format("YYYY-MM-DD")
         Docs.find {
             model:'event'
             published:true
-            start_datetime:$gt:moment().format()
+            date:$gt:moment().subtract(1,'days').format("YYYY-MM-DD")
         }, 
-            sort:start_datetime:1
+            sort:date:1
     
 
     # Meteor.publish 'doc_by_slug', (slug)->

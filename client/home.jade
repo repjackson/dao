@@ -46,7 +46,7 @@ template(name='home')
                     |offer
                 .ui.basic.big.compact.circular.button.add_bug
                     i.bug.red.icon
-                    |+ bug/feature request
+                    |+ bug
                 .ui.basic.big.compact.circular.button.add_message
                     i.chat.blue.icon
                     |+ message
@@ -263,7 +263,7 @@ template(name='home_event_card')
                     |led by
                     if fac.profile_image_id
                         with fac
-                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
+                            img.ui.avatar.spaced.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
                     | #{fac.name}
             // .meta #{when}
             .description 
