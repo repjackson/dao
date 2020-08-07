@@ -11,44 +11,35 @@ template(name='debit_view')
             .centered.row 
                 .five.wide.column
                     a(href="/user/#{_author.username}") 
-                        .ui.center.aligned.segment.pointer
-                            .ui.header 
-                                i.chevron.up.icon
-                                |sender
-                            img.ui.rounded.centered.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            .ui.header 
-                                |#{_author.name}
+                        img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                        .ui.large.center.aligned.header.pointer.zoom
+                            |#{_author.name}
                 .five.wide.column
-                    a(href="/user/#{recipient.username}")
-                        .ui.center.aligned.segment.pointer
-                            .ui.header
-                                i.chevron.down.icon
-                                |recipient
-                            img.ui.rounded.centered.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            .ui.header
-                                |#{recipient.name}
-                            
-            .centered.row
-                .four.wide.column
                     .ui.huge.center.aligned.header
                         |#{amount}pts
                     if is_dev
                         +remove_button
-                    +voting_full
-                    .ui.small.header
-                        i.clock.icon
-                        | #{when}
-                .ten.wide.column
-                    .f12
+                    .f14
                         |#{description}
+                    .spacer
                     +image_view key='image_id' label='image' direct=true
                     div 
                     if tags
                         i.tags.icon
                         each tags 
-                            .ui.big.label #{this}
+                            .ui.big.basic.circular.label #{this}
+                    +voting_full
+                    .ui.small.header
+                        i.clock.icon
+                        | #{when}
                     .spacer
                     .spacer
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
+                .five.wide.column
+                    a(href="/user/#{recipient.username}")
+                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                        .ui.large.center.aligned.header.pointer.zoom
+                            |#{recipient.name}
+                            
 

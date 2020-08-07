@@ -8,6 +8,10 @@ template(name='events')
                 if can_add_event
                     .ui.circular.basic.icon.button.add_event(title='add event')
                         i.plus.big.green.icon
+                .ui.button.toggle_past
+                    if viewing_past
+                        i.checkmark.large.green.icon
+                    |past
                 .spacer
                 .spacer
                 .ui.stackable.five.cards

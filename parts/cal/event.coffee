@@ -17,14 +17,10 @@ if Meteor.isClient
     #     @render 'event_view'
     #     ), name:'event_view_by_slug'
         
-    # Template.registerHelper 'current_event', () ->
-    #     if Router.current().params.doc_id
-    #         Docs.findOne
-    #             _id:Router.current().params.doc_id
-    #     else
-    #         Docs.findOne
-    #             model:'event'
-    #             slug:Router.current().params.doc_slug
+    Template.registerHelper 'facilitator', () ->    
+        Meteor.users.findOne @facilitator_id
+    Template.registerHelper 'fac', () ->    
+        Meteor.users.findOne @facilitator_id
    
     Template.registerHelper 'event_room', () ->
         event = Docs.findOne @_id
@@ -68,6 +64,8 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'all_users'
         
     Template.events.events
+        'click .toggle_past': ->
+            Session.set('viewing_past', !Session.get('viewing_past'))
         'click .add_event': ->
             new_id = 
                 Docs.insert 
@@ -78,14 +76,23 @@ if Meteor.isClient
             
             
     Template.events.helpers
+        viewing_past: -> Session.get('viewing_past')
         events: ->
             # console.log moment().format()
-            Docs.find {
-                model:'event'
-                published:true
-                start_datetime:$gt:moment().format()
-            }, 
-                sort:start_datetime:1
+            if Session.get('viewing_past')
+                Docs.find {
+                    model:'event'
+                    published:true
+                    start_datetime:$lt:moment().format()
+                }, 
+                    sort:start_datetime:-1
+            else
+                Docs.find {
+                    model:'event'
+                    published:true
+                    start_datetime:$gt:moment().format()
+                }, 
+                    sort:start_datetime:1
     
     
         can_add_event: ->

@@ -1,10 +1,11 @@
 template(name='nav')
     // .ui.fluid.inverted.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
-    .ui.fluid.inverted.borderless.attached.menu.topnav(style="background-color:#{currentUser.theme_color};")
+    .ui.fluid.inverted.borderless.attached.large.menu.topnav(style="background-color:#{currentUser.theme_color};")
         a.icon.item.toggle_sidebar
             i.large.bars.icon
-        a.icon.item(href="/" class="{{isActivePath 'home'}}")
+        a.item(href="/" class="{{isActivePath 'home'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            .mobile.hidden One|Riverside
             // i.large.home.icon
         a.item.set_member.mobile.hidden(href="/m/member" class="{{isActiveRoute 'users'}}" title='players')
             i.large.users.icon
@@ -13,7 +14,7 @@ template(name='nav')
             i.large.calendar.icon
             | events
         // a.item.mobile.hidden(href="/m/event" class="{{isActiveRoute 'events'}}" title='events')
-        a.item.mobile.hidden(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
+        a.item.mobile.hidden.set_post(href="/m/post" class="{{isActiveRoute 'feed'}}" title='feed')
             i.large.newspaper.icon
             // em(data-emoji='newspaper')
             | news
@@ -25,7 +26,7 @@ template(name='nav')
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
         .right.menu
-            a.icon.item.toggle_top_sidebar(href="#")
+            a.icon.item.alerts(href="#")
                 i.large.bell.icon
             // a.icon.item(href="/chat" title='chat') 
             a.icon.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
@@ -56,12 +57,13 @@ template(name='nav')
             //         // |login
             //         +icon name='login-rounded-right'
             //         // i.large.chevron.right.icon
-
+    if session_is 'viewing_alerts'
+        +top_sidebar
 
 
 
 template(name='top_sidebar')
-    .ui.top.sidebar.inverted.vertical.large.menu(style="background-color:#{currentUser.theme_color};")
+    .ui.inverted.fluid.large.attached.menu(style="background-color:#{currentUser.theme_color};")
         .item.header notifications
         .spacer
         .spacer

@@ -131,6 +131,7 @@ template(name='field_edit')
                 +key_value_edit key='field_type' value='single_user' icon='clone'
                 +key_value_edit key='field_type' value='multi_user' icon='clone'
                 if is_dev
+                    i.large.code.icon
                     +single_doc_edit key='field_type' ref_model='field_type' label='field type' direct=true        
                     .spacer
                     // +text_edit key='field_type_id' label='field type id' direct=true        

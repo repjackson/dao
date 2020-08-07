@@ -68,7 +68,7 @@ template(name='html_view')
         //     else
         //         |#{this}
         .f12 
-            !{field_value}
+            |!{field_value}
 
 
 
@@ -1000,7 +1000,9 @@ template(name='single_user_edit')
             input#single_user_select_input(type='text' placeholder='lookup user..')
             each selections
                 .ui.large.label
-                    |#{first_name} #{last_name} #{username} 
+                    |#{name} 
+                .ui.mini.grey.inline.header 
+                    |#{username}
         if user_results
             .ui.attached.smoothed.segment
                 .ui.middle.aligned.selection.animated.list
@@ -1008,18 +1010,18 @@ template(name='single_user_edit')
                         .select_user.item
                             .ui.small.inline.header
                                 img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
-                                |#{name}
-                            //- .ui.mini.grey.inline.header 
-                            //-     |#{username}
+                                |#{first_name} #{last_name}
+                            .ui.mini.grey.inline.header 
+                                |#{username}
     if field_value
         // +user_card field_value
         |#{field_value}
         //- |#{this}
         with user_from_id field_value
-            .ui.header
+            .ui.inline.header
                 img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
                 |#{name}
-                i.pull_user.remove.link.circular.icon
+            i.pull_user.remove.link.circular.icon
 
 
 template(name='single_user_view')

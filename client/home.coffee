@@ -14,7 +14,7 @@ if Meteor.isClient
         
         @autorun => Meteor.subscribe 'model_docs', 'transaction'
         @autorun => Meteor.subscribe 'model_docs', 'request'
-        @autorun => Meteor.subscribe 'model_docs', 'shift'
+        @autorun => Meteor.subscribe 'model_docs', 'offer'
         @autorun => Meteor.subscribe 'model_docs', 'comment'
         @autorun => Meteor.subscribe 'future_events'
         @autorun => Meteor.subscribe 'model_docs', 'post'
@@ -85,6 +85,13 @@ if Meteor.isClient
         next_shifts: ->
             Docs.find {
                 model:'shift'
+            },
+                sort:
+                    _timestamp: -1
+                limit:10
+        latest_offers: ->
+            Docs.find {
+                model:'offer'
             },
                 sort:
                     _timestamp: -1

@@ -16,28 +16,28 @@ Template.nav.onRendered ->
             })
             .sidebar('attach events', '.toggle_sidebar')
     , 1000
-    Meteor.setTimeout ->
-        $('.ui.right.sidebar')
-            .sidebar({
-                context: $('.bottom.segment')
-                transition:'overlay'
-                exclusive:true
-                duration:250
-                scrollLock:true
-            })
-            .sidebar('attach events', '.profile_sidebar')
-    , 1000
-    Meteor.setTimeout ->
-        $('.ui.top.sidebar')
-            .sidebar({
-                context: $('.bottom.segment')
-                transition:'overlay'
-                exclusive:true
-                duration:250
-                scrollLock:true
-            })
-            .sidebar('attach events', '.toggle_top_sidebar')
-    , 1000
+    # Meteor.setTimeout ->
+    #     $('.ui.right.sidebar')
+    #         .sidebar({
+    #             context: $('.bottom.segment')
+    #             transition:'overlay'
+    #             exclusive:true
+    #             duration:250
+    #             scrollLock:true
+    #         })
+    #         .sidebar('attach events', '.profile_sidebar')
+    # , 1000
+    # Meteor.setTimeout ->
+    #     $('.ui.top.sidebar')
+    #         .sidebar({
+    #             context: $('.bottom.segment')
+    #             transition:'overlay'
+    #             exclusive:true
+    #             duration:250
+    #             scrollLock:true
+    #         })
+    #         .sidebar('attach events', '.toggle_top_sidebar')
+    # , 1000
 
 Template.right_sidebar.events
     'click .logout': ->
@@ -47,10 +47,9 @@ Template.right_sidebar.events
             Router.go '/login'
 
 Template.nav.events
-    # 'click .toggle_sidebar': ->
-    #     $('.ui.sidebar')
-    #         .sidebar('setting', 'transition', 'push')
-    #         .sidebar('toggle')
+    'click .alerts': ->
+        Session.set('viewing_alerts', !Session.get('viewing_alerts'))
+        
     'click .toggle_admin': ->
         if 'admin' in Meteor.user().roles
             Meteor.users.update Meteor.userId(),
@@ -101,6 +100,10 @@ Template.nav.events
     'click .set_project': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'project', ->
+            Session.set 'loading', false
+    'click .set_post': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'post', ->
             Session.set 'loading', false
     'click .add_gift': ->
         # user = Meteor.users.findOne(username:@username)

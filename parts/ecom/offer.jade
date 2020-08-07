@@ -1,0 +1,180 @@
+template(name='offers')
+    .ui.stackable.padded.grid 
+        .row
+            .sixteen.wide.column
+                .ui.inline.header 
+                    i.concierge.bell.icon
+                    |offers
+                i.circular.link.large.plus.icon.add_offer
+                .spacer
+                .spacer
+                .spacer
+                .ui.stackable.cards
+                    each offers
+                        +offer_card
+
+
+template(name='offer_card')
+    .card.pointer.offer_card
+        .image
+            if youtube_id
+                +youtube_view key='youtube_id' direct=true
+            else if image_id
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+        .content
+            .ui.header
+                |#{title}
+                if complete
+                    i.green.checkmark.icon
+            |!{description}
+        .content
+            |by 
+            if _author.profile_image_id
+                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            |#{_author.name}
+            .ui.big.basic.label
+                |#{point_bounty}pts
+            .ui.small.inline.header status:#{status}
+            if complete
+                .ui.basic.label 
+                    |completed by #{completer.name}
+                    |{{from_now completed_timestamp}}
+        
+
+
+template(name='offer_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .middle.aligned.row 
+                .sixteen.wide.column
+                    a(href="/m/offer" title='offers')
+                        i.concierge.bell.big.circular.link.icon
+                    .ui.inline.header 
+                        small viewing offer 
+                    .ui.inline.large.header 
+                        |#{title}
+                    if can_edit
+                        a.edit_offer(href="/offer/#{_id}/edit")
+                            i.large.pencil.circular.link.icon
+            .row 
+                .four.wide.column
+                    .ui.header
+                        |#{point_bounty}pts offered
+                    if image_id
+                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
+                    .ui.header 
+                        small posted by
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.name}
+                    .ui.header #{when}
+                    .ui.header
+                        i.certificate.icon
+                        |required badges
+                    .ui.header
+                        i.users.icon
+                        |audience
+                    +array_view key='location_tags' label='location_tags' direct=true
+                    div
+                    +voting_full
+                .eight.wide.column
+
+                    .f13
+                        |!{description}
+                    // a.ui.header(href="/user/#{target.username}")
+                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //     |#{target.username}
+                    if youtube_id
+                        +youtube_view key='youtube_id' direct=true
+                    .spacer
+                    i.large.tags.icon
+                    each tags 
+                        .ui.basic.large.label #{this}
+                    .spacer
+                    .spacer
+                    +comments
+                .four.wide.column
+                    .ui.header status: #{status}
+                    if can_claim
+                        .ui.fluid.green.big.button.claim
+                            i.grab.large.icon
+                            |claim
+                    if claimer
+                        .ui.header claimed by
+                        .ui.header #{claimer.name}
+                        unless complete
+                            .ui.button.unclaim
+                                i.undo.icon
+                                |unclaim
+                        if can_edit
+                            div
+                            unless complete
+                                .ui.big.basic.button.mark_complete
+                                    i.checkmark.green.icon
+                                    |mark complete
+                            else 
+                                .ui.big.basic.button.mark_incomplete
+                                    i.undo.orange.icon
+                                    |mark incomplete
+                        if complete
+                            .ui.segment
+                                .ui.header completed by #{completer.name} {{from_now completed_timestamp}}
+                    
+
+template(name='offer_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .sixteen.wide.column
+                    a.ui.green.icon.button(href="/offer/#{_id}/view" title='save')
+                        i.checkmark.big.icon
+                    .ui.inline.header 
+                        i.concierge.bell.icon
+                        small edit offer
+                        |#{title}
+                    i.large.remove.link.circular.icon.delete_offer(title='cancel')
+            .row 
+                .four.wide.column
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    +text_edit key='title' icon='header' direct=true
+                    +date_edit key='date' label='date' icon='calendar' direct=true
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    .ui.header
+                        +icon name='audience'
+                        |audience
+                    .ui.disabled.button
+                        |everyone
+                    .ui.disabled.button
+                        |groups
+                    .ui.disabled.button
+                        |specific people
+                    .ui.header
+                        +icon name='warranty'
+                        |badges
+                .eight.wide.column
+                    +number_edit key='point_bounty' label='point bounty' icon='paper-bag-with-seeds' min='0' direct=true
+                    div
+                    +html_edit key='description' label='description' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' icon='tags' direct=true
+                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                .four.wide.column
+                    .ui.header your points: #{currentUser.points}
+                    .ui.small.header.thin publishing offer holds points from your balance and dispenses them when offer is marked complete
+                    .ui.inline.header status:
+                    if published
+                        .ui.green.inline.header published
+                    else
+                        .ui.orange.inline.header unpublished
+                    if published
+                        .ui.fluid.orange.basic.large.button.unpublish
+                            i.undo.icon
+                            |unpublish
+                    else
+                        .ui.fluid.teal.big.button.publish
+                            i.checkmark.icon
+                            |publish
+                            

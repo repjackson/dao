@@ -346,6 +346,9 @@ if Meteor.isServer
             # average_credit_per_student = total_credit_amount/student_count
             # average_debit_per_student = total_debit_amount/student_count
             flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
+            points = total_credit_amount-total_debit_amount
+            
+            
             if total_debit_amount is 0 then total_debit_amount++
             if total_credit_amount is 0 then total_credit_amount++
             # debit_credit_ratio = total_debit_amount/total_credit_amount
@@ -371,6 +374,7 @@ if Meteor.isServer
                     total_credit_amount: total_credit_amount
                     total_debit_amount: total_debit_amount
                     flow_volume: flow_volume
+                    points:points
                     # calculated_user_balance: calculated_user_balance
                     # debit_credit_ratio: debit_credit_ratio
                     # credit_debit_ratio: credit_debit_ratio

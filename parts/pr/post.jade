@@ -17,15 +17,15 @@ template(name='post_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.icon.button(href="/m/post")
-                        i.large.blog.icon
+                    a(href="/m/post")
+                        i.newspaper.circular.link.icon
                     .ui.large.inline.header #{title}
                     // div
                     // .ui.inline.grey.header {{from_now start_datetime}}
                     
                     if can_edit
-                        a.ui.icon.button.edit_post(href="/m/post/#{_id}/edit" title='edit')
-                            i.large.pencil.icon
+                        a.edit_post(href="/m/post/#{_id}/edit" title='edit')
+                            i.big.circular.link.pencil.icon
 
             .row 
                 .four.wide.column

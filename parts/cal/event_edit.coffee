@@ -21,8 +21,6 @@ if Meteor.isClient
                     room_id:@_id
                     room_title:@title
 
-
-
         'click .submit': ->
             Docs.update Router.current().params.doc_id,
                 $set:published:true

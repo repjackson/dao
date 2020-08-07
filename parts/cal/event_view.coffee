@@ -55,11 +55,11 @@ if Meteor.isClient
 
     Template.event_view.events
         'click .buy_for_points': (e,t)->
-            val = t.$('.point_input').val()
-            Session.set('point_paying')
+            val = parseInt $('.point_input').val()
+            Session.set('point_paying',val)
             # $('.ui.modal').modal('show')
             Swal.fire({
-                title: "buy ticket for #{@point_price}pts?"
+                title: "buy ticket for #{Session.get('point_paying')}pts?"
                 text: "#{@title}"
                 icon: 'question'
                 # input:'number'
@@ -75,12 +75,12 @@ if Meteor.isClient
                         transaction_type:'ticket_purchase'
                         payment_type:'points'
                         is_points:true
-                        point_amount:@point_price
+                        point_amount:Session.get('point_paying')
                         event_id:@_id
                     Meteor.users.update Meteor.userId(),
-                        $inc:points:-@point_price
+                        $inc:points:-Session.get('point_paying')
                     Meteor.users.update @_author_id, 
-                        $inc:points:@point_price
+                        $inc:points:Session.get('point_paying')
                     Swal.fire(
                         position: 'top-end',
                         icon: 'success',
@@ -143,12 +143,6 @@ if Meteor.isClient
                 confirmButtonText: 'confirm'
                 confirmButtonColor: 'orange'
                 # grow:'fullscreen'
-                showClass:
-                    popup: 'swal2-noanimation',
-                    backdrop: 'swal2-noanimation'
-                hideClass:
-                    popup: '',
-                    backdrop: ''
                 showCancelButton: true
                 cancelButtonText: 'cancel'
                 reverseButtons: true

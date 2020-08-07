@@ -19,15 +19,19 @@ template(name='event_edit')
                     +text_edit key='title' label='title' direct=true
                     // +slug_edit key='slug' label='slug' icon='slug' direct=true
                     +date_edit key='date' label='date' direct=true
-                    // +datetime_edit key='start_datetime' label='start' direct=true
-                    // +datetime_edit key='end_datetime' label='end' direct=true
+                    +single_user_edit key='facilitator_id' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
                     .ui.header
                         i.users.icon
                         |audience
                     +number_edit key='max_attendees' label='max attendees' min='0' max='100' direct=true
-                    +number_edit key='max_attendees_tickets' label='max attendees for points' min='0' max='100' direct=true
-                    +number_edit key='point_price' label='minimum points per ticket' min='0' max='100' direct=true
-                    +number_edit key='usd_price' label='minimum dollars per ticket' min='0' max='100' direct=true
+                    +number_edit key='max_attendees_tickets' label='max attendees for points' min='0' max=max_attendees direct=true
+                    div
+                    +boolean_edit key='free' label='free' direct=true
+                    unless free
+                        +number_edit key='point_price' label='minimum points per ticket' min='0' max='100' direct=true
+                        +number_edit key='usd_price' label='minimum dollars per ticket' min='0' max='100' direct=true
                 .ten.wide.column
                     .ui.segment
                         .ui.header room
@@ -40,26 +44,41 @@ template(name='event_edit')
                                         if dollars_per_hour
                                             | $#{dollars_per_hour}/hr
                                     
-                        with event_room
-                            .ui.header #{title}
-                            
-                            |$#{dollars_per_hour}
-                            .ui.small.header schedule for #{current_doc.date}
-                        .ui.header slot 1: 9am-11am
-                            if slot_1_res
-                                .ui.small.header reserved
-                        .ui.header slot 2: 11am-1pm
-                            if slot_1_res
-                                .ui.small.header reserved
-                        .ui.header slot 3: 1pm-3pm  
-                            if slot_1_res
-                                .ui.small.header reserved
-                        .ui.header slot 4: 3pm-5pm   
+                        if room_id
+                            unless key_value_is 'room_title' 'other'
+                                with event_room
+                                    // .ui.header #{title}
+                                    |$#{dollars_per_hour}
+                                    .ui.small.header schedule for #{current_doc.date}
+                                .ui.header slot 1: 9am-11am
+                                    if slot_1_res
+                                        .ui.small.header reserved
+                                    else 
+                                        .ui.green.button buy
+                                .ui.header slot 2: 11am-1pm
+                                    if slot_2_res
+                                        .ui.small.header reserved
+                                    else 
+                                        .ui.green.button buy
+                                .ui.header slot 3: 1pm-3pm  
+                                    if slot_3_res
+                                        .ui.small.header reserved
+                                    else 
+                                        .ui.green.button buy
+                                .ui.header slot 4: 3pm-5pm   
+                                    if slot_4_res
+                                        .ui.small.header reserved
+                                    else 
+                                        .ui.green.button buy
+                            else
+                                +text_edit key='location' label='location' icon='red marker' direct=true
+                                +array_edit key='location_tags' label='location tags' icon='red tags' direct=true
+                                
+                                +datetime_edit key='start_datetime' label='start' direct=true
+                                +datetime_edit key='end_datetime' label='end' direct=true
                          each room_reservations
                             .ui.header reserved
                             
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
-                    div 
-                    +array_edit key='tags' label='tags' direct=true
 

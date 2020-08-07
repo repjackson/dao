@@ -111,12 +111,6 @@ if Meteor.isClient
                 confirmButtonText: 'confirm'
                 cancelButtonText: 'cancel'
                 reverseButtons: true
-                showClass:
-                    popup: 'swal2-noanimation',
-                    backdrop: 'swal2-noanimation'
-                hideClass:
-                    popup: '',
-                    backdrop: ''
             }).then((result)=>
                 if result.value
                     Docs.remove @_id
@@ -139,12 +133,6 @@ if Meteor.isClient
                         Swal.fire(
                             title:"#{@amount} sent"
                             icon:'success'
-                            showClass:
-                                popup: 'swal2-noanimation',
-                                backdrop: 'swal2-noanimation'
-                            hideClass:
-                                popup: '',
-                                backdrop: ''
                             showConfirmButton: false
                             timer: 1000
                         )

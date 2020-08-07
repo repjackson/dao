@@ -10,10 +10,10 @@ Meteor.methods
             slug:'model'
 
 
-    import_tests: ->
-        # myobject = HTTP.get(Meteor.absoluteUrl("/public/tests.json")).data;
-        myjson = JSON.parse(Assets.getText("tests.json"));
-        console.log myjson
+    # import_tests: ->
+    #     # myobject = HTTP.get(Meteor.absoluteUrl("/public/tests.json")).data;
+    #     myjson = JSON.parse(Assets.getText("tests.json"));
+    #     console.log myjson
 
 
     add_user: (username)->
@@ -64,20 +64,20 @@ Meteor.methods
         re.test String(email).toLowerCase()
 
 
-    # notify_message: (message_id)->
-    #     message = Docs.findOne message_id
-    #     if message
-    #         to_user = Meteor.users.findOne message.to_user_id
-    #
-    #         message_link = "https://www.dao.af/user/#{to_user.username}/messages"
-    #
-    #     	Email.send({
-    #             to:["<#{to_user.emails[0].address}>"]
-    #             from:"relay@dao.af"
-    #             subject:"dao message from #{message._author_username}"
-    #             html: "<h3> #{message._author_username} sent you the message:</h3>"+"<h2> #{message.body}.</h2>"+
-    #                 "<br><h4>view your messages here:<a href=#{message_link}>#{message_link}</a>.</h4>"
-    #         })
+    notify_message: (message_id)->
+        message = Docs.findOne message_id
+        if message
+            to_user = Meteor.users.findOne message.to_user_id
+    
+            message_link = "https://www.oneriverside.app/user/#{to_user.username}/messages"
+    
+        	Email.send({
+                to:["<#{to_user.emails[0].address}>"]
+                from:"relay@dao.af"
+                subject:"One message from #{message._author_username}"
+                html: "<h3> #{message._author_username} sent you the message:</h3>"+"<h2> #{message.body}.</h2>"+
+                    "<br><h4>view your messages here:<a href=#{message_link}>#{message_link}</a>.</h4>"
+            })
 
     checkout_students: ()->
         now = Date.now()
@@ -157,11 +157,6 @@ Meteor.methods
             guest_name: {$regex:"#{guest_name}", $options: 'i'}
             },{limit:10}).fetch()
 
-    lookup_project: (project_title)->
-        Docs.find({
-            model:'project'
-            title: {$regex:"#{project_title}", $options: 'i'}
-            }).fetch()
 
     lookup_earn_list: (title)->
         Docs.find({
@@ -267,111 +262,6 @@ Meteor.methods
             Meteor.call 'key', doc._id
 
 
-
-
-    detect_fields: (doc_id)->
-        doc = Docs.findOne doc_id
-        keys = _.keys doc
-        light_fields = _.reject( keys, (key)-> key.startsWith '_' )
-
-        Docs.update doc._id,
-            $set:_keys:light_fields
-
-        for key in light_fields
-            value = doc["#{key}"]
-
-            meta = {}
-
-            js_type = typeof value
-
-
-            if js_type is 'object'
-                meta.object = true
-                if Array.isArray value
-                    meta.array = true
-                    meta.length = value.length
-                    meta.array_element_type = typeof value[0]
-                    meta.field = 'array'
-                else
-                    if key is 'watson'
-                        meta.field = 'object'
-                        # meta.field = 'watson'
-                    else
-                        meta.field = 'object'
-
-            else if js_type is 'boolean'
-                meta.boolean = true
-                meta.field = 'boolean'
-
-            else if js_type is 'number'
-                meta.number = true
-                d = Date.parse(value)
-                # nan = isNaN d
-                # !nan
-                if value < 0
-                    meta.negative = true
-                else if value > 0
-                    meta.positive = false
-
-                integer = Number.isInteger(value)
-                if integer
-                    meta.integer = true
-                meta.field = 'number'
-
-
-            else if js_type is 'string'
-                meta.string = true
-                meta.length = value.length
-
-                html_check = /<[a-z][\s\S]*>/i
-                html_result = html_check.test value
-
-                url_check = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/
-                url_result = url_check.test value
-
-                youtube_check = /((\w|-){11})(?:\S+)?$/
-                youtube_result = youtube_check.test value
-
-                if key is 'html'
-                    meta.html = true
-                    meta.field = 'html'
-                if key is 'youtube_id'
-                    meta.youtube = true
-                    meta.field = 'youtube'
-                else if html_result
-                    meta.html = true
-                    meta.field = 'html'
-                else if url_result
-                    meta.url = true
-                    image_check = (/\.(gif|jpg|jpeg|tiff|png)$/i).test value
-                    if image_check
-                        meta.image = true
-                        meta.field = 'image'
-                    else
-                        meta.field = 'url'
-                # else if youtube_result
-                #     meta.youtube = true
-                #     meta.field = 'youtube'
-                else if Meteor.users.findOne value
-                    meta.user_id = true
-                    meta.field = 'user_ref'
-                else if Docs.findOne value
-                    meta.doc_id = true
-                    meta.field = 'doc_ref'
-                else if meta.length is 20
-                    meta.field = 'image'
-                else if meta.length > 20
-                    meta.field = 'textarea'
-                else
-                    meta.field = 'text'
-
-            Docs.update doc_id,
-                $set: "_#{key}": meta
-
-        # Docs.update doc_id,
-        #     $set:_detected:1
-
-        return doc_id
 
 
     send_enrollment_email: (user_id, email)->

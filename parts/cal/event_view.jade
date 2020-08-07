@@ -24,7 +24,9 @@ template(name='event_view')
                             i.large.blue.link.pencil.circular.icon
             .row 
                 .five.wide.column
-                    .ui.header room: #{event_room.title}
+                    a.ui.header(href="/room/#{event_room._id/view")
+                        img.ui.small.image(src="{{c.url event_room.image_id }}")
+                        |#{event_room.title}
                     .ui.header date: {{medium_date date}}
                     if location 
                         i.large.marker.icon(title='location')
@@ -34,7 +36,8 @@ template(name='event_view')
                     if is_admin
                         .ui.segment
                             .ui.header 
-                                small author
+                                i.shield.icon
+                                | author
                             a.ui.header(href="/user/#{_author.username}") 
                                 img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{_author.name}

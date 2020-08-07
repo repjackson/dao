@@ -46,7 +46,7 @@ template(name='home')
                     |offer
                 .ui.basic.big.compact.circular.button.add_bug
                     i.bug.red.icon
-                    |+ bug
+                    |+ bug/feature request
                 .ui.basic.big.compact.circular.button.add_message
                     i.chat.blue.icon
                     |+ message
@@ -124,7 +124,7 @@ template(name='home')
                 // if is_admin 
                 //     i.plus.icon.add_event
                     
-                .smallscroll
+                .medscroll
                     each next_events
                         +home_event_card
             .four.wide.column
@@ -132,7 +132,7 @@ template(name='home')
                 .ui.center.aligned.header
                     i.gift.red.icon
                     |gifts
-                .smallscroll
+                .medscroll
                     each latest_debits
                         +debit_card
             .four.wide.column
@@ -140,16 +140,24 @@ template(name='home')
                 .ui.center.aligned.header
                     i.concierge.bell.teal.icon
                     |requests
-                .smallscroll
+                .medscroll
                     each latest_requests
                         +home_request_card
                                             
             .four.wide.column
                 // a.ui.center.aligned.header(href="/m/post")
                 .ui.center.aligned.header
+                    i.hand.holding.heart.icon
+                    |offers
+                .ui.large.link.selection.list.medscroll
+                    each latest_offers
+                        +home_offer_card
+            .four.wide.column
+                // a.ui.center.aligned.header(href="/m/post")
+                .ui.center.aligned.header
                     i.newspaper.icon
                     |news
-                .ui.large.link.selection.list.smallscroll
+                .ui.large.link.selection.list.medscroll
                     each latest_posts
                         a.item(href="/m/post/#{_id}/view")
                             .header #{title}
@@ -202,6 +210,37 @@ template(name='home_request_card')
 
 
                                     
+template(name='home_offer_card')
+    .ui.segment.view_request.pointer
+        .content
+            if youtube_id
+                +youtube_view key='youtube_id' direct=true
+            else if image_id
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+            .header
+                .ui.inline.header #{title}
+                if _author.profile_image_id
+                    with _author
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
+                | #{_author.name}
+            // |!{description}
+            .meta #{when}
+            if point_price
+                |#{point_price}p
+            if dollar_price
+                |$#{dollar_price}
+            // each tags 
+            //     .ui.tiny.basic.label #{this}
+            if doc_comments.count
+                .meta
+                    each doc_comments 
+                        i.grey.chat.outline.icon
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                        |#{body}
+                        div
+
+
+                                    
                                     
 template(name='home_event_card')
     a.ui.fluid.card(href="/event/#{_id}/view")
@@ -218,7 +257,7 @@ template(name='home_event_card')
                 if _author.profile_image_id
                     with _author
                         img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
-                | #{_author.shortname}
+                | #{fac.shortname}
             // .meta #{when}
             .description 
             if location
@@ -254,7 +293,6 @@ template(name='debit_card')
     .ui.card.pointer.view_debit
         if image_id
             img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
-
         .content
             .description 
                 if _author.profile_image_id
@@ -273,7 +311,8 @@ template(name='debit_card')
             .spacer
             each tags 
                 .ui.small.basic.label #{this}
-            +voting_tiny
+            if upvoter_ids
+                +voting_tiny
             if doc_comments.count
                 .meta
                     each doc_comments 
