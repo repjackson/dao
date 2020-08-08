@@ -1,12 +1,17 @@
 template(name='user_offers')  
     .ui.center.aligned.header 
-        +icon name='request-service'
+        i.hand.holding.heart.icon
         |user offers
     .scrolling
-        each requests
+        each offers
             .ui.segment
-                a.ui.header(href="/request/#{_id}/view") #{bounty}pts: #{title}
-                | #{description}
+                a.ui.header(href="/m/offer/#{_id}/view") 
+                    |#{title}
+                div
+                    |$#{usd_price}
+                    |#{point_price}pts
+                div
+                | !{description}
                 div
                 if is_admin
                     +remove_button

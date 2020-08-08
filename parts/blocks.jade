@@ -50,31 +50,32 @@ template(name='session_toggle_button')
         i.large.icon(class=icon)
 
 template(name='comments')
+    .spacer
     .ui.inline.grey.header
         i.chat.outline.icon
         |comments
     div
+    .ui.fluid.icon.large.input
+        i.plus.icon
+        input.add_comment(model='text' placeholder='add')
     if currentUser
-        .ui.fluid.icon.large.input
-            i.plus.icon
-            input.add_comment(model='text' placeholder='add')
-    .ui.comments
-        each doc_comments
-            .comment
-                a.avatar(href="/user/#{_author.username}") 
-                    img(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-                .content
-                    a.author(href="/user/#{_author.username}") 
-                        |#{_author.name}
-                    .metadata
-                        span.date #{when}
-                    .text
-                        | #{body}
-                    span.meta
-                        if can_edit
-                            +remove_icon
-                        else
-                            +voting_small
+        .ui.comments
+            each doc_comments
+                .comment
+                    a.avatar(href="/user/#{_author.username}") 
+                        img(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                    .content
+                        a.author(href="/user/#{_author.username}") 
+                            |#{_author.name}
+                        .metadata
+                            span.date #{when}
+                        .text
+                            | #{body}
+                        span.meta
+                            if can_edit
+                                +remove_icon
+                            else
+                                +voting_small
 
 
 

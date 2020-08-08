@@ -32,13 +32,13 @@ template(name='offer_card')
                 img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{_author.name}
             .ui.big.basic.label
-                |#{point_bounty}pts
-            .ui.small.inline.header status:#{status}
-            if complete
-                .ui.basic.label 
-                    |completed by #{completer.name}
-                    |{{from_now completed_timestamp}}
-        
+                |$#{usd_price}
+            .ui.big.basic.label
+                |#{point_price}pts
+            if rental
+                .ui.small.header
+                    i.checkmark.icon
+                    |rental
 
 
 template(name='offer_view')
@@ -67,17 +67,16 @@ template(name='offer_view')
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.name}
                     .ui.header #{when}
-                    .ui.header
-                        i.certificate.icon
-                        |required badges
-                    .ui.header
-                        i.users.icon
-                        |audience
+                    // .ui.header
+                    //     i.certificate.icon
+                    //     |required badges
+                    // .ui.header
+                    //     i.users.icon
+                    //     |audience
                     +array_view key='location_tags' label='location_tags' direct=true
                     div
                     +voting_full
                 .eight.wide.column
-
                     .f13
                         |!{description}
                     // a.ui.header(href="/user/#{target.username}")

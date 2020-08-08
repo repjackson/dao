@@ -32,9 +32,16 @@ if Meteor.isClient
                 parent = Docs.findOne Router.current().params.doc_id
             else
                 parent = Docs.findOne Template.parentData()._id
-            Docs.find
-                parent_id:parent._id
-                model:'comment'
+            if Meteor.user()
+                Docs.find
+                    parent_id:parent._id
+                    model:'comment'
+            else
+                Docs.find
+                    model:'comment'
+                    parent_id:parent._id
+                    _author_id:$exists:false
+                    
     Template.comments.events
         'keyup .add_comment': (e,t)->
             if e.which is 13

@@ -5,9 +5,9 @@ if Meteor.isClient
         ), name:'user_offers'
 
     Template.user_offers.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'offer', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_offers', Router.current().params.username
         # @autorun => Meteor.subscribe 'user_offers', Router.current().params.username
-        @autorun => Meteor.subscribe 'model_docs', 'offer'
+        # @autorun => Meteor.subscribe 'model_docs', 'offer'
 
     Template.user_offers.events
         'keyup .new_offer': (e,t)->
@@ -36,5 +36,8 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'user_offers', (username)->
+        user = Meteor.users.findOne username:username
         Docs.find
             model:'offer'
+            _author_id:user._id
+            

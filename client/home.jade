@@ -260,9 +260,9 @@ template(name='home_event_card')
             .header
                 | #{title} 
             .meta    
-                |{{home_long_date start_datetime}}
-                .ui.small.grey.inline.header {{from_now start_datetime}}
-            
+                |#{date}
+                // |{{home_long_date start_datetime}}
+                // .ui.small.grey.inline.header {{from_now start_datetime}}
             .meta    
                 .ui.inline.small.header $#{usd_price} / #{point_price}p
             .meta
