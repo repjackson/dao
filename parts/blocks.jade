@@ -381,8 +381,9 @@ template(name='honey_badger')
 
 
 template(name='voting_full')
-    i.thumbs.up.large.big.circular.link.icon.upvote(class=upvote_class title='upvote')
-    i.thumbs.down.large.big.circular.link.icon.downvote(class=downvote_class title='downvote')
+    unless is_author
+        i.thumbs.up.large.big.circular.link.icon.upvote(class=upvote_class title='upvote')
+        i.thumbs.down.large.big.circular.link.icon.downvote(class=downvote_class title='downvote')
     if points
         |&nbsp;
         span(title='points') #{points} pts

@@ -116,9 +116,9 @@ template(name='profile_layout')
                         a.ui.large.compact.basic.button.profile_nav_item(href="/user/#{username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
                             i.chat.large.icon
                             span.mobile.hidden chat
-                        a.ui.large.compact.basic.button(href="/user/#{username}/badges" class="{{isActivePath 'user_badges'}}" title="#{user.username} badges")
-                            i.certificate.large.icon
-                            span.mobile.hidden badges
+                        // a.ui.large.compact.basic.button(href="/user/#{username}/badges" class="{{isActivePath 'user_badges'}}" title="#{user.username} badges")
+                        //     i.certificate.large.icon
+                        //     span.mobile.hidden badges
                         a.ui.large.compact.basic.button(href="/user/#{username}/genekeys" class="{{isActivePath 'user_genekeys'}}" title="#{user.username} genekeys")
                             +icolor name='dna-helix' cl='ui avatar image'
                             span.mobile.hidden genekeys

@@ -14,37 +14,37 @@ template(name='user_edit_layout')
                             .ui.small.inline.header @#{current_user.username}
                             img.ui.centered.small.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 
-                            a.ui.big.green.button(href="/user/#{current_user.username}/") 
+                            a.ui.big.green.circular.button(href="/user/#{current_user.username}/") 
                                 i.checkmark.big.icon
                                 strong save
-                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
                                 i.cog.large.icon 
                                 |account
-                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
                                 i.info.large.blue.icon 
                                 |info
-                            // a.ui.large.basic.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
+                            // a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
                             //     i.users.icon 
                             //     |friends
-                            // a.ui.large.basic.button(href="/user/#{current_user.username}/edit/levels" class="{{isActiveRoute 'user_edit_alerts'}}") 
+                            // a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/levels" class="{{isActiveRoute 'user_edit_alerts'}}") 
                             //     i.shield.icon 
                             //     |levels
-                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
                                 i.bell.yellow.icon 
                                 |alerts
-                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/style" class="{{isActiveRoute 'user_edit_style'}}") 
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/style" class="{{isActiveRoute 'user_edit_style'}}") 
                                 i.paint.brush.icon 
                                 |style
-                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
                                 i.dna.icon 
                                 |genekeys
-                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
                                 i.lock.privacy.icon 
                                 | privacy
-                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
                                 i.certificate.icon
                                 |badges
-                            a.ui.large.basic.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
                                 i.shield.icon 
                                 | membership
                         .twelve.wide.column

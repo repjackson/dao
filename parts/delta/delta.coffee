@@ -138,7 +138,7 @@ if Meteor.isClient
             delta = Docs.findOne model:'delta'
             model = Docs.findOne model:'model'
             if model.show_facets
-                'twelve wide column'
+                'thirteen wide column'
             else
                 'sixteen wide column'
     

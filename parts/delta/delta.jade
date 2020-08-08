@@ -7,7 +7,7 @@ template(name='delta')
             //             +model_top
             .row
                 if current_model.show_facets
-                    .four.wide.column
+                    .three.wide.column
                         +model_top
                         each sorted_facets
                             +facet
@@ -237,7 +237,7 @@ template(name='facet')
         if viewing_results
             each filtering_res
                 if name
-                    .selector.ui.compact.basic.button.toggle_selection(class=toggle_value_class title=count)
+                    .selector.ui.compact.basic.circular.button.toggle_selection(class=toggle_value_class title=count)
                         //- with ..
                         //- if parent_key_value_is 'field_type' 'color_icon'
                         //-     .ui.header icon
@@ -246,7 +246,7 @@ template(name='facet')
                         if is_admin
                             small #{cal_count} #{count}
                 else
-                    .selector.ui.compact.basic.button.toggle_selection(class=toggle_value_class)
+                    .selector.ui.compact.basic.circular.button.toggle_selection(class=toggle_value_class)
                         strong null
                         //- small #{cal_count}
             //- .ui.hidden.divider

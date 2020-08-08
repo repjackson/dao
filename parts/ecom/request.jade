@@ -43,6 +43,35 @@ template(name='request_card')
                     |{{from_now completed_timestamp}}
         
 
+template(name='request_item')
+    .ui.fluid.horizontal.card.pointer.request_card
+        .image
+            if youtube_id
+                +youtube_view key='youtube_id' direct=true
+            else if image_id
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+        .content
+            .ui.header
+                |#{title}
+                if complete
+                    i.green.checkmark.icon
+            |!{description}
+        .content
+            +comments_view_small
+        .content
+            |by 
+            if _author.profile_image_id
+                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            |#{_author.name}
+            .ui.big.basic.label
+                |#{point_bounty}pts
+            .ui.small.inline.header status:#{status}
+            if complete
+                .ui.basic.label 
+                    |completed by #{completer.name}
+                    |{{from_now completed_timestamp}}
+        
+
 
 template(name='request_view')
     with current_doc
@@ -56,7 +85,7 @@ template(name='request_view')
                     .ui.inline.large.header 
                         |#{title}
                     if can_edit
-                        a.edit_request(href="/request/#{_id}/edit")
+                        a.edit_request(href="/m/request/#{_id}/edit")
                             i.large.pencil.circular.link.icon
             .row 
                 .four.wide.column
@@ -70,17 +99,10 @@ template(name='request_view')
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.name}
                     .ui.header #{when}
-                    .ui.header
-                        i.certificate.icon
-                        |required badges
-                    .ui.header
-                        i.users.icon
-                        |audience
                     +array_view key='location_tags' label='location_tags' direct=true
                     div
                     +voting_full
                 .eight.wide.column
-
                     .f13
                         |!{description}
                     // a.ui.header(href="/user/#{target.username}")
@@ -131,10 +153,9 @@ template(name='request_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.icon.button(href="/m/request/#{_id}/view" title='save')
+                    a.ui.green.icon.circular.button(href="/m/request/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
-                        i.concierge.bell.icon
                         small edit request
                         |#{title}
                     i.large.remove.link.circular.icon.delete_request(title='cancel')
@@ -150,18 +171,6 @@ template(name='request_edit')
                     +boolean_edit key='has_youtube' label='has youtube' direct=true
                     if has_youtube
                         +youtube_edit key='youtube_id' label='youtube id' direct=true
-                    .ui.header
-                        +icon name='audience'
-                        |audience
-                    .ui.disabled.button
-                        |everyone
-                    .ui.disabled.button
-                        |groups
-                    .ui.disabled.button
-                        |specific people
-                    .ui.header
-                        +icon name='warranty'
-                        |badges
                 .eight.wide.column
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true

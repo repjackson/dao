@@ -19,6 +19,8 @@ if Meteor.isClient
                 complete:$ne:true
                 published:true
 
+    Template.offer_card.onCreated ->
+        @autorun => Meteor.subscribe 'doc_comments', @data._id
 
     Template.offer_card.events
         'click .offer_card': ->

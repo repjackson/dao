@@ -9,8 +9,6 @@ if Meteor.isClient
     #     @layout 'layout'
     #     @render 'requests'
     #     ), name:'requests'
-    # Template.requests.onCreated ->
-    #     @autorun => Meteor.subscribe 'model_docs', 'request'
     # Template.requests.events
     #     'click .add_request': ->
     #         new_id = 
@@ -25,6 +23,8 @@ if Meteor.isClient
                 complete:$ne:true
                 published:true
 
+    Template.request_card.onCreated ->
+        @autorun => Meteor.subscribe 'doc_comments', @data._id
 
     Template.request_card.events
         'click .request_card': ->

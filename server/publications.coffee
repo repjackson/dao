@@ -19,6 +19,11 @@ Meteor.publish 'user_from_id', (user_id)->
     Meteor.users.find
         _id:user_id
 
+Meteor.publish 'doc_comments', (doc_id)->
+    Docs.find
+        model:'comment'
+        parent_id:doc_id
+
 
 Meteor.publish 'children', (model, parent_id)->
     match = {}

@@ -9,6 +9,11 @@ if Meteor.isClient
     #     @layout 'layout'
     #     @render 'posts'
     #     ), name:'posts'
+
+    Template.post_card.onCreated ->
+        @autorun => Meteor.subscribe 'doc_comments', @data._id
+
+
     Template.post_card.events
         'click .view_post': ->
             Router.go "/m/post/#{@_id}/view"
