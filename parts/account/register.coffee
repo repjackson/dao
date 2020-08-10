@@ -7,7 +7,9 @@ if Meteor.isClient
 
 
     Template.register.onCreated ->
-        Session.set 'email', null
+        Session.setDefault 'email', null
+        Session.setDefault 'email_status', 'invalid'
+        
     Template.register.events
         'keyup .first_name': ->
             first_name = $('.first_name').val()
@@ -15,10 +17,9 @@ if Meteor.isClient
         'keyup .last_name': ->
             last_name = $('.last_name').val()
             Session.set 'last_name', last_name
-        'keyup .email': ->
-            email = $('.email').val()
+        'keyup .email_field': ->
+            email = $('.email_field').val()
             Session.set 'email', email
-            email = $('.email').val()
             Meteor.call 'validate_email', email, (err,res)->
                 console.log res
                 if res is true
@@ -44,56 +45,68 @@ if Meteor.isClient
                     Session.set 'enter_mode', 'login'
                 else
                     Session.set 'enter_mode', 'register'
+        
+        'blur .password': ->
+            password = $('.password').val()
+            Session.set 'password', password
 
         'click .register': (e,t)->
-            username = $('.username').val()
-            # email = $('.email').val()
+            # username = $('.username').val()
+            email = $('.email_field').val()
             password = $('.password').val()
             # if Session.equals 'enter_mode', 'register'
             # if confirm "register #{username}?"
             # Meteor.call 'validate_email', email, (err,res)->
             #     console.log res
-            options = {
-                username:username
-                password:password
-            }
             # options = {
-            #     email:email
+            #     username:username
             #     password:password
-            #     }
+            # }
+            options = {
+                email:email
+                password:password
+                }
             Meteor.call 'create_user', options, (err,res)=>
-                console.log res
-                Meteor.users.update res,
-                    $addToSet: roles: 'member'
-                Meteor.loginWithPassword username, password, (err,res)=>
-                    if err
-                        alert err.reason
-                        # if err.error is 403
-                        #     Session.set 'message', "#{username} not found"
-                        #     Session.set 'enter_mode', 'register'
-                        #     Session.set 'username', "#{username}"
-                    else
-                        Meteor.users.update Meteor.userId(),
-                            $set:
-                                app:'stand'
-                                first_name: Session.get('first_name')
-                                last_name: Session.get('last_name')
-                        Router.go '/'
-            # else
-            #     Meteor.loginWithPassword username, password, (err,res)=>
-            #         if err
-            #             if err.error is 403
-            #                 Session.set 'message', "#{username} not found"
-            #                 Session.set 'enter_mode', 'register'
-            #                 Session.set 'username', "#{username}"
-            #         else
-            #             Router.go '/'
+                if err
+                    alert err
+                else
+                    console.log res
+                    username = "#{Session.get('first_name').toLowerCase()}_#{Session.get('last_name').toLowerCase()}"
+                    console.log username
+                    Meteor.users.update res,
+                        $addToSet: 
+                            roles: 'explorer'
+                            levels: 'explorer'
+                        $set:
+                            first_name: Session.get('first_name')
+                            last_name: Session.get('last_name')
+                            app:'stand'
+                            username:username
+                    Meteor.loginWithPassword username, password, (err,res)=>
+                        if err
+                            alert err.reason
+                            # if err.error is 403
+                            #     Session.set 'message', "#{username} not found"
+                            #     Session.set 'enter_mode', 'register'
+                            #     Session.set 'username', "#{username}"
+                        else
+                            Router.go '/'
+                # else
+                #     Meteor.loginWithPassword username, password, (err,res)=>
+                #         if err
+                #             if err.error is 403
+                #                 Session.set 'message', "#{username} not found"
+                #                 Session.set 'enter_mode', 'register'
+                #                 Session.set 'username', "#{username}"
+                #         else
+                #             Router.go '/'
 
 
     Template.register.helpers
         can_register: ->
-            # Session.get('first_name') and Session.get('last_name') and Session.get('email')
-            Session.get('username')
+            Session.get('first_name') and Session.get('last_name') and Session.get('email_status', 'valid') and Session.get('password').length>3
+
+            # Session.get('username')
 
         email: -> Session.get 'email'
         username: -> Session.get 'username'

@@ -23,9 +23,9 @@ template(name='user_edit_layout')
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
                                 i.info.large.blue.icon 
                                 |info
-                            // a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
-                            //     i.users.icon 
-                            //     |friends
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/food" class="{{isActiveRoute 'user_edit_food'}}") 
+                                i.food.icon 
+                                |food
                             // a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/levels" class="{{isActiveRoute 'user_edit_alerts'}}") 
                             //     i.shield.icon 
                             //     |levels

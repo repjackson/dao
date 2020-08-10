@@ -32,6 +32,8 @@ template(name='nav')
         .right.menu
             a.icon.item.alerts(href="#")
                 i.large.bell.icon
+                if unread_message_count
+                    |#{unread_message_count}
             // a.icon.item(href="/chat" title='chat') 
             a.icon.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
                 i.chat.large.icon

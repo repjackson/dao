@@ -1,16 +1,16 @@
 if Meteor.isClient
-    Router.route '/user/:username/edit/membership', (->
+    Router.route '/user/:username/edit/food', (->
         @layout 'user_edit_layout'
-        @render 'user_edit_membership'
-        ), name:'user_edit_membership'
+        @render 'user_edit_food'
+        ), name:'user_edit_food'
 
 
-    Template.user_edit_membership.onCreated ->
-        @autorun => Meteor.subscribe 'user_edit_membership', Router.current().params.username
+    Template.user_edit_food.onCreated ->
+        @autorun => Meteor.subscribe 'user_edit_food', Router.current().params.username
         # @autorun => Meteor.subscribe 'model_docs', 'picture'
         @autorun => Meteor.subscribe 'model_docs', 'transaction'
 
-    Template.user_edit_membership.events
+    Template.user_edit_food.events
         'keyup .new_picture': (e,t)->
             if e.which is 13
                 val = $('.new_picture').val()
@@ -23,8 +23,8 @@ if Meteor.isClient
 
 
 
-    Template.user_edit_membership.helpers
-        user_edit_membership: ->
+    Template.user_edit_food.helpers
+        user_edit_food: ->
             target_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find
                 model:'picture'
@@ -34,14 +34,12 @@ if Meteor.isClient
             target_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
                 model:'transaction'
-                transaction_type:'membership'
+                transaction_type:'food'
                 _author_id: target_user._id
             }, 
                 sort:
                     _timestamp:-1
-                    
-                    
-    Template.user_edit_membership.onCreated ->
+    Template.user_edit_food.onCreated ->
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
         else if Meteor.isProduction
@@ -55,37 +53,37 @@ if Meteor.isClient
                 # amount = parseInt(Session.get('topup_amount'))
                 # product = Docs.findOne Router.current().params.doc_id
                 charge =
-                    amount: 25000
+                    amount: 250
                     currency: 'usd'
                     source: token.id
                     description: token.description
                     # receipt_email: token.email
-                Meteor.call 'buy_membership', charge, (err,res)=>
+                Meteor.call 'buy_food', charge, (err,res)=>
                     if err then alert err.reason, 'danger'
                     else
                         console.log 'res', res
                         Swal.fire(
-                            'membership purchased',
+                            'food purchased',
                             ''
                             'success'
                         Docs.insert
                             model:'transaction'
-                            transaction_type:'membership'
+                            transaction_type:'food'
                             amount:250
                         Meteor.users.update Meteor.userId(),
                             $inc: points:500
                         )
         )
 
-    Template.user_edit_membership.onRendered ->
+    Template.user_edit_food.onRendered ->
 
-    Template.user_edit_membership.events
-        'click .pay_membership': ->
+    Template.user_edit_food.events
+        'click .pay_food': ->
             console.log Template.instance()
             # if confirm 'add 5 credits?'
             # Session.set('topup_amount',5)
             # Template.instance().checkout.open
-            #     name: 'Riverside Membership'
+            #     name: 'Riverside food'
             #     # email:Meteor.user().emails[0].address
             #     description: 'monthly'
             #     amount: 250
@@ -95,8 +93,8 @@ if Meteor.isClient
 
 
             Swal.fire({
-                title: 'buy membership?'
-                text: "this will charge you $250"
+                title: 'buy food?'
+                text: "this will charge you $11"
                 icon: 'question'
                 showCancelButton: true,
                 confirmButtonText: 'confirm'
@@ -106,10 +104,10 @@ if Meteor.isClient
                     # Session.set('topup_amount',5)
                     # Template.instance().checkout.open
                     instance.checkout.open
-                        name: 'Riverside Membership'
+                        name: 'Riverside food'
                         # email:Meteor.user().emails[0].address
                         description: 'monthly'
-                        amount: 250
+                        amount: 1100
             
                     # Meteor.users.update @_author_id,
                     #     $inc:credit:@order_price
@@ -121,6 +119,6 @@ if Meteor.isClient
             )
 
 if Meteor.isServer
-    Meteor.publish 'user_edit_membership', (username)->
+    Meteor.publish 'user_edit_food', (username)->
         Docs.find
             model:'picture'

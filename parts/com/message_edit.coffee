@@ -106,7 +106,7 @@ if Meteor.isClient
 
         'click .submit': ->
             Swal.fire({
-                title: "confirm send #{@amount}pts?"
+                title: "confirm send message?"
                 text: ""
                 icon: 'question'
                 showCancelButton: true,
@@ -117,7 +117,7 @@ if Meteor.isClient
                 if result.value
                     Meteor.call 'send_message', @_id, =>
                         Swal.fire(
-                            title:"#{@amount} sent"
+                            title:"message sent"
                             icon:'success'
                             showClass:
                                 popup: 'swal2-noanimation',

@@ -61,8 +61,10 @@ Meteor.methods
 
     validate_email: (email) ->
         re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        re.test String(email).toLowerCase()
-
+        test_result = re.test String(email)
+        console.log email
+        console.log test_result
+        test_result
 
     notify_message: (message_id)->
         message = Docs.findOne message_id

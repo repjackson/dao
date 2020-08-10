@@ -1,0 +1,13 @@
+template(name='user_food')
+    .ui.header 
+        +icolor name='food'
+        |user food
+    with current_user
+        .ui.stackable.three.column.grid
+            .column
+                each food_orders
+                    .ui.header #{when}
+        |!{food_report}
+
+
+

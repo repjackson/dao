@@ -189,6 +189,7 @@ template(name='offer_edit')
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' icon='tags' direct=true
+                    +text_edit key='location' label='location' icon='marker' direct=true
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .six.wide.column
                     .ui.header your points: #{currentUser.points}

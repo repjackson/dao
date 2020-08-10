@@ -124,6 +124,7 @@ Template.topbar.onCreated ->
     @autorun => Meteor.subscribe 'my_sent_messages'
 
 Template.topbar.helpers
+    
     recent_alerts: ->
         Docs.find 
             model:'message'
