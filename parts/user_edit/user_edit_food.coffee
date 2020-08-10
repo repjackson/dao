@@ -6,7 +6,7 @@ if Meteor.isClient
 
 
     Template.user_edit_food.onCreated ->
-        @autorun => Meteor.subscribe 'user_edit_food', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_food_orders'
         # @autorun => Meteor.subscribe 'model_docs', 'picture'
         @autorun => Meteor.subscribe 'model_docs', 'transaction'
 
@@ -24,21 +24,11 @@ if Meteor.isClient
 
 
     Template.user_edit_food.helpers
-        user_edit_food: ->
-            target_user = Meteor.users.findOne(username:Router.current().params.username)
+        food_orders: ->
             Docs.find
-                model:'picture'
-                target_user_id: target_user._id
+                model:'food_order'
 
-        transactions: ->
-            target_user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.find {
-                model:'transaction'
-                transaction_type:'food'
-                _author_id: target_user._id
-            }, 
-                sort:
-                    _timestamp:-1
+
     Template.user_edit_food.onCreated ->
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
@@ -53,7 +43,7 @@ if Meteor.isClient
                 # amount = parseInt(Session.get('topup_amount'))
                 # product = Docs.findOne Router.current().params.doc_id
                 charge =
-                    amount: 250
+                    amount: 11
                     currency: 'usd'
                     source: token.id
                     description: token.description
@@ -66,19 +56,57 @@ if Meteor.isClient
                             'food purchased',
                             ''
                             'success'
-                        Docs.insert
-                            model:'transaction'
-                            transaction_type:'food'
-                            amount:250
-                        Meteor.users.update Meteor.userId(),
-                            $inc: points:500
+                        # Docs.insert
+                        #     model:'transaction'
+                        #     transaction_type:'food'
+                        #     amount:1100
                         )
         )
 
     Template.user_edit_food.onRendered ->
 
     Template.user_edit_food.events
-        'click .pay_food': ->
+        'click .buy_ethel_tiffen': ->
+            console.log Template.instance()
+            # if confirm 'add 5 credits?'
+            # Session.set('topup_amount',5)
+            # Template.instance().checkout.open
+            #     name: 'Riverside food'
+            #     # email:Meteor.user().emails[0].address
+            #     description: 'monthly'
+            #     amount: 250
+
+
+            instance = Template.instance()
+
+
+            Swal.fire({
+                title: 'buy Ethel food?'
+                text: "this will charge you $11"
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonText: 'confirm'
+                cancelButtonText: 'cancel'
+            }).then((result)=>
+                if result.value
+                    # Session.set('topup_amount',5)
+                    # Template.instance().checkout.open
+                    instance.checkout.open
+                        name: 'buy Ethel Tiffen'
+                        # email:Meteor.user().emails[0].address
+                        description: 'monthly'
+                        amount: 1100
+            
+                    # Meteor.users.update @_author_id,
+                    #     $inc:credit:@order_price
+                    # Swal.fire(
+                    #     'topup initiated',
+                    #     ''
+                    #     'success'
+                    # )
+            )
+            
+        'click .buy_nicole_tiffen': ->
             console.log Template.instance()
             # if confirm 'add 5 credits?'
             # Session.set('topup_amount',5)
@@ -104,9 +132,9 @@ if Meteor.isClient
                     # Session.set('topup_amount',5)
                     # Template.instance().checkout.open
                     instance.checkout.open
-                        name: 'Riverside food'
+                        name: 'Nicole Tiffen'
                         # email:Meteor.user().emails[0].address
-                        description: 'monthly'
+                        description: ''
                         amount: 1100
             
                     # Meteor.users.update @_author_id,
@@ -119,6 +147,8 @@ if Meteor.isClient
             )
 
 if Meteor.isServer
-    Meteor.publish 'user_edit_food', (username)->
+    Meteor.publish 'user_food_orders', (username)->
+        
         Docs.find
-            model:'picture'
+            model:'food_order'
+            _author_id: Meteor.userId()

@@ -7,12 +7,13 @@ template(name='user_edit_food')
                     | riverside membership
         .row 
             .sixteen.wide.column
-                .ui.big.green.button.pay_membership
-                    |pay $250 for membership
-                each transactions
+                .ui.big.green.button.buy_ethel_tiffen
+                    |pay $11 for an Ethel tiffen
+                .ui.big.green.button.buy_nicole_tiffen
+                    |pay $11 for a nicole tiffen
+                each food_orders
                     .ui.segment
-                        a.ui.header(href="/transaction/#{_id}/view") #{when}
-                        |#{amount} amount
+                        a.ui.header(href="/m/food_order/#{_id}/view") #{when}
                         if charge 
                             .ui.header charge
                         |#{charge.result.id}
