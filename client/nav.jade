@@ -39,7 +39,7 @@ template(name='nav')
                 .icon.item
                     i.large.code.icon
             // if currentUser
-            // a.large.item.profile_sidebar(class="{{isActiveRoute 'user_dashboard'}}")
+            // a.large.item.toggle_rightbar(class="{{isActiveRoute 'user_dashboard'}}")
             a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                 //- i.large.user.large.icon
                 if currentUser.profile_image_id
@@ -64,52 +64,55 @@ template(name='nav')
             //         +icon name='login-rounded-right'
             //         // i.large.chevron.right.icon
     if session_is 'viewing_alerts'
-        +top_sidebar
+        +topbar
 
 
 
-template(name='top_sidebar')
+template(name='topbar')
     .ui.inverted.fluid.large.attached.menu(style="background-color:#{currentUser.theme_color};")
         .item.header notifications
+        .ui.list
+            each recent_alerts
+                .item #{description} #{author.name}
         .spacer
         .spacer
-        a.ui.button(href="/inbox")
+        a.ui.tertiary.button.item(href="/inbox")
             i.inbox.icon
             |inbox
             
             
 template(name='right_sidebar')
     .ui.right.sidebar.inverted.vertical.large.borderless.menu(style="background-color:#{currentUser.theme_color};")
-        a.item.profile_sidebar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
             img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             |profile
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
             | dashboard
             i.dashboard.icon
         
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
             | about
             i.info.icon
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
             | received
             i.chevron.down.icon
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
             | sent
             i.chevron.up.icon
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
             | events
             i.calendar.icon
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
             | requests
             i.concierge.bell.icon
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/offers" class="{{isActivePath 'user_offers'}}" title="#{user.username} requests")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActivePath 'user_offers'}}" title="#{user.username} requests")
             | offers
             i.hand.holding.heart.icon
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
             | chat
             i.chat.icon
         .ui.divider
-        a.item.profile_sidebar(href="/user/#{currentUser.username}/edit" title='edit your account')
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/edit" title='edit your account')
             i.cog.large.icon
             |settings
 

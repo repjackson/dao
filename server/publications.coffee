@@ -37,6 +37,14 @@ Meteor.publish 'current_doc', (doc_id)->
 
 
 
+Meteor.publish 'my_received_messages', ->
+    Docs.find 
+        model:'message'
+        recipient_id:Meteor.userId()
+Meteor.publish 'my_sent_messages', ->
+    Docs.find 
+        model:'message'
+        _author_id:Meteor.userId()
 
 Meteor.publish 'alerts', ->
     Docs.find

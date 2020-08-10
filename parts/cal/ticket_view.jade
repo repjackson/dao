@@ -3,10 +3,10 @@ template(name='ticket_view')
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
-                    if is_admin
-                        .ui.button.delete_item
-                            |delete
+                    if can_edit
+                        .ui.button.cancel_reservation
                             i.large.remove.icon
+                            |cancel reservation
                 .eight.wide.column
                     .ui.header
                         i.ticket.icon

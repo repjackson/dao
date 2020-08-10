@@ -27,17 +27,6 @@ Template.nav.onRendered ->
             })
             .sidebar('attach events', '.toggle_rightbar')
     , 1000
-    # Meteor.setTimeout ->
-    #     $('.ui.top.sidebar')
-    #         .sidebar({
-    #             context: $('.bottom.segment')
-    #             transition:'overlay'
-    #             exclusive:true
-    #             duration:250
-    #             scrollLock:true
-    #         })
-    #         .sidebar('attach events', '.toggle_top_sidebar')
-    # , 1000
 
 Template.right_sidebar.events
     'click .logout': ->
@@ -130,6 +119,16 @@ Template.nav.events
         Meteor.call 'calc_user_points', Meteor.userId()
         
         
+Template.topbar.onCreated ->
+    @autorun => Meteor.subscribe 'my_received_messages'
+    @autorun => Meteor.subscribe 'my_sent_messages'
+
+Template.topbar.helpers
+    recent_alerts: ->
+        Docs.find 
+            model:'message'
+            recipient_id:Meteor.userId()
+        , srot:_timestamp:-1
 Template.left_sidebar.events
     # 'click .toggle_sidebar': ->
     #     $('.ui.sidebar')

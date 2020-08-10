@@ -61,20 +61,20 @@ if Meteor.isClient
             t.$('.new_element').val(element)
     
     
-        'click .result': (e,t)->
-            Meteor.call 'log_term', @title, ->
-            selected_tags.push @title
-            $('#search').val('')
-            Meteor.call 'call_wiki', @title, ->
-            Meteor.call 'calc_term', @title, ->
-            Meteor.call 'omega', @title, ->
-            Session.set('current_query', '')
-            Session.set('searching', false)
+        # 'click .result': (e,t)->
+        #     Meteor.call 'log_term', @title, ->
+        #     selected_tags.push @title
+        #     $('#search').val('')
+        #     Meteor.call 'call_wiki', @title, ->
+        #     Meteor.call 'calc_term', @title, ->
+        #     Meteor.call 'omega', @title, ->
+        #     Session.set('current_query', '')
+        #     Session.set('searching', false)
     
-            Meteor.call 'search_reddit', selected_tags.array(), ->
-            # Meteor.setTimeout ->
-            #     Session.set('dummy', !Session.get('dummy'))
-            # , 7000
+        #     Meteor.call 'search_reddit', selected_tags.array(), ->
+        #     # Meteor.setTimeout ->
+        #     #     Session.set('dummy', !Session.get('dummy'))
+        #     # , 7000
 
     
         'blur .edit_description': (e,t)->
@@ -89,11 +89,6 @@ if Meteor.isClient
                 $set:"#{@key}":val
     
     
-        'blur .point_amount': (e,t)->
-            # console.log @
-            val = parseInt t.$('.point_amount').val()
-            Docs.update Router.current().params.doc_id,
-                $set:amount:val
 
 
 if Meteor.isClient
@@ -145,15 +140,12 @@ if Meteor.isServer
         send_message: (message_id)->
             message = Docs.findOne message_id
             recipient = Meteor.users.findOne message.recipient_id
-            messageer = Meteor.users.findOne message._author_id
+            sender = Meteor.users.findOne message._author_id
 
             console.log 'sending message', message
-            Meteor.users.update recipient._id,
+            Meteor.users.update sender._id,
                 $inc:
-                    points: message.amount
-            Meteor.users.update messageer._id,
-                $inc:
-                    points: -message.amount
+                    unread_message_count:1
             Docs.update message_id,
                 $set:
                     submitted:true

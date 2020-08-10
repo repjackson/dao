@@ -134,12 +134,12 @@ template(name='event_view')
                     if currentUser
                         .spacer
                         .spacer
-                        .ui.dividing.header 
+                        .ui.dividing.header
                             // +icolor name='activity-history' cl='ui inline image'
                             |#{event_tickets.count} spots reserved
                         .ui.large.link.selection.list
                             each event_tickets
-                                a.ui.item(href="/ticket/#{_id}/view") 
+                                a.ui.item(href="/m/ticket/#{_id}/view") 
                                     .content
                                         .header
                                             if is_usd
@@ -152,8 +152,6 @@ template(name='event_view')
                                         // if can_edit 
                                         //     i.
                                         //     +icolor name='return-purchase' cl='ui mini inline image return pointer'
-                                        if is_dev
-                                            +remove_button
                         +attendance
     .ui.modal
         i.close.icon

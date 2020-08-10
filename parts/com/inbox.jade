@@ -1,2 +1,22 @@
 template(name='inbox')
-    .ui.header inbox
+    .ui.padded.stackable.grid 
+        .row
+            .four.wide.column
+                .ui.header inbox
+            .twelve.wide.column
+                .ui.header sent messages
+                .ui.list
+                    each my_sent_messages
+                        a.item(href="/m/message/#{_id}/view")
+                            .content
+                                .header
+                                    |#{when} #{recipient.name}
+                                |#{description}
+                .ui.header received messages
+                .ui.list
+                    each my_received_messages
+                        a.item(href="/m/message/#{_id}/view") #{when} #{author.name}
+                            .content
+                                .header
+                                    |#{when} #{recipient.name}
+                                |#{description}

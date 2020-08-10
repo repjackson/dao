@@ -5,7 +5,9 @@ if Meteor.isClient
         ), name:'inbox'
 
     Template.inbox.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'offer', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_model_docs', 'messge', Router.current().params.username
+        @autorun => Meteor.subscribe 'my_received_messages'
+        @autorun => Meteor.subscribe 'my_sent_messages'
         # @autorun => Meteor.subscribe 'inbox', Router.current().params.username
         @autorun => Meteor.subscribe 'model_docs', 'stat'
 
@@ -23,11 +25,20 @@ if Meteor.isClient
 
 
     Template.inbox.helpers
-        offers: ->
+        my_received_messages: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
-                model:'offer'
-                _author_id: current_user._id
+                model:'message'
+                _author_id: Meteor.userId()
+                # target_user_id: target_user._id
+            },
+                sort:_timestamp:-1
+
+        my_sent_messages: ->
+            current_user = Meteor.users.findOne(username:Router.current().params.username)
+            Docs.find {
+                model:'message'
+                recipient_id: Meteor.userId()
                 # target_user_id: target_user._id
             },
                 sort:_timestamp:-1

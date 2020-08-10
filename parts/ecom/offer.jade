@@ -65,13 +65,8 @@ template(name='offer_view')
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.name}
                     .ui.header #{when}
-                    // .ui.header
-                    //     i.certificate.icon
-                    //     |required badges
-                    // .ui.header
-                    //     i.users.icon
-                    //     |audience
                     +array_view key='location_tags' label='location_tags' direct=true
+                    +boolean_view key='approval_required' label='approval required' icon='shield' direct=true
                     div
                     +voting_full
                 .six.wide.column
@@ -177,8 +172,7 @@ template(name='offer_edit')
                 .sixteen.wide.column
                     a.ui.green.icon.button(href="/m/offer/#{_id}/view" title='save')
                         i.checkmark.big.icon
-                    .ui.inline.header 
-                        i.hand.holding.heart.icon
+                    .ui.inline.large.header 
                         small edit offer
                         |#{title}
                     i.large.remove.link.circular.icon.delete_offer(title='delete offer')
@@ -188,6 +182,7 @@ template(name='offer_edit')
                         small author
                         |#{_author.username}
                     +text_edit key='title' icon='header' direct=true
+                    +boolean_edit key='approval_required' label='approval required' icon='shield' direct=true
                 .six.wide.column
                     div
                     +html_edit key='description' label='description' direct=true

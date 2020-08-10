@@ -14,7 +14,6 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'product_from_message_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'all_users'
         
     Template.message_view.onRendered ->
 

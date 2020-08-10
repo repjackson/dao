@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/ticket/:doc_id/view', (->
-        @layout 'layout'
-        @render 'ticket_view'
-        ), name:'ticket_view'
-
     Template.registerHelper 'ticket_event', () ->
         Docs.findOne @event_id
 
@@ -17,6 +12,33 @@ if Meteor.isClient
         
     Template.ticket_view.onRendered ->
 
+    Template.ticket_view.events
+        'click .cancel_reservation': ->
+            event = @
+            # Swal.fire({
+            #     title: "cancel reservation?"
+            #     # text: "cannot be undone"
+            #     icon: 'question'
+            #     confirmButtonText: 'confirm cancelation'
+            #     confirmButtonColor: 'red'
+            #     showCancelButton: true
+            #     cancelButtonText: 'return'
+            #     reverseButtons: true
+            # }).then((result)=>
+            #     if result.value
+            #         console.log @
+            #             Meteor.call 'remove_reservation', @_id, =>
+            #                 Swal.fire(
+            #                     position: 'top-end',
+            #                     icon: 'success',
+            #                     title: 'reservation removed',
+            #                     showConfirmButton: false,
+            #                     timer: 1500
+            #                 )
+            #                 Router.go "/event/#{event}/view"
+            #         )
+            # )_
+
 
 
 if Meteor.isServer
@@ -24,3 +46,8 @@ if Meteor.isServer
         ticket = Docs.findOne ticket_id
         Docs.find 
             _id:ticket.event_id
+            
+            
+    Meteor.methods
+        remove_reservation: (doc_id)->
+            Docs.remove doc_id
