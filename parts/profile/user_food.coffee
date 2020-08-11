@@ -1,18 +1,18 @@
 if Meteor.isClient
-    Router.route '/user/:username/genekeys', (->
+    Router.route '/user/:username/food', (->
         @layout 'profile_layout'
-        @render 'user_genekeys'
-        ), name:'user_genekeys'
+        @render 'user_food'
+        ), name:'user_food'
     
-    Template.user_genekeys.onCreated ->
+    Template.user_food.onCreated ->
         @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'thought'
 
 
-    Template.user_genekeys.onCreated ->
-        @autorun => Meteor.subscribe 'user_genekeys', Router.current().params.username
-        @autorun => Meteor.subscribe 'model_docs', 'message'
+    Template.user_food.onCreated ->
+        # @autorun => Meteor.subscribe 'user_food', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_model_docs', 'food_order', Router.current().params.username
 
-    Template.user_genekeys.events
+    Template.user_food.events
         'keyup .new_public_message': (e,t)->
             if e.which is 13
                 val = $('.new_public_message').val()
@@ -62,33 +62,24 @@ if Meteor.isClient
 
 
 
-    Template.user_genekeys.helpers
-        user_public_genekeys: ->
-            target_user = Meteor.users.findOne(username:Router.current().params.username)
+    Template.user_food.helpers
+        food_orders: ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find
-                model:'message'
-                target_user_id: target_user._id
-                is_private:false
-
-        user_private_genekeys: ->
-            target_user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.find
-                model:'message'
-                target_user_id: target_user._id
-                is_private:true
-                _author_id:Meteor.userId()
+                model:'food_order'
+                # _author_id:user._id
 
 
 
 if Meteor.isServer
-    Meteor.publish 'user_public_genekeys', (username)->
+    Meteor.publish 'user_public_food', (username)->
         target_user = Meteor.users.findOne(username:Router.current().params.username)
         Docs.find
             model:'message'
             target_user_id: target_user._id
             is_private:false
 
-    Meteor.publish 'user_private_genekeys', (username)->
+    Meteor.publish 'user_private_food', (username)->
         target_user = Meteor.users.findOne(username:Router.current().params.username)
         Docs.find
             model:'message'

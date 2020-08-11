@@ -88,38 +88,38 @@ template(name='right_sidebar')
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}" title="#{user.username} dashboard")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActivePath 'user_dashboard'}}")
             | dashboard
             i.dashboard.icon
         
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}" title="#{user.username} info")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}")
             | about
             i.info.icon
-        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}" title="#{user.username} credits")
+        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}")
         //     | received
         //     i.chevron.down.icon
-        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}" title="#{user.username} sent")
+        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}")
         //     | sent
         //     i.chevron.up.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}" title="#{user.username} events")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}")
             | events
             i.calendar.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}" title="#{user.username} requests")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActivePath 'user_requests'}}")
             | requests
             i.concierge.bell.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/food" class="{{isActivePath 'user_food'}}" title="#{user.username} food")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/food" class="{{isActivePath 'user_food'}}")
             | food
             i.food.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActivePath 'user_orders'}}" title="#{user.username} orders")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActivePath 'user_orders'}}")
             | orders
             i.cart.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/delivery" class="{{isActivePath 'user_delivery'}}" title="#{user.username} delievery")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/delivery" class="{{isActivePath 'user_delivery'}}")
             | delivery
             i.truck.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActivePath 'user_offers'}}" title="#{user.username} requests")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActivePath 'user_offers'}}")
             | offers
             i.hand.holding.heart.icon
-        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}")
         //     | chat
         //     i.chat.icon
         .ui.divider
@@ -127,7 +127,7 @@ template(name='right_sidebar')
             i.cog.large.icon
             |settings
 
-        a.item.logout(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+        a.item.logout(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" )
             |logout
             if is_logging_out
                 i.refresh.loading.icon

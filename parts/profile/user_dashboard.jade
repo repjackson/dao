@@ -53,26 +53,28 @@ template(name='user_dashboard')
                 |requests
             .medscroll
                 each user_requests
-                    .ui.segment
+                    .ui.card
                         if image_id
                             img.ui.image(src="{{c.url image_id height=100 width=200}}")
-                        a.header(href="/request/#{_id}/view")
-                            |#{point_bounty}pts: #{title}
-                        |!{description}
-                        |status: #{status}
-                        if complete 
-                            |completed by #{completer.name}
+                        .content
+                            a.header(href="/request/#{_id}/view")
+                                |#{point_bounty}pts: #{title}
+                            // |!{description}
+                            |status: #{status}
+                            if complete 
+                                |completed by #{completer.name}
         .column
             .ui.header 
                 i.calendar.icon
                 |events
             .medscroll
                 each user_event_tickets
-                    .ui.segment
+                    .ui.card
                         if ticket_event.image_id
                             img.ui.fluid.image(src="{{c.url ticket_event.image_id height=100 width=200}}")
-                        a.header(href="/event/#{event_id}/view")
-                            |#{ticket_event.title}
-                        |#{_author.shortname}
-                        |#{description}
-                        |#{when}
+                        .content
+                            a.header(href="/event/#{event_id}/view")
+                                |#{ticket_event.title}
+                            |#{fac.shortname}
+                            |#{description}
+                            |{{med_date date}}

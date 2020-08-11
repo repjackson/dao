@@ -1,18 +1,18 @@
 if Meteor.isClient
-    Router.route '/user/:username/food', (->
+    Router.route '/user/:username/genekeys', (->
         @layout 'profile_layout'
-        @render 'user_food'
-        ), name:'user_food'
+        @render 'user_genekeys'
+        ), name:'user_genekeys'
     
-    Template.user_food.onCreated ->
+    Template.user_genekeys.onCreated ->
         @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'thought'
 
 
-    Template.user_food.onCreated ->
-        @autorun => Meteor.subscribe 'user_food', Router.current().params.username
+    Template.user_genekeys.onCreated ->
+        @autorun => Meteor.subscribe 'user_genekeys', Router.current().params.username
         @autorun => Meteor.subscribe 'model_docs', 'message'
 
-    Template.user_food.events
+    Template.user_genekeys.events
         'keyup .new_public_message': (e,t)->
             if e.which is 13
                 val = $('.new_public_message').val()
@@ -62,15 +62,15 @@ if Meteor.isClient
 
 
 
-    Template.user_food.helpers
-        user_public_food: ->
+    Template.user_genekeys.helpers
+        user_public_genekeys: ->
             target_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find
                 model:'message'
                 target_user_id: target_user._id
                 is_private:false
 
-        user_private_food: ->
+        user_private_genekeys: ->
             target_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find
                 model:'message'
@@ -81,14 +81,14 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'user_public_food', (username)->
+    Meteor.publish 'user_public_genekeys', (username)->
         target_user = Meteor.users.findOne(username:Router.current().params.username)
         Docs.find
             model:'message'
             target_user_id: target_user._id
             is_private:false
 
-    Meteor.publish 'user_private_food', (username)->
+    Meteor.publish 'user_private_genekeys', (username)->
         target_user = Meteor.users.findOne(username:Router.current().params.username)
         Docs.find
             model:'message'

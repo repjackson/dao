@@ -92,30 +92,32 @@ template(name='offer_view')
                             +boolean_view key='is_rentable_hourly' label='rentable hourly' direct=true
                             if is_rentable_hourly
                                 +number_view key='rentable_hourly_usd' label='rentable hourly $' direct=true
-                                +number_view key='rentable_hourly_points' label='rentable hourly $' direct=true
+                                +number_view key='rentable_hourly_points' label='rentable hourly points' direct=true
                                 .ui.disabled.green.button.buy_for_points
                                     i.cart.large.icon
-                                    |buy for #{sale_point_price}pts
+                                    |rent for #{rentable_hourly_points}pts
                             +boolean_view key='is_rentable_daily' label='rentable daily' direct=true
                             if is_rentable_daily
-                                +number_view key='rentable_daily_usd' label='daily $' direct=true
-                                .ui.disabled.green.button.buy_for_points
-                                    i.cart.large.icon
-                                    |buy for #{sale_point_price}pts
+                                if rentable_daily_usd
+                                    +number_view key='rentable_daily_usd' label='daily $' direct=true
+                                    .ui.disabled.green.button.buy_for_points
+                                        i.cart.large.icon
+                                        |rent for $#{rentable_hourly_points}
                                 +number_view key='rentable_daily_points' label='daily points' direct=true
                                 .ui.disabled.green.button.buy_for_points
                                     i.cart.large.icon
-                                    |buy for #{sale_point_price}pts
+                                    |rent for #{rentable_daily_points}pts
                             +boolean_view key='is_rentable_weekly' label='rentable weekly' direct=true
                             if is_rentable_weekly
-                                +number_view key='rentable_weekly_usd' label='weekly $' direct=true
-                                .ui.disabled.green.button.buy_for_points
-                                    i.cart.large.icon
-                                    |buy for #{sale_point_price}pts
+                                if rentable_weekly_usd
+                                    +number_view key='rentable_weekly_usd' label='weekly $' direct=true
+                                    .ui.disabled.green.button.buy_for_points
+                                        i.cart.large.icon
+                                        |buy for #{sale_point_price}pts
                                 +number_view key='rentable_weekly_points' label='weekly points' direct=true
                                 .ui.disabled.green.button.buy_for_points
                                     i.cart.large.icon
-                                    |buy for #{sale_point_price}pts
+                                    |rent for #{rentable_weekly_points}pts
                             +boolean_view key='is_rentable_monthly' label='rentable monthly' direct=true
                             if is_rentable_monthly
                                 +number_view key='rentable_monthly_usd' label='monthly $' direct=true
@@ -202,7 +204,7 @@ template(name='offer_edit')
                             +boolean_edit key='is_rentable_hourly' label='rentable hourly' direct=true
                             if is_rentable_hourly
                                 +number_edit key='rentable_hourly_usd' label='rentable hourly $' direct=true
-                                +number_edit key='rentable_hourly_points' label='rentable hourly $' direct=true
+                                +number_edit key='rentable_hourly_points' label='rentable hourly points' direct=true
                             +boolean_edit key='is_rentable_daily' label='rentable daily' direct=true
                             if is_rentable_daily
                                 +number_edit key='rentable_daily_usd' label='daily $' direct=true
@@ -224,6 +226,6 @@ template(name='offer_edit')
                                 +number_edit key='sale_usd_price' label='for sale $ price' direct=true
                             +boolean_edit key='is_for_sale_points' label='for sale points' direct=true
                             if is_for_sale_points
-                                +number_edit key='sale_point_price' label='for sale usd price' direct=true
+                                +number_edit key='sale_point_price' label='for sale pointsS' direct=true
                     
                     

@@ -2,6 +2,13 @@ Meteor.publish 'user_from_username', (username)->
     # console.log 'pulling doc'
     Meteor.users.find
         username:username
+        
+Meteor.publish 'user_model_docs', (model,username)->
+    # console.log 'pulling doc'
+    user = Meteor.users.findOne username:username
+    Docs.find
+        model:model
+        _author_id:user._id
 
 Meteor.publish 'recipient_from_gift_id', (gift_id)->
     # console.log 'pulling doc'

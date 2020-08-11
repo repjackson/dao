@@ -15,15 +15,16 @@ if Meteor.isClient
 
     Template.profile_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
-        @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
-        @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
-        @autorun -> Meteor.subscribe 'all_users'
     
     Template.profile_layout.onRendered ->
         # Meteor.setTimeout ->
         #     $('.profile_nav_item')
         #         .popup()
         # , 1000
+        user = Meteor.users.findOne(username:Router.current().params.username)
+        # Meteor.call 'calc_user_stats', user._id, ->
+        if user
+            Meteor.call 'recalc_one_stats', user._id, ->
 
 
     Template.profile_layout.helpers
