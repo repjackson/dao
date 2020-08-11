@@ -14,15 +14,16 @@ Docs.allow
         if user.roles and 'admin' in user.roles
             true
         else
-            user_id
-            # user_id is doc._author_id
+            # user_id
+            user_id is doc._author_id
     remove: (user_id, doc) ->
         user = Meteor.users.findOne user_id
         if user.roles and 'admin' in user.roles
             true
         else
             user_id is doc._author_id
-# Facts.setUserIdFilter(()->true);
+
+
 Meteor.users.allow
     insert: (user_id, doc, fields, modifier) ->
         # user_id
@@ -30,12 +31,15 @@ Meteor.users.allow
         # if user_id and doc._id == user_id
         #     true
     update: (user_id, doc, fields, modifier) ->
-        user_id
-        # if user_id and doc._id == user_id
-        #     true
+        user = Meteor.users.findOne user_id
+        if user_id and 'dev' in user.roles
+            true
+        else
+            if user_id and doc._id == user_id
+                true
     remove: (user_id, doc, fields, modifier) ->
         user = Meteor.users.findOne user_id
-        if user_id and 'admin' in user.roles
+        if user_id and 'dev' in user.roles
             true
         # if userId and doc._id == userId
         #     true

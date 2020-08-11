@@ -43,7 +43,7 @@ if Meteor.isClient
                 # amount = parseInt(Session.get('topup_amount'))
                 # product = Docs.findOne Router.current().params.doc_id
                 charge =
-                    amount: 11
+                    amount: 1100
                     currency: 'usd'
                     source: token.id
                     description: token.description
@@ -145,6 +145,15 @@ if Meteor.isClient
                     #     'success'
                     # )
             )
+
+
+    Template.food_order.events
+        'click submit_order': ->
+            console.log 'hi'
+            if confirm 'submit?'
+                Docs.update @_id, 
+                    $set:submitted
+
 
 if Meteor.isServer
     Meteor.publish 'user_food_orders', (username)->

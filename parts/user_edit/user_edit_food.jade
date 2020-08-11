@@ -3,28 +3,44 @@ template(name='user_edit_food')
         .row 
             .sixteen.wide.column
                 .ui.header
-                    i.id.badge.outline.icon
-                    | riverside membership
+                    i.food.icon
+                    | food
         .row 
             .sixteen.wide.column
+                +array_edit key='allergens' label='allergens' direct=true
+                +array_edit key='food_likes' label='food likes' direct=true
+                +array_edit key='food_dislikes' label='food dislikes' direct=true
+                div
                 .ui.big.green.button.buy_ethel_tiffen
                     |pay $11 for an Ethel tiffen
                 .ui.big.green.button.buy_nicole_tiffen
-                    |pay $11 for a nicole tiffen
+                    |pay $11 for a Nicole tiffen
                 each food_orders
-                    .ui.segment
-                        a.ui.header(href="/m/food_order/#{_id}/view") #{when}
-                        if charge 
-                            .ui.header charge
-                        |#{charge.result.id}
-                        .ui.header $#{charge.result.amount}
-                        if is_admin
-                            +remove_button
-                            +print_this
-                // +user_edit_finance
-                if is_admin
-                    .ui.header
-                        i.shield.icon
-                        |admin
-                    +array_edit key='levels' label='levels' direct=true
-                    +array_edit key='roles' label='roles' direct=true
+                    +food_order
+
+
+
+template(name='food_order')
+    .ui.segment
+        a.ui.header(href="/m/food_order/#{_id}/view") #{when}
+        if charge 
+            .ui.header charge
+        if is_dev
+            |#{charge.result.id}
+        .ui.header $#{charge.result.amount}
+        if can_edit 
+            unless submitted
+                +date_edit key='date' label='date' direct=true
+                +text_edit key='notes' label='notes' direct=true
+                +key_value_edit key='tiffen_type' value='meat' direct=true
+                +key_value_edit key='tiffen_type' value='veggie' direct=true
+                .ui.green.button.submit_order
+                    |submit order
+            else
+                +date_view key='date' label='date' direct=true
+                +text_view key='notes' label='notes' direct=true
+                +key_value_view key='tiffen_type' value='meat' direct=true
+                +key_value_view key='tiffen_type' value='veggie' direct=true
+        if is_dev
+            +remove_button
+            +print_this

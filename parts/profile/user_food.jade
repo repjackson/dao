@@ -2,12 +2,18 @@ template(name='user_food')
     .ui.header 
         +icolor name='food'
         |user food
+    if is_current_user
+        a.ui.circular.basic.button(href="/user/#{current_user.username}/edit/food")
+            i.pencil.icon
     with current_user
         .ui.stackable.three.column.grid
             .column
                 each food_orders
                     .ui.header #{when}
-        |!{food_report}
+        +array_view key='allergens' label='allergens'
+        +array_view key='food_likes' label='food likes'
+        +array_view key='food_dislikes' label='food dilikes'
+
 
 
 

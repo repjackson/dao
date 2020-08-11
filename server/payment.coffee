@@ -141,7 +141,7 @@ Meteor.methods
             Docs.insert
                 model:'food_order'
                 transaction_type:'1 tiffen'
-                amount:1100
+                amount:11
                 charge: new_charge
         
     buy_product: (charge) ->
