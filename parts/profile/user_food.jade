@@ -3,7 +3,7 @@ template(name='user_food')
         +icolor name='food'
         |user food
     if is_current_user
-        a.ui.circular.basic.button(href="/user/#{current_user.username}/edit/food")
+        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/food")
             i.pencil.icon
     with current_user
         .ui.stackable.three.column.grid

@@ -1,0 +1,23 @@
+template(name='user_delivery')
+    .ui.inline.header 
+        +icolor name='delivery'
+        |user delivery
+    if is_current_user
+        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/delivery")
+            i.pencil.icon
+            |edit delivery settings
+    div
+    .ui.large.label available to deliver
+        if available_for_delivery
+            i.large.green.checkmark.icon
+        else
+            i.large.green.checkmark.icon
+    with current_user
+        .ui.stackable.three.column.grid
+            .column
+                each delivery_orders
+                    .ui.header #{when}
+
+
+
+

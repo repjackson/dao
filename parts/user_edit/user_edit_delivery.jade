@@ -1,0 +1,50 @@
+template(name='user_edit_delivery')
+    .ui.padded.stackable.grid 
+        .row 
+            .sixteen.wide.column
+                .ui.header
+                    i.truck.icon
+                    | delivery settings
+                .ui.small.header
+                    |deliveries are a $5 minimum (split between the org and driver) with a suggested $5 tip (all going to the driver)
+        .row 
+            .sixteen.wide.column
+                .ui.header home address
+                .ui.small.header will only be shown to deliveries to your address and to match you to deliveries nearby
+                +text_edit key='address' direct=true
+                +text_edit key='city' direct=true
+                +number_edit key='zipcode' direct=true
+                +array_edit key='location_tags' label='location tags' direct=true
+                +multi_user_edit key='approved_drivers' label='approved drivers to your address' direct=true
+                // +address_edit key='home_address'
+                .ui.header driver settings
+                +boolean_edit key='available_for_delivery' label='available for delivery' direct=true
+                if available_for_delivery
+                    +array_edit key='prefered_zipcodes' label='prefered zipcodes' direct=true
+                each deliveries
+                    +delivery
+
+template(name='delivery')
+    .ui.segment
+        a.ui.header(href="/m/delivery_order/#{_id}/view") #{when}
+        if charge 
+            .ui.header charge
+        if is_dev
+            |#{charge.result.id}
+        .ui.header $#{charge.result.amount}
+        if can_edit 
+            unless submitted
+                +date_edit key='date' label='date' direct=true
+                +text_edit key='notes' label='notes' direct=true
+                +key_value_edit key='tiffen_type' value='meat' direct=true
+                +key_value_edit key='tiffen_type' value='veggie' direct=true
+                .ui.green.button.submit_order
+                    |submit order
+            else
+                +date_view key='date' label='date' direct=true
+                +text_view key='notes' label='notes' direct=true
+                +key_value_view key='tiffen_type' value='meat' direct=true
+                +key_value_view key='tiffen_type' value='veggie' direct=true
+        if is_dev
+            +remove_button
+            +print_this

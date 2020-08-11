@@ -138,6 +138,44 @@ template(name='price_view')
 
 
 
+template(name='address_edit')
+    div
+    .ui.fluid.input
+        .ui.small.inline.header
+            if icon
+                +icon name=icon
+                //- i.icon(class=icon)
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else
+                |#{key}
+        //- +clear_value                
+        input.edit_address(type='number' value=field_value placeholder=placeholder autocomplete="off")
+            
+            
+template(name='address_view')
+    if field_value
+        div
+        .ui.small.inline.header
+            if icon
+                +icon name=icon
+                //- i.icon(class=icon)
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else if key
+                |#{key}
+            else
+                |#{this}
+        strong &nbsp; #{field_value}
+        .ui.big.green.button.buy_now
+            |buy now
+
+
+
 
 
 
@@ -1056,7 +1094,7 @@ template(name='multi_user_edit')
         else
             |#{this}
     .ui.input
-        input#multi_user_select_input(type='text' placeholder="lookup #{role_filter}..")
+        input#multi_user_select_input(type='text' placeholder="lookup #{role_filter}.." autocomplete='off')
     each selections
         a.ui.large.label(href="/user/#{username}")
             |#{name}
@@ -1064,19 +1102,20 @@ template(name='multi_user_edit')
         .ui.top.attached.segment
             .ui.middle.aligned.selection.animated.list
                 each user_results
-                    .select_user.item
+                    a.select_user.item(href="#")
                         .ui.header
                             img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
-                            strong #{name}
+                            strong #{first_name} #{last_name}
+                            |@#{username}
     +clear_value                
     each field_value
         // |#{this}
         with user_from_id this
-            .ui.header
+            div
+            .ui.inline.header
                 img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
                 |#{name}
-                i.pull_user.remove.link.circular.icon
-
+            i.pull_user.remove.link.circular.icon
 
 template(name='multi_doc_input')
     //- .ui.form

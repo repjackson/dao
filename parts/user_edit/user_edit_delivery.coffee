@@ -1,16 +1,16 @@
 if Meteor.isClient
-    Router.route '/user/:username/edit/food', (->
+    Router.route '/user/:username/edit/delivery', (->
         @layout 'user_edit_layout'
-        @render 'user_edit_food'
-        ), name:'user_edit_food'
+        @render 'user_edit_delivery'
+        ), name:'user_edit_delivery'
 
 
-    Template.user_edit_food.onCreated ->
-        @autorun => Meteor.subscribe 'user_food_orders'
+    Template.user_edit_delivery.onCreated ->
+        @autorun => Meteor.subscribe 'user_delivery_orders'
         # @autorun => Meteor.subscribe 'model_docs', 'picture'
         @autorun => Meteor.subscribe 'model_docs', 'transaction'
 
-    Template.user_edit_food.events
+    Template.user_edit_delivery.events
         'keyup .new_picture': (e,t)->
             if e.which is 13
                 val = $('.new_picture').val()
@@ -23,18 +23,13 @@ if Meteor.isClient
 
 
 
-    Template.user_edit_food.helpers
-        food_orders: ->
+    Template.user_edit_delivery.helpers
+        delivery_orders: ->
             Docs.find
-                model:'food_order'
+                model:'delivery_order'
 
-    Template.food_order.events
-        'click .submit_order': ->
-            if confirm 'submit?'
-                Docs.update @_id, 
-                    $set:submitted:true
 
-    Template.user_edit_food.onCreated ->
+    Template.user_edit_delivery.onCreated ->
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
         else if Meteor.isProduction
@@ -53,30 +48,30 @@ if Meteor.isClient
                     source: token.id
                     description: token.description
                     # receipt_email: token.email
-                Meteor.call 'buy_food', charge, (err,res)=>
+                Meteor.call 'buy_delivery', charge, (err,res)=>
                     if err then alert err.reason, 'danger'
                     else
                         console.log 'res', res
                         Swal.fire(
-                            'food purchased',
+                            'delivery purchased',
                             ''
                             'success'
                         # Docs.insert
                         #     model:'transaction'
-                        #     transaction_type:'food'
+                        #     transaction_type:'delivery'
                         #     amount:1100
                         )
         )
 
-    Template.user_edit_food.onRendered ->
+    Template.user_edit_delivery.onRendered ->
 
-    Template.user_edit_food.events
+    Template.user_edit_delivery.events
         'click .buy_ethel_tiffen': ->
             console.log Template.instance()
             # if confirm 'add 5 credits?'
             # Session.set('topup_amount',5)
             # Template.instance().checkout.open
-            #     name: 'Riverside food'
+            #     name: 'Riverside delivery'
             #     # email:Meteor.user().emails[0].address
             #     description: 'monthly'
             #     amount: 250
@@ -86,7 +81,7 @@ if Meteor.isClient
 
 
             Swal.fire({
-                title: 'buy Ethel food?'
+                title: 'buy Ethel delivery?'
                 text: "this will charge you $11"
                 icon: 'question'
                 showCancelButton: true,
@@ -116,7 +111,7 @@ if Meteor.isClient
             # if confirm 'add 5 credits?'
             # Session.set('topup_amount',5)
             # Template.instance().checkout.open
-            #     name: 'Riverside food'
+            #     name: 'Riverside delivery'
             #     # email:Meteor.user().emails[0].address
             #     description: 'monthly'
             #     amount: 250
@@ -126,7 +121,7 @@ if Meteor.isClient
 
 
             Swal.fire({
-                title: 'buy food?'
+                title: 'buy delivery?'
                 text: "this will charge you $11"
                 icon: 'question'
                 showCancelButton: true,
@@ -152,10 +147,16 @@ if Meteor.isClient
             )
 
 
+    Template.delivery.events
+        'click submit_order': ->
+            console.log 'hi'
+            if confirm 'submit?'
+                Docs.update @_id, 
+                    $set:submitted:true
 
 
 if Meteor.isServer
-    Meteor.publish 'user_food_orders', (username)->
+    Meteor.publish 'user_delivery_orders', (username)->
         Docs.find
-            model:'food_order'
+            model:'delivery_order'
             _author_id: Meteor.userId()

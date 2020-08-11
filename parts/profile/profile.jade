@@ -99,11 +99,14 @@ template(name='profile_layout')
                             i.large.chevron.down.icon
                             span credits
                         a.ui.large.compact.basic.button.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
-                            i.large.red.gift.icon
+                            i.large.gift.icon
                             span sent
                         a.ui.large.compact.basic.button.profile_nav_item(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
                             i.calendar.large.icon
                             span events
+                        a.ui.large.compact.basic.button.profile_nav_item(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} delivery")
+                            i.large.truck.icon
+                            span delivery
                         a.ui.large.compact.basic.button.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
                             i.large.concierge.bell.icon
                             span requests
@@ -120,7 +123,7 @@ template(name='profile_layout')
                         //     i.certificate.large.icon
                         //     span.mobile.hidden badges
                         a.ui.large.compact.basic.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
-                            +icolor name='dna-helix' cl='ui avatar image'
+                            i.large.dna.icon
                             span.mobile.hidden genekeys
                         .spacer
                         .spacer

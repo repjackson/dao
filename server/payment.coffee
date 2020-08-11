@@ -109,13 +109,15 @@ Meteor.methods
                 charge: new_charge
             Meteor.users.update Meteor.userId(),
                 $inc: points:500
+    
+    
     buy_food: (charge) ->
         console.log 'charge', charge
         # console.log 'user', user
         if Meteor.isDevelopment
             Stripe = StripeAPI(Meteor.settings.private.stripe_test_secret)
         else
-            Stripe = StripeAPI(Meteor.settings.private.stripe_live_secret)
+            Stripe = StripeAPI(Meteor.settings.private.stripe_dao_live_secret)
         charge_card = new Future
         # fee_addition = 0
         # if account.profile.isJGFeesApply

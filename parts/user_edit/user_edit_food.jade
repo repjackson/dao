@@ -39,8 +39,9 @@ template(name='food_order')
             else
                 +date_view key='date' label='date' direct=true
                 +text_view key='notes' label='notes' direct=true
-                +key_value_view key='tiffen_type' value='meat' direct=true
-                +key_value_view key='tiffen_type' value='veggie' direct=true
+                .ui.large.label
+                    |tiffen type: #{tiffen_type}
+                +boolean_edit key='delivery' label='add delivery' direct=true                    
         if is_dev
             +remove_button
             +print_this

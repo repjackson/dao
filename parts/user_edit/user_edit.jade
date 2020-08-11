@@ -12,7 +12,7 @@ template(name='user_edit_layout')
                                 i.big.cog.icon(style="color:#{current_user.theme_color};")
                                 | #{current_user.name}
                             .ui.small.inline.header @#{current_user.username}
-                            img.ui.centered.small.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
                                 
                             a.ui.big.green.circular.button(href="/user/#{current_user.username}/") 
                                 i.checkmark.big.icon
@@ -24,28 +24,28 @@ template(name='user_edit_layout')
                                 i.info.large.blue.icon 
                                 |info
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/food" class="{{isActiveRoute 'user_edit_food'}}") 
-                                i.food.icon 
+                                i.food.large.icon 
                                 |food
-                            // a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/levels" class="{{isActiveRoute 'user_edit_alerts'}}") 
-                            //     i.shield.icon 
-                            //     |levels
+                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/delivery" class="{{isActiveRoute 'user_edit_delivery'}}") 
+                                i.truck.large.icon 
+                                |delivery
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
-                                i.bell.yellow.icon 
+                                i.bell.yellow.large.icon 
                                 |alerts
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/style" class="{{isActiveRoute 'user_edit_style'}}") 
-                                i.paint.brush.icon 
+                                i.paint.brush.large.icon 
                                 |style
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
-                                i.dna.icon 
+                                i.dna.large.icon 
                                 |genekeys
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
-                                i.lock.privacy.icon 
+                                i.lock.privacy.large.icon 
                                 | privacy
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
-                                i.certificate.icon
+                                i.certificate.large.icon
                                 |badges
                             a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
-                                i.shield.icon 
+                                i.shield.large.icon
                                 | membership
                         .twelve.wide.column
                             +yield

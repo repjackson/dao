@@ -18,7 +18,7 @@ Template.registerHelper 'current_user', () ->
     Meteor.users.findOne username:Router.current().params.username
 
 Template.registerHelper 'user_from_id', (user_id) ->
-    console.log @
+    # console.log @
     Meteor.users.findOne _id:user_id
 
 Template.registerHelper 'is_current_user', () ->
