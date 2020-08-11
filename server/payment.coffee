@@ -145,6 +145,39 @@ Meteor.methods
                 transaction_type:'1 tiffen'
                 amount:11
                 charge: new_charge
+    
+    send_tip: (charge, dollar_debit_id) ->
+        console.log 'charge', charge
+        # console.log 'user', user
+        if Meteor.isDevelopment
+            Stripe = StripeAPI(Meteor.settings.private.stripe_test_secret)
+        else
+            Stripe = StripeAPI(Meteor.settings.private.stripe_dao_live_secret)
+        charge_card = new Future
+        # fee_addition = 0
+        # if account.profile.isJGFeesApply
+        #     fee_addition = Math.round(data.amount * 100 * 0.019 + 70)
+        # else
+        #     fee_addition = Math.round(data.amount * 100 * 0.019 + 30)
+        # #console.log(fee_addition);
+        charge_data =
+            amount: charge.amount
+            currency: 'usd'
+            source: charge.source
+            description: "tip"
+            # destination: account.stripe.stripeId
+        Stripe.charges.create charge_data, (error, result) ->
+            if error
+                charge_card.return error: error
+            else
+                charge_card.return result: result
+            return
+        new_charge = charge_card.wait()
+        console.log new_charge
+        if new_charge
+            Docs.update dollar_debit_id,
+                $set:
+                    charge: new_charge
         
     buy_product: (charge) ->
         console.log 'charge', charge

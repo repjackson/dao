@@ -1,0 +1,204 @@
+template(name='dollar_debit_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .five.wide.column
+                    unless charge
+                        .ui.large.fluid.basic.circular.button.cancel_dollar_debit
+                            i.large.remove.red.icon
+                            |cancel
+                    .ui.segment
+                        .ui.inline.grey.header sender
+                        .ui.inline.header
+                            img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{_author.name}
+                    .ui.segment
+                        .ui.header recipient
+                        with recipient
+                            i.large.remove.link.icon.remove_recipient
+                            a.pointer(href="/user/#{name}")
+                                img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
+                                .ui.inline.header #{name}
+                                .ui.small.grey.inline.header #{points}
+                        unless recipient
+                            .ui.divider
+                            i.large.user.plus.icon
+                            +single_user_edit key='recipient_id' label='search member' direct=true
+                            // .ui.icon.input
+                            //     i.search.icon
+                            //     input.search_username(type='text' placeholder='username')
+                            each members
+                                .ui.compact.basic.circular.button.add_recipient
+                                    // i.plus.icon
+                                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{name}
+                                    small #{points}p
+                    +date_edit key='date' label='date' direct=true   
+                .six.wide.column
+                    +textarea_edit key='description' label='description' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    div
+                    .ui.inline.header
+                        i.tag.red.icon
+                        |tags
+                    .ui.input
+                        input.new_element(type='text' placeholder='+' autocomplete="off")
+                        //- +clear_value                
+                    each tags
+                        .ui.big.basic.circular.label
+                            i.delete.icon.remove_element
+                            |#{this}
+                    +array_edit key='location_tags' label='location_tags' direct=true
+                    if charge
+                        +charge_view
+                .five.wide.center.aligned.column
+                    .ui.big.header $#{dollar_amount}
+                    unless charge
+                        .ui.big.input
+                            input.point_dollar_amount(type='number' value=dollar_amount min='1' max=point_max)
+                        div
+                        +key_value_edit key='dollar_amount' value=1
+                        +key_value_edit key='dollar_amount' value=5
+                        +key_value_edit key='dollar_amount' value=10
+                        +key_value_edit key='dollar_amount' value=25
+                        +key_value_edit key='dollar_amount' value=50
+                        .spacer
+                        .ui.center.aligned.basic.segment
+                            if can_submit
+                                .ui.green.huge.circular.button.submit
+                                    i.big.send.icon
+                                    |send
+                            else 
+                                .ui.green.huge.circular.disabled.button
+                                    i.send.big.icon
+                                    |send
+                    else
+                        .ui.header already charged
+                        a.ui.fluid.basic.button(href="/dollar_debit/#{_id}/view")
+                            |view dollar debit
+
+
+
+template(name='charge_view')
+    if is_dev
+        +print_this
+    with charge
+        with result
+            .ui.list
+                .item id: #{id}
+                .item object: #{object}
+                .item amount: #{amount}
+                .item amount refunded: #{amount_refunded}
+                .item app: #{application}
+                .item app fee: #{application_fee}
+                .item #{application_fee_amount}
+                .item #{balance_transaction}
+                with billing_details
+                    .ui.list
+                        with address
+                            .item #{city}
+                            .item #{country}
+                            .item #{line1}
+                            .item #{line2}
+                            .item #{postal_code}
+                            .item #{state}
+                    .item #{name}
+        //     },
+        //     |#{email": null,
+        //     |#{name": "repjackson@gmail.com",
+        //     |#{phone": null
+        //   },
+        //   |#{calculated_statement_descriptor": "ONE BECOMING ONE",
+        //   |#{captured": true,
+        //   |#{created": 1597175373,
+        //   |#{currency": "usd",
+        //   |#{customer": null,
+        //   |#{description": "tip",
+        //   |#{destination": null,
+        //   |#{dispute": null,
+        //   |#{disputed": false,
+        //   |#{failure_code": null,
+        //   |#{failure_message": null,
+        //   |#{fraud_details": {},
+        //   |#{invoice": null,
+        //   |#{livemode": false,
+        //   |#{metadata": {},
+        //   |#{on_behalf_of": null,
+        //   |#{order": null,
+        //   |#{outcome": {
+        //     |#{network_status": "approved_by_network",
+        //     |#{reason": null,
+        //     |#{risk_level": "normal",
+        //     |#{risk_score": 18,
+        //     |#{seller_message": "Payment complete.",
+        //     |#{type": "authorized"
+        //   },
+        //   |#{paid": true,
+        //   |#{payment_intent": null,
+        //   |#{payment_method": "card_1HF3TSHpDAiUeXWPblQ6WMWO",
+        //   |#{payment_method_details": {
+        //     |#{card": {
+        //       |#{brand": "visa",
+        //       |#{checks": {
+        //         |#{address_line1_check": null,
+        //         |#{address_postal_code_check": null,
+        //         |#{cvc_check": "pass"
+        //       },
+        //       |#{country": "US",
+        //       |#{exp_month": 12,
+        //       |#{exp_year": 2020,
+        //       |#{fingerprint": "IGb3WOy8od8WyHQT",
+        //       |#{funding": "credit",
+        //       |#{installments": null,
+        //       |#{last4": "4242",
+        //       |#{network": "visa",
+        //       |#{three_d_secure": null,
+        //       |#{wallet": null
+        //     },
+        //     |#{type": "card"
+        //   },
+        //   |#{receipt_email": null,
+        //   |#{receipt_number": null,
+        //   |#{receipt_url": "https://pay.stripe.com/receipts/acct_1BvZbqHpDAiUeXWP/ch_1HF3TVHpDAiUeXWPGzpsVhMJ/rcpt_HogrRi9kPmtViOum6uiMTHbx8gEkjyv",
+        //   |#{refunded": false,
+        //   |#{refunds": {
+        //     |#{object": "list",
+        //     |#{data": [],
+        //     |#{has_more": false,
+        //     |#{total_count": 0,
+        //     |#{url": "/v1/charges/ch_1HF3TVHpDAiUeXWPGzpsVhMJ/refunds"
+        //   },
+        //   |#{review": null,
+        //   |#{shipping": null,
+        //   |#{source": {
+        //     |#{id": "card_1HF3TSHpDAiUeXWPblQ6WMWO",
+        //     |#{object": "card",
+        //     |#{address_city": null,
+        //     |#{address_country": null,
+        //     |#{address_line1": null,
+        //     |#{address_line1_check": null,
+        //     |#{address_line2": null,
+        //     |#{address_state": null,
+        //     |#{address_zip": null,
+        //     |#{address_zip_check": null,
+        //     |#{brand": "Visa",
+        //     |#{country": "US",
+        //     |#{customer": null,
+        //     |#{cvc_check": null,
+        //     |#{dynamic_last4": null,
+        //     |#{exp_month": 12,
+        //     |#{exp_year": 2020,
+        //     |#{fingerprint": "IGb3WOy8od8WyHQT",
+        //     |#{funding": "credit",
+        //     |#{last4": "4242",
+        //     |#{metadata": {},
+        //     |#{name": "repjackson@gmail.com",
+        //     |#{tokenization_method": null
+        //   },
+        //   |#{source_transfer": null,
+        //   |#{statement_descriptor": null,
+        //   |#{statement_descriptor_suffix": null,
+        //   |#{status": "succeeded",
+        //   |#{transfer_data": null,
+        //   |#{transfer_group": null

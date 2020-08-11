@@ -875,7 +875,8 @@ Template.single_user_edit.events
 Template.multi_user_edit.onCreated ->
     @user_results = new ReactiveVar
 Template.multi_user_edit.helpers
-    user_results: -> Template.instance().user_results.get()
+    user_results: -> 
+        Template.instance().user_results.get()
 Template.multi_user_edit.events
     'click .clear_results': (e,t)->
         t.user_results.set null
@@ -887,6 +888,7 @@ Template.multi_user_edit.events
             Meteor.call 'lookup_user', search_value, @role_filter, (err,res)=>
                 if err then console.error err
                 else
+                    # console.log res 
                     t.user_results.set res
     'click .select_user': (e,t) ->
         page_doc = Docs.findOne Router.current().params.doc_id

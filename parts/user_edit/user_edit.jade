@@ -139,7 +139,7 @@ template(name='user_edit_friends')
 
 template(name='user_edit_account')
     .ui.header 
-        i.cog.icons
+        i.cog.icon
         |account
     .ui.two.column.stackable.grid
         .column
@@ -158,12 +158,11 @@ template(name='user_edit_account')
                 i.envelope.outline.icon
                 |emails
             +emails_edit
-            if is_admin
+            if is_dev
                 .ui.segment
-                    .ui.header
-                        i.shield.icon
-                        |admin
+                    i.code.icon
                     +username_edit
+                    +multi_user_edit key='user_representatives' label='user representatives' direct=true
             .spacer
             +phone_edit key='phone' label='phone' icon='phone' direct=true
 

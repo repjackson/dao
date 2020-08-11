@@ -1083,7 +1083,7 @@ template(name='multi_user_edit')
     div
     .ui.inline.header
         if icon
-            i.grey.icon(class=icon)
+            i.icon(class=icon)
             //- +i name=icon
         if title
             |#{title}
@@ -1106,7 +1106,7 @@ template(name='multi_user_edit')
                         .ui.header
                             img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
                             strong #{first_name} #{last_name}
-                            |@#{username}
+                            small @#{username}
     +clear_value                
     each field_value
         // |#{this}

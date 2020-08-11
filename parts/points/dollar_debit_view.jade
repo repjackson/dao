@@ -1,4 +1,4 @@
-template(name='debit_view')
+template(name='dollar_debit_view')
     with current_doc
         .ui.stackable.padded.grid
             .centered.row 
@@ -8,8 +8,8 @@ template(name='debit_view')
                         .ui.large.center.aligned.header.pointer.zoom
                             |#{_author.name}
                 .five.wide.column
-                    .ui.huge.center.aligned.header
-                        |#{amount}pts
+                    .ui.huge.center.aligned.green.header
+                        |$#{dollar_amount}
                     if is_dev
                         +remove_button
                     .f14
@@ -27,6 +27,7 @@ template(name='debit_view')
                         | #{when}
                     .spacer
                     .spacer
+                    +charge_view
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column

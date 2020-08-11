@@ -34,11 +34,17 @@ if Meteor.isClient
     Template.profile_layout.events
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
-            new_debit_id =
-                Docs.insert
-                    model:'debit'
-                    amount:1
-                    recipient_id: user._id
+            if Meteor.userId() is user._id
+                new_debit_id =
+                    Docs.insert
+                        model:'debit'
+                        amount:1
+            else
+                new_debit_id =
+                    Docs.insert
+                        model:'debit'
+                        amount:1
+                        recipient_id: user._id
             Router.go "/debit/#{new_debit_id}/edit"
 
         'click .refresh_user_stats': ->
@@ -46,21 +52,26 @@ if Meteor.isClient
             # Meteor.call 'calc_user_stats', user._id, ->
             Meteor.call 'recalc_one_stats', user._id, ->
 
-        # 'click .debit': ->
-        #     # user = Meteor.users.findOne(username:@username)
-        #     new_debit_id =
-        #         Docs.insert
-        #             model:'debit'
-        #             recipient_id: @_id
-        #     Router.go "/debit/#{new_debit_id}/edit"
+        'click .tip': ->
+            # user = Meteor.users.findOne(username:@username)
+            new_debit_id =
+                Docs.insert
+                    model:'dollar_debit'
+            Router.go "/dollar_debit/#{new_debit_id}/edit"
 
         'click .request': ->
-            # user = Meteor.users.findOne(username:@username)
-            new_id =
-                Docs.insert
-                    model:'request'
-                    recipient_id: @_id
-                    amount:1
+            user = Meteor.users.findOne(username:@username)
+            if Meteor.userId() is user._id
+                new_id =
+                    Docs.insert
+                        model:'request'
+                        amount:1
+            else    
+                new_id =
+                    Docs.insert
+                        model:'request'
+                        recipient_id: user._id
+                        amount:1
             Router.go "/request/#{new_id}/edit"
     
         # 'click .recalc_user_cloud': ->

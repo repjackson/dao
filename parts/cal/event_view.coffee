@@ -8,7 +8,6 @@ if Meteor.isClient
     Template.event_view.onCreated ->
         @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'model_docs', 'room'
-        @autorun => Meteor.subscribe 'all_users'
         
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
