@@ -1,0 +1,43 @@
+template(name='user_credit')  
+    .ui.header 
+        i.dollar.green.large.icon
+        |fiat credit
+    .ui.padded.stackable.two.column.grid
+        .column
+            .scrolling
+                each received_dollar_debits
+                    .ui.segment
+                        if recipient.profile_image_id
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        .ui.header $#{dollar_amount}
+                        |to
+                        a(href="/user/#{recipient.username}")
+                            |#{recipient.username}
+                        .content
+                            a(href="/m/dollar_debit/#{_id}/view")
+                                |#{when} 
+                            .description
+                                |#{description}
+                                each tags
+                                    .ui.mini.basic.label #{this}
+                            if is_admin
+                                +remove_button
+        .column
+            .scrolling
+                each sent_dollar_debits
+                    .ui.segment
+                        if recipient.profile_image_id
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        strong $#{dollar_amount}
+                        |to
+                        a(href="/user/#{recipient.username}")
+                            |#{recipient.username}
+                        .content
+                            a(href="/m/dollar_debit/#{_id}/view")
+                                |#{when} 
+                            .description
+                                |#{description}
+                                each tags
+                                    .ui.mini.basic.label #{this}
+                            if is_admin
+                                +remove_button

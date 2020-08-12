@@ -26,7 +26,7 @@ if Meteor.isClient
                     currency: 'usd'
                     source: token.id
                     # description: token.description
-                    description: "One Becomeing One"
+                    description: "One Becoming One"
                     # receipt_email: token.email
                 Meteor.call 'send_tip', charge, Router.current().params.doc_id,(err,res)=>
                     if err then alert err.reason, 'danger'
@@ -36,10 +36,8 @@ if Meteor.isClient
                             'tip sent',
                             ''
                             'success'
-                        Router.go "/m/dollar_debit/#{dollar_debit._id}/view"
-                        # Meteor.users.update Meteor.userId(),
-                        #     $inc: points:500
                         )
+                        Router.go "/m/dollar_debit/#{dollar_debit._id}/view"
         )
         
     Template.dollar_debit_edit.onRendered ->

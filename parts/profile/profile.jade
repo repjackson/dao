@@ -96,10 +96,13 @@ template(name='profile_layout')
                             span about
                         a.ui.large.compact.basic.circular.button.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
                             i.large.chevron.down.icon
-                            span credits
+                            span pts received
                         a.ui.large.compact.basic.circular.button.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
                             i.large.gift.icon
-                            span sent
+                            span pts sent
+                        a.ui.large.compact.basic.circular.button.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                            i.large.dollar.icon
+                            span credit
                         a.ui.large.compact.basic.circular.button.profile_nav_item(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
                             i.calendar.large.icon
                             span events

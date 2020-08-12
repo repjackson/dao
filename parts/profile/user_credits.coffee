@@ -7,7 +7,7 @@ if Meteor.isClient
 
     Template.user_credits.onCreated ->
         @autorun => Meteor.subscribe 'user_credits', Router.current().params.username
-        @autorun => Meteor.subscribe 'model_docs', 'debit'
+        # @autorun => Meteor.subscribe 'model_docs', 'debit'
 
     Template.user_credits.events
         # 'keyup .new_credit': (e,t)->
