@@ -30,11 +30,11 @@ template(name='event_edit')
                         |audience
                     +number_edit key='max_attendees' label='max attendees' min='0' max='100' direct=true
                     +number_edit key='max_attendees_tickets' label='max attendees for points' min='0' max=max_attendees direct=true
-                    div
-                    +boolean_edit key='free' label='free' direct=true
-                    unless free
-                        +number_edit key='point_price' label='minimum points per ticket' min='0' max='100' direct=true
-                        +number_edit key='usd_price' label='minimum dollars per ticket' min='0' max='100' direct=true
+                    // div
+                    // +boolean_edit key='free' label='free' direct=true
+                    // unless free
+                    +number_edit key='point_price' label='minimum points per ticket' min='0' max='100' direct=true
+                    +number_edit key='usd_price' label='minimum dollars per ticket' min='0' max='100' direct=true
                 .ten.wide.column
                     .ui.segment
                         .ui.header room
@@ -46,7 +46,6 @@ template(name='event_edit')
                                         .ui.small.header #{title}
                                         if dollars_per_hour
                                             | $#{dollars_per_hour}/hr
-                                    
                         if room_id
                             unless key_value_is 'room_title' 'other'
                                 with event_room
@@ -55,24 +54,43 @@ template(name='event_edit')
                                     .ui.small.header schedule for #{current_doc.date}
                                 .ui.header slot 1: 9am-11am
                                     if slot_1_res
-                                        .ui.small.header reserved
+                                        with slot_1_res
+                                            .ui.small.header reserved by #{_author.name}
+                                            if can_edit
+                                                +remove_button
                                     else 
-                                        .ui.green.button buy
+                                        if event_room.dollars_per_hour
+                                            .ui.green.button.buy_slot_1 buy slot 1
+                                            .ui.green.button.request_slot_1 request for points
+                                        else
+                                            .ui.green.button.reserve_slot_1 reserve slot 1
                                 .ui.header slot 2: 11am-1pm
                                     if slot_2_res
                                         .ui.small.header reserved
                                     else 
-                                        .ui.green.button buy
+                                        if event_room.dollars_per_hour
+                                            .ui.green.button.buy_slot_2 buy slot 2
+                                            .ui.green.button.request_slot_2 request for points
+                                        else
+                                            .ui.green.button.reserve_slot_2 reserve slot 2
                                 .ui.header slot 3: 1pm-3pm  
                                     if slot_3_res
                                         .ui.small.header reserved
                                     else 
-                                        .ui.green.button buy
+                                        if event_room.dollars_per_hour
+                                            .ui.green.button.buy_slot_3 buy slot 3
+                                            .ui.green.button.request_slot_3 request for points
+                                        else
+                                            .ui.green.button.reserve_slot_3 reserve slot 3
                                 .ui.header slot 4: 3pm-5pm   
                                     if slot_4_res
                                         .ui.small.header reserved
                                     else 
-                                        .ui.green.button buy
+                                        if event_room.dollars_per_hour
+                                            .ui.green.button.buy_slot_4 buy slot 4
+                                            .ui.green.button.request_slot_4 request for points
+                                        else
+                                            .ui.green.button.reserve_slot_4 reserve slot 4
                             else
                                 +text_edit key='location' label='location' icon='red marker' direct=true
                                 +array_edit key='location_tags' label='location tags' icon='red tags' direct=true

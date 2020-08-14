@@ -6,7 +6,7 @@ if Meteor.isClient
 
     Template.event_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'model_docs', 'reservation'
+        @autorun => Meteor.subscribe 'model_docs', 'room_reservation'
     Template.event_edit.onRendered ->
 
 
@@ -41,14 +41,52 @@ if Meteor.isClient
             event = Docs.findOne Router.current().params.doc_id
             room = Docs.findOne _id:event.room_id
             Docs.find 
-                model:'reservation'
+                model:'room_reservation'
                 room_id:event.room_id 
                 date:event.date
                 
+        slot_1_res: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            Docs.findOne
+                model:'room_reservation'
+                room_id:event.room_id
+                slot:1
     
+        slot_2_res: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            Docs.findOne
+                model:'room_reservation'
+                room_id:event.room_id
+                slot:2
+    
+        slot_3_res: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            Docs.findOne
+                model:'room_reservation'
+                room_id:event.room_id
+                slot:3
+    
+        slot_4_res: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            Docs.findOne 
+                model:'room_reservation'
+                room_id:event.room_id
+                slot:4
     
     
     Template.event_edit.events
+        'click .reserve_slot_1': ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            Docs.insert 
+                model:'room_reservation'
+                room_id:event.room_id
+                slot:1
+                payment:'points'
 
 if Meteor.isServer
     Meteor.methods

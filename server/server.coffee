@@ -13,6 +13,9 @@ Docs.allow
         user = Meteor.users.findOne user_id
         if user.roles and 'admin' in user.roles
             true
+        else if doc.model is 'event'
+            if Meteor.userId() is doc.facilitator_id
+                true
         else
             # user_id
             user_id is doc._author_id

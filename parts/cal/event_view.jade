@@ -49,14 +49,14 @@ template(name='event_view')
                                 |#{_author.name}
                     if facilitator
                         .ui.dividing.header 
-                            i.chess.king.icon
+                            i.chess.king.grey.icon
                             |facilitator
                         a.ui.header(href="/user/#{fac.username}") 
                             img.ui.avatar.image(src="{{c.url fac.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{fac.name}
                     if support
                         .ui.dividing.header 
-                            i.chess.queen.icon
+                            i.chess.queen.grey.icon
                             |support
                         a.ui.header(href="/user/#{support.username}") 
                             img.ui.avatar.image(src="{{c.url support.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -98,22 +98,40 @@ template(name='event_view')
                         // .spacer
                         // .ui.grey.small.inline.header (give more if you want to)
                         div
-                    .ui.huge.fluid.action.left.icon.input
-                        i.dollar.icon
-                        input.usd_input(type='number' min=usd_price value=usd_price)
-                        .ui.green.icon.button.buy_for_usd
-                            i.checkmark.large.icon
-                    // unless currentUser
-                    //     .ui.green.large.fluid.button
-                    //         i.sun.icon
-                    //         |add on day membership +$10
-                    if currentUser
-                        .ui.horizontal.divider or
-                        .ui.big.fluid.action.left.icon.input
-                            i.hashtag.icon
-                            input.point_input(type='number' min=point_price value=point_price)
-                            .ui.teal.icon.button.buy_for_points
+                    if my_ticket
+                        .ui.header your ticket
+                        with my_ticket
+                            .ui.segment
+                                if is_usd
+                                    .ui.inline.green.header ${{money_format amount}}
+                                else
+                                    .ui.inline.header #{point_amount}pts
+                                |#{when} 
+                                if is_usd
+                                    .ui.button.request_refund
+                                        i.undo.icon
+                                        |request refund
+                                else
+                                    .ui.button.return
+                                        i.undo.icon
+                                        |return
+                    unless my_ticket
+                        .ui.huge.fluid.action.left.icon.input
+                            i.dollar.icon
+                            input.usd_input(type='number' min=usd_price value=usd_price)
+                            .ui.green.icon.button.buy_for_usd
                                 i.checkmark.large.icon
+                        // unless currentUser
+                        //     .ui.green.large.fluid.button
+                        //         i.sun.icon
+                        //         |add on day membership +$10
+                        if currentUser
+                            .ui.horizontal.divider or
+                            .ui.big.fluid.action.left.icon.input
+                                i.hashtag.icon
+                                input.point_input(type='number' min=point_price value=point_price)
+                                .ui.teal.icon.button.buy_for_points
+                                    i.checkmark.large.icon
                     // .ui.big.green.fluid.button.buy_for_usd
                     //     i.cart.icon
                     //     |buy for min
@@ -137,21 +155,27 @@ template(name='event_view')
                         .ui.dividing.header
                             // +icolor name='activity-history' cl='ui inline image'
                             |#{event_tickets.count} spots reserved
-                        .ui.large.link.selection.list
+                        .ui.comments
                             each event_tickets
-                                a.ui.item(href="/m/ticket/#{_id}/view") 
-                                    .content
-                                        .header
+                                .comment
+                                    a.avatar(href="/user/#{_author.username}") 
+                                        img(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                                    a.content(href="/m/ticket/#{_id}/view")
+                                        a.author(href="/user/#{_author.username}") 
+                                            |#{_author.name}
+                                        .metadata
+                                            span.date #{when}
+                                        .text
                                             if is_usd
                                                 .ui.inline.green.header ${{money_format amount}}
                                             else
                                                 .ui.inline.header #{point_amount}pts
-                                            |#{when} 
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                            |#{_author.name}
-                                        // if can_edit 
-                                        //     i.
-                                        //     +icolor name='return-purchase' cl='ui mini inline image return pointer'
+                                        // span.meta
+                                        //     if can_edit
+                                        //         +remove_icon
+                                        //     else
+                                        //         +voting_small
+                            
                         +attendance
     .ui.modal
         i.close.icon
@@ -182,8 +206,8 @@ template(name='attendance')
     //     a.ui.circular.basic.circular.button(href="/user/#{username}")    
     //         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
     //         |#{username}
-    .ui.basic.circular.button
-        .ui.orange.header.pointer.mark_maybe
+    .ui.basic.circular.button.mark_maybe
+        .ui.orange.header
             // if currentUser
             //     +icolor name='clock' cl='mark_maybe pointer'
             // else
@@ -195,8 +219,8 @@ template(name='attendance')
         a.ui.circular.basic.circular.button(href="/user/#{username}")    
             img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{username}
-    .ui.basic.circular.button
-        .ui.red.header.pointer.mark_not
+    .ui.basic.circular.button.mark_not
+        .ui.red.header
             i.ban.icon
             |#{not_going.count} not going
         // .ui.icon.button.pick_not

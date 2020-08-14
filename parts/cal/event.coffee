@@ -22,6 +22,14 @@ if Meteor.isClient
     Template.registerHelper 'fac', () ->    
         Meteor.users.findOne @facilitator_id
    
+    Template.registerHelper 'my_ticket', () ->    
+        event = Docs.findOne @_id
+        Docs.findOne
+            model:'transaction'
+            transaction_type:'ticket_purchase'
+            event_id:@_id
+            _author_id:Meteor.userId()
+   
     Template.registerHelper 'event_room', () ->
         event = Docs.findOne @_id
         Docs.findOne 
