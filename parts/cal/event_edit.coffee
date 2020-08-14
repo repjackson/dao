@@ -16,10 +16,17 @@ if Meteor.isClient
                 Docs.remove @_id
 
         'click .select_room': ->
-            Docs.update Router.current().params.doc_id,
-                $set:
-                    room_id:@_id
-                    room_title:@title
+            reservation_exists = 
+                Docs.findOne
+                    model:'room_reservation'
+                    # room_id:event.room_id 
+                    # date:event.date
+            console.log reservation_exists
+            unless reservation_exists            
+                Docs.update Router.current().params.doc_id,
+                    $set:
+                        room_id:@_id
+                        room_title:@title
 
         'click .submit': ->
             Docs.update Router.current().params.doc_id,
@@ -32,10 +39,23 @@ if Meteor.isClient
     Template.event_edit.helpers
         room_button_class: ->
             event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            reservation_exists = 
+                Docs.findOne
+                    model:'room_reservation'
+                    # room_id:event.room_id 
+                    date:event.date
+            res = ''
             if event.room_id is @_id
-                'blue inverted'
+                res += 'blue inverted'
             else 
-                'basic'
+                res += 'basic pointer'
+            if reservation_exists
+                console.log 'res exists'
+                res += ' disabled'
+            else
+                console.log 'no res'
+            res
     
         room_reservations: ->
             event = Docs.findOne Router.current().params.doc_id
@@ -51,6 +71,7 @@ if Meteor.isClient
             Docs.findOne
                 model:'room_reservation'
                 room_id:event.room_id
+                # date:event.date
                 slot:1
     
         slot_2_res: ->
@@ -85,6 +106,7 @@ if Meteor.isClient
             Docs.insert 
                 model:'room_reservation'
                 room_id:event.room_id
+                date:event.date
                 slot:1
                 payment:'points'
 

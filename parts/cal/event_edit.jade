@@ -38,14 +38,12 @@ template(name='event_edit')
                 .ten.wide.column
                     .ui.segment
                         .ui.header room
-                        .ui.six.column.stackable.grid
-                            each rooms 
-                                .column
-                                    .ui.pointer.segment.select_room(class=room_button_class)
-                                        img.ui.fluid.rounded.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
-                                        .ui.small.header #{title}
-                                        if dollars_per_hour
-                                            | $#{dollars_per_hour}/hr
+                        each rooms 
+                            .ui.button.select_room(class=room_button_class)
+                                img.ui.mini.rounded.inline.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                .ui.small.inline.header #{title}
+                                if dollars_per_hour
+                                    | $#{dollars_per_hour}/hr
                         if room_id
                             unless key_value_is 'room_title' 'other'
                                 with event_room
