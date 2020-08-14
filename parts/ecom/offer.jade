@@ -40,6 +40,32 @@ template(name='offer_card')
                     i.checkmark.icon
                     |rental
 
+template(name='offer_item')
+    .ui.item.pointer.offer_item
+        if image_id
+            .image
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+        .content
+            .ui.header
+                |#{title}
+                if complete
+                    i.green.checkmark.icon
+            |!{description}
+            +comments_view_small    
+        .content
+            |by 
+            if _author.profile_image_id
+                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            |#{_author.name}
+            .ui.big.basic.label
+                |$#{usd_price}
+            .ui.big.basic.label
+                |#{point_price}pts
+            if rental
+                .ui.small.header
+                    i.checkmark.icon
+                    |rental
+    .ui.divider
 
 template(name='offer_view')
     with current_doc

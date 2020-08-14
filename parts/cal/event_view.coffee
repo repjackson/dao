@@ -133,14 +133,20 @@ if Meteor.isClient
 
     
     Template.attendance.events
-        'click .pick_maybe': ->
+        'click .mark_maybe': ->
             event = Docs.findOne Router.current().params.doc_id
+            Meteor.call 'mark_maybe', Router.current().params.doc_id, ->
     
-        'click .pick_not': ->
+        'click .mark_not': ->
             event = Docs.findOne Router.current().params.doc_id
+            Meteor.call 'mark_not', Router.current().params.doc_id, ->
 
-
-    Template.event_card.helpers
+    Template.event_card.events
+        'click .mark_maybe': ->
+            Meteor.call 'mark_maybe', @_id, ->
+    
+        'click .mark_not': ->
+            Meteor.call 'mark_not', @_id, ->
     Template.event_view.helpers
         tickets_left: ->
             ticket_count = 

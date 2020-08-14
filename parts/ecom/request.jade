@@ -45,18 +45,18 @@ template(name='request_card')
 
 template(name='request_item')
     .ui.fluid.horizontal.card.pointer.request_card
-        .image
-            if youtube_id
+        if youtube_id
+            .image
                 +youtube_view key='youtube_id' direct=true
-            else if image_id
-                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+        else if image_id
+            .image
+                img.ui.raw.image(src="{{c.url image_id width=400 height=600 crop='fill'}}")    
         .content
             .ui.header
                 |#{title}
                 if complete
                     i.green.checkmark.icon
             |!{description}
-        .content
             +comments_view_small
         .content
             |by 

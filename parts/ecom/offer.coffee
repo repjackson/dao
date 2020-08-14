@@ -28,6 +28,12 @@ if Meteor.isClient
             Docs.update @_id,
                 $inc: views:1
 
+    Template.offer_item.events
+        'click .offer_item': ->
+            Router.go "/m/offer/#{@_id}/view"
+            Docs.update @_id,
+                $inc: views:1
+
 
     Template.offer_view.onRendered ->
 

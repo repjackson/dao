@@ -21,7 +21,7 @@ template(name='profile_layout')
                         a.ui.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};") 
                             |@#{username}
                         .ui.inline.header(style="color:#{current_user.theme_color};") #{points}pts
-                        .ui.big.basic.circular.label(style="color:#{current_user.theme_color};") {{fixed one_ratio}} ONE|Ratio
+                        .ui.big.basic.circular.label(style="color:#{current_user.theme_color};") {{to_percent one_ratio}}% one ratio
                         .ui.large.basic.circular.label(style="color:#{current_user.theme_color};") #{flow_volume} volume
                         //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                         //-     i.refresh.icon

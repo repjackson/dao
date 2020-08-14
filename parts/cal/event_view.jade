@@ -183,24 +183,24 @@ template(name='attendance')
     //         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
     //         |#{username}
     .ui.basic.circular.button
-        .ui.orange.header.pointer.pick_maybe
+        .ui.orange.header.pointer.mark_maybe
             // if currentUser
-            //     +icolor name='clock' cl='pick_maybe pointer'
+            //     +icolor name='clock' cl='mark_maybe pointer'
             // else
-            //     +icolor name='event-accepted-tentatively'
+            +icolor name='event-accepted-tentatively'
             |#{maybe_going.count} maybe
-    // .ui.icon.button.pick_maybe 
+    // .ui.icon.button.mark_maybe 
     //     i.yellow.minus.big.icon
     each maybe_going
         a.ui.circular.basic.circular.button(href="/user/#{username}")    
             img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{username}
     .ui.basic.circular.button
-        .ui.red.header.pointer.pick_not
+        .ui.red.header.pointer.mark_not
             // if currentUser
-            //     +icolor name='cancel' cl='pick_not pointer'
+            //     +icolor name='cancel' cl='mark_not pointer'
             // else
-            //     +icolor name='event-declined'
+            +icolor name='event-declined'
             |#{not_going.count} not going
         // .ui.icon.button.pick_not
             // i.big.ban.icon
