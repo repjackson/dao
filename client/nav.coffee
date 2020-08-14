@@ -86,9 +86,9 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'location', ->
             Session.set 'loading', false
-    'click .set_discussion': ->
+    'click .set_meal': ->
         Session.set 'loading', true
-        Meteor.call 'set_facets', 'discussion', ->
+        Meteor.call 'set_facets', 'meal', ->
             Session.set 'loading', false
     'click .set_project': ->
         Session.set 'loading', true
@@ -178,9 +178,9 @@ Template.left_sidebar.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'location', ->
             Session.set 'loading', false
-    'click .set_discussion': ->
+    'click .set_meal': ->
         Session.set 'loading', true
-        Meteor.call 'set_facets', 'discussion', ->
+        Meteor.call 'set_facets', 'meal', ->
             Session.set 'loading', false
     'click .set_project': ->
         Session.set 'loading', true

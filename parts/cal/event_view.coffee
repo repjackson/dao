@@ -173,19 +173,19 @@ if Meteor.isServer
             event_id:event_id
 
 
-    Meteor.methods
-        'mark_not': (event_id)->
-            Docs.update event_id,
-                $addToSet:
-                    not_user_ids: Meteor.userId()
-                $pull:
-                    going_user_ids: Meteor.userId()
-                    maybe_user_ids: Meteor.userId()
-            
-        'mark_maybe': (event_id)->
-            Docs.update event_id,
-                $addToSet:
-                    maybe_user_ids: Meteor.userId()
-                $pull:
-                    going_user_ids: Meteor.userId()
-                    not_user_ids: Meteor.userId()
+Meteor.methods
+    'mark_not': (event_id)->
+        Docs.update event_id,
+            $addToSet:
+                not_user_ids: Meteor.userId()
+            $pull:
+                going_user_ids: Meteor.userId()
+                maybe_user_ids: Meteor.userId()
+        
+    'mark_maybe': (event_id)->
+        Docs.update event_id,
+            $addToSet:
+                maybe_user_ids: Meteor.userId()
+            $pull:
+                going_user_ids: Meteor.userId()
+                not_user_ids: Meteor.userId()

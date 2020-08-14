@@ -111,7 +111,7 @@ Meteor.methods
                 $inc: points:500
     
     
-    buy_food: (charge) ->
+    buy_meal: (charge) ->
         console.log 'charge', charge
         # console.log 'user', user
         if Meteor.isDevelopment

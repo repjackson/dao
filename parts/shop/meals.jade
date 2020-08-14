@@ -1,0 +1,147 @@
+template(name='meal_card')
+    .ui.card.pointer
+        if image_id
+            a.image(href="/meal/#{_id}/view")
+                img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
+        .content
+            a.ui.header(href="/meal/#{_id}/view") #{title}
+            // |#{when}
+            .ui.green.big.label
+                |$#{dollar_price}
+            .ui.teal.big.label 
+                |#{point_price}pts
+
+
+
+template(name='meal_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .five.wide.column
+                    a(href="/m/meal" title='shop')
+                        +icolor name='shop' cl='ui inline image pointer'
+                        // i.store.big.icon
+                        // span.mobile.hidden shop
+                    .ui.inline.header 
+                        |meal
+                    .ui.large.inline.header #{title}
+                        
+                    if can_edit
+                        a.ui.icon.button.edit_meal(href="/meal/#{_id}/edit")
+                            i.large.pencil.icon
+                            // |edit
+                    .ui.header 
+                        small author
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.username}
+                        
+                .six.wide.column
+                    +boolean_view key='published' label='published' direct=true
+                    +image_view key='image_id' label='image' direct=true
+                    // a.ui.header(href="/user/#{target.username}")
+                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //     |#{target.username}
+                    .ui.header $#{dollar_price} per item
+                    +number_view key='dollar_price' label='usd amount' direct=true
+                    +number_view key='inventory' label='inventory' direct=true
+                    // if can_buy
+                    //     .ui.big.green.button.buy_usd
+                    //         |buy #{dollar_price}
+                    //     .ui.big.green.button.buy_usd
+                    //         |buy #{}
+                    // .ui.big.green.button.purchase
+                    //     |purchase for #{point_price}p and $#{dollar_price}
+                    +textarea_view key='description' label='description' direct=true
+                    div 
+                    +array_view key='tags' label='tags' direct=true
+                    .spacer
+                    .spacer
+                    +comments
+                    +voting_full
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .five.wide.column
+                    .ui.header 
+                        +icolor name='shopping-cart-loaded'
+                        |buy
+                    .ui.big.green.button.buy_for_usd
+                        // |buy for 
+                        |$#{dollar_price}
+                    .ui.inline.header or
+                    .ui.big.teal.button.buy
+                        // i.cart.icon
+                        // |buy for 
+                        |#{point_price}pts
+                    .ui.header your points #{currentUser.calculated_points}
+                
+                    .ui.header 
+                        i.clock.icon
+                        |latest purchases
+                    .ui.large.link.selection.list
+                    
+                        each meal_transactions
+                            a.ui.item(href="/debit/#{_id}/view") 
+                                .content
+                                    .header
+                                        if is_usd
+                                            .ui.inline.green.header $ #{amount}cents
+                                        else
+                                            .ui.inline.header #{point_amount}pts
+                                        
+                                        |#{when} #{_author_username}
+                            if is_admin
+                                +remove_button
+                
+                    .ui.small.grey.header 
+                        i.line.chart.icon
+                        |stats
+                    .ui.list
+                        .item #{views} views
+                    each viewers
+                        .ui.label #{username
+                    
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+
+template(name='meal_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row 
+                .four.wide.center.aligned.column
+                    a.ui.green.big.icon.button(href="/meal/#{_id}/view")
+                        i.checkmark.big.icon
+                .eight.wide.center.aligned.column
+                    .ui.header 
+                        +icon name='meal'
+                        |edit meal: #{title}
+                .four.wide.center.aligned.column
+                    .ui.icon.button.delete_item
+                        i.large.remove.icon
+            .row
+                .four.wide.column
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    +number_edit key='inventory' label='inventory' direct=true                    
+                .eight.wide.column
+                    +text_edit key='title' label='title' direct=true
+                    .ui.header
+                        |audience
+                            
+                    +number_edit key='point_price' label='point price' icon='hashtag' direct=true
+                    +number_edit key='dollar_price' label='usd price' icon='money' direct=true
+                    +textarea_edit key='description' label='description' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    +boolean_edit key='published' label='published' direct=true
+                    // unless published
+                    //     a.ui.fluid.green.button.submit(href="/save")
+                    //         i.checkmark.icon
+                    //         |publish
+                    // else
+                    //     .ui.basic.button.unpublish 
+                    //         |unpublish

@@ -58,14 +58,21 @@ if Meteor.isClient
 
         
     Template.events.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'event'
+        @autorun => Meteor.subscribe 'events',
+            Session.get('viewing_room_id')
+            Session.get('viewing_past')
         @autorun => Meteor.subscribe 'model_docs', 'badge'
-        @autorun => Meteor.subscribe 'model_docs', 'transaction'
-        @autorun => Meteor.subscribe 'all_users'
+        @autorun => Meteor.subscribe 'model_docs', 'room'
+        # @autorun => Meteor.subscribe 'model_docs', 'transaction'
         
     Template.events.events
         'click .toggle_past': ->
             Session.set('viewing_past', !Session.get('viewing_past'))
+        'click .select_room': ->
+            if Session.equals('viewing_room_id', @_id)
+                Session.set('viewing_room_id', null)
+            else
+                Session.set('viewing_room_id', @_id)
         'click .add_event': ->
             new_id = 
                 Docs.insert 
@@ -76,6 +83,12 @@ if Meteor.isClient
             
             
     Template.events.helpers
+        rooms: ->
+            Docs.find 
+                model:'room'
+                
+        room_button_class: -> 
+            if Session.equals('viewing_room_id', @_id) then 'blue' else 'basic'
         viewing_past: -> Session.get('viewing_past')
         events: ->
             # console.log moment().format()
@@ -114,6 +127,24 @@ if Meteor.isServer
             published:true
             date:$gt:moment().subtract(1,'days').format("YYYY-MM-DD")
         }, 
+            sort:date:1
+    
+    Meteor.publish 'events', (
+        viewing_room_id
+        viewing_past
+        viewing_published
+        )->
+            
+        match = {model:'event'}
+        if viewing_room_id
+            match.room_id = viewing_room_id
+        if viewing_past
+            match.date = $gt:moment().subtract(1,'days').format("YYYY-MM-DD")
+            
+        match.published = viewing_published    
+            
+        console.log moment().subtract(1,'days').format("YYYY-MM-DD")
+        Docs.find match, 
             sort:date:1
     
 
