@@ -45,6 +45,8 @@ template(name='post_view')
                     each viewers
                         .ui.label #{username
                     +array_view key='tags' label='tags' direct=true
+                    +voting_full
+                    //- +array_view key='location_tags' label='location_tags' direct=true
                 .twelve.wide.column
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
@@ -54,8 +56,6 @@ template(name='post_view')
                     .spacer
                     .spacer
                     +comments
-                    // +voting_full
-                    //- +array_view key='location_tags' label='location_tags' direct=true
                 // .four.wide.column
                 
 

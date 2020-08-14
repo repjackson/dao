@@ -28,7 +28,7 @@ template(name='event_view')
                         a.edit_event(href="/event/#{_id}/edit" title='edit')
                             i.large.blue.link.pencil.circular.icon
             .row 
-                .five.wide.column
+                .five.wide.column.scrolling
                     if location 
                         i.large.marker.icon(title='location')
                         |#{location}
@@ -82,7 +82,7 @@ template(name='event_view')
                 .seven.wide.column
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
-                    .f13
+                    .f13.scrolling
                         |!{description}
                     // div 
                     // .spacer
@@ -94,9 +94,9 @@ template(name='event_view')
                     if tickets_left
                         .ui.grey.small.inline.header #{tickets_left} available
                         .spacer
-                        .ui.grey.small.inline.header  minimum amount requested 
-                        .spacer
-                        .ui.grey.small.inline.header (give more if you want to)
+                        .ui.grey.small.inline.header  minimum requested 
+                        // .spacer
+                        // .ui.grey.small.inline.header (give more if you want to)
                         div
                     .ui.huge.fluid.action.left.icon.input
                         i.dollar.icon
@@ -182,27 +182,28 @@ template(name='attendance')
     //     a.ui.circular.basic.circular.button(href="/user/#{username}")    
     //         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
     //         |#{username}
-    
-    .ui.orange.header.pointer.pick_maybe
-        // if currentUser
-        //     +icolor name='clock' cl='pick_maybe pointer'
-        // else
-        //     +icolor name='event-accepted-tentatively'
-        |#{maybe_going.count} maybe
+    .ui.basic.circular.button
+        .ui.orange.header.pointer.pick_maybe
+            // if currentUser
+            //     +icolor name='clock' cl='pick_maybe pointer'
+            // else
+            //     +icolor name='event-accepted-tentatively'
+            |#{maybe_going.count} maybe
     // .ui.icon.button.pick_maybe 
     //     i.yellow.minus.big.icon
     each maybe_going
         a.ui.circular.basic.circular.button(href="/user/#{username}")    
             img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{username}
-    .ui.red.header.pointer.pick_not
-        // if currentUser
-        //     +icolor name='cancel' cl='pick_not pointer'
-        // else
-        //     +icolor name='event-declined'
-        |#{not_going.count} not going
-    // .ui.icon.button.pick_not
-        // i.big.ban.icon
+    .ui.basic.circular.button
+        .ui.red.header.pointer.pick_not
+            // if currentUser
+            //     +icolor name='cancel' cl='pick_not pointer'
+            // else
+            //     +icolor name='event-declined'
+            |#{not_going.count} not going
+        // .ui.icon.button.pick_not
+            // i.big.ban.icon
     each not_going
         a.ui.circular.basic.circular.button(href="/user/#{username}")    
             img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")

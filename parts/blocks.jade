@@ -70,7 +70,7 @@ template(name='comments')
                         .metadata
                             span.date #{when}
                         .text
-                            | #{body}
+                            | !{body}
                         span.meta
                             if can_edit
                                 +remove_icon

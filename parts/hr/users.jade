@@ -35,6 +35,25 @@ template(name='user_cloud')
             strong #{this.name}
 
 
+
+template(name='member_item')
+    .item
+        a.zoom.pointer.mobile.hidden(href="/user/#{username}")
+            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+
+            a.ui.inline.header.pointer(href="/user/#{username}" style="color:#{theme_color};")
+                |#{name}
+                //- |#{username}
+            .ui.inline.header(style="color:#{current_user.theme_color};") #{points}pts
+            .ui.large.basic.label(style="color:#{current_user.theme_color};") {{to_percent one_ratio}}% one ratio
+            .ui.large.basic.label(style="color:#{current_user.theme_color};") #{flow_volume} volume
+            each levels
+                .ui.basic.small.label(style="color:#{theme_color};") #{this}
+            // unless is_this_user
+            //     i.red.gift.pointer.debit.big.icon
+            //     i.teal.concierge.bell.pointer.request.big.icon
+            //     i.blue.chat.pointer.message.big.disabled.icon
+
         
 
 template(name='member_card')

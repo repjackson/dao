@@ -28,7 +28,7 @@ if Meteor.isClient
                     source: token.id
                     input:'number'
                     # description: token.description
-                    description: "One Becomeing One"
+                    description: "one"
                     event_title:event.title
                     # receipt_email: token.email
                 Meteor.call 'buy_ticket', charge, (err,res)=>
@@ -135,49 +135,9 @@ if Meteor.isClient
     Template.attendance.events
         'click .pick_maybe': ->
             event = Docs.findOne Router.current().params.doc_id
-            Swal.fire({
-                title: "mark yourself as maybe?"
-                text: "for #{event.title}"
-                icon: 'question'
-                showCancelButton: true,
-                confirmButtonText: 'confirm'
-                confirmButtonColor: 'orange'
-                # grow:'fullscreen'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Docs.update Router.current().params.doc_id,
-                        $addToSet:
-                            maybe_user_ids: Meteor.userId()
-                        $pull:
-                            going_user_ids: Meteor.userId()
-                            not_user_ids: Meteor.userId()
-            )
     
         'click .pick_not': ->
             event = Docs.findOne Router.current().params.doc_id
-
-            Swal.fire({
-                title: "mark yourself as no?"
-                text: "for #{event.title}"
-                icon: 'error'
-                showCancelButton: true,
-                confirmButtonText: 'confirm'
-                confirmButtonColor: 'red'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Docs.update Router.current().params.doc_id,
-                        $addToSet:
-                            not_user_ids: Meteor.userId()
-                        $pull:
-                            going_user_ids: Meteor.userId()
-                            maybe_user_ids: Meteor.userId()
-            )
 
 
     Template.event_card.helpers
@@ -205,3 +165,21 @@ if Meteor.isServer
             model:'transaction'
             transaction_type:'ticket_purchase'
             event_id:event_id
+
+
+    Meteor.methods
+        'mark_not': (event_id)->
+            Docs.update event_id,
+                $addToSet:
+                    not_user_ids: Meteor.userId()
+                $pull:
+                    going_user_ids: Meteor.userId()
+                    maybe_user_ids: Meteor.userId()
+            
+        'mark_maybe': (event_id)->
+            Docs.update event_id,
+                $addToSet:
+                    maybe_user_ids: Meteor.userId()
+                $pull:
+                    going_user_ids: Meteor.userId()
+                    not_user_ids: Meteor.userId()

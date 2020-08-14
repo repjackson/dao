@@ -7,34 +7,34 @@ template(name='home')
             //     .ui.big.button.send_notification
             //         |send
                 
-            .sixteen.wide.column.toggle_finance_details
-                .ui.green.small.progress.bar.pointer
-                    .bar
-                    // .label
-                    //     |monthly budget progress / 20k
-                if viewing_finance_details
-                    .ui.stackable.grid
-                        .two.column.row
-                            .column
-                                .ui.header finance details
-                                .ui.header income from events
-                            .column
-                                .ui.header most generative event
-                                .ui.header most generative member
+            // .sixteen.wide.column.toggle_finance_details
+            //     .ui.green.small.progress.bar.pointer
+            //         .bar
+            //         // .label
+            //         //     |monthly budget progress / 20k
+            //     if viewing_finance_details
+            //         .ui.stackable.grid
+            //             .two.column.row
+            //                 .column
+            //                     .ui.header finance details
+            //                     .ui.header income from events
+            //                 .column
+            //                     .ui.header most generative event
+            //                     .ui.header most generative member
                     
-        .centered.row
-            .sixteen.wide.center.aligned.column
-                each members 
-                    if profile_image_id
-                        a(href="/user/#{username}" title="{{name}} {{points}}")
-                            img.ui.tiny.pointer.inline.circular.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-                        // if avatar_image_id
-                        // .ui.move.reveal.tiny.circular.spaced_image.image
-                        //     .visible.content
-                        //         img(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-                        //     .hidden.content
-                        //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-                        // else
+        // .centered.row
+        //     .sixteen.wide.center.aligned.column
+        //         each members 
+        //             if profile_image_id
+        //                 a(href="/user/#{username}" title="{{name}} {{points}}")
+        //                     img.ui.tiny.pointer.inline.circular.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+        //                 // if avatar_image_id
+        //                 // .ui.move.reveal.tiny.circular.spaced_image.image
+        //                 //     .visible.content
+        //                 //         img(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+        //                 //     .hidden.content
+        //                 //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+        //                 // else
         .centered.row
             .sixteen.wide.center.aligned.column
                .ui.basic.big.compact.circular.button.debit

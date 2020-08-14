@@ -6,7 +6,7 @@ template(name='user_dashboard')
             a.ui.inline.header(href="/user/#{username}/credits")
                 i.chevron.down.large.icon
                 |#{total_credit_amount}p
-                |received
+                // |received
                 small(title='received count') (#{credit_count}x) 
                 small(title='rank') ##{global_credit_count_rank}
             .medscroll
@@ -14,7 +14,7 @@ template(name='user_dashboard')
                     .ui.segment.user_credit_segment.pointer
                         .header
                             strong #{amount}pt 
-                            |from 
+                            // |from 
                             if author.profile_image_id
                                 img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.shortname}
@@ -28,7 +28,7 @@ template(name='user_dashboard')
             a.ui.inline.spaced.header(href="/user/#{username}/debits")
                 i.chevron.up.icon
                 |#{total_debit_amount}p
-                |sent
+                // |sent
                 small(title='debit count') (#{debit_count}x)
                 small(title='rank') ##{global_debit_count_rank}
             div
