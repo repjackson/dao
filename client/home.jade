@@ -57,10 +57,9 @@ template(name='home')
                 .ui.basic.big.compact.circular.button.add_message
                     i.chat.blue.icon
                     |+ message
-                if is_admin
-                    a.ui.basic.big.button(href='/register')
-                        i.user.plus.green.icon
-                        |member
+                a.ui.basic.big.button(href='/register')
+                    i.user.plus.green.icon
+                    |member
 
        
         // .centered.row
