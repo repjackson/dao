@@ -100,7 +100,8 @@ if Meteor.isClient
                 Docs.findOne    
                     model:'badge'
                     slug:'facilitator'
-            Meteor.userId() in facilitator_badge.badger_ids
+            if facilitator_badge
+                Meteor.userId() in facilitator_badge.badger_ids
             
     
     

@@ -3,29 +3,33 @@ template(name='nav')
     .ui.fluid.inverted.borderless.attached.menu.topnav(style="background-color:#{currentUser.theme_color};")
         a.icon.item.toggle_sidebar
             i.large.bars.icon
-        a.item(href="/" class="{{isActivePath '/'}}")
-            img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-            .mobile.hidden one
-            // i.large.home.icon
+        a.icon.item(href="/" class="{{isActivePath '/'}}")
+            i.large.home.icon
+            // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
+            // .mobile.hidden one
         a.item.set_member.mobile.hidden(href="/m/member" class="{{isActivePath '/m/member'}}" title='players')
             i.large.users.icon
-            | directory
-        a.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
+            // | directory
+        a.icon.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
             i.large.calendar.icon
-            | events
-        // a.item.mobile.hidden(href="/m/event" class="{{isActivePath 'events'}}" title='events')
-        a.item.mobile.hidden.set_request(href="/m/request" class="{{isActivePath '/m/request'}}" title='requests')
+            // | events
+        // a.icon.item.mobile.hidden(href="/m/event" class="{{isActivePath 'events'}}" title='events')
+        a.icon.item.mobile.hidden.set_request(href="/m/request" class="{{isActivePath '/m/request'}}" title='requests')
             i.large.concierge.bell.icon
             // em(data-emoji='bellhop')
-            | requests
-        a.item.mobile.hidden.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}" title='offers')
+            // | requests
+        a.icon.item.mobile.hidden.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}" title='offers')
             i.large.hand.holding.heart.icon
             // em(data-emoji='bellhop')
-            | offers
-        a.item.mobile.hidden.set_post(href="/m/post" class="{{isActivePath '/m/post'}}" title='feed')
+            // | offers
+        a.icon.item.mobile.hidden.set_post(href="/m/post" class="{{isActivePath '/m/post'}}" title='feed')
             i.large.newspaper.icon
             // em(data-emoji='newspaper')
-            | news
+            // | news
+        a.icon.item.mobile.hidden.set_food(href="/m/meal" class="{{isActivePath '/m/meal'}}" title='feed')
+            i.large.food.icon
+            // em(data-emoji='newspaper')
+            // | news
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
@@ -159,6 +163,9 @@ template(name='left_sidebar')
         // a.item.toggle_sidebar(href="/m/collective" class="{{isActivePath 'requests'}}")
         //     i.users.icon
         //     |collectives
+        a.item.toggle_sidebar(href="/m/meal" class="{{isActivePath '/m/meal'}}")
+            i.food.icon
+            |food
         a.item.toggle_sidebar.set_bug(href="/m/bug" class="{{isActivePath '/m/bug'}}")
             i.bug.icon
             |bugs

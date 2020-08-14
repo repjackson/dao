@@ -9,8 +9,10 @@ template(name='post_card')
 template(name='post_item')
     .ui.fluid.segment.view_post.pointer
         a.ui.header(href="/m/post/#{_id}/view") #{title}
+        div
+        .ui.small.grey.inline.header #{when}
         each tags 
-            .ui.basic.label #{this}
+            .ui.basic.small.label #{this}
         
 
 template(name='post_view')

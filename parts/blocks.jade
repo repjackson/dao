@@ -500,10 +500,10 @@ template(name='user_string_toggle')
 
 
 template(name='key_value_edit')
-    .ui.compact.large.circular.button.set_key_value(class=set_key_value_class title=value)
+    a.ui.compact.large.circular.button.set_key_value(class=set_key_value_class title=value href='#')
         if icon
-            +icon name=icon cl='ui avatar image'
-            //- i.icon(class=icon)
+            // +icon name=icon cl='ui avatar image'
+            i.icon(class=icon)
         unless icon_only
             if label
                 |#{label}

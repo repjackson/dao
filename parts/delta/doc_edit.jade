@@ -9,9 +9,9 @@ template(name='model_doc_edit')
                         .ui.header(title="model: #{model}")
                             |edit #{model}
                         +creation_info
-                        a.ui.big.icon.green.button(href="/m/#{model}/#{_id}/view")
+                        a.ui.big.icon.green.circular.button(href="/m/#{model}/#{_id}/view")
                             i.big.checkmark.icon
-                        #delete_doc.ui.icon.button
+                        #delete_doc.ui.icon.circular.button
                             i.trash.icon
                         if is_user
                             +boolean_edit key='private' direct=true
