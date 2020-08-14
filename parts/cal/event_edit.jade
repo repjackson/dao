@@ -61,7 +61,7 @@ template(name='event_edit')
                                             .ui.green.button.buy_slot_1 buy slot 1
                                             .ui.green.button.request_slot_1 request for points
                                         else
-                                            .ui.green.button.reserve_slot_1 reserve slot 1
+                                            +reserve_button slot=1
                                 .ui.header slot 2: 11am-1pm
                                     if slot_2_res
                                         .ui.small.header reserved
@@ -70,7 +70,7 @@ template(name='event_edit')
                                             .ui.green.button.buy_slot_2 buy slot 2
                                             .ui.green.button.request_slot_2 request for points
                                         else
-                                            .ui.green.button.reserve_slot_2 reserve slot 2
+                                            +reserve_button slot=2
                                 .ui.header slot 3: 1pm-3pm  
                                     if slot_3_res
                                         .ui.small.header reserved
@@ -79,7 +79,7 @@ template(name='event_edit')
                                             .ui.green.button.buy_slot_3 buy slot 3
                                             .ui.green.button.request_slot_3 request for points
                                         else
-                                            .ui.green.button.reserve_slot_3 reserve slot 3
+                                            +reserve_button slot=3
                                 .ui.header slot 4: 3pm-5pm   
                                     if slot_4_res
                                         .ui.small.header reserved
@@ -88,7 +88,7 @@ template(name='event_edit')
                                             .ui.green.button.buy_slot_4 buy slot 4
                                             .ui.green.button.request_slot_4 request for points
                                         else
-                                            .ui.green.button.reserve_slot_4 reserve slot 4
+                                            +reserve_button slot=4
                             else
                                 +text_edit key='location' label='location' icon='red marker' direct=true
                                 +array_edit key='location_tags' label='location tags' icon='red tags' direct=true
@@ -101,3 +101,6 @@ template(name='event_edit')
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
 
+
+template(name='reserve_button')
+    .ui.green.button.reserve_slot reserve slot #{slot}

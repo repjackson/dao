@@ -99,15 +99,15 @@ if Meteor.isClient
                 slot:4
     
     
-    Template.event_edit.events
-        'click .reserve_slot_1': ->
+    Template.reserve_button.events
+        'click .reserve_slot': ->
             event = Docs.findOne Router.current().params.doc_id
             room = Docs.findOne _id:event.room_id
             Docs.insert 
                 model:'room_reservation'
                 room_id:event.room_id
                 date:event.date
-                slot:1
+                slot:@slot
                 payment:'points'
 
 if Meteor.isServer
