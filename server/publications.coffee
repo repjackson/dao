@@ -106,17 +106,16 @@ Meteor.publish 'me', ()->
 
 
 Meteor.publish 'tag_results', (
-    doc_id
+    # doc_id
     selected_tags
     searching
     query
+    dummy
     )->
     # console.log 'dummy', dummy
     console.log 'selected tags', selected_tags
     console.log 'query', query
 
-    debit = Docs.findOne doc_id
-    console.log debit
     self = @
     match = {}
 
@@ -124,7 +123,7 @@ Meteor.publish 'tag_results', (
     # console.log 'query length', query.length
     # if query
     # if query and query.length > 1
-    if query and query.length > 1
+    if query.length > 1
         # console.log 'searching query', query
         # #     # match.tags = {$regex:"#{query}", $options: 'i'}
         # #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
@@ -163,8 +162,10 @@ Meteor.publish 'tag_results', (
         #         match._timestamp = $gt:yesterday
 
 
+        # debit = Docs.findOne doc_id
         # if debit.tags.length > 0
-        match.tags = $all: debit.tags
+        # match.tags = $all: debit.tags
+        match.tags = $all: selected_tags
         # else
         #     # unless selected_domains.length > 0
         #     #     unless selected_subreddits.length > 0
@@ -191,7 +192,7 @@ Meteor.publish 'tag_results', (
             { $match: count: $lt: agg_doc_count }
             # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
             { $sort: count: -1, _id: 1 }
-            { $limit: 25 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
         ], {
             allowDiskUse: true

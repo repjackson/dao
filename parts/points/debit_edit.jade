@@ -21,8 +21,8 @@ template(name='debit_edit')
                                 .ui.small.grey.inline.header #{points}
                         unless recipient
                             .ui.divider
-                            i.large.user.plus.icon
-                            +single_user_edit key='recipient_id' label='search member' direct=true
+                            // i.large.user.plus.icon
+                            +single_user_edit key='recipient_id' label='search member' icon='user plus' direct=true
                             // .ui.icon.input
                             //     i.search.icon
                             //     input.search_username(type='text' placeholder='username')
@@ -55,7 +55,8 @@ template(name='debit_edit')
                         .ui.big.basic.circular.label
                             i.delete.icon.remove_element
                             |#{this}
-                    .ui.small.header suggestions
+                    if suggestions
+                        .ui.small.header suggestions
                     each suggestions
                         a.ui.large.circular.basic.button.select_term(href='#')
                             // if image

@@ -10,10 +10,11 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => @subscribe 'tag_results',
-            Router.current().params.doc_id
+            # Router.current().params.doc_id
             selected_tags.array()
             Session.get('searching')
             Session.get('current_query')
+            Session.get('dummy')
         
     Template.debit_edit.onRendered ->
 
@@ -31,11 +32,12 @@ if Meteor.isClient
         members: ->
             debit = Docs.findOne Router.current().params.doc_id
             Meteor.users.find({
-                levels: $in: ['member','domain']
+                # levels: $in: ['member','domain']
                 _id: $ne: Meteor.userId()
                 username: $ne: Meteor.userId()
             }, {
                 sort:points:-1
+                limit:10
                 })
         # subtotal: ->
         #     debit = Docs.findOne Router.current().params.doc_id
@@ -59,7 +61,7 @@ if Meteor.isClient
             Docs.update Router.current().params.doc_id,
                 $unset:
                     recipient_id:1
-        'keyup .new_tag': (e,t)->
+        'keyup .new_tag': _.throttle((e,t)->
             query = $('.new_tag').val()
             if query.length > 0
                 Session.set('searching', true)
@@ -71,27 +73,34 @@ if Meteor.isClient
                 element_val = t.$('.new_tag').val().toLowerCase().trim()
                 Docs.update Router.current().params.doc_id,
                     $addToSet:tags:element_val
+                selected_tags.push element_val
                 Meteor.call 'log_term', element_val, ->
                 Session.set('searching', false)
-                Session.set('current_query', null)
+                Session.set('current_query', '')
+                Session.set('dummy', !Session.get('dummy'))
                 t.$('.new_tag').val('')
-    
+        , 1000)
+
         'click .remove_element': (e,t)->
             element = @valueOf()
             field = Template.currentData()
+            selected_tags.remove element
             Docs.update Router.current().params.doc_id,
                 $pull:tags:element
             t.$('.new_tag').focus()
             t.$('.new_tag').val(element)
+            Session.set('dummy', !Session.get('dummy'))
     
     
         'click .select_term': (e,t)->
             # selected_tags.push @title
             Docs.update Router.current().params.doc_id,
                 $addToSet:tags:@title
+            selected_tags.push @title
             $('.new_tag').val('')
             Session.set('current_query', '')
             Session.set('searching', false)
+            Session.set('dummy', !Session.get('dummy'))
 
     
         'blur .edit_description': (e,t)->
