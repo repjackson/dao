@@ -9,6 +9,10 @@ template(name='user_dashboard')
                 // |received
                 small(title='received count') (#{credit_count}x) 
                 small(title='rank') ##{global_credit_count_rank}
+            i.tags.icon(title='credit tags')
+            each credit_tags
+                .ui.label #{title}
+                    small #{count}
             .medscroll
                 each user_credits
                     .ui.segment.user_credit_segment.pointer
@@ -31,6 +35,11 @@ template(name='user_dashboard')
                 // |sent
                 small(title='debit count') (#{debit_count}x)
                 small(title='rank') ##{global_debit_count_rank}
+            i.tags.icon(title='credit tags')
+            each debit_tags
+                .ui.label #{title} 
+                    small #{count}
+
             div
             .medscroll
                 each user_debits

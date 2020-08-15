@@ -51,6 +51,7 @@ if Meteor.isClient
             user = Meteor.users.findOne(username:Router.current().params.username)
             # Meteor.call 'calc_user_stats', user._id, ->
             Meteor.call 'recalc_one_stats', user._id, ->
+            Meteor.call 'calc_user_tags', user._id, ->
 
         'click .tip': ->
             # user = Meteor.users.findOne(username:@username)

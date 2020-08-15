@@ -54,6 +54,7 @@ if Meteor.isClient
                 element_val = t.$('.new_tag').val().toLowerCase().trim()
                 Docs.update Router.current().params.doc_id,
                     $addToSet:tags:element_val
+                Meteor.call 'log_term', element_val, ->
                 t.$('.new_tag').val('')
     
         'click .remove_element': (e,t)->
@@ -66,7 +67,6 @@ if Meteor.isClient
     
     
         # 'click .result': (e,t)->
-        #     Meteor.call 'log_term', @title, ->
         #     selected_tags.push @title
         #     $('#search').val('')
         #     Meteor.call 'call_wiki', @title, ->
