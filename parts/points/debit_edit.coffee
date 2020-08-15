@@ -49,20 +49,20 @@ if Meteor.isClient
             Docs.update Router.current().params.doc_id,
                 $unset:
                     recipient_id:1
-        'keyup .new_element': (e,t)->
+        'keyup .new_tag': (e,t)->
             if e.which is 13
-                element_val = t.$('.new_element').val().toLowerCase().trim()
+                element_val = t.$('.new_tag').val().toLowerCase().trim()
                 Docs.update Router.current().params.doc_id,
                     $addToSet:tags:element_val
-                t.$('.new_element').val('')
+                t.$('.new_tag').val('')
     
         'click .remove_element': (e,t)->
             element = @valueOf()
             field = Template.currentData()
             Docs.update Router.current().params.doc_id,
                 $pull:tags:element
-            t.$('.new_element').focus()
-            t.$('.new_element').val(element)
+            t.$('.new_tag').focus()
+            t.$('.new_tag').val(element)
     
     
         # 'click .result': (e,t)->

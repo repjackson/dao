@@ -85,8 +85,8 @@ template(name='reserve_button')
                     .ui.circular.icon.button.cancel_res
                         i.red.remove.icon
     else 
-        if event_room.dollars_per_hour
-            .ui.green.button.buy_slot buy slot #{slot}
-            .ui.green.button.request_slot request for points
-        else
-            .ui.green.button.reserve_slot reserve slot #{slot}
+        // if event_room.dollars_per_hour
+        //     .ui.green.button.buy_slot buy slot #{slot}
+        //     .ui.green.button.request_slot request for points
+        // else
+        .ui.green.button.reserve_slot reserve slot #{slot}

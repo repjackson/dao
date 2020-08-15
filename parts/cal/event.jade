@@ -11,7 +11,7 @@ template(name='events')
                 .ui.inline.header
                     i.orange.calendar.icon
                     |events
-                if can_add_event
+                if currentUser
                     .ui.circular.basic.icon.button.add_event(title='add event')
                         i.plus.big.green.icon
                 .ui.large.basic.circular.button.toggle_past

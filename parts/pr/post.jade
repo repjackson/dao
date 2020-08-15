@@ -1,5 +1,6 @@
 template(name='post_card')
     .ui.card.view_post.pointer
+        img.ui.fluid.rounded.image(src="{{c.url image_id height=200 width=400 gravity='face' crop='fill'}}")
         .content
             a.ui.header(href="/m/post/#{_id}/view") #{title}
             .ui.small.grey.header #{when}

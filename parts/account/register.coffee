@@ -51,7 +51,7 @@ if Meteor.isClient
             Session.set 'password', password
 
         'click .register': (e,t)->
-            # username = $('.username').val()
+            username = $('.username').val()
             email = $('.email_field').val()
             password = $('.password').val()
             # if Session.equals 'enter_mode', 'register'
@@ -64,6 +64,7 @@ if Meteor.isClient
             # }
             options = {
                 email:email
+                username:username
                 password:password
                 }
             Meteor.call 'create_user', options, (err,res)=>

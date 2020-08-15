@@ -123,6 +123,14 @@ template(name='home')
             //         each next_shifts
                             +home_shift_card
             .four.wide.column
+                // a.ui.center.aligned.header(href="/m/debit")
+                .ui.center.aligned.header
+                    i.gift.red.icon
+                    |gifts
+                .medscroll
+                    each latest_debits
+                        +debit_card
+            .four.wide.column
                 // .ui.center.aligned.header
                 a.ui.center.aligned.header(href="/events")
                     i.calendar.orange.icon
@@ -133,14 +141,6 @@ template(name='home')
                 .medscroll
                     each next_events
                         +home_event_card
-            .four.wide.column
-                // a.ui.center.aligned.header(href="/m/debit")
-                .ui.center.aligned.header
-                    i.gift.red.icon
-                    |gifts
-                .medscroll
-                    each latest_debits
-                        +debit_card
             .four.wide.column
                 // .ui.center.aligned.header
                 a.ui.center.aligned.header(href="/m/request")
