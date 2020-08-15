@@ -10,6 +10,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => @subscribe 'tag_results',
+            Router.current().params.doc_id
             selected_tags.array()
             Session.get('searching')
             Session.get('current_query')
@@ -20,6 +21,8 @@ if Meteor.isClient
     Template.debit_edit.helpers
         terms: ->
             Terms.find()
+        suggestions: ->
+            Tags.find()
         recipient: ->
             debit = Docs.findOne Router.current().params.doc_id
             if debit.recipient_id

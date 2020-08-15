@@ -1,6 +1,31 @@
 template(name='home')
-    .ui.stackable.padded.grid
-        .row 
+    .ui.center.aligned.basic.segment
+       .ui.basic.big.compact.circular.button.debit
+            i.gift.red.icon
+            |send points
+            // else
+            //     .ui.green.disabled.compact.circular.button
+            //         +icolor name='debit' cl='ui mini inline image'
+            //         // i.debit.icon
+            //         |send
+        .ui.basic.big.compact.circular.button.request
+            i.concierge.bell.teal.icon
+            |request
+        .ui.basic.big.compact.circular.button.offer
+            i.hand.holding.heart.olive.icon
+            |offer
+        .ui.basic.big.compact.circular.button.add_bug
+            i.bug.red.icon
+            |+ bug
+        .ui.basic.big.compact.circular.button.add_message
+            i.chat.blue.icon
+            |+ message
+        a.ui.basic.big.circular.button(href='/register')
+            i.user.plus.green.icon
+            |member
+
+    .ui.stackable.grid
+        // .row 
             // if is_admin
             //     .ui.big.button.check_notifications
             //         |check
@@ -35,33 +60,10 @@ template(name='home')
         //                 //     .hidden.content
         //                 //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
         //                 // else
-        .centered.row
-            .sixteen.wide.center.aligned.column
-               .ui.basic.big.compact.circular.button.debit
-                    i.gift.red.icon
-                    |send points
-                    // else
-                    //     .ui.green.disabled.compact.circular.button
-                    //         +icolor name='debit' cl='ui mini inline image'
-                    //         // i.debit.icon
-                    //         |send
-                .ui.basic.big.compact.circular.button.request
-                    i.concierge.bell.teal.icon
-                    |request
-                .ui.basic.big.compact.circular.button.offer
-                    i.hand.holding.heart.olive.icon
-                    |offer
-                .ui.basic.big.compact.circular.button.add_bug
-                    i.bug.red.icon
-                    |+ bug
-                .ui.basic.big.compact.circular.button.add_message
-                    i.chat.blue.icon
-                    |+ message
-                a.ui.basic.big.button(href='/register')
-                    i.user.plus.green.icon
-                    |member
+        // .centered.row
+            // .sixteen.wide.center.aligned.column
+    
 
-       
         // .centered.row
         //     .four.wide.column
                 // if can_debit
@@ -123,8 +125,8 @@ template(name='home')
             //         each next_shifts
                             +home_shift_card
             .four.wide.column
-                // a.ui.center.aligned.header(href="/m/debit")
-                .ui.center.aligned.header
+                // .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/m/debit")
                     i.gift.red.icon
                     |gifts
                 .medscroll

@@ -106,6 +106,7 @@ Meteor.publish 'me', ()->
 
 
 Meteor.publish 'tag_results', (
+    doc_id
     selected_tags
     searching
     query
@@ -114,6 +115,8 @@ Meteor.publish 'tag_results', (
     console.log 'selected tags', selected_tags
     console.log 'query', query
 
+    debit = Docs.findOne doc_id
+    console.log debit
     self = @
     match = {}
 
@@ -121,7 +124,7 @@ Meteor.publish 'tag_results', (
     # console.log 'query length', query.length
     # if query
     # if query and query.length > 1
-    if query.length > 1
+    if query and query.length > 1
         # console.log 'searching query', query
         # #     # match.tags = {$regex:"#{query}", $options: 'i'}
         # #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
@@ -160,8 +163,8 @@ Meteor.publish 'tag_results', (
         #         match._timestamp = $gt:yesterday
 
 
-        if selected_tags.length > 0
-            match.tags = $all: selected_tags
+        # if debit.tags.length > 0
+        match.tags = $all: debit.tags
         # else
         #     # unless selected_domains.length > 0
         #     #     unless selected_subreddits.length > 0

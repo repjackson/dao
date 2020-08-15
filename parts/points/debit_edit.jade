@@ -55,6 +55,12 @@ template(name='debit_edit')
                         .ui.big.basic.circular.label
                             i.delete.icon.remove_element
                             |#{this}
+                    .ui.small.header suggestions
+                    each suggestions
+                        a.ui.large.circular.basic.button.select_term(href='#')
+                            // if image
+                            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{title}
                 .five.wide.center.aligned.column
                     .ui.big.header #{amount}pts
                     .ui.big.input
