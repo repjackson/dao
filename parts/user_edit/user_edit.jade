@@ -146,11 +146,6 @@ template(name='user_edit_account')
             +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true
             +image_edit key='avatar_image_id' icon='picture' title='avatar image' direct=true
             +password_edit
-            if is_admin
-                with current_user
-                    .ui.button.remove_user 
-                        i.remove.icon
-                        |delete user
         .column
             +text_edit key='first_name' label='first name' direct=true
             +text_edit key='last_name' label='last name' direct=true
@@ -162,7 +157,13 @@ template(name='user_edit_account')
                 .ui.segment
                     i.code.icon
                     +username_edit
+                    +boolean_edit key='disabled' label='disabled' direct=true
                     +multi_user_edit key='user_representatives' label='user representatives' direct=true
+                    div
+                    with current_user
+                        .ui.button.remove_user 
+                            i.remove.icon
+                            |delete user
             .spacer
             +phone_edit key='phone' label='phone' icon='phone' direct=true
 

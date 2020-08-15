@@ -19,8 +19,8 @@ if Meteor.isClient
             reservation_exists = 
                 Docs.findOne
                     model:'room_reservation'
-                    # room_id:event.room_id 
-                    # date:event.date
+                    room_id:event.room_id 
+                    date:event.date
             console.log reservation_exists
             unless reservation_exists            
                 Docs.update Router.current().params.doc_id,
@@ -37,6 +37,12 @@ if Meteor.isClient
 
 
     Template.event_edit.helpers
+        reservation_exists: ->
+            event = Docs.findOne Router.current().params.doc_id
+            Docs.findOne
+                model:'room_reservation'
+                # room_id:event.room_id 
+                date:event.date
         room_button_class: ->
             event = Docs.findOne Router.current().params.doc_id
             room = Docs.findOne _id:event.room_id
@@ -47,11 +53,11 @@ if Meteor.isClient
                     date:event.date
             res = ''
             if event.room_id is @_id
-                res += 'blue inverted'
+                res += 'blue'
             else 
-                res += 'basic pointer'
+                res += 'basic'
             if reservation_exists
-                console.log 'res exists'
+                # console.log 'res exists'
                 res += ' disabled'
             else
                 console.log 'no res'
@@ -65,41 +71,34 @@ if Meteor.isClient
                 room_id:event.room_id 
                 date:event.date
                 
-        slot_1_res: ->
+    Template.reserve_button.helpers
+        event_room: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+        slot_res: ->
             event = Docs.findOne Router.current().params.doc_id
             room = Docs.findOne _id:event.room_id
             Docs.findOne
                 model:'room_reservation'
                 room_id:event.room_id
-                # date:event.date
-                slot:1
-    
-        slot_2_res: ->
-            event = Docs.findOne Router.current().params.doc_id
-            room = Docs.findOne _id:event.room_id
-            Docs.findOne
-                model:'room_reservation'
-                room_id:event.room_id
-                slot:2
-    
-        slot_3_res: ->
-            event = Docs.findOne Router.current().params.doc_id
-            room = Docs.findOne _id:event.room_id
-            Docs.findOne
-                model:'room_reservation'
-                room_id:event.room_id
-                slot:3
-    
-        slot_4_res: ->
-            event = Docs.findOne Router.current().params.doc_id
-            room = Docs.findOne _id:event.room_id
-            Docs.findOne 
-                model:'room_reservation'
-                room_id:event.room_id
-                slot:4
+                date:event.date
+                slot:@slot
     
     
     Template.reserve_button.events
+        'click .cancel_res': ->
+            Swal.fire({
+                title: "confirm delete reservation?"
+                text: ""
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonText: 'confirm'
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.remove @_id
+            )
         'click .reserve_slot': ->
             event = Docs.findOne Router.current().params.doc_id
             room = Docs.findOne _id:event.room_id
