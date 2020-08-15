@@ -9,10 +9,17 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => @subscribe 'tag_results',
+            selected_tags.array()
+            Session.get('searching')
+            Session.get('current_query')
+        
     Template.debit_edit.onRendered ->
 
 
     Template.debit_edit.helpers
+        terms: ->
+            Terms.find()
         recipient: ->
             debit = Docs.findOne Router.current().params.doc_id
             if debit.recipient_id
@@ -50,11 +57,20 @@ if Meteor.isClient
                 $unset:
                     recipient_id:1
         'keyup .new_tag': (e,t)->
+            query = $('.new_tag').val()
+            if query.length > 0
+                Session.set('searching', true)
+            else
+                Session.set('searching', false)
+            Session.set('current_query', query)
+            
             if e.which is 13
                 element_val = t.$('.new_tag').val().toLowerCase().trim()
                 Docs.update Router.current().params.doc_id,
                     $addToSet:tags:element_val
                 Meteor.call 'log_term', element_val, ->
+                Session.set('searching', false)
+                Session.set('current_query', null)
                 t.$('.new_tag').val('')
     
         'click .remove_element': (e,t)->
@@ -66,19 +82,13 @@ if Meteor.isClient
             t.$('.new_tag').val(element)
     
     
-        # 'click .result': (e,t)->
-        #     selected_tags.push @title
-        #     $('#search').val('')
-        #     Meteor.call 'call_wiki', @title, ->
-        #     Meteor.call 'calc_term', @title, ->
-        #     Meteor.call 'omega', @title, ->
-        #     Session.set('current_query', '')
-        #     Session.set('searching', false)
-    
-        #     Meteor.call 'search_reddit', selected_tags.array(), ->
-        #     # Meteor.setTimeout ->
-        #     #     Session.set('dummy', !Session.get('dummy'))
-        #     # , 7000
+        'click .select_term': (e,t)->
+            # selected_tags.push @title
+            Docs.update Router.current().params.doc_id,
+                $addToSet:tags:@title
+            $('.new_tag').val('')
+            Session.set('current_query', '')
+            Session.set('searching', false)
 
     
         'blur .edit_description': (e,t)->

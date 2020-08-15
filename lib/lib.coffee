@@ -1,5 +1,6 @@
 @Docs = new Meteor.Collection 'docs'
 @Tags = new Meteor.Collection 'tags'
+@Terms = new Meteor.Collection 'terms'
 @User_tags = new Meteor.Collection 'user_tags'
 @Level_results = new Meteor.Collection 'level_results'
 

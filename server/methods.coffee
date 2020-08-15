@@ -33,22 +33,6 @@
 # #                 Meteor.call 'log_term', tag, ->
 # #
 # #
-# #     log_term: (term_title)->
-# #         # console.log 'logging term', term
-# #         found_term =
-# #             Terms.findOne
-# #                 title:term_title
-# #         unless found_term
-# #             Terms.insert
-# #                 title:term_title
-# #             # if Meteor.user()
-# #             #     Meteor.users.update({_id:Meteor.userId()},{$inc: points: 1}, -> )
-# #             # console.log 'added term', term
-# #         else
-# #             Terms.update({_id:found_term._id},{$inc: count: 1}, -> )
-# #             # console.log 'found term', term
-# #             Meteor.call 'call_wiki', @term_title, =>
-# #                 Meteor.call 'calc_term', @term_title, ->
 # #
 # #     calc_term: (term_title)->
 # #         found_term =
@@ -325,4 +309,22 @@
 # #     #     #         $set:
 # #     #     #             emotion_color:emotion_color
 # #     #     #             max_emotion_name:main_emotion.max_emotion_name
-
+Meteor.methods
+    log_term: (term_title)->
+        # console.log 'logging term', term
+        found_term =
+            Terms.findOne
+                title:term_title
+                app:'stand'
+        unless found_term
+            Terms.insert
+                title:term_title
+                app:'stand'
+            # if Meteor.user()
+            #     Meteor.users.update({_id:Meteor.userId()},{$inc: points: 1}, -> )
+            # console.log 'added term', term
+        else
+            Terms.update({_id:found_term._id},{$inc: count: 1}, -> )
+            # console.log 'found term', term
+            # Meteor.call 'call_wiki', @term_title, =>
+            #     Meteor.call 'calc_term', @term_title, ->

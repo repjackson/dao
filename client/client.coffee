@@ -7,7 +7,7 @@
 	# progressDelay : 100
 
 Template.body.events
-    'click a': ->
+    'click a:not(.select_term)': ->
         $('.global_container')
         .transition('fade out', 200)
         .transition('fade in', 200)
