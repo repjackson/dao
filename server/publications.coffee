@@ -124,13 +124,14 @@ Meteor.publish 'tag_results', (
     # if query
     # if query and query.length > 1
     if query.length > 1
-        # console.log 'searching query', query
+        console.log 'searching query', query
         # #     # match.tags = {$regex:"#{query}", $options: 'i'}
         # #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
         # #
         terms = Terms.find({
             # title: {$regex:"#{query}"}
             title: {$regex:"#{query}", $options: 'i'}
+            app:'stand'
         },
             sort:
                 count: -1
@@ -163,129 +164,50 @@ Meteor.publish 'tag_results', (
 
 
         # debit = Docs.findOne doc_id
-        # if debit.tags.length > 0
-        # match.tags = $all: debit.tags
-        match.tags = $all: selected_tags
-        # else
-        #     # unless selected_domains.length > 0
-        #     #     unless selected_subreddits.length > 0
-        #     #         unless selected_subreddits.length > 0
-        #     #             unless selected_emotions.length > 0
-        #     match.tags = $all: ['dao']
-        # console.log 'match for tags', match
-        # if selected_subreddits.length > 0
-        #     match.subreddit = $all: selected_subreddits
-        # if selected_domains.length > 0
-        #     match.domain = $all: selected_domains
-        # if selected_emotions.length > 0
-        #     match.max_emotion_name = $all: selected_emotions
-        console.log 'match for tags', match
-
-
-        agg_doc_count = Docs.find(match).count()
-        tag_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "tags": 1 }
-            { $unwind: "$tags" }
-            { $group: _id: "$tags", count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
-            { $match: count: $lt: agg_doc_count }
-            # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
-            { $sort: count: -1, _id: 1 }
-            { $limit: 10 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-        ], {
-            allowDiskUse: true
-        }
-
-        tag_cloud.forEach (tag, i) =>
-            # console.log 'queried tag ', tag
-            # console.log 'key', key
-            self.added 'tags', Random.id(),
-                title: tag.name
-                count: tag.count
-                # category:key
-                # index: i
-        # console.log doc_tag_cloud.count()
-
-
-
-        # # # agg_doc_count = Docs.find(match).count()
-        # subreddit_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: "subreddit": 1 }
-        #     # { $unwind: "$subreddit" }
-        #     { $group: _id: "$subreddit", count: $sum: 1 }
-        #     { $match: _id: $nin: selected_subreddits }
-        #     # { $match: count: $lt: agg_doc_count }
-        #     # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: 10 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        # ], {
-        #     allowDiskUse: true
-        # }
-
-        # subreddit_cloud.forEach (subreddit, i) =>
-        #     # console.log 'queried subreddit ', subreddit
-        #     # console.log 'key', key
-        #     self.added 'subreddits', Random.id(),
-        #         title: subreddit.name
-        #         count: subreddit.count
-        #         # category:key
-        #         # index: i
-        # # console.log doc_tag_cloud.count()
-
-
-        # domain_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: "domain": 1 }
-        #     # { $unwind: "$domain" }
-        #     { $group: _id: "$domain", count: $sum: 1 }
-        #     { $match: _id: $nin: selected_domains }
-        #     # { $match: count: $lt: agg_doc_count }
-        #     # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: 10 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        # ], {
-        #     allowDiskUse: true
-        # }
-
-        # domain_cloud.forEach (domain, i) =>
-        #     # console.log 'queried domain ', domain
-        #     # console.log 'key', key
-        #     self.added 'domain_results', Random.id(),
-        #         title: domain.name
-        #         count: domain.count
-        #         # category:key
-        #         # index: i
-        # # console.log doc_tag_cloud.count()
-
-        # emotion_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: "max_emotion_name": 1 }
-        #     # { $unwind: "$max_emotion_name" }
-        #     { $group: _id: "$max_emotion_name", count: $sum: 1 }
-        #     { $match: _id: $nin: selected_emotions }
-        #     # { $match: count: $lt: agg_doc_count }
-        #     # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $limit: 5 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        # ], {
-        #     allowDiskUse: true
-        # }
-
-        # emotion_cloud.forEach (emotion, i) =>
-        #     # console.log 'queried emotion ', emotion
-        #     # console.log 'key', key
-        #     self.added 'emotion_results', Random.id(),
-        #         title: emotion.name
-        #         count: emotion.count
-        #         # category:key
-        #         # index: i
-        # # console.log doc_tag_cloud.count()
+        if selected_tags.length > 0
+            # match.tags = $all: debit.tags
+            match.tags = $all: selected_tags
+            # else
+            #     # unless selected_domains.length > 0
+            #     #     unless selected_subreddits.length > 0
+            #     #         unless selected_subreddits.length > 0
+            #     #             unless selected_emotions.length > 0
+            #     match.tags = $all: ['dao']
+            # console.log 'match for tags', match
+            # if selected_subreddits.length > 0
+            #     match.subreddit = $all: selected_subreddits
+            # if selected_domains.length > 0
+            #     match.domain = $all: selected_domains
+            # if selected_emotions.length > 0
+            #     match.max_emotion_name = $all: selected_emotions
+            console.log 'match for tags', match
+    
+    
+            agg_doc_count = Docs.find(match).count()
+            tag_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: "tags": 1 }
+                { $unwind: "$tags" }
+                { $group: _id: "$tags", count: $sum: 1 }
+                { $match: _id: $nin: selected_tags }
+                { $match: count: $lt: agg_doc_count }
+                # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
+                { $sort: count: -1, _id: 1 }
+                { $limit: 10 }
+                { $project: _id: 0, name: '$_id', count: 1 }
+            ], {
+                allowDiskUse: true
+            }
+    
+            tag_cloud.forEach (tag, i) =>
+                # console.log 'queried tag ', tag
+                # console.log 'key', key
+                self.added 'tags', Random.id(),
+                    title: tag.name
+                    count: tag.count
+                    # category:key
+                    # index: i
+            # console.log doc_tag_cloud.count()
 
         self.ready()
 
