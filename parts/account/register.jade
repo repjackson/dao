@@ -35,11 +35,11 @@ template(name='register')
                     |username
                 .ui.fluid.icon.input(class=login_class)
                     //- if email_valid
-                    if email_valid
-                        i.checkmark.large.green.icon
-                    else
-                        i.ban.orange.large.icon
-                    input.email_field(type='email')
+                    // if username_valid
+                    //     i.checkmark.large.green.icon
+                    // else
+                    //     i.ban.orange.large.icon
+                    input.username(type='text')
                 // .ui.fluid.icon.input(class=login_class)
                 //     //- if email_valid
                 //     if username_valid

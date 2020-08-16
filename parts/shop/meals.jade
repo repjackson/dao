@@ -18,10 +18,10 @@ template(name='meal_view')
         .ui.stackable.padded.grid
             .row 
                 .five.wide.column
-                    a(href="/m/meal" title='shop')
-                        +icolor name='shop' cl='ui inline image pointer'
+                    a(href="/m/meal" title='meal')
+                        +icolor name='meal' cl='ui inline image pointer'
                         // i.store.big.icon
-                        // span.mobile.hidden shop
+                        // span.mobile.hidden meal
                     .ui.inline.header 
                         |meal
                     .ui.large.inline.header #{title}
@@ -35,10 +35,15 @@ template(name='meal_view')
                     a.ui.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.username}
+                    .ui.header 
+                        small cook
+                    a.ui.header(href="/user/#{_cook.username}") 
+                        img.ui.avatar.image(src="{{c.url _cook.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_cook.username}
+                    +image_view key='image_id' label='image' direct=true
                         
                 .six.wide.column
                     +boolean_view key='published' label='published' direct=true
-                    +image_view key='image_id' label='image' direct=true
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}

@@ -159,6 +159,7 @@ Meteor.methods
                         username:1
                         first_name:1
                         last_name:1
+                        profile_image_id:1
                     limit:10
                     }).fetch()
     # lookup_user: (username_query, role_filter)->

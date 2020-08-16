@@ -27,7 +27,6 @@ if Meteor.isClient
                 else
                     Session.set 'email_status', 'invalid'
 
-
         'keyup .username': ->
             username = $('.username').val()
             Session.set 'username', username
@@ -105,7 +104,8 @@ if Meteor.isClient
 
     Template.register.helpers
         can_register: ->
-            Session.get('first_name') and Session.get('last_name') and Session.get('email_status', 'valid') and Session.get('password').length>3
+            # Session.get('first_name') and Session.get('last_name') and Session.get('email_status', 'valid') and Session.get('password').length>3
+            Session.get('username') and Session.get('password').length>3
 
             # Session.get('username')
 

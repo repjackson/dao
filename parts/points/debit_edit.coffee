@@ -34,9 +34,8 @@ if Meteor.isClient
             Meteor.users.find({
                 # levels: $in: ['member','domain']
                 _id: $ne: Meteor.userId()
-                username: $ne: Meteor.userId()
             }, {
-                sort:points:-1
+                sort:points:1
                 limit:10
                 })
         # subtotal: ->

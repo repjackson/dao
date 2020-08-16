@@ -822,13 +822,13 @@ Template.single_user_edit.events
         page_doc = Docs.findOne Router.current().params.doc_id
         field = Template.currentData()
 
-        console.log @
-        console.log Template.currentData()
-        console.log Template.parentData()
-        console.log Template.parentData(1)
-        console.log Template.parentData(2)
-        console.log Template.parentData(3)
-        console.log Template.parentData(4)
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData()
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
 
 
         val = t.$('.edit_text').val()

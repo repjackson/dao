@@ -313,7 +313,7 @@ template(name='debit_card')
                     with recipient
                         img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                 |#{recipient.shortname}
-                .ui.inline.header #{amount}p
+                a.ui.inline.header(href="/debit/#{_id}/view") #{amount}p
             .meta #{when}
             .description.f11
                 |#{description}
