@@ -81,7 +81,6 @@ if Meteor.isClient
 
 
     Template.profile_layout.events
-        'click .logout_other_clients': -> Meteor.logoutOtherClients()
         'click .logout': ->
             # Router.go '/login'
             Session.set 'logging_out', true

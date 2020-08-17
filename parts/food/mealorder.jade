@@ -6,7 +6,7 @@ template(name='mealorder_view')
                     if can_edit
                         .ui.button.cancel_reservation
                             i.large.remove.icon
-                            |cancel reservation
+                            |cancel order
                 .eight.wide.column
                     .ui.header
                         i.mealorder.icon
@@ -23,13 +23,13 @@ template(name='mealorder_view')
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
                     .ui.segment
-                        a.ui.inline.header(href="/event/#{event_id}/view")
-                            i.calendar.icon
-                            |event
-                        a(href="/event/#{event_id}/view")
-                            img.ui.medium.image(src="{{c.url mealorder_event.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        a.ui.header(href="/event/#{mealorder_event._id}/view")
-                            |#{mealorder_event.title}
+                        a.ui.inline.header(href="/meal/#{meal_id}/view")
+                            i.food.icon
+                            |meal
+                        a(href="/meal/#{meal_id}/view")
+                            img.ui.medium.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        a.ui.header(href="/meal/#{mealorder_meal._id}/view")
+                            |#{mealorder_meal.title}
                             
                     +number_view key='amount' label='amount' direct=true
                     +textarea_view key='description' label='description' direct=true

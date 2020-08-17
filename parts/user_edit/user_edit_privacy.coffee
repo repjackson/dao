@@ -7,6 +7,14 @@ if Meteor.isClient
     Template.user_edit_privacy.onRendered ->
 
     Template.user_edit_privacy.events
+        'click .logout_other_clients': -> 
+            Meteor.logoutOtherClients ->
+                $('body').toast({
+                    class: 'success',
+                    message: "logged out other clients"
+                })
+
+    
         'click .add_five_credits': ->
             console.log Template.instance()
             if confirm 'add 5 credits?'

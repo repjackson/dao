@@ -205,7 +205,7 @@ Template.registerHelper 'med_date', (input)-> moment(input).format("MMM D 'YY")
 Template.registerHelper 'medium_date', (input)-> moment(input).format("dddd, MMMM Do YYYY")
 Template.registerHelper 'today', -> moment(Date.now()).format("dddd, MMMM Do a")
 Template.registerHelper 'int', (input)-> input.toFixed(0)
-Template.registerHelper 'when', ()-> moment(@_timestamp).fromNow()
+Template.registerHelper 'made_when', ()-> moment(@_timestamp).fromNow()
 Template.registerHelper 'from_now', (input)-> moment(input).fromNow()
 Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
 
@@ -232,7 +232,6 @@ Template.registerHelper 'is_one', ()->
 Template.registerHelper 'loading_class', ()->
     if Session.get 'loading' then 'disabled' else ''
 
-Template.registerHelper 'when', ()-> moment(@_timestamp).fromNow()
 Template.registerHelper 'from_now', (input)-> moment(input).fromNow()
 
 Template.registerHelper 'in_dev', ()-> Meteor.isDevelopment

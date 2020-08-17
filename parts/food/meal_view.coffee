@@ -22,7 +22,7 @@ if Meteor.isClient
                     description: token.description
                     meal_title:meal.title
                     # receipt_email: token.email
-                Meteor.call 'buy_meal', charge, (err,res)=>
+                Meteor.call 'buy_meal', charge, Router.current().params.doc_id, (err,res)=>
                     if err then alert err.reason, 'danger'
                     else
                         console.log 'res', res
@@ -34,6 +34,11 @@ if Meteor.isClient
                         #     $inc: points:500
                         )
         )
+        
+    Template.registerHelper 'mealorder_meal', () ->
+        Docs.findOne @meal_id
+    
+        
 
     Template.meal_view.events
         'click .delete_meal': ->

@@ -111,7 +111,7 @@ Meteor.methods
                 $inc: points:500
     
     
-    buy_meal: (charge) ->
+    buy_meal: (charge, meal_id) ->
         console.log 'charge', charge
         # console.log 'user', user
         if Meteor.isDevelopment
@@ -142,6 +142,7 @@ Meteor.methods
         if new_charge
             Docs.insert
                 model:'mealorder'
+                meal_id:meal_id
                 transaction_type:'1 tiffen'
                 amount:11
                 charge: new_charge

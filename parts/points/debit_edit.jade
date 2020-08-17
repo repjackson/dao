@@ -26,12 +26,12 @@ template(name='debit_edit')
                             // .ui.icon.input
                             //     i.search.icon
                             //     input.search_username(type='text' placeholder='username')
-                            each members
-                                .ui.compact.basic.circular.button.add_recipient
-                                    // i.plus.icon
-                                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                    |#{name}
-                                    small #{points}p
+                            // each members
+                            //     .ui.compact.basic.circular.button.add_recipient
+                            //         // i.plus.icon
+                            //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            //         |#{name}
+                            //         small #{points}p
                     +date_edit key='date' label='date' direct=true   
                     +time_edit key='time' label='time' direct=true   
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
