@@ -5,7 +5,7 @@ if Meteor.isClient
         ), name:'inbox'
 
     Template.inbox.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'messge', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_model_docs', 'message', Router.current().params.username
         @autorun => Meteor.subscribe 'my_received_messages'
         @autorun => Meteor.subscribe 'my_sent_messages'
         # @autorun => Meteor.subscribe 'inbox', Router.current().params.username
@@ -25,7 +25,7 @@ if Meteor.isClient
 
 
     Template.inbox.helpers
-        my_received_messages: ->
+        my_sent_messages: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
                 model:'message'
@@ -34,7 +34,7 @@ if Meteor.isClient
             },
                 sort:_timestamp:-1
 
-        my_sent_messages: ->
+        my_received_messages: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
                 model:'message'
@@ -43,7 +43,24 @@ if Meteor.isClient
             },
                 sort:_timestamp:-1
 
-
+    Template.toggle_view_icon.helpers
+        toggle_view_class: ->
+            if @read_ids and Meteor.userId() in @read_ids
+                'grey'
+            else
+                'large black'
+    Template.toggle_view_icon.events
+        'click .toggle_viewed': ->
+            if @read_ids
+                if Meteor.userId() in @read_ids
+                    Docs.update @_id, 
+                        $pull:read_ids:Meteor.userId()
+                else
+                    Docs.update @_id, 
+                        $addToSet:read_ids:Meteor.userId()
+            else
+                Docs.update @_id, 
+                    $addToSet:read_ids:Meteor.userId()
 
 if Meteor.isServer
     Meteor.publish 'inbox', (username)->

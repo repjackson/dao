@@ -30,6 +30,10 @@ template(name='nav')
             i.large.food.icon
             // em(data-emoji='newspaper')
             // | news
+        a.icon.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
+            i.large.picture.icon
+            // em(data-emoji='newspaper')
+            // | news
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
@@ -77,16 +81,25 @@ template(name='nav')
 
 
 template(name='topbar')
-    .ui.inverted.fluid.large.attached.menu(style="background-color:#{currentUser.theme_color};")
-        .item.header notifications
-        .ui.list
+    .ui.inverted.fluid.large.attached.segment(style="background-color:#{currentUser.theme_color};")
+        .ui.middle.aligned.divided.inverted.list
             each recent_alerts
-                .item #{description} #{author.name}
-        .spacer
-        .spacer
-        a.ui.tertiary.button.item(href="/inbox")
-            i.inbox.icon
+                +recent_alert
+        a.ui.icon.attached.button.item.close_topbar(href="/inbox")
+            i.inbox.large.icon
             |inbox
+        
+template(name='recent_alert')        
+    .item.alert
+        .right.floated.content
+            i.circular.eye.link.icon.mark_read(title='mark read')
+        img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+        .content
+            .header
+                |#{description} 
+            .description #{author.name} #{made_when}
+            
+            
             
             
 template(name='right_sidebar')
@@ -174,6 +187,9 @@ template(name='left_sidebar')
         a.item.toggle_sidebar.set_bug(href="/m/bug" class="{{isActivePath '/m/bug'}}")
             i.bug.icon
             |bugs
+        a.icon.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
+            i.large.picture.icon
+            |photos            
         // a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
         //     i.clock.icon
         //     |rentals

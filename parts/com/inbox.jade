@@ -2,21 +2,38 @@ template(name='inbox')
     .ui.padded.stackable.grid 
         .row
             .four.wide.column
-                .ui.header inbox
-            .twelve.wide.column
-                .ui.header sent messages
+                .ui.header 
+                    i.big.inbox.icon
+                    |inbox
+            .six.wide.column
+                .ui.header 
+                    i.chevron.down.icon
+                    |sent messages
                 .ui.list
                     each my_sent_messages
-                        a.item(href="/m/message/#{_id}/view")
+                        .item
                             .content
                                 .header
                                     |#{when} #{recipient.name}
                                 |#{description}
-                .ui.header received messages
+                                a(href="/m/message/#{_id}/view")
+                                   |view 
+                                +toggle_view_icon
+            .six.wide.column
+                .ui.header 
+                    i.chevron.down.icon
+                    |received messages
                 .ui.list
                     each my_received_messages
-                        a.item(href="/m/message/#{_id}/view") #{when} #{author.name}
+                        .item
                             .content
                                 .header
                                     |#{when} #{recipient.name}
                                 |#{description}
+                                .meta    
+                                    a(href="/m/message/#{_id}/view") #{author.name}
+                                +toggle_view_icon
+                                
+                                
+template(name='toggle_view_icon')
+    i.eye.circular.link.icon.toggle_viewed(class=toggle_view_class title='toggle viewed')

@@ -93,6 +93,10 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'meal', ->
             Session.set 'loading', false
+    'click .set_photo': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'photo', ->
+            Session.set 'loading', false
     'click .set_project': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'project', ->
@@ -131,7 +135,25 @@ Template.topbar.helpers
         Docs.find 
             model:'message'
             recipient_id:Meteor.userId()
-        , srot:_timestamp:-1
+            read_ids:$nin:[Meteor.userId()]
+        , sort:_timestamp:-1
+        
+Template.recent_alert.events
+    'click .mark_read': (e,t)->
+        console.log @
+        console.log $(e.currentTarget).closest('.alert')
+        # $(e.currentTarget).closest('.alert').transition('slide left')
+        Docs.update @_id, 
+            $addToSet:read_ids:Meteor.userId()
+        # Meteor.setTimeout ->
+        # , 500
+        
+Template.topbar.events
+    'click .close_topbar': ->
+        Session.set('viewing_alerts', false)
+
+        
+        
 Template.left_sidebar.events
     # 'click .toggle_sidebar': ->
     #     $('.ui.sidebar')
@@ -148,6 +170,11 @@ Template.left_sidebar.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'member', ->
             Session.set 'loading', false
+    'click .set_photo': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'photo', ->
+            Session.set 'loading', false
+            
     'click .set_shift': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'shift', ->
