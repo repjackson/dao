@@ -32,6 +32,11 @@ if Meteor.isClient
         user: -> Meteor.users.findOne username:Router.current().params.username
 
     Template.profile_layout.events
+        'click a.select_term': ->
+            $('.profile_yield')
+                .transition('fade out', 200)
+                .transition('fade in', 200)
+    
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             if Meteor.userId() is user._id

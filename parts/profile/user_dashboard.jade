@@ -1,70 +1,96 @@
 template(name='user_dashboard')
     // +user_about
     // .ui.hidden.divider
-    .ui.stackable.four.column.grid
-        .column
-            a.ui.inline.header(href="/user/#{username}/credits")
-                i.chevron.down.large.icon
-                |#{total_credit_amount}p
-                // |received
-                small(title='received count') (#{credit_count}x) 
-                small(title='rank') ##{global_credit_count_rank}
-            i.tags.icon(title='credit tags')
-            each credit_tags
-                .ui.small.basic.circular.label #{title}
-                    small #{count}
-            .medscroll
-                each user_credits
-                    +user_credit_segment
-        .column
-            a.ui.inline.spaced.header(href="/user/#{username}/debits")
-                i.chevron.up.icon
-                |#{total_debit_amount}p
-                // |sent
-                small(title='debit count') (#{debit_count}x)
-                small(title='rank') ##{global_debit_count_rank}
-            i.tags.icon(title='credit tags')
-            each debit_tags
-                .ui.label #{title} 
-                    small #{count}
-
-            div
-            .medscroll
-                each user_debits
-                    +user_debit_segment
-        .column
-            .ui.header 
-                i.concierge.bell.icon
-                |requests
-            .medscroll
-                each user_requests
-                    .ui.card
-                        if image_id
-                            img.ui.image(src="{{c.url image_id height=100 width=200}}")
-                        .content
-                            a.header(href="/request/#{_id}/view")
-                                |#{point_bounty}pts: #{title}
-                            // |!{description}
-                            |status: #{status}
-                            if complete 
-                                |completed by #{completer.name}
-        .column
-            .ui.header 
-                i.calendar.icon
-                |events
-            .medscroll
-                each user_event_tickets
-                    .ui.card
-                        if ticket_event.image_id
-                            a(href="/event/#{event_id}/view")
-                                img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=100 width=200 crop='fill'}}")
-                        .content
-                            a.header(href="/event/#{event_id}/view")
-                                |#{ticket_event.title}
-                            |#{fac.shortname}
-                            |#{description}
-                            |{{med_date date}}
-                            |{{long_time time}}
+    .ui.stackable.grid
+        .row
+            .sixteen.wide.column
+                .ui.inline.header(style="color:#{current_user.theme_color};") #{points}pts
+                .ui.big.basic.circular.label(style="color:#{current_user.theme_color};") {{to_percent one_ratio}}% one ratio
+                .ui.large.basic.circular.label(style="color:#{current_user.theme_color};") #{flow_volume} volume
+                //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
+                //-     i.refresh.icon
+                if is_current_user
+                    +boolean_edit key='online' label='online' direct=true
+                    +text_edit key='current_status' label='status' icon='clock' direct=true
+                else 
+                    if online 
+                        .ui.green.large.label 
+                            i.large.checkmark.icon
+                            |online
+                    else
+                        .ui.disabled.large.label 
+                            |offline
+                    if current_status
+                        .ui.basic.big.label(title='status' style="color:#{current_user.theme_color};")
+                            i.grey.clock.icon
+                            |#{current_status}
+                if is_dev
+                    .ui.small.inline.header #{_id}
+            
+        .four.column.row
+            .column
+                a.ui.inline.header(href="/user/#{username}/credits")
+                    i.chevron.down.large.icon
+                    |#{total_credit_amount}p
+                    // |received
+                    small(title='received count') (#{credit_count}x) 
+                    small(title='rank') ##{global_credit_count_rank}
+                i.tags.icon(title='credit tags')
+                each credit_tags
+                    .ui.small.basic.circular.label #{title}
+                        small #{count}
+                .medscroll
+                    each user_credits
+                        +user_credit_segment
+            .column
+                a.ui.inline.spaced.header(href="/user/#{username}/debits")
+                    i.chevron.up.icon
+                    |#{total_debit_amount}p
+                    // |sent
+                    small(title='debit count') (#{debit_count}x)
+                    small(title='rank') ##{global_debit_count_rank}
+                i.tags.icon(title='credit tags')
+                each debit_tags
+                    .ui.label #{title} 
+                        small #{count}
+    
+                div
+                .medscroll
+                    each user_debits
+                        +user_debit_segment
+            .column
+                .ui.header 
+                    i.concierge.bell.icon
+                    |requests
+                .medscroll
+                    each user_requests
+                        .ui.card
+                            if image_id
+                                img.ui.image(src="{{c.url image_id height=100 width=200}}")
+                            .content
+                                a.header(href="/request/#{_id}/view")
+                                    |#{point_bounty}pts: #{title}
+                                // |!{description}
+                                |status: #{status}
+                                if complete 
+                                    |completed by #{completer.name}
+            .column
+                .ui.header 
+                    i.calendar.icon
+                    |events
+                .medscroll
+                    each user_event_tickets
+                        .ui.card
+                            if ticket_event.image_id
+                                a(href="/event/#{event_id}/view")
+                                    img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=100 width=200 crop='fill'}}")
+                            .content
+                                a.header(href="/event/#{event_id}/view")
+                                    |#{ticket_event.title}
+                                |#{fac.shortname}
+                                |#{description}
+                                |{{med_date date}}
+                                |{{long_time time}}
 
 
 
