@@ -302,9 +302,12 @@ a.title, #title {
     border-radius:10px !important;
 }
 
-.ui.embed, .ui.text, .invert{
+.ui.embed, .ui.text {
     border-radius: 10px !important;
-    /* filter: invert(1) !important; */
+}
+
+.invert{
+  filter: invert(1) !important; 
 }
 .left.floated{
     margin:3px !important;

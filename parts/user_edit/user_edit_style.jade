@@ -7,3 +7,7 @@ template(name='user_edit_style')
     a.ui.big.button(href='https://www.w3schools.com/cssref/css_colors.asp' target='_window')
         i.external.icon
         |color list
+    div
+    +user_key_value_edit key='invert_class' value='invert' label='invert on' direct=true
+    +user_key_value_edit key='invert_class' value='' label='invert off' direct=true
+        
