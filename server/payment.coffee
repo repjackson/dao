@@ -42,7 +42,7 @@ Meteor.methods
         new_charge
 
 
-    strip_credit_topup: (charge) ->
+    credit_topup: (charge) ->
         console.log 'charge', charge
         # console.log 'user', user
         if Meteor.isDevelopment

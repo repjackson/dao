@@ -103,7 +103,7 @@ if Meteor.isClient
             )
 
     Template.meal_view.helpers 
-        meal_orders: ->
+        mealorders: ->
             Docs.find
                 model:'mealorder'
 

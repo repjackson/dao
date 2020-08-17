@@ -23,7 +23,7 @@ if Meteor.isClient
                     source: token.id
                     description: token.description
                     # receipt_email: token.email
-                Meteor.call 'strip_credit_topup', charge, (err,res)=>
+                Meteor.call 'credit_topup', charge, (err,res)=>
                     if err then alert err.reason, 'danger'
                     else
                         Swal.fire(

@@ -34,7 +34,7 @@ template(name='nav')
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
         .right.menu
-            a.icon.item.alerts(href="#")
+            a.icon.item.alerts.select_term(href="#" class=alert_toggle_class)
                 i.large.bell.icon
                 if unread_message_count
                     |#{unread_message_count}
@@ -56,8 +56,10 @@ template(name='nav')
                 else 
                     i.large.user.large.icon
                 strong.mobile.hidden #{currentUser.name}
-                // small.mobile.hidden
-                //     |#{currentUser.points}p
+            a.mobile.hidden.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
+                |#{currentUser.credit}c
+            a.mobile.hidden.item(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_points'}}")
+                |#{currentUser.points}p
             a.icon.item.toggle_rightbar
                 i.ellipsis.vertical.large.icon
             // else
@@ -99,12 +101,12 @@ template(name='right_sidebar')
         a.item.toggle_rightbar(href="/user/#{currentUser.username}/about" class="{{isActivePath 'user_about'}}")
             | about
             i.info.icon
-        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}")
-        //     | received
-        //     i.chevron.down.icon
-        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}")
-        //     | sent
-        //     i.chevron.up.icon
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActivePath 'user_credits'}}")
+            | received
+            i.chevron.down.icon
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActivePath 'user_sent'}}")
+            | sent
+            i.chevron.up.icon
         a.item.toggle_rightbar(href="/user/#{currentUser.username}/events" class="{{isActivePath 'user_events'}}")
             | events
             i.calendar.icon
@@ -123,6 +125,9 @@ template(name='right_sidebar')
         a.item.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActivePath 'user_offers'}}")
             | offers
             i.hand.holding.heart.icon
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActivePath 'user_credit'}}")
+            | credit
+            i.dollar.icon
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}")
         //     | chat
         //     i.chat.icon

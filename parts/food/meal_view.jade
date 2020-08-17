@@ -83,8 +83,8 @@ template(name='meal_view')
                         i.clock.icon
                         |latest orders
                     .ui.large.link.selection.list
-                        each meal_orders
-                            a.ui.item(href="/m/meal_order/#{_id}/view") 
+                        each mealorders
+                            a.ui.item(href="/m/mealorder/#{_id}/view") 
                                 .content
                                     .header
                                         .ui.inline.green.header $#{amount}

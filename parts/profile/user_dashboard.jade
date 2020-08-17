@@ -11,23 +11,11 @@ template(name='user_dashboard')
                 small(title='rank') ##{global_credit_count_rank}
             i.tags.icon(title='credit tags')
             each credit_tags
-                .ui.label #{title}
+                .ui.small.basic.circular.label #{title}
                     small #{count}
             .medscroll
                 each user_credits
-                    .ui.segment.user_credit_segment.pointer
-                        .header
-                            strong #{amount}pt 
-                            // |from 
-                            if author.profile_image_id
-                                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{_author.shortname}
-                        small #{when}
-                        div
-                        |#{description}
-                        div
-                        each tags
-                            .ui.mini.basic.label #{this}
+                    +user_credit_segment
         .column
             a.ui.inline.spaced.header(href="/user/#{username}/debits")
                 i.chevron.up.icon
@@ -89,3 +77,20 @@ template(name='user_dashboard')
                             |#{description}
                             |{{med_date date}}
                             |{{long_time time}}
+
+
+
+template(name='user_credit_segment')
+    .ui.segment.user_credit_segment.pointer
+        .header
+            strong #{amount}pt 
+            // |from 
+            if author.profile_image_id
+                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            |#{_author.shortname}
+        small #{when}
+        div
+        |#{description}
+        div
+        each tags
+            .ui.mini.basic.label #{this}

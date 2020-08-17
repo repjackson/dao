@@ -1,7 +1,12 @@
 template(name='user_sent')  
-    .ui.header 
+    .ui.inline.header 
         i.send.icon
         |sent
+    i.tags.icon(title='credit tags')
+    each debit_tags
+        .ui.basic.circular.label #{title}
+            small #{count}
+        
     .scrolling
         each sent_items
             .ui.segment

@@ -35,6 +35,9 @@ Template.right_sidebar.events
             Session.set 'logging_out', false
             Router.go '/login'
 
+Template.nav.helpers
+    alert_toggle_class: ->
+        if Session.get('viewing_alerts') then 'active' else ''
 Template.nav.events
     'click .alerts': ->
         Session.set('viewing_alerts', !Session.get('viewing_alerts'))
@@ -124,7 +127,6 @@ Template.topbar.onCreated ->
     @autorun => Meteor.subscribe 'my_sent_messages'
 
 Template.topbar.helpers
-    
     recent_alerts: ->
         Docs.find 
             model:'message'

@@ -1,23 +1,28 @@
 template(name='user_credits')  
-    .ui.header 
+    .ui.inline.header 
         i.chevron.down.icon
         |points received
-    .scrolling
+    i.tags.icon(title='credit tags')
+    each credit_tags
+        .ui.basic.circular.label #{title}
+            small #{count}
+        
+    .ui.stackable.cards.scrolling
         each user_credits
-            .ui.segment
-                strong #{amount}pt 
-                a(href="/debit/#{_id}/view")
-                    |#{when} from 
-                a(href="/user/#{author.username}")
-                    if author.profile_image_id
-                        img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    |#{author.name}
-                .description
+            .ui.card.user_credit_segment
+                .content
+                    .header
+                        strong #{amount}pt 
+                        // |from 
+                        if author.profile_image_id
+                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.shortname}
+                    small #{when}
+                    div
                     |#{description}
+                    div
                     each tags
                         .ui.mini.basic.label #{this}
-                if is_admin
-                    +remove_button
 
 template(name='user_credits_small')
     .ui.inline.header 
