@@ -23,10 +23,9 @@ template(name='user_dashboard')
                     if current_status
                         .ui.basic.big.label(title='status' style="color:#{current_user.theme_color};")
                             i.grey.clock.icon
-                            |#{current_status}
+                            |!{current_status}
                 if is_dev
                     .ui.small.inline.header #{_id}
-            
         .four.column.row
             .column
                 a.ui.inline.header(href="/user/#{username}/credits")
@@ -38,7 +37,7 @@ template(name='user_dashboard')
                 i.tags.icon(title='credit tags')
                 each credit_tags
                     .ui.small.basic.circular.label #{title}
-                        small #{count}
+                        // small #{count}
                 .medscroll.ui.segments
                     each user_credits
                         +user_credit_segment
@@ -51,8 +50,8 @@ template(name='user_dashboard')
                     small(title='rank') ##{global_debit_count_rank}
                 i.tags.icon(title='credit tags')
                 each debit_tags
-                    .ui.label #{title} 
-                        small #{count}
+                    .ui.small.basic.circular.label #{title} 
+                        // small #{count}
     
                 div
                 .medscroll.ui.segments
@@ -67,7 +66,7 @@ template(name='user_dashboard')
                         .ui.card
                             if image_id
                                 img.ui.image(src="{{c.url image_id height=100 width=200}}")
-                            .content
+                            .content.zoom.pointer
                                 a.header(href="/request/#{_id}/view")
                                     |#{point_bounty}pts: #{title}
                                 // |!{description}
@@ -84,7 +83,7 @@ template(name='user_dashboard')
                             if ticket_event.image_id
                                 a(href="/event/#{event_id}/view")
                                     img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=200 width=200 crop='fit'}}")
-                            .content
+                            .content.zoom.pointer
                                 a.header(href="/event/#{event_id}/view")
                                     |#{ticket_event.title}
                                 |#{fac.shortname}
@@ -95,7 +94,7 @@ template(name='user_dashboard')
 
 
 template(name='user_credit_segment')
-    .ui.segment.user_credit_segment.pointer
+    .ui.segment.user_credit_segment.pointer.zoom
         .header
             strong #{amount}pt 
             // |from 
@@ -111,7 +110,7 @@ template(name='user_credit_segment')
 
 
 template(name='user_debit_segment')
-    .ui.segment.user_debit_segment.pointer
+    .ui.segment.user_debit_segment.pointer.zoom
         .header
             strong #{amount}pt
             | to 

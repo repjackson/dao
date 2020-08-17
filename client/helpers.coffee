@@ -207,7 +207,7 @@ Template.registerHelper 'home_long_date', (input)-> moment(input).format("dd, MM
 Template.registerHelper 'short_date', (input)-> moment(input).format("dddd, MMMM Do")
 Template.registerHelper 'med_date', (input)-> moment(input).format("MMM D 'YY")
 # Template.registerHelper 'medium_date', (input)-> moment(input).format("MMMM Do YYYY")
-Template.registerHelper 'medium_date', (input)-> moment(input).format("dddd, MMMM Do YYYY")
+Template.registerHelper 'medium_date', (input)-> moment(input).format("dddd, MMMM Do")
 Template.registerHelper 'today', -> moment(Date.now()).format("dddd, MMMM Do a")
 Template.registerHelper 'int', (input)-> input.toFixed(0)
 Template.registerHelper 'made_when', ()-> moment(@_timestamp).fromNow()

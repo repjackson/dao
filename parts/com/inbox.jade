@@ -11,10 +11,11 @@ template(name='inbox')
             .six.wide.column
                 .ui.header 
                     i.chevron.down.icon
-                    |sent messages
-                .ui.list
+                    |#{my_sent_messages.count} sent messages
+                .ui.list.medscroll
                     each my_sent_messages
                         .item
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=100 width=200}}")
                             .content
                                 .header
                                     |#{when} to #{recipient.name} #{target.name} #{to.name}
@@ -27,16 +28,17 @@ template(name='inbox')
             .six.wide.column
                 .ui.header 
                     i.chevron.down.icon
-                    |received messages
-                .ui.list
+                    |#{my_received_messages.count} received messages
+                .ui.list.medscroll
                     each my_received_messages
                         .item
+                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=100 width=200}}")
                             .content
                                 .header
-                                    |#{when} from #{recipient.name} #{target.name}
+                                    |#{when} from #{author.name}
                                 |#{description} #{body}
                                 .meta    
-                                    a(href="/m/message/#{_id}/view") #{author.name}
+                                    a(href="/m/message/#{_id}/view")
                                 +toggle_view_icon
                                 if is_dev
                                     +print_this

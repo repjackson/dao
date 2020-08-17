@@ -2,34 +2,36 @@ template(name='mealorder_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
+                .five.wide.column
                     if can_edit
-                        .ui.button.cancel_reservation
+                        .ui.basic.red.button.cancel_order
                             i.large.remove.icon
                             |cancel order
-                .eight.wide.column
+                    a.ui.zoom.pointer.card(href="/m/meal/#{meal_id}/view")
+                        .content
+                            .ui.inline.header
+                                i.food.icon
+                                |meal
+                        img.ui.rounded.fluid.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        .content
+                            .ui.header
+                                |#{mealorder_meal.title}
+                .six.wide.column
                     .ui.header
-                        i.mealorder.icon
-                        |${{money_format amount}}
+                        i.food.icon
+                        |${{amount}}
                         | mealorder
                     .ui.small.header
                         i.clock.icon
                         | #{when}
-                    .ui.segment
-                        .ui.inline.header 
-                            i.user.outline.icon
-                            |buyer
-                        a.ui.inline.header(href="/user/#{_author.username}") 
-                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{_author.username}
-                    .ui.segment
-                        a.ui.inline.header(href="/m/meal/#{meal_id}/view")
-                            i.food.icon
-                            |meal
-                        a(href="/m/meal/#{meal_id}/view")
-                            img.ui.medium.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        a.ui.header(href="/m/meal/#{mealorder_meal._id}/view")
-                            |#{mealorder_meal.title}
+                    a.ui.pointer.zoom.card(href="/user/#{_author.username}")
+                        .content
+                            .ui.inline.header 
+                                i.user.outline.icon
+                                |buyer
+                            .ui.inline.header
+                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{_author.username}
                             
                     +number_view key='amount' label='amount' direct=true
                     +textarea_view key='description' label='description' direct=true
@@ -44,8 +46,21 @@ template(name='mealorder_view')
                     +comments
                     // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
+                .five.wide.column
+                    unless submitted
+                        +date_edit key='date' label='date' direct=true
+                        +text_edit key='notes' label='notes' direct=true
+                        +key_value_edit key='tiffen_type' value='meat' direct=true
+                        +key_value_edit key='tiffen_type' value='veggie' direct=true
+                        .ui.green.button.submit_order
+                            |submit order
+                    else
+                        +date_view key='date' label='date' direct=true
+                        .spacer
+                        +text_view key='notes' label='notes' direct=true
+                        .spacer
+                        .ui.large.label
+                            |tiffen type: #{tiffen_type}
+                        .spacer
+                        // +boolean_edit key='delivery' label='add delivery' direct=true                    
 

@@ -136,9 +136,6 @@ html.ios body {
   to   { opacity: 1}
 }
 
-.result_column {
-  animation: fadein .5s;
-}
 
 @media screen and (max-width: 1100px) {
   .overlay-text {
@@ -530,18 +527,14 @@ body {
 } 
 
 
-.button, .selector, .card, .dark_mode, .header, .item{
-    animation: fadein .5s !important;
-    -webkit-transition: opacity .25s ease-in !important;
+.button, .selector, .card, .dark_mode, .ui.header, .ui.label, .item, p, img{
+    animation: fadein 1s !important;
+    /*-webkit-transition: opacity .25s ease-in !important;*/
     /* -webkit-transition: opacity .25s ease-out; */
     /* animation: fadeout .25s; */
 }
 
 
-@keyframes fadein {
-  from { opacity: 0}
-  to   { opacity: 1}
-}
 
 @keyframes fadeout {
   from { opacity: 1}
@@ -564,9 +557,6 @@ body {
      /*font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Lato+Mono', sans-serif !important; */
     /*font-family: 'Ubuntu', sans-serif !important;*/
-}
-.segment, .input, .header, .button {
-  animation: fadein .5s;
 }
 
 @keyframes fadein {

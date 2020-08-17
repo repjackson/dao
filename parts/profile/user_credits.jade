@@ -14,7 +14,7 @@ template(name='user_credits')
         
     .ui.stackable.cards.scrolling
         each user_credits
-            .ui.card.user_credit_segment
+            a.ui.card(href="/m/debit/#{_id}/view")
                 .content
                     .header
                         strong #{amount}pt 

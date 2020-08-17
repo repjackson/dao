@@ -700,7 +700,7 @@ template(name='date_view')
         div
         if icon
             +icon name=icon cl='ui avatar image'
-        .ui.grey.inline.header
+        .ui.grey.inline.small.header
             if title
                 |#{title}
             else if label
@@ -709,7 +709,8 @@ template(name='date_view')
                 |#{key}
             else
                 |#{this}
-        .ui.inline.header &nbsp; #{field_value}
+        .ui.inline.header 
+            |&nbsp; {{medium_date field_value}}
 
 
 
