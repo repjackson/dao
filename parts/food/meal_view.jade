@@ -1,15 +1,15 @@
 template(name='meal_card')
     .ui.card.pointer
         if image_id
-            a.image(href="/meal/#{_id}/view")
+            a.image(href="/m/meal/#{_id}/view")
                 img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
         .content
-            a.ui.header(href="/meal/#{_id}/view") #{title}
+            a.ui.header(href="/m/meal/#{_id}/view") #{title}
             // |#{when}
             .ui.green.big.label
                 |$#{dollar_price}
-            .ui.teal.big.label 
-                |#{point_price}pts
+            // .ui.teal.big.label 
+            //     |#{point_price}pts
 
 
 
@@ -27,7 +27,7 @@ template(name='meal_view')
                     .ui.large.inline.header #{title}
                         
                     if can_edit
-                        a.ui.icon.button.edit_meal(href="/meal/#{_id}/edit")
+                        a.ui.icon.button.edit_meal(href="/m/meal/#{_id}/edit")
                             i.large.pencil.icon
                             // |edit
                     .ui.header 
@@ -72,27 +72,22 @@ template(name='meal_view')
                     .ui.big.green.button.buy_for_usd
                         // |buy for 
                         |$#{dollar_price}
-                    .ui.inline.header or
-                    .ui.big.teal.button.buy
-                        // i.cart.icon
-                        // |buy for 
-                        |#{point_price}pts
-                    .ui.header your points #{currentUser.calculated_points}
+                    // .ui.inline.header or
+                    // .ui.big.teal.button.buy
+                    //     // i.cart.icon
+                    //     // |buy for 
+                    //     |#{point_price}pts
+                    .ui.header your points #{currentUser.points}
                 
                     .ui.header 
                         i.clock.icon
-                        |latest purchases
+                        |latest orders
                     .ui.large.link.selection.list
-                    
-                        each meal_transactions
-                            a.ui.item(href="/debit/#{_id}/view") 
+                        each meal_orders
+                            a.ui.item(href="/m/meal_order/#{_id}/view") 
                                 .content
                                     .header
-                                        if is_usd
-                                            .ui.inline.green.header $ #{amount}cents
-                                        else
-                                            .ui.inline.header #{point_amount}pts
-                                        
+                                        .ui.inline.green.header $#{amount}
                                         |#{when} #{_author_username}
                             if is_admin
                                 +remove_button
@@ -109,44 +104,3 @@ template(name='meal_view')
                     //-     i.checkmark.icon
                     //-     |submit
 
-template(name='meal_edit')
-    with current_doc
-        .ui.stackable.padded.grid
-            .centered.middle.aligned.row 
-                .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/meal/#{_id}/view")
-                        i.checkmark.big.icon
-                .eight.wide.center.aligned.column
-                    .ui.header 
-                        +icon name='meal'
-                        |edit meal: #{title}
-                .four.wide.center.aligned.column
-                    .ui.icon.button.delete_item
-                        i.large.remove.icon
-            .row
-                .four.wide.column
-                    .ui.header 
-                        small author
-                        |#{_author.username}
-                    +number_edit key='inventory' label='inventory' direct=true                    
-                .eight.wide.column
-                    +text_edit key='title' label='title' direct=true
-                    .ui.header
-                        |audience
-                            
-                    +number_edit key='point_price' label='point price' icon='hashtag' direct=true
-                    +number_edit key='dollar_price' label='usd price' icon='money' direct=true
-                    +textarea_edit key='description' label='description' direct=true
-                    +image_edit key='image_id' label='image' direct=true
-                    div 
-                    +array_edit key='tags' label='tags' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    +boolean_edit key='published' label='published' direct=true
-                    // unless published
-                    //     a.ui.fluid.green.button.submit(href="/save")
-                    //         i.checkmark.icon
-                    //         |publish
-                    // else
-                    //     .ui.basic.button.unpublish 
-                    //         |unpublish

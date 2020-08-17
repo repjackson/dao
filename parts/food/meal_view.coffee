@@ -1,41 +1,7 @@
 if Meteor.isClient
-    Router.route '/meal/:doc_id/view', (->
-        @layout 'layout'
-        @render 'meal_view'
-        ), name:'meal_view'
-
     Template.meal_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'model_docs', 'transaction'
-
-    Template.meal_view.events
-        'click .delete_meal': ->
-            if confirm 'delete meal?'
-                Docs.remove @_id
-
-        'click .submit': ->
-            # if confirm 'confirm?'
-                # Meteor.call 'send_meal', @_id, =>
-                #     Router.go "/meal/#{@_id}/view"
-
-        'click .buy': ->
-            if confirm "buy for #{@point_price} points?"
-                Docs.insert 
-                    model:'transaction'
-                    transaction_type:'shop_purchase'
-                    payment_type:'points'
-                    is_points:true
-                    point_amount:@point_price
-                    meal_id:@_id
-                Meteor.users.update Meteor.userId(),
-                    $inc:points:-@point_price
-                Meteor.users.update @_author_id, 
-                    $inc:points:@point_price
-
-
-    Template.meal_view.helpers
-    Template.meal_view.events
-    Template.meal_view.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'mealorder'
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
         else if Meteor.isProduction
@@ -69,7 +35,31 @@ if Meteor.isClient
                         )
         )
 
-    Template.meal_view.onRendered ->
+    Template.meal_view.events
+        'click .delete_meal': ->
+            if confirm 'delete meal?'
+                Docs.remove @_id
+
+        'click .submit': ->
+            # if confirm 'confirm?'
+                # Meteor.call 'send_meal', @_id, =>
+                #     Router.go "/meal/#{@_id}/view"
+
+        'click .buy': ->
+            if confirm "buy for #{@point_price} points?"
+                Docs.insert 
+                    model:'transaction'
+                    transaction_type:'shop_purchase'
+                    payment_type:'points'
+                    is_points:true
+                    point_amount:@point_price
+                    meal_id:@_id
+                Meteor.users.update Meteor.userId(),
+                    $inc:points:-@point_price
+                Meteor.users.update @_author_id, 
+                    $inc:points:@point_price
+
+
 
     Template.meal_view.events
         'click .buy_for_usd': ->
@@ -112,12 +102,10 @@ if Meteor.isClient
                     # )
             )
 
-        Template.meal_view.helpers 
-            meal_transactions: ->
-                Docs.find
-                    model:'transaction'
-                    transaction_type:'shop_purchase'
-                    meal_id: Router.current().params.doc_id
+    Template.meal_view.helpers 
+        meal_orders: ->
+            Docs.find
+                model:'mealorder'
 
 
 
@@ -147,54 +135,3 @@ if Meteor.isClient
         #             submitted:true
 
 
-if Meteor.isClient
-    Router.route '/meal/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'meal_edit'
-        ), name:'meal_edit'
-
-    Template.meal_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.meal_edit.onRendered ->
-
-
-    Template.meal_edit.events
-        'click .delete_item': ->
-            if confirm 'delete item?'
-                Docs.remove @_id
-
-        'click .submit': ->
-            Docs.update Router.current().params.doc_id,
-                $set:published:true
-            if confirm 'confirm?'
-                Meteor.call 'send_meal', @_id, =>
-                    Router.go "/meal/#{@_id}/view"
-
-
-    Template.meal_edit.helpers
-    Template.meal_edit.events
-
-if Meteor.isServer
-    Meteor.methods
-        send_meal: (meal_id)->
-            meal = Docs.findOne meal_id
-            target = Meteor.users.findOne meal.recipient_id
-            gifter = Meteor.users.findOne meal._author_id
-
-            console.log 'sending meal', meal
-            Meteor.users.update target._id,
-                $inc:
-                    points: meal.amount
-            Meteor.users.update gifter._id,
-                $inc:
-                    points: -meal.amount
-            Docs.update meal_id,
-                $set:
-                    submitted:true
-                    submitted_timestamp:Date.now()
-
-
-
-            Docs.update Router.current().params.doc_id,
-                $set:
-                    submitted:true

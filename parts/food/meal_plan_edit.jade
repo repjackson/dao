@@ -1,0 +1,45 @@
+template(name='meal_plan_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row 
+                .four.wide.center.aligned.column
+                    a.ui.green.big.icon.button(href="/m/meal_plan/#{_id}/view")
+                        i.checkmark.big.icon
+                .eight.wide.center.aligned.column
+                    .ui.header 
+                        +icon name='invoice'
+                        |edit meal_plan: #{title}
+                .four.wide.center.aligned.column
+                    .ui.icon.button.delete_item
+                        i.large.remove.icon
+            .row
+                .four.wide.column
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    +number_edit key='inventory' label='inventory' direct=true    
+                    +single_user_edit key='chef_id' label='chef' direct=true
+                .four.wide.column
+                    +text_edit key='title' label='title' direct=true
+                            
+                    +number_edit key='point_price' label='point price' icon='hashtag' direct=true
+                    +number_edit key='dollar_price' label='usd price' icon='money' direct=true
+                    +textarea_edit key='description' label='description' direct=true
+                .four.wide.column
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    .ui.header meal_plan plans
+                    i.plus.link.icon.new_meal_plan_plan  
+                    each meal_plan_plans
+                        .ui.small.header #{title}
+                .four.wide.column
+                    +boolean_edit key='published' label='published' direct=true
+                    // unless published
+                    //     a.ui.fluid.green.button.submit(href="/save")
+                    //         i.checkmark.icon
+                    //         |publish
+                    // else
+                    //     .ui.basic.button.unpublish 
+                    //         |unpublish

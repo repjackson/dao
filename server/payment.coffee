@@ -138,10 +138,10 @@ Meteor.methods
                 charge_card.return result: result
             return
         new_charge = charge_card.wait()
-        console.log new_charge
+        console.log 'new chaarge', new_charge
         if new_charge
             Docs.insert
-                model:'food_order'
+                model:'mealorder'
                 transaction_type:'1 tiffen'
                 amount:11
                 charge: new_charge
