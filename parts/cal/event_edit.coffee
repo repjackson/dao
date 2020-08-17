@@ -8,6 +8,12 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'model_docs', 'room_reservation'
     Template.event_edit.onRendered ->
+    Template.event_edit.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'room'
+    Template.event_edit.helpers
+        rooms: ->
+            Docs.find   
+                model:'room'
 
 
     Template.event_edit.events

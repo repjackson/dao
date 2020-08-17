@@ -17,14 +17,16 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
     
     Template.profile_layout.onRendered ->
-        # Meteor.setTimeout ->
-        #     $('.profile_nav_item')
-        #         .popup()
-        # , 1000
+        Meteor.setTimeout ->
+            $('.profile_nav_item')
+                .popup()
+        , 1000
         user = Meteor.users.findOne(username:Router.current().params.username)
         # Meteor.call 'calc_user_stats', user._id, ->
-        if user
-            Meteor.call 'recalc_one_stats', user._id, ->
+        Meteor.setTimeout ->
+            if user
+                Meteor.call 'recalc_one_stats', user._id, ->
+        , 2000
 
 
     Template.profile_layout.helpers
@@ -37,6 +39,13 @@ if Meteor.isClient
                 .transition('fade out', 200)
                 .transition('fade in', 200)
     
+        'click .refresh_user_stats': ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            # Meteor.call 'calc_user_stats', user._id, ->
+            Meteor.call 'recalc_one_stats', user._id, ->
+            Meteor.call 'calc_user_tags', user._id, ->
+    
+    Template.user_dashboard.events
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             if Meteor.userId() is user._id
@@ -52,11 +61,6 @@ if Meteor.isClient
                         recipient_id: user._id
             Router.go "/debit/#{new_debit_id}/edit"
 
-        'click .refresh_user_stats': ->
-            user = Meteor.users.findOne(username:Router.current().params.username)
-            # Meteor.call 'calc_user_stats', user._id, ->
-            Meteor.call 'recalc_one_stats', user._id, ->
-            Meteor.call 'calc_user_tags', user._id, ->
 
         'click .tip': ->
             # user = Meteor.users.findOne(username:@username)

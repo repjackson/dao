@@ -89,6 +89,32 @@ if Meteor.isClient
                         timer: 1500
                     )
             )
+        
+        'click .return': (e,t)->
+            # val = parseInt $('.point_input').val()
+            # Session.set('point_paying',val)
+            # $('.ui.modal').modal('show')
+            Swal.fire({
+                title: "return ticket?"
+                # text: "#{Template.parentData().title}"
+                icon: 'question'
+                # input:'number'
+                confirmButtonText: 'return'
+                confirmButtonColor: 'orange'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.remove @_id
+                    Swal.fire(
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'ticket returned',
+                        showConfirmButton: false,
+                        timer: 1500
+                    )
+            )
     
         'click .buy_for_usd': (e,t)->
             console.log Template.instance()
@@ -157,12 +183,6 @@ if Meteor.isClient
                 }).count()
             @max_attendees-ticket_count
 
-    Template.event_edit.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'room'
-    Template.event_edit.helpers
-        rooms: ->
-            Docs.find   
-                model:'room'
 
 
 if Meteor.isServer

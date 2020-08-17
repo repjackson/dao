@@ -155,6 +155,7 @@ if Meteor.isClient
                             title:"#{@amount} sent"
                             icon:'success'
                             showConfirmButton: false
+                            position: 'top-end',
                             timer: 1000
                         )
                         Router.go "/debit/#{@_id}/view"
