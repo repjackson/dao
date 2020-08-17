@@ -31,19 +31,7 @@ template(name='user_dashboard')
             div
             .medscroll
                 each user_debits
-                    .ui.segment.user_debit_segment.pointer
-                        .header
-                            strong #{amount}pt
-                            | to 
-                            if recipient.profile_image_id
-                                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{recipient.shortname}
-                        small #{when}
-                        div
-                        |#{description}
-                        div
-                        each tags
-                            .ui.mini.basic.label #{this}
+                    +user_debit_segment
         .column
             .ui.header 
                 i.concierge.bell.icon
@@ -88,6 +76,22 @@ template(name='user_credit_segment')
             if author.profile_image_id
                 img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             |#{_author.shortname}
+        small #{when}
+        div
+        |#{description}
+        div
+        each tags
+            .ui.mini.basic.label #{this}
+
+
+template(name='user_debit_segment')
+    .ui.segment.user_debit_segment.pointer
+        .header
+            strong #{amount}pt
+            | to 
+            if recipient.profile_image_id
+                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            |#{recipient.shortname}
         small #{when}
         div
         |#{description}

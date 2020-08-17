@@ -50,7 +50,7 @@ template(name='nav')
                 //- i.large.user.large.icon
                 if currentUser.profile_image_id
                     if is_admin
-                        i.large.user.shield.icon(title='admin mode on')
+                        i.large.shield.icon(title='admin mode on')
                     else
                         img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 else 

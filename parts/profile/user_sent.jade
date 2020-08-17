@@ -7,21 +7,19 @@ template(name='user_sent')
         .ui.basic.circular.label #{title}
             small #{count}
         
-    .scrolling
+    .ui.stackable.cards.scrolling
         each sent_items
-            .ui.segment
-                if recipient.profile_image_id
-                    img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                strong #{amount}pt
-                |to
-                a(href="/user/#{recipient.username}")
-                    |#{recipient.username}
+            .ui.card
                 .content
-                    a(href="/debit/#{_id}/view")
-                        |#{when} 
-                    .description
-                        |#{description}
-                        each tags
-                            .ui.mini.basic.label #{this}
-                    if is_admin
-                        +remove_button
+                    .header
+                        strong #{amount}pt
+                        | to 
+                        if recipient.profile_image_id
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{recipient.shortname}
+                    small #{when}
+                    div
+                    |#{description}
+                    div
+                    each tags
+                        .ui.mini.basic.label #{this}

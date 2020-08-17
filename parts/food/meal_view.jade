@@ -87,7 +87,7 @@ template(name='meal_view')
                             a.ui.item(href="/m/mealorder/#{_id}/view") 
                                 .content
                                     .header
-                                        .ui.inline.green.header $#{amount}
+                                        .ui.inline.green.header $#{dollar_amount} #{amount}
                                         |#{when} #{_author_username}
                             if is_admin
                                 +remove_button

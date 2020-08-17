@@ -32,11 +32,11 @@ template(name='user_about')
                     |#{this}
                 // +user_info_tag
         div
-        .ui.header 
-            i.line.chart.icon
-            |levels
-        each levels
-            .ui.basic.label #{this}
+        // .ui.header 
+        //     i.line.chart.icon
+        //     |levels
+        // each levels
+        //     .ui.basic.label #{this}
         div
         .ui.header 
             |city:
@@ -46,11 +46,12 @@ template(name='user_about')
             |state:
             |#{state}               
         div
-        .ui.header 
-            i.shield.icon
-            |roles
-        each roles
-            .ui.label #{this}
+        if is_admin
+            .ui.header 
+                i.shield.icon
+                |roles
+            each roles
+                .ui.label #{this}
             
 
 template(name='user_info_tag')

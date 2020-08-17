@@ -75,32 +75,60 @@ if Meteor.isClient
 
             instance = Template.instance()
 
-
-            Swal.fire({
-                title: "buy #{@title}?"
-                text: "this will charge you $#{@dollar_price}"
-                icon: 'question'
-                showCancelButton: true,
-                confirmButtonText: 'confirm'
-                cancelButtonText: 'cancel'
-            }).then((result)=>
-                if result.value
-                    # Session.set('topup_amount',5)
-                    # Template.instance().checkout.open
-                    instance.checkout.open
-                        name: @title
-                        # email:Meteor.user().emails[0].address
-                        description: 'meal purchase'
-                        amount: @dollar_price*100
-            
-                    # Meteor.users.update @_author_id,
-                    #     $inc:credit:@order_price
-                    # Swal.fire(
-                    #     'topup initiated',
-                    #     ''
-                    #     'success'
-                    # )
-            )
+            if Meteor.user().credit > @dollar_price
+                Swal.fire({
+                    title: "buy #{@title}?"
+                    text: "this will charge you #{@dollar_price} credits"
+                    icon: 'question'
+                    showCancelButton: true
+                    confirmButtonText: 'confirm'
+                    cancelButtonText: 'cancel'
+                }).then((result)=>
+                    if result.value
+                        # Session.set('topup_amount',5)
+                        # Template.instance().checkout.open
+                        Docs.insert 
+                            model:'dollar_transaction'
+                            product_id: Router.current().params.doc_id
+                            dollar_amount: @dollar_price
+                            target_user_id:@chef_id
+                        Docs.insert
+                            model:'mealorder'
+                            meal_id: Router.current().params.doc_id
+                            transaction_type:'1 tiffen'
+                            dollar_amount:@dollar_price
+                        Swal.fire(
+                            'credit transfered',
+                            ''
+                            'success'
+                        )
+                )
+            else
+                Swal.fire({
+                    title: "buy #{@title}?"
+                    text: "this will charge you $#{@dollar_price}"
+                    icon: 'question'
+                    showCancelButton: true
+                    confirmButtonText: 'confirm'
+                    cancelButtonText: 'cancel'
+                }).then((result)=>
+                    if result.value
+                        # Session.set('topup_amount',5)
+                        # Template.instance().checkout.open
+                        instance.checkout.open
+                            name: @title
+                            # email:Meteor.user().emails[0].address
+                            description: 'meal purchase'
+                            amount: @dollar_price*100
+                
+                        # Meteor.users.update @_author_id,
+                        #     $inc:credit:@order_price
+                        # Swal.fire(
+                        #     'topup initiated',
+                        #     ''
+                        #     'success'
+                        # )
+                )
 
     Template.meal_view.helpers 
         mealorders: ->
