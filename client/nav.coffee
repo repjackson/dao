@@ -130,6 +130,13 @@ Template.topbar.onCreated ->
     @autorun => Meteor.subscribe 'my_received_messages'
     @autorun => Meteor.subscribe 'my_sent_messages'
 
+Template.nav.helpers
+    unread_count: ->
+        Docs.find( 
+            model:'message'
+            recipient_id:Meteor.userId()
+            read_ids:$nin:[Meteor.userId()]
+        ).count()
 Template.topbar.helpers
     recent_alerts: ->
         Docs.find 
@@ -140,8 +147,8 @@ Template.topbar.helpers
         
 Template.recent_alert.events
     'click .mark_read': (e,t)->
-        console.log @
-        console.log $(e.currentTarget).closest('.alert')
+        # console.log @
+        # console.log $(e.currentTarget).closest('.alert')
         # $(e.currentTarget).closest('.alert').transition('slide left')
         Docs.update @_id, 
             $addToSet:read_ids:Meteor.userId()

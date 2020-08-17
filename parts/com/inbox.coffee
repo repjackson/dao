@@ -12,15 +12,11 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'stat'
 
     Template.inbox.events
-        'keyup .new_offer': (e,t)->
-            if e.which is 13
-                val = $('.new_offer').val()
-                console.log val
-                target_user = Meteor.users.findOne(username:Router.current().params.username)
+        'click .add_message': ->
+            new_message_id =
                 Docs.insert
-                    model:'offer'
-                    body: val
-                    target_user_id: target_user._id
+                    model:'message'
+            Router.go "/m/message/#{new_message_id}/edit"
 
 
 

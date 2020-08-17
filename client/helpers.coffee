@@ -31,6 +31,11 @@ Template.registerHelper 'user_class', () ->
 
 Template.registerHelper 'recipient', () ->
     Meteor.users.findOne @recipient_id
+Template.registerHelper 'target', () ->
+    Meteor.users.findOne @target_user_id
+Template.registerHelper 'to', () ->
+    Meteor.users.findOne @to_user_id
+    
 Template.registerHelper 'shift_leader', () ->
     Meteor.users.findOne @leader_user_id
 Template.registerHelper 'product', () ->

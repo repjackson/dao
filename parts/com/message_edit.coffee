@@ -34,8 +34,8 @@ if Meteor.isClient
         
         can_submit: ->
             true
-            # message = Docs.findOne Router.current().params.doc_id
-            # message.amount and message.recipient_id
+            message = Docs.findOne Router.current().params.doc_id
+            message.description and message.recipient_id
     Template.message_edit.events
         'click .add_recipient': ->
             Docs.update Router.current().params.doc_id,

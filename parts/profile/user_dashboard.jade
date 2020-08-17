@@ -83,7 +83,7 @@ template(name='user_dashboard')
                         .ui.card
                             if ticket_event.image_id
                                 a(href="/event/#{event_id}/view")
-                                    img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=100 width=200 crop='fill'}}")
+                                    img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=200 width=200 crop='fit'}}")
                             .content
                                 a.header(href="/event/#{event_id}/view")
                                     |#{ticket_event.title}
