@@ -121,12 +121,10 @@ template(name='delta')
                                     +delta_list_result
                                     // .ui.divider
                     //- +Template.dynamic template=view_mode_template
-            //- .row 
-            //-     .sixteen.wide.column
-            //-         if model_stats_exists
-            //-             +Template.dynamic template=model_stats
-            //-         .ui.header calculations
-            //-         .ui.button rerun calculations
+            .row 
+                .sixteen.wide.column
+                    if model_stats_exists
+                        +Template.dynamic template=model_stats
         unless current_model
             if subs_ready
                 if is_dev

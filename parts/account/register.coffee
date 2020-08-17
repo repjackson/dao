@@ -71,7 +71,8 @@ if Meteor.isClient
                     alert err
                 else
                     console.log res
-                    username = "#{Session.get('first_name').toLowerCase()}_#{Session.get('last_name').toLowerCase()}"
+                    unless username
+                        username = "#{Session.get('first_name').toLowerCase()}_#{Session.get('last_name').toLowerCase()}"
                     console.log username
                     Meteor.users.update res,
                         $addToSet: 
@@ -82,15 +83,16 @@ if Meteor.isClient
                             last_name: Session.get('last_name')
                             app:'stand'
                             username:username
-                    Meteor.loginWithPassword username, password, (err,res)=>
-                        if err
-                            alert err.reason
-                            # if err.error is 403
-                            #     Session.set 'message', "#{username} not found"
-                            #     Session.set 'enter_mode', 'register'
-                            #     Session.set 'username', "#{username}"
-                        else
-                            Router.go '/'
+                    Router.go "/user/#{username}"
+                    # Meteor.loginWithPassword username, password, (err,res)=>
+                    #     if err
+                    #         alert err.reason
+                    #         # if err.error is 403
+                    #         #     Session.set 'message', "#{username} not found"
+                    #         #     Session.set 'enter_mode', 'register'
+                    #         #     Session.set 'username', "#{username}"
+                    #     else
+                    #         Router.go '/'
                 # else
                 #     Meteor.loginWithPassword username, password, (err,res)=>
                 #         if err

@@ -34,6 +34,10 @@ template(name='nav')
             i.large.picture.icon
             // em(data-emoji='newspaper')
             // | news
+        a.zoom.icon.item.mobile.hidden.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
+            i.large.dollar.icon
+            // em(data-emoji='newspaper')
+            // | news
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon

@@ -101,6 +101,10 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'project', ->
             Session.set 'loading', false
+    'click .set_expense': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'expense', ->
+            Session.set 'loading', false
     'click .set_post': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'post', ->

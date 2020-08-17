@@ -15,11 +15,10 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'model_docs', 'transaction'
         @autorun => Meteor.subscribe 'model_docs', 'request'
         @autorun => Meteor.subscribe 'model_docs', 'offer'
-        @autorun => Meteor.subscribe 'model_docs', 'comment'
+        # @autorun => Meteor.subscribe 'model_docs', 'comment'
         @autorun => Meteor.subscribe 'future_events'
         @autorun => Meteor.subscribe 'model_docs', 'post'
-        @autorun => Meteor.subscribe 'model_docs', 'global_stats'
-        @autorun => Meteor.subscribe 'all_users'
+        # @autorun => Meteor.subscribe 'model_docs', 'global_stats'
         # @autorun -> Meteor.subscribe('home_tag_results',
         #     selected_tags.array()
         #     selected_location_tags.array()
@@ -34,7 +33,7 @@ if Meteor.isClient
         #     Session.get('view_purchased')
         #     # Session.get('view_incomplete')
         #     )
-        @autorun => Meteor.subscribe 'model_docs', 'home_doc'
+        # @autorun => Meteor.subscribe 'model_docs', 'home_doc'
 
     Template.home.helpers
         viewing_finance_details: -> Session.get('view_finance_details')
@@ -163,7 +162,14 @@ if Meteor.isClient
     Template.home_event_card.onCreated ->
         # console.log @
         @autorun => Meteor.subscribe 'event_transactions', @data
+        @autorun => Meteor.subscribe 'doc_comments', @data._id
 
+    Template.debit_card.onCreated ->
+        @autorun => Meteor.subscribe 'doc_comments', @data._id
+    Template.home_offer_card.onCreated ->
+        @autorun => Meteor.subscribe 'doc_comments', @data._id
+    Template.home_request_card.onCreated ->
+        @autorun => Meteor.subscribe 'doc_comments', @data._id
 
     # Template.home_card.events
     #     'click .record_home': ->

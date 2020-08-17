@@ -21,7 +21,7 @@ template(name='user_dashboard')
                         .ui.disabled.large.label 
                             |offline
                     if current_status
-                        .ui.basic.big.label(title='status' style="color:#{current_user.theme_color};")
+                        .ui.small.header(title='status' style="color:#{current_user.theme_color};")
                             i.grey.clock.icon
                             |!{current_status}
                 if is_dev
