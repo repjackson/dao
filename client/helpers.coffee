@@ -225,7 +225,7 @@ Template.registerHelper 'loading_class', ()->
 
 Template.registerHelper 'in_dev', ()-> Meteor.isDevelopment
 
-Template.registerHelper 'is_eric', ()-> if Meteor.userId() and Meteor.userId() in ['K77p8B9jpXbTz6nfD'] then true else false
+Template.registerHelper 'is_eric', ()-> if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c'] then true else false
 Template.registerHelper 'publish_when', ()-> moment(@publish_date).fromNow()
 
 

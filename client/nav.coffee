@@ -49,6 +49,13 @@ Template.nav.events
         else
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'admin'
+    'click .toggle_dev': ->
+        if 'dev' in Meteor.user().roles
+            Meteor.users.update Meteor.userId(),
+                $pull:'roles':'dev'
+        else
+            Meteor.users.update Meteor.userId(),
+                $addToSet:'roles':'dev'
     'click .set_member': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'member', ->
@@ -177,6 +184,14 @@ Template.left_sidebar.events
         else
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'admin'
+    'click .toggle_dev': ->
+        if 'dev' in Meteor.user().roles
+            Meteor.users.update Meteor.userId(),
+                $pull:'roles':'dev'
+        else
+            Meteor.users.update Meteor.userId(),
+                $addToSet:'roles':'dev'
+                
     'click .set_member': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'member', ->
@@ -209,6 +224,10 @@ Template.left_sidebar.events
     'click .set_event': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'event', ->
+            Session.set 'loading', false
+    'click .set_expense': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'expense', ->
             Session.set 'loading', false
     'click .set_badge': ->
         Session.set 'loading', true

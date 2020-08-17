@@ -171,40 +171,50 @@ template(name='left_sidebar')
         // a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One
-        a.item.set_member.toggle_sidebar(href="/m/member" class="{{isActivePath 'm/member'}}" title='players')
+        a.item.set_member.toggle_sidebar.zoom(href="/m/member" class="{{isActivePath 'm/member'}}" title='players')
             i.large.users.icon
             | directory
-        a.item.toggle_sidebar(href="/events" class="{{isActivePath '/events'}}")
+        a.item.toggle_sidebar.zoom(href="/events" class="{{isActivePath '/events'}}")
             i.large.calendar.icon
             |events
-        a.item.toggle_sidebar(href="/m/request" class="{{isActivePath '/m/request'}}")
+        a.item.toggle_sidebar.zoom(href="/m/request" class="{{isActivePath '/m/request'}}")
             i.large.concierge.bell.icon
             |requests
-        a.item.toggle_sidebar(href="/m/offer" class="{{isActivePath '/m/offer'}}")
+        a.item.toggle_sidebar.zoom(href="/m/offer" class="{{isActivePath '/m/offer'}}")
             i.large.hand.holding.heart.icon
             |offers
-        a.item.toggle_sidebar.set_post(href="/m/post" class="{{isActivePath '/m/post'}}")
+        a.item.toggle_sidebar.zoom.set_post(href="/m/post" class="{{isActivePath '/m/post'}}")
             i.large.newspaper.icon
             |news
-        // a.item.toggle_sidebar(href="/m/collective" class="{{isActivePath 'requests'}}")
+        // a.item.toggle_sidebar.zoom(href="/m/collective" class="{{isActivePath 'requests'}}")
         //     i.users.icon
         //     |collectives
-        a.item.toggle_sidebar(href="/m/meal" class="{{isActivePath '/m/meal'}}")
+        a.item.toggle_sidebar.zoom(href="/m/meal" class="{{isActivePath '/m/meal'}}")
             i.large.food.icon
             |food
-        a.item.toggle_sidebar.set_bug(href="/m/bug" class="{{isActivePath '/m/bug'}}")
+        a.item.toggle_sidebar.zoom.set_bug(href="/m/bug" class="{{isActivePath '/m/bug'}}")
             i.large.bug.icon
             |bugs
-        a.icon.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
+        a.icon.item.toggle_sidebar.zoom.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
             i.large.large.picture.icon
-            |photos            
-        // a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
+            |photos  
+        a.zoom.icon.item.toggle_sidebar.zoom.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
+            i.large.dollar.icon
+            |expenses            
+        // a.item.toggle_sidebar.zoom.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
         //     i.clock.icon
         //     |rentals
         // if has_badge 'facilitator'
-        a.item.toggle_sidebar(href="/chat" class="{{isActivePath '/chat'}}" title='chat') 
-            |chat
-            i.large.chat.icon
+        // a.item.toggle_sidebar(href="/chat" class="{{isActivePath '/chat'}}" title='chat') 
+        //     |chat
+        //     i.large.chat.icon
+        if is_eric
+            a.icon.item.toggle_dev.toggle_sidebar
+                |toggle dev
+                if is_dev
+                    i.code.blue.large.icon
+                else
+                    i.code.large.icon
         if is_in_admin
             a.icon.item.toggle_admin.toggle_sidebar
                 |toggle admin
