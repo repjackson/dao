@@ -2,6 +2,10 @@ template(name='user_sent')
     .ui.inline.header 
         i.send.icon
         |sent
+    .ui.basic.label #{total_debit_amount}p total sent
+    .ui.basic.label(title='debit count') #{debit_count} gifts sent
+    .ui.basic.label(title='rank') ##{global_debit_count_rank} gift sent rank
+        
     i.tags.icon(title='credit tags')
     each debit_tags
         .ui.basic.circular.label #{title}

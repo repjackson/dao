@@ -60,7 +60,7 @@ template(name='nav')
                 |#{currentUser.credit}c
             a.mobile.hidden.item(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_points'}}")
                 |#{currentUser.points}p
-            a.icon.item.toggle_rightbar
+            a.icon.item.toggle_rightbar.select_term
                 i.ellipsis.vertical.large.icon
             // else
             //     // a.item(href="/register" title='register')

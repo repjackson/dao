@@ -23,12 +23,12 @@ template(name='mealorder_view')
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
                     .ui.segment
-                        a.ui.inline.header(href="/meal/#{meal_id}/view")
+                        a.ui.inline.header(href="/m/meal/#{meal_id}/view")
                             i.food.icon
                             |meal
-                        a(href="/meal/#{meal_id}/view")
+                        a(href="/m/meal/#{meal_id}/view")
                             img.ui.medium.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        a.ui.header(href="/meal/#{mealorder_meal._id}/view")
+                        a.ui.header(href="/m/meal/#{mealorder_meal._id}/view")
                             |#{mealorder_meal.title}
                             
                     +number_view key='amount' label='amount' direct=true

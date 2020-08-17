@@ -48,7 +48,7 @@ Meteor.users.helpers
     name: ->
         if @nickname
             "#{@nickname}"
-        else if @first_name and @last_name
+        else if @first_name
             "#{@first_name} #{@last_name}"
         else
             "#{@username}"
@@ -65,8 +65,8 @@ Meteor.users.helpers
         if @tags
             @tags[..5]
     has_points: -> @points > 0
-    is_tech_admin: ->
-        @_id in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
+    # is_tech_admin: ->
+    #     @_id in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
 
 
 

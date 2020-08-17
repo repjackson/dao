@@ -39,7 +39,7 @@ template(name='user_dashboard')
                 each credit_tags
                     .ui.small.basic.circular.label #{title}
                         small #{count}
-                .medscroll
+                .medscroll.ui.segments
                     each user_credits
                         +user_credit_segment
             .column
@@ -55,11 +55,11 @@ template(name='user_dashboard')
                         small #{count}
     
                 div
-                .medscroll
+                .medscroll.ui.segments
                     each user_debits
                         +user_debit_segment
             .column
-                .ui.header 
+                a.ui.inline.spaced.header(href="/user/#{username}/requests")
                     i.concierge.bell.icon
                     |requests
                 .medscroll
@@ -75,7 +75,7 @@ template(name='user_dashboard')
                                 if complete 
                                     |completed by #{completer.name}
             .column
-                .ui.header 
+                a.ui.inline.spaced.header(href="/user/#{username}/events")
                     i.calendar.icon
                     |events
                 .medscroll
