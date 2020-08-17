@@ -16,7 +16,12 @@ template(name='user_edit_privacy')
                 a.ui.basic.compact.button.logout_other_clients(href="#")
                     i.globe.icon
                     |log out other clients
+                if is_admin
+                    a.ui.basic.compact.button.force_logout(href="#")
+                        i.shield.icon
+                        |force log out
+                
                 .ui.header sessions
                 .ui.large.list
-                    each currentUser.services.resume.loginTokens
+                    each current_user.services.resume.loginTokens
                         .item #{when}: #{hashedToken}

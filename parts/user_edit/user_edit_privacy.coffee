@@ -15,6 +15,12 @@ if Meteor.isClient
                 })
 
     
+        'click .force_logout': ->
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            Meteor.users.update current_user._id,
+                $set:'services.resume.loginTokens':[]
+
+    
         'click .add_five_credits': ->
             console.log Template.instance()
             if confirm 'add 5 credits?'
