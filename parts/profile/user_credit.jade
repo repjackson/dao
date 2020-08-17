@@ -1,7 +1,9 @@
 template(name='user_credit')  
-    .ui.header 
+    .ui.header.recalc_user_credit
         i.dollar.green.large.icon
         |fiat credit
+    .ui.header total topup amount #{current_user.total_topup_amount}
+    .ui.header total topup count #{current_user.topup_count}
     .ui.padded.stackable.two.column.grid
         .column
             .scrolling
@@ -53,13 +55,15 @@ template(name='user_credit')
                         +icolor name='refund-2--v1'
                         |topups
                     .ui.bulleted.list.medscroll
-                        each user_credits
+                        each user_topups
                             .item 
                                 .content
                                     .header $#{amount}
                                     .description
                                         |#{transaction_type}
                                         |#{when}
+                                    if is_dev
+                                        +print_this
             .column
                 .ui.segment
                     .ui.header
@@ -67,22 +71,22 @@ template(name='user_credit')
                         |your balance
                     .ui.small.inline.header current credit
                     .ui.green.inline.header #{current_user.credit}c
-                    +session_boolean_toggle key='adding_credit' label='add credit' icon='plus'
-                    if session_is 'adding_credit' true
-                        .ui.small.header add amount
-                        //- .ui.input
-                        //-     input.add_amount(type='number')
-                        //- .ui.horizontal.divider or
-                        .ui.circular.compact.basic.large.button.add_five_credits
-                            |5
-                        .ui.circular.compact.basic.large.button.add_ten_credits
-                            |10
-                        .ui.circular.compact.basic.large.button.add_twenty_credits
-                            |20
-                        .ui.circular.compact.basic.large.button.add_fifty_credits
-                            |50
-                        .ui.circular.compact.basic.large.button.add_hundred_credits
-                            |100
+                    // +session_boolean_toggle key='adding_credit' label='add credit' icon='plus'
+                    // if session_is 'adding_credit' true
+                    .ui.small.header add amount
+                    //- .ui.input
+                    //-     input.add_amount(type='number')
+                    //- .ui.horizontal.divider or
+                    .ui.circular.compact.basic.large.button.add_five_credits
+                        |$5
+                    .ui.circular.compact.basic.large.button.add_ten_credits
+                        |$10
+                    .ui.circular.compact.basic.large.button.add_twenty_credits
+                        |$20
+                    .ui.circular.compact.basic.large.button.add_fifty_credits
+                        |$50
+                    .ui.circular.compact.basic.large.button.add_hundred_credits
+                        |$100
                 
 
             .column

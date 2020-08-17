@@ -7,9 +7,11 @@ if Meteor.isClient
     Template.user_credit.onCreated ->
         @autorun -> Meteor.subscribe 'received_dollar_debits', Router.current().params.username
         @autorun -> Meteor.subscribe 'sent_dollar_debits', Router.current().params.username
-        # @autorun => Meteor.subscribe 'user_credit', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_topups', Router.current().params.username
 
     Template.user_credit.events
+        'click .recalc_user_credit': ->
+            Meteor.call 'recalc_user_credit', Router.current().params.username, ->
         'keyup .new_debit': (e,t)->
             if e.which is 13
                 val = $('.new_debit').val()
@@ -88,8 +90,7 @@ if Meteor.isClient
                             ''
                             'success'
                         Docs.insert
-                            model:'transaction'
-                            transaction_type:'topup'
+                            model:'topup'
                             amount:amount
                         Meteor.users.update Meteor.userId(),
                             $inc: credit:amount
@@ -106,7 +107,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'wc top up'
+                description: 'one top up'
                 amount: 500
 
 
@@ -117,7 +118,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'wc top up'
+                description: 'one top up'
                 amount: 1000
 
 
@@ -128,7 +129,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'wc top up'
+                description: 'one top up'
                 amount: 2000
 
 
@@ -139,7 +140,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'wc top up'
+                description: 'one top up'
                 amount: 5000
 
 
@@ -150,7 +151,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'wc top up'
+                description: 'one top up'
                 amount: 10000
 
 
@@ -168,7 +169,7 @@ if Meteor.isClient
             #         Template.instance().checkout.open
             #             name: 'credit deposit'
             #             # email:Meteor.user().emails[0].address
-            #             description: 'wc top up'
+            #             description: 'one top up'
             #             amount: 5
             #
             #         # Meteor.users.update @_author_id,
@@ -181,17 +182,85 @@ if Meteor.isClient
             # )
 
     Template.user_credit.helpers
-        user_credits: ->
+        user_topups: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
-                model:'transaction'
+                model:'topup'
                 _author_id: current_user._id
             }, sort:_timestamp:-1
 
 
 if Meteor.isServer
-    Meteor.publish 'user_transactions', (username)->
+    Meteor.publish 'user_topups', (username)->
         current_user = Meteor.users.findOne(username:username)
         Docs.find
-            model:'transaction'
+            model:'topup'
             _author_id: current_user._id
+    
+    Meteor.methods 
+        recalc_user_credit: (username)->
+            user = Meteor.users.findOne username:username
+            user_id = user._id
+            # console.log classroom
+            # student_stats_doc = Docs.findOne
+            #     model:'student_stats'
+            #     user_id: user_id
+            #
+            # unless student_stats_doc
+            #     new_stats_doc_id = Docs.insert
+            #         model:'student_stats'
+            #         user_id: user_id
+            #     student_stats_doc = Docs.findOne new_stats_doc_id
+
+            topups = Docs.find({
+                model:'topup'
+                amount:$exists:true
+                _author_id:user_id})
+            topup_count = topups.count()
+            total_topup_amount = 0
+            for topup in topups.fetch()
+                total_topup_amount += topup.amount
+
+            console.log 'total topup amount', total_topup_amount
+
+            # credits = Docs.find({
+            #     model:'debit'
+            #     amount:$exists:true
+            #     recipient_id:user_id})
+            # credit_count = credits.count()
+            # total_credit_amount = 0
+            # for credit in credits.fetch()
+            #     total_credit_amount += credit.amount
+
+            # console.log 'total credit amount', total_credit_amount
+            # calculated_user_balance = total_credit_amount-total_debit_amount
+
+            # # average_credit_per_student = total_credit_amount/student_count
+            # # average_debit_per_student = total_debit_amount/student_count
+            # flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
+            # points = total_credit_amount-total_debit_amount
+            
+            
+            # if total_debit_amount is 0 then total_debit_amount++
+            # if total_credit_amount is 0 then total_credit_amount++
+            # # debit_credit_ratio = total_debit_amount/total_credit_amount
+            # unless total_debit_amount is 1
+            #     unless total_credit_amount is 1
+            #         one_ratio = total_debit_amount/total_credit_amount
+            #     else
+            #         one_ratio = 0
+            # else
+            #     one_ratio = 0
+                    
+            # dc_ratio_inverted = 1/debit_credit_ratio
+
+            # credit_debit_ratio = total_credit_amount/total_debit_amount
+            # cd_ratio_inverted = 1/credit_debit_ratio
+
+            # one_score = total_bandwith*dc_ratio_inverted
+
+            Meteor.users.update user_id,
+                $set:
+                    topup_count: topup_count
+                    total_topup_amount:total_topup_amount
+                    credit: total_topup_amount

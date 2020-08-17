@@ -77,9 +77,9 @@ template(name='profile_layout')
                         a.ui.large.compact.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
                             i.large.gift.icon
                             // span pts sent
-                        a.ui.large.compact.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                            i.large.dollar.icon
-                            // span credit
+                        // a.ui.large.compact.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                        //     i.large.dollar.icon
+                        //     // span credit
                         a.ui.large.compact.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
                             i.calendar.large.icon
                             // span events
