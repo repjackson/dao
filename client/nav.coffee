@@ -1,6 +1,7 @@
 Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
     @autorun => Meteor.subscribe 'all_users'
+    @autorun => Meteor.subscribe 'my_received_messages'
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
@@ -97,10 +98,6 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'event', ->
             Session.set 'loading', false
-    'click .set_badge': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'badge', ->
-            Session.set 'loading', false
     'click .set_location': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'location', ->
@@ -170,10 +167,12 @@ Template.recent_alert.events
         # console.log @
         # console.log $(e.currentTarget).closest('.alert')
         # $(e.currentTarget).closest('.alert').transition('slide left')
-        Docs.update @_id, 
-            $addToSet:read_ids:Meteor.userId()
+        Meteor.call 'mark_read', @_id, ->
+            
         # Meteor.setTimeout ->
         # , 500
+     
+     
         
 Template.topbar.events
     'click .close_topbar': ->

@@ -45,4 +45,7 @@ template(name='inbox')
                                 
                                 
 template(name='toggle_view_icon')
-    i.eye.circular.link.icon.toggle_viewed(class=toggle_view_class title='toggle viewed')
+    if is_read
+        i.eye.circular.link.grey.icon.mark_unread(title='mark unread')
+    else
+        i.eye.circular.link.large.icon.mark_read(title='mark read')

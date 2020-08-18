@@ -40,24 +40,14 @@ if Meteor.isClient
                 sort:_timestamp:-1
 
     Template.toggle_view_icon.helpers
-        toggle_view_class: ->
-            if @read_ids and Meteor.userId() in @read_ids
-                'grey'
-            else
-                'large black'
+        is_read: ->
+            @read_ids and Meteor.userId() in @read_ids
     Template.toggle_view_icon.events
-        'click .toggle_viewed': ->
-            if @read_ids
-                if Meteor.userId() in @read_ids
-                    Docs.update @_id, 
-                        $pull:read_ids:Meteor.userId()
-                else
-                    Docs.update @_id, 
-                        $addToSet:read_ids:Meteor.userId()
-            else
-                Docs.update @_id, 
-                    $addToSet:read_ids:Meteor.userId()
-
+        'click .mark_read': ->
+            Meteor.call 'mark_read', @_id, ->
+        'click .mark_unread': ->
+            Meteor.call 'mark_unread', @_id, ->
+            
 if Meteor.isServer
     Meteor.publish 'inbox', (username)->
         Docs.find

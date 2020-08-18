@@ -53,7 +53,8 @@ template(name='meal_view')
                         a.ui.header(href="/user/#{_author.username}") 
                             img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
-                    .ui.header 
+                    div
+                    .ui.inline.header 
                         |cook
                     +user_info cook_id
                     a.ui.header(href="/user/#{_cook.username}") 

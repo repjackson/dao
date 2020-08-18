@@ -41,9 +41,9 @@ template(name='user_edit_layout')
                             a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
                                 i.lock.privacy.large.icon 
                                 // | privacy
-                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
-                                i.certificate.large.icon
-                                // |badges
+                            // a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
+                            //     i.certificate.large.icon
+                            //     // |badges
                             a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
                                 i.shield.large.icon
                                 // | membership
