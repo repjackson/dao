@@ -50,7 +50,7 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "r a"
 	callback: ->
-        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
+        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','YFPxjXCgjhMYEPADS']
             if Meteor.user().roles and 'admin' in Meteor.user().roles
                 Meteor.users.update Meteor.userId(), $pull:roles:'admin'
             else
@@ -58,7 +58,7 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "r s"
 	callback: ->
-        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
+        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','YFPxjXCgjhMYEPADS']
             if 'steward' in Meteor.user().roles
                 Meteor.users.update Meteor.userId(), $pull:roles:'steward'
             else
@@ -89,7 +89,7 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "g d"
 	callback: ->
-        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
+        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','YFPxjXCgjhMYEPADS']
             Router.go '/dev'
 globalHotkeys.add
 	combo: "g p"

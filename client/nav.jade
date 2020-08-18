@@ -72,7 +72,7 @@ template(name='nav')
                 |#{currentUser.credit}c
             a.mobile.hidden.item(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
                 |#{currentUser.points}p
-            a.icon.item.toggle_rightbar.select_term
+            a.icon.large.item.toggle_rightbar.select_term
                 i.ellipsis.vertical.large.icon
             // else
             //     // a.item(href="/register" title='register')
@@ -116,17 +116,17 @@ template(name='right_sidebar')
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'user_dashboard'}}")
-            | dashboard
+            | dashboard (#{currentUser.points}p)
             i.large.dashboard.icon
         
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/about" class="{{isActiveRoute 'user_about'}}")
             | about
             i.large.info.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
-            | received
+            | #{currentUser.total_credit_amount}p received
             i.large.chevron.down.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActiveRoute 'user_sent'}}")
-            | sent
+            | #{currentUser.total_debit_amount}p sent
             i.large.chevron.up.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/events" class="{{isActiveRoute 'user_events'}}")
             | events
@@ -147,7 +147,7 @@ template(name='right_sidebar')
             | offers
             i.large.hand.holding.heart.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
-            | credit
+            | #{currentUser.credit} credit
             i.large.dollar.icon
         // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}")
         //     | chat
@@ -159,7 +159,6 @@ template(name='right_sidebar')
         a.item.toggle_nightmode.zoom.toggle_rightbar(href="#")
             i.lightbulb.large.icon
             |dark mode
-
         a.item.logout.zoom(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}" )
             |logout
             if is_logging_out
