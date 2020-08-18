@@ -132,9 +132,6 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "g a"
 	callback: -> Router.go "/admin"
-globalHotkeys.add
-	combo: "g a"
-	callback: -> Router.go "/admin"
 
 
 globalHotkeys.add
