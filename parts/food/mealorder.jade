@@ -4,7 +4,7 @@ template(name='mealorder_view')
             .row 
                 .five.wide.column
                     if can_edit
-                        .ui.basic.red.button.cancel_order
+                        .ui.basic.button.cancel_order
                             i.large.remove.icon
                             |cancel order
                     a.ui.zoom.pointer.card(href="/m/meal/#{meal_id}/view")
@@ -12,7 +12,7 @@ template(name='mealorder_view')
                             .ui.inline.header
                                 i.food.icon
                                 |meal
-                        img.ui.rounded.fluid.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        img.ui.rounded.fluid.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .content
                             .ui.header
                                 |#{mealorder_meal.title}
@@ -30,7 +30,7 @@ template(name='mealorder_view')
                                 i.user.outline.icon
                                 |buyer
                             .ui.inline.header
-                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 |#{_author.username}
                             
                     +number_view key='amount' label='amount' direct=true
@@ -62,5 +62,10 @@ template(name='mealorder_view')
                         .ui.large.label
                             |tiffen type: #{tiffen_type}
                         .spacer
-                        // +boolean_edit key='delivery' label='add delivery' direct=true                    
-
+                        
+                        +key_value_edit key='transfer' value='pickup' label='pickup' direct=true                    
+                        +key_value_edit key='transfer' value='delivery' label='delivery' direct=true                    
+                        if key_value_is key='transfer' value='delivery' direct=true
+                            +date_edit key='delivery_date' label='delivery date' direct=true
+                            +time_edit key='delivery_time' label='delivery time' direct=true
+                            

@@ -4,9 +4,9 @@ template(name='user_dashboard')
     .ui.stackable.grid
         .row
             .sixteen.wide.column
-                .ui.inline.header(style="color:#{current_user.theme_color};") #{points}pts
-                .ui.big.basic.circular.label(style="color:#{current_user.theme_color};") {{to_percent one_ratio}}% one ratio
-                .ui.large.basic.circular.label(style="color:#{current_user.theme_color};") #{flow_volume} volume
+                .ui.inline.header(style="color:#{current_user.theme_color};" class=currentUser.invert_class) #{points}pts
+                .ui.big.basic.circular.label(style="color:#{current_user.theme_color};" class=currentUser.invert_class) {{to_percent one_ratio}}% one ratio
+                .ui.large.basic.circular.label(style="color:#{current_user.theme_color};" class=currentUser.invert_class) #{flow_volume} volume
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
                 if is_current_user
@@ -21,7 +21,7 @@ template(name='user_dashboard')
                         .ui.disabled.large.label 
                             |offline
                     if current_status
-                        .ui.small.header(title='status' style="color:#{current_user.theme_color};")
+                        .ui.small.header(title='status' style="color:#{current_user.theme_color};" class=currentUser.invert_class)
                             i.grey.clock.icon
                             |!{current_status}
                 if is_dev
@@ -65,7 +65,7 @@ template(name='user_dashboard')
                     each user_requests
                         .ui.card
                             if image_id
-                                img.ui.image(src="{{c.url image_id height=100 width=200}}")
+                                img.ui.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
                             .content.zoom.pointer
                                 a.header(href="/request/#{_id}/view")
                                     |#{point_bounty}pts: #{title}
@@ -82,7 +82,7 @@ template(name='user_dashboard')
                         .ui.card
                             if ticket_event.image_id
                                 a(href="/event/#{event_id}/view")
-                                    img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=200 width=200 crop='fit'}}")
+                                    img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=200 width=200 crop='fit'}}" class=currentUser.invert_class)
                             .content.zoom.pointer
                                 a.header(href="/event/#{event_id}/view")
                                     |#{ticket_event.title}
@@ -99,7 +99,7 @@ template(name='user_credit_segment')
             strong #{amount}pt 
             // |from 
             if author.profile_image_id
-                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{_author.shortname}
         small #{when}
         div
@@ -115,7 +115,7 @@ template(name='user_debit_segment')
             strong #{amount}pt
             | to 
             if recipient.profile_image_id
-                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{recipient.shortname}
         small #{when}
         div

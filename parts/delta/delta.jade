@@ -98,8 +98,12 @@ template(name='delta')
                                 if is_loading
                                     each current_delta.result_ids
                                         .ui.card
+                                            .ui.placeholder
+                                                .rectangular.image
                                             .content
                                                 .ui.fluid.placeholder
+                                                    .header
+                                                        .line
                                                     .line
                                                     .line
                                                     .line
@@ -233,7 +237,7 @@ template(name='facet')
         if viewing_results
             each filtering_res
                 if name
-                    a.selector.ui.compact.basic.circular.button.toggle_selection(class=toggle_value_class title=count)
+                    a.selector.ui.compact.basic.circular.button.toggle_selection.select_term(class=toggle_value_class title=count)
                         //- with ..
                         //- if parent_key_value_is 'field_type' 'color_icon'
                         //-     .ui.header icon

@@ -20,7 +20,7 @@ template(name='request_card')
             if youtube_id
                 +youtube_view key='youtube_id' direct=true
             else if image_id
-                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+                img.ui.zoom.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
             .ui.header
                 |#{title}
@@ -50,7 +50,7 @@ template(name='request_item')
                 +youtube_view key='youtube_id' direct=true
         else if image_id
             .image
-                img.ui.raw.image(src="{{c.url image_id width=400 height=600 crop='fill'}}")    
+                img.ui.raw.image(src="{{c.url image_id width=400 height=600 crop='fill'}}" class=currentUser.invert_class)    
         .content
             .ui.header
                 |#{title}

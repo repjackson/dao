@@ -4,7 +4,7 @@ template(name='debit_view')
             .centered.row 
                 .five.wide.column
                     a(href="/user/#{_author.username}") 
-                        img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                        img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .ui.large.center.aligned.header.pointer.zoom
                             |#{_author.name}
                 .five.wide.column
@@ -31,7 +31,7 @@ template(name='debit_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
                     a(href="/user/#{recipient.username}")
-                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .ui.large.center.aligned.header.pointer.zoom
                             |#{recipient.name}
                             

@@ -9,14 +9,14 @@ template(name='debit_edit')
                     .ui.segment
                         .ui.inline.grey.header sender
                         .ui.inline.header
-                            img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{_author.name}
                     .ui.segment
                         .ui.header recipient
                         with recipient
                             i.large.remove.link.icon.remove_recipient
                             a.pointer(href="/user/#{name}")
-                                img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
+                                img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 .ui.inline.header #{name}
                                 .ui.small.grey.inline.header #{points}
                         unless recipient
@@ -29,7 +29,7 @@ template(name='debit_edit')
                             // each members
                             //     .ui.compact.basic.circular.button.add_recipient
                             //         // i.plus.icon
-                            //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             //         |#{name}
                             //         small #{points}p
                     +date_edit key='date' label='date' direct=true   
@@ -49,7 +49,7 @@ template(name='debit_edit')
                     each terms 
                         a.ui.large.circular.basic.button.select_term(href='#')
                             if image
-                                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}")
+                                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{title}
                     each tags
                         .ui.big.basic.circular.label
@@ -60,7 +60,7 @@ template(name='debit_edit')
                     each suggestions
                         a.ui.large.circular.basic.button.select_term(href='#')
                             // if image
-                            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}")
+                            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{title}
                 .five.wide.center.aligned.column
                     .ui.big.header #{amount}pts

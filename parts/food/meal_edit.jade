@@ -2,14 +2,12 @@ template(name='meal_edit')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
-                .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/meal/#{_id}/view")
+                .sixteen.wide.column
+                    a.ui.green.big.icon.circular.button(href="/m/meal/#{_id}/view")
                         i.checkmark.big.icon
-                .eight.wide.center.aligned.column
-                    .ui.header 
+                    .ui.inline.header 
                         +icon name='meal'
                         |edit meal: #{title}
-                .four.wide.center.aligned.column
                     .ui.icon.button.delete_item
                         i.large.remove.icon
             .row
@@ -19,6 +17,7 @@ template(name='meal_edit')
                         |#{_author.username}
                     +number_edit key='inventory' label='inventory' direct=true    
                     +single_user_edit key='chef_id' label='chef' direct=true
+                    +boolean_edit key='published' label='published' direct=true
                 .four.wide.column
                     +text_edit key='title' label='title' direct=true
                             
@@ -34,8 +33,6 @@ template(name='meal_edit')
                     i.plus.link.icon.new_meal_plan  
                     each meal_plans
                         .ui.small.header #{title}
-                .four.wide.column
-                    +boolean_edit key='published' label='published' direct=true
                     // unless published
                     //     a.ui.fluid.green.button.submit(href="/save")
                     //         i.checkmark.icon

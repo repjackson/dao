@@ -2,7 +2,7 @@ template(name='meal_card')
     .ui.card.pointer
         if image_id
             a.image(href="/m/meal/#{_id}/view")
-                img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}")
+                img.ui.image.zoom(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .content
             a.ui.header(href="/m/meal/#{_id}/view") #{title}
             // |#{when}
@@ -17,7 +17,7 @@ template(name='meal_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .five.wide.column
+                .four.wide.column
                     a(href="/m/meal" title='meal')
                         +icolor name='meal' cl='ui inline image pointer'
                         // i.store.big.icon
@@ -25,38 +25,45 @@ template(name='meal_view')
                     .ui.inline.header 
                         |meal
                     .ui.large.inline.header #{title}
-                        
+                    div
+                    .ui.inline.header 
+                        i.cart.icon
+                        |buy
+                    .ui.big.button.buy_for_usd
+                        // |buy for
+                        i.shopping.cart.icon
+                        |$#{dollar_price}
+                    // .ui.inline.header or
+                    // .ui.big.teal.button.buy
+                    //     // i.cart.icon
+                    //     // |buy for 
+                    //     |#{point_price}pts
+                    // .ui.header your points #{currentUser.points}
+                
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
                     if can_edit
                         a.ui.icon.button.edit_meal(href="/m/meal/#{_id}/edit")
                             i.large.pencil.icon
                             // |edit
+                    if is_dev
+                        .ui.header 
+                            small author
+                        a.ui.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{_author.username}
                     .ui.header 
-                        small author
-                    a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.username}
-                    .ui.header 
-                        small cook
+                        |cook
+                    +user_info cook_id
                     a.ui.header(href="/user/#{_cook.username}") 
                         img.ui.avatar.image(src="{{c.url _cook.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_cook.username}
                     +image_view key='image_id' label='image' direct=true
                         
-                .six.wide.column
-                    +boolean_view key='published' label='published' direct=true
-                    // a.ui.header(href="/user/#{target.username}")
-                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //     |#{target.username}
                     .ui.header $#{dollar_price} per item
                     +number_view key='dollar_price' label='usd amount' direct=true
                     +number_view key='inventory' label='inventory' direct=true
-                    // if can_buy
-                    //     .ui.big.green.button.buy_usd
-                    //         |buy #{dollar_price}
-                    //     .ui.big.green.button.buy_usd
-                    //         |buy #{}
-                    // .ui.big.green.button.purchase
-                    //     |purchase for #{point_price}p and $#{dollar_price}
                     +textarea_view key='description' label='description' direct=true
                     div 
                     +array_view key='tags' label='tags' direct=true
@@ -65,55 +72,58 @@ template(name='meal_view')
                     +comments
                     +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .five.wide.column
-                    .ui.header 
-                        +icolor name='shopping-cart-loaded'
-                        |buy
-                    .ui.big.green.button.buy_for_usd
-                        // |buy for 
-                        |$#{dollar_price}
-                    // .ui.inline.header or
-                    // .ui.big.teal.button.buy
-                    //     // i.cart.icon
-                    //     // |buy for 
-                    //     |#{point_price}pts
-                    .ui.header your points #{currentUser.points}
-                
-                    .ui.header 
+                .twelve.wide.column
+                    .ui.button.set_latest
                         i.clock.icon
                         |latest orders
+                    .ui.button.set_today 
+                        i.sun.icon
+                        |today
+                    .ui.button.set_today 
+                        i.chevron.right.icon
+                        |tomorrow
+                    .ui.input
+                        input.select_date(type='date')
+                    .ui.button.toggle_complete
+                        
+                        i.checkmark.icon
+                        |complete
                     .ui.large.link.selection.list
                         each mealorders
                             +mealorder_small
-                
-                    .ui.small.grey.header 
-                        i.line.chart.icon
-                        |stats
-                    .ui.list
-                        .item #{views} views
-                    each viewers
-                        .ui.label #{username
-                    
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
 
 
 
 template(name='mealorder_small')
     a(href="/m/mealorder/#{_id}/view") 
-        .ui.segment.pointer.zoom
+        .ui.segment.pointer
             .header
                 .ui.inline.green.header $#{dollar_amount} #{amount}
-                |#{when} #{_author_username}
+                |#{when} 
+                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                |#{author.name}
             .content
-                +date_view key='date' label='date' direct=true
-                div
-                .ui.small.header {{from_now date}}
+                .ui.inline.header {{medium_date date}}
+                .ui.small.inline.header {{from_now date}}
                 div
                 +text_view key='notes' label='notes' direct=true
                 div
                 .ui.large.label
                     |tiffen type: #{tiffen_type}
+                div
+                if pickup
+                    .ui.label 
+                        i.grab.icon
+                        |pickup
+                if delivery
+                    .ui.label 
+                        i.truck.icon
+                        |delivery
+            if is_chef
+                .ui.button.mark_complete
+                    |mark complete
+                if complete 
+                    +key_value_edit key='location' value='freezer' direct=true
+                    +key_value_edit key='location' value='stand' direct=true
 
             

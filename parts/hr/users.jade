@@ -75,16 +75,16 @@ template(name='user_item')
 
 template(name='member_card')
     .card.rounded.calc_points
-        img.ui.image.mobile.only(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
+        img.ui.image.mobile.only(class=currentUser.invert_class src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
         a.zoom.pointer.mobile.hidden(href="/user/#{username}")
             unless avatar_image_id
-                img.ui.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
+                img.ui.image(class=currentUser.invert_class src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
             if avatar_image_id
                 .ui.fade.reveal.image
                     .visible.content
-                        img(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+                        img(class=currentUser.invert_class src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
                     .hidden.content
-                        img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+                        img(class=currentUser.invert_class src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
 
         .content
             a.ui.inline.header.pointer(href="/user/#{username}" style="color:#{theme_color};")

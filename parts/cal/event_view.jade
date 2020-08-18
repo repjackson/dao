@@ -7,7 +7,7 @@ template(name='event_view')
                         a(href="/events")
                             i.calendar.big.circular.link.icon
                     a.pointer(href="http://oneboulder.one" target="_window")
-                        img.ui.inline.tiny.image(src="{{c.url 'one_logo' }}")
+                        img.ui.inline.tiny.image(src="{{c.url 'one_logo' }}" class=currentUser.invert_class)
                 
                     .ui.large.inline.header #{title}
                     if can_edit
@@ -33,10 +33,10 @@ template(name='event_view')
                         i.large.marker.icon(title='location')
                         |#{location}
                     a(href="{{c.url image_id }}")
-                        img.ui.fluid.rounded.image(src="{{c.url image_id }}")
+                        img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     .spacer
                     a(href="/m/room/#{event_room._id}/view")
-                        img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}")
+                        img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}" class=currentUser.invert_class)
                         .ui.inline.header.pointer.zoom
                             |#{event_room.title}
                     if is_admin
@@ -45,21 +45,21 @@ template(name='event_view')
                                 i.shield.icon
                                 | author
                             a.ui.header(href="/user/#{_author.username}") 
-                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 |#{_author.name}
                     if facilitator
                         .ui.dividing.header 
                             i.chess.king.grey.icon
                             |facilitator
                         a.ui.header(href="/user/#{fac.username}") 
-                            img.ui.avatar.image(src="{{c.url fac.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.avatar.image(src="{{c.url fac.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{fac.name}
                     if support
                         .ui.dividing.header 
                             i.chess.queen.grey.icon
                             |support
                         a.ui.header(href="/user/#{support.username}") 
-                            img.ui.avatar.image(src="{{c.url support.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.avatar.image(src="{{c.url support.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{support.name}
                     if is_admin
                         .ui.header
@@ -159,7 +159,7 @@ template(name='event_view')
                             each event_tickets
                                 .comment
                                     a.avatar(href="/user/#{_author.username}") 
-                                        img(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                                        img(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                     a.content(href="/m/ticket/#{_id}/view")
                                         a.author(href="/user/#{_author.username}") 
                                             |#{_author.name}
@@ -204,7 +204,7 @@ template(name='attendance')
     //     i.green.checkmark.big.icon
     // each going 
     //     a.ui.circular.basic.circular.button(href="/user/#{username}")    
-    //         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+    //         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
     //         |#{username}
     .ui.basic.circular.button.mark_maybe
         .ui.orange.header
@@ -217,7 +217,7 @@ template(name='attendance')
     //     i.yellow.minus.big.icon
     each maybe_going
         a.ui.circular.basic.circular.button(href="/user/#{username}")    
-            img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{username}
     .ui.basic.circular.button.mark_not
         .ui.red.header
@@ -227,5 +227,5 @@ template(name='attendance')
             // i.big.ban.icon
     each not_going
         a.ui.circular.basic.circular.button(href="/user/#{username}")    
-            img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{username}

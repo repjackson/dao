@@ -4,8 +4,8 @@ Template.nav.onCreated ->
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
-        # $('.menu .item')
-        #     .popup()
+        $('.menu .item')
+            .popup()
         $('.ui.left.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
@@ -34,6 +34,15 @@ Template.right_sidebar.events
         Meteor.logout ->
             Session.set 'logging_out', false
             Router.go '/login'
+            
+    'click .toggle_nightmode': ->
+        if Meteor.user().invert_class is 'invert'
+            Meteor.users.update Meteor.userId(),
+                $set:invert_class:''
+        else
+            Meteor.users.update Meteor.userId(),
+                $set:invert_class:'invert'
+            
 
 Template.nav.helpers
     alert_toggle_class: ->

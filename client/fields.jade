@@ -321,7 +321,7 @@ template(name='image_view')
         //-     img(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
         //- else 
         a(href="{{c.url field_value }}" target='_window')
-            img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}")
+            img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}" class=currentUser.invert_class)
         //- a(href="{{c.url field_value gravity='face' crop='fit'}}")
         //-     |download
     //- +call_visual
@@ -1171,9 +1171,9 @@ template(name='multi_user_view')
         |#{title} #{label}
         //- #{key} #{label}
     each field_value
-        .ui.stackable.cards
-            with user_from_id this
-                +user_card
+        with user_from_id this
+            +user_item
+            div
             
 
 

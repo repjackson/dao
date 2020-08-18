@@ -1,6 +1,6 @@
 template(name='post_card')
     .ui.card.view_post.pointer
-        img.ui.fluid.rounded.image(src="{{c.url image_id height=200 width=400 gravity='face' crop='fill'}}")
+        img.ui.fluid.rounded.image(src="{{c.url image_id height=200 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .content
             a.ui.header(href="/m/post/#{_id}/view") #{title}
             .ui.small.grey.header #{when}
@@ -33,12 +33,12 @@ template(name='post_view')
 
             .row 
                 .four.wide.column
-                    img.ui.fluid.rounded.image(src="{{c.url image_id }}")
+                    img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     .ui.segment
                         .ui.header 
                             small author
                         a.ui.header(href="/user/#{_author.username}") 
-                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{_author.username}
                     .ui.small.grey.header 
                         i.line.chart.icon
