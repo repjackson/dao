@@ -19,7 +19,7 @@ template(name='message_view')
                             .ui.header 
                                 |#{_author.name}
                 .six.wide.column
-                    if is_dev
+                    if can_edit
                         +remove_button
                     .ui.header
                         i.message.icon

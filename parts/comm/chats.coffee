@@ -112,46 +112,46 @@ if Meteor.isServer
     #         chat_id: chat_id
 
 
-    publishComposite 'participant_ids', (selected_theme_tags, selected_participant_ids)->
+    # publishComposite 'participant_ids', (selected_theme_tags, selected_participant_ids)->
 
-        {
-            find: ->
-                self = @
-                match = {}
-                match.model = 'chat'
-                if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
-                if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
-                match.published = true
+    #     {
+    #         find: ->
+    #             self = @
+    #             match = {}
+    #             match.model = 'chat'
+    #             if selected_theme_tags.length > 0 then match.tags = $all: selected_theme_tags
+    #             if selected_participant_ids.length > 0 then match.participant_ids = $in: selected_participant_ids
+    #             match.published = true
 
-                cloud = Docs.aggregate [
-                    { $match: match }
-                    { $project: participant_ids: 1 }
-                    { $unwind: "$participant_ids" }
-                    { $group: _id: '$participant_ids', count: $sum: 1 }
-                    { $match: _id: $nin: selected_participant_ids }
-                    { $sort: count: -1, _id: 1 }
-                    { $limit: 20 }
-                    { $project: _id: 0, text: '$_id', count: 1 }
-                    ]
+    #             cloud = Docs.aggregate [
+    #                 { $match: match }
+    #                 { $project: participant_ids: 1 }
+    #                 { $unwind: "$participant_ids" }
+    #                 { $group: _id: '$participant_ids', count: $sum: 1 }
+    #                 { $match: _id: $nin: selected_participant_ids }
+    #                 { $sort: count: -1, _id: 1 }
+    #                 { $limit: 20 }
+    #                 { $project: _id: 0, text: '$_id', count: 1 }
+    #                 ]
 
 
 
-                # author_objects = []
-                # Meteor.users.find _id: $in: cloud.
+    #             # author_objects = []
+    #             # Meteor.users.find _id: $in: cloud.
 
-                cloud.forEach (participant_ids) ->
-                    self.added 'participant_ids', Random.id(),
-                        text: participant_ids.text
-                        count: participant_ids.count
-                self.ready()
+    #             cloud.forEach (participant_ids) ->
+    #                 self.added 'participant_ids', Random.id(),
+    #                     text: participant_ids.text
+    #                     count: participant_ids.count
+    #             self.ready()
 
-            # children: [
-            #     { find: (doc) ->
-            #         Meteor.users.find
-            #             _id: doc.participant_ids
-            #         }
-            #     ]
-        }
+    #         # children: [
+    #         #     { find: (doc) ->
+    #         #         Meteor.users.find
+    #         #             _id: doc.participant_ids
+    #         #         }
+    #         #     ]
+    #     }
 
 
     Meteor.publish 'chats', (selected_theme_tags, selected_participant_ids, view_published)->
