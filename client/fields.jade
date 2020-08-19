@@ -344,7 +344,7 @@ template(name='image_edit')
             if field_value
                 //- label Image
                 a(href="{{c.url field_value }}" target='_window')
-                    img.ui.large.centered.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}")
+                    img.ui.large.centered.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 a#remove_photo.ui.right.corner.link.label
                     i.remove.link.icon
             else
@@ -1051,7 +1051,7 @@ template(name='single_user_edit')
                     each user_results
                         a.select_user.item(href='#')
                             .ui.small.inline.header
-                                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
+                                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 |#{first_name} #{last_name}
                             .ui.mini.grey.inline.header 
                                 |#{username}
@@ -1062,7 +1062,7 @@ template(name='single_user_edit')
         //- |#{this}
         with user_from_id field_value
             .ui.inline.header
-                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
+                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 |#{name}
             i.pull_user.remove.link.circular.icon
 
@@ -1107,7 +1107,7 @@ template(name='multi_user_edit')
                 each user_results
                     a.select_user.item(href="#")
                         .ui.header
-                            img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             strong #{first_name} #{last_name}
                             small @#{username}
     +clear_value                
@@ -1116,7 +1116,7 @@ template(name='multi_user_edit')
         with user_from_id this
             div
             .ui.inline.header
-                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
+                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 |#{name}
             i.pull_user.remove.link.circular.icon
 
@@ -1145,7 +1145,7 @@ template(name='multi_doc_input')
                 each doc_results
                     .select_doc.item
                         h2.ui.header
-                            //- img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                            //- img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             strong + #{guest_name} #{first_name} #{last_name}
         //- +clear_value                
         //- .ui.list
@@ -1159,7 +1159,7 @@ template(name='multi_doc_input')
                 //-         .right.floated.content
                 //-             i.pull_user.remove.link.icon
                 //-         .image
-                //-             img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+                //-             img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 //-         .content
                 //-             h4.ui.header
                 //-                 |#{first_name} #{last_name}

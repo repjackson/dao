@@ -29,10 +29,11 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "d c"
 	callback: ->
-        model = Docs.findOne
-            model:'model'
-            slug: Router.current().params.model_slug
-        Router.go "/model/edit/#{model._id}"
+	    if 'admin' in Meteor.user().roles
+            model = Docs.findOne
+                model:'model'
+                slug: Router.current().params.model_slug
+            Router.go "/model/edit/#{model._id}"
 
 globalHotkeys.add
 	combo: "d s"
