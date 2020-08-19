@@ -4,14 +4,22 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
 
-    Template.home.onRendered ->
-        $('.progress').progress({
-              percent: 22
-        });
+    Template.finance_bar.onRendered ->
+        Meteor.setTimeout ->
+            finance_stat = Docs.findOne model:'finance_stat'
+            if finance_stat
+                percent = 20000/finance_stat.total_expense_sum
+                console.log percent
+                $('.progress').progress({
+                      percent: percent
+                });
+        , 2000
     
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_debits'
-        
+        @autorun => Meteor.subscribe 'model_docs', 'finance_stat'
+        @autorun => Meteor.subscribe 'model_docs', 'expense'
+
         # @autorun => Meteor.subscribe 'model_docs', 'transaction'
         @autorun => Meteor.subscribe 'model_docs', 'request'
         @autorun => Meteor.subscribe 'model_docs', 'offer'
@@ -35,8 +43,26 @@ if Meteor.isClient
         #     )
         # @autorun => Meteor.subscribe 'model_docs', 'home_doc'
 
+    Template.finance_bar.helpers
+        viewing_finance_details: -> 
+            Session.get('view_finance_details')
+        membership_payments: ->
+            Docs.find 
+                model:'expense'
+                # membership:true
+        
+        finance_stat: ->
+            Docs.findOne
+                model:'finance_stat'
+                # membership:true
+        
+        membership_count: ->
+            Docs.find(
+                model:'expense'
+                membership:true
+            ).count()
+        
     Template.home.helpers
-        viewing_finance_details: -> Session.get('view_finance_details')
         featured_products: ->
             Docs.find
                 model:'product'
@@ -102,6 +128,10 @@ if Meteor.isClient
         members: ->
             Meteor.users.find({},
                 sort:points:1)
+    Template.finance_bar.events
+        'click .toggle_finance_details': ->
+            Session.set('view_finance_details', !Session.get('view_finance_details'))
+    
     Template.home.events
         'click .view_debit': ->
             Router.go "/m/debit/#{@_id}/view"
@@ -109,9 +139,6 @@ if Meteor.isClient
             Router.go "/m/request/#{@_id}/view"
         'click .view_offer': ->
             Router.go "/m/offer/#{@_id}/view"
-    
-        'click .toggle_finance_details': ->
-            Session.set('view_finance_details', !Session.get('view_finance_details'))
 
         'click .refresh_stats': ->
             Meteor.call 'calc_global_stats'

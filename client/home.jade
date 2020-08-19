@@ -28,27 +28,14 @@ template(name='home')
             |member
 
     .ui.stackable.grid
-        // .row 
+        .row 
             // if is_admin
             //     .ui.big.button.check_notifications
             //         |check
             //     .ui.big.button.send_notification
             //         |send
-                
-            // .sixteen.wide.column.toggle_finance_details
-            //     .ui.green.small.progress.bar.pointer
-            //         .bar
-            //         // .label
-            //         //     |monthly budget progress / 20k
-            //     if viewing_finance_details
-            //         .ui.stackable.grid
-            //             .two.column.row
-            //                 .column
-            //                     .ui.header finance details
-            //                     .ui.header income from events
-            //                 .column
-            //                     .ui.header most generative event
-            //                     .ui.header most generative member
+            if template_subs_ready
+                +finance_bar
                     
         // .centered.row
         //     .sixteen.wide.center.aligned.column
@@ -189,7 +176,26 @@ template(name='home')
                     //                 |#{description}
                     //             each tags 
                     //                 .ui.tiny.basic.label #{this}
-                                    
+                    
+                    
+                    
+template(name='finance_bar')
+    .sixteen.wide.column.toggle_finance_details
+        .ui.green.small.progress.bar.pointer
+            .bar
+                .progress
+            .label
+                |monthly budget progress / 20k
+        if viewing_finance_details
+            .ui.stackable.grid
+                .two.column.row
+                    .column
+                        .ui.header #{finance_stat.membership_count} memberships totaling #{finance_stat.membership_sum}
+                        // .ui.header income from events
+                    .column
+                        // .ui.header most generative event
+                        // .ui.header most generative member
+                            
                                     
 template(name='home_request_card')
     .ui.segment.view_request.pointer
