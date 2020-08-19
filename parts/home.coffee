@@ -125,6 +125,11 @@ if Meteor.isClient
                 Docs.insert
                     model:'request'
             Router.go "/m/request/#{new_request_id}/edit"
+        'click .add_event': ->
+            new_event_id =
+                Docs.insert
+                    model:'event'
+            Router.go "/m/event/#{new_event_id}/edit"
         'click .offer': ->
             new_offer_id =
                 Docs.insert
