@@ -93,6 +93,8 @@ template(name='offer_view')
                     .ui.header #{when}
                     +array_view key='location_tags' label='location_tags' direct=true
                     +boolean_view key='approval_required' label='approval required' icon='shield' direct=true
+                    +datetime_view key='start_datetime' label='start' icon='clock' direct=true
+                    +datetime_view key='end_datetime' label='end' icon='clock' direct=true
                     div
                     +voting_full
                 .six.wide.column
@@ -211,6 +213,7 @@ template(name='offer_edit')
                         |#{_author.username}
                     +text_edit key='title' icon='header' direct=true
                     +boolean_edit key='approval_required' label='approval required' icon='shield' direct=true
+                    +range_edit key='timedate' direct=true
                 .six.wide.column
                     div
                     +html_edit key='description' label='description' direct=true

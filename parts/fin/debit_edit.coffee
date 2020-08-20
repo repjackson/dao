@@ -173,19 +173,11 @@ if Meteor.isServer
             debiter = Meteor.users.findOne debit._author_id
 
             console.log 'sending debit', debit
-            Meteor.users.update recipient._id,
-                $inc:
-                    points: debit.amount
-            Meteor.users.update debiter._id,
-                $inc:
-                    points: -debit.amount
+            Meteor.call 'recalc_one_stats', recipient._id, ->
+            Meteor.call 'recalc_one_stats', debit._author_id, ->
+    
             Docs.update debit_id,
                 $set:
                     submitted:true
                     submitted_timestamp:Date.now()
-
-
-
-            Docs.update debit_id,
-                $set:
-                    submitted:true
+            return

@@ -1,28 +1,26 @@
 template(name='home')
     .ui.center.aligned.basic.segment
-       .ui.basic.big.compact.circular.button.debit
+        .ui.basic.big.compact.circular.button.debit
             i.gift.red.icon
             |send points
-            // else
-            //     .ui.green.disabled.compact.circular.button
-            //         +icolor name='debit' cl='ui mini inline image'
-            //         // i.debit.icon
-            //         |send
         .ui.basic.big.compact.circular.button.request
             i.concierge.bell.teal.icon
             |+ request
         .ui.basic.big.compact.circular.button.offer
             i.hand.holding.heart.olive.icon
             |+ offer
-        .ui.basic.big.compact.circular.button.add_event
-            i.calendar.purple.icon
-            |+ event
-        // .ui.basic.big.compact.circular.button.add_bug
-        //     i.bug.red.icon
-        //     |+ bug
         .ui.basic.big.compact.circular.button.add_message
             i.chat.blue.icon
             |+ message
+        .ui.basic.big.compact.circular.button.add_event
+            i.calendar.purple.icon
+            |+ event
+        .ui.basic.big.compact.circular.button.add_expense
+            i.dollar.purple.icon
+            |+ expense
+        .ui.basic.big.compact.circular.button.add_bug
+            i.bug.red.icon
+            |+ bug
         a.ui.basic.big.circular.button(href='/register')
             i.user.plus.green.icon
             |member
@@ -190,7 +188,7 @@ template(name='finance_bar')
             .ui.stackable.grid
                 .two.column.row
                     .column
-                        .ui.header #{finance_stat.membership_count} memberships totaling #{finance_stat.membership_sum}
+                        .ui.header #{finance_stat.membership_count} memberships totaling $#{finance_stat.total_membership_sum}
                         // .ui.header income from events
                     .column
                         // .ui.header most generative event
@@ -315,12 +313,12 @@ template(name='debit_card')
                     with _author
                         img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                 | #{_author.shortname}
+                a.ui.inline.header(href="/debit/#{_id}/view") #{amount}p
                 .ui.inline.header >
                 if recipient.profile_image_id
                     with recipient
                         img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
                 |#{recipient.shortname}
-                a.ui.inline.header(href="/debit/#{_id}/view") #{amount}p
             .meta #{when}
             .description.f11
                 |#{description}

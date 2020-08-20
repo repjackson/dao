@@ -61,6 +61,8 @@ template(name='user_dashboard')
                 a.ui.inline.spaced.header(href="/user/#{username}/requests")
                     i.concierge.bell.icon
                     |requests
+                .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
+                .ui.small.header (#{fulfilled_count}p total fulfilled count)
                 .medscroll
                     each user_requests
                         .ui.card

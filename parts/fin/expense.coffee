@@ -40,8 +40,18 @@ if Meteor.isServer
             for expense in expenses.fetch()
                 total_expense_sum += expense.dollar_amount
         
+            total_membership_sum = 0
+            memberships = 
+                Docs.find 
+                    model:'expense'
+                    membership:true
+            for membership in memberships.fetch()
+                total_membership_sum += membership.dollar_amount
+        
             console.log 'total expenses', total_expense_sum
             Docs.update fs._id,
                 $set:
                     total_expense_sum:total_expense_sum
                     total_expense_count:expenses.count()
+                    membership_count:memberships.count()
+                    total_membership_sum:total_membership_sum

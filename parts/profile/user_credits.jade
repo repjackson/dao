@@ -27,7 +27,7 @@ template(name='user_credits')
                     |#{description}
                     div
                     each tags
-                        .ui.mini.basic.label #{this}
+                        .ui.basic.label #{this}
 
 template(name='user_credits_small')
     .ui.inline.header 
@@ -55,7 +55,7 @@ template(name='user_credits_small')
                     .description
                         |#{description}
                         each tags
-                            .ui.mini.basic.label #{this}
+                            .ui.basic.label #{this}
                 if is_admin 
                     +remove_button
                 .spacer

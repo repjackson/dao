@@ -4,6 +4,7 @@ template(name='nav')
         a.zoom.icon.item.toggle_sidebar
             i.large.bars.icon
         a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+            |#{current_tribe.title}
             i.large.home.icon
             // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
             // .mobile.hidden one

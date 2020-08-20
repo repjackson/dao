@@ -8,6 +8,11 @@ Template.registerHelper 'in_role', (role)->
     else
         false
 
+Template.registerHelper 'current_tribe', () ->
+    Docs.findOne 
+        _id:Meteor.user().current_tribe_id
+    
+    
 Template.registerHelper 'is_in_admin', () ->
     Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','EYGz4bDSAdWF3W4wi']
 Template.registerHelper 'is_this_user', () ->

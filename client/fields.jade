@@ -1168,6 +1168,9 @@ template(name='multi_doc_input')
 
 template(name='multi_user_view')
     .ui.header 
+        if icon 
+            i.icon(class=icon)
+        |#{field_value.length}
         |#{title} #{label}
         //- #{key} #{label}
     each field_value

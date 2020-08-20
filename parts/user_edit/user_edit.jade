@@ -47,6 +47,9 @@ template(name='user_edit_layout')
                             a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
                                 i.shield.large.icon
                                 // | membership
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/tribes" class="{{isActiveRoute 'user_edit_tribes'}}") 
+                                i.fire.large.icon 
+                                // |tribes
                         .twelve.wide.column
                             +yield
 

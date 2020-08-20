@@ -162,11 +162,11 @@ if Meteor.isClient
                 Docs.insert
                     model:'offer'
             Router.go "/m/offer/#{new_offer_id}/edit"
-        'click .add_bug': ->
+        'click .add_expense': ->
             new_bug_id =
                 Docs.insert
-                    model:'bug'
-            Router.go "/m/bug/#{new_bug_id}/edit"
+                    model:'expense'
+            Router.go "/m/expense/#{new_bug_id}/edit"
         
         'click .add_message': ->
             new_message_id =

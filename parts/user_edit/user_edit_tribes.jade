@@ -1,0 +1,14 @@
+template(name='user_edit_tribes')
+    .ui.header
+        +icolor name='campfire' cl='ui image'
+        | tribes
+    a.ui.circular.basic.button(href="/m/tribe")
+        |view all
+    .ui.grid 
+        .row 
+            .sixteen.wide.column
+                each my_tribes
+                    .ui.segment
+                        .ui.header #{title}
+                        .ui.button.switch
+                            |switch to

@@ -45,7 +45,7 @@ if Meteor.isClient
             Meteor.call 'recalc_one_stats', user._id, ->
             Meteor.call 'calc_user_tags', user._id, ->
     
-    Template.user_dashboard.events
+    Template.profile_layout.events
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             if Meteor.userId() is user._id
@@ -87,9 +87,6 @@ if Meteor.isClient
         # 'click .recalc_user_cloud': ->
         #     Meteor.call 'recalc_user_cloud', Router.current().params.username, ->
 
-
-
-    Template.profile_layout.events
         'click .logout': ->
             # Router.go '/login'
             Session.set 'logging_out', true
@@ -247,81 +244,81 @@ if Meteor.isServer
         #     # average_reading_percent
 
 
-        recalc_user_cloud: (user_id)->
-            user = Meteor.users.findOne user_id
-            test_session_cursor =
-                Docs.find
-                    model:'test_session'
-                    _author_id: user_id
-                    right_tags: $exists: true
-            all_right_tags = []
-            all_wrong_tags = []
-            right_tag_list = []
-            wrong_tag_list = []
-            right_tag_cloud = []
-            wrong_tag_cloud = []
+        # recalc_user_cloud: (user_id)->
+        #     user = Meteor.users.findOne user_id
+        #     test_session_cursor =
+        #         Docs.find
+        #             model:'test_session'
+        #             _author_id: user_id
+        #             right_tags: $exists: true
+        #     all_right_tags = []
+        #     all_wrong_tags = []
+        #     right_tag_list = []
+        #     wrong_tag_list = []
+        #     right_tag_cloud = []
+        #     wrong_tag_cloud = []
 
-            for test_session in test_session_cursor.fetch()
-                for right_tag in test_session.right_tags
-                    unless right_tag in right_tag_list
-                        right_tag_list.push right_tag
-                    all_right_tags.push right_tag
-                    tag_object = _.findWhere(right_tag_cloud, {tag: right_tag})
-                    # console.log tag_object
-                    if tag_object
-                        index_of_tag = _.indexOf(right_tag_cloud, tag_object)
-                        # console.log 'index of tag', index_of_tag
-                        tag_count = tag_object.count
-                        # console.log tag_count
-                        # console.log 'inc', tag_count++
-                        right_tag_cloud[index_of_tag] = {
-                            tag:right_tag
-                            count:tag_count+1
-                        }
-                    else
-                        tag_object = {
-                            tag:right_tag
-                            count: 1
-                        }
-                        right_tag_cloud.push tag_object
-                for wrong_tag in test_session.wrong_tags
-                    unless wrong_tag in wrong_tag_list
-                        wrong_tag_list.push wrong_tag
-                    all_wrong_tags.push wrong_tag
-                    tag_object = _.findWhere(wrong_tag_cloud, {tag: wrong_tag})
-                    # console.log tag_object
-                    if tag_object
-                        index_of_tag = _.indexOf(wrong_tag_cloud, tag_object)
-                        # console.log 'index of tag', index_of_tag
-                        tag_count = tag_object.count
-                        # console.log tag_count
-                        # console.log 'inc', tag_count++
-                        wrong_tag_cloud[index_of_tag] = {
-                            tag:wrong_tag
-                            count:tag_count+1
-                        }
-                    else
-                        tag_object = {
-                            tag:wrong_tag
-                            count: 1
-                        }
-                        wrong_tag_cloud.push tag_object
-            # console.log right_tag_cloud
-            right_tag_cloud =  _.sortBy(right_tag_cloud, 'count')
-            wrong_tag_cloud = _.sortBy(wrong_tag_cloud, 'count')
-            right_tag_cloud = right_tag_cloud.reverse()
-            wrong_tag_cloud = wrong_tag_cloud.reverse()
-            right_tag_cloud = right_tag_cloud[..10]
-            wrong_tag_cloud = wrong_tag_cloud[..10]
-            # right_tag_cloud = _.countBy(all_right_tags, (tag)-> tag)
-            # wrong_tag_cloud = _.countBy(all_wrong_tags, (tag)-> tag)
+        #     for test_session in test_session_cursor.fetch()
+        #         for right_tag in test_session.right_tags
+        #             unless right_tag in right_tag_list
+        #                 right_tag_list.push right_tag
+        #             all_right_tags.push right_tag
+        #             tag_object = _.findWhere(right_tag_cloud, {tag: right_tag})
+        #             # console.log tag_object
+        #             if tag_object
+        #                 index_of_tag = _.indexOf(right_tag_cloud, tag_object)
+        #                 # console.log 'index of tag', index_of_tag
+        #                 tag_count = tag_object.count
+        #                 # console.log tag_count
+        #                 # console.log 'inc', tag_count++
+        #                 right_tag_cloud[index_of_tag] = {
+        #                     tag:right_tag
+        #                     count:tag_count+1
+        #                 }
+        #             else
+        #                 tag_object = {
+        #                     tag:right_tag
+        #                     count: 1
+        #                 }
+        #                 right_tag_cloud.push tag_object
+        #         for wrong_tag in test_session.wrong_tags
+        #             unless wrong_tag in wrong_tag_list
+        #                 wrong_tag_list.push wrong_tag
+        #             all_wrong_tags.push wrong_tag
+        #             tag_object = _.findWhere(wrong_tag_cloud, {tag: wrong_tag})
+        #             # console.log tag_object
+        #             if tag_object
+        #                 index_of_tag = _.indexOf(wrong_tag_cloud, tag_object)
+        #                 # console.log 'index of tag', index_of_tag
+        #                 tag_count = tag_object.count
+        #                 # console.log tag_count
+        #                 # console.log 'inc', tag_count++
+        #                 wrong_tag_cloud[index_of_tag] = {
+        #                     tag:wrong_tag
+        #                     count:tag_count+1
+        #                 }
+        #             else
+        #                 tag_object = {
+        #                     tag:wrong_tag
+        #                     count: 1
+        #                 }
+        #                 wrong_tag_cloud.push tag_object
+        #     # console.log right_tag_cloud
+        #     right_tag_cloud =  _.sortBy(right_tag_cloud, 'count')
+        #     wrong_tag_cloud = _.sortBy(wrong_tag_cloud, 'count')
+        #     right_tag_cloud = right_tag_cloud.reverse()
+        #     wrong_tag_cloud = wrong_tag_cloud.reverse()
+        #     right_tag_cloud = right_tag_cloud[..10]
+        #     wrong_tag_cloud = wrong_tag_cloud[..10]
+        #     # right_tag_cloud = _.countBy(all_right_tags, (tag)-> tag)
+        #     # wrong_tag_cloud = _.countBy(all_wrong_tags, (tag)-> tag)
 
-            Meteor.users.update user_id,
-                $set:
-                    right_tag_list:right_tag_list
-                    wrong_tag_list:wrong_tag_list
-                    right_tag_cloud:right_tag_cloud
-                    wrong_tag_cloud:wrong_tag_cloud
+        #     Meteor.users.update user_id,
+        #         $set:
+        #             right_tag_list:right_tag_list
+        #             wrong_tag_list:wrong_tag_list
+        #             right_tag_cloud:right_tag_cloud
+        #             wrong_tag_cloud:wrong_tag_cloud
 
 
 
@@ -352,6 +349,30 @@ if Meteor.isServer
 
             console.log 'total debit amount', total_debit_amount
 
+            fulfilled_requests = Docs.find({
+                model:'request'
+                point_bounty:$exists:true
+                claimed_user_id:user_id
+                complete:true
+            })
+            fulfilled_count = fulfilled_requests.count()
+            total_fulfilled_amount = 0
+            for fulfilled in fulfilled_requests.fetch()
+                total_fulfilled_amount += fulfilled.point_bounty
+            
+            
+            requested = Docs.find({
+                model:'request'
+                point_bounty:$exists:true
+                _author_id:user_id
+                published:true
+            })
+            authored_count = requested.count()
+            total_authored_amount = 0
+            for authored in requested.fetch()
+                total_authored_amount += authored.point_bounty
+            
+            
             credits = Docs.find({
                 model:'debit'
                 amount:$exists:true
@@ -367,8 +388,13 @@ if Meteor.isServer
             # average_credit_per_student = total_credit_amount/student_count
             # average_debit_per_student = total_debit_amount/student_count
             flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
-            points = total_credit_amount-total_debit_amount
+            flow_volumne =+ total_fulfilled_amount
+            flow_volumne =+ total_requested_amount
             
+            
+            points = total_credit_amount-total_debit_amount
+            points =+ total_fulfilled_amount
+            points =- total_requested_amount
             
             if total_debit_amount is 0 then total_debit_amount++
             if total_credit_amount is 0 then total_credit_amount++
@@ -396,9 +422,6 @@ if Meteor.isServer
                     total_debit_amount: total_debit_amount
                     flow_volume: flow_volume
                     points:points
-                    # calculated_user_balance: calculated_user_balance
-                    # debit_credit_ratio: debit_credit_ratio
-                    # credit_debit_ratio: credit_debit_ratio
-                    # dc_ratio_inverted: dc_ratio_inverted
-                    # cd_ratio_inverted: cd_ratio_inverted
                     one_ratio: one_ratio
+                    total_fulfilled_amount:total_fulfilled_amount
+                    fulfilled_count:fulfilled_count
