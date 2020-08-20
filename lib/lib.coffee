@@ -32,6 +32,12 @@ Docs.helpers
     is_read: ->
         @read_ids and Meteor.userId() in @read_ids
 
+    enabled_features: () ->
+        Docs.find
+            model:'feature'
+            _id:$in:@enabled_feature_ids
+
+
     upvoters: ->
         if @upvoter_ids
             upvoters = []

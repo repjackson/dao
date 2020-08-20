@@ -368,9 +368,9 @@ if Meteor.isServer
                 published:true
             })
             authored_count = requested.count()
-            total_authored_amount = 0
-            for authored in requested.fetch()
-                total_authored_amount += authored.point_bounty
+            total_request_amount = 0
+            for request in requested.fetch()
+                total_request_amount += request.point_bounty
             
             
             credits = Docs.find({
@@ -389,12 +389,12 @@ if Meteor.isServer
             # average_debit_per_student = total_debit_amount/student_count
             flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
             flow_volumne =+ total_fulfilled_amount
-            flow_volumne =+ total_requested_amount
+            flow_volumne =+ total_request_amount
             
             
-            points = total_credit_amount-total_debit_amount
-            points =+ total_fulfilled_amount
-            points =- total_requested_amount
+            points = total_credit_amount-total_debit_amount+total_fulfilled_amount-total_request_amount
+            # points =+ total_fulfilled_amount
+            # points =- total_request_amount
             
             if total_debit_amount is 0 then total_debit_amount++
             if total_credit_amount is 0 then total_credit_amount++

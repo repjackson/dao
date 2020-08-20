@@ -3,14 +3,16 @@ template(name='nav')
     .ui.fluid.borderless.attached.menu.topnav(style="background-color:#{currentUser.theme_color};" class=currentUser.invert_class)
         a.zoom.icon.item.toggle_sidebar
             i.large.bars.icon
-        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
-            |#{current_tribe.title}
+        a.zoom.item(href="/" class="{{isActivePath '/'}}")
             i.large.home.icon
+            span.mobile.hidden #{current_tribe.title}
             // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-            // .mobile.hidden one
+        each current_tribe.enabled_features
+            a.zoom.icon.item.mobile.hidden.goto_feature(href=link class="{{isActivePath link}}" title=title)
+                i.large.icon(class=icon)
+                | #{title}
         a.zoom.icon.item.set_member.mobile.hidden(href="/m/member" class="{{isActivePath '/m/member'}}" title='users')
             i.large.users.icon
-            // | directory
         a.zoom.icon.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
             i.large.calendar.icon
             // | events

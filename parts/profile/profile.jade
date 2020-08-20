@@ -14,20 +14,20 @@ template(name='profile_layout')
                         span.mobile.hidden
                             a(href="/user/#{username}/")
                                 img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
-                        a.ui.large.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};" class=currentUser.invert_class) 
+                        a.ui.large.header.refresh_user_stats(href="/user/#{username}") 
                             // if spirit_animal
                             //     span(title="spirit animal #{spirit_animal}")
                             //         +icolor name=spirit_animal cl='ui inline image'
                             |#{name}
                         // div
-                        a.ui.small.header.refresh_user_stats(href="/user/#{username}" style="color:#{current_user.theme_color};" class=currentUser.invert_class) 
+                        a.ui.small.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
                         if is_admin
-                            a.ui.large.icon.circular.basic.button(href="/user/#{username}/edit" title='admin edit account' style="color:#{current_user.theme_color};" class=currentUser.invert_class)
+                            a.ui.large.icon.circular.basic.button(href="/user/#{username}/edit" title='admin edit account')
                                 i.shield.large.icon
                                 // |account
                         if is_current_user
-                            a.ui.circular.icon.basic.button(href="/user/#{username}/edit" title='edit your account' style="color:#{current_user.theme_color};" class=currentUser.invert_class)
+                            a.ui.circular.icon.basic.button(href="/user/#{username}/edit" title='edit your account')
                                 i.cog.big.icon
                                 // |account
                             a.ui.circular.icon.basic.button.logout(href="#" title='log out')
@@ -100,6 +100,9 @@ template(name='profile_layout')
                         a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
                             i.chat.large.icon
                             // span chat
+                        a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}" title="#{user.username} messages")
+                            i.fire.large.icon
+                            // span chat
                         // a.ui.large.compact.basic.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
                         //     i.certificate.large.icon
                         //     span.mobile.hidden badges
@@ -108,6 +111,8 @@ template(name='profile_layout')
                             // span genekeys
                         // .spacer
                         // .spacer
+                        if is_dev
+                            +print_this
                     .twelve.wide.column.profile_yield
                         +yield    
                       

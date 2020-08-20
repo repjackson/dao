@@ -9,8 +9,15 @@ Template.registerHelper 'in_role', (role)->
         false
 
 Template.registerHelper 'current_tribe', () ->
-    Docs.findOne 
-        _id:Meteor.user().current_tribe_id
+    if Meteor.user()
+        Docs.findOne 
+            _id:Meteor.user().current_tribe_id
+    
+Template.registerHelper 'enabled_features', () ->
+    console.log @
+    Docs.find
+        model:'feature'
+        _id:@enabled_feature_ids
     
     
 Template.registerHelper 'is_in_admin', () ->

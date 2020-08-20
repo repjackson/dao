@@ -4,9 +4,9 @@ template(name='user_dashboard')
     .ui.stackable.grid
         .row
             .sixteen.wide.column
-                .ui.inline.header(style="color:#{current_user.theme_color};" class=currentUser.invert_class) #{points}pts
-                .ui.big.basic.circular.label(style="color:#{current_user.theme_color};" class=currentUser.invert_class) {{to_percent one_ratio}}% one ratio
-                .ui.large.basic.circular.label(style="color:#{current_user.theme_color};" class=currentUser.invert_class) #{flow_volume} volume
+                .ui.inline.header() #{points}pts
+                .ui.big.basic.circular.label() {{to_percent one_ratio}}% one ratio
+                .ui.large.basic.circular.label() #{flow_volume} volume
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
                 if is_current_user
@@ -21,7 +21,7 @@ template(name='user_dashboard')
                         .ui.disabled.large.label 
                             |offline
                     if current_status
-                        .ui.small.header(title='status' style="color:#{current_user.theme_color};" class=currentUser.invert_class)
+                        .ui.small.header(title='status' )
                             i.grey.clock.icon
                             |!{current_status}
                 if is_dev

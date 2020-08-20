@@ -1,7 +1,9 @@
 Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
     @autorun => Meteor.subscribe 'all_users'
-    @autorun => Meteor.subscribe 'my_received_messages'
+    @autorun => Meteor.subscribe 'my_unread_messages'
+    @autorun => Meteor.subscribe 'model_docs', 'tribe'
+    @autorun => Meteor.subscribe 'model_docs', 'feature'
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
@@ -48,6 +50,11 @@ Template.right_sidebar.events
 Template.nav.helpers
     alert_toggle_class: ->
         if Session.get('viewing_alerts') then 'active' else ''
+    current_tribe: () ->
+        if Meteor.user()
+            Docs.findOne 
+                _id:Meteor.user().current_tribe_id
+        
 Template.nav.events
     'click .alerts': ->
         Session.set('viewing_alerts', !Session.get('viewing_alerts'))

@@ -1,16 +1,46 @@
 if Meteor.isClient
     Template.tribe_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'model_docs', 'feature'
         @autorun => Meteor.subscribe 'all_users'
         @autorun => Meteor.subscribe 'tribe_template_from_tribe_id', Router.current().params.doc_id
 
+    Template.tribe_edit.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'feature'
 
     Template.registerHelper 'is_member', ()->
         Meteor.userId() in @tribe_member_ids
 
     Template.tribe_view.onRendered ->
         @autorun => Meteor.subscribe 'tribe_template_from_tribe_id', Router.current().params.doc_id
-    Template.tribe_view.events
+    Template.tribe_edit.helpers
+        enabled_features: ->
+            tribe = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                model:'feature'
+                _id:$in:tribe.enabled_feature_ids
+        disabled_features: ->
+            tribe = Docs.findOne Router.current().params.doc_id
+            if tribe.enabled_feature_ids
+                Docs.find 
+                    model:'feature'
+                    _id:$nin:tribe.enabled_feature_ids
+            else
+                Docs.find 
+                    model:'feature'
+            
+    Template.tribe_edit.events
+        'click .enable_feature': ->
+            console.log @
+            Docs.update Router.current().params.doc_id,
+                $addToSet: 
+                    enabled_feature_ids:@_id
+    
+        'click .disable_feature': ->
+            Docs.update Router.current().params.doc_id,
+                $pull: 
+                    enabled_feature_ids:@_id
+    
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
@@ -44,6 +74,7 @@ if Meteor.isServer
             Docs.update tribe_id, 
                 $addToSet:
                     tribe_member_ids: Meteor.userId()
+        
         leave_tribe: (tribe_id)->
             tribe = Docs.findOne tribe_id
             Docs.update tribe_id, 

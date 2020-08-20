@@ -102,8 +102,8 @@ template(name='tribe_edit')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.green.icon.button(href="/m/tribe/#{_id}/view" title='save')
-                        i.checkmark.huge.icon
+                    a.ui.green.icon.circular.button(href="/m/tribe/#{_id}/view" title='save')
+                        i.checkmark.big.icon
                         // |save
                 .eight.wide.center.aligned.column
                     .ui.small.inline.header 
@@ -125,10 +125,12 @@ template(name='tribe_edit')
                     +array_edit key='tags' label='tags' icon='tags' direct=true
                 .four.wide.column
                     +boolean_edit key='private' label='private' direct=true
-                    eacb enabled_features
+                    .ui.header enabled features
+                    each enabled_features
                         .ui.active.button.disable_feature
                             |#{title}
+                    .ui.header disabled features
                     each disabled_features
-                        .ui.basic.circular.button.enabled_feature
+                        .ui.basic.circular.button.enable_feature
                             |#{title}
                     
