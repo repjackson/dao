@@ -14,7 +14,7 @@ Template.registerHelper 'current_tribe', () ->
             _id:Meteor.user().current_tribe_id
     
 Template.registerHelper 'enabled_features', () ->
-    console.log @
+    # console.log @
     Docs.find
         model:'feature'
         _id:@enabled_feature_ids

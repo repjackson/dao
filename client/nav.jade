@@ -4,7 +4,10 @@ template(name='nav')
         a.zoom.icon.item.toggle_sidebar
             i.large.bars.icon
         a.zoom.item(href="/" class="{{isActivePath '/'}}")
-            i.large.home.icon
+            if current_tribe.icon 
+                i.large.icon(class=current_tribe.icon)
+            else
+                i.large.home.icon
             span.mobile.hidden #{current_tribe.title}
             // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         each current_tribe.enabled_features
@@ -39,8 +42,8 @@ template(name='nav')
             // | news
         a.zoom.icon.item.mobile.hidden.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
             i.large.dollar.icon
-            // em(data-emoji='newspaper')
-            // | news
+        a.zoom.icon.item.mobile.hidden.set_tribe(href="/m/tribe" class="{{isActivePath '/m/tribe'}}" title='tribes')
+            i.large.fire.icon
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
