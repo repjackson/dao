@@ -76,13 +76,13 @@ template(name='mealorder_view')
                         .ui.fluid.button.unsubmit_order
                             i.undo.icon
                             |unsubmit order
-
                     .ui.header delivery 
-                    +key_value_edit key='status' value='delivery_started' direct=true
-                    if key_value_is 'status' 'delivery_started'
+                    +boolean_edit key='delivery_started' direct=true
+                    if delivery_started
                         div
-                        +key_value_edit key='status' value='delivery_complete' label='delivery complete' direct=true
-                        +image_edit key='delivery_image' direct=true
+                        +boolean_edit key='delivery_complete' direct=true
+                        if delivery_complete
+                            +image_edit key='delivery_image' direct=true
                         
-                    .ui.header customer
-                    +boolean_edit key='delivery_accepted' label='delivery accepted' direct=true
+                            .ui.header customer
+                            +boolean_edit key='delivery_accepted' label='delivery accepted' direct=true
