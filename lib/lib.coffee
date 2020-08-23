@@ -88,7 +88,7 @@ Docs.before.insert (userId, doc)->
     doc._timestamp = timestamp
     doc._timestamp_long = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
 
-    doc.app = 'stand'
+    doc.app = 'dao'
 
     date = moment(timestamp).format('Do')
     weekdaynum = moment(timestamp).isoWeekday()

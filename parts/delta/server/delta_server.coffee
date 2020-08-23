@@ -92,7 +92,7 @@ Meteor.methods
             # unless delta.model_filter is 'post'
             built_query.model = delta.model_filter
         # unless Meteor.user() and 'admin' in Meteor.user().roles
-        #     built_query.app = 'stand'
+        #     built_query.app = 'dao'
 
         # if delta.model_filter is 'model'
         #     unless 'dev' in Meteor.user().roles

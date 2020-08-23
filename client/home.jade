@@ -1,29 +1,32 @@
 template(name='home')
     .ui.center.aligned.basic.segment
-        .ui.basic.big.compact.circular.button.debit
+        .ui.basic.big.compact.circular.button.buy_tiffen
             i.gift.red.icon
-            |send points
-        .ui.basic.big.compact.circular.button.request
-            i.concierge.bell.teal.icon
-            |+ request
-        .ui.basic.big.compact.circular.button.offer
-            i.hand.holding.heart.olive.icon
-            |+ offer
-        .ui.basic.big.compact.circular.button.add_message
-            i.chat.blue.icon
-            |+ message
-        .ui.basic.big.compact.circular.button.add_event
-            i.calendar.purple.icon
-            |+ event
-        .ui.basic.big.compact.circular.button.add_expense
-            i.dollar.purple.icon
-            |+ expense
-        .ui.basic.big.compact.circular.button.add_bug
-            i.bug.red.icon
-            |+ bug
-        a.ui.basic.big.circular.button(href='/register')
-            i.user.plus.green.icon
-            |member
+            |buy tiffen
+        // .ui.basic.big.compact.circular.button.debit
+        //     i.gift.red.icon
+        //     |send points
+        // .ui.basic.big.compact.circular.button.request
+        //     i.concierge.bell.teal.icon
+        //     |+ request
+        // .ui.basic.big.compact.circular.button.offer
+        //     i.hand.holding.heart.olive.icon
+        //     |+ offer
+        // .ui.basic.big.compact.circular.button.add_message
+        //     i.chat.blue.icon
+        //     |+ message
+        // .ui.basic.big.compact.circular.button.add_event
+        //     i.calendar.purple.icon
+        //     |+ event
+        // .ui.basic.big.compact.circular.button.add_expense
+        //     i.dollar.purple.icon
+        //     |+ expense
+        // .ui.basic.big.compact.circular.button.add_bug
+        //     i.bug.red.icon
+        //     |+ bug
+        // a.ui.basic.big.circular.button(href='/register')
+        //     i.user.plus.green.icon
+        //     |member
 
     .ui.stackable.grid
         .row 
@@ -32,8 +35,8 @@ template(name='home')
             //         |check
             //     .ui.big.button.send_notification
             //         |send
-            if template_subs_ready
-                +finance_bar
+            // if template_subs_ready
+            //     +finance_bar
                     
         // .centered.row
         //     .sixteen.wide.center.aligned.column
@@ -112,49 +115,49 @@ template(name='home')
             //     .medscroll
             //         each next_shifts
                             +home_shift_card
-            .four.wide.column
-                // .ui.center.aligned.header
-                a.ui.center.aligned.header(href="/m/debit")
-                    i.gift.red.icon
-                    |gifts
-                .medscroll
-                    each latest_debits
-                        +debit_card
-            .four.wide.column
-                // .ui.center.aligned.header
-                a.ui.center.aligned.header(href="/events")
-                    i.calendar.orange.icon
-                    |events
-                // if is_admin 
-                //     i.plus.icon.add_event
+            // .four.wide.column
+            //     // .ui.center.aligned.header
+            //     a.ui.center.aligned.header(href="/m/debit")
+            //         i.gift.red.icon
+            //         |gifts
+            //     .medscroll
+            //         each latest_debits
+            //             +debit_card
+            // .four.wide.column
+            //     // .ui.center.aligned.header
+            //     a.ui.center.aligned.header(href="/events")
+            //         i.calendar.orange.icon
+            //         |events
+            //     // if is_admin 
+            //     //     i.plus.icon.add_event
                     
-                .medscroll
-                    each next_events
-                        +home_event_card
-            .four.wide.column
-                // .ui.center.aligned.header
-                a.ui.center.aligned.header(href="/m/request")
-                    i.concierge.bell.teal.icon
-                    |requests
-                .medscroll
-                    each latest_requests
-                        +home_request_card
+            //     .medscroll
+            //         each next_events
+            //             +home_event_card
+            // .four.wide.column
+            //     // .ui.center.aligned.header
+            //     a.ui.center.aligned.header(href="/m/request")
+            //         i.concierge.bell.teal.icon
+            //         |requests
+            //     .medscroll
+            //         each latest_requests
+            //             +home_request_card
                                             
-            .four.wide.column
-                a.ui.center.aligned.header(href="/m/offer")
-                    i.hand.holding.heart.icon
-                    |offers
-                .ui.large.link.selection.list.medscroll
-                    each latest_offers
-                        +home_offer_card
-            .four.wide.column
-                a.ui.center.aligned.header(href="/m/post")
-                    i.newspaper.icon
-                    |news
-                .ui.large.link.selection.list.medscroll
-                    each latest_posts
-                        a.item(href="/m/post/#{_id}/view")
-                            .header #{title}
+            // .four.wide.column
+            //     a.ui.center.aligned.header(href="/m/offer")
+            //         i.hand.holding.heart.icon
+            //         |offers
+            //     .ui.large.link.selection.list.medscroll
+            //         each latest_offers
+            //             +home_offer_card
+            // .four.wide.column
+            //     a.ui.center.aligned.header(href="/m/post")
+            //         i.newspaper.icon
+            //         |news
+            //     .ui.large.link.selection.list.medscroll
+            //         each latest_posts
+            //             a.item(href="/m/post/#{_id}/view")
+            //                 .header #{title}
                 
                 // .medscroll
                     // each latest_debits

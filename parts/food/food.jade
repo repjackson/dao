@@ -1,0 +1,22 @@
+template(name='food')
+    .ui.stackable.padded.grid
+        .four.wide.column
+            .ui.header food
+            .ui.big.green.button.order
+                |order
+        .twelve.wide.column
+            .ui.cards
+                each orders
+                    +order_card
+                    
+                    
+template(name='order_card')                    
+    .ui.card 
+        .content 
+            .ui.header #{when}
+            a.ui.button(href="/m/mealorder/#{_id}/view")
+                |view
+            if can_edit
+                .ui.red.compact.button.cancel_order
+                    |cancel
+                    

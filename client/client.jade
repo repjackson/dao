@@ -1,5 +1,5 @@
 head
-    title one
+    title dao
     meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.3, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
@@ -19,7 +19,7 @@ head
     link(href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet")
     script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
     script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
-    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css")
+    // link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css")
     // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js")
     // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/htmlmixed/htmlmixed.js")
     // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/xml/xml.js")
@@ -51,8 +51,8 @@ template(name='layout')
     // #main_area.scrolling.global_container
     .ui.bottom.attached.pushable.segment
         // +top_sidebar
-        +left_sidebar
-        +right_sidebar
+        // +left_sidebar
+        // +right_sidebar
                 
         #main_area.global_container.pusher(class=currentUser.invert_class)
             +yield

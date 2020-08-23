@@ -3,7 +3,8 @@ if Meteor.isClient
         # console.log 'key', key
         delta = Docs.findOne model:'delta'
         # console.log 'value', value
-        delta["#{key}"] is value
+        if delta
+            delta["#{key}"] is value
     Template.registerHelper 'fixed', (input) ->
         if input
             input.toFixed(2)
@@ -273,7 +274,7 @@ if Meteor.isClient
             Docs.insert
                 model:'delta'
                 view_mode:'cards'
-                app:'stand'
+                app:'dao'
                 model_filter: Router.current().params.model_slug
 
         'click .print_delta': (e,t)->

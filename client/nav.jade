@@ -1,61 +1,63 @@
 template(name='nav')
     // .ui.fluid.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
     .ui.fluid.borderless.attached.menu.topnav(style="background-color:#{currentUser.theme_color};" class=currentUser.invert_class)
-        a.zoom.icon.item.toggle_sidebar
-            i.large.bars.icon
-        a.zoom.item(href="/" class="{{isActivePath '/'}}")
-            if current_tribe.icon 
-                i.large.icon(class=current_tribe.icon)
-            else
-                i.large.home.icon
-            span.mobile.hidden #{current_tribe.title}
-            // img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-        each current_tribe.enabled_features
-            a.zoom.icon.item.mobile.hidden.goto_feature(href=link class="{{isActivePath link}}" title=title)
-                i.large.icon(class=icon)
-                | #{title}
-        a.zoom.icon.item.set_member.mobile.hidden(href="/m/member" class="{{isActivePath '/m/member'}}" title='users')
-            i.large.users.icon
-        a.zoom.icon.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
-            i.large.calendar.icon
-            // | events
-        // a.icon.item.mobile.hidden(href="/m/event" class="{{isActivePath 'events'}}" title='events')
-        a.zoom.icon.item.mobile.hidden.set_request(href="/m/request" class="{{isActivePath '/m/request'}}" title='requests')
-            i.large.concierge.bell.icon
-            // em(data-emoji='bellhop')
-            // | requests
-        a.zoom.icon.item.mobile.hidden.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}" title='offers')
-            i.large.hand.holding.heart.icon
-            // em(data-emoji='bellhop')
-            // | offers
-        a.zoom.icon.item.mobile.hidden.set_post(href="/m/post" class="{{isActivePath '/m/post'}}" title='feed')
-            i.large.newspaper.icon
-            // em(data-emoji='newspaper')
-            // | news
-        a.zoom.icon.item.mobile.hidden.set_meal(href="/m/meal" class="{{isActivePath '/m/meal'}}" title='food')
-            i.large.food.icon
-            // em(data-emoji='newspaper')
-            // | news
-        a.zoom.icon.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
-            i.large.picture.icon
-            // em(data-emoji='newspaper')
-            // | news
-        a.zoom.icon.item.mobile.hidden.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
-            i.large.dollar.icon
-        a.zoom.icon.item.mobile.hidden.set_tribe(href="/m/tribe" class="{{isActivePath '/m/tribe'}}" title='tribes')
-            i.large.fire.icon
+        // a.zoom.icon.item.toggle_sidebar
+        //     i.large.bars.icon
+        a.zoom.header.item(href="/" class="{{isActivePath '/'}}")
+            // if current_tribe.icon 
+            //     i.large.icon(class=current_tribe.icon)
+            // else
+            i.large.yin.yang.icon
+            // if current_tribe
+            //     span.mobile.hidden #{current_tribe.title}
+            // else    
+            span.mobile.hidden dao
+        // each current_tribe.enabled_features
+        //     a.zoom.icon.item.mobile.hidden.goto_feature(href=link class="{{isActivePath link}}" title=title)
+        //         i.large.icon(class=icon)
+        //         | #{title}
+        // a.zoom.icon.item.set_member.mobile.hidden(href="/m/member" class="{{isActivePath '/m/member'}}" title='users')
+        //     i.large.users.icon
+        // a.zoom.icon.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
+        //     i.large.calendar.icon
+        //     // | events
+        // // a.icon.item.mobile.hidden(href="/m/event" class="{{isActivePath 'events'}}" title='events')
+        // a.zoom.icon.item.mobile.hidden.set_request(href="/m/request" class="{{isActivePath '/m/request'}}" title='requests')
+        //     i.large.concierge.bell.icon
+        //     // em(data-emoji='bellhop')
+        //     // | requests
+        // a.zoom.icon.item.mobile.hidden.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}" title='offers')
+        //     i.large.hand.holding.heart.icon
+        //     // em(data-emoji='bellhop')
+        //     // | offers
+        // a.zoom.icon.item.mobile.hidden.set_post(href="/m/post" class="{{isActivePath '/m/post'}}" title='feed')
+        //     i.large.newspaper.icon
+        //     // em(data-emoji='newspaper')
+        //     // | news
+        // a.zoom.icon.item.mobile.hidden.set_meal(href="/m/meal" class="{{isActivePath '/m/meal'}}" title='food')
+        //     i.large.food.icon
+        //     // em(data-emoji='newspaper')
+        //     // | news
+        // a.zoom.icon.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
+        //     i.large.picture.icon
+        //     // em(data-emoji='newspaper')
+        //     // | news
+        // a.zoom.icon.item.mobile.hidden.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
+        //     i.large.dollar.icon
+        // a.zoom.icon.item.mobile.hidden.set_tribe(href="/m/tribe" class="{{isActivePath '/m/tribe'}}" title='tribes')
+        //     i.large.fire.icon
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
         //         i.database.large.icon
         .right.menu
-            if unread_count
-                a.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    i.large.bell.icon
-                    if unread_count
-                        |#{unread_count}
-            else
-                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                    i.large.outline.bell.icon
+            // if unread_count
+            //     a.item.alerts.select_term(href="#" class=alert_toggle_class)
+            //         i.large.bell.icon
+            //         if unread_count
+            //             |#{unread_count}
+            // else
+            //     a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+            //         i.large.outline.bell.icon
             // a.icon.item(href="/chat" title='chat') 
             // a.icon.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
             //     i.chat.large.icon
@@ -64,6 +66,10 @@ template(name='nav')
                     i.large.code.icon
             // if currentUser
             // a.large.item.toggle_rightbar(class="{{isActiveRoute 'user_dashboard'}}")
+            a.mobile.hidden.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
+                |#{currentUser.credit}c
+            // a.mobile.hidden.item(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
+            //     |#{currentUser.points}p
             a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                 //- i.large.user.large.icon
                 if currentUser.profile_image_id
@@ -74,12 +80,8 @@ template(name='nav')
                 else 
                     i.large.user.large.icon
                 strong.mobile.hidden #{currentUser.name}
-            a.mobile.hidden.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
-                |#{currentUser.credit}c
-            a.mobile.hidden.item(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
-                |#{currentUser.points}p
-            a.icon.large.item.toggle_rightbar.select_term
-                i.ellipsis.vertical.large.icon
+            // a.icon.large.item.toggle_rightbar.select_term
+            //     i.ellipsis.vertical.large.icon
             // else
             //     // a.item(href="/register" title='register')
             //     //     // |login
@@ -97,8 +99,8 @@ template(name='nav')
 template(name='topbar')
     .ui.fluid.large.attached.segment(style="background-color:#{currentUser.theme_color};" class=currentUser.invert_class)
         .ui.middle.aligned.divided.list
-            each recent_alerts
-                +recent_alert
+            // each recent_alerts
+            //     +recent_alert
         a.ui.icon.attached.basic.button.item.close_topbar(href="/inbox")
             i.inbox.large.icon
             |inbox

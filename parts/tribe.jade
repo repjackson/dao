@@ -21,7 +21,9 @@ template(name='tribe_card')
             |#{tribe_leader_ids.length} leaders
             i.chess.queen.icon
             |#{tribe_member_ids.length} members
-        
+            +enter_tribe
+            
+            
 template(name='tribe_view')
     with current_doc
         .ui.stackable.padded.grid

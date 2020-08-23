@@ -7,20 +7,20 @@ template(name='mealorder_view')
                         .ui.basic.button.cancel_order
                             i.large.remove.icon
                             |cancel order
-                    a.ui.zoom.pointer.card(href="/m/meal/#{meal_id}/view")
-                        .content
-                            .ui.inline.header
-                                i.food.icon
-                                |meal
-                        img.ui.rounded.fluid.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        .content
-                            .ui.header
-                                |#{mealorder_meal.title}
+                    // a.ui.zoom.pointer.card(href="/m/meal/#{meal_id}/view")
+                    //     .content
+                    //         .ui.inline.header
+                    //             i.food.icon
+                    //             |meal
+                    //     img.ui.rounded.fluid.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //     .content
+                    //         .ui.header
+                    //             |#{mealorder_meal.title}
                 .six.wide.column
                     .ui.header
                         i.food.icon
                         |${{amount}}
-                        | mealorder
+                        | meal order
                     .ui.small.header
                         i.clock.icon
                         | #{when}
@@ -30,7 +30,7 @@ template(name='mealorder_view')
                                 i.user.outline.icon
                                 |buyer
                             .ui.inline.header
-                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{_author.username}
                             
                     +number_view key='amount' label='amount' direct=true

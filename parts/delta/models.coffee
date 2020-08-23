@@ -55,6 +55,7 @@ if Meteor.isServer
 
     Meteor.publish 'model_fields_from_id', (model_id)->
         model = Docs.findOne model_id
-        Docs.find
-            model:'field'
-            parent_id:model._id
+        if model
+            Docs.find
+                model:'field'
+                parent_id:model._id

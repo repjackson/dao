@@ -131,7 +131,7 @@ Meteor.publish 'tag_results', (
         terms = Terms.find({
             # title: {$regex:"#{query}"}
             title: {$regex:"#{query}", $options: 'i'}
-            app:'stand'
+            app:'dao'
         },
             sort:
                 count: -1

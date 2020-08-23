@@ -46,9 +46,19 @@ if Meteor.isClient
                 Docs.remove @_id
 
         'click .submit': ->
-            # if confirm 'confirm?'
-                # Meteor.call 'send_meal', @_id, =>
-                #     Router.go "/meal/#{@_id}/view"
+            if confirm "submit order?"
+                Meteor.call 'submit_order', @_id, ->
+                # Docs.insert 
+                #     model:'transaction'
+                #     transaction_type:'shop_purchase'
+                #     payment_type:'points'
+                #     is_points:true
+                #     point_amount:@point_price
+                #     meal_id:@_id
+                # Meteor.users.update Meteor.userId(),
+                #     $inc:points:-@point_price
+                # Meteor.users.update @_author_id, 
+                #     $inc:points:@point_price
 
         'click .buy': ->
             if confirm "buy for #{@point_price} points?"
