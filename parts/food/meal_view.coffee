@@ -48,6 +48,9 @@ if Meteor.isClient
         'click .submit': ->
             if confirm "submit order?"
                 Meteor.call 'submit_order', @_id, ->
+        'click .unsubmit': ->
+            if confirm "unsubmit order?"
+                Meteor.call 'unsubmit_order', @_id, ->
                 # Docs.insert 
                 #     model:'transaction'
                 #     transaction_type:'shop_purchase'

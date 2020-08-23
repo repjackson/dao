@@ -14,6 +14,15 @@ template(name='order_card')
     .ui.card 
         .content 
             .ui.header #{when}
+            +time_view key='delivery_time' label='delivery time' direct=true
+            +textarea_view key='delivery_location' label='delivery location' direct=true
+            +textarea_view key='delivery_notes' label='delivery notes' direct=true
+            +text_view key='notes' label='notes' direct=true
+            +date_view key='date' label='date' direct=true
+            .spacer
+            .ui.large.label
+                |tiffen type: #{tiffen_type}
+            
             a.ui.button(href="/m/mealorder/#{_id}/view")
                 |view
             if can_edit

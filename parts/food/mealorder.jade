@@ -2,7 +2,7 @@ template(name='mealorder_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .five.wide.column
+                .four.wide.column
                     if can_edit
                         .ui.basic.button.cancel_order
                             i.large.remove.icon
@@ -16,7 +16,6 @@ template(name='mealorder_view')
                     //     .content
                     //         .ui.header
                     //             |#{mealorder_meal.title}
-                .six.wide.column
                     .ui.header
                         i.food.icon
                         |${{amount}}
@@ -46,26 +45,44 @@ template(name='mealorder_view')
                     +comments
                     // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .five.wide.column
+                .six.wide.column
                     unless submitted
-                        +date_edit key='date' label='date' direct=true
-                        +text_edit key='notes' label='notes' direct=true
+                        +datetime_edit key='delivery_datetime' label='delivery date time' direct=true
+                        +textarea_edit key='notes' label='notes' direct=true
                         +key_value_edit key='tiffen_type' value='meat' direct=true
                         +key_value_edit key='tiffen_type' value='veggie' direct=true
-                        .ui.green.button.submit_order
-                            |submit order
-                    else
-                        +date_view key='date' label='date' direct=true
                         .spacer
+                        .spacer
+                        // +key_value_edit key='transfer' value='pickup' label='pickup' direct=true                    
+                        // +key_value_edit key='transfer' value='delivery' label='delivery' direct=true                    
+                        // if key_value_is key='transfer' value='delivery' direct=true
+                        // +date_edit key='delivery_date' label='delivery date' direct=true
+                        +textarea_edit key='delivery_location' label='delivery location' direct=true
+                        +textarea_edit key='delivery_notes' label='delivery notes' direct=true
+                    else
+                        +time_view key='delivery_time' label='delivery time' direct=true
+                        +textarea_view key='delivery_location' label='delivery location' direct=true
+                        +textarea_view key='delivery_notes' label='delivery notes' direct=true
                         +text_view key='notes' label='notes' direct=true
+                        +date_view key='date' label='date' direct=true
                         .spacer
                         .ui.large.label
                             |tiffen type: #{tiffen_type}
-                        .spacer
+                .six.wide.column
+                    unless submitted
+                        .ui.green.fluid.button.submit_order
+                            |submit order
+                    else
+                        .ui.fluid.button.unsubmit_order
+                            i.undo.icon
+                            |unsubmit order
+
+                    .ui.header delivery 
+                    +key_value_edit key='status' value='delivery_started' direct=true
+                    if key_value_is 'status' 'delivery_started'
+                        div
+                        +key_value_edit key='status' value='delivery_complete' label='delivery complete' direct=true
+                        +image_edit key='delivery_image' direct=true
                         
-                        +key_value_edit key='transfer' value='pickup' label='pickup' direct=true                    
-                        +key_value_edit key='transfer' value='delivery' label='delivery' direct=true                    
-                        if key_value_is key='transfer' value='delivery' direct=true
-                            +date_edit key='delivery_date' label='delivery date' direct=true
-                            +time_edit key='delivery_time' label='delivery time' direct=true
-                            
+                    .ui.header customer
+                    +boolean_edit key='delivery_accepted' label='delivery accepted' direct=true

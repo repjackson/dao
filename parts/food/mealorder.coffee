@@ -41,6 +41,10 @@ if Meteor.isClient
             Docs.update @_id,
                 $set:submitted:true
 
+        'click .unsubmit_order': ->
+            Docs.update @_id,
+                $set:submitted:false
+
 
 if Meteor.isServer
     Meteor.publish 'meal_from_mealorder_id', (mealorder_id)->
