@@ -68,10 +68,16 @@ template(name='debit_edit')
                         input.point_amount(type='number' value=amount min='1' max=point_max)
                     div
                     +key_value_edit key='amount' value=1
-                    +key_value_edit key='amount' value=6
-                    +key_value_edit key='amount' value=12
-                    +key_value_edit key='amount' value=22
-                    +key_value_edit key='amount' value=55
+                    +key_value_edit key='amount' value=5
+                    +key_value_edit key='amount' value=10
+                    +key_value_edit key='amount' value=25
+                    +key_value_edit key='amount' value=50
+                    +key_value_edit key='amount' value=100
+                    +key_value_edit key='amount' value=250
+                    +key_value_edit key='amount' value=500
+                    +key_value_edit key='amount' value=1000
+                    +key_value_edit key='amount' value=2000
+                    +key_value_edit key='amount' value=5000
                     .spacer
                     .ui.center.aligned.basic.segment
                         if can_submit

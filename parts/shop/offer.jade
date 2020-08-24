@@ -15,7 +15,7 @@ template(name='offers')
 
 
 template(name='offer_card')
-    .card.pointer.offer_card
+    .card.crediter.offer_card
         if image_id
             .image
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
@@ -34,14 +34,14 @@ template(name='offer_card')
             .ui.big.basic.label
                 |$#{usd_price}
             .ui.big.basic.label
-                |#{point_price}pts
+                |#{credit_price}pts
             if rental
                 .ui.small.header
                     i.checkmark.icon
                     |rental
 
 template(name='offer_item')
-    .ui.item.pointer.offer_item
+    .ui.item.crediter.offer_item
         if image_id
             .image
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
@@ -60,7 +60,7 @@ template(name='offer_item')
             .ui.big.basic.label
                 |$#{usd_price}
             .ui.big.basic.label
-                |#{point_price}pts
+                |#{credit_price}pts
             if rental
                 .ui.small.header
                     i.checkmark.icon
@@ -120,42 +120,42 @@ template(name='offer_view')
                             +boolean_view key='is_rentable_hourly' label='rentable hourly' direct=true
                             if is_rentable_hourly
                                 +number_view key='rentable_hourly_usd' label='rentable hourly $' direct=true
-                                +number_view key='rentable_hourly_points' label='rentable hourly points' direct=true
-                                .ui.disabled.green.button.buy_for_points
+                                +number_view key='rentable_hourly_credits' label='rentable hourly credits' direct=true
+                                .ui.disabled.green.button.buy_for_credits
                                     i.cart.large.icon
-                                    |rent for #{rentable_hourly_points}pts
+                                    |rent for #{rentable_hourly_credits}pts
                             +boolean_view key='is_rentable_daily' label='rentable daily' direct=true
                             if is_rentable_daily
                                 if rentable_daily_usd
                                     +number_view key='rentable_daily_usd' label='daily $' direct=true
-                                    .ui.disabled.green.button.buy_for_points
+                                    .ui.disabled.green.button.buy_for_credits
                                         i.cart.large.icon
-                                        |rent for $#{rentable_hourly_points}
-                                +number_view key='rentable_daily_points' label='daily points' direct=true
-                                .ui.disabled.green.button.buy_for_points
+                                        |rent for $#{rentable_hourly_credits}
+                                +number_view key='rentable_daily_credits' label='daily credits' direct=true
+                                .ui.disabled.green.button.buy_for_credits
                                     i.cart.large.icon
-                                    |rent for #{rentable_daily_points}pts
+                                    |rent for #{rentable_daily_credits}pts
                             +boolean_view key='is_rentable_weekly' label='rentable weekly' direct=true
                             if is_rentable_weekly
                                 if rentable_weekly_usd
                                     +number_view key='rentable_weekly_usd' label='weekly $' direct=true
-                                    .ui.disabled.green.button.buy_for_points
+                                    .ui.disabled.green.button.buy_for_credits
                                         i.cart.large.icon
-                                        |buy for #{sale_point_price}pts
-                                +number_view key='rentable_weekly_points' label='weekly points' direct=true
-                                .ui.disabled.green.button.buy_for_points
+                                        |buy for #{sale_credit_price}pts
+                                +number_view key='rentable_weekly_credits' label='weekly credits' direct=true
+                                .ui.disabled.green.button.buy_for_credits
                                     i.cart.large.icon
-                                    |rent for #{rentable_weekly_points}pts
+                                    |rent for #{rentable_weekly_credits}pts
                             +boolean_view key='is_rentable_monthly' label='rentable monthly' direct=true
                             if is_rentable_monthly
                                 +number_view key='rentable_monthly_usd' label='monthly $' direct=true
-                                .ui.disabled.green.button.buy_for_points
+                                .ui.disabled.green.button.buy_for_credits
                                     i.cart.large.icon
-                                    |buy for #{sale_point_price}pts
-                                +number_view key='rentable_monthly_points' label='monthly points' direct=true
-                                .ui.disabled.green.button.buy_for_points
+                                    |buy for #{sale_credit_price}pts
+                                +number_view key='rentable_monthly_credits' label='monthly credits' direct=true
+                                .ui.disabled.green.button.buy_for_credits
                                     i.cart.large.icon
-                                    |buy for #{sale_point_price}pts
+                                    |buy for #{sale_credit_price}pts
                     .ui.segment
                         +boolean_view key='for_sale' label='for sale' direct=true
                         if for_sale
@@ -165,12 +165,12 @@ template(name='offer_view')
                                 .ui.disabled.green.button.buy_for_usd
                                     i.cart.large.icon
                                     |buy for $#{sale_usd_price}
-                            +boolean_view key='is_for_sale_points' label='for sale points' direct=true
-                            if is_for_sale_points
-                                +number_view key='sale_point_price' label='for sale usd price' direct=true
-                                .ui.disabled.green.button.buy_for_points
+                            +boolean_view key='is_for_sale_credits' label='for sale credits' direct=true
+                            if is_for_sale_credits
+                                +number_view key='sale_credit_price' label='for sale usd price' direct=true
+                                .ui.disabled.green.button.buy_for_credits
                                     i.cart.large.icon
-                                    |buy for #{sale_point_price}pts
+                                    |buy for #{sale_credit_price}pts
                     
                     .ui.dividing.header 
                         // +icolor name='activity-history' cl='ui inline image'
@@ -183,14 +183,14 @@ template(name='offer_view')
                                         if is_usd
                                             .ui.inline.green.header ${{money_format amount}}
                                         else
-                                            .ui.inline.header #{point_amount}pts
+                                            .ui.inline.header #{credit_amount}pts
                                         
                                         |#{when} 
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                         |#{_author.name}
                                     // if can_edit 
                                     //     i.
-                                    //     +icolor name='return-purchase' cl='ui mini inline image return pointer'
+                                    //     +icolor name='return-purchase' cl='ui mini inline image return crediter'
                                     if is_dev
                                         +remove_button
                     
@@ -223,38 +223,29 @@ template(name='offer_edit')
                     +text_edit key='location' label='location' icon='marker' direct=true
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .six.wide.column
-                    .ui.header your points: #{currentUser.points}
+                    .ui.header your credits: #{currentUser.credits}
                     // +number_edit key='usd_price' label='usd price' direct=true
-                    // +number_edit key='point_price' label='point price' direct=true
+                    // +number_edit key='credit_price' label='credit price' direct=true
                     +number_edit key='inventory' label='inventory' direct=true
                     .ui.segment
                         +boolean_edit key='rentable' label='rentable' direct=true
                         if rentable
                             +boolean_edit key='is_rentable_hourly' label='rentable hourly' direct=true
                             if is_rentable_hourly
-                                +number_edit key='rentable_hourly_usd' label='rentable hourly $' direct=true
-                                +number_edit key='rentable_hourly_points' label='rentable hourly points' direct=true
+                                +number_edit key='rentable_hourly_credits' label='rentable hourly credits' direct=true
                             +boolean_edit key='is_rentable_daily' label='rentable daily' direct=true
                             if is_rentable_daily
-                                +number_edit key='rentable_daily_usd' label='daily $' direct=true
-                                +number_edit key='rentable_daily_points' label='daily points' direct=true
+                                +number_edit key='rentable_daily_credits' label='daily credits' direct=true
                             +boolean_edit key='is_rentable_weekly' label='rentable weekly' direct=true
                             if is_rentable_weekly
-                                +number_edit key='rentable_weekly_usd' label='weekly $' direct=true
-                                +number_edit key='rentable_weekly_points' label='weekly points' direct=true
+                                +number_edit key='rentable_weekly_credits' label='weekly credits' direct=true
                             +boolean_edit key='is_rentable_monthly' label='rentable monthly' direct=true
                             if is_rentable_monthly
-                                +number_edit key='rentable_monthly_usd' label='monthly $' direct=true
-                                +number_edit key='rentable_monthly_points' label='monthly points' direct=true
+                                +number_edit key='rentable_monthly_credits' label='monthly credits' direct=true
                             
                     .ui.segment
                         +boolean_edit key='for_sale' label='for sale' direct=true
                         if for_sale
-                            +boolean_edit key='is_for_sale_usd' label='for sale $' direct=true
-                            if is_for_sale_usd
-                                +number_edit key='sale_usd_price' label='for sale $ price' direct=true
-                            +boolean_edit key='is_for_sale_points' label='for sale points' direct=true
-                            if is_for_sale_points
-                                +number_edit key='sale_point_price' label='for sale pointsS' direct=true
+                            +number_edit key='sale_credit_price' label='for sale creditsS' direct=true
                     
                     

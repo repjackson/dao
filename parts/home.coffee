@@ -1,8 +1,8 @@
 if Meteor.isClient
     Router.route '/', (->
         @layout 'layout'
-        @render 'food'
-        ), name:'food'
+        @render 'home'
+        ), name:'home'
 
     Template.finance_bar.onRendered ->
         Meteor.setTimeout ->

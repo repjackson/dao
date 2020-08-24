@@ -18,9 +18,23 @@ if Meteor.isClient
         
     Template.food.events
         'click .order': ->
-            Docs.insert 
-                model:'order'
-            
+            Swal.fire({
+                title: "order"
+                text: "this will charge you 15 credits"
+                icon: 'question'
+                confirmButtonText: 'order'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    new_order_id = 
+                        Docs.insert 
+                            model:'order'
+                    Router.go "/order/#{@_id}/edit"
+            )
+
     
         'click .cancel_order': ->
             event = @

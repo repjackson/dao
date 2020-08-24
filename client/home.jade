@@ -1,35 +1,35 @@
 template(name='home')
     .ui.center.aligned.basic.segment
         .ui.basic.big.compact.circular.button.buy_tiffen
-            i.gift.red.icon
+            i.gift.icon
             |buy tiffen
-        // .ui.basic.big.compact.circular.button.debit
-        //     i.gift.red.icon
-        //     |send points
-        // .ui.basic.big.compact.circular.button.request
-        //     i.concierge.bell.teal.icon
-        //     |+ request
-        // .ui.basic.big.compact.circular.button.offer
-        //     i.hand.holding.heart.olive.icon
-        //     |+ offer
-        // .ui.basic.big.compact.circular.button.add_message
-        //     i.chat.blue.icon
-        //     |+ message
-        // .ui.basic.big.compact.circular.button.add_event
-        //     i.calendar.purple.icon
-        //     |+ event
-        // .ui.basic.big.compact.circular.button.add_expense
-        //     i.dollar.purple.icon
-        //     |+ expense
-        // .ui.basic.big.compact.circular.button.add_bug
-        //     i.bug.red.icon
-        //     |+ bug
-        // a.ui.basic.big.circular.button(href='/register')
-        //     i.user.plus.green.icon
-        //     |member
+        .ui.basic.big.compact.circular.button.debit
+            i.gift.icon
+            |send points
+        .ui.basic.big.compact.circular.button.request
+            i.concierge.bell.icon
+            |+ request
+        .ui.basic.big.compact.circular.button.offer
+            i.hand.holding.heart.icon
+            |+ offer
+        .ui.basic.big.compact.circular.button.add_message
+            i.chat.icon
+            |+ message
+        .ui.basic.big.compact.circular.button.add_event
+            i.calendar.icon
+            |+ event
+        .ui.basic.big.compact.circular.button.add_expense
+            i.dollar.icon
+            |+ expense
+        .ui.basic.big.compact.circular.button.add_bug
+            i.bug.icon
+            |+ bug
+        a.ui.basic.big.circular.button(href='/register')
+            i.user.plus.icon
+            |member
 
     .ui.stackable.grid
-        .row 
+        // .row 
             // if is_admin
             //     .ui.big.button.check_notifications
             //         |check
@@ -38,145 +38,90 @@ template(name='home')
             // if template_subs_ready
             //     +finance_bar
                     
-        // .centered.row
-        //     .sixteen.wide.center.aligned.column
-        //         each members 
-        //             if profile_image_id
-        //                 a(href="/user/#{username}" title="{{name}} {{points}}")
-        //                     img.ui.tiny.pointer.inline.circular.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-        //                 // if avatar_image_id
-        //                 // .ui.move.reveal.tiny.circular.spaced_image.image
-        //                 //     .visible.content
-        //                 //         img(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-        //                 //     .hidden.content
-        //                 //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-        //                 // else
-        // .centered.row
-            // .sixteen.wide.center.aligned.column
-    
-
-        // .centered.row
-        //     .four.wide.column
-                // if can_debit
-            // .four.wide.column
-            //     // if can_debit
-            //     .ui.fluid.teal.button.request
-            //         // i.hand.holding.heart.icon
-            //         +icolor name='compass' cl='ui mini inline image'
-            //         |add explorer
-                // else
-                //     .ui.fluid.teal.disabled.button
-                //         // i.hand.holding.heart.icon
-                //         +icolor name='request-service' cl='ui mini inline image'
-                //         |request
-            // .two.wide.column
-            //     // .ui.center.aligned.grey.header.refresh_stats
-            //     //     i.line.chart.icon
-            //     //     |stats
-            //     with stats_doc
-            //         .ui.list
-            //             .item #{total_points} system points
-                        
+        .centered.row
+            .sixteen.wide.center.aligned.column
+                each members 
+                    if profile_image_id
+                        a(href="/user/#{username}" title="{{name}} {{points}}")
+                            img.ui.tiny.pointer.inline.circular.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                        // if avatar_image_id
+                        // .ui.move.reveal.tiny.circular.spaced_image.image
+                        //     .visible.content
+                        //         img(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+                        //     .hidden.content
+                        //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+                        // else
         .row
-            // .four.wide.column
-            //     .ui.center.aligned.header
-            //         // i.shop.icon
-            //         +icolor name='shop' cl='ui image'
-            //         |featured products
-            //     // if is_admin 
-            //     //     i.plus.icon.add_shift
-            //     .medscroll
-            //         each featured_products
-            //             a.ui.fluid.card(href="/product/#{_id}/view")
-            //                 .image
-            //                     img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
-            //                 .content
-            //                     .header
-            //                         |#{title}
-            //                     .description
-            //                         // if _author.profile_image_id
-            //                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-            //                         // | #{_author_username}
-            //                         // div
-            //                         .ui.inline.header $#{usd_price}
-            //                         .ui.inline.header #{point_price}
-            //                     // .meta #{when}
-            //                     // .description 
-            //                     //     |#{description}
-            //                     // each tags 
-            //                     //     .ui.tiny.basic.label #{this}
-            // .four.wide.column
-            //     .ui.center.aligned.header
-            //         // i.clock.icon
-            //         +icolor name='clock' cl='ui image'
-            //         |next shifts
-            //     // if is_admin 
-            //     //     i.plus.icon.add_shift
-            //     .medscroll
-            //         each next_shifts
-                            +home_shift_card
-            // .four.wide.column
-            //     // .ui.center.aligned.header
-            //     a.ui.center.aligned.header(href="/m/debit")
-            //         i.gift.red.icon
-            //         |gifts
-            //     .medscroll
-            //         each latest_debits
-            //             +debit_card
-            // .four.wide.column
-            //     // .ui.center.aligned.header
-            //     a.ui.center.aligned.header(href="/events")
-            //         i.calendar.orange.icon
-            //         |events
-            //     // if is_admin 
-            //     //     i.plus.icon.add_event
+            .four.wide.column
+                .ui.center.aligned.header
+                    // i.shop.icon
+                    +icolor name='shop' cl='ui image'
+                    |featured products
+                // if is_admin 
+                //     i.plus.icon.add_shift
+                .medscroll
+                    each featured_products
+                        a.ui.fluid.card(href="/product/#{_id}/view")
+                            .image
+                                img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
+                            .content
+                                .header
+                                    |#{title}
+                                .description
+                                    // if _author.profile_image_id
+                                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                                    // | #{_author_username}
+                                    // div
+                                    .ui.inline.header $#{usd_price}
+                                    .ui.inline.header #{point_price}
+                                // .meta #{when}
+                                // .description 
+                                //     |#{description}
+                                // each tags 
+                                //     .ui.tiny.basic.label #{this}
+            .four.wide.column
+                // .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/m/debit")
+                    i.gift.icon
+                    |gifts
+                .medscroll
+                    each latest_debits
+                        +debit_card
+            .four.wide.column
+                // .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/events")
+                    i.calendar.icon
+                    |events
+                // if is_admin 
+                //     i.plus.icon.add_event
                     
-            //     .medscroll
-            //         each next_events
-            //             +home_event_card
-            // .four.wide.column
-            //     // .ui.center.aligned.header
-            //     a.ui.center.aligned.header(href="/m/request")
-            //         i.concierge.bell.teal.icon
-            //         |requests
-            //     .medscroll
-            //         each latest_requests
-            //             +home_request_card
+                .medscroll
+                    each next_events
+                        +home_event_card
+            .four.wide.column
+                // .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/m/request")
+                    i.concierge.bell.icon
+                    |requests
+                .medscroll
+                    each latest_requests
+                        +home_request_card
                                             
-            // .four.wide.column
-            //     a.ui.center.aligned.header(href="/m/offer")
-            //         i.hand.holding.heart.icon
-            //         |offers
-            //     .ui.large.link.selection.list.medscroll
-            //         each latest_offers
-            //             +home_offer_card
-            // .four.wide.column
-            //     a.ui.center.aligned.header(href="/m/post")
-            //         i.newspaper.icon
-            //         |news
-            //     .ui.large.link.selection.list.medscroll
-            //         each latest_posts
-            //             a.item(href="/m/post/#{_id}/view")
-            //                 .header #{title}
-                
-                // .medscroll
-                    // each latest_debits
-                    //     a.ui.card(href="/debit/#{_id}/view")
-                    //         .content
-                    //             .description 
-                    //                 if _author.profile_image_id
-                    //                     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                    //                 | #{_author_username}
-                    //                 .ui.inline.header >
-                    //                 if recipient.profile_image_id
-                    //                     img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                    //                 |#{recipient.username}
-                    //                 .ui.inline.header #{amount}p
-                    //             .meta #{when}
-                    //             .description 
-                    //                 |#{description}
-                    //             each tags 
-                    //                 .ui.tiny.basic.label #{this}
+            .four.wide.column
+                a.ui.center.aligned.header(href="/m/offer")
+                    i.hand.holding.heart.icon
+                    |offers
+                .ui.large.link.selection.list.medscroll
+                    each latest_offers
+                        +home_offer_card
+            .four.wide.column
+                a.ui.center.aligned.header(href="/m/post")
+                    i.newspaper.icon
+                    |news
+                .ui.large.link.selection.list.medscroll
+                    each latest_posts
+                        a.item(href="/m/post/#{_id}/view")
+                            .header #{title}
                     
                     
                     
@@ -293,12 +238,12 @@ template(name='home_event_card')
             i.checkmark.green.large.icon
             each going
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
-            // i.question.orange.large.icon
+            // i.question.large.icon
             // | #{maybe_user_ids.length}
             // each maybe_going
             //     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
             // | #{not_user_ids.length}
-            // i.remove.red.large.icon
+            // i.remove.large.icon
             // each not_going
             //     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
             +comments_view_small
