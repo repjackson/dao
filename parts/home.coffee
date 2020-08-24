@@ -4,16 +4,16 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
 
-    Template.finance_bar.onRendered ->
-        Meteor.setTimeout ->
-            finance_stat = Docs.findOne model:'finance_stat'
-            if finance_stat
-                percent = 20000/finance_stat.total_expense_sum
-                console.log percent
-                $('.progress').progress({
-                      percent: percent
-                });
-        , 2000
+    # Template.finance_bar.onRendered ->
+    #     Meteor.setTimeout ->
+    #         finance_stat = Docs.findOne model:'finance_stat'
+    #         if finance_stat
+    #             percent = 20000/finance_stat.total_expense_sum
+    #             console.log percent
+    #             $('.progress').progress({
+    #                   percent: percent
+    #             });
+    #     , 2000
     
     Template.home.onCreated ->
         @autorun => Meteor.subscribe 'latest_debits'
@@ -125,7 +125,7 @@ if Meteor.isClient
         debits: ->
             Docs.find
                 model:'debit'
-        members: ->
+        friends: ->
             Meteor.users.find({},
                 sort:points:1)
     Template.finance_bar.events

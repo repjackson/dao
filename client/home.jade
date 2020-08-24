@@ -1,104 +1,93 @@
 template(name='home')
     .ui.center.aligned.basic.segment
-        .ui.basic.big.compact.circular.button.buy_tiffen
-            i.gift.icon
-            |buy tiffen
-        .ui.basic.big.compact.circular.button.debit
-            i.gift.icon
-            |send points
-        .ui.basic.big.compact.circular.button.request
-            i.concierge.bell.icon
-            |+ request
-        .ui.basic.big.compact.circular.button.offer
+        // .ui.basic.big.compact.button.buy_tiffen
+        //     i.gift.icon
+        //     |buy tiffen
+        .ui.basic.big.compact.button.debit
+            i.send.icon
+            |send credit
+        // .ui.basic.big.compact.button.request
+        //     i.concierge.bell.icon
+        //     |request
+        .ui.basic.big.compact.button.offer
             i.hand.holding.heart.icon
-            |+ offer
-        .ui.basic.big.compact.circular.button.add_message
-            i.chat.icon
-            |+ message
-        .ui.basic.big.compact.circular.button.add_event
-            i.calendar.icon
-            |+ event
-        .ui.basic.big.compact.circular.button.add_expense
-            i.dollar.icon
-            |+ expense
-        .ui.basic.big.compact.circular.button.add_bug
-            i.bug.icon
-            |+ bug
-        a.ui.basic.big.circular.button(href='/register')
+            |offer
+        // .ui.basic.big.compact.button.add_message
+        //     i.chat.icon
+        //     |message
+        // .ui.basic.big.compact.button.add_event
+        //     i.calendar.icon
+        //     |+ event
+        // .ui.basic.big.compact.button.add_expense
+        //     i.dollar.icon
+        //     |+ expense
+        // .ui.basic.big.compact.button.add_bug
+        //     i.bug.icon
+        //     |+ bug
+        a.ui.basic.big.button(href='/register')
             i.user.plus.icon
             |member
 
+        each friends
+            if profile_image_id
+                a(href="/user/#{username}" title="{{name}} {{points}}")
+                    img.ui.tiny.pointer.inline.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                // if avatar_image_id
+                // .ui.move.reveal.tiny.spaced_image.image
+                //     .visible.content
+                //         img(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+                //     .hidden.content
+                //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+                // else
     .ui.stackable.grid
-        // .row 
-            // if is_admin
-            //     .ui.big.button.check_notifications
-            //         |check
-            //     .ui.big.button.send_notification
-            //         |send
-            // if template_subs_ready
-            //     +finance_bar
-                    
-        .centered.row
-            .sixteen.wide.center.aligned.column
-                each members 
-                    if profile_image_id
-                        a(href="/user/#{username}" title="{{name}} {{points}}")
-                            img.ui.tiny.pointer.inline.circular.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-                        // if avatar_image_id
-                        // .ui.move.reveal.tiny.circular.spaced_image.image
-                        //     .visible.content
-                        //         img(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-                        //     .hidden.content
-                        //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-                        // else
-        .row
-            .four.wide.column
-                .ui.center.aligned.header
-                    // i.shop.icon
-                    +icolor name='shop' cl='ui image'
-                    |featured products
-                // if is_admin 
-                //     i.plus.icon.add_shift
-                .medscroll
-                    each featured_products
-                        a.ui.fluid.card(href="/product/#{_id}/view")
-                            .image
-                                img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
-                            .content
-                                .header
-                                    |#{title}
-                                .description
-                                    // if _author.profile_image_id
-                                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                                    // | #{_author_username}
-                                    // div
-                                    .ui.inline.header $#{usd_price}
-                                    .ui.inline.header #{point_price}
-                                // .meta #{when}
-                                // .description 
-                                //     |#{description}
-                                // each tags 
-                                //     .ui.tiny.basic.label #{this}
-            .four.wide.column
+        .three.column.row
+            // .column
+            //     .ui.center.aligned.header
+            //         // i.shop.icon
+            //         +icolor name='shop' cl='ui image'
+            //         |featured products
+            //     // if is_admin 
+            //     //     i.plus.icon.add_shift
+            //     .medscroll
+            //         each featured_products
+            //             a.ui.fluid.card(href="/product/#{_id}/view")
+            //                 .image
+            //                     img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
+            //                 .content
+            //                     .header
+            //                         |#{title}
+            //                     .description
+            //                         // if _author.profile_image_id
+            //                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+            //                         // | #{_author_username}
+            //                         // div
+            //                         .ui.inline.header $#{usd_price}
+            //                         .ui.inline.header #{point_price}
+            //                     // .meta #{when}
+            //                     // .description 
+            //                     //     |#{description}
+            //                     // each tags 
+            //                     //     .ui.tiny.basic.label #{this}
+            .column
                 // .ui.center.aligned.header
                 a.ui.center.aligned.header(href="/m/debit")
-                    i.gift.icon
-                    |gifts
+                    i.send.icon
+                    |transactions
                 .medscroll
                     each latest_debits
                         +debit_card
-            .four.wide.column
-                // .ui.center.aligned.header
-                a.ui.center.aligned.header(href="/events")
-                    i.calendar.icon
-                    |events
-                // if is_admin 
-                //     i.plus.icon.add_event
+            // .column
+            //     // .ui.center.aligned.header
+            //     a.ui.center.aligned.header(href="/events")
+            //         i.calendar.icon
+            //         |events
+            //     // if is_admin 
+            //     //     i.plus.icon.add_event
                     
-                .medscroll
-                    each next_events
-                        +home_event_card
-            .four.wide.column
+            //     .medscroll
+            //         each next_events
+            //             +home_event_card
+            .column
                 // .ui.center.aligned.header
                 a.ui.center.aligned.header(href="/m/request")
                     i.concierge.bell.icon
@@ -107,21 +96,21 @@ template(name='home')
                     each latest_requests
                         +home_request_card
                                             
-            .four.wide.column
+            .column
                 a.ui.center.aligned.header(href="/m/offer")
                     i.hand.holding.heart.icon
                     |offers
                 .ui.large.link.selection.list.medscroll
                     each latest_offers
                         +home_offer_card
-            .four.wide.column
-                a.ui.center.aligned.header(href="/m/post")
-                    i.newspaper.icon
-                    |news
-                .ui.large.link.selection.list.medscroll
-                    each latest_posts
-                        a.item(href="/m/post/#{_id}/view")
-                            .header #{title}
+            // .column
+            //     a.ui.center.aligned.header(href="/m/post")
+            //         i.newspaper.icon
+            //         |news
+            //     .ui.large.link.selection.list.medscroll
+            //         each latest_posts
+            //             a.item(href="/m/post/#{_id}/view")
+            //                 .header #{title}
                     
                     
                     
