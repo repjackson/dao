@@ -3,15 +3,15 @@ template(name='home')
         // .ui.basic.big.compact.button.buy_tiffen
         //     i.gift.icon
         //     |buy tiffen
-        .ui.basic.big.compact.button.debit
-            i.send.icon
-            |send credit
+        .ui.basic.big.compact.icon.button.debit
+            i.send.big.icon
+            // |send credit
         // .ui.basic.big.compact.button.request
         //     i.concierge.bell.icon
         //     |request
-        .ui.basic.big.compact.button.offer
-            i.hand.holding.heart.icon
-            |offer
+        .ui.basic.big.compact.icon.button.offer
+            i.hand.holding.heart.big.icon
+            // |offer
         // .ui.basic.big.compact.button.add_message
         //     i.chat.icon
         //     |message
@@ -24,10 +24,9 @@ template(name='home')
         // .ui.basic.big.compact.button.add_bug
         //     i.bug.icon
         //     |+ bug
-        a.ui.basic.big.button(href='/register')
-            i.user.plus.icon
-            |member
-
+        a.ui.basic.big.icon.button(href='/register')
+            i.user.plus.big.icon
+            // |member
         each friends
             if profile_image_id
                 a(href="/user/#{username}" title="{{name}} {{points}}")

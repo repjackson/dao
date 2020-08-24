@@ -1,9 +1,9 @@
 template(name='nav')
     // .ui.fluid.fixed.menu.topnav(style="background-color:#{currentUser.theme_color};")
     .ui.fluid.borderless.attached.menu.topnav(style="background-color:#{currentUser.theme_color};" class=currentUser.invert_class)
-        a.zoom.icon.item.toggle_sidebar
-            i.large.bars.icon
-        a.zoom.header.item(href="/" class="{{isActivePath '/'}}")
+        // a.zoom.icon.item.toggle_sidebar
+        //     i.large.bars.icon
+        a.zoom.header.icon.item(href="/" class="{{isActivePath '/'}}")
             // if current_tribe.icon 
             //     i.large.icon(class=current_tribe.icon)
             // else
@@ -11,7 +11,6 @@ template(name='nav')
             // if current_tribe
             //     span.mobile.hidden #{current_tribe.title}
             // else    
-            span.mobile.hidden dao
         // each current_tribe.enabled_features
         //     a.zoom.icon.item.mobile.hidden.goto_feature(href=link class="{{isActivePath link}}" title=title)
         //         i.large.icon(class=icon)
@@ -80,8 +79,8 @@ template(name='nav')
                     else 
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.name}
-                a.icon.large.item.toggle_rightbar.select_term
-                    i.ellipsis.vertical.large.icon
+                // a.icon.large.item.toggle_rightbar.select_term
+                //     i.ellipsis.vertical.large.icon
             else
                 a.item(href="/register" title='register')
                     // |login

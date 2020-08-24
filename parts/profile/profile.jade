@@ -38,9 +38,6 @@ template(name='profile_layout')
                             if currentUser
                                 // div
                                 +user_friend_button 
-                        a.ui.large.icon.button(href="/user/#{username}/dashboard" class="{{isActiveRoute 'user_dashboard'}}")
-                            i.dashboard.large.icon
-                            // |dashboard
                         if is_current_user
                             a.ui.large.icon.button(href="/user/#{username}/edit/membership" class="{{isActiveRoute 'user_finance'}}")
                                 i.money.large.icon
@@ -103,9 +100,6 @@ template(name='profile_layout')
                         a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}" title="#{user.username} messages")
                             i.fire.large.icon
                             // span chat
-                        a.ui.large.compact.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
-                            i.certificate.large.icon
-                            span.mobile.hidden badges
                         a.ui.large.compact.icon.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
                             i.large.dna.icon
                             // span genekeys
@@ -113,7 +107,7 @@ template(name='profile_layout')
                         // .spacer
                         if is_dev
                             +print_this
-                    .twelve.wide.column.profile_yield
+                    .twelve.wide.column.profile_yield.scrolling
                         +yield    
                       
 
