@@ -32,12 +32,6 @@ template(name='user_edit_layout')
                             a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
                                 i.bell.large.icon 
                                 // |alerts
-                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/style" class="{{isActiveRoute 'user_edit_style'}}") 
-                                i.paint.brush.large.icon 
-                                // |style
-                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
-                                i.dna.large.icon 
-                                // |genekeys
                             a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
                                 i.lock.privacy.large.icon 
                                 // | privacy
