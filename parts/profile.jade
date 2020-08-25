@@ -1,0 +1,90 @@
+template(name='profile_layout')
+    +nav
+    .ui.bottom.attached.pushable.segment
+        // +top_sidebar
+        +left_sidebar
+        +right_sidebar
+        #main_area.global_container.pusher(class=currentUser.invert_class)
+            with user
+                .ui.stackable.padded.grid
+                    .four.wide.column
+                        span.mobile.only
+                            a(href="/user/#{username}/")
+                                img.ui.centered.tiny.inline.spaced.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        span.mobile.hidden
+                            a(href="/user/#{username}/")
+                                img.ui.centered.fluid.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
+                        a.ui.small.header.refresh_user_stats(href="/user/#{username}") 
+                            |@#{username}
+                        if is_admin
+                            a.ui.large.icon.button(href="/user/#{username}/edit" title='admin edit account')
+                                i.shield.large.icon
+                                // |account
+                        if is_current_user
+                            a.ui.icon.button(href="/user/#{username}/edit" title='edit your account')
+                                i.cog.big.icon
+                                // |account
+                            a.ui.icon.button.logout(href="#" title='log out')
+                                i.sign.out.big.icon
+                                // |log out
+                        
+                        .ui.header $#{credit} credit
+                        .ui.inline.header #{points}pts
+                        .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
+                            i.refresh.icon
+                        if is_dev
+                            .ui.small.inline.header #{_id}
+        
+                        unless is_current_user
+                            if currentUser
+                                // div
+                                +user_friend_button 
+                        if i_have_points
+                            .ui.button.send(title='send points')
+                                i.red.gift.large.icon
+                                span send pts
+                        a.ui.large.compact.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                            i.chat.large.blue.icon
+                            // | message
+        
+        
+                        a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                            i.large.dashboard.icon
+                            // span dashboard
+                        a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                            i.large.chevron.down.icon
+                            // span pts received
+                        a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                            i.large.gift.icon
+                            // span pts sent
+                        // a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                        //     i.large.dollar.icon
+                        //     // span credit
+                        a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
+                            i.large.concierge.bell.icon
+                            // span requests
+                        a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
+                            i.large.hand.holding.heart.icon
+                            // span offers
+                        // a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                        //     i.chat.large.icon
+                        //     span chat
+                        // .spacer
+                        // .spacer
+                        if is_dev
+                            +print_this
+                    .twelve.wide.column.profile_yield.scrolling
+                        +yield    
+                      
+
+
+
+
+
+template(name='user_friend_button')
+    if is_friend
+        .ui.blue.large.icon.button.unfriend(title='unfriend')
+            i.checkmark.large.icon
+    else
+        .ui.large.icon.button.friend(title='friend')
+            i.user.plus.large.icon
