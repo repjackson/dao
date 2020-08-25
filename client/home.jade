@@ -30,7 +30,7 @@ template(name='home')
         each friends
             if profile_image_id
                 a(href="/user/#{username}" title="{{name}} {{points}}")
-                    img.ui.tiny.pointer.rounded.inline.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    img.ui.tiny.pointer.rounded.inline.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             else 
                 a.ui.circular.button(href="/user/#{username}" title="{{name}} {{points}}")
                     |#{username}
@@ -42,7 +42,7 @@ template(name='home')
                 //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
                 // else
     .ui.stackable.grid
-        .two.column.row
+        .three.column.row
             .column
                 a.ui.center.aligned.header(href="/m/offer")
                     i.hand.holding.heart.icon
@@ -58,14 +58,14 @@ template(name='home')
                 .ui.stackable.cards.medscroll
                     each latest_debits
                         +debit_card
-            // .column
-            //     // .ui.center.aligned.header
-            //     a.ui.center.aligned.header(href="/m/request")
-            //         i.concierge.bell.icon
-            //         |requests
-            //     .medscroll
-            //         each latest_requests
-            //             +home_request_card
+            .column
+                // .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/m/request")
+                    i.concierge.bell.icon
+                    |requests
+                .medscroll
+                    each latest_requests
+                        +home_request_card
                     
                     
                     

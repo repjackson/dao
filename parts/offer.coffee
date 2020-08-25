@@ -22,8 +22,10 @@ if Meteor.isClient
             
     Template.offers.helpers
         offers: ->
-            Docs.find 
+            Docs.find {
                 model:'offer'
+                },
+                    sort:_timestamp:-1
                 # complete:$ne:true
                 # published:true
 
@@ -49,21 +51,21 @@ if Meteor.isClient
             zipCode: true
             token: (token) =>
                 # amount = parseInt(Session.get('topup_amount'))
-                meal = Docs.findOne Router.current().params.doc_id
+                offer = Docs.findOne Router.current().params.doc_id
                 charge =
-                    amount: meal.dollar_price*100
-                    meal_id:meal._id
+                    amount: offer.credit_price*100
+                    offer_id:offer._id
                     currency: 'usd'
                     source: token.id
                     description: token.description
-                    meal_title:meal.title
+                    offer_title:offer.title
                     # receipt_email: token.email
-                Meteor.call 'buy_meal', charge, Router.current().params.doc_id, (err,res)=>
+                Meteor.call 'buy_offer', charge, Router.current().params.doc_id, (err,res)=>
                     if err then alert err.reason, 'danger'
                     else
                         console.log 'res', res
                         Swal.fire(
-                            'meal purchased',
+                            'offer purchased',
                             ''
                             'success'
                         # Meteor.users.update Meteor.userId(),
@@ -78,7 +80,7 @@ if Meteor.isClient
             # if confirm 'add 5 credits?'
             # Session.set('topup_amount',5)
             # Template.instance().checkout.open
-            #     name: 'meal purchase'
+            #     name: 'offer purchase'
             #     # email:Meteor.user().emails[0].address
             #     description: 'monthly'
             #     amount: 250
@@ -86,10 +88,10 @@ if Meteor.isClient
 
             instance = Template.instance()
 
-            if Meteor.user().credit > @dollar_price
+            if Meteor.user().credit > @credit_price
                 Swal.fire({
                     title: "buy #{@title}?"
-                    text: "this will charge you #{@dollar_price} credits"
+                    text: "this will charge you #{@credit_price} credits"
                     icon: 'question'
                     showCancelButton: true
                     confirmButtonText: 'confirm'
@@ -98,16 +100,15 @@ if Meteor.isClient
                     if result.value
                         # Session.set('topup_amount',5)
                         # Template.instance().checkout.open
-                        Docs.insert 
-                            model:'dollar_transaction'
-                            product_id: Router.current().params.doc_id
-                            dollar_amount: @dollar_price
-                            target_user_id:@chef_id
+                        # Docs.insert 
+                        #     model:'dollar_transaction'
+                        #     product_id: Router.current().params.doc_id
+                        #     dollar_amount: @credit_price
+                        #     target_user_id:@chef_id
                         Docs.insert
-                            model:'mealorder'
-                            meal_id: Router.current().params.doc_id
-                            transaction_type:'1 tiffen'
-                            dollar_amount:@dollar_price
+                            model:'order'
+                            offer_id: Router.current().params.doc_id
+                            purchase_price:@credit_price
                         Swal.fire(
                             'credit transfered',
                             ''
@@ -117,7 +118,7 @@ if Meteor.isClient
             else
                 Swal.fire({
                     title: "buy #{@title}?"
-                    text: "this will charge you $#{@dollar_price}"
+                    text: "this will charge you $#{@credit_price}"
                     icon: 'question'
                     showCancelButton: true
                     confirmButtonText: 'confirm'
@@ -129,8 +130,8 @@ if Meteor.isClient
                         instance.checkout.open
                             name: @title
                             # email:Meteor.user().emails[0].address
-                            description: 'meal purchase'
-                            amount: @dollar_price*100
+                            description: 'offer purchase'
+                            amount: @credit_price*100
                 
                         # Meteor.users.update @_author_id,
                         #     $inc:credit:@order_price

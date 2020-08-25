@@ -5,18 +5,21 @@ if Meteor.isClient
         ), name:'user_friends'
     
     Template.user_friends.onCreated ->
-        @autorun => Meteor.subscribe 'users'
+        @autorun => Meteor.subscribe 'all_users'
 
 
 
     Template.user_friends.helpers
-        friends: ->
-            current_user = Meteor.users.findOne Router.current().params.user_id
-            Meteor.users.find
-                _id:$in: current_user.friend_ids
-        nonfriends: ->
-            Meteor.users.find
-                _id:$nin:Meteor.user().friend_ids
+        friended: ->
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            if current_user
+                Meteor.users.find
+                    _id:$in:current_user.friend_ids
+        friended_by: ->
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            if current_user
+                Meteor.users.find
+                    friend_ids:$in:current_user._id
 
 
     Template.user_friend_button.helpers
@@ -32,15 +35,15 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $pull: friend_ids:@_id
 
-        'keyup .assign_earn': (e,t)->
-            if e.which is 13
-                post = t.$('.assign_earn').val().trim()
-                # console.log post
-                current_user = Meteor.users.findOne Router.current().params.user_id
-                Docs.insert
-                    body:post
-                    model:'earn'
-                    assigned_user_id:current_user._id
-                    assigned_username:current_user.username
+        # 'keyup .assign_earn': (e,t)->
+        #     if e.which is 13
+        #         post = t.$('.assign_earn').val().trim()
+        #         # console.log post
+        #         current_user = Meteor.users.findOne Router.current().params.user_id
+        #         Docs.insert
+        #             body:post
+        #             model:'earn'
+        #             assigned_user_id:current_user._id
+        #             assigned_username:current_user.username
 
-                t.$('.assign_earn').val('')
+        #         t.$('.assign_earn').val('')

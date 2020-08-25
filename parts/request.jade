@@ -10,10 +10,22 @@ template(name='requests')
                 .spacer
                 .spacer
                 +cloud filter='request'
-            .twelve.wide.column.scrolling
-                .ui.stackable.divided.items
-                    each requests
-                        +request_item
+            .twelve.wide.column
+                |sort by
+                .ui.button.when
+                    |when
+                .ui.button.price
+                    |price
+                if sorting_up
+                    .ui.button.sort_down
+                        i.chevron.up.icon
+                else
+                    .ui.button.sort_up
+                        i.chevron.down.icon
+                .scrolling
+                    .ui.stackable.divided.items
+                        each requests
+                            +request_item
 
 
 

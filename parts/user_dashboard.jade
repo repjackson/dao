@@ -51,6 +51,24 @@ template(name='user_dashboard')
                                 |status: #{status}
                                 if complete 
                                     |completed by #{completer.name}
+            .column
+                a.ui.inline.spaced.header(href="/user/#{username}/offers")
+                    i.concierge.bell.icon
+                    |offers
+                .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
+                .ui.small.header (#{fulfilled_count}p total fulfilled count)
+                .medscroll
+                    each user_offers
+                        .ui.card
+                            if image_id
+                                img.ui.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
+                            .content.zoom.pointer
+                                a.header(href="/offer/#{_id}/view")
+                                    |#{point_bounty}pts: #{title}
+                                // |!{description}
+                                |status: #{status}
+                                if complete 
+                                    |completed by #{completer.name}
 
 
 

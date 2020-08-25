@@ -10,10 +10,23 @@ template(name='offers')
                 .spacer
                 .spacer
                 .spacer
-            .twelve.wide.column.scrolling
-                .ui.stackable.divided.items
-                    each offers
-                        +offer_item
+            .twelve.wide.column
+                |sort by
+                .ui.button.when
+                    |when
+                .ui.button.price
+                    |price
+                if sorting_up
+                    .ui.button.sort_down
+                        i.chevron.up.icon
+                else
+                    .ui.button.sort_up
+                        i.chevron.down.icon
+
+                .scrolling
+                    .ui.stackable.divided.items
+                        each offers
+                            +offer_item
 
 
 
@@ -34,7 +47,7 @@ template(name='offer_item')
                     img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 |#{_author.name}
                 .ui.big.basic.label
-                    |#{credit_price}p
+                    |#{credit_price} credit
                 if rental
                     .ui.small.header
                         i.checkmark.icon

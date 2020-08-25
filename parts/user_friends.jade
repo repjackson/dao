@@ -3,27 +3,27 @@ template(name='user_friends')
     .ui.stackable.grid
         .two.column.row
             .column
-                .ui.small.header connected to
+                .ui.small.header friended
                 .ui.middle.aligned.selection.animated.large.list
-                    each friends
+                    each friended
                         +user_segment
             .column
-                .ui.small.header connected by
+                .ui.small.header friended by
                 .ui.middle.aligned.selection.animated.large.list
-                    each friends_with
+                    each friended_by
                         +user_segment
 
 
 template(name='user_segment')
     a.item(href="/user/#{username}")
-        img.ui.avatar.image(src="{{c.url image_id gravity='face' crop='fit'}}")
+        img.ui.avatar.image(src="{{c.url profile_image_id gravity='face' crop='fit'}}")
         .content
             .header
-                |#{name}
-                small $#{credit}
-            .description
-                each tags
-                    .ui.basic.label #{this}
+                |#{username}
+                small #{credit}
+            // .description
+            //     each tags
+            //         .ui.basic.label #{this}
 
     //- .ui.horizontal.card
     //-     .image

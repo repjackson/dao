@@ -2,18 +2,19 @@ template(name='profile_layout')
     +nav
     .ui.bottom.attached.pushable.segment
         // +top_sidebar
-        +left_sidebar
-        +right_sidebar
-        #main_area.global_container.pusher(class=currentUser.invert_class)
+        // +left_sidebar
+        // +right_sidebar
+        // #main_area.global_container.pusher
+        #main_area.global_container.pusher
             with user
                 .ui.stackable.padded.grid
                     .four.wide.column
                         span.mobile.only
                             a(href="/user/#{username}/")
-                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                         span.mobile.hidden
                             a(href="/user/#{username}/")
-                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
+                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
                         a.ui.small.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
                         if is_admin
