@@ -3,29 +3,28 @@ template(name='login')
         .centered.row
             .eight.wide.column
                 .ui.center.aligned.basic.segment
-                    .ui.inline.header 
+                    .ui.inline.big.header 
                         i.yin.yang.icon
-                        |dao
-                    .ui.inline.grey.header login
+                        i.sign.in.alternate.icon
                 div
-                if message
-                    h4.ui.center.aligned.header #{message}
-                .ui.inline.small.header 
+                // if message
+                //     h4.ui.center.aligned.header #{message}
+                // .ui.inline.small.header 
+                //     |username
+                .ui.fluid.large.icon.input(class=login_class title='username')
                     i.user.outline.icon
-                    |username
-                .ui.fluid.large.input(class=login_class)
                     input.username(type='text')
                 .spacer
-                .ui.inline.small.header 
+                // .ui.inline.small.header 
+                //     | password
+                .ui.fluid.large.icon.input(class=login_class title='password')
                     i.lock.icon
-                    | password
-                .ui.fluid.large.input(class=login_class)
                     input.password(type='password')
                 //- if username
                 if logging_in
                     .spacer
                     .ui.fluid.big.basic.button.enter(title="login #{username}" class=enter_class)
-                        |login
+                        // |login
                         strong #{username}
                         |&nbsp;
                         i.sign.in.alternate.icon

@@ -15,7 +15,7 @@ template(name='profile_layout')
                         span.mobile.hidden
                             a(href="/user/#{username}/")
                                 img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-                        a.ui.small.header.refresh_user_stats(href="/user/#{username}") 
+                        a.ui.big.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
                         if is_admin
                             a.ui.large.icon.button(href="/user/#{username}/edit" title='admin edit account')
@@ -29,8 +29,8 @@ template(name='profile_layout')
                                 i.sign.out.big.icon
                                 // |log out
                         
-                        .ui.header $#{credit} credit
-                        .ui.inline.header #{points}pts
+                        // .ui.header $#{credit} credit
+                        .ui.inline.header #{points}p
                         .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                             i.refresh.icon
                         if is_dev
@@ -42,12 +42,8 @@ template(name='profile_layout')
                                 +user_friend_button 
                         if i_have_points
                             .ui.button.send(title='send points')
-                                i.red.gift.large.icon
+                                i.send.large.icon
                                 span send pts
-                        a.ui.large.compact.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                            i.chat.large.blue.icon
-                            // | message
-        
         
                         a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
                             i.large.dashboard.icon
@@ -56,11 +52,11 @@ template(name='profile_layout')
                             i.large.chevron.down.icon
                             // span pts received
                         a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
-                            i.large.gift.icon
+                            i.large.send.icon
                             // span pts sent
-                        // a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                        //     i.large.dollar.icon
-                        //     // span credit
+                        a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                            i.large.dollar.icon
+                            // span credit
                         a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
                             i.large.concierge.bell.icon
                             // span requests

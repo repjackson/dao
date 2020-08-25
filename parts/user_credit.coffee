@@ -70,7 +70,7 @@ if Meteor.isClient
             pub_key = Meteor.settings.public.stripe_live_publishable
         Template.instance().checkout = StripeCheckout.configure(
             key: pub_key
-            image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/wc_logo.png'
+            image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/black_diamond.png'
             locale: 'auto'
             zipCode: true
             token: (token) ->
@@ -107,7 +107,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'one top up'
+                description: 'dao top up'
                 amount: 500
 
 
@@ -118,7 +118,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'one top up'
+                description: 'dao top up'
                 amount: 1000
 
 
@@ -129,7 +129,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'one top up'
+                description: 'dao top up'
                 amount: 2000
 
 
@@ -140,7 +140,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'one top up'
+                description: 'dao top up'
                 amount: 5000
 
 
@@ -151,7 +151,7 @@ if Meteor.isClient
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'one top up'
+                description: 'dao top up'
                 amount: 10000
 
 
@@ -169,7 +169,7 @@ if Meteor.isClient
             #         Template.instance().checkout.open
             #             name: 'credit deposit'
             #             # email:Meteor.user().emails[0].address
-            #             description: 'one top up'
+            #             description: 'dao top up'
             #             amount: 5
             #
             #         # Meteor.users.update @_author_id,

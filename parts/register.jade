@@ -8,27 +8,9 @@ template(name='register')
                     //-     i.large.home.icon
                     .ui.big.inline.header 
                         i.yin.yang.icon
-                        |dao registration
+                        i.user.plus.icon
                 //- if message
                 //-     h4.ui.center.aligned.header #{message}
-                .ui.small.inline.header 
-                    |first name
-                .ui.fluid.input(class=login_class)
-                    input.first_name(type='text')
-                .ui.small.inline.header 
-                    |last name
-                .ui.fluid.input(class=login_class)
-                    input.last_name(type='text')
-                .ui.small.inline.header 
-                    i.mail.icon
-                    |email
-                .ui.fluid.icon.input(class=login_class)
-                    //- if email_valid
-                    if email_valid
-                        i.checkmark.large.green.icon
-                    else
-                        i.ban.orange.large.icon
-                    input.email_field(type='email')
                 .ui.small.inline.header 
                     i.user.outline.icon
                     |username

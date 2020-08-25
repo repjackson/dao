@@ -34,10 +34,10 @@ template(name='nav')
                     i.large.code.icon
             if currentUser
                 // a.large.item.toggle_rightbar(class="{{isActiveRoute 'user_dashboard'}}")
-                a.mobile.hidden.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
-                    |#{currentUser.credit}c
+                // a.mobile.hidden.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
+                //     |#{currentUser.credit}c
                 a.mobile.hidden.item(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
-                    |#{currentUser.points}p
+                    |{{money_format currentUser.points}}c
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                     //- i.large.user.large.icon
                     if currentUser.profile_image_id

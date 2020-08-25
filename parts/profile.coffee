@@ -388,12 +388,21 @@ if Meteor.isServer
             # average_credit_per_student = total_credit_amount/student_count
             # average_debit_per_student = total_debit_amount/student_count
             flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
-            flow_volumne =+ total_fulfilled_amount
-            flow_volumne =+ total_request_amount
+            flow_volume += total_fulfilled_amount
+            flow_volume += total_request_amount
             
             
-            points = total_credit_amount-total_debit_amount+total_fulfilled_amount-total_request_amount
-            # points =+ total_fulfilled_amount
+            topups = 
+                Docs.find
+                    model:'topup'
+                    _author_id:user_id
+            
+            total_topup_amount = 0        
+            for topup in topups.fetch()
+                total_topup_amount += topup.amount*100
+                console.log 'adding', topup.amount
+            points = total_credit_amount-total_debit_amount+total_fulfilled_amount-total_request_amount+total_topup_amount
+            # points += total_fulfilled_amount
             # points =- total_request_amount
             
             if total_debit_amount is 0 then total_debit_amount++
