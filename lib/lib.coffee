@@ -54,19 +54,19 @@ Docs.helpers
             downvoters
 Meteor.users.helpers
     name: ->
-        if @nickname
-            "#{@nickname}"
-        else if @first_name
-            "#{@first_name} #{@last_name}"
-        else
-            "#{@username}"
+        # if @nickname
+        #     "#{@nickname}"
+        # else if @first_name
+        #     "#{@first_name} #{@last_name}"
+        # else
+        "#{@username}"
     shortname: ->
-        if @nickname
-            "#{@nickname}"
-        else if @first_name
-            "#{@first_name}"
-        else
-            "#{@username}"
+        # if @nickname
+        #     "#{@nickname}"
+        # else if @first_name
+        #     "#{@first_name}"
+        # else
+        "#{@username}"
     email_address: -> if @emails and @emails[0] then @emails[0].address
     email_verified: -> if @emails and @emails[0] then @emails[0].verified
     first_five_tags: ->

@@ -2,8 +2,6 @@ Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
     @autorun => Meteor.subscribe 'all_users'
     @autorun => Meteor.subscribe 'my_unread_messages'
-    @autorun => Meteor.subscribe 'model_docs', 'tribe'
-    @autorun => Meteor.subscribe 'model_docs', 'feature'
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
@@ -73,14 +71,6 @@ Template.nav.events
         else
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'dev'
-    'click .set_member': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'member', ->
-            Session.set 'loading', false
-    'click .set_shift': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'shift', ->
-            Session.set 'loading', false
     'click .set_request': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'request', ->
@@ -92,42 +82,6 @@ Template.nav.events
     'click .set_model': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'model', ->
-            Session.set 'loading', false
-    'click .set_rental': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'rental', ->
-            Session.set 'loading', false
-    'click .set_product': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'product', ->
-            Session.set 'loading', false
-    'click .set_event': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'event', ->
-            Session.set 'loading', false
-    'click .set_location': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'location', ->
-            Session.set 'loading', false
-    'click .set_meal': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'meal', ->
-            Session.set 'loading', false
-    'click .set_photo': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'photo', ->
-            Session.set 'loading', false
-    'click .set_project': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'project', ->
-            Session.set 'loading', false
-    'click .set_expense': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'expense', ->
-            Session.set 'loading', false
-    'click .set_post': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'post', ->
             Session.set 'loading', false
     'click .add_gift': ->
         # user = Meteor.users.findOne(username:@username)
@@ -207,19 +161,6 @@ Template.left_sidebar.events
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'dev'
                 
-    'click .set_member': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'member', ->
-            Session.set 'loading', false
-    'click .set_photo': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'photo', ->
-            Session.set 'loading', false
-            
-    'click .set_shift': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'shift', ->
-            Session.set 'loading', false
     'click .set_request': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'request', ->
@@ -227,38 +168,6 @@ Template.left_sidebar.events
     'click .set_model': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'model', ->
-            Session.set 'loading', false
-    'click .set_rental': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'rental', ->
-            Session.set 'loading', false
-    'click .set_product': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'product', ->
-            Session.set 'loading', false
-    'click .set_event': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'event', ->
-            Session.set 'loading', false
-    'click .set_expense': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'expense', ->
-            Session.set 'loading', false
-    'click .set_badge': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'badge', ->
-            Session.set 'loading', false
-    'click .set_location': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'location', ->
-            Session.set 'loading', false
-    'click .set_meal': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'meal', ->
-            Session.set 'loading', false
-    'click .set_project': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'project', ->
             Session.set 'loading', false
     'click .add_gift': ->
         # user = Meteor.users.findOne(username:@username)

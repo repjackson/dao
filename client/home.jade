@@ -43,38 +43,11 @@ template(name='home')
                 // else
     .ui.stackable.grid
         .two.column.row
-            // .column
-            //     .ui.center.aligned.header
-            //         // i.shop.icon
-            //         +icolor name='shop' cl='ui image'
-            //         |featured products
-            //     // if is_admin 
-            //     //     i.plus.icon.add_shift
-            //     .medscroll
-            //         each featured_products
-            //             a.ui.fluid.card(href="/product/#{_id}/view")
-            //                 .image
-            //                     img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
-            //                 .content
-            //                     .header
-            //                         |#{title}
-            //                     .description
-            //                         // if _author.profile_image_id
-            //                         //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-            //                         // | #{_author_username}
-            //                         // div
-            //                         .ui.inline.header $#{usd_price}
-            //                         .ui.inline.header #{point_price}
-            //                     // .meta #{when}
-            //                     // .description 
-            //                     //     |#{description}
-            //                     // each tags 
-            //                     //     .ui.tiny.basic.label #{this}
             .column
                 a.ui.center.aligned.header(href="/m/offer")
                     i.hand.holding.heart.icon
                     |offers
-                .ui.large.link.selection.list.medscroll
+                .ui.stackable.cards.medscroll
                     each latest_offers
                         +home_offer_card
             .column

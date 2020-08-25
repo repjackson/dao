@@ -6,6 +6,7 @@ template(name='offers')
                     i.hand.holding.heart.icon
                     |offers
                 i.circular.link.large.plus.icon.add_offer
+                +cloud filter='offer'
                 .spacer
                 .spacer
                 .spacer
@@ -33,7 +34,7 @@ template(name='offer_item')
                     img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 |#{_author.name}
                 .ui.big.basic.label
-                    |#{credit_price}pts
+                    |#{credit_price}p
                 if rental
                     .ui.small.header
                         i.checkmark.icon
@@ -51,7 +52,7 @@ template(name='offer_view')
                     a(href="/m/offer" title='offers')
                         i.hand.holding.heart.big.circular.link.icon
                     .ui.inline.header 
-                        small viewing offer 
+                        small offer: 
                     .ui.inline.large.header 
                         |#{title}
                     if can_edit
@@ -61,16 +62,13 @@ template(name='offer_view')
                 .four.wide.column
                     if image_id
                         img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
-                    .ui.header 
-                        small posted by
+                    .ui.small.inline.header posted by
                     a.ui.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.name}
-                    .ui.header #{when}
+                    .ui.inline.small.header #{when}
+                    div
                     +array_view key='location_tags' label='location_tags' direct=true
-                    +boolean_view key='approval_required' label='approval required' icon='shield' direct=true
-                    +datetime_view key='start_datetime' label='start' icon='clock' direct=true
-                    +datetime_view key='end_datetime' label='end' icon='clock' direct=true
                     div
                     +voting_full
                 .six.wide.column
@@ -79,8 +77,6 @@ template(name='offer_view')
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
-                    if youtube_id
-                        +youtube_view key='youtube_id' direct=true
                     .spacer
                     i.large.tags.icon
                     each tags 
@@ -90,45 +86,9 @@ template(name='offer_view')
                     +comments
                 .six.wide.column
                     .ui.header inventory: #{inventory}
-                    .ui.segment
-                        +boolean_view key='rentable' label='rentable' direct=true
-                        if rentable
-                            +boolean_view key='is_rentable_hourly' label='rentable hourly' direct=true
-                            if is_rentable_hourly
-                                +number_view key='rentable_hourly_credits' label='rentable hourly credits' direct=true
-                                .ui.disabled.green.button.buy_for_credits
-                                    i.cart.large.icon
-                                    |rent for #{rentable_hourly_credits}pts
-                            +boolean_view key='is_rentable_daily' label='rentable daily' direct=true
-                            if is_rentable_daily
-                                +number_view key='rentable_daily_credits' label='daily credits' direct=true
-                                .ui.disabled.green.button.buy_for_credits
-                                    i.cart.large.icon
-                                    |rent for #{rentable_daily_credits}pts
-                            +boolean_view key='is_rentable_weekly' label='rentable weekly' direct=true
-                            if is_rentable_weekly
-                                +number_view key='rentable_weekly_credits' label='weekly credits' direct=true
-                                .ui.disabled.green.button.buy_for_credits
-                                    i.cart.large.icon
-                                    |rent for #{rentable_weekly_credits}pts
-                            +boolean_view key='is_rentable_monthly' label='rentable monthly' direct=true
-                            if is_rentable_monthly
-                                +number_view key='rentable_monthly_usd' label='monthly $' direct=true
-                                .ui.disabled.green.button.buy_for_credits
-                                    i.cart.large.icon
-                                    |buy for #{sale_credit_price}pts
-                                +number_view key='rentable_monthly_credits' label='monthly credits' direct=true
-                                .ui.disabled.green.button.buy_for_credits
-                                    i.cart.large.icon
-                                    |buy for #{sale_credit_price}pts
-                    .ui.segment
-                        +boolean_view key='for_sale' label='for sale' direct=true
-                        if for_sale
-                            +boolean_view key='is_for_sale_credits' label='for sale credits' direct=true
-                            +number_view key='sale_credit_price' label='for sale usd price' direct=true
-                            .ui.disabled.green.button.buy_for_credits
-                                i.cart.large.icon
-                                |buy for #{sale_credit_price}pts
+                    .ui.large.fluid.button.buy
+                        i.cart.large.icon
+                        |buy for #{sale_credit_price} credit
                     
                     .ui.dividing.header 
                         // +icolor name='activity-history' cl='ui inline image'
@@ -141,7 +101,7 @@ template(name='offer_view')
                                         if is_usd
                                             .ui.inline.green.header ${{money_format amount}}
                                         else
-                                            .ui.inline.header #{credit_amount}pts
+                                            .ui.inline.header #{credit_amount}p
                                         
                                         |#{when} 
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -161,7 +121,7 @@ template(name='offer_edit')
                     a.ui.green.icon.button(href="/m/offer/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.large.header 
-                        small edit offer
+                        small edit offer:
                         |#{title}
                     i.large.remove.link.circular.icon.delete_offer(title='delete offer')
             .row 
@@ -170,40 +130,27 @@ template(name='offer_edit')
                         small author
                         |#{_author.username}
                     +text_edit key='title' icon='header' direct=true
-                    +boolean_edit key='approval_required' label='approval required' icon='shield' direct=true
-                    +range_edit key='timedate' direct=true
+                    // +boolean_edit key='approval_required' label='approval required' icon='shield' direct=true
+                    // +range_edit key='timedate' direct=true
                 .six.wide.column
                     div
-                    +html_edit key='description' label='description' direct=true
-                    +image_edit key='image_id' label='image' direct=true
+                    +boolean_edit key='has_description' label='has description' direct=true
+                    if has_description
+                        +html_edit key='description' label='description' direct=true
+                    div
+                    +boolean_edit key='has_image' label='has image' direct=true
+                    if has_image
+                        +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' icon='tags' direct=true
-                    +text_edit key='location' label='location' icon='marker' direct=true
-                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                    div
+                    +boolean_edit key='has_location' label='has location' direct=true
+                    if has_location
+                        +text_edit key='location' label='location' icon='marker' direct=true
+                        +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .six.wide.column
                     .ui.header your credits: #{currentUser.credits}
-                    // +number_edit key='usd_price' label='usd price' direct=true
-                    // +number_edit key='credit_price' label='credit price' direct=true
                     +number_edit key='inventory' label='inventory' direct=true
-                    .ui.segment
-                        +boolean_edit key='rentable' label='rentable' direct=true
-                        if rentable
-                            +boolean_edit key='is_rentable_hourly' label='rentable hourly' direct=true
-                            if is_rentable_hourly
-                                +number_edit key='rentable_hourly_credits' label='rentable hourly credits' direct=true
-                            +boolean_edit key='is_rentable_daily' label='rentable daily' direct=true
-                            if is_rentable_daily
-                                +number_edit key='rentable_daily_credits' label='daily credits' direct=true
-                            +boolean_edit key='is_rentable_weekly' label='rentable weekly' direct=true
-                            if is_rentable_weekly
-                                +number_edit key='rentable_weekly_credits' label='weekly credits' direct=true
-                            +boolean_edit key='is_rentable_monthly' label='rentable monthly' direct=true
-                            if is_rentable_monthly
-                                +number_edit key='rentable_monthly_credits' label='monthly credits' direct=true
-                            
-                    .ui.segment
-                        +boolean_edit key='for_sale' label='for sale' direct=true
-                        if for_sale
-                            +number_edit key='sale_credit_price' label='for sale creditsS' direct=true
+                    +number_edit key='credit_price' label='credit price' direct=true
                     
                     
