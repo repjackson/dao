@@ -1,7 +1,7 @@
 template(name='offers')
     .ui.stackable.padded.grid 
         .row
-            .sixteen.wide.column
+            .four.wide.column
                 .ui.inline.header 
                     i.hand.holding.heart.icon
                     |offers
@@ -9,62 +9,38 @@ template(name='offers')
                 .spacer
                 .spacer
                 .spacer
-                .ui.stackable.cards
+            .twelve.wide.column.scrolling
+                .ui.stackable.divided.items
                     each offers
-                        +offer_card
+                        +offer_item
 
 
-template(name='offer_card')
-    .card.crediter.offer_card
-        if image_id
-            .image
-                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
-        .content
-            .ui.header
-                |#{title}
-                if complete
-                    i.green.checkmark.icon
-            |!{description}
-            +comments_view_small    
-        .content
-            |by 
-            if _author.profile_image_id
-                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-            |#{_author.name}
-            .ui.big.basic.label
-                |$#{usd_price}
-            .ui.big.basic.label
-                |#{credit_price}pts
-            if rental
-                .ui.small.header
-                    i.checkmark.icon
-                    |rental
+
 
 template(name='offer_item')
-    .ui.item.crediter.offer_item
+    .ui.item.pointer.offer_item
         if image_id
             .image
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            .ui.header
+            .header
                 |#{title}
                 if complete
                     i.green.checkmark.icon
-            |!{description}
-            +comments_view_small    
-        .content
-            |by 
-            if _author.profile_image_id
-                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-            |#{_author.name}
-            .ui.big.basic.label
-                |$#{usd_price}
-            .ui.big.basic.label
-                |#{credit_price}pts
-            if rental
-                .ui.small.header
-                    i.checkmark.icon
-                    |rental
+            .meta
+                |by 
+                if _author.profile_image_id
+                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                |#{_author.name}
+                .ui.big.basic.label
+                    |#{credit_price}pts
+                if rental
+                    .ui.small.header
+                        i.checkmark.icon
+                        |rental
+            .description
+                |!{description}
+                +comments_view_small    
     .ui.divider
 
 template(name='offer_view')

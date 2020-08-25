@@ -10,10 +10,10 @@ template(name='profile_layout')
                     .four.wide.column
                         span.mobile.only
                             a(href="/user/#{username}/")
-                                img.ui.centered.tiny.inline.spaced.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         span.mobile.hidden
                             a(href="/user/#{username}/")
-                                img.ui.centered.fluid.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
+                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
                         a.ui.small.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
                         if is_admin
@@ -63,6 +63,9 @@ template(name='profile_layout')
                         a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
                             i.large.concierge.bell.icon
                             // span requests
+                        a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}" title="#{user.username} friends")
+                            i.large.users.icon
+                            span friends
                         a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
                             i.large.hand.holding.heart.icon
                             // span offers

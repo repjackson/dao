@@ -1,7 +1,7 @@
 template(name='requests')
     .ui.stackable.padded.grid 
         .row
-            .sixteen.wide.column
+            .four.wide.column
                 .ui.inline.header 
                     i.concierge.bell.icon
                     |requests
@@ -9,68 +9,40 @@ template(name='requests')
                 .spacer
                 .spacer
                 .spacer
-                .ui.stackable.cards
+            .twelve.wide.column.scrolling
+                .ui.stackable.divided.items
                     each requests
-                        +request_card
+                        +request_item
 
 
-template(name='request_card')
-    .card.pointer.request_card
-        .image
-            if youtube_id
-                +youtube_view key='youtube_id' direct=true
-            else if image_id
-                img.ui.zoom.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
-        .content
-            .ui.header
-                |#{title}
-                if complete
-                    i.green.checkmark.icon
-            |!{description}
-        .content
-            +comments_view_small
-        .content
-            |by 
-            if _author.profile_image_id
-                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-            |#{_author.name}
-            .ui.big.basic.label
-                |#{point_bounty}pts
-            .ui.small.inline.header status:#{status}
-            if complete
-                .ui.basic.label 
-                    |completed by #{completer.name}
-                    |{{from_now completed_timestamp}}
-        
 
 template(name='request_item')
-    .ui.fluid.horizontal.card.pointer.request_card
-        if youtube_id
-            .image
-                +youtube_view key='youtube_id' direct=true
-        else if image_id
+    .ui.item.pointer.request_item
+        if image_id
             .image
                 img.ui.raw.image(src="{{c.url image_id width=400 height=600 crop='fill'}}" class=currentUser.invert_class)    
         .content
-            .ui.header
+            .header
                 |#{title}
                 if complete
                     i.green.checkmark.icon
-            |!{description}
-            +comments_view_small
-        .content
-            |by 
-            if _author.profile_image_id
-                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-            |#{_author.name}
-            .ui.big.basic.label
-                |#{point_bounty}pts
-            .ui.small.inline.header status:#{status}
-            if complete
-                .ui.basic.label 
-                    |completed by #{completer.name}
-                    |{{from_now completed_timestamp}}
+            .meta
+                |by 
+                if _author.profile_image_id
+                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                |#{_author.name}
+                .ui.big.basic.label
+                    |#{point_bounty}pts
+                .ui.small.inline.header status:#{status}
+                if complete
+                    .ui.basic.label 
+                        |completed by #{completer.name}
+                        |{{from_now completed_timestamp}}
+            .description
+                |!{description}
+                +comments_view_small
         
+        .description
 
 
 template(name='request_view')

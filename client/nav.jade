@@ -1,9 +1,9 @@
 template(name='nav')
     // .ui.fluid.fixed.menu.topnav(
     .ui.fluid.borderless.attached.menu.topnav(class=currentUser.invert_class)
-        // a.zoom.icon.item.toggle_sidebar
+        // a.icon.item.toggle_sidebar
         //     i.large.bars.icon
-        a.zoom.header.icon.item(href="/" class="{{isActivePath '/'}}")
+        a.header.icon.item(href="/" class="{{isActivePath '/'}}")
             // if current_tribe.icon 
             //     i.large.icon(class=current_tribe.icon)
             // else
@@ -12,39 +12,39 @@ template(name='nav')
             //     span.mobile.hidden #{current_tribe.title}
             // else    
         // each current_tribe.enabled_features
-        //     a.zoom.icon.item.mobile.hidden.goto_feature(href=link class="{{isActivePath link}}" title=title)
+        //     a.icon.item.mobile.hidden.goto_feature(href=link class="{{isActivePath link}}" title=title)
         //         i.large.icon(class=icon)
         //         | #{title}
-        // a.zoom.item.set_member.mobile.hidden(href="/m/member" class="{{isActivePath '/m/member'}}" title='users')
+        // a.item.set_member.mobile.hidden(href="/m/member" class="{{isActivePath '/m/member'}}" title='users')
         //     i.large.users.icon
         //     | people
-        // a.zoom.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
+        // a.item.mobile.hidden(href="/events" class="{{isActivePath '/events'}}" title='events')
         //     i.large.calendar.icon
             // | events
         // a.item.mobile.hidden(href="/m/event" class="{{isActivePath 'events'}}" title='events')
-        a.zoom.item.mobile.hidden.set_request(href="/requests" class="{{isActivePath '/requests'}}" title='requests')
-            i.large.concierge.bell.icon
-            // em(data-emoji='bellhop')
-            | requests
-        a.zoom.item.mobile.hidden.set_offer(href="/offers" class="{{isActivePath '/offers'}}" title='offers')
+        // a.item.mobile.hidden.set_request(href="/requests" class="{{isActivePath '/requests'}}" title='requests')
+        //     i.large.concierge.bell.icon
+        //     // em(data-emoji='bellhop')
+        //     | requests
+        a.item.mobile.hidden.set_offer(href="/offers" class="{{isActivePath '/offers'}}" title='offers')
             i.large.hand.holding.heart.icon
             // em(data-emoji='bellhop')
             | offers
-        // a.zoom.icon.item.mobile.hidden.set_post(href="/m/post" class="{{isActivePath '/m/post'}}" title='feed')
+        // a.icon.item.mobile.hidden.set_post(href="/m/post" class="{{isActivePath '/m/post'}}" title='feed')
         //     i.large.newspaper.icon
         //     // em(data-emoji='newspaper')
         //     // | news
-        // a.zoom.icon.item.mobile.hidden.set_meal(href="/m/meal" class="{{isActivePath '/m/meal'}}" title='food')
+        // a.icon.item.mobile.hidden.set_meal(href="/m/meal" class="{{isActivePath '/m/meal'}}" title='food')
         //     i.large.food.icon
         //     // em(data-emoji='newspaper')
         //     // | news
-        // a.zoom.icon.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
+        // a.icon.item.mobile.hidden.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
         //     i.large.picture.icon
             // em(data-emoji='newspaper')
             // | news
-        // a.zoom.icon.item.mobile.hidden.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
+        // a.icon.item.mobile.hidden.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
         //     i.large.dollar.icon
-        // a.zoom.icon.item.mobile.hidden.set_tribe(href="/m/tribe" class="{{isActivePath '/m/tribe'}}" title='tribes')
+        // a.icon.item.mobile.hidden.set_tribe(href="/m/tribe" class="{{isActivePath '/m/tribe'}}" title='tribes')
         //     i.large.fire.icon
         // if is_admin
         //     a.icon.item.mobile.hidden(href="/m/model" class="{{isActivePath regex='model'}}" title='admin')
@@ -123,51 +123,51 @@ template(name='right_sidebar')
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'user_dashboard'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'user_dashboard'}}")
             | dashboard (#{currentUser.points}p)
             i.large.dashboard.icon
         
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/about" class="{{isActiveRoute 'user_about'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/about" class="{{isActiveRoute 'user_about'}}")
             | about
             i.large.info.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
             | #{currentUser.total_credit_amount}p received
             i.large.chevron.down.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActiveRoute 'user_sent'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActiveRoute 'user_sent'}}")
             | #{currentUser.total_debit_amount}p sent
             i.large.chevron.up.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/events" class="{{isActiveRoute 'user_events'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/events" class="{{isActiveRoute 'user_events'}}")
             | events
             i.large.calendar.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActiveRoute 'user_requests'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActiveRoute 'user_requests'}}")
             | requests
             i.large.concierge.bell.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/food" class="{{isActiveRoute 'user_food'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/food" class="{{isActiveRoute 'user_food'}}")
             | food
             i.large.food.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
             | orders
             i.large.cart.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/delivery" class="{{isActiveRoute 'user_delivery'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/delivery" class="{{isActiveRoute 'user_delivery'}}")
             | delivery
             i.large.truck.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
             | offers
             i.large.hand.holding.heart.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
             | #{currentUser.credit} credit
             i.large.dollar.icon
-        // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}")
+        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}")
         //     | chat
         //     i.chat.icon
         .ui.divider
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/edit" title='edit your account')
+        a.item.toggle_rightbar(href="/user/#{currentUser.username}/edit" title='edit your account')
             i.cog.large.icon
             |settings
-        a.item.toggle_nightmode.zoom.toggle_rightbar(href="#")
+        a.item.toggle_nightmode.toggle_rightbar(href="#")
             i.lightbulb.large.icon
             |dark mode
-        a.item.logout.zoom(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}" )
+        a.item.logout(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}" )
             |logout
             if is_logging_out
                 i.refresh.loading.icon
@@ -181,37 +181,37 @@ template(name='left_sidebar')
         // a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One
-        a.item.set_member.toggle_sidebar.zoom(href="/m/member" class="{{isActivePath 'm/member'}}" title='players')
+        a.item.set_member.toggle_sidebar(href="/m/member" class="{{isActivePath 'm/member'}}" title='players')
             i.large.users.icon
             | directory
-        a.item.toggle_sidebar.zoom(href="/events" class="{{isActivePath '/events'}}")
+        a.item.toggle_sidebar(href="/events" class="{{isActivePath '/events'}}")
             i.large.calendar.icon
             |events
-        a.item.toggle_sidebar.zoom(href="/m/request" class="{{isActivePath '/m/request'}}")
+        a.item.toggle_sidebar(href="/m/request" class="{{isActivePath '/m/request'}}")
             i.large.concierge.bell.icon
             |requests
-        a.item.toggle_sidebar.zoom(href="/m/offer" class="{{isActivePath '/m/offer'}}")
+        a.item.toggle_sidebar(href="/m/offer" class="{{isActivePath '/m/offer'}}")
             i.large.hand.holding.heart.icon
             |offers
-        a.item.toggle_sidebar.zoom.set_post(href="/m/post" class="{{isActivePath '/m/post'}}")
+        a.item.toggle_sidebar.set_post(href="/m/post" class="{{isActivePath '/m/post'}}")
             i.large.newspaper.icon
             |news
-        // a.item.toggle_sidebar.zoom(href="/m/collective" class="{{isActivePath 'requests'}}")
+        // a.item.toggle_sidebar(href="/m/collective" class="{{isActivePath 'requests'}}")
         //     i.users.icon
         //     |collectives
-        a.item.toggle_sidebar.zoom(href="/m/meal" class="{{isActivePath '/m/meal'}}")
+        a.item.toggle_sidebar(href="/m/meal" class="{{isActivePath '/m/meal'}}")
             i.large.food.icon
             |food
-        a.item.toggle_sidebar.zoom.set_bug(href="/m/bug" class="{{isActivePath '/m/bug'}}")
+        a.item.toggle_sidebar.set_bug(href="/m/bug" class="{{isActivePath '/m/bug'}}")
             i.large.bug.icon
             |bugs
-        a.icon.item.toggle_sidebar.zoom.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
+        a.icon.item.toggle_sidebar.set_photo(href="/m/photo" class="{{isActivePath '/m/photo'}}" title='photos')
             i.large.large.picture.icon
             |photos  
-        a.zoom.icon.item.toggle_sidebar.zoom.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
+        a.icon.item.toggle_sidebar.set_expense(href="/m/expense" class="{{isActivePath '/m/expense'}}" title='expenses')
             i.large.dollar.icon
             |expenses            
-        // a.item.toggle_sidebar.zoom.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
+        // a.item.toggle_sidebar.set_rental(href="/m/rental" class="{{isActivePath regex='rentals'}}")
         //     i.clock.icon
         //     |rentals
         // if has_badge 'facilitator'

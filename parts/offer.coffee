@@ -26,14 +26,8 @@ if Meteor.isClient
                 # complete:$ne:true
                 # published:true
 
-    Template.offer_card.onCreated ->
+    Template.offer_item.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id
-
-    Template.offer_card.events
-        'click .offer_card': ->
-            Router.go "/m/offer/#{@_id}/view"
-            Docs.update @_id,
-                $inc: views:1
 
     Template.offer_item.events
         'click .offer_item': ->

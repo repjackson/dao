@@ -55,7 +55,8 @@ template(name='debit_edit')
                         .ui.big.basic.circular.label
                             i.delete.icon.remove_element
                             |#{this}
-                    if suggestions
+                    if suggestions.count
+                        div
                         .ui.small.inline.header suggestions
                     each suggestions
                         a.ui.large.circular.basic.button.select_term(href='#')

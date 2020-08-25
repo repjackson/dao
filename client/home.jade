@@ -3,13 +3,13 @@ template(name='home')
         // .ui.basic.big.compact.button.buy_tiffen
         //     i.gift.icon
         //     |buy tiffen
-        .ui.basic.big.compact.icon.button.debit
+        .ui.basic.big.compact.icon.button.debit(title='send credit')
             i.send.big.icon
             // |send credit
         // .ui.basic.big.compact.button.request
         //     i.concierge.bell.icon
         //     |request
-        .ui.basic.big.compact.icon.button.offer
+        .ui.basic.big.compact.icon.button.offer(title='offer')
             i.hand.holding.heart.big.icon
             // |offer
         // .ui.basic.big.compact.button.add_message
@@ -30,7 +30,10 @@ template(name='home')
         each friends
             if profile_image_id
                 a(href="/user/#{username}" title="{{name}} {{points}}")
-                    img.ui.tiny.pointer.inline.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    img.ui.tiny.pointer.rounded.inline.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            else 
+                a.ui.circular.button(href="/user/#{username}" title="{{name}} {{points}}")
+                    |#{username}
                 // if avatar_image_id
                 // .ui.move.reveal.tiny.spaced_image.image
                 //     .visible.content
@@ -39,7 +42,7 @@ template(name='home')
                 //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
                 // else
     .ui.stackable.grid
-        .three.column.row
+        .two.column.row
             // .column
             //     .ui.center.aligned.header
             //         // i.shop.icon
@@ -68,68 +71,31 @@ template(name='home')
             //                     // each tags 
             //                     //     .ui.tiny.basic.label #{this}
             .column
-                // .ui.center.aligned.header
-                a.ui.center.aligned.header(href="/m/debit")
-                    i.send.icon
-                    |transactions
-                .medscroll
-                    each latest_debits
-                        +debit_card
-            // .column
-            //     // .ui.center.aligned.header
-            //     a.ui.center.aligned.header(href="/events")
-            //         i.calendar.icon
-            //         |events
-            //     // if is_admin 
-            //     //     i.plus.icon.add_event
-                    
-            //     .medscroll
-            //         each next_events
-            //             +home_event_card
-            .column
-                // .ui.center.aligned.header
-                a.ui.center.aligned.header(href="/m/request")
-                    i.concierge.bell.icon
-                    |requests
-                .medscroll
-                    each latest_requests
-                        +home_request_card
-                                            
-            .column
                 a.ui.center.aligned.header(href="/m/offer")
                     i.hand.holding.heart.icon
                     |offers
                 .ui.large.link.selection.list.medscroll
                     each latest_offers
                         +home_offer_card
+            .column
+                // .ui.center.aligned.header
+                a.ui.center.aligned.header(href="/m/debit")
+                    i.send.icon
+                    |transfers
+                .ui.stackable.cards.medscroll
+                    each latest_debits
+                        +debit_card
             // .column
-            //     a.ui.center.aligned.header(href="/m/post")
-            //         i.newspaper.icon
-            //         |news
-            //     .ui.large.link.selection.list.medscroll
-            //         each latest_posts
-            //             a.item(href="/m/post/#{_id}/view")
-            //                 .header #{title}
+            //     // .ui.center.aligned.header
+            //     a.ui.center.aligned.header(href="/m/request")
+            //         i.concierge.bell.icon
+            //         |requests
+            //     .medscroll
+            //         each latest_requests
+            //             +home_request_card
                     
                     
                     
-template(name='finance_bar')
-    .sixteen.wide.column.toggle_finance_details
-        .ui.green.small.progress.bar.pointer
-            .bar
-                .progress
-            .label
-                |monthly budget progress / 20k
-        if viewing_finance_details
-            .ui.stackable.grid
-                .two.column.row
-                    .column
-                        .ui.header #{finance_stat.membership_count} memberships totaling $#{finance_stat.total_membership_sum}
-                        // .ui.header income from events
-                    .column
-                        // .ui.header most generative event
-                        // .ui.header most generative member
-                            
                                     
 template(name='home_request_card')
     .ui.segment.view_request.pointer
@@ -160,11 +126,9 @@ template(name='home_request_card')
 
                                     
 template(name='home_offer_card')
-    .ui.segment.view_offer.pointer
+    .ui.card.view_offer.pointer
         .content
-            if youtube_id
-                +youtube_view key='youtube_id' direct=true
-            else if image_id
+            if image_id
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
             .header
                 .ui.inline.header #{title}
@@ -176,8 +140,6 @@ template(name='home_offer_card')
             .meta #{when}
             if point_price
                 |#{point_price}p
-            if dollar_price
-                |$#{dollar_price}
             // each tags 
             //     .ui.tiny.basic.label #{this}
             +comments_view_small
@@ -194,50 +156,6 @@ template(name='comments_view_small')
 
 
                                     
-                                    
-template(name='home_event_card')
-    a.ui.fluid.card(href="/event/#{_id}/view")
-        img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
-        .content
-            .header
-                | #{title} 
-            .meta    
-                |{{medium_date date}}
-                |#{time}
-                // |{{home_long_date start_datetime}}
-                // .ui.small.grey.inline.header {{from_now start_datetime}}
-            .meta    
-                .ui.inline.small.header $#{usd_price} / #{point_price}p
-            .meta
-                if fac
-                    |led by
-                    if fac.profile_image_id
-                        with fac
-                            img.ui.avatar.spaced.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
-                    | #{fac.name}
-            // .meta #{when}
-            .description 
-            if location
-                i.marker.icon 
-                |#{location}
-            div 
-        .content
-            |#{going.count}
-            i.checkmark.green.large.icon
-            each going
-                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
-            // i.question.large.icon
-            // | #{maybe_user_ids.length}
-            // each maybe_going
-            //     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
-            // | #{not_user_ids.length}
-            // i.remove.large.icon
-            // each not_going
-            //     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class title=shortname)
-            +comments_view_small
-                               
-                               
-                               
                                     
 template(name='debit_card')
     .ui.card.pointer.view_debit
@@ -265,29 +183,3 @@ template(name='debit_card')
                 +voting_tiny
             +comments_view_small
                                     
-template(name='join_button')
-    .ui.fluid.green.button.join
-        i.checkmark.icon
-        |join
-
-
-
-
-template(name='home_shift_card')
-    a.ui.card(href="/shift/#{_id}/view")
-        .content
-            .header
-                .ui.inline.header
-                // if _author.profile_image_id
-                //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                // | #{_author_username}
-                .item from {{from_now start_datetime}} > {{from_now end_datetime}}
-                if shift_contributors 
-                    each shift_contributors
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                        |#{username}
-            .meta #{when}
-            .description 
-                |#{description}
-            each tags 
-                .ui.tiny.basic.label #{this}
