@@ -1,9 +1,7 @@
 if Meteor.isClient
-    Template.registerHelper 'order_offer', () ->
-        Docs.findOne @offer_id
+    Template.registerHelper 'order_offer', () -> Docs.findOne @offer_id
 
-    Template.registerHelper 'order_tax', () ->
-        @purchase_price/100
+    Template.registerHelper 'order_tax', () -> @purchase_price/100
 
 
     Template.order_view.onCreated ->
@@ -17,10 +15,10 @@ if Meteor.isClient
         'click .cancel_order': ->
             event = @
             Swal.fire({
-                title: "cancel reservation?"
+                title: "cancel order?"
                 # text: "cannot be undone"
                 icon: 'question'
-                confirmButtonText: 'confirm cancelation'
+                confirmButtonText: 'confirm'
                 confirmButtonColor: 'red'
                 showCancelButton: true
                 cancelButtonText: 'return'
@@ -31,7 +29,7 @@ if Meteor.isClient
                     Swal.fire(
                         position: 'top-end',
                         icon: 'success',
-                        title: 'reservation removed',
+                        title: 'order canceled',
                         showConfirmButton: false,
                         timer: 1000
                     )

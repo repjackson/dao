@@ -7,6 +7,9 @@ if Meteor.isClient
     Template.registerHelper 'claimer', () ->
         Meteor.users.findOne @claimed_user_id
     
+    Template.registerHelper 'sale_credit_price', () ->
+        @credit_price + @credit_price/100
+    
     Template.offers.onCreated ->
         @autorun => Meteor.subscribe 'offers',
             selected_tags.array()
@@ -87,13 +90,16 @@ if Meteor.isClient
 
 
             instance = Template.instance()
+            sale_credit_price = @credit_price + @credit_price/100
 
             if Meteor.user().points > @credit_price*100
                 Swal.fire({
                     title: "buy #{@title}?"
-                    text: "this will charge you #{@credit_price} credits"
+                    text: "this will charge you #{sale_credit_price} credits"
                     icon: 'question'
                     showCancelButton: true
+                    reverseButtons: true
+                    confirmButtonColor: 'green'
                     confirmButtonText: 'confirm'
                     cancelButtonText: 'cancel'
                 }).then((result)=>
@@ -105,15 +111,24 @@ if Meteor.isClient
                         #     product_id: Router.current().params.doc_id
                         #     dollar_amount: @credit_price
                         #     target_user_id:@chef_id
-                        Docs.insert
-                            model:'order'
-                            offer_id: Router.current().params.doc_id
-                            purchase_price:@credit_price
+                        new_order_id = 
+                            Docs.insert
+                                model:'order'
+                                offer_id: Router.current().params.doc_id
+                                offer_credit_price:@credit_price
+                                tax:@credit_price/100
+                                purchase_price:sale_credit_price
+                                sale_credit_price:sale_credit_price
+                        Docs.update @_id,
+                            $inc:inventory:-1
                         Swal.fire(
-                            'credit transfered',
-                            ''
-                            'success'
+                            position: 'top-end',
+                            icon: 'success',
+                            title: "#{@title} purchased",
+                            showConfirmButton: false,
+                            timer: 1000
                         )
+                        Router.go "/m/order/#{new_order_id}/view"
                 )
             else
                 Swal.fire({
