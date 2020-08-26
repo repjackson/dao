@@ -6,8 +6,6 @@ if Meteor.isClient
 
     Template.registerHelper 'claimer', () ->
         Meteor.users.findOne @claimed_user_id
-    Template.registerHelper 'completer', () ->
-        Meteor.users.findOne @completed_by_user_id
     
     Template.offers.onCreated ->
         @autorun => Meteor.subscribe 'offers',

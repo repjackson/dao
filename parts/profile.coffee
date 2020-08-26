@@ -3,14 +3,6 @@ if Meteor.isClient
         @layout 'profile_layout'
         @render 'user_dashboard'
         ), name:'profile_layout'
-    Router.route '/user/:username/about', (->
-        @layout 'profile_layout'
-        @render 'user_about'
-        ), name:'user_about'
-    Router.route '/user/:username/contact', (->
-        @layout 'profile_layout'
-        @render 'user_contact'
-        ), name:'user_contact'
 
 
     Template.profile_layout.onCreated ->

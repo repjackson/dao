@@ -8,24 +8,11 @@ Template.registerHelper 'in_role', (role)->
     else
         false
 
-Template.registerHelper 'current_tribe', () ->
-    if Meteor.user()
-        Docs.findOne 
-            _id:Meteor.user().current_tribe_id
-    
-Template.registerHelper 'enabled_features', () ->
-    # console.log @
-    Docs.find
-        model:'feature'
-        _id:@enabled_feature_ids
-    
     
 Template.registerHelper 'is_in_admin', () ->
     Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','EYGz4bDSAdWF3W4wi']
 Template.registerHelper 'is_this_user', () ->
     Meteor.userId() is @_id
-Template.registerHelper 'is_in_levels', (level) ->
-    Meteor.user() and Meteor.user().levels and level in Meteor.user().levels
 Template.registerHelper 'current_user', () ->
     Meteor.users.findOne username:Router.current().params.username
 
@@ -37,21 +24,15 @@ Template.registerHelper 'is_current_user', () ->
     if Meteor.user()
         Meteor.user().username is Router.current().params.username
 
+Template.registerHelper 'is_dao', () -> @username is 'dao'
+
 
 Template.registerHelper 'user_class', () ->
     if @online then 'user_online'
 
 Template.registerHelper 'recipient', () ->
     Meteor.users.findOne @recipient_id
-Template.registerHelper 'target', () ->
-    Meteor.users.findOne @target_user_id
-Template.registerHelper 'to', () ->
-    Meteor.users.findOne @to_user_id
     
-Template.registerHelper 'shift_leader', () ->
-    Meteor.users.findOne @leader_user_id
-Template.registerHelper 'product', () ->
-    Docs.findOne @product_id
 Template.registerHelper 'upvote_class', () ->
     if Meteor.userId()
         if @upvoter_ids and Meteor.userId() in @upvoter_ids then 'green' else 'outline'

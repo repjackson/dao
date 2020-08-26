@@ -6,9 +6,6 @@ template(name='user_orders')
         a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/orders")
             i.pencil.icon
     div
-    +array_view key='allergens' label='allergens'
-    +array_view key='orders_likes' label='orders likes'
-    +array_view key='orders_dislikes' label='orders dislikes'
     each orders
         +order_view
 

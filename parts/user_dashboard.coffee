@@ -11,6 +11,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_requests', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_completed_requests', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_orders', Router.current().params.username
         
     Template.user_dashboard.events
         'click .user_credit_segment': ->
@@ -48,6 +49,22 @@ if Meteor.isClient
                 sort: _timestamp:-1
                 limit: 10
        
+        user_orders: ->
+            current_user = Meteor.users.findOne(username:Router.current().params.username)
+            if Router.current().params.username is 'dao'
+                Docs.find {
+                    model:'order'
+                }, 
+                    sort: _timestamp:-1
+                    limit: 10
+            else
+                Docs.find {
+                    model:'order'
+                    _author_id: current_user._id
+                }, 
+                    sort: _timestamp:-1
+                    limit: 10
+      
         user_requests: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
@@ -100,13 +117,21 @@ if Meteor.isServer
         
     Meteor.publish 'user_orders', (username)->
         user = Meteor.users.findOne username:username
-        Docs.find({
-            model:'order'
-            _author_id:user._id
-        },{
-            limit:20
-            sort: _timestamp:-1
-        })
+        if username is 'dao'
+            Docs.find({
+                model:'order'
+            },{
+                limit:20
+                sort: _timestamp:-1
+            })
+        else
+            Docs.find({
+                model:'order'
+                _author_id:user._id
+            },{
+                limit:20
+                sort: _timestamp:-1
+            })
         
         
     # Meteor.publish 'user_requests', (username)->

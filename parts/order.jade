@@ -3,26 +3,19 @@ template(name='order_view')
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
+                    a.ui.zoom.pointer.card(href="/m/offer/#{offer_id}/view")
+                        .content
+                            .ui.inline.header
+                                i.chevron.left.icon
+                                |offer
+                        img.ui.rounded.fluid.image(src="{{c.url order_offer.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        .content
+                            .ui.header
+                                |#{order_offer.title}
                     if can_edit
                         .ui.basic.button.cancel_order
                             i.large.remove.icon
                             |cancel order
-                    // a.ui.zoom.pointer.card(href="/m/meal/#{meal_id}/view")
-                    //     .content
-                    //         .ui.inline.header
-                    //             i.food.icon
-                    //             |meal
-                    //     img.ui.rounded.fluid.image(src="{{c.url mealorder_meal.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //     .content
-                    //         .ui.header
-                    //             |#{mealorder_meal.title}
-                    .ui.header
-                        i.food.icon
-                        |${{amount}}
-                        | meal order
-                    .ui.small.header
-                        i.clock.icon
-                        | #{when}
                     a.ui.pointer.zoom.card(href="/user/#{_author.username}")
                         .content
                             .ui.inline.header 
@@ -46,11 +39,19 @@ template(name='order_view')
                     // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .six.wide.column
+                    .ui.inline.header
+                        |#{purchase_price} credits 
+                    |purchased
+                    .ui.inline.header
+                        i.clock.icon
+                        | #{when}
+                    .ui.small.header 
+                        |{{order_tax}}c tax
                     unless submitted
                         +datetime_edit key='delivery_datetime' label='delivery date time' direct=true
                         +textarea_edit key='notes' label='notes' direct=true
-                        +key_value_edit key='tiffen_type' value='meat' direct=true
-                        +key_value_edit key='tiffen_type' value='veggie' direct=true
+                        // +key_value_edit key='tiffen_type' value='meat' direct=true
+                        // +key_value_edit key='tiffen_type' value='veggie' direct=true
                         .spacer
                         .spacer
                         // +key_value_edit key='transfer' value='pickup' label='pickup' direct=true                    
@@ -60,14 +61,13 @@ template(name='order_view')
                         +textarea_edit key='delivery_location' label='delivery location' direct=true
                         +textarea_edit key='delivery_notes' label='delivery notes' direct=true
                     else
-                        +time_view key='delivery_time' label='delivery time' direct=true
+                        +datetime_view key='delivery_datetime' label='delivery time' direct=true
                         +textarea_view key='delivery_location' label='delivery location' direct=true
                         +textarea_view key='delivery_notes' label='delivery notes' direct=true
                         +text_view key='notes' label='notes' direct=true
-                        +date_view key='date' label='date' direct=true
                         .spacer
-                        .ui.large.label
-                            |tiffen type: #{tiffen_type}
+                        // .ui.large.label
+                        //     |tiffen type: #{tiffen_type}
                 .six.wide.column
                     unless submitted
                         .ui.green.fluid.button.submit_order

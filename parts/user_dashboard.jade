@@ -3,7 +3,16 @@ template(name='user_dashboard')
     // .ui.hidden.divider
     .ui.stackable.grid
         .three.column.row
-            .column
+            if is_dao
+                .column
+                    .ui.header tax collected
+                    .ui.list
+                        each user_orders 
+                            .item 
+                                .content
+                                    .header #{order_offer.title}
+                                    |#{when}, #{purchase_price}c
+            .column                 
                 a.ui.inline.header(href="/user/#{username}/credits")
                     i.chevron.down.large.icon
                     |#{total_credit_amount}p
