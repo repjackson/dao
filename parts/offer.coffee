@@ -40,6 +40,8 @@ if Meteor.isClient
 
 
     Template.offer_view.onCreated ->
+        @autorun -> Meteor.subscribe 'offer_orders', Router.current().params.doc_id
+
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
         else if Meteor.isProduction
@@ -88,7 +90,7 @@ if Meteor.isClient
 
             instance = Template.instance()
 
-            if Meteor.user().credit > @credit_price
+            if Meteor.user().points > @credit_price*100
                 Swal.fire({
                     title: "buy #{@title}?"
                     text: "this will charge you #{@credit_price} credits"
@@ -163,10 +165,21 @@ if Meteor.isClient
                     false
                 else
                     true
+        orders: ->
+            Docs.find 
+                model:'order'
+                offer_id: @_id
+
 
 
 
 if Meteor.isServer
+    Meteor.publish 'offer_orders', (offer_id)->
+        Docs.find   
+            model:'order'
+            offer_id:offer_id
+    
+    
     Meteor.publish 'offers', (selected_tags)->
         
         match = {model:'offer'}

@@ -2,8 +2,8 @@
  "name": "dao",
  "short_name": "dao",
  "description": "wei wu wei",
- "background_color": "grey",
- "theme_color": "grey",
+ "background_color": "black",
+ "theme_color": "black",
  "start_url": "/",
  "display": "fullscreen",
  "icons": [

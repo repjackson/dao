@@ -1,18 +1,18 @@
 if Meteor.isClient
-    Template.registerHelper 'mealorder_meal', () ->
+    Template.registerHelper 'order_meal', () ->
         Docs.findOne @meal_id
 
 
 
-    Template.mealorder_view.onCreated ->
-        @autorun => Meteor.subscribe 'meal_from_mealorder_id', Router.current().params.doc_id
+    Template.order_view.onCreated ->
+        @autorun => Meteor.subscribe 'meal_from_order_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'model_docs', 'meal'
         
-    Template.mealorder_view.onRendered ->
+    Template.order_view.onRendered ->
 
-    Template.mealorder_view.events
+    Template.order_view.events
         'click .cancel_order': ->
             event = @
             Swal.fire({
@@ -47,10 +47,10 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'meal_from_mealorder_id', (mealorder_id)->
-        mealorder = Docs.findOne mealorder_id
+    Meteor.publish 'meal_from_order_id', (order_id)->
+        order = Docs.findOne order_id
         Docs.find 
-            _id:mealorder.meal_id
+            _id:order.meal_id
             
             
     Meteor.methods

@@ -25,7 +25,7 @@ if Meteor.isClient
         # Meteor.call 'calc_user_stats', user._id, ->
         Meteor.setTimeout ->
             if user
-                Meteor.call 'recalc_one_stats', user._id, ->
+                Meteor.call 'recalc_user_stats', user._id, ->
         , 2000
 
 
@@ -42,7 +42,7 @@ if Meteor.isClient
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             # Meteor.call 'calc_user_stats', user._id, ->
-            Meteor.call 'recalc_one_stats', user._id, ->
+            Meteor.call 'recalc_user_stats', user._id, ->
             Meteor.call 'calc_user_tags', user._id, ->
     
     Template.profile_layout.events
@@ -322,7 +322,7 @@ if Meteor.isServer
 
 
 
-        recalc_one_stats: (user_id)->
+        recalc_user_stats: (user_id)->
             user = Meteor.users.findOne user_id
             unless user
                 user = Meteor.users.findOne username
@@ -431,6 +431,7 @@ if Meteor.isServer
                     total_debit_amount: total_debit_amount
                     flow_volume: flow_volume
                     points:points
+                    credit:points/100
                     one_ratio: one_ratio
                     total_fulfilled_amount:total_fulfilled_amount
                     fulfilled_count:fulfilled_count

@@ -49,3 +49,4 @@ if Meteor.isServer
             _author_id: user._id
         }, 
             limit:100
+            sort:_timestamp:-1
