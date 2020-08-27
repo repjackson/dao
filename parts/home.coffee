@@ -98,11 +98,6 @@ if Meteor.isClient
                     model:'offer'
             Router.go "/m/offer/#{new_offer_id}/edit"
         
-        'click .add_message': ->
-            new_message_id =
-                Docs.insert
-                    model:'message'
-            Router.go "/m/message/#{new_message_id}/edit"
 
         'keydown .find_username': (e,t)->
             # email = $('submit_email').val()

@@ -40,29 +40,7 @@ template(name='debit_edit')
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     div
-                    .ui.inline.header
-                        i.tag.red.icon
-                        |tags
-                    .ui.input
-                        input.new_tag(type='text' placeholder='+' autocomplete="off")
-                        //- +clear_value                
-                    each terms 
-                        a.ui.large.circular.basic.button.select_term(href='#')
-                            if image
-                                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{title}
-                    each tags
-                        .ui.big.basic.circular.label
-                            i.delete.icon.remove_element
-                            |#{this}
-                    if suggestions.count
-                        div
-                        .ui.small.inline.header suggestions
-                    each suggestions
-                        a.ui.large.circular.basic.button.select_term(href='#')
-                            // if image
-                            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{title}
+                    +smart_tagger
                 .five.wide.center.aligned.column
                     .ui.big.header #{amount}pts
                     .ui.big.input

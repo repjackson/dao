@@ -66,6 +66,22 @@ if Meteor.isClient
                     sort: _timestamp:-1
                     limit: 10
       
+        user_sales: ->
+            current_user = Meteor.users.findOne(username:Router.current().params.username)
+            if Router.current().params.username is 'dao'
+                Docs.find {
+                    model:'order'
+                }, 
+                    sort: _timestamp:-1
+                    limit: 10
+            else
+                Docs.find {
+                    model:'order'
+                    _author_id: current_user._id
+                }, 
+                    sort: _timestamp:-1
+                    limit: 10
+      
         user_requests: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
@@ -105,28 +121,6 @@ if Meteor.isServer
             sort: _timestamp:-1
         })
         
-    Meteor.publish 'user_offers', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find({
-            model:'offer'
-            _author_id:user._id
-        },{
-            limit:20
-            sort: _timestamp:-1
-        })
-        
-        
-        
-        
-    # Meteor.publish 'user_requests', (username)->
-    #     user = Meteor.users.findOne username:username
-    #     Docs.find({
-    #         model:'request'
-    #         completed_by_user_id:user._id
-    #     },{
-    #         limit:20
-    #         sort: _timestamp:-1
-    #     })
         
     Meteor.publish 'user_event_tickets', (username)->
         user = Meteor.users.findOne username:username

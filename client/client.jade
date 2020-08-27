@@ -43,7 +43,7 @@ head
 
 
 template(name='layout')
-    +status    
+    // +status    
 
     if currentUser
         +nav
@@ -53,7 +53,7 @@ template(name='layout')
         +left_sidebar
         +right_sidebar
                 
-        // #main_area.global_container.pusher(class=currentUser.invert_class)
+        // #main_area.global_container.pusher(class='')
         #main_area.global_container.pusher
             +yield
             // .scrolling

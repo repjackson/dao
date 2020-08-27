@@ -46,7 +46,6 @@ Template.right_sidebar.events
             
 
 Template.nav.helpers
-    
     alert_toggle_class: ->
         if Session.get('viewing_alerts') then 'active' else ''
     current_tribe: () ->
@@ -55,6 +54,22 @@ Template.nav.helpers
                 _id:Meteor.user().current_tribe_id
         
 Template.nav.events
+    'click .debit': ->
+        new_debit_id =
+            Docs.insert
+                model:'debit'
+        Router.go "/m/debit/#{new_debit_id}/edit"
+    'click .request': ->
+        new_request_id =
+            Docs.insert
+                model:'request'
+        Router.go "/m/request/#{new_request_id}/edit"
+    'click .offer': ->
+        new_offer_id =
+            Docs.insert
+                model:'offer'
+        Router.go "/m/offer/#{new_offer_id}/edit"
+
     'click .alerts': ->
         Session.set('viewing_alerts', !Session.get('viewing_alerts'))
         

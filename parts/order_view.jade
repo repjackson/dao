@@ -3,7 +3,7 @@ template(name='order_view')
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
-                    a.ui.zoom.pointer.card(href="/m/offer/#{offer_id}/view")
+                    a.ui.zoom.pointer.fluid.card(href="/m/offer/#{offer_id}/view")
                         .content
                             .ui.inline.header
                                 i.chevron.left.icon
@@ -13,9 +13,9 @@ template(name='order_view')
                             .ui.header
                                 |#{order_offer.title}
                     if can_edit
-                        .ui.basic.button.cancel_order
-                            i.large.remove.icon
-                            |cancel order
+                        .ui.basic.fluid.large.button.cancel_order
+                            i.remove.icon
+                            |cancel
                     a.ui.pointer.zoom.card(href="/user/#{_author.username}")
                         .content
                             .ui.inline.header 
@@ -43,7 +43,6 @@ template(name='order_view')
                         |#{purchase_price} credits 
                     |purchased
                     .ui.inline.header
-                        i.clock.icon
                         | #{when}
                     .ui.small.header 
                         |{{order_tax}}c tax

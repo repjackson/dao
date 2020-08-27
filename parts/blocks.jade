@@ -21,6 +21,33 @@ template(name='user_button')
         |#{name}
 
 
+template(name='smart_tagger')
+    .ui.inline.header
+        i.tag.red.icon
+        |tags
+    .ui.input
+        input.new_tag(type='text' placeholder='+' autocomplete="off")
+        //- +clear_value                
+    each terms 
+        a.ui.large.circular.basic.button.select_term(href='#')
+            if image
+                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            |#{title}
+    each tags
+        .ui.big.basic.circular.label
+            i.delete.icon.remove_element
+            |#{this}
+    if suggestions.count
+        div
+        .ui.small.inline.header suggestions
+    each suggestions
+        a.ui.large.circular.basic.button.select_term(href='#')
+            // if image
+            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            |#{title}
+
+
+
 template(name='print_this')
     .ui.icon.basic.button.print_this
         i.orange.code.icon
@@ -51,13 +78,9 @@ template(name='session_toggle_button')
 
 template(name='comments')
     .spacer
-    .ui.inline.grey.header
-        i.chat.outline.icon
-        |comments
-    div
     .ui.fluid.icon.large.input
-        i.plus.icon
-        input.add_comment(model='text' placeholder='add')
+        i.chat.icon
+        input.add_comment(model='text' placeholder='comment')
     if currentUser
         .ui.comments
             each doc_comments
