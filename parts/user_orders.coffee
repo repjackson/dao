@@ -37,7 +37,18 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'user_orders', (username)->
         user = Meteor.users.findOne username:username
-        Docs.find
-            model:'order'
-            _author_id:user._id
-            
+        if username is 'dao'
+            Docs.find({
+                model:'order'
+            },{
+                limit:20
+                sort: _timestamp:-1
+            })
+        else
+            Docs.find({
+                model:'order'
+                _author_id:user._id
+            },{
+                limit:20
+                sort: _timestamp:-1
+            })

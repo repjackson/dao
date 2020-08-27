@@ -12,6 +12,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_requests', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_completed_requests', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_orders', Router.current().params.username
+        @autorun -> Meteor.subscribe 'model_docs', 'offer'
         
     Template.user_dashboard.events
         'click .user_credit_segment': ->
@@ -115,23 +116,6 @@ if Meteor.isServer
         })
         
         
-    Meteor.publish 'user_orders', (username)->
-        user = Meteor.users.findOne username:username
-        if username is 'dao'
-            Docs.find({
-                model:'order'
-            },{
-                limit:20
-                sort: _timestamp:-1
-            })
-        else
-            Docs.find({
-                model:'order'
-                _author_id:user._id
-            },{
-                limit:20
-                sort: _timestamp:-1
-            })
         
         
     # Meteor.publish 'user_requests', (username)->

@@ -23,9 +23,10 @@ template(name='user_dashboard')
                 each credit_tags
                     .ui.small.basic.circular.label #{title}
                         // small #{count}
-                .medscroll.ui.segments
+                .smallscroll.ui.segments
                     each user_credits
                         +user_credit_segment
+                .ui.hidden.divider
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/debits")
                     i.chevron.up.icon
@@ -39,55 +40,83 @@ template(name='user_dashboard')
                         // small #{count}
     
                 div
-                .medscroll.ui.segments
+                .smallscroll.ui.segments
                     each user_debits
                         +user_debit_segment
+                .ui.hidden.divider
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/requests")
                     i.concierge.bell.icon
                     |requests
                 .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
                 .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                .medscroll
+                .smallscroll
                     each user_requests
                         .ui.card
                             if image_id
                                 img.ui.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
                             .content.zoom.pointer
-                                a.header(href="/request/#{_id}/view")
+                                a.header(href="/m/request/#{_id}/view")
                                     |#{point_bounty}pts: #{title}
                                 // |!{description}
                                 |status: #{status}
                                 if complete 
                                     |completed by #{completer.name}
+                .ui.hidden.divider
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/offers")
                     i.concierge.bell.icon
                     |offers
                 .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
                 .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                .medscroll
+                .smallscroll
                     each user_offers
                         .ui.card
                             if image_id
-                                img.ui.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
+                                a(href="/m/offer/#{_id}/view")
+                                    img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
                             .content.zoom.pointer
-                                a.header(href="/offer/#{_id}/view")
+                                a.header(href="/m/offer/#{_id}/view")
                                     |#{point_bounty}pts: #{title}
                                 // |!{description}
                                 |status: #{status}
                                 if complete 
                                     |completed by #{completer.name}
+                .ui.hidden.divider
+            .column
+                a.ui.inline.spaced.header(href="/user/#{username}/offers")
+                    i.receipt.icon
+                    |orders
+                // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
+                // .ui.small.header (#{fulfilled_count}p total fulfilled count)
+                .smallscroll
+                    each user_orders
+                        +user_order_card
+                        
+                        
+template(name='user_order_card')                    
+    .ui.card
+        if image_id
+            a(href="/m/offer/#{order_offer._id}/view")
+                img.ui.zoom.image(src="{{c.url order_offer.image_id height=100 width=200}}" class=currentUser.invert_class)
+        .content.zoom.pointer
+            a.header(href="/m/offer/#{order_offer._id}/view")
+                |#{purchase_price}c #{order_offer.title}
+            // |!{description}
+            if complete 
+                |completed by #{completer.name}
 
 
 
 template(name='user_credit_segment')
     .ui.segment.user_credit_segment.pointer.zoom
+        if image_id
+            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .header
             strong #{amount}pt 
             // |from 
             if author.profile_image_id
-                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{_author.shortname}
         small #{when}
         div
@@ -99,11 +128,13 @@ template(name='user_credit_segment')
 
 template(name='user_debit_segment')
     .ui.segment.user_debit_segment.pointer.zoom
+        if image_id
+            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .header
             strong #{amount}pt
             | to 
             if recipient.profile_image_id
-                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{recipient.shortname}
         small #{when}
         div

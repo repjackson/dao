@@ -46,6 +46,7 @@ Template.right_sidebar.events
             
 
 Template.nav.helpers
+    
     alert_toggle_class: ->
         if Session.get('viewing_alerts') then 'active' else ''
     current_tribe: () ->
