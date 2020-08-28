@@ -2,17 +2,6 @@ template(name='home')
     .ui.stackable.padded.grid 
         .row
             .four.wide.column
-                i.tags.icon
-                if selected_tags
-                    #clear_tags.ui.active.icon.compact.button
-                        i.remove.icon
-                    each selected_tags
-                        .unselect_tag.ui.active.compact.button
-                            strong #{this}
-                each tags
-                    .ui.compact.button.select_tag(class=cloud_tag_class) 
-                        strong #{this.name}
-                div
                 i.clone.icon
                 if selected_models
                     #clear_models.ui.active.icon.compact.button
@@ -22,6 +11,17 @@ template(name='home')
                             strong #{this}
                 each models
                     .ui.compact.button.select_model(class=cloud_tag_class) 
+                        strong #{this.name}
+                div
+                i.tags.icon
+                if selected_tags
+                    #clear_tags.ui.active.icon.compact.button
+                        i.remove.icon
+                    each selected_tags
+                        .unselect_tag.ui.active.compact.button
+                            strong #{this}
+                each tag_results
+                    .ui.compact.button.select_tag(class=cloud_tag_class) 
                         strong #{this.name}
             .twelve.wide.column
                 .ui.icon.input 
@@ -41,9 +41,17 @@ template(name='home')
                 .scrolling
                     .ui.stackable.divided.items
                         each docs
-                            .ui.header doc
-                            +request_item
-                    
+                            if key_value_is 'model' 'request'
+                                +request_item
+                            else if key_value_is 'model' 'offer'
+                                +offer_item
+                            else
+                                .ui.header #{model}
+                                if is_dev
+                                    i.remove.big.icon.link.delete
+                                each tags
+                                    .ui.label #{this}
+                                +print_this
                                     
 template(name='home_request_card')
     .ui.segment.view_request.pointer

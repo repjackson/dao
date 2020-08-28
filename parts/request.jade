@@ -1,3 +1,30 @@
+template(name='request_item')
+    .ui.item.pointer.request_item
+        if image_id
+            .image
+                img.ui.rounded.image(src="{{c.url image_id width=400 height=600 crop='fill'}}")    
+        .content
+            .header
+                |#{title}
+                if complete
+                    i.green.checkmark.icon
+            .meta
+                |by 
+                if _author.profile_image_id
+                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                |#{_author.name}
+                .ui.big.basic.label
+                    |#{point_bounty}pts
+                .ui.small.inline.header status:#{status}
+                if complete
+                    .ui.basic.label 
+                        |completed by #{completer.name}
+                        |{{from_now completed_timestamp}}
+            .description
+                |!{description}
+                +comments_view_small
+        
+        .description
 
 
 template(name='request_view')

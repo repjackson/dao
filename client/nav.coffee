@@ -58,17 +58,17 @@ Template.nav.events
         new_debit_id =
             Docs.insert
                 model:'debit'
-        Router.go "/m/debit/#{new_debit_id}/edit"
+        Router.go "/debit/#{new_debit_id}/edit"
     'click .request': ->
         new_request_id =
             Docs.insert
                 model:'request'
-        Router.go "/m/request/#{new_request_id}/edit"
+        Router.go "/request/#{new_request_id}/edit"
     'click .offer': ->
         new_offer_id =
             Docs.insert
                 model:'offer'
-        Router.go "/m/offer/#{new_offer_id}/edit"
+        Router.go "/offer/#{new_offer_id}/edit"
 
     'click .alerts': ->
         Session.set('viewing_alerts', !Session.get('viewing_alerts'))

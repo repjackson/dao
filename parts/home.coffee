@@ -54,14 +54,19 @@ if Meteor.isClient
         selected_tags: -> selected_tags.array()
         selected_authors: -> selected_authors.array()
         selected_models: -> selected_models.array()
-        tags: ->
+        tag_results: ->
             doc_count = Docs.find().count()
-            if 0 < doc_count < 3 then Tags.find { count: $lt: doc_count } else Tags.find()
+            if 0 < doc_count < 3 then Tag_results.find { count: $lt: doc_count } else Tag_results.find()
         models: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3 then Model_results.find { count: $lt: doc_count } else Model_results.find()
 
     Template.home.events
+        'click .delete': -> 
+            console.log @
+            Docs.remove @_id
+        
+        
         'click .select_tag': -> selected_tags.push @name
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
@@ -161,7 +166,7 @@ if Meteor.isServer
         # console.log 'filter: ', filter
         # console.log 'cloud: ', cloud
         tag_cloud.forEach (tag, i) ->
-            self.added 'tags', Random.id(),
+            self.added 'tag_results', Random.id(),
                 name: tag.name
                 count: tag.count
                 index: i

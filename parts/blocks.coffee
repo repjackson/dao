@@ -15,7 +15,7 @@ if Meteor.isClient
 
     Template.smart_tagger.helpers        
         terms: -> Terms.find()
-        suggestions: -> Tags.find()
+        suggestions: -> Tag_results.find()
 
     Template.smart_tagger.events
         'keyup .new_tag': _.throttle((e,t)->

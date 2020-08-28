@@ -15,9 +15,9 @@ template(name='debit_edit')
                         .ui.header recipient
                         with recipient
                             i.large.remove.link.icon.remove_recipient
-                            a.pointer(href="/user/#{name}")
+                            a.pointer(href="/user/#{username}")
                                 img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
-                                .ui.inline.header #{name}
+                                .ui.inline.header #{username}
                                 .ui.small.grey.inline.header #{points}
                         unless recipient
                             .ui.divider
