@@ -47,7 +47,7 @@ template(name='home')
                 a.ui.center.aligned.header(href="/m/offer")
                     i.hand.holding.heart.icon
                     |offers
-                .ui.stackable.cards.medscroll
+                .ui.stackable.centered.cards.medscroll
                     each latest_offers
                         +home_offer_card
             .column
@@ -55,7 +55,7 @@ template(name='home')
                 a.ui.center.aligned.header(href="/m/debit")
                     i.send.icon
                     |transfers
-                .ui.stackable.cards.medscroll
+                .ui.stackable.centered.cards.medscroll
                     each latest_debits
                         +debit_card
             .column
@@ -63,7 +63,7 @@ template(name='home')
                 a.ui.center.aligned.header(href="/m/request")
                     i.concierge.bell.icon
                     |requests
-                .medscroll
+                .ui.stackable.centered.cards.medscroll
                     each latest_requests
                         +home_request_card
                     

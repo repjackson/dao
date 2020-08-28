@@ -57,6 +57,58 @@ Meteor.methods
                 global_credit_count_rank:my_rank
 
 
+    log_term: (term_title)->
+        # console.log 'logging term', term
+        found_term =
+            Terms.findOne
+                title:term_title
+                app:'dao'
+        unless found_term
+            Terms.insert
+                title:term_title
+                app:'dao'
+            # if Meteor.user()
+            #     Meteor.users.update({_id:Meteor.userId()},{$inc: points: 1}, -> )
+            # console.log 'added term', term
+        else
+            Terms.update({_id:found_term._id},{$inc: count: 1}, -> )
+            # console.log 'found term', term
+            # Meteor.call 'call_wiki', @term_title, =>
+            #     Meteor.call 'calc_term', @term_title, ->
+
+
+    calc_finance_stats: ()->
+        fs = Docs.findOne model:'finance_stat'
+        unless fs 
+            Docs.insert 
+                model:'finance_stat'
+        fs = Docs.findOne model:'finance_stat'
+        
+        total_expense_sum = 0
+        
+        expenses = 
+            Docs.find 
+                model:'expense'
+        for expense in expenses.fetch()
+            total_expense_sum += expense.dollar_amount
+    
+        total_membership_sum = 0
+        memberships = 
+            Docs.find 
+                model:'expense'
+                membership:true
+        for membership in memberships.fetch()
+            total_membership_sum += membership.dollar_amount
+    
+        console.log 'total expenses', total_expense_sum
+        Docs.update fs._id,
+            $set:
+                total_expense_sum:total_expense_sum
+                total_expense_count:expenses.count()
+                membership_count:memberships.count()
+                total_membership_sum:total_membership_sum
+
+
     calc_user_points: (user_id)->
         user = Meteor.users.findOne user_id
         debits = Docs.find({

@@ -9,7 +9,7 @@ iron:router@=1.0.13
 mongo@1.10.0                   # The database Meteor supports right now
 session@1.2.0                 # Client-side reactive dictionary for your app
 tracker@1.2.0                 # Meteor's client-side reactive programming library
-accounts-base@1.6.0
+accounts-base@1.7.0
 
 
 random@1.2.0
@@ -30,11 +30,10 @@ constellation:console
 constellation:subscriptions
 constellation:session
 babrahams:temple
-accounts-password
+accounts-password@1.6.2
 zimme:active-route
 lepozepo:cloudinary
 dburles:collection-helpers
 mrgalaxy:stripe
-lookback:emails
 francocatena:status
 flowkey:hotkeys
