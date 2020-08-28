@@ -1,9 +1,7 @@
 @Docs = new Meteor.Collection 'docs'
 @Tags = new Meteor.Collection 'tags'
-@Request_tags = new Meteor.Collection 'request_tags'
-@Offer_tags = new Meteor.Collection 'offer_tags'
 @Terms = new Meteor.Collection 'terms'
-@Models = new Meteor.Collection 'models'
+@Model_results = new Meteor.Collection 'model_results'
 @User_tags = new Meteor.Collection 'user_tags'
 
 
@@ -118,7 +116,7 @@ Meteor.methods
                         downvoter_usernames:Meteor.user().username
                     $addToSet: 
                         upvoter_ids:Meteor.userId()
-                        upvoter_usernames:Meteor.user().username
+                        upvoter_usernames :Meteor.user().username
                     $inc:
                         credit:.02
                         upvotes:1

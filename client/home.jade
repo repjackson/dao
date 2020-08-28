@@ -1,73 +1,48 @@
 template(name='home')
-    .ui.center.aligned.basic.segment
-        // .ui.basic.big.compact.button.buy_tiffen
-        //     i.gift.icon
-        //     |buy tiffen
-        .ui.basic.big.compact.icon.button.debit(title='send credit')
-            i.send.big.icon
-            // |send credit
-        .ui.basic.big.compact.icon.button.request
-            i.concierge.bell.icon
-            // |request
-        .ui.basic.big.compact.icon.button.offer(title='offer')
-            i.hand.holding.heart.big.icon
-            // |offer
-        // .ui.basic.big.compact.button.add_message
-        //     i.chat.icon
-        //     |message
-        // .ui.basic.big.compact.button.add_event
-        //     i.calendar.icon
-        //     |+ event
-        // .ui.basic.big.compact.button.add_expense
-        //     i.dollar.icon
-        //     |+ expense
-        // .ui.basic.big.compact.button.add_bug
-        //     i.bug.icon
-        //     |+ bug
-        a.ui.basic.big.icon.button(href='/register')
-            i.user.plus.big.icon
-            // |member
-        each friends
-            if profile_image_id
-                a(href="/user/#{username}" title="{{name}} {{points}}")
-                    img.ui.tiny.pointer.rounded.inline.spaced_image.zoom.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-            else 
-                a.ui.circular.button(href="/user/#{username}" title="{{name}} {{points}}")
-                    |#{username}
-                // if avatar_image_id
-                // .ui.move.reveal.tiny.spaced_image.image
-                //     .visible.content
-                //         img(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-                //     .hidden.content
-                //         img(src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
-                // else
-    .ui.stackable.grid
-        .three.column.row
-            .column
-                a.ui.center.aligned.header(href="/m/offer")
-                    i.hand.holding.heart.icon
-                    |offers
-                .ui.stackable.centered.cards.medscroll
-                    each latest_offers
-                        +home_offer_card
-            .column
-                // .ui.center.aligned.header
-                a.ui.center.aligned.header(href="/m/debit")
-                    i.send.icon
-                    |transfers
-                .ui.stackable.centered.cards.medscroll
-                    each latest_debits
-                        +debit_card
-            .column
-                // .ui.center.aligned.header
-                a.ui.center.aligned.header(href="/m/request")
-                    i.concierge.bell.icon
-                    |requests
-                .ui.stackable.centered.cards.medscroll
-                    each latest_requests
-                        +home_request_card
-                    
-                    
+    .ui.stackable.padded.grid 
+        .row
+            .four.wide.column
+                i.tags.icon
+                if selected_tags
+                    #clear_tags.ui.active.icon.compact.button
+                        i.remove.icon
+                    each selected_tags
+                        .unselect_tag.ui.active.compact.button
+                            strong #{this}
+                each tags
+                    .ui.compact.button.select_tag(class=cloud_tag_class) 
+                        strong #{this.name}
+                div
+                i.clone.icon
+                if selected_models
+                    #clear_models.ui.active.icon.compact.button
+                        i.remove.icon
+                    each selected_models
+                        .unselect_model.ui.active.compact.button
+                            strong #{this}
+                each models
+                    .ui.compact.button.select_model(class=cloud_tag_class) 
+                        strong #{this.name}
+            .twelve.wide.column
+                .ui.icon.input 
+                    i.search.icon
+                    input.request_title(type='text')
+                |sort by
+                .ui.button.when
+                    |when
+                .ui.button.price
+                    |price
+                if sorting_up
+                    .ui.button.sort_down
+                        i.chevron.up.icon
+                else
+                    .ui.button.sort_up
+                        i.chevron.down.icon
+                .scrolling
+                    .ui.stackable.divided.items
+                        each docs
+                            .ui.header doc
+                            +request_item
                     
                                     
 template(name='home_request_card')

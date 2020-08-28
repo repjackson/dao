@@ -88,3 +88,4 @@ if Meteor.isServer
                 index: i
 
         self.ready()
+        
