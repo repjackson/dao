@@ -1,0 +1,69 @@
+template(name='requests')
+    .ui.stackable.padded.grid 
+        .row
+            .four.wide.column
+                .ui.inline.header 
+                    i.concierge.bell.icon
+                    |requests
+                a.ui.circular.icon.button.add_request(href='add request')
+                    i.large.plus.icon
+                div
+                i.tags.icon
+                if selected_request_tags
+                    #clear_request_tags.ui.active.icon.compact.button
+                        i.remove.icon
+                    each selected_request_tags
+                        .unselect_request_tag.ui.active.compact.button
+                            strong #{this}
+                each request_tags
+                    .ui.compact.button.select_tag(class=cloud_tag_class) 
+                        strong #{this.name}
+            .twelve.wide.column
+                .ui.icon.input 
+                    i.search.icon
+                    input.request_title(type='text')
+                |sort by
+                .ui.button.when
+                    |when
+                .ui.button.price
+                    |price
+                if sorting_up
+                    .ui.button.sort_down
+                        i.chevron.up.icon
+                else
+                    .ui.button.sort_up
+                        i.chevron.down.icon
+                .scrolling
+                    .ui.stackable.divided.items
+                        each requests
+                            +request_item
+
+
+
+template(name='request_item')
+    .ui.item.pointer.request_item
+        if image_id
+            .image
+                img.ui.rounded.image(src="{{c.url image_id width=400 height=600 crop='fill'}}")    
+        .content
+            .header
+                |#{title}
+                if complete
+                    i.green.checkmark.icon
+            .meta
+                |by 
+                if _author.profile_image_id
+                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                |#{_author.name}
+                .ui.big.basic.label
+                    |#{point_bounty}pts
+                .ui.small.inline.header status:#{status}
+                if complete
+                    .ui.basic.label 
+                        |completed by #{completer.name}
+                        |{{from_now completed_timestamp}}
+            .description
+                |!{description}
+                +comments_view_small
+        
+        .description

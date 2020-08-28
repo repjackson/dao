@@ -1,8 +1,10 @@
 @Docs = new Meteor.Collection 'docs'
 @Tags = new Meteor.Collection 'tags'
+@Request_tags = new Meteor.Collection 'request_tags'
+@Offer_tags = new Meteor.Collection 'offer_tags'
 @Terms = new Meteor.Collection 'terms'
+@Models = new Meteor.Collection 'models'
 @User_tags = new Meteor.Collection 'user_tags'
-@Level_results = new Meteor.Collection 'level_results'
 
 
 if Meteor.isClient
@@ -21,23 +23,13 @@ if Meteor.isServer
 Docs.helpers
     _author: -> Meteor.users.findOne @_author_id
     _buyer: -> Meteor.users.findOne @buyer_id
-    recipient: ->
-        Meteor.users.findOne @recipient_id
-    
+    recipient: -> Meteor.users.findOne @recipient_id
     when: -> moment(@_timestamp).fromNow()
     is_visible: -> @published in [0,1]
     is_published: -> @published is 1
     is_anonymous: -> @published is 0
     is_private: -> @published is -1
-    is_read: ->
-        @read_ids and Meteor.userId() in @read_ids
-
-    enabled_features: () ->
-        Docs.find
-            model:'feature'
-            _id:$in:@enabled_feature_ids
-
-
+    is_read: -> @read_ids and Meteor.userId() in @read_ids
     upvoters: ->
         if @upvoter_ids
             upvoters = []
@@ -52,31 +44,14 @@ Docs.helpers
                 downvoter = Meteor.users.findOne downvoter_id
                 downvoters.push downvoter
             downvoters
+
 Meteor.users.helpers
-    name: ->
-        # if @nickname
-        #     "#{@nickname}"
-        # else if @first_name
-        #     "#{@first_name} #{@last_name}"
-        # else
-        "#{@username}"
-    shortname: ->
-        # if @nickname
-        #     "#{@nickname}"
-        # else if @first_name
-        #     "#{@first_name}"
-        # else
-        "#{@username}"
     email_address: -> if @emails and @emails[0] then @emails[0].address
     email_verified: -> if @emails and @emails[0] then @emails[0].verified
     first_five_tags: ->
         if @tags
             @tags[..5]
     has_points: -> @points > 0
-    # is_tech_admin: ->
-    #     @_id in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
-
-
 
 
 
@@ -100,9 +75,7 @@ Docs.before.insert (userId, doc)->
     month = moment(timestamp).format('MMMM')
     year = moment(timestamp).format('YYYY')
 
-
     doc.points = 0
-
 
     # date_array = [ap, "hour #{hour}", "min #{minute}", weekday, month, date, year]
     date_array = [ap, weekday, month, date, year]
@@ -111,37 +84,11 @@ Docs.before.insert (userId, doc)->
         # date_array = _.each(date_array, (el)-> console.log(typeof el))
         # console.log date_array
         doc._timestamp_tags = date_array
-
     return
 
 
 
 Meteor.methods
-    add_facet_filter: (delta_id, key, filter)->
-        if key is '_keys'
-            new_facet_ob = {
-                key:filter
-                filters:[]
-                res:[]
-            }
-            Docs.update { _id:delta_id },
-                $addToSet: facets: new_facet_ob
-        Docs.update { _id:delta_id, "facets.key":key},
-            $addToSet: "facets.$.filters": filter
-
-        Meteor.call 'fum', delta_id, (err,res)->
-
-
-    remove_facet_filter: (delta_id, key, filter)->
-        if key is '_keys'
-            Docs.update { _id:delta_id },
-                $pull:facets: {key:filter}
-        Docs.update { _id:delta_id, "facets.key":key},
-            $pull: "facets.$.filters": filter
-        Meteor.call 'fum', delta_id, (err,res)->
-
-
-
     pin: (doc)->
         if doc.pinned_ids and Meteor.userId() in doc.pinned_ids
             Docs.update doc._id,
@@ -197,13 +144,6 @@ Meteor.methods
                         credit:.01
             Meteor.users.update doc._author_id,
                 $inc:points:1
-        else
-            Docs.update doc._id,
-                $inc:
-                    anon_credit:.01
-                    anon_upvotes:1
-            Meteor.users.update doc._author_id,
-                $inc:anon_points:1
 
     downvote: (doc)->
         if Meteor.userId()
@@ -240,10 +180,3 @@ Meteor.methods
                         downvotes:1
             Meteor.users.update doc._author_id,
                 $inc:points:-1
-        else
-            Docs.update doc._id,
-                $inc:
-                    anon_credit:-1
-                    anon_downvotes:1
-            Meteor.users.update doc._author_id,
-                $inc:anon_points:-1

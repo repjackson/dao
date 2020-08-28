@@ -5,20 +5,12 @@ template(name='nav')
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
-            // if current_tribe.icon 
-            //     i.large.icon(class=current_tribe.icon)
-            // else
             i.large.yin.yang.icon
-            // if current_tribe
-            //     span.mobile.hidden #{current_tribe.title}
-            // else    
         a.item.set_request(href="/requests" class="{{isActivePath '/requests'}}" title='requests')
             i.large.concierge.bell.icon
-            // em(data-emoji='bellhop')
             span.mobile.hidden requests
         a.item.set_offer(href="/offers" class="{{isActivePath '/offers'}}" title='offers')
             i.large.hand.holding.heart.icon
-            // em(data-emoji='bellhop')
             span.mobile.hidden offers
         a.icon.item.debit(title='send credit')
             i.send.large.icon
@@ -29,14 +21,6 @@ template(name='nav')
         //     i.hand.holding.heart.large.icon
     
         .right.menu
-            if unread_count
-                a.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    i.large.bell.icon
-                    if unread_count
-                        |#{unread_count}
-            else
-                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                    i.large.outline.bell.icon
             if is_dev 
                 .icon.item.toggle_dev
                     i.large.code.icon

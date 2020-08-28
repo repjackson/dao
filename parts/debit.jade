@@ -9,14 +9,14 @@ template(name='debit_edit')
                     .ui.segment
                         .ui.inline.grey.header sender
                         .ui.inline.header
-                            img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.name}
                     .ui.segment
                         .ui.header recipient
                         with recipient
                             i.large.remove.link.icon.remove_recipient
                             a.pointer(href="/user/#{name}")
-                                img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
                                 .ui.inline.header #{name}
                                 .ui.small.grey.inline.header #{points}
                         unless recipient
@@ -29,7 +29,7 @@ template(name='debit_edit')
                             // each members
                             //     .ui.compact.basic.circular.button.add_recipient
                             //         // i.plus.icon
-                            //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             //         |#{name}
                             //         small #{points}p
                     +date_edit key='date' label='date' direct=true   
@@ -77,7 +77,7 @@ template(name='debit_view')
             .centered.row 
                 .five.wide.column
                     a(href="/user/#{_author.username}") 
-                        img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                         .ui.large.center.aligned.header.pointer.zoom
                             |#{_author.name}
                 .five.wide.column
@@ -104,7 +104,7 @@ template(name='debit_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
                     a(href="/user/#{recipient.username}")
-                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                         .ui.large.center.aligned.header.pointer.zoom
                             |#{recipient.name}
                             

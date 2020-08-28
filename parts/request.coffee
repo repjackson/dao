@@ -4,8 +4,6 @@ if Meteor.isClient
     Template.registerHelper 'completer', () ->
         Meteor.users.findOne @completed_by_user_id
     
-    Template.requests.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'request'
     Router.route '/request/:doc_id/view', (->
         @layout 'layout'
         @render 'request_view'
@@ -14,33 +12,6 @@ if Meteor.isClient
         @layout 'layout'
         @render 'request_edit'
         ), name:'request_edit'
-
-    Router.route '/requests', (->
-        @layout 'layout'
-        @render 'requests'
-        ), name:'requests'
-    Template.requests.events
-        'click .add_request': ->
-            new_id = 
-                Docs.insert 
-                    model:'request'
-            Router.go "/request/#{new_id}/edit"
-            
-    Template.requests.helpers
-        requests: ->
-            Docs.find 
-                model:'request'
-                complete:$ne:true
-                published:true
-
-    Template.request_item.onCreated ->
-        @autorun => Meteor.subscribe 'doc_comments', @data._id
-
-    Template.request_item.events
-        'click .request_item': ->
-            Router.go "/request/#{@_id}/view"
-            Docs.update @_id,
-                $inc: views:1
 
 
 
@@ -100,31 +71,6 @@ if Meteor.isClient
                     true
 
 
-
-# if Meteor.isServer
-#     Meteor.methods
-        # send_request: (request_id)->
-        #     request = Docs.findOne request_id
-        #     target = Meteor.users.findOne request.recipient_id
-        #     gifter = Meteor.users.findOne request._author_id
-        #
-        #     console.log 'sending request', request
-        #     Meteor.users.update target._id,
-        #         $inc:
-        #             points: request.amount
-        #     Meteor.users.update gifter._id,
-        #         $inc:
-        #             points: -request.amount
-        #     Docs.update request_id,
-        #         $set:
-        #             publishted:true
-        #             submitted_timestamp:Date.now()
-        #
-        #
-        #
-        #     Docs.update Router.current().params.doc_id,
-        #         $set:
-        #             submitted:true
 
 
 if Meteor.isClient
@@ -235,4 +181,19 @@ if Meteor.isServer
                     published_timestamp:null
                     
                     
+                    
+                    
+                    
+if Meteor.isServer
+    Meteor.publish 'requests', (
+        query=''
+        selected_tags
+        )->
+        match = {model:'request'}
+        if query.length > 0
+            match.title = {$regex:"#{query}", $options: 'i'}
+
+        if selected_tags.length > 0
+            match.tags = $in:selected_tags
+        Docs.find match
                     

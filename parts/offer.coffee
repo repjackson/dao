@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/offers', (->
-        @layout 'layout'
-        @render 'offers'
-        ), name:'offers'
-        
     Router.route '/offer/:doc_id/view', (->
         @layout 'layout'
         @render 'offer_view'
@@ -16,41 +11,6 @@ if Meteor.isClient
     Template.registerHelper 'sale_credit_price', () ->
         @credit_price + @credit_price/100
     
-    Template.offers.onCreated ->
-        @autorun => Meteor.subscribe 'offers',
-            Session.get('offer_search')
-            selected_tags.array()
-    
-    Template.offers.events
-        'click .add_offer': ->
-            new_id = 
-                Docs.insert 
-                    model:'offer'
-            Router.go "/offer/#{new_id}/edit"
-            
-            
-        'keyup .offer_title': (e,t)->
-            query = $('.offer_title').val()
-            Session.set('offer_search', query)
-
-            
-    Template.offers.helpers
-        offers: ->
-            Docs.find {
-                model:'offer'
-                },
-                    sort:_timestamp:-1
-                # complete:$ne:true
-                # published:true
-
-    Template.offer_item.onCreated ->
-        @autorun => Meteor.subscribe 'doc_comments', @data._id
-
-    Template.offer_item.events
-        'click .offer_item': ->
-            Router.go "/offer/#{@_id}/view"
-            Docs.update @_id,
-                $inc: views:1
 
 
     Template.offer_view.onCreated ->
@@ -218,30 +178,6 @@ if Meteor.isServer
         if selected_tags.length > 0
             match.tags = $in:selected_tags
         Docs.find match
-#     Meteor.methods
-        # send_offer: (offer_id)->
-        #     offer = Docs.findOne offer_id
-        #     target = Meteor.users.findOne offer.recipient_id
-        #     gifter = Meteor.users.findOne offer._author_id
-        #
-        #     console.log 'sending offer', offer
-        #     Meteor.users.update target._id,
-        #         $inc:
-        #             points: offer.amount
-        #     Meteor.users.update gifter._id,
-        #         $inc:
-        #             points: -offer.amount
-        #     Docs.update offer_id,
-        #         $set:
-        #             publishted:true
-        #             submitted_timestamp:Date.now()
-        #
-        #
-        #
-        #     Docs.update Router.current().params.doc_id,
-        #         $set:
-        #             submitted:true
-
 
 if Meteor.isClient
     Template.offer_edit.onCreated ->

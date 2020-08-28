@@ -2,8 +2,8 @@ template(name='profile_layout')
     +nav
     .ui.bottom.attached.pushable.segment
         // +top_sidebar
-        // +left_sidebar
-        // +right_sidebar
+        +left_sidebar
+        +right_sidebar
         // #main_area.global_container.pusher
         #main_area.global_container.pusher
             with user
@@ -40,37 +40,65 @@ template(name='profile_layout')
                             if currentUser
                                 // div
                                 +user_friend_button 
-                        if i_have_points
-                            .ui.basic.button.send(title='send points')
-                                i.send.large.icon
-                                span send pts
-                        a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                            i.large.dashboard.icon
-                            // span dashboard
-                        a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
-                            i.large.chevron.down.icon
-                            // span pts received
-                        a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
-                            i.large.send.icon
-                            // span pts sent
-                        if is_current_user
-                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                                i.large.dollar.icon
-                                // span credit
-                        a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
-                            i.large.concierge.bell.icon
-                            // span requests
-                        a.ui.large.basic.button.select_term.profile_nav_item(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}" title="#{user.username} friends")
-                            i.large.users.icon
-                            span friends
-                        a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
-                            i.large.hand.holding.heart.icon
-                            // span offers
-                        // a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                        //     i.chat.large.icon
-                        //     span chat
-                        // .spacer
-                        // .spacer
+                        .mobile.hidden
+                            if i_have_points
+                                .ui.basic.button.send(title='send points')
+                                    i.send.large.icon
+                                    span send pts
+                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                                i.large.dashboard.icon
+                                span dashboard
+                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                                i.large.chevron.down.icon
+                                span pts received
+                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                                i.large.send.icon
+                                span pts sent
+                            if is_current_user
+                                a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                                    i.large.dollar.icon
+                                    span credit
+                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
+                                i.large.concierge.bell.icon
+                                span requests
+                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}" title="#{user.username} friends")
+                                i.large.users.icon
+                                span friends
+                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
+                                i.large.hand.holding.heart.icon
+                                span offers
+                        .mobile.only
+                            if i_have_points
+                                .ui.basic.button.send(title='send points')
+                                    i.send.large.icon
+                                    span send pts
+                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                                i.large.dashboard.icon
+                                // span dashboard
+                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                                i.large.chevron.down.icon
+                                // span pts received
+                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                                i.large.send.icon
+                                // span pts sent
+                            if is_current_user
+                                a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                                    i.large.dollar.icon
+                                    // span credit
+                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
+                                i.large.concierge.bell.icon
+                                // span requests
+                            a.ui.large.basic.button.select_term.profile_nav_item(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}" title="#{user.username} friends")
+                                i.large.users.icon
+                                span friends
+                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
+                                i.large.hand.holding.heart.icon
+                                // span offers
+                            // a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                            //     i.chat.large.icon
+                            //     span chat
+                            // .spacer
+                            // .spacer
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield.scrolling

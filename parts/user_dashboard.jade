@@ -74,7 +74,7 @@ template(name='user_dashboard')
                                     |completed by #{completer.name}
                 .ui.hidden.divider
             .column
-                a.ui.inline.spaced.header(href="/user/#{username}/offers")
+                a.ui.inline.spaced.header(href="/user/#{username}/orders")
                     i.receipt.icon
                     |orders
                 // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
@@ -83,7 +83,7 @@ template(name='user_dashboard')
                     each user_orders
                         +user_order_card
             .column
-                a.ui.inline.spaced.header(href="/user/#{username}/offers")
+                a.ui.inline.spaced.header(href="/user/#{username}/sales")
                     i.cart.icon
                     |sales
                 // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
@@ -115,9 +115,6 @@ template(name='user_offer_card')
             a.header(href="/offer/#{_id}/view")
                 |#{point_bounty}pts: #{title}
             // |!{description}
-            |status: #{status}
-            if complete 
-                |completed by #{completer.name}
 
                         
                         
