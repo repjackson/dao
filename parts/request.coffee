@@ -6,7 +6,15 @@ if Meteor.isClient
     
     Template.requests.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'request'
-    
+    Router.route '/request/:doc_id/view', (->
+        @layout 'layout'
+        @render 'request_view'
+        ), name:'request_view'
+    Router.route '/request/:doc_id/edit', (->
+        @layout 'layout'
+        @render 'request_edit'
+        ), name:'request_edit'
+
     Router.route '/requests', (->
         @layout 'layout'
         @render 'requests'
@@ -16,7 +24,7 @@ if Meteor.isClient
             new_id = 
                 Docs.insert 
                     model:'request'
-            Router.go "/m/request/#{new_id}/edit"
+            Router.go "/request/#{new_id}/edit"
             
     Template.requests.helpers
         requests: ->
@@ -30,7 +38,7 @@ if Meteor.isClient
 
     Template.request_item.events
         'click .request_item': ->
-            Router.go "/m/request/#{@_id}/view"
+            Router.go "/request/#{@_id}/view"
             Docs.update @_id,
                 $inc: views:1
 
@@ -39,6 +47,10 @@ if Meteor.isClient
    
     Template.request_view.onRendered ->
 
+    Template.request_view.onCreated ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+    Template.request_edit.onCreated ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
     Template.request_view.events
         'click .claim': ->
@@ -140,7 +152,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/m/request"
+                    Router.go "/request"
             )
 
         'click .publish': ->

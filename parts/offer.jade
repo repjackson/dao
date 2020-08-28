@@ -62,14 +62,14 @@ template(name='offer_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a(href="/m/offer" title='offers')
+                    a(href="/offers " title='offers')
                         i.hand.holding.heart.big.circular.link.icon
                     .ui.inline.header 
                         small offer: 
                     .ui.inline.large.header 
                         |#{title}
                     if can_edit
-                        a.edit_offer(href="/m/offer/#{_id}/edit")
+                        a.edit_offer(href="/offer/#{_id}/edit")
                             i.large.pencil.circular.link.icon
             .row 
                 .four.wide.column
@@ -108,7 +108,7 @@ template(name='offer_view')
                         |#{offer_purchases.count} purchases
                     .ui.large.link.selection.list
                         each orders
-                            a.ui.item(href="/m/order/#{_id}/view") 
+                            a.ui.item(href="/order/#{_id}/view") 
                                 .content
                                     .header
                                         if is_usd
@@ -131,7 +131,7 @@ template(name='offer_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.icon.button(href="/m/offer/#{_id}/view" title='save')
+                    a.ui.green.icon.button(href="/offer/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit offer:

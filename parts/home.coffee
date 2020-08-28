@@ -74,11 +74,11 @@ if Meteor.isClient
                     sort:points:1)
     Template.home.events
         'click .view_debit': ->
-            Router.go "/m/debit/#{@_id}/view"
+            Router.go "/debit/#{@_id}/view"
         'click .view_request': ->
-            Router.go "/m/request/#{@_id}/view"
+            Router.go "/request/#{@_id}/view"
         'click .view_offer': ->
-            Router.go "/m/offer/#{@_id}/view"
+            Router.go "/offer/#{@_id}/view"
 
         'click .refresh_stats': ->
             Meteor.call 'calc_global_stats'
@@ -86,17 +86,17 @@ if Meteor.isClient
             new_debit_id =
                 Docs.insert
                     model:'debit'
-            Router.go "/m/debit/#{new_debit_id}/edit"
+            Router.go "/debit/#{new_debit_id}/edit"
         'click .request': ->
             new_request_id =
                 Docs.insert
                     model:'request'
-            Router.go "/m/request/#{new_request_id}/edit"
+            Router.go "/request/#{new_request_id}/edit"
         'click .offer': ->
             new_offer_id =
                 Docs.insert
                     model:'offer'
-            Router.go "/m/offer/#{new_offer_id}/edit"
+            Router.go "/offer/#{new_offer_id}/edit"
         
 
         'keydown .find_username': (e,t)->

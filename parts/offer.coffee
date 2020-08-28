@@ -3,6 +3,15 @@ if Meteor.isClient
         @layout 'layout'
         @render 'offers'
         ), name:'offers'
+        
+    Router.route '/offer/:doc_id/view', (->
+        @layout 'layout'
+        @render 'offer_view'
+        ), name:'offer_view'
+    Router.route '/offer/:doc_id/edit', (->
+        @layout 'layout'
+        @render 'offer_edit'
+        ), name:'offer_edit'
 
     Template.registerHelper 'claimer', () ->
         Meteor.users.findOne @claimed_user_id
@@ -19,7 +28,7 @@ if Meteor.isClient
             new_id = 
                 Docs.insert 
                     model:'offer'
-            Router.go "/m/offer/#{new_id}/edit"
+            Router.go "/offer/#{new_id}/edit"
             
     Template.offers.helpers
         offers: ->
@@ -35,13 +44,14 @@ if Meteor.isClient
 
     Template.offer_item.events
         'click .offer_item': ->
-            Router.go "/m/offer/#{@_id}/view"
+            Router.go "/offer/#{@_id}/view"
             Docs.update @_id,
                 $inc: views:1
 
 
     Template.offer_view.onCreated ->
         @autorun -> Meteor.subscribe 'offer_orders', Router.current().params.doc_id
+        @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
 
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
@@ -128,7 +138,7 @@ if Meteor.isClient
                             showConfirmButton: false,
                             timer: 1000
                         )
-                        Router.go "/m/order/#{new_order_id}/view"
+                        Router.go "/order/#{new_order_id}/view"
                 )
             else
                 Swal.fire({
@@ -225,7 +235,8 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-    Template.offer_edit.onRendered ->
+    Template.offer_edit.onCreated ->
+        @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
 
 
     Template.offer_edit.events
@@ -249,7 +260,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/m/offer"
+                    Router.go "/offer"
             )
 
 

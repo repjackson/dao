@@ -63,14 +63,14 @@ template(name='request_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a(href="/m/request" title='requests')
+                    a(href="/requests" title='requests')
                         i.concierge.bell.big.circular.link.icon
                     .ui.inline.header 
                         small viewing request 
                     .ui.inline.large.header 
                         |#{title}
                     if can_edit
-                        a.edit_request(href="/m/request/#{_id}/edit")
+                        a.edit_request(href="/request/#{_id}/edit")
                             i.large.pencil.circular.link.icon
             .row 
                 .four.wide.column
@@ -138,7 +138,7 @@ template(name='request_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.icon.circular.button(href="/m/request/#{_id}/view" title='save')
+                    a.ui.green.icon.circular.button(href="/request/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
                         small edit request

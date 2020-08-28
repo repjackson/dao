@@ -12,6 +12,16 @@ template(name='user_dashboard')
                                 .content
                                     .header #{order_offer.title}
                                     |#{when}, #{purchase_price}c
+            .column
+                a.ui.inline.spaced.header(href="/user/#{username}/offers")
+                    i.concierge.bell.icon
+                    |offers
+                .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
+                .ui.small.header (#{fulfilled_count}p total fulfilled count)
+                .smallscroll
+                    each user_offers
+                        +user_offer_card
+                .ui.hidden.divider
             .column                 
                 a.ui.inline.header(href="/user/#{username}/credits")
                     i.chevron.down.large.icon
@@ -56,22 +66,12 @@ template(name='user_dashboard')
                             if image_id
                                 img.ui.image(src="{{c.url image_id height=100 width=200}}")
                             .content.zoom.pointer
-                                a.header(href="/m/request/#{_id}/view")
+                                a.header(href="/request/#{_id}/view")
                                     |#{point_bounty}pts: #{title}
                                 // |!{description}
                                 |status: #{status}
                                 if complete 
                                     |completed by #{completer.name}
-                .ui.hidden.divider
-            .column
-                a.ui.inline.spaced.header(href="/user/#{username}/offers")
-                    i.concierge.bell.icon
-                    |offers
-                .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
-                .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                .smallscroll
-                    each user_offers
-                        +user_offer_card
                 .ui.hidden.divider
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/offers")
@@ -95,10 +95,10 @@ template(name='user_dashboard')
 template(name='user_sale_card')
     .ui.card
         if image_id
-            a(href="/m/order/#{_id}/view")
+            a(href="/order/#{_id}/view")
                 img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}")
         .content.zoom.pointer
-            a.header(href="/m/order/#{_id}/view")
+            a.header(href="/order/#{_id}/view")
                 |#{point_bounty}pts: #{title}
             // |!{description}
             |status: #{status}
@@ -109,10 +109,10 @@ template(name='user_sale_card')
 template(name='user_offer_card')
     .ui.card
         if image_id
-            a(href="/m/offer/#{_id}/view")
+            a(href="/offer/#{_id}/view")
                 img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}")
         .content.zoom.pointer
-            a.header(href="/m/offer/#{_id}/view")
+            a.header(href="/offer/#{_id}/view")
                 |#{point_bounty}pts: #{title}
             // |!{description}
             |status: #{status}
@@ -124,10 +124,10 @@ template(name='user_offer_card')
 template(name='user_order_card')                    
     .ui.card
         if image_id
-            a(href="/m/offer/#{order_offer._id}/view")
+            a(href="/offer/#{order_offer._id}/view")
                 img.ui.zoom.image(src="{{c.url order_offer.image_id height=100 width=200}}")
         .content.zoom.pointer
-            a.header(href="/m/offer/#{order_offer._id}/view")
+            a.header(href="/offer/#{order_offer._id}/view")
                 |#{purchase_price}c #{order_offer.title}
             // |!{description}
             if complete 
