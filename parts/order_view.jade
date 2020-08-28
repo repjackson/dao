@@ -3,7 +3,7 @@ template(name='order_view')
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
-                    a.ui.zoom.pointer.fluid.card(href="/m/offer/#{offer_id}/view")
+                    a.ui.zoom.pointer.fluid.card(href="/offer/#{offer_id}/view")
                         .content
                             .ui.inline.header
                                 i.chevron.left.icon
@@ -45,28 +45,39 @@ template(name='order_view')
                     .ui.inline.header
                         | #{when}
                     .ui.small.header 
-                        |{{order_tax}}c tax
+                        |{{fixed order_tax}}c tax
                     unless submitted
-                        +datetime_edit key='delivery_datetime' label='delivery date time' direct=true
-                        +textarea_edit key='notes' label='notes' direct=true
-                        // +key_value_edit key='tiffen_type' value='meat' direct=true
-                        // +key_value_edit key='tiffen_type' value='veggie' direct=true
-                        .spacer
-                        .spacer
-                        // +key_value_edit key='transfer' value='pickup' label='pickup' direct=true                    
-                        // +key_value_edit key='transfer' value='delivery' label='delivery' direct=true                    
-                        // if key_value_is key='transfer' value='delivery' direct=true
-                        // +date_edit key='delivery_date' label='delivery date' direct=true
-                        +textarea_edit key='delivery_location' label='delivery location' direct=true
-                        +textarea_edit key='delivery_notes' label='delivery notes' direct=true
+                        +key_value_edit key='transfer' value='pickup'
+                        +key_value_edit key='transfer' value='delivery'
                     else
-                        +datetime_view key='delivery_datetime' label='delivery time' direct=true
-                        +textarea_view key='delivery_location' label='delivery location' direct=true
-                        +textarea_view key='delivery_notes' label='delivery notes' direct=true
-                        +text_view key='notes' label='notes' direct=true
-                        .spacer
-                        // .ui.large.label
-                        //     |tiffen type: #{tiffen_type}
+                        .ui.header transfer: #{transfer}
+                    if key_value_is 'transfer' 'pickup'
+                        unless submitted
+                            +datetime_edit key='pickup_datetime' label='pickup date time' direct=true
+                            +textarea_edit key='notes' label='notes' direct=true
+                    if key_value_is 'transfer' 'delivery'
+                        unless submitted
+                            +datetime_edit key='delivery_datetime' label='delivery date time' direct=true
+                            +datetime_edit key='delivery_datetime' label='delivery date time' direct=true
+                            +textarea_edit key='notes' label='notes' direct=true
+                            // +key_value_edit key='tiffen_type' value='meat' direct=true
+                            // +key_value_edit key='tiffen_type' value='veggie' direct=true
+                            .spacer
+                            .spacer
+                            // +key_value_edit key='transfer' value='pickup' label='pickup' direct=true                    
+                            // +key_value_edit key='transfer' value='delivery' label='delivery' direct=true                    
+                            // if key_value_is key='transfer' value='delivery' direct=true
+                            // +date_edit key='delivery_date' label='delivery date' direct=true
+                            +textarea_edit key='delivery_location' label='delivery location' direct=true
+                            +textarea_edit key='delivery_notes' label='delivery notes' direct=true
+                        else
+                            +datetime_view key='delivery_datetime' label='delivery time' direct=true
+                            +textarea_view key='delivery_location' label='delivery location' direct=true
+                            +textarea_view key='delivery_notes' label='delivery notes' direct=true
+                            +text_view key='notes' label='notes' direct=true
+                            .spacer
+                            // .ui.large.label
+                            //     |tiffen type: #{tiffen_type}
                 .six.wide.column
                     unless submitted
                         .ui.green.fluid.button.submit_order

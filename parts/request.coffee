@@ -152,7 +152,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/request"
+                    Router.go "/requests"
             )
 
         'click .publish': ->

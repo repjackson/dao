@@ -11,6 +11,9 @@ template(name='offers')
                 .spacer
                 .spacer
             .twelve.wide.column
+                .ui.icon.input 
+                    i.search.icon
+                    input.offer_title(type='text')
                 |sort by
                 .ui.button.when
                     |when
@@ -62,15 +65,15 @@ template(name='offer_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a(href="/offers " title='offers')
-                        i.hand.holding.heart.big.circular.link.icon
+                    a.ui.circular.icon.button(href="/offers " title='offers')
+                        i.hand.holding.heart.big.icon
                     .ui.inline.header 
                         small offer: 
                     .ui.inline.large.header 
                         |#{title}
                     if can_edit
-                        a.edit_offer(href="/offer/#{_id}/edit")
-                            i.large.pencil.circular.link.icon
+                        a.ui.circular.icon.button.edit_offer(href="/offer/#{_id}/edit")
+                            i.large.pencil.icon
             .row 
                 .four.wide.column
                     if image_id
@@ -80,6 +83,8 @@ template(name='offer_view')
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.name}
                     .ui.inline.small.header #{when}
+                    +boolean_view key='rental' direct=true
+                    +boolean_view key='for_sale' label='for sale' direct=true
                     div
                     +array_view key='location_tags' label='location_tags' direct=true
                     div
@@ -105,25 +110,41 @@ template(name='offer_view')
                     
                     .ui.dividing.header 
                         // +icolor name='activity-history' cl='ui inline image'
-                        |#{offer_purchases.count} purchases
+                        |#{offer_purchases.count} sales
                     .ui.large.link.selection.list
                         each orders
                             a.ui.item(href="/order/#{_id}/view") 
                                 .content
                                     .header
-                                        if is_usd
-                                            .ui.inline.green.header ${{money_format amount}}
-                                        else
-                                            .ui.inline.header #{purchase_price}c
+                                        .ui.inline.header #{purchase_price}c
                                         
                                         |#{when} 
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                         |#{_author.name}
+                                        .ui.small.header submitted: #{submitted}
+                                        .ui.small.header transfer: #{transfer}
+                                        if key_value_is 'transfer' 'delivery'
+                                            +datetime_view key='delivery_datetime' label='delivery time' direct=true
+                                            +textarea_view key='delivery_location' label='delivery location' direct=true
+                                            +textarea_view key='delivery_notes' label='delivery notes' direct=true
+                                            +text_view key='notes' label='notes' direct=true
+                                            +boolean_view key='delivery_started' direct=true
+                                            if delivery_started
+                                                div
+                                                +boolean_view key='delivery_complete' direct=true
+                                                if delivery_complete
+                                                    +image_view key='delivery_image' direct=true
+                                                
+                                                    .ui.header customer
+                                                    +boolean_view key='delivery_accepted' label='delivery accepted' direct=true                    
+                                        if key_value_is 'transfer' 'pickup'
+                                            +datetime_view key='pickup_datetime' label='pickup date time' direct=true
+                                            +textarea_view key='notes' label='notes' direct=true
+    
+                                        
                                     // if can_edit 
                                     //     i.
                                     //     +icolor name='return-purchase' cl='ui mini inline image return crediter'
-                                    if is_dev
-                                        +remove_button
                     
 
 template(name='offer_edit')
@@ -143,21 +164,21 @@ template(name='offer_edit')
                         small author
                         |#{_author.username}
                     +text_edit key='title' icon='header' direct=true
-                    // +boolean_edit key='approval_required' label='approval required' icon='shield' direct=true
-                    // +range_edit key='timedate' direct=true
+                    +boolean_edit key='rental' direct=true
+                    +boolean_edit key='for_sale' label='for sale' direct=true
                 .six.wide.column
                     div
-                    +boolean_edit key='has_description' label='has description' direct=true
+                    +boolean_edit key='has_description' label='description' direct=true
                     if has_description
                         +html_edit key='description' label='description' direct=true
                     div
-                    +boolean_edit key='has_image' label='has image' direct=true
+                    +boolean_edit key='has_image' label='image' direct=true
                     if has_image
                         +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' icon='tags' direct=true
                     div
-                    +boolean_edit key='has_location' label='has location' direct=true
+                    +boolean_edit key='has_location' label='location' direct=true
                     if has_location
                         +text_edit key='location' label='location' icon='marker' direct=true
                         +array_edit key='location_tags' label='location tags' icon='marker' direct=true
@@ -165,6 +186,6 @@ template(name='offer_edit')
                     .ui.header your credits: #{currentUser.credits}
                     +number_edit key='inventory' label='inventory' direct=true
                     div
-                    +float_edit key='credit_price' label='credit price' direct=true
+                    +float_edit key='credit_price' label='price' direct=true
                     
                     

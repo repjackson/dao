@@ -36,7 +36,7 @@ if Meteor.isClient
                 Session.set('current_query', '')
                 Session.set('dummy', !Session.get('dummy'))
                 t.$('.new_tag').val('')
-        , 1000)
+        , 500)
 
         'click .remove_element': (e,t)->
             element = @valueOf()

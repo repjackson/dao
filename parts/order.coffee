@@ -2,6 +2,10 @@ if Meteor.isClient
     Template.registerHelper 'order_offer', () -> Docs.findOne @offer_id
 
     Template.registerHelper 'order_tax', () -> @purchase_price/100
+    Router.route '/order/:doc_id/view', (->
+        @layout 'layout'
+        @render 'order_view'
+        ), name:'order_view'
 
 
     Template.order_view.onCreated ->

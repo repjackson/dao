@@ -13,14 +13,12 @@ if Meteor.isClient
         @render 'offer_edit'
         ), name:'offer_edit'
 
-    Template.registerHelper 'claimer', () ->
-        Meteor.users.findOne @claimed_user_id
-    
     Template.registerHelper 'sale_credit_price', () ->
         @credit_price + @credit_price/100
     
     Template.offers.onCreated ->
         @autorun => Meteor.subscribe 'offers',
+            Session.get('offer_search')
             selected_tags.array()
     
     Template.offers.events
@@ -29,6 +27,12 @@ if Meteor.isClient
                 Docs.insert 
                     model:'offer'
             Router.go "/offer/#{new_id}/edit"
+            
+            
+        'keyup .offer_title': (e,t)->
+            query = $('.offer_title').val()
+            Session.set('offer_search', query)
+
             
     Template.offers.helpers
         offers: ->
@@ -203,9 +207,14 @@ if Meteor.isServer
             offer_id:offer_id
     
     
-    Meteor.publish 'offers', (selected_tags)->
-        
+    Meteor.publish 'offers', (
+        query=''
+        selected_tags
+        )->
         match = {model:'offer'}
+        if query.length > 0
+            match.title = {$regex:"#{query}", $options: 'i'}
+
         if selected_tags.length > 0
             match.tags = $in:selected_tags
         Docs.find match
@@ -260,7 +269,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/offer"
+                    Router.go "/offers"
             )
 
 
