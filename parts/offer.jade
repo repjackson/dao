@@ -12,7 +12,7 @@ template(name='offer_item')
                 |by 
                 if _author.profile_image_id
                     img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                |#{_author.name}
+                |#{_author.username}
                 .ui.label #{when}
     
                 .ui.big.basic.label
@@ -47,7 +47,7 @@ template(name='offer_view')
                     .ui.small.inline.header posted by
                     a.ui.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.name}
+                        |#{_author.username}
                     .ui.inline.small.header #{when}
                     +boolean_view key='rental' direct=true
                     +boolean_view key='for_sale' label='for sale' direct=true
@@ -86,7 +86,7 @@ template(name='offer_view')
                                         
                                         |#{when} 
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        |#{_author.name}
+                                        |#{_author.username}
                                         .ui.small.header submitted: #{submitted}
                                         .ui.small.header transfer: #{transfer}
                                         if key_value_is 'transfer' 'delivery'

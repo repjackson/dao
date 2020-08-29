@@ -89,7 +89,7 @@ template(name='comments')
                         img(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
                     .content
                         a.author(href="/user/#{_author.username}") 
-                            |#{_author.name}
+                            |#{_author.username}
                         .metadata
                             span.date #{when}
                         .text
@@ -172,14 +172,10 @@ template(name='toggle_edit')
 template(name='user_list_info')
     a.ui.basic.button.item(href="/user/#{user.username}/view")
         img.ui.avatar.image(src=user.profile.profilePic title=name)
-        |#{user.profile.name}
+        |#{user.username}
         +user_status user
 
 
-template(name='view_full_button')
-    a.ui.icon.basic.button(href="/view/#{_id}" data-tooltip='View Full')
-        i.double.icon
-        |view
 
 template(name='user_status')
     if online 
@@ -199,39 +195,13 @@ template(name='user_status')
 //             .image
 //                 img.ui.rounded.mini.image(src="{{c.url profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
 //             .content    
-//                 a.header(href="/user/#{username}") #{first_name} #{last_name} 
+//                 a.header(href="/user/#{username}") #{username} 
 //                 //- .meta @#{username}
 //                 strong $#{credit}
 //                 small credit
 //                 //- +emails_edit    
 //         //- +user_status user
 
-
-template(name='small_horizontal_user_card')
-    with user
-        .ui.small.horizontal.card
-            .image
-                if profile_photo
-                    img.ui.rounded.tiny.image(src="{{c.url profile_photo width=200 height=200 gravity='face' crop='fill'}}")
-                else if image_id
-                    img.ui.rounded.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                else if image_id
-                    img.ui.rounded.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-            .content    
-                a.header(href="/student/#{username}") #{first_initial} #{last_name} 
-                //- .meta @#{username}
-                //- span(title='points')
-                //-     |#{points} pts
-                //- span(title='points')
-                //-     |#{points} 
-                //-     i.yin.yang.icon
-                each tags
-                    .ui.small.basic.label #{this}
-                if is_admin
-                    div
-                    +user_email
-                //- +emails_edit    
-        +user_status user
 
 
 template(name='user_email')
@@ -255,7 +225,7 @@ template(name='big_user_card')
                 img.ui.rounded.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
             .content
                 a.header(href="/user/#{username}")
-                     |#{first_name} #{last_name} 
+                     |#{username} 
                     //- .meta @#{username}
                     //- +array_view key='tags' label='Tags' direct=true
 

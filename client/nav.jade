@@ -19,13 +19,10 @@ template(name='nav')
                 .icon.item.toggle_dev
                     i.large.code.icon
             if currentUser
-                // a.large.item.toggle_rightbar(class="{{isActiveRoute 'user_dashboard'}}")
-                // a.mobile.hidden.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
-                //     |#{currentUser.credit}c
-                a.mobile.hidden.item(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
-                    |{{money_format currentUser.points}}c
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                     //- i.large.user.large.icon
+                    |{{money_format currentUser.points}}c
+                    |&nbsp;
                     if currentUser.profile_image_id
                         if is_admin
                             i.large.shield.icon(title='admin mode on')
@@ -33,42 +30,16 @@ template(name='nav')
                             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                     else 
                         i.large.user.large.icon
-                    strong.mobile.hidden #{currentUser.name}
+                    strong.mobile.hidden #{currentUser.username}
                 a.icon.large.item.toggle_rightbar.select_term
                     i.ellipsis.vertical.large.icon
             else
                 a.item(href="/register" title='register')
-                    // |login
-                    +icon name='plus'
-                    // i.large.chevron.right.icon
+                    |register
+                    i.large.user.plus.icon
                 a.item(href="/login" title='login')
-                    // |login
-                    +icon name='login-rounded-right'
-                    // i.large.chevron.right.icon
-    if session_is 'viewing_alerts'
-        +topbar
-
-
-
-template(name='topbar')
-    .ui.fluid.large.attached.segment(class='')
-        .ui.middle.aligned.divided.list
-            // each recent_alerts
-            //     +recent_alert
-        a.ui.icon.attached.basic.button.item.close_topbar(href="/inbox")
-            i.inbox.large.icon
-            |inbox
-        
-template(name='recent_alert')        
-    .item.alert
-        .right.floated.content
-            i.circular.eye.link.large.icon.mark_read(title='mark read')
-        img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-        .content
-            .header
-                |#{description} 
-            .description #{author.name} #{made_when}
-            
+                    |login
+                    i.large.chevron.right.icon
             
             
             

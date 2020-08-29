@@ -58,7 +58,6 @@ template(name='order_view')
                     if key_value_is 'transfer' 'delivery'
                         unless submitted
                             +datetime_edit key='delivery_datetime' label='delivery date time' direct=true
-                            +datetime_edit key='delivery_datetime' label='delivery date time' direct=true
                             +textarea_edit key='notes' label='notes' direct=true
                             // +key_value_edit key='tiffen_type' value='meat' direct=true
                             // +key_value_edit key='tiffen_type' value='veggie' direct=true

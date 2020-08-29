@@ -12,7 +12,7 @@ template(name='request_item')
                 |by 
                 if _author.profile_image_id
                     img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                |#{_author.name}
+                |#{_author.username}
                 .ui.label #{when}
                 .ui.big.basic.label
                     |#{point_bounty}pts
@@ -52,7 +52,7 @@ template(name='request_view')
                         small posted by
                     a.ui.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.name}
+                        |#{_author.username}
                     .ui.header #{when}
                     +array_view key='location_tags' label='location_tags' direct=true
                     div

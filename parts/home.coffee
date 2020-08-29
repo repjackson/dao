@@ -125,21 +125,9 @@ if Meteor.isClient
         'click .sort_up': ->
             Session.set('sort_direction', 1)
 
-        'keydown .find_username': (e,t)->
-            # email = $('submit_email').val()
-            if e.which is 13
-                email = $('.submit_email').val()
-                if email.length > 0
-                    Docs.insert
-                        model:'email_signup'
-                        email_address:email
-                    $('body')
-                      .toast({
-                        class: 'success'
-                        position: 'top right'
-                        message: "#{email} added to list"
-                      })
-                    $('.submit_email').val('')
+        'keydown .search_title': (e,t)->
+            search = $('.search_title').val()
+            Session.set('query',search)
 
 
 
@@ -159,6 +147,8 @@ if Meteor.isServer
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
             match.tags = $in:selected_tags
+        if selected_authors.length > 0
+            match._author_username = $in:selected_authors
         console.log sort_key
         console.log sort_direction
         Docs.find match,

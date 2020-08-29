@@ -1,17 +1,6 @@
-# if Meteor.isClient
-    # Router.route '/', (->
-    #     @redirect('/m/model')
-    # )
-
-    # Router.route '/', (->
-    #     @layout 'layout'
-    #     @render 'home'
-    #     ), name:'home'
-
-
 Router.configure
     layoutTemplate: 'layout'
-    notFoundTemplate: 'not_found'
+    notFoundTemplate: 'home'
     loadingTemplate: 'splash'
     trackPageView: false
 
@@ -28,8 +17,6 @@ Router.onBeforeAction(force_loggedin, {
         'login'
         'verify-email'
         'forgot_password'
-        'event_view'
-        'delta'
     ]
     })
 
@@ -65,7 +52,7 @@ Router.route('verify-email', {
 
 
 Router.route '/verification_confirmation', -> @render 'verification_confirmation'
-Router.route '*', -> @render 'not_found'
+Router.route '*', -> @render 'home'
 
 # Router.route '/user/:username/m/:type', -> @render 'profile_layout', 'user_section'
 

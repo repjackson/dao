@@ -40,7 +40,7 @@ body {
 }
 
 .pushable.segment {
-    background: rgba(245,245,245,1) !important;
+    background: rgba(248,248,248,.8) !important;
   
 }
 
@@ -222,29 +222,10 @@ html.ios body {
     font-weight: 400 !important;
 }
 
-.yeah {
-    font-size: 1.10rem !important;
-    font-weight: 300 !important;
-    /* color: grey !important; */
-    /* border-radius: 0 0 10px 10px !important; */
-    transition: all .2s ease !important;
-    /* margin-bottom: 10px !important; */
-    /* background-color: rgba(250,250,250,.6) !important; */
-    /* opacity: .7 !important; */
-}
-
-.grey_text {
-    color: grey !important;
-}
 
 .rounded {
      border-radius: 10px !important; 
 }
-
-.sadness {
-    color: rgb(45, 147, 173) !important;
-}
-
 
 .card {
     /* background: black !important; */

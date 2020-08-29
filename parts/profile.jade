@@ -22,10 +22,10 @@ template(name='profile_layout')
                                 i.shield.large.icon
                                 // |account
                         if is_current_user
-                            a.ui.icon.button(href="/user/#{username}/edit" title='edit your account')
+                            a.ui.icon.circular.button(href="/user/#{username}/edit" title='edit your account')
                                 i.cog.big.icon
                                 // |account
-                            a.ui.icon.button.logout(href="#" title='log out')
+                            a.ui.icon.circular.button.logout(href="#" title='log out')
                                 i.sign.out.big.icon
                                 // |log out
                         
@@ -45,39 +45,15 @@ template(name='profile_layout')
                                 .ui.basic.button.send(title='send points')
                                     i.send.large.icon
                                     span send pts
-                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                                i.large.dashboard.icon
-                                span dashboard
-                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
-                                i.large.chevron.down.icon
-                                span pts received
-                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
-                                i.large.send.icon
-                                span pts sent
                             if is_current_user
                                 a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
                                     i.large.dollar.icon
                                     span credit
-                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
-                                i.large.concierge.bell.icon
-                                span requests
-                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}" title="#{user.username} friends")
-                                i.large.users.icon
-                                span friends
-                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
-                                i.large.hand.holding.heart.icon
-                                span offers
                         .mobile.only
                             if i_have_points
                                 .ui.basic.button.send(title='send points')
                                     i.send.large.icon
                                     span send pts
-                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                                i.large.dashboard.icon
-                                // span dashboard
-                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
-                                i.large.chevron.down.icon
-                                // span pts received
                             a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
                                 i.large.send.icon
                                 // span pts sent
@@ -85,20 +61,6 @@ template(name='profile_layout')
                                 a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
                                     i.large.dollar.icon
                                     // span credit
-                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
-                                i.large.concierge.bell.icon
-                                // span requests
-                            a.ui.large.basic.button.select_term.profile_nav_item(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}" title="#{user.username} friends")
-                                i.large.users.icon
-                                span friends
-                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
-                                i.large.hand.holding.heart.icon
-                                // span offers
-                            // a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                            //     i.chat.large.icon
-                            //     span chat
-                            // .spacer
-                            // .spacer
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield.scrolling

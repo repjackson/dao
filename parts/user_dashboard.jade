@@ -18,41 +18,48 @@ template(name='user_dashboard')
                     |offers
                 .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
                 .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                .smallscroll
-                    each user_offers
-                        +user_offer_card
-                .ui.hidden.divider
+                // .smallscroll
+                //     each user_offers
+                //         +user_offer_card
+                // .ui.hidden.divider
             .column                 
                 a.ui.inline.header(href="/user/#{username}/credits")
                     i.chevron.down.large.icon
                     |#{credit_count} credits
                     small (#{total_credit_amount}p)
-                    // |received
-                    // small(title='rank') ##{global_credit_count_rank}
-                // i.tags.icon(title='credit tags')
+                .ui.basic.label #{total_credit_amount}p total received
+                // |received
+                .ui.basic.label(title='received count') #{credit_count} total gifts 
+                .ui.basic.label(title='rank') ##{global_credit_count_rank} count rank
+                    
+                i.tags.icon(title='credit tags')
                 each credit_tags
-                    .ui.small.basic.circular.label #{title}
+                    .ui.basic.circular.label #{title}
+                        small #{count}
                         // small #{count}
-                .smallscroll.ui.segments
-                    each user_credits
-                        +user_credit_segment
+                // .smallscroll.ui.segments
+                //     each user_credits
+                //         +user_credit_segment
                 .ui.hidden.divider
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/debits")
                     i.chevron.up.icon
                     |#{debit_count} debits
                     small (#{total_debit_amount}p)
-                    // |sent
+                    .ui.basic.label #{total_debit_amount}p total sent
+                    .ui.basic.label(title='debit count') #{debit_count} gifts sent
+                    .ui.basic.label(title='rank') ##{global_debit_count_rank} gift sent rank
+                        
+                    i.tags.icon(title='credit tags')
+                    each debit_tags
+                        .ui.basic.circular.label #{title}
+                            small #{count}
+                    
                     // small(title='rank') ##{global_debit_count_rank}
                 // i.tags.icon(title='credit tags')
                 each debit_tags
                     .ui.small.basic.circular.label #{title} 
                         // small #{count}
-    
-                div
-                .smallscroll.ui.segments
-                    each user_debits
-                        +user_debit_segment
                 .ui.hidden.divider
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/requests")
@@ -60,38 +67,21 @@ template(name='user_dashboard')
                     |requests
                 .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
                 .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                .smallscroll
-                    each user_requests
-                        .ui.card
-                            if image_id
-                                img.ui.image(src="{{c.url image_id height=100 width=200}}")
-                            .content.zoom.pointer
-                                a.header(href="/request/#{_id}/view")
-                                    |#{point_bounty}pts: #{title}
-                                // |!{description}
-                                |status: #{status}
-                                if complete 
-                                    |completed by #{completer.name}
-                .ui.hidden.divider
-            .column
-                a.ui.inline.spaced.header(href="/user/#{username}/orders")
-                    i.receipt.icon
-                    |orders
-                // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
-                // .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                .smallscroll
-                    each user_orders
-                        +user_order_card
+                // .ui.hidden.divider
+            // .column
+            //     a.ui.inline.spaced.header(href="/user/#{username}/orders")
+            //         i.receipt.icon
+            //         |orders
+            //     // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
+            //     // .ui.small.header (#{fulfilled_count}p total fulfilled count)
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/sales")
                     i.cart.icon
                     |sales
                 // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
                 // .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                .smallscroll
-                    each user_sales
-                        +user_sale_card
-            
+            .column
+                +user_friends
 template(name='user_sale_card')
     .ui.card
         if image_id
@@ -118,19 +108,6 @@ template(name='user_offer_card')
 
                         
                         
-template(name='user_order_card')                    
-    .ui.card
-        if image_id
-            a(href="/offer/#{order_offer._id}/view")
-                img.ui.zoom.image(src="{{c.url order_offer.image_id height=100 width=200}}")
-        .content.zoom.pointer
-            a.header(href="/offer/#{order_offer._id}/view")
-                |#{purchase_price}c #{order_offer.title}
-            // |!{description}
-            if complete 
-                |completed by #{completer.name}
-
-
 
 template(name='user_credit_segment')
     .ui.segment.user_credit_segment.pointer.zoom

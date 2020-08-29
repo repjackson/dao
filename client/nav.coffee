@@ -11,8 +11,8 @@ Template.nav.onRendered ->
                 context: $('.bottom.segment')
                 transition:'overlay'
                 exclusive:true
-                duration:200
-                scrollLock:true
+                duration:150
+                scrollLock:false
             })
             .sidebar('attach events', '.toggle_sidebar')
     , 1000
@@ -22,8 +22,8 @@ Template.nav.onRendered ->
                 context: $('.bottom.segment')
                 transition:'overlay'
                 exclusive:true
-                duration:200
-                scrollLock:true
+                duration:150
+                scrollLock:false
             })
             .sidebar('attach events', '.toggle_rightbar')
     , 1000
@@ -45,12 +45,6 @@ Template.right_sidebar.events
             
 
 Template.nav.helpers
-    alert_toggle_class: ->
-        if Session.get('viewing_alerts') then 'active' else ''
-    current_tribe: () ->
-        if Meteor.user()
-            Docs.findOne 
-                _id:Meteor.user().current_tribe_id
         
 Template.nav.events
     'click .debit': ->

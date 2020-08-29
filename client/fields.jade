@@ -773,7 +773,7 @@ template(name='datetime_view')
         |#{key}
     else
         |#{this}
-    strong &nbsp; #{field_value}
+    strong &nbsp; {{long_date field_value}} {{from_now field_value}}
 
 
 template(name='array_edit')
@@ -1041,9 +1041,7 @@ template(name='single_user_edit')
         .ui.input
             input#single_user_select_input(type='text' placeholder='lookup user..' autocomplete='off')
             each selections
-                .ui.large.label
-                    |#{name} 
-                .ui.mini.grey.inline.header 
+                .ui.grey.inline.header 
                     |#{username}
         if user_results
             .ui.attached.smoothed.segment
@@ -1052,8 +1050,6 @@ template(name='single_user_edit')
                         a.select_user.item(href='#')
                             .ui.small.inline.header
                                 img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class='')
-                                |#{first_name} #{last_name}
-                            .ui.mini.grey.inline.header 
                                 |#{username}
     if field_value
         // +user_card field_value
@@ -1063,7 +1059,7 @@ template(name='single_user_edit')
         with user_from_id field_value
             .ui.inline.header
                 img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class='')
-                |#{name}
+                |#{username}
             i.pull_user.remove.link.circular.icon
 
 
@@ -1100,7 +1096,7 @@ template(name='multi_user_edit')
         input#multi_user_select_input(type='text' placeholder="lookup #{role_filter}.." autocomplete='off')
     each selections
         a.ui.large.label(href="/user/#{username}")
-            |#{name}
+            |#{username}
     if user_results
         .ui.top.attached.segment
             .ui.middle.aligned.selection.animated.list
@@ -1108,7 +1104,6 @@ template(name='multi_user_edit')
                     a.select_user.item(href="#")
                         .ui.header
                             img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class='')
-                            strong #{first_name} #{last_name}
                             small @#{username}
     +clear_value                
     each field_value
@@ -1117,7 +1112,7 @@ template(name='multi_user_edit')
             div
             .ui.inline.header
                 img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class='')
-                |#{name}
+                |#{username}
             i.pull_user.remove.link.circular.icon
 
 template(name='multi_doc_input')
@@ -1138,7 +1133,7 @@ template(name='multi_doc_input')
         //- input#multi_doc_select_input(type='text' placeholder="Lookup #{ref_model}.." autocomplete="off")
     each selections
         .ui.large.label
-            |#{guest_name} #{first_name} #{last_name}
+            |#{name}
     if doc_results
         .ui.attached.secondary.segment
             .ui.middle.aligned.selection.animated.list
