@@ -1,13 +1,14 @@
 template(name='nav')
     // .ui.fluid.fixed.menu.topnav(
     // .ui.fluid.borderless.attached.menu.topnav(class='')
-    .ui.fluid.borderless.attached.menu.topnav
-        a.icon.item.toggle_sidebar
-            i.large.bars.icon
+    .ui.fluid.attached.menu.topnav
+        // a.icon.item.toggle_sidebar
+        //     i.large.bars.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
-            i.large.yin.yang.icon
-        a.icon.item.debit(title='send credit')
-            i.send.large.icon
+            i.big.yin.yang.icon
+        if currentUser
+            a.icon.item.debit(title='send credit')
+                i.send.large.icon
             // |send credit
         // a.icon.item.request
         //     i.concierge.bell.large.icon
@@ -35,11 +36,11 @@ template(name='nav')
                     i.ellipsis.vertical.large.icon
             else
                 a.item(href="/register" title='register')
-                    |register
                     i.large.user.plus.icon
+                    |register
                 a.item(href="/login" title='login')
-                    |login
                     i.large.chevron.right.icon
+                    |login
             
             
             
@@ -105,13 +106,3 @@ template(name='left_sidebar')
                     i.shield.blue.large.icon
                 else
                     i.shield.large.icon
-            
-        if is_admin
-            .divider
-            a.blue.item.set_model.toggle_sidebar(href="/m/model" class="{{isActivePath '/m/model'}}")
-                |admin
-                i.database.blue.icon
-            a.item.set_user.toggle_sidebar(href="/m/user" class="{{isActiveRoute '/m/user'}}")
-                i.blue.users.icon
-                | all users
-

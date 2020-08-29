@@ -18,7 +18,7 @@ if Meteor.isClient
 
     Template.home.onCreated ->
         Session.setDefault 'sort_key', '_timestamp'
-        Session.setDefault 'sort_direction', 1
+        Session.setDefault 'sort_direction', -1
         @autorun -> Meteor.subscribe('tags',
             Session.get('sort_key')
             Session.get('sort_direction')

@@ -1,41 +1,41 @@
 template(name='home')
     .ui.stackable.padded.grid 
         .row
-            .six.wide.column
+            .sixteen.wide.column
                 i.large.database.icon
                 if selected_models
-                    // #clear_models.ui.active.icon.compact.button
+                    // #clear_models.ui.active.icon.compact.large.button
                     //     i.remove.icon
                     each selected_models
-                        .unselect_model.ui.active.compact.circular.button
+                        .unselect_model.ui.active.compact.large.circular.button
                             strong #{this}
                 each model_results
-                    .ui.compact.circular.basic.button.select_model
+                    .ui.compact.large.circular.basic.button.select_model
                         strong #{this.name}
-                div
+                // div
                 i.tags.large.icon
                 if selected_tags
-                    #clear_tags.ui.active.icon.compact.circular.button
+                    #clear_tags.ui.active.icon.compact.large.circular.button
                         i.remove.icon
                     each selected_tags
-                        .unselect_tag.ui.active.compact.circular.button
+                        .unselect_tag.ui.active.compact.large.circular.button
                             strong #{this}
                 each tag_results
-                    .ui.compact.circular.basic.button.select_tag
+                    .ui.compact.large.circular.basic.button.select_tag
                         strong #{this.name}
-                div
+                // div
                 i.users.large.icon
                 |author
                 if selected_authors
-                    #clear_authors.ui.active.icon.compact.circular.button
+                    #clear_authors.ui.active.icon.compact.large.circular.button
                         i.remove.icon
                     each selected_authors
-                        .unselect_author.ui.active.compact.circular.button
+                        .unselect_author.ui.active.compact.large.circular.button
                             strong #{this}
                 each author_results
-                    .ui.compact.circular.basic.button.select_author
+                    .ui.compact.large.circular.basic.button.select_author
                         strong #{this.name}
-            .ten.wide.column
+            .sixteen.wide.column
                 .ui.icon.input 
                     i.search.icon
                     input.search_title(type='text')
@@ -53,7 +53,7 @@ template(name='home')
                     .ui.button.sort_up
                         i.chevron.down.icon
                 .scrolling
-                    .ui.stackable.divided.items
+                    .ui.stackable.cards
                         each docs
                             if key_value_is 'model' 'request'
                                 +request_item
@@ -83,7 +83,7 @@ template(name='home_request_card')
                 .ui.inline.header #{point_bounty}p: #{title}
                 if _author.profile_image_id
                     with _author
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=username)
                 | #{_author.username}
             |!{description}
             .meta #{when}
@@ -108,7 +108,7 @@ template(name='home_offer_card')
                 .ui.inline.header #{title}
                 if _author.profile_image_id
                     with _author
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=shortname)
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=username)
                 | #{_author.username}
             // |!{description}
             .meta #{when}
@@ -140,13 +140,13 @@ template(name='debit_card')
                 if _author.profile_image_id
                     with _author
                         img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                | #{_author.shortname}
+                | #{_author.username}
                 a.ui.inline.header(href="/debit/#{_id}/view") #{amount}p
                 .ui.inline.header >
                 if recipient.profile_image_id
                     with recipient
                         img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                |#{recipient.shortname}
+                |#{recipient.username}
             .meta #{when}
             .description.f11
                 |#{description}

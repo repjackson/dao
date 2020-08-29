@@ -88,11 +88,15 @@ if Meteor.isClient
                         new_order_id = 
                             Docs.insert
                                 model:'order'
+                                title:@title
+                                image_id:@image_id
+                                
+                                description:@description
+                                seller_username:@_author_username
                                 offer_id: Router.current().params.doc_id
-                                offer_credit_price:@credit_price
+                                price:@credit_price
                                 tax:@credit_price/100
-                                purchase_price:sale_credit_price
-                                sale_credit_price:sale_credit_price
+                                total_price:sale_credit_price
                         Docs.update @_id,
                             $inc:inventory:-1
                         Swal.fire(
