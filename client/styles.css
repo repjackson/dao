@@ -409,12 +409,12 @@ a.title, #title {
   height: 10px;
 }
 
-.label.circular {
+.label {
   margin:2px !important;
 }
 .label:not(.circular) {
     margin: 2px !important;
-    border-radius: 10px !important; 
+    /*border-radius: 10px !important; */
 }
 
 input {

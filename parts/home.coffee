@@ -151,8 +151,8 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'docs', (
-        sort_key
-        sort_direction
+        sort_key='_timestamp'
+        sort_direction=1
         query=''
         selected_models
         selected_tags
@@ -169,6 +169,7 @@ if Meteor.isServer
             match._author_username = $in:selected_authors
         console.log sort_key
         console.log sort_direction
+        console.log match
         Docs.find match,
             limit:42
             "#{sort_key}":sort_direction

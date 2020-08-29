@@ -15,13 +15,13 @@ template(name='home')
                 // div
                 i.tags.large.icon
                 if selected_tags
-                    #clear_tags.ui.active.icon.compact.large.button
+                    a#clear_tags.ui.active.icon.compact.large.button
                         i.remove.icon
                     each selected_tags
-                        .unselect_tag.ui.active.compact.large.button
+                        a.unselect_tag.ui.active.compact.large.button
                             strong #{this}
                 each tag_results
-                    .ui.compact.large.basic.button.select_tag
+                    a.ui.large.basic.label.select_tag(href='#')
                         strong #{this.name}
                 // div
                 i.users.large.icon
@@ -37,7 +37,7 @@ template(name='home')
                             strong #{this}
                 each author_results
                     // .ui.compact.large.circular.basic.button.select_author
-                    a.ui.big.image.basic.label.select_author
+                    a.ui.large.image.basic.label.select_author
                         if author.profile_image_id
                             img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
 
@@ -137,30 +137,4 @@ template(name='comments_view_small')
 
 
                                     
-                                    
-template(name='debit_card')
-    .ui.card.pointer.view_debit
-        if image_id
-            img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
-        .content
-            .description 
-                if _author.profile_image_id
-                    with _author
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                | #{_author.username}
-                a.ui.inline.header(href="/debit/#{_id}/view") #{amount}p
-                .ui.inline.header >
-                if recipient.profile_image_id
-                    with recipient
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                |#{recipient.username}
-            .meta #{when}
-            .description.f11
-                |#{description}
-            .spacer
-            each tags 
-                .ui.small.basic.label #{this}
-            if upvoter_ids
-                +voting_tiny
-            +comments_view_small
                                     
