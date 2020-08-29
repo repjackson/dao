@@ -63,7 +63,7 @@ template(name='profile_layout')
                                     // span credit
                         if is_dev
                             +print_this
-                    .thirteen.wide.column.profile_yield.scrolling
+                    .thirteen.wide.column.profile_yield
                         +yield    
                       
 
@@ -86,9 +86,9 @@ template(name='user_dashboard')
     // +user_about
     // .ui.hidden.divider
     .ui.stackable.grid
-        .three.column.row
+        .row
             if is_dao
-                .column
+                .four.wide.column
                     .ui.header tax collected
                     .ui.list
                         each user_orders 
@@ -96,7 +96,7 @@ template(name='user_dashboard')
                                 .content
                                     .header #{order_offer.title}
                                     |#{when}, #{purchase_price}c
-            .column
+            .four.wide.column
                 a.ui.inline.spaced.header(href="/user/#{username}/offers")
                     i.concierge.bell.icon
                     |offers
@@ -106,7 +106,7 @@ template(name='user_dashboard')
                 //     each user_offers
                 //         +user_offer_card
                 // .ui.hidden.divider
-            .column                 
+            .four.wide.column                 
                 a.ui.inline.header(href="/user/#{username}/credits")
                     i.chevron.down.large.icon
                     |#{credit_count} credits
@@ -125,7 +125,7 @@ template(name='user_dashboard')
                 //     each user_credits
                 //         +user_credit_segment
                 .ui.hidden.divider
-            .column
+            .four.wide.column
                 a.ui.inline.spaced.header(href="/user/#{username}/debits")
                     i.chevron.up.icon
                     |#{debit_count} debits
@@ -145,7 +145,7 @@ template(name='user_dashboard')
                     .ui.small.basic.circular.label #{title} 
                         // small #{count}
                 .ui.hidden.divider
-            .column
+            .four.wide.column
                 a.ui.inline.spaced.header(href="/user/#{username}/requests")
                     i.concierge.bell.icon
                     |requests
@@ -158,13 +158,13 @@ template(name='user_dashboard')
             //         |orders
             //     // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
             //     // .ui.small.header (#{fulfilled_count}p total fulfilled count)
-            .column
+            .four.wide.column
                 a.ui.inline.spaced.header(href="/user/#{username}/sales")
                     i.cart.icon
                     |sales
                 // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
                 // .ui.small.header (#{fulfilled_count}p total fulfilled count)
-            .column
+            .eight.wide.column
                 +user_friends
 template(name='user_sale_card')
     .ui.card

@@ -6,14 +6,14 @@ template(name='debit_edit')
                     .ui.large.fluid.basic.circular.button.cancel_debit
                         i.large.remove.red.icon
                         |cancel
+                    // .ui.segment
+                    //     .ui.inline.grey.header sender
+                    //     .ui.inline.header
+                    //         img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //         |#{_author.username}
                     .ui.segment
-                        .ui.inline.grey.header sender
-                        .ui.inline.header
-                            img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{_author.username}
-                    .ui.segment
-                        .ui.header recipient
                         with recipient
+                            .ui.header recipient
                             i.large.remove.link.icon.remove_recipient
                             a.pointer(href="/user/#{username}")
                                 img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
@@ -22,7 +22,7 @@ template(name='debit_edit')
                         unless recipient
                             .ui.divider
                             // i.large.user.plus.icon
-                            +single_user_edit key='recipient_id' label='search member' icon='user plus' direct=true
+                            +single_user_edit key='recipient_id' label='select recipient' icon='user plus' direct=true
                             // .ui.icon.input
                             //     i.search.icon
                             //     input.search_username(type='text' placeholder='username')
@@ -32,8 +32,10 @@ template(name='debit_edit')
                             //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             //         |#{name}
                             //         small #{points}p
-                    +date_edit key='date' label='date' direct=true   
-                    +time_edit key='time' label='time' direct=true   
+                    +boolean_edit key='has_datetime' label='has datetime' direct=true
+                    if has_datetime
+                        +datetime_edit key='datetime' label='datetime' direct=true   
+                        // +time_edit key='time' label='time' direct=true   
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .six.wide.column
                     +textarea_edit key='description' label='description' direct=true
@@ -42,6 +44,7 @@ template(name='debit_edit')
                     div
                     +smart_tagger
                 .five.wide.center.aligned.column
+                    .ui.small.grey.header 100pts = 1 credit
                     .ui.big.header #{amount}pts
                     .ui.big.input
                         input.point_amount(type='number' value=amount min='1')
@@ -60,13 +63,13 @@ template(name='debit_edit')
                     .spacer
                     .ui.center.aligned.basic.segment
                         if can_submit
-                            .ui.green.huge.circular.button.submit
+                            .ui.green.massive.circular.circular.icon.button.submit
                                 i.big.send.icon
-                                |send
+                                // |send
                         else 
-                            .ui.green.huge.circular.disabled.button
+                            .ui.green.massive.circular.disabled.circular.icon.button
                                 i.send.big.icon
-                                |send
+                                // |send
 
 
 

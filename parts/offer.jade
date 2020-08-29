@@ -1,8 +1,8 @@
 template(name='offer_item')
-    .ui.item.pointer.offer_item
+    .ui.card.pointer.offer_item
         if image_id
-            .image
-                img.ui.rounded.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+            a.image(href="/offer/#{_id}/view")
+                img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             a.header(href="/offer/#{_id}/view")
                 |#{title}
@@ -16,7 +16,7 @@ template(name='offer_item')
                 .ui.label #{when}
     
                 .ui.big.basic.label
-                    |#{credit_price} credit
+                    |#{price} credit
                 if rental
                     .ui.small.header
                         i.checkmark.icon
@@ -29,8 +29,8 @@ template(name='offer_item')
 template(name='offer_view')
     with current_doc
         .ui.stackable.padded.grid
-            .middle.aligned.row 
-                .sixteen.wide.column
+            .row 
+                .four.wide.column
                     .ui.inline.header 
                         small offer: 
                     .ui.inline.large.header 
@@ -38,8 +38,6 @@ template(name='offer_view')
                     if can_edit
                         a.ui.circular.icon.button.edit_offer(href="/offer/#{_id}/edit")
                             i.large.pencil.icon
-            .row 
-                .four.wide.column
                     if image_id
                         img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
                     .ui.small.inline.header posted by
@@ -67,15 +65,16 @@ template(name='offer_view')
                     .spacer
                     +comments
                 .six.wide.column
-                    .ui.header inventory: #{inventory}
-                    .ui.large.fluid.button.buy
-                        i.cart.large.icon
+                    .ui.large.fluid.green.circular.button.buy
+                        i.cart.arrow.down.large.icon
                         |buy for #{sale_credit_price} credit
+                    .ui.header #{inventory} left
                     
                     .ui.dividing.header 
+                        i.list.icon
                         // +icolor name='activity-history' cl='ui inline image'
                         |#{offer_purchases.count} sales
-                    .ui.large.link.selection.list
+                    .ui.link.selection.list.medscroll
                         each orders
                             a.ui.item(href="/order/#{_id}/view") 
                                 .content
@@ -150,6 +149,6 @@ template(name='offer_edit')
                     .ui.header your credits: #{currentUser.credits}
                     +number_edit key='inventory' label='inventory' direct=true
                     div
-                    +float_edit key='credit_price' label='price' direct=true
+                    +float_edit key='price' label='price' direct=true
                     
                     

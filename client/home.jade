@@ -10,18 +10,18 @@ template(name='home')
                         .unselect_model.ui.active.compact.large.circular.button
                             strong #{this}
                 each model_results
-                    .ui.compact.large.circular.basic.button.select_model
+                    .ui.compact.large.circular.button.select_model
                         strong #{this.name}
                 // div
                 i.tags.large.icon
                 if selected_tags
-                    #clear_tags.ui.active.icon.compact.large.circular.button
+                    #clear_tags.ui.active.icon.compact.large.button
                         i.remove.icon
                     each selected_tags
-                        .unselect_tag.ui.active.compact.large.circular.button
+                        .unselect_tag.ui.active.compact.large.button
                             strong #{this}
                 each tag_results
-                    .ui.compact.large.circular.basic.button.select_tag
+                    .ui.compact.large.basic.button.select_tag
                         strong #{this.name}
                 // div
                 i.users.large.icon
@@ -38,7 +38,7 @@ template(name='home')
             .sixteen.wide.column
                 .ui.icon.input 
                     i.search.icon
-                    input.search_title(type='text')
+                    input.search_title(type='text' autofocus='')
                 |sort by
                 .ui.button.when
                     |when

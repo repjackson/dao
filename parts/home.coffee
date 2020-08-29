@@ -63,10 +63,21 @@ if Meteor.isClient
         selected_models: -> selected_models.array()
         tag_results: ->
             doc_count = Docs.find().count()
-            if 0 < doc_count < 3 then Tag_results.find { count: $lt: doc_count } else Tag_results.find()
+            if 0 < doc_count < 3 
+                Tag_results.find({ 
+                    count:$lt:doc_count 
+                })
+            else 
+                Tag_results.find()
         model_results: ->
             doc_count = Docs.find().count()
-            if 0 < doc_count < 3 then Model_results.find { count: $lt: doc_count } else Model_results.find()
+            if 0 < doc_count < 3 
+                Model_results.find { 
+                    name:$in:['debit','order','request','offer']
+                    count: $lt: doc_count 
+                } 
+            else 
+                Model_results.find({name:$in:['debit','order','request','offer']})
         author_results: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3 then Author_results.find { count: $lt: doc_count } else Author_results.find()

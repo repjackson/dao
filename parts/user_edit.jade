@@ -103,13 +103,6 @@ template(name='emails_edit')
 
 
 
-template(name='user_edit_friends')
-    .ui.header
-        i.users.icon
-        | friends
-    
-    
-    
     
 
 template(name='user_edit_account')
@@ -126,11 +119,10 @@ template(name='user_edit_account')
                 |emails
             +emails_edit
             if is_dev
-                .ui.segment
-                    i.code.icon
+                .ui.red.inverted.segment
                     +username_edit
                     +boolean_edit key='disabled' label='disabled' direct=true
-                    +multi_user_edit key='user_representatives' label='user representatives' direct=true
+                    // +multi_user_edit key='user_representatives' label='user representatives' direct=true
                     div
                     with current_user
                         .ui.button.remove_user 
@@ -138,7 +130,7 @@ template(name='user_edit_account')
                             |delete user
             .spacer
             +phone_edit key='phone' label='phone' icon='phone' direct=true
-
+            +multi_user_edit key='friend_ids' label='friends' direct=true
             //- +phone_editor
     
 template(name='username_edit')

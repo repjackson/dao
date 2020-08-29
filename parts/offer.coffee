@@ -90,13 +90,17 @@ if Meteor.isClient
                                 model:'order'
                                 title:@title
                                 image_id:@image_id
-                                
+                                tags:@tags
                                 description:@description
                                 seller_username:@_author_username
+                                seller_id:@_author_id
+                                buyer_username:Meteor.user().username
+                                buyer_id:Meteor.userId()
                                 offer_id: Router.current().params.doc_id
                                 price:@credit_price
                                 tax:@credit_price/100
                                 total_price:sale_credit_price
+                                payment:'credit'
                         Docs.update @_id,
                             $inc:inventory:-1
                         Swal.fire(
