@@ -27,15 +27,21 @@ template(name='home')
                 i.users.large.icon
                 |author
                 if selected_authors
-                    #clear_authors.ui.active.icon.compact.large.circular.button
-                        i.remove.icon
+                    // #clear_authors.ui.active.icon.compact.large.circular.button
+                    //     i.remove.icon
                     each selected_authors
-                        .unselect_author.ui.active.compact.large.circular.button
+                        // .unselect_author.ui.active.compact.large.circular.button
+                        a.ui.big.active.image.label.unselect_author
+                            if selected_author.profile_image_id
+                                img.ui.avatar.image(src="{{c.url selected_author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                             strong #{this}
                 each author_results
-                    .ui.compact.large.circular.basic.button.select_author
+                    // .ui.compact.large.circular.basic.button.select_author
+                    a.ui.big.image.basic.label.select_author
+                        if author.profile_image_id
+                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+
                         strong #{this.name}
-            .sixteen.wide.column
                 .ui.icon.input 
                     i.search.icon
                     input.search_title(type='text' autofocus='')
@@ -52,6 +58,7 @@ template(name='home')
                 else
                     .ui.button.sort_up
                         i.chevron.down.icon
+            .sixteen.wide.column
                 .scrolling
                     .ui.stackable.cards
                         each docs

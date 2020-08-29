@@ -60,6 +60,13 @@ if Meteor.isClient
             
         selected_tags: -> selected_tags.array()
         selected_authors: -> selected_authors.array()
+        selected_author: ->
+            console.log @
+            Meteor.users.findOne username:@valueOf()
+        author: ->
+            Meteor.users.findOne username:@name
+        
+        
         selected_models: -> selected_models.array()
         tag_results: ->
             doc_count = Docs.find().count()
@@ -163,7 +170,7 @@ if Meteor.isServer
         console.log sort_key
         console.log sort_direction
         Docs.find match,
-            limit:20
+            limit:42
             "#{sort_key}":sort_direction
                         
                         
