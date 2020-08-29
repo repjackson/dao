@@ -43,8 +43,23 @@ if Meteor.isClient
             )
 
         
+    Template.sort_button.events
+        'click .toggle_sort': ->
+            Session.set('sort_key',@key)
+            if Session.equals('sort_direction', 1)
+                Session.set('sort_direction', -1)
+            else
+                Session.set('sort_direction', 1)
+
+            
+    Template.sort_button.helpers
+        is_selected: -> 
+            Session.equals('sort_key', @key)
+        sorting_up: -> 
+            Session.equals('sort_direction', 1)
+        sort_button_class: ->
+            if Session.equals('sort_key', @key) then 'active' else 'basic'
     Template.home.helpers
-        sorting_up: -> Session.equals('sort_direction',1)
         can_debit: -> Meteor.user().points > 0
         docs: ->
             Docs.find {
@@ -53,19 +68,21 @@ if Meteor.isClient
                 sort:
                     "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:10
-        friends: ->
-            if Meteor.user()
-                Meteor.users.find({_id:$in:Meteor.user().friend_ids},
-                    sort:points:1)
+        # friends: ->
+        #     if Meteor.user()
+        #         Meteor.users.find({_id:$in:Meteor.user().friend_ids},
+        #             sort:points:1)
             
         selected_tags: -> selected_tags.array()
         selected_authors: -> selected_authors.array()
         selected_author: ->
-            console.log @
+            # console.log @
             Meteor.users.findOne username:@valueOf()
         author: ->
             Meteor.users.findOne username:@name
         
+        one_result: ->
+            Docs.find().count() < 2
         
         selected_models: -> selected_models.array()
         tag_results: ->
@@ -114,8 +131,6 @@ if Meteor.isClient
         'click .view_offer': ->
             Router.go "/offer/#{@_id}/view"
 
-        'click .refresh_stats': ->
-            Meteor.call 'calc_global_stats'
         # 'click .debit': ->
         #     new_debit_id =
         #         Docs.insert
@@ -132,16 +147,6 @@ if Meteor.isClient
         #             model:'offer'
         #     Router.go "/offer/#{new_offer_id}/edit"
         
-        'click .when': ->
-            Session.set('sort_key', '_timestamp')
-        'click .price': ->
-            Session.set('sort_key', 'price')
-        'click .title': ->
-            Session.set('sort_key', 'title')
-        'click .sort_down': ->
-            Session.set('sort_direction', -1)
-        'click .sort_up': ->
-            Session.set('sort_direction', 1)
 
         'keydown .search_title': (e,t)->
             search = $('.search_title').val()
@@ -160,7 +165,10 @@ if Meteor.isServer
         selected_authors
         )->
         match = {}
-        if selected_models.length > 0 then match.model = $all: selected_models
+        if selected_models.length > 0 
+            match.model = $all: selected_models
+        else
+            match.model = $in:['debit','order','request','offer']
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
@@ -170,9 +178,11 @@ if Meteor.isServer
         console.log sort_key
         console.log sort_direction
         console.log match
+        console.log typeof sort_direction
+        int_direction = parseInt sort_direction
         Docs.find match,
-            limit:42
-            "#{sort_key}":sort_direction
+            limit:20
+            sort:"#{sort_key}":int_direction
                         
                         
     Meteor.publish 'tags', (

@@ -15,14 +15,15 @@ template(name='debit_card')
             .spacer
             each tags 
                 .ui.small.basic.label #{this}
-            +voting_tiny
+            // +voting_tiny
             // if upvoter_ids
             +comments_view_small
         .content
-                if recipient.profile_image_id
-                    with recipient
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                |#{recipient.username}
+            .right.floated
+                    if recipient.profile_image_id
+                        with recipient
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                    |#{recipient.username}
                                     
 
 template(name='debit_edit')

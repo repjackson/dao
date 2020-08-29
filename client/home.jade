@@ -12,6 +12,9 @@ template(name='home')
                 each model_results
                     .ui.compact.large.circular.button.select_model
                         strong #{this.name}
+                .ui.icon.input 
+                    i.search.icon
+                    input.search_title(type='text' autofocus='')
                 // div
                 i.tags.large.icon
                 if selected_tags
@@ -25,7 +28,7 @@ template(name='home')
                         strong #{this.name}
                 // div
                 i.users.large.icon
-                |author
+                |seller
                 if selected_authors
                     // #clear_authors.ui.active.icon.compact.large.circular.button
                     //     i.remove.icon
@@ -42,22 +45,11 @@ template(name='home')
                             img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
 
                         strong #{this.name}
-                .ui.icon.input 
-                    i.search.icon
-                    input.search_title(type='text' autofocus='')
-                |sort by
-                .ui.button.when
-                    |when
-                .ui.button.title
-                    |title
-                .ui.button.price
-                    |price
-                if sorting_up
-                    .ui.button.sort_down
-                        i.chevron.up.icon
-                else
-                    .ui.button.sort_up
-                        i.chevron.down.icon
+                unless one_result
+                    |sort by
+                    +sort_button key='_timestamp' label='added' icon='clock'
+                    +sort_button key='title' label='title' 
+                    +sort_button key='price' label='price' icon='coins'
             .sixteen.wide.column
                 .scrolling
                     .ui.stackable.cards
@@ -77,6 +69,19 @@ template(name='home')
                                 each tags
                                     .ui.label #{this}
                                 +print_this
+            
+template(name='sort_button')
+    .ui.button.toggle_sort(class=sort_button_class)
+        if icon 
+            i.icon(class=icon)
+        |#{label}
+        if is_selected
+            if sorting_up
+                i.chevron.up.icon
+            else
+                i.chevron.down.icon
+
+            
                                     
 template(name='home_request_card')
     .ui.segment.view_request.pointer
@@ -85,7 +90,6 @@ template(name='home_request_card')
                 +youtube_view key='youtube_id' direct=true
             else if image_id
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
-
             .header
                 .ui.inline.header #{point_bounty}p: #{title}
                 if _author.profile_image_id
