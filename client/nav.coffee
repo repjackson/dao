@@ -1,7 +1,6 @@
 Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
     @autorun => Meteor.subscribe 'all_users'
-    @autorun => Meteor.subscribe 'my_unread_messages'
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
@@ -87,18 +86,6 @@ Template.nav.events
         else
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'dev'
-    'click .set_request': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'request', ->
-            Session.set 'loading', false
-    'click .set_offer': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'offer', ->
-            Session.set 'loading', false
-    'click .set_model': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'model', ->
-            Session.set 'loading', false
     'click .add_gift': ->
         # user = Meteor.users.findOne(username:@username)
         new_gift_id =
@@ -120,42 +107,7 @@ Template.nav.events
         Meteor.call 'calc_user_points', Meteor.userId()
         
         
-Template.topbar.onCreated ->
-    @autorun => Meteor.subscribe 'my_received_messages'
-    @autorun => Meteor.subscribe 'my_sent_messages'
-
 Template.nav.helpers
-    unread_count: ->
-        Docs.find( 
-            model:'message'
-            recipient_id:Meteor.userId()
-            read_ids:$nin:[Meteor.userId()]
-        ).count()
-Template.topbar.helpers
-    recent_alerts: ->
-        Docs.find 
-            model:'message'
-            recipient_id:Meteor.userId()
-            read_ids:$nin:[Meteor.userId()]
-        , sort:_timestamp:-1
-        
-Template.recent_alert.events
-    'click .mark_read': (e,t)->
-        # console.log @
-        # console.log $(e.currentTarget).closest('.alert')
-        # $(e.currentTarget).closest('.alert').transition('slide left')
-        Meteor.call 'mark_read', @_id, ->
-            
-        # Meteor.setTimeout ->
-        # , 500
-     
-     
-        
-Template.topbar.events
-    'click .close_topbar': ->
-        Session.set('viewing_alerts', false)
-
-        
         
 Template.left_sidebar.events
     # 'click .toggle_sidebar': ->
@@ -177,14 +129,6 @@ Template.left_sidebar.events
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'dev'
                 
-    'click .set_request': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'request', ->
-            Session.set 'loading', false
-    'click .set_model': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'model', ->
-            Session.set 'loading', false
     'click .add_gift': ->
         # user = Meteor.users.findOne(username:@username)
         new_gift_id =

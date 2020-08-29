@@ -1,16 +1,16 @@
 template(name='home')
     .ui.stackable.padded.grid 
         .row
-            .four.wide.column
+            .six.wide.column
                 i.clone.icon
                 if selected_models
-                    #clear_models.ui.active.icon.compact.button
-                        i.remove.icon
+                    // #clear_models.ui.active.icon.compact.button
+                    //     i.remove.icon
                     each selected_models
                         .unselect_model.ui.active.compact.button
                             strong #{this}
-                each models
-                    .ui.compact.button.select_model(class=cloud_tag_class) 
+                each model_results
+                    .ui.compact.button.select_model
                         strong #{this.name}
                 div
                 i.tags.icon
@@ -21,15 +21,28 @@ template(name='home')
                         .unselect_tag.ui.active.compact.button
                             strong #{this}
                 each tag_results
-                    .ui.compact.button.select_tag(class=cloud_tag_class) 
+                    .ui.compact.button.select_tag
                         strong #{this.name}
-            .twelve.wide.column
+                div
+                i.users.icon
+                if selected_authors
+                    #clear_authors.ui.active.icon.compact.button
+                        i.remove.icon
+                    each selected_authors
+                        .unselect_author.ui.active.compact.button
+                            strong #{this}
+                each author_results
+                    .ui.compact.button.select_author
+                        strong #{this.name}
+            .ten.wide.column
                 .ui.icon.input 
                     i.search.icon
                     input.request_title(type='text')
                 |sort by
                 .ui.button.when
                     |when
+                .ui.button.title
+                    |title
                 .ui.button.price
                     |price
                 if sorting_up
@@ -45,6 +58,10 @@ template(name='home')
                                 +request_item
                             else if key_value_is 'model' 'offer'
                                 +offer_item
+                            else if key_value_is 'model' 'debit'
+                                +debit_card
+                            else if key_value_is 'model' 'order'
+                                +user_order_card
                             else
                                 .ui.header #{model}
                                 if is_dev

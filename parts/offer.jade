@@ -4,7 +4,7 @@ template(name='offer_item')
             .image
                 img.ui.rounded.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            .header
+            a.header(href="/offer/#{_id}/view")
                 |#{title}
                 if complete
                     i.green.checkmark.icon
@@ -13,6 +13,8 @@ template(name='offer_item')
                 if _author.profile_image_id
                     img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 |#{_author.name}
+                .ui.label #{when}
+    
                 .ui.big.basic.label
                     |#{credit_price} credit
                 if rental
