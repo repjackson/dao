@@ -15,7 +15,7 @@ template(name='request_item')
                 |#{_author.username}
                 .ui.label #{when}
                 .ui.big.basic.label
-                    |#{point_bounty}pts
+                    |#{price}pts
                 .ui.small.inline.header status:#{status}
                 if complete
                     .ui.basic.label 
@@ -45,7 +45,7 @@ template(name='request_view')
             .row 
                 .four.wide.column
                     .ui.header
-                        |#{point_bounty}pts offered
+                        |#{price}pts offered
                     if image_id
                         img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
                     .ui.header 
@@ -123,9 +123,6 @@ template(name='request_edit')
                     +boolean_edit key='has_date' label='has date' direct=true
                     if has_date
                         +date_edit key='date' label='date' icon='calendar' direct=true
-                    +boolean_edit key='has_youtube' label='has youtube' direct=true
-                    if has_youtube
-                        +youtube_edit key='youtube_id' label='youtube id' direct=true
                 .eight.wide.column
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
@@ -134,7 +131,7 @@ template(name='request_edit')
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .four.wide.column
                     .ui.header your points: #{currentUser.points}
-                    +number_edit key='point_bounty' label='point bounty' icon='hashtag' min='0' direct=true
+                    +number_edit key='price' label='point bounty' icon='hashtag' min='0' direct=true
                     div
                     .ui.small.header.thin publishing request holds points from your balance and dispenses them when request is marked complete
                     .ui.inline.header status:

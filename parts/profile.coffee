@@ -44,13 +44,13 @@ if Meteor.isClient
                 new_debit_id =
                     Docs.insert
                         model:'debit'
-                        amount:1
+                        price:1
             else
                 new_debit_id =
                     Docs.insert
                         model:'debit'
-                        amount:1
-                        recipient_id: user._id
+                        price:1
+                        seller_id: user._id
             Router.go "/debit/#{new_debit_id}/edit"
 
 
@@ -67,13 +67,13 @@ if Meteor.isClient
                 new_id =
                     Docs.insert
                         model:'request'
-                        amount:1
+                        price:1
             else    
                 new_id =
                     Docs.insert
                         model:'request'
-                        recipient_id: user._id
-                        amount:1
+                        buyer_id: user._id
+                        price:1
             Router.go "/request/#{new_id}/edit"
     
         # 'click .recalc_user_cloud': ->
@@ -332,77 +332,78 @@ if Meteor.isServer
 
             debits = Docs.find({
                 model:'debit'
-                amount:$exists:true
+                price:$exists:true
                 _author_id:user_id})
             debit_count = debits.count()
-            total_debit_amount = 0
+            total_debit_price = 0
             for debit in debits.fetch()
-                total_debit_amount += debit.amount
+                total_debit_price += debit.price
 
-            console.log 'total debit amount', total_debit_amount
+            console.log 'total debit price', total_debit_price
 
             fulfilled_requests = Docs.find({
                 model:'request'
-                point_bounty:$exists:true
+                price:$exists:true
                 claimed_user_id:user_id
                 complete:true
             })
             fulfilled_count = fulfilled_requests.count()
-            total_fulfilled_amount = 0
+            total_fulfilled_price = 0
             for fulfilled in fulfilled_requests.fetch()
-                total_fulfilled_amount += fulfilled.point_bounty
+                total_fulfilled_price += fulfilled.price
             
             
             requested = Docs.find({
                 model:'request'
-                point_bounty:$exists:true
+                price:$exists:true
                 _author_id:user_id
                 published:true
             })
             authored_count = requested.count()
-            total_request_amount = 0
+            total_request_price = 0
             for request in requested.fetch()
-                total_request_amount += request.point_bounty
+                total_request_price += request.price
             
             
             credits = Docs.find({
                 model:'debit'
-                amount:$exists:true
-                recipient_id:user_id})
+                price:$exists:true
+                seller_id:user_id})
             credit_count = credits.count()
-            total_credit_amount = 0
+            total_credit_price = 0
             for credit in credits.fetch()
-                total_credit_amount += credit.amount
+                total_credit_price += credit.price
 
-            console.log 'total credit amount', total_credit_amount
-            calculated_user_balance = total_credit_amount-total_debit_amount
+            console.log 'total credit price', total_credit_price
+            calculated_user_balance = total_credit_price-total_debit_price
 
-            # average_credit_per_student = total_credit_amount/student_count
-            # average_debit_per_student = total_debit_amount/student_count
-            flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
-            flow_volume += total_fulfilled_amount
-            flow_volume += total_request_amount
+            # average_credit_per_student = total_credit_price/student_count
+            # average_debit_per_student = total_debit_price/student_count
+            flow_volume = Math.abs(total_credit_price)+Math.abs(total_debit_price)
+            flow_volume += total_fulfilled_price
+            flow_volume += total_request_price
             
             
-            topups = 
-                Docs.find
-                    model:'topup'
-                    _author_id:user_id
+            # topups = 
+            #     Docs.find
+            #         model:'topup'
+            #         _author_id:user_id
             
-            total_topup_amount = 0        
-            for topup in topups.fetch()
-                total_topup_amount += topup.amount*100
-                console.log 'adding', topup.amount
-            points = total_credit_amount-total_debit_amount+total_fulfilled_amount-total_request_amount+total_topup_amount
-            # points += total_fulfilled_amount
-            # points =- total_request_amount
+            # total_topup_price = 0        
+            # for topup in topups.fetch()
+            #     total_topup_price += topup.price*100
+            #     console.log 'adding', topup.price
+            # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_price+total_topup_price
+            points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_price
+            # points += total_fulfilled_price
+            # points =- total_request_price
             
-            if total_debit_amount is 0 then total_debit_amount++
-            if total_credit_amount is 0 then total_credit_amount++
-            # debit_credit_ratio = total_debit_amount/total_credit_amount
-            unless total_debit_amount is 1
-                unless total_credit_amount is 1
-                    one_ratio = total_debit_amount/total_credit_amount
+            if total_debit_price is 0 then total_debit_price++
+            if total_credit_price is 0 then total_credit_price++
+            # debit_credit_ratio = total_debit_price/total_credit_price
+            unless total_debit_price is 1
+                unless total_credit_price is 1
+                    one_ratio = total_debit_price/total_credit_price
                 else
                     one_ratio = 0
             else
@@ -410,7 +411,7 @@ if Meteor.isServer
                     
             # dc_ratio_inverted = 1/debit_credit_ratio
 
-            # credit_debit_ratio = total_credit_amount/total_debit_amount
+            # credit_debit_ratio = total_credit_price/total_debit_price
             # cd_ratio_inverted = 1/credit_debit_ratio
 
             # one_score = total_bandwith*dc_ratio_inverted
@@ -419,11 +420,11 @@ if Meteor.isServer
                 $set:
                     credit_count: credit_count
                     debit_count: debit_count
-                    total_credit_amount: total_credit_amount
-                    total_debit_amount: total_debit_amount
+                    total_credit_price: total_credit_price
+                    total_debit_price: total_debit_price
                     flow_volume: flow_volume
                     points:points
                     credit:points/100
                     one_ratio: one_ratio
-                    total_fulfilled_amount:total_fulfilled_amount
+                    total_fulfilled_price:total_fulfilled_price
                     fulfilled_count:fulfilled_count

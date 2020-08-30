@@ -47,7 +47,7 @@ if Meteor.isClient
                     status:'complete'
                     completed_timestamp:Date.now()
             Meteor.users.update @claimed_user_id,
-                $inc:points:@point_bounty
+                $inc:points:@price
                             
         'click .mark_incomplete': ->
             Docs.update Router.current().params.doc_id,
@@ -57,7 +57,7 @@ if Meteor.isClient
                     status:'claimed'
                     completed_timestamp:null
             Meteor.users.update @claimed_user_id,
-                $inc:points:-@point_bounty
+                $inc:points:-@price
                             
 
     Template.request_view.helpers
@@ -159,7 +159,7 @@ if Meteor.isServer
             console.log 'publishing request', request
             Meteor.users.update author._id,
                 $inc:
-                    points: -request.point_bounty
+                    points: -request.price
             Docs.update request_id,
                 $set:
                     published:true
@@ -174,7 +174,7 @@ if Meteor.isServer
             console.log 'unpublishing request', request
             Meteor.users.update author._id,
                 $inc:
-                    points: request.point_bounty
+                    points: request.price
             Docs.update request_id,
                 $set:
                     published:false

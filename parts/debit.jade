@@ -1,15 +1,24 @@
 template(name='debit_card')
     .ui.card.pointer.view_debit
         .content
-            .right.floated.meta #{when}
-            if buyer.profile_image_id
-                with buyer
-                    img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-            | #{buyer.username}
+            a.header(href="/debit/#{_id}/view") 
+                i.send.icon
+                if buyer.profile_image_id
+                    with buyer
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                | #{buyer.username}
+                small >
+                |#{price}p    
+                small >
+                if seller.profile_image_id
+                    with seller
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
+                |#{seller.username}
         if image_id
             img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
         .content
-            a.ui.inline.header(href="/debit/#{_id}/view") #{price}p
+            .meta #{when}
+            a.ui.inline.header
             .description.f11
                 |#{description}
             .spacer
@@ -18,12 +27,6 @@ template(name='debit_card')
             // +voting_tiny
             // if upvoter_ids
             +comments_view_small
-        .content
-            .right.floated
-                if seller.profile_image_id
-                    with seller
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                |#{seller.username}
                                     
 
 template(name='debit_edit')

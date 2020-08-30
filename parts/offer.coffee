@@ -199,7 +199,7 @@ if Meteor.isClient
                     status:'claimed'
                     completed_timestamp:null
             Meteor.users.update @claimed_user_id,
-                $inc:points:-@point_bounty
+                $inc:points:-@price
                             
 
     Template.offer_view.helpers
@@ -284,7 +284,7 @@ if Meteor.isServer
             console.log 'publishing offer', offer
             Meteor.users.update author._id,
                 $inc:
-                    points: -offer.point_bounty
+                    points: -offer.price
             Docs.update offer_id,
                 $set:
                     published:true

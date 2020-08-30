@@ -6,7 +6,7 @@ if Meteor.isClient
         
         
     Template.debit_edit.onCreated ->
-        @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'seller_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         
@@ -25,7 +25,7 @@ if Meteor.isClient
                 })
         # subtotal: ->
         #     debit = Docs.findOne Router.current().params.doc_id
-        #     debit.price*debit.recipient_ids.length
+        #     debit.price*debit.seller_ids.length
         
         point_max: ->
             if Meteor.user().username is 'one'
@@ -104,11 +104,11 @@ if Meteor.isServer
     Meteor.methods
         send_debit: (debit_id)->
             debit = Docs.findOne debit_id
-            recipient = Meteor.users.findOne debit.recipient_id
+            seller = Meteor.users.findOne debit.seller_id
             debiter = Meteor.users.findOne debit._author_id
 
             console.log 'sending debit', debit
-            Meteor.call 'recalc_one_stats', recipient._id, ->
+            Meteor.call 'recalc_one_stats', seller._id, ->
             Meteor.call 'recalc_one_stats', debit._author_id, ->
     
             Docs.update debit_id,

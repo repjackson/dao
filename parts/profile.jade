@@ -173,7 +173,7 @@ template(name='user_sale_card')
                 img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}")
         .content.zoom.pointer
             a.header(href="/order/#{_id}/view")
-                |#{point_bounty}pts: #{title}
+                |#{price}pts: #{title}
             // |!{description}
             |status: #{status}
             if complete 
@@ -187,7 +187,7 @@ template(name='user_offer_card')
                 img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}")
         .content.zoom.pointer
             a.header(href="/offer/#{_id}/view")
-                |#{point_bounty}pts: #{title}
+                |#{price}pts: #{title}
             // |!{description}
 
                         

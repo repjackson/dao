@@ -58,15 +58,17 @@ Template.nav.events
         new_request_id =
             Docs.insert
                 model:'request'
+                buyer_id:Meteor.userId()
+                buyer_username:Meteor.user().username
         Router.go "/request/#{new_request_id}/edit"
     'click .offer': ->
         new_offer_id =
             Docs.insert
                 model:'offer'
+                seller_id:Meteor.userId()
+                seller_username:Meteor.user().username
         Router.go "/offer/#{new_offer_id}/edit"
 
-    'click .alerts': ->
-        Session.set('viewing_alerts', !Session.get('viewing_alerts'))
         
     'click .toggle_admin': ->
         if 'admin' in Meteor.user().roles
@@ -82,22 +84,6 @@ Template.nav.events
         else
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'dev'
-    'click .add_gift': ->
-        # user = Meteor.users.findOne(username:@username)
-        new_gift_id =
-            Docs.insert
-                model:'gift'
-                recipient_id: @_id
-        Router.go "/debit/#{new_gift_id}/edit"
-
-    'click .add_request': ->
-        # user = Meteor.users.findOne(username:@username)
-        new_id =
-            Docs.insert
-                model:'request'
-                recipient_id: @_id
-        Router.go "/request/#{new_id}/edit"
-
 
     'click .view_profile': ->
         Meteor.call 'calc_user_points', Meteor.userId()

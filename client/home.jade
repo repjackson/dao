@@ -26,8 +26,9 @@ template(name='home')
                     a.ui.large.basic.label.select_tag(href='#')
                         strong #{name}
                 div        
-                i.user.outline.large.icon
-                |seller
+                .ui.inline.header
+                    i.user.outline.large.icon
+                    |to
                 if selected_sellers
                     // #clear_sellers.ui.active.icon.compact.large.circular.button
                     //     i.remove.icon
@@ -47,8 +48,9 @@ template(name='home')
                         else
                             |none
                 div        
-                i.user.large.icon
-                |buyer
+                .ui.inline.header
+                    i.user.large.icon
+                    |from
                 if selected_buyers
                     // #clear_buyers.ui.active.icon.compact.large.circular.button
                     //     i.remove.icon

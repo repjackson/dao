@@ -15,7 +15,7 @@ template(name='nav')
                 i.concierge.bell.large.icon
                 |+
             a.item.offer(title='offer')
-                i.hand.holding.heart.large.icon
+                i.store.large.icon
                 |+
     
         .right.menu
@@ -70,7 +70,7 @@ template(name='right_sidebar')
             i.large.cart.icon
         a.item.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
             | offers
-            i.large.hand.holding.heart.icon
+            i.large.shop.icon
         a.item.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
             | #{currentUser.credit} credit
             i.large.dollar.icon
