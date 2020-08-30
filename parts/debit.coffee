@@ -14,11 +14,6 @@ if Meteor.isClient
 
 
     Template.debit_edit.helpers
-        recipient: ->
-            debit = Docs.findOne Router.current().params.doc_id
-            if debit.recipient_id
-                Meteor.users.findOne
-                    _id: debit.recipient_id
         members: ->
             debit = Docs.findOne Router.current().params.doc_id
             Meteor.users.find({
@@ -40,16 +35,8 @@ if Meteor.isClient
         
         can_submit: ->
             debit = Docs.findOne Router.current().params.doc_id
-            debit.amount and debit.recipient_id
+            debit.amount and debit.seller_id
     Template.debit_edit.events
-        'click .add_recipient': ->
-            Docs.update Router.current().params.doc_id,
-                $set:
-                    recipient_id:@_id
-        'click .remove_recipient': ->
-            Docs.update Router.current().params.doc_id,
-                $unset:
-                    recipient_id:1
         'blur .edit_description': (e,t)->
             textarea_val = t.$('.edit_textarea').val()
             Docs.update Router.current().params.doc_id,

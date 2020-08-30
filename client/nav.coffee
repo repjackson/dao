@@ -51,6 +51,8 @@ Template.nav.events
         new_debit_id =
             Docs.insert
                 model:'debit'
+                buyer_id:Meteor.userId()
+                buyer_username:Meteor.user().username
         Router.go "/debit/#{new_debit_id}/edit"
     'click .request': ->
         new_request_id =

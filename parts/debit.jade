@@ -20,10 +20,10 @@ template(name='debit_card')
             +comments_view_small
         .content
             .right.floated
-                    if recipient.profile_image_id
-                        with recipient
+                    if seller.profile_image_id
+                        with seller
                             img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class)
-                    |#{recipient.username}
+                    |#{seller.username}
                                     
 
 template(name='debit_edit')
@@ -39,27 +39,9 @@ template(name='debit_edit')
                     //     .ui.inline.header
                     //         img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //         |#{_author.username}
-                    .ui.segment
-                        with recipient
-                            .ui.header recipient
-                            i.large.remove.link.icon.remove_recipient
-                            a.pointer(href="/user/#{username}")
-                                img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
-                                .ui.inline.header #{username}
-                                .ui.small.grey.inline.header #{points}
-                        unless recipient
-                            .ui.divider
-                            // i.large.user.plus.icon
-                            +single_user_edit key='recipient_id' label='select recipient' icon='user plus' direct=true
-                            // .ui.icon.input
-                            //     i.search.icon
-                            //     input.search_username(type='text' placeholder='username')
-                            // each members
-                            //     .ui.compact.basic.circular.button.add_recipient
-                            //         // i.plus.icon
-                            //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            //         |#{name}
-                            //         small #{points}p
+                    if is_admin
+                        +single_user_edit key='buyer_id' key2='buyer_username' label='select buyer' icon='user outline' direct=true
+                    +single_user_edit key='seller_id' key2='seller_username' label='select seller' icon='user' direct=true
                     +boolean_edit key='has_datetime' label='has datetime' direct=true
                     if has_datetime
                         +datetime_edit key='datetime' label='datetime' direct=true   
@@ -134,9 +116,9 @@ template(name='debit_view')
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
-                    a(href="/user/#{recipient.username}")
-                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                    a(href="/user/#{seller.username}")
+                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url seller.profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                         .ui.large.center.aligned.header.pointer.zoom
-                            |#{recipient.username}
+                            |#{seller.username}
                             
 
