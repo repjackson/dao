@@ -19,7 +19,7 @@ if Meteor.isClient
             current_user = Meteor.users.findOne username:Router.current().params.username
             if current_user
                 Meteor.users.find
-                    friend_ids:$in:current_user._id
+                    friend_ids:$in:[current_user._id]
 
 
     Template.user_friend_button.helpers

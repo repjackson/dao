@@ -87,8 +87,8 @@ template(name='offer_view')
                                         .ui.inline.header #{purchase_price}c
                                         
                                         |#{when} 
-                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        |#{_author.username}
+                                        img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        |#{buyer.username}
                                         .ui.small.header submitted: #{submitted}
                                         .ui.small.header transfer: #{transfer}
                                         if key_value_is 'transfer' 'delivery'

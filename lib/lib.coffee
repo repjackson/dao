@@ -1,7 +1,8 @@
 @Docs = new Meteor.Collection 'docs'
 @Tag_results = new Meteor.Collection 'tag_results'
 @Terms = new Meteor.Collection 'terms'
-@Author_results = new Meteor.Collection 'author_results'
+@seller_results = new Meteor.Collection 'seller_results'
+@buyer_results = new Meteor.Collection 'buyer_results'
 @Model_results = new Meteor.Collection 'model_results'
 @User_tags = new Meteor.Collection 'user_tags'
 
@@ -21,8 +22,9 @@ if Meteor.isServer
 
 Docs.helpers
     _author: -> Meteor.users.findOne @_author_id
-    _buyer: -> Meteor.users.findOne @buyer_id
     recipient: -> Meteor.users.findOne @recipient_id
+    seller: -> Meteor.users.findOne @seller_id
+    buyer: -> Meteor.users.findOne @buyer_id
     when: -> moment(@_timestamp).fromNow()
     is_visible: -> @published in [0,1]
     is_published: -> @published is 1

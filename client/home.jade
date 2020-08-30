@@ -26,23 +26,41 @@ template(name='home')
                 each tag_results
                     a.ui.large.basic.label.select_tag(href='#')
                         strong #{this.name}
-                // div
+                div        
                 i.users.large.icon
                 |seller
-                if selected_authors
-                    // #clear_authors.ui.active.icon.compact.large.circular.button
+                if selected_sellers
+                    // #clear_sellers.ui.active.icon.compact.large.circular.button
                     //     i.remove.icon
-                    each selected_authors
-                        // .unselect_author.ui.active.compact.large.circular.button
-                        a.ui.big.active.image.label.unselect_author
-                            if selected_author.profile_image_id
-                                img.ui.avatar.image(src="{{c.url selected_author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                    each selected_sellers
+                        // .unselect_seller.ui.active.compact.large.circular.button
+                        a.ui.big.active.image.label.unselect_seller
+                            if selected_seller.profile_image_id
+                                img.ui.avatar.image(src="{{c.url selected_seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                             strong #{this}
-                each author_results
-                    // .ui.compact.large.circular.basic.button.select_author
-                    a.ui.large.image.basic.label.select_author
-                        if author.profile_image_id
-                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                each seller_results
+                    // .ui.compact.large.circular.basic.button.select_seller
+                    a.ui.large.image.basic.label.select_seller
+                        if seller.profile_image_id
+                            img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                        strong #{this.name}
+                div        
+                i.users.large.icon
+                |buyer
+                if selected_buyers
+                    // #clear_buyers.ui.active.icon.compact.large.circular.button
+                    //     i.remove.icon
+                    each selected_buyers
+                        // .unselect_buyer.ui.active.compact.large.circular.button
+                        a.ui.big.active.image.label.unselect_buyer
+                            if selected_buyer.profile_image_id
+                                img.ui.avatar.image(src="{{c.url selected_buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                            strong #{this}
+                each buyer_results
+                    // .ui.compact.large.circular.basic.button.select_buyer
+                    a.ui.large.image.basic.label.select_buyer
+                        if buyer.profile_image_id
+                            img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
 
                         strong #{this.name}
                 unless one_result

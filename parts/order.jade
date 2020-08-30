@@ -12,8 +12,11 @@ template(name='order_card')
         .content
             .header
                 |#{price}c
+            .ui.header seller: #{seller.username}
+            .ui.header buyer: #{buyer.username}
+            .ui.header payment: #{payment}
             // |!{description}
-            if complete 
+            if complete
                 |completed by #{completer.name}
                 +datetime_view key='delivery_datetime' label='delivery time' direct=true
                 // +textarea_view key='delivery_location' label='delivery location' direct=true
@@ -49,7 +52,7 @@ template(name='order_view')
         .ui.stackable.padded.grid
             .row 
                 .five.wide.column
-                    a.ui.zoom.pointer.fluid.card(href="/offer/#{offer_id}/view")
+                    a.ui.zoom.pointer.card(href="/offer/#{offer_id}/view")
                         img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                         .content
                             .ui.inline.header
@@ -69,6 +72,24 @@ template(name='order_view')
                                 img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{_author.username}
                             
+                    a.ui.pointer.zoom.card(href="/user/#{seller_username}")
+                        .content
+                            .ui.inline.header 
+                                i.user.outline.icon
+                                |seller
+                            .ui.inline.header
+                                img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{seller.username}
+                            
+                    a.ui.pointer.zoom.card(href="/user/#{buyer.username}")
+                        .content
+                            .ui.inline.header 
+                                i.user.outline.icon
+                                |buyer
+                            .ui.inline.header
+                                img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{buyer.username}
+                            
                     +textarea_view key='description' label='description' direct=true
                     // +image_view key='image_id' label='image' direct=true
                     div 
@@ -86,6 +107,8 @@ template(name='order_view')
                         +single_user_edit key='buyer_id' key2='buyer_username' label='buyer' direct=true
                         // unless buyer_id
                         
+                    .ui.header
+                        |payment: #{payment} 
                     .ui.header
                         |#{price} credits 
                     |purchased

@@ -265,7 +265,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/offers"
+                    Router.go "/"
             )
 
 

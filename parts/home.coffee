@@ -1,7 +1,8 @@
 if Meteor.isClient
     @selected_tags = new ReactiveArray []
     @selected_models = new ReactiveArray []
-    @selected_authors = new ReactiveArray []
+    @selected_sellers = new ReactiveArray []
+    @selected_buyers = new ReactiveArray []
     @selected_location_tags = new ReactiveArray []
     
     Template.body.events
@@ -26,7 +27,8 @@ if Meteor.isClient
             selected_models.array()
             selected_tags.array()
             selected_location_tags.array()
-            selected_authors.array()
+            selected_sellers.array()
+            selected_buyers.array()
             Session.get('view_purchased')
             # Session.get('view_incomplete')
             )
@@ -37,7 +39,8 @@ if Meteor.isClient
             selected_models.array()
             selected_tags.array()
             selected_location_tags.array()
-            selected_authors.array()
+            selected_sellers.array()
+            selected_buyers.array()
             Session.get('view_purchased')
             # Session.get('view_incomplete')
             )
@@ -74,7 +77,7 @@ if Meteor.isClient
         #             sort:points:1)
             
         selected_tags: -> selected_tags.array()
-        selected_authors: -> selected_authors.array()
+        selected_sellers: -> selected_sellers.array()
         selected_author: ->
             # console.log @
             Meteor.users.findOne username:@valueOf()
@@ -102,9 +105,13 @@ if Meteor.isClient
                 } 
             else 
                 Model_results.find({name:$in:['debit','order','request','offer']})
-        author_results: ->
+        seller_results: ->
             doc_count = Docs.find().count()
-            if 0 < doc_count < 3 then Author_results.find { count: $lt: doc_count } else Author_results.find()
+            if 0 < doc_count < 3 then seller_results.find { count: $lt: doc_count } else seller_results.find()
+        selected_buyers: -> selected_buyers.array()
+        buyer_results: ->
+            doc_count = Docs.find().count()
+            if 0 < doc_count < 3 then buyer_results.find { count: $lt: doc_count } else buyer_results.find()
 
     Template.home.events
         'click .delete': -> 
@@ -116,9 +123,13 @@ if Meteor.isClient
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
     
-        'click .select_author': -> selected_authors.push @name
-        'click .unselect_author': -> selected_authors.remove @valueOf()
-        'click #clear_authors': -> selected_authors.clear()
+        'click .select_seller': -> selected_sellers.push @name
+        'click .unselect_seller': -> selected_sellers.remove @valueOf()
+        'click #clear_sellers': -> selected_sellers.clear()
+    
+        'click .select_buyer': -> selected_buyers.push @name
+        'click .unselect_buyer': -> selected_buyers.remove @valueOf()
+        'click #clear_buyers': -> selected_buyers.clear()
     
         'click .select_model': -> selected_models.push @name
         'click .unselect_model': -> selected_models.remove @valueOf()
@@ -162,7 +173,8 @@ if Meteor.isServer
         selected_models
         selected_tags
         selected_location_tags
-        selected_authors
+        selected_sellers
+        selected_buyers
         )->
         match = {}
         if selected_models.length > 0 
@@ -173,16 +185,16 @@ if Meteor.isServer
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
             match.tags = $in:selected_tags
-        if selected_authors.length > 0
-            match._author_username = $in:selected_authors
-        console.log sort_key
-        console.log sort_direction
-        console.log match
-        console.log typeof sort_direction
-        int_direction = parseInt sort_direction
+        if selected_sellers.length > 0
+            match.seller_username = $in:selected_sellers
+        if selected_buyers.length > 0
+            match.buyer_username = $in:selected_buyers
+        # console.log sort_key
+        # console.log sort_direction
+        # console.log match
         Docs.find match,
             limit:20
-            sort:"#{sort_key}":int_direction
+            sort:"#{sort_key}":sort_direction
                         
                         
     Meteor.publish 'tags', (
@@ -192,7 +204,8 @@ if Meteor.isServer
         selected_models
         selected_tags
         selected_location_tags
-        selected_authors
+        selected_sellers
+        selected_buyers
         limit=20
         )->
         self = @
@@ -201,7 +214,8 @@ if Meteor.isServer
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         if selected_models.length > 0 then match.model = $all: selected_models
-        if selected_authors.length > 0 then match._author_username = $all: selected_authors
+        if selected_sellers.length > 0 then match.seller_username = $all: selected_sellers
+        if selected_buyers.length > 0 then match.buyer_username = $all: selected_buyers
         
         
         tag_cloud = Docs.aggregate [
@@ -239,21 +253,38 @@ if Meteor.isServer
                 count: model.count
                 index: i
        
-        author_cloud = Docs.aggregate [
+        seller_cloud = Docs.aggregate [
             { $match: match }
-            { $project: "_author_username": 1 }
-            { $group: _id: "$_author_username", count: $sum: 1 }
-            { $match: _id: $nin: selected_authors }
+            { $project: "seller_username": 1 }
+            { $group: _id: "$seller_username", count: $sum: 1 }
+            { $match: _id: $nin: selected_sellers }
             { $sort: count: -1, _id: 1 }
             { $limit: limit }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter
         # console.log 'cloud: ', cloud
-        author_cloud.forEach (model, i) ->
-            self.added 'author_results', Random.id(),
-                name: model.name
-                count: model.count
+        seller_cloud.forEach (seller, i) ->
+            self.added 'seller_results', Random.id(),
+                name: seller.name
+                count: seller.count
+                index: i
+        
+        buyer_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "buyer_username": 1 }
+            { $group: _id: "$buyer_username", count: $sum: 1 }
+            { $match: _id: $nin: selected_buyers }
+            { $sort: count: -1, _id: 1 }
+            { $limit: limit }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'filter: ', filter
+        # console.log 'cloud: ', cloud
+        buyer_cloud.forEach (buyer, i) ->
+            self.added 'buyer_results', Random.id(),
+                name: buyer.name
+                count: buyer.count
                 index: i
 
         self.ready()
