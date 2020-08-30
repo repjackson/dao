@@ -411,6 +411,7 @@ a.title, #title {
 
 .label {
   margin:5px !important;
+  border-radius: 10px !important; 
 }
 
 input {

@@ -13,8 +13,8 @@ template(name='home')
                         strong #{this.name}
                 .ui.left.icon.input 
                     i.search.icon
-                    input.search_title(type='text' autofocus='' placeholder='title...')
-                // div
+                    input.search_title(type='text' autofocus='' placeholder='title')
+                div
                 i.tag.large.icon
                 if selected_tags
                     a#clear_tags.ui.active.icon.compact.large.button
@@ -34,18 +34,18 @@ template(name='home')
                     each selected_sellers
                         // .unselect_seller.ui.active.compact.large.circular.button
                         a.ui.big.active.image.label.unselect_seller
-                            if selected_seller.profile_image_id
-                                img.ui.avatar.image(src="{{c.url selected_seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                            if selected_user.profile_image_id
+                                img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                             strong #{this}
                 each seller_results
                     // .ui.compact.large.circular.basic.button.select_seller
                     a.ui.large.image.basic.label.select_seller
-                        if seller.profile_image_id
-                            img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                        if user_ob.profile_image_id
+                            img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                         if name
                             strong #{name}
                         else
-                            |[null]
+                            |none
                 div        
                 i.user.large.icon
                 |buyer
@@ -55,18 +55,18 @@ template(name='home')
                     each selected_buyers
                         // .unselect_buyer.ui.active.compact.large.circular.button
                         a.ui.big.active.image.label.unselect_buyer
-                            if selected_buyer.profile_image_id
-                                img.ui.avatar.image(src="{{c.url selected_buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                            if selected_user.profile_image_id
+                                img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                             strong #{this}
                 each buyer_results
                     // .ui.compact.large.circular.basic.button.select_buyer
                     a.ui.large.image.basic.label.select_buyer
-                        if buyer.profile_image_id
-                            img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                        if user_ob.profile_image_id
+                            img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                         if name
                             strong #{name}
                         else
-                            |[null]
+                            |none
                 unless one_result
                     div
                     i.large.sort.icon(title='sort')

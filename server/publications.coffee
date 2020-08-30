@@ -103,7 +103,7 @@ Meteor.publish 'tag_results', (
     self = @
     match = {}
 
-    match.model = $in: ['debit']
+    match.model = $in: ['debit','request','offer']
     # console.log 'query length', query.length
     # if query
     # if query and query.length > 1

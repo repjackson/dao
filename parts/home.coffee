@@ -78,10 +78,10 @@ if Meteor.isClient
             
         selected_tags: -> selected_tags.array()
         selected_sellers: -> selected_sellers.array()
-        selected_author: ->
+        selected_user: ->
             # console.log @
             Meteor.users.findOne username:@valueOf()
-        author: ->
+        user_ob: ->
             Meteor.users.findOne username:@name
         
         one_result: ->
@@ -193,7 +193,7 @@ if Meteor.isServer
         # console.log sort_direction
         # console.log match
         Docs.find match,
-            limit:20
+            limit:10
             sort:"#{sort_key}":sort_direction
                         
                         
@@ -206,7 +206,7 @@ if Meteor.isServer
         selected_location_tags
         selected_sellers
         selected_buyers
-        limit=20
+        limit=10
         )->
         self = @
         match = {}
