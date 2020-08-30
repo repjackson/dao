@@ -11,10 +11,12 @@ template(name='nav')
                 i.send.large.icon
             // |send credit
         if currentUser
-            a.icon.item.request
+            a.item.request
                 i.concierge.bell.large.icon
-            a.icon.item.offer(title='offer')
+                |+
+            a.item.offer(title='offer')
                 i.hand.holding.heart.large.icon
+                |+
     
         .right.menu
             if is_dev 

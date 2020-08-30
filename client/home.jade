@@ -2,7 +2,6 @@ template(name='home')
     .ui.stackable.padded.grid 
         .row
             .sixteen.wide.column
-                i.large.database.icon
                 if selected_models
                     // #clear_models.ui.active.icon.compact.large.button
                     //     i.remove.icon
@@ -16,7 +15,7 @@ template(name='home')
                     i.search.icon
                     input.search_title(type='text' autofocus='' placeholder='title...')
                 // div
-                i.tags.large.icon
+                i.tag.large.icon
                 if selected_tags
                     a#clear_tags.ui.active.icon.compact.large.button
                         i.remove.icon
@@ -25,9 +24,9 @@ template(name='home')
                             strong #{this}
                 each tag_results
                     a.ui.large.basic.label.select_tag(href='#')
-                        strong #{this.name}
+                        strong #{name}
                 div        
-                i.users.large.icon
+                i.user.outline.large.icon
                 |seller
                 if selected_sellers
                     // #clear_sellers.ui.active.icon.compact.large.circular.button
@@ -43,9 +42,12 @@ template(name='home')
                     a.ui.large.image.basic.label.select_seller
                         if seller.profile_image_id
                             img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
-                        strong #{this.name}
+                        if name
+                            strong #{name}
+                        else
+                            |[null]
                 div        
-                i.users.large.icon
+                i.user.large.icon
                 |buyer
                 if selected_buyers
                     // #clear_buyers.ui.active.icon.compact.large.circular.button
@@ -61,13 +63,17 @@ template(name='home')
                     a.ui.large.image.basic.label.select_buyer
                         if buyer.profile_image_id
                             img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
-
-                        strong #{this.name}
+                        if name
+                            strong #{name}
+                        else
+                            |[null]
                 unless one_result
+                    div
                     i.large.sort.icon(title='sort')
                     +sort_button key='_timestamp' label='added' icon='clock'
                     +sort_button key='title' label='title' 
                     +sort_button key='price' label='price' icon='coins'
+        .row
             .sixteen.wide.column
                 .ui.stackable.cards
                     each docs
