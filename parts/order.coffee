@@ -42,6 +42,91 @@ if Meteor.isClient
                     Router.go "/offer/#{@offer_id}/view"
             )
 
+        'click .mark_delivery_started': ->
+            event = @
+            Swal.fire({
+                title: "start delivery?"
+                text: "cannot be undone"
+                icon: 'question'
+                confirmButtonText: 'confirm'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.update @_id, 
+                        $set:
+                            delivery_started: true
+                            delivery_start_timestamp:Date.now()
+                    Swal.fire(
+                        position: 'top-start',
+                        icon: 'success',
+                        title: 'delivery started',
+                        showConfirmButton: false,
+                        timer: 1000
+                    )
+            )
+        
+        
+        'click .mark_delivery_ended': ->
+            event = @
+            Swal.fire({
+                title: "mark delivery ended?"
+                text: "cannot be undone"
+                icon: 'question'
+                confirmButtonText: 'confirm'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.update @_id, 
+                        $set:
+                            delivery_ended: true
+                            delivery_end_timestamp:Date.now()
+                            seller_complete:true
+                    Swal.fire(
+                        position: 'top-start',
+                        icon: 'success',
+                        title: 'delivery marked complete',
+                        showConfirmButton: false,
+                        timer: 1000
+                    )
+            )
+        
+        
+        'click .mark_delivery_accepted': ->
+            event = @
+            Swal.fire({
+                title: "mark delivery accepted?"
+                text: "cannot be undone"
+                icon: 'question'
+                confirmButtonText: 'confirm'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.update @_id, 
+                        $set:
+                            delivery_accepted: true
+                            delivery_accepted_timestamp:Date.now()
+                            buyer_complete:true
+                            order_complete:true
+                    Swal.fire(
+                        position: 'top-start',
+                        icon: 'success',
+                        title: 'delivery marked complete',
+                        showConfirmButton: false,
+                        timer: 1000
+                    )
+            )
+        
+        
+        
         'click .submit_order': ->
             Docs.update @_id,
                 $set:submitted:true

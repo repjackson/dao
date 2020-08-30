@@ -25,6 +25,10 @@ template(name='order_card')
                 // .ui.large.label
                 //     |tiffen type: #{tiffen_type}
         .content
+            +boolean_view key='seller_complete' label='seller complete'
+            +boolean_view key='buyer_complete' label='buyer complete'
+            +boolean_view key='order_complete' label='order complete'
+        
             // unless submitted
             //     if can_edit
             //         .ui.green.fluid.button.submit_order
@@ -89,7 +93,7 @@ template(name='order_view')
                     a.ui.pointer.zoom.card(href="/user/#{buyer.username}")
                         .content
                             .ui.inline.header 
-                                i.user.outline.icon
+                                i.user.icon
                                 |buyer
                             .ui.inline.header
                                 img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -108,10 +112,13 @@ template(name='order_view')
                     // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
-                    if can_edit
-                        +single_user_edit key='buyer_id' key2='buyer_username' label='buyer' direct=true
+                    if is_admin
+                        +single_user_edit key='seller_id' key2='seller_username' label='seller' direct=true
                         // unless buyer_id
                         
+                    unless submitted
+                        +single_user_edit key='buyer_id' key2='buyer_username' label='buyer' direct=true
+                        // unless buyer_id
                     .ui.header
                         |payment: #{payment} 
                     .ui.header
@@ -152,9 +159,13 @@ template(name='order_view')
                             // .ui.large.label
                             //     |tiffen type: #{tiffen_type}
                 .six.wide.column
+                    +boolean_view key='seller_complete' label='seller complete'
+                    +boolean_view key='buyer_complete' label='buyer complete'
+                    +boolean_view key='order_complete' label='order complete'
                     unless submitted
-                        .ui.green.fluid.button.submit_order
-                            |submit order
+                        if transfer
+                            .ui.green.fluid.button.submit_order
+                                |submit order
                     else
                         unless delivery_started
                             .ui.fluid.button.unsubmit_order
@@ -164,17 +175,50 @@ template(name='order_view')
                             .ui.fluid.disabled.button
                                 i.undo.icon
                                 |unsubmit order
-                    .ui.header delivery 
-                    +boolean_edit key='delivery_started' label='delivery started' direct=true
-                    if delivery_started
-                        div
-                        +boolean_edit key='delivery_complete' direct=true
-                        if delivery_complete
-                            +image_edit key='delivery_image' direct=true
-                            .ui.header customer
-                            +boolean_edit key='delivery_accepted' label='delivery accepted' direct=true
-                            
-                            
+                    if key_value_is 'transfer' 'delivery'
+                        .ui.header 
+                            i.truck.icon
+                            |delivery 
+                        if is_seller
+                            unless delivery_started
+                                if submitted
+                                    .ui.fluid.button.mark_delivery_started
+                                        i.clock.icon
+                                        |mark delivery started
+                        if is_admin
+                            +boolean_edit key='delivery_started' label='delivery started' direct=true
+                        if delivery_started
+                            .ui.small.header delivery started at {{long_date delivery_start_timestamp}} 
+                            .ui.small.header {{from_now delivery_start_timestamp}}
+                            div
+                            unless delivery_ended
+                                .ui.fluid.button.mark_delivery_ended
+                                    i.large.green.checkmark.icon
+                                    |mark delivery ended
+                            if is_admin
+                                +boolean_edit key='delivery_ended' direct=true
+                            if delivery_ended
+                                .ui.small.header delivery ended at {{long_date delivery_end_timestamp}} 
+                                .ui.small.header {{from_now delivery_end_timestamp}}
+                                +image_edit key='delivery_image' label='delivery end image' direct=true
+                                if is_buyer
+                                    .ui.header customer
+                                    unless delivery_accepted
+                                        .ui.fluid.button.mark_delivery_accepted
+                                            i.large.green.checkmark.icon
+                                            |mark delivery accepted
+                                if delivery_accepted
+                                    .ui.small.header delivery accepted by #{buyer_username} at {{long_date delivery_accepted_timestamp}} 
+                                    .ui.small.header {{from_now delivery_accepted_timestamp}}
+                                if is_admin
+                                    +boolean_edit key='delivery_accepted' label='delivery accepted' direct=true
+                    if key_value_is 'delivery' 'pickup'
+                        if is_seller
+                            .ui.button.mark_pickup_complete_seller
+                                |mark pickup complete
+                        if is_buyer
+                            .ui.button.mark_pickup_complete_buyer
+                                |mark pickup complete (buyer)
                             
 template(name='user_orders')
     .ui.inline.header

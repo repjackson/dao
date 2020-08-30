@@ -13,6 +13,10 @@ Template.registerHelper 'is_in_admin', () ->
     Meteor.user() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','EYGz4bDSAdWF3W4wi']
 Template.registerHelper 'is_this_user', () ->
     Meteor.userId() is @_id
+Template.registerHelper 'is_seller', () ->
+    Meteor.userId() is @seller_id or 'admin' in Meteor.user().roles
+Template.registerHelper 'is_buyer', () ->
+    Meteor.userId() is @buyer_id or 'admin' in Meteor.user().roles
 Template.registerHelper 'current_user', () ->
     Meteor.users.findOne username:Router.current().params.username
 
