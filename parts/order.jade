@@ -1,15 +1,17 @@
-template(name='user_order_card')                    
+template(name='order_card')                    
     .ui.card
-        .content
-            .ui.header 
+        a.content(href="/order/#{_id}/view")
+            .right.floated.meta
+                |#{when}
+            .ui.inline.small.header 
                 i.receipt.icon
-                |order
+                |#{title} order
         if image_id
-            a(href="/offer/#{order_offer._id}/view")
-                img.ui.zoom.image(src="{{c.url order_offer.image_id height=100 width=200}}")
-        .content.zoom.pointer
-            a.header(href="/offer/#{order_offer._id}/view")
-                |#{purchase_price}c #{order_offer.title}
+            a(href="/order/#{_id}/view")
+                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}")
+        .content
+            .header
+                |#{price}c
             // |!{description}
             if complete 
                 |completed by #{completer.name}
@@ -48,14 +50,12 @@ template(name='order_view')
             .row 
                 .five.wide.column
                     a.ui.zoom.pointer.fluid.card(href="/offer/#{offer_id}/view")
+                        img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                         .content
                             .ui.inline.header
                                 i.chevron.left.icon
-                                |offer
-                        img.ui.rounded.fluid.image(src="{{c.url order_offer.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        .content
-                            .ui.header
-                                |#{order_offer.title}
+                                small offer:
+                                |#{title}
                     if can_edit
                         .ui.basic.fluid.large.button.cancel_order
                             i.remove.red.icon
@@ -64,7 +64,7 @@ template(name='order_view')
                         .content
                             .ui.inline.header 
                                 i.user.outline.icon
-                                |buyer
+                                |author
                             .ui.inline.header
                                 img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{_author.username}
@@ -75,14 +75,18 @@ template(name='order_view')
                     if tags
                         i.tags.icon
                         each tags 
-                            .ui.big.label #{this}
+                            .ui.label #{this}
                     .spacer
                     .spacer
                     +comments
                     // +voting_full
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
-                    .ui.inline.header
+                    if can_edit
+                        +single_user_edit key='buyer_id' key2='buyer_username' label='buyer' direct=true
+                        // unless buyer_id
+                        
+                    .ui.header
                         |#{price} credits 
                     |purchased
                     .ui.inline.header
@@ -136,3 +140,47 @@ template(name='order_view')
                             +image_edit key='delivery_image' direct=true
                             .ui.header customer
                             +boolean_edit key='delivery_accepted' label='delivery accepted' direct=true
+                            
+                            
+                            
+template(name='user_orders')
+    .ui.inline.header
+        +icolor name='orders'
+        |user orders
+    if is_current_user
+        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/orders")
+            i.pencil.icon
+    div
+    each orders
+        +order_view
+
+
+
+
+
+
+// template(name='order_view')
+//     .ui.segment
+//         a.ui.header(href="/m/order/#{_id}/view") #{when}
+//         if charge 
+//             .ui.header charge
+//         if is_dev
+//             |#{charge.result.id}
+//         .ui.header $#{charge.result.amount}
+//         if can_edit 
+//             unless submitted
+//                 +date_edit key='date' label='date' direct=true
+//                 +text_edit key='notes' label='notes' direct=true
+//                 +key_value_edit key='tiffen_type' value='meat' direct=true
+//                 +key_value_edit key='tiffen_type' value='veggie' direct=true
+//                 .ui.green.button.submit_order
+//                     |submit order
+//             else
+//                 +date_view key='date' label='date' direct=true
+//                 +text_view key='notes' label='notes' direct=true
+//                 .ui.large.label
+//                     |tiffen type: #{tiffen_type}
+//                 +boolean_edit key='delivery' label='add delivery' direct=true                    
+//         if is_dev
+//             +remove_button
+//             +print_this                            

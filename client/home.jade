@@ -12,9 +12,9 @@ template(name='home')
                 each model_results
                     .ui.compact.large.circular.button.select_model
                         strong #{this.name}
-                .ui.icon.input 
+                .ui.left.icon.input 
                     i.search.icon
-                    input.search_title(type='text' autofocus='')
+                    input.search_title(type='text' autofocus='' placeholder='title...')
                 // div
                 i.tags.large.icon
                 if selected_tags
@@ -46,29 +46,28 @@ template(name='home')
 
                         strong #{this.name}
                 unless one_result
-                    |sort by
+                    i.large.sort.icon(title='sort')
                     +sort_button key='_timestamp' label='added' icon='clock'
                     +sort_button key='title' label='title' 
                     +sort_button key='price' label='price' icon='coins'
             .sixteen.wide.column
-                .scrolling
-                    .ui.stackable.cards
-                        each docs
-                            if key_value_is 'model' 'request'
-                                +request_item
-                            else if key_value_is 'model' 'offer'
-                                +offer_item
-                            else if key_value_is 'model' 'debit'
-                                +debit_card
-                            else if key_value_is 'model' 'order'
-                                +user_order_card
-                            else
-                                .ui.header #{model}
-                                if is_dev
-                                    i.remove.big.icon.link.delete
-                                each tags
-                                    .ui.label #{this}
-                                +print_this
+                .ui.stackable.cards
+                    each docs
+                        if key_value_is 'model' 'request'
+                            +request_item
+                        else if key_value_is 'model' 'offer'
+                            +offer_item
+                        else if key_value_is 'model' 'debit'
+                            +debit_card
+                        else if key_value_is 'model' 'order'
+                            +order_card
+                        else
+                            .ui.header #{model}
+                            if is_dev
+                                i.remove.big.icon.link.delete
+                            each tags
+                                .ui.label #{this}
+                            +print_this
             
 template(name='sort_button')
     .ui.button.toggle_sort(class=sort_button_class)
@@ -83,7 +82,7 @@ template(name='sort_button')
 
             
                                     
-template(name='home_request_card')
+template(name='request_card')
     .ui.segment.view_request.pointer
         .content
             if youtube_id
@@ -110,7 +109,7 @@ template(name='home_request_card')
 
 
                                     
-template(name='home_offer_card')
+template(name='offer_card')
     .ui.card.view_offer.pointer
         .content
             if image_id

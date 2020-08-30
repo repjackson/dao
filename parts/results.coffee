@@ -1,9 +1,9 @@
 if Meteor.isClient
     Template.debit_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id
-    Template.home_offer_card.onCreated ->
+    Template.offer_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id
-    Template.home_request_card.onCreated ->
+    Template.request_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id
 
     # Template.home_card.events

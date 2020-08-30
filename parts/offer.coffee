@@ -8,8 +8,10 @@ if Meteor.isClient
         @render 'offer_edit'
         ), name:'offer_edit'
 
-    Template.registerHelper 'sale_credit_price', () ->
-        @credit_price + @credit_price/100
+    Template.registerHelper 'total_price', () -> @price + @price/100
+    
+    Template.registerHelper 'buy_button_class', () ->
+        if @inventory > 0 then '' else 'disabled'
     
 
 
@@ -30,7 +32,7 @@ if Meteor.isClient
                 # amount = parseInt(Session.get('topup_amount'))
                 offer = Docs.findOne Router.current().params.doc_id
                 charge =
-                    amount: offer.credit_price*100
+                    amount: offer.price*100
                     offer_id:offer._id
                     currency: 'usd'
                     source: token.id
@@ -64,12 +66,12 @@ if Meteor.isClient
 
 
             instance = Template.instance()
-            sale_credit_price = @credit_price + @credit_price/100
+            total_price = @price + @price/100
 
-            if Meteor.user().points > @credit_price*100
+            if Meteor.user().points > @price*100
                 Swal.fire({
                     title: "buy #{@title}?"
-                    text: "this will charge you #{sale_credit_price} credits"
+                    text: "this will charge you #{total_price} credits"
                     icon: 'question'
                     showCancelButton: true
                     reverseButtons: true
@@ -83,7 +85,7 @@ if Meteor.isClient
                         # Docs.insert 
                         #     model:'dollar_transaction'
                         #     product_id: Router.current().params.doc_id
-                        #     dollar_amount: @credit_price
+                        #     dollar_amount: @price
                         #     target_user_id:@chef_id
                         new_order_id = 
                             Docs.insert
@@ -97,9 +99,9 @@ if Meteor.isClient
                                 buyer_username:Meteor.user().username
                                 buyer_id:Meteor.userId()
                                 offer_id: Router.current().params.doc_id
-                                price:@credit_price
-                                tax:@credit_price/100
-                                total_price:sale_credit_price
+                                price:@price
+                                tax:@price/100
+                                total_price:total_price
                                 payment:'credit'
                         Docs.update @_id,
                             $inc:inventory:-1
@@ -115,7 +117,7 @@ if Meteor.isClient
             else
                 Swal.fire({
                     title: "buy #{@title}?"
-                    text: "this will charge you $#{@credit_price}"
+                    text: "this will charge you $#{@price}"
                     icon: 'question'
                     showCancelButton: true
                     confirmButtonText: 'confirm'
@@ -128,7 +130,7 @@ if Meteor.isClient
                             name: @title
                             # email:Meteor.user().emails[0].address
                             description: 'offer purchase'
-                            amount: @credit_price*100
+                            amount: @price*100
                 
                         # Meteor.users.update @_author_id,
                         #     $inc:credit:@order_price
@@ -139,6 +141,55 @@ if Meteor.isClient
                         # )
                 )
             
+                 
+        'click .log_purchase': ->
+    
+            Swal.fire({
+                title: "log #{@title} purchase?"
+                # text: "log you #{total_price} credits"
+                icon: 'question'
+                showCancelButton: true
+                reverseButtons: true
+                confirmButtonColor: 'green'
+                confirmButtonText: 'confirm'
+                cancelButtonText: 'cancel'
+            }).then((result)=>
+                if result.value
+                    # Session.set('topup_amount',5)
+                    # Template.instance().checkout.open
+                    # Docs.insert 
+                    #     model:'dollar_transaction'
+                    #     product_id: Router.current().params.doc_id
+                    #     dollar_amount: @price
+                    #     target_user_id:@chef_id
+                    total_price = @price + @price/100
+                    new_order_id = 
+                        Docs.insert
+                            model:'order'
+                            title:@title
+                            image_id:@image_id
+                            tags:@tags
+                            description:@description
+                            seller_username:@_author_username
+                            seller_id:@_author_id
+                            # buyer_username:Meteor.user().username
+                            # buyer_id:Meteor.userId()
+                            offer_id: Router.current().params.doc_id
+                            price:@price
+                            tax:@price/100
+                            total_price:total_price
+                            payment:'cash'
+                    Docs.update @_id,
+                        $inc:inventory:-1
+                    Swal.fire(
+                        position: 'top-end',
+                        icon: 'success',
+                        title: "#{@title} purchase logged",
+                        showConfirmButton: false,
+                        timer: 1000
+                    )
+                    Router.go "/order/#{new_order_id}/view"
+            )
                             
         'click .mark_incomplete': ->
             Docs.update Router.current().params.doc_id,
@@ -164,6 +215,7 @@ if Meteor.isClient
             Docs.find 
                 model:'order'
                 offer_id: @_id
+
 
 
 

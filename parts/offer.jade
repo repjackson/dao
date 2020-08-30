@@ -65,9 +65,14 @@ template(name='offer_view')
                     .spacer
                     +comments
                 .six.wide.column
-                    .ui.large.fluid.green.circular.button.buy
-                        i.cart.arrow.down.large.icon
-                        |buy for #{sale_credit_price} credit
+                    if is_author
+                        .ui.large.fluid.teal.circular.button.log_purchase(class=buy_button_class)
+                            i.cart.arrow.down.large.icon
+                            |log purchase for #{total_price} credit
+                    else
+                        .ui.large.fluid.green.circular.button.buy(class=buy_button_class)
+                            i.cart.arrow.down.large.icon
+                            |buy for #{total_price} credit
                     .ui.header #{inventory} left
                     
                     .ui.dividing.header 
@@ -115,7 +120,7 @@ template(name='offer_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.icon.button(href="/offer/#{_id}/view" title='save')
+                    a.ui.green.icon.circular.large.button(href="/offer/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit offer:
