@@ -25,7 +25,7 @@ if Meteor.isClient
                 })
         # subtotal: ->
         #     debit = Docs.findOne Router.current().params.doc_id
-        #     debit.amount*debit.recipient_ids.length
+        #     debit.price*debit.recipient_ids.length
         
         point_max: ->
             if Meteor.user().username is 'one'
@@ -35,7 +35,7 @@ if Meteor.isClient
         
         can_submit: ->
             debit = Docs.findOne Router.current().params.doc_id
-            debit.amount and debit.seller_id
+            debit.price and debit.seller_id
     Template.debit_edit.events
         'blur .edit_description': (e,t)->
             textarea_val = t.$('.edit_textarea').val()
@@ -49,11 +49,11 @@ if Meteor.isClient
                 $set:"#{@key}":val
     
     
-        'blur .point_amount': (e,t)->
+        'blur .point_price': (e,t)->
             # console.log @
-            val = parseInt t.$('.point_amount').val()
+            val = parseInt t.$('.point_price').val()
             Docs.update Router.current().params.doc_id,
-                $set:amount:val
+                $set:price:val
 
 
 
@@ -75,7 +75,7 @@ if Meteor.isClient
             
         'click .submit': ->
             Swal.fire({
-                title: "confirm send #{@amount}pts?"
+                title: "confirm send #{@price}pts?"
                 text: ""
                 icon: 'question'
                 showCancelButton: true,
@@ -87,7 +87,7 @@ if Meteor.isClient
                 if result.value
                     Meteor.call 'send_debit', @_id, =>
                         Swal.fire(
-                            title:"#{@amount} sent"
+                            title:"#{@price} sent"
                             icon:'success'
                             showConfirmButton: false
                             position: 'top-end',

@@ -309,7 +309,8 @@ Meteor.methods
             Docs.find(
                 model:'debit'
                 # recipient_id:$exists:true
-                buyer_id:$exists:false
+                # buyer_id:$exists:false
+                amount:$exists:true
             )
         console.log cur.count()
         # old_count = Docs.find({"#{old}":$exists:true}).count()
@@ -322,13 +323,18 @@ Meteor.methods
         # cursor = Docs.find({newk:$exists:true}, { fields:_id:1 })
 
         for doc in cur.fetch()
-            buyer = 
-                Meteor.users.findOne doc._author_id
-            if buyer
-                Docs.update doc._id,
-                    $set:
-                        buyer_id:buyer._id
-                        buyer_username:buyer.username
+            Docs.update doc._id,
+                $rename:
+                    amount:"price"
+
+        # for doc in cur.fetch()
+        #     buyer = 
+        #         Meteor.users.findOne doc._author_id
+        #     if buyer
+        #         Docs.update doc._id,
+        #             $set:
+        #                 buyer_id:buyer._id
+        #                 buyer_username:buyer.username
 
 
 

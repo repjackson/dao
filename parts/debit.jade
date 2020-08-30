@@ -9,7 +9,7 @@ template(name='debit_card')
         if image_id
             img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}")
         .content
-            a.ui.inline.header(href="/debit/#{_id}/view") #{amount}p
+            a.ui.inline.header(href="/debit/#{_id}/view") #{price}p
             .description.f11
                 |#{description}
             .spacer
@@ -55,21 +55,21 @@ template(name='debit_edit')
                     +smart_tagger
                 .five.wide.center.aligned.column
                     .ui.small.grey.header 100pts = 1 credit
-                    .ui.big.header #{amount}pts
+                    .ui.big.header #{price}pts
                     .ui.big.input
-                        input.point_amount(type='number' value=amount min='1')
+                        input.point_price(type='number' value=price min='1')
                     div
-                    +key_value_edit key='amount' value=1
-                    +key_value_edit key='amount' value=5
-                    +key_value_edit key='amount' value=10
-                    +key_value_edit key='amount' value=25
-                    +key_value_edit key='amount' value=50
-                    +key_value_edit key='amount' value=100
-                    +key_value_edit key='amount' value=250
-                    +key_value_edit key='amount' value=500
-                    +key_value_edit key='amount' value=1000
-                    +key_value_edit key='amount' value=2000
-                    +key_value_edit key='amount' value=5000
+                    +key_value_edit key='price' value=1
+                    +key_value_edit key='price' value=5
+                    +key_value_edit key='price' value=10
+                    +key_value_edit key='price' value=25
+                    +key_value_edit key='price' value=50
+                    +key_value_edit key='price' value=100
+                    +key_value_edit key='price' value=250
+                    +key_value_edit key='price' value=500
+                    +key_value_edit key='price' value=1000
+                    +key_value_edit key='price' value=2000
+                    +key_value_edit key='price' value=5000
                     .spacer
                     .ui.center.aligned.basic.segment
                         if can_submit
@@ -95,7 +95,7 @@ template(name='debit_view')
                             |#{_author.username}
                 .five.wide.column
                     .ui.huge.center.aligned.header
-                        |#{amount}pts
+                        |#{price}pts
                     if is_dev
                         +remove_button
                     .f14
