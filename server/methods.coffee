@@ -3,12 +3,7 @@ Meteor.methods
         Docs.update doc_id,
             $inc:views:1
 
-    create_delta: ->
-        # console.log @
-        Docs.insert
-            model:'model'
-            slug:'model'
-
+    
 
     # import_tests: ->
     #     # myobject = HTTP.get(Meteor.absoluteUrl("/public/tests.json")).data;
@@ -74,16 +69,6 @@ Meteor.methods
             return res
         else
             Throw.new Meteor.Error 'err creating user'
-
-    parse_keys: ->
-        cursor = Docs.find
-            model:'key'
-        for key in cursor.fetch()
-            # new_building_number = parseInt key.building_number
-            new_unit_number = parseInt key.unit_number
-            Docs.update key._id,
-                $set:
-                    unit_number:new_unit_number
 
 
     change_username:  (user_id, new_username) ->
@@ -155,33 +140,6 @@ Meteor.methods
                         logout_timestamp:Date.now()
                 # checkedin_students = Meteor.users.find(healthclub_checkedin:true).fetch()
 
-    check_student_status: (user_id)->
-        user = Meteor.users.findOne user_id
-
-
-
-    checkout_user: (user_id)->
-        Meteor.users.update user_id,
-            $set:
-                healthclub_checkedin:false
-        checkedin_doc =
-            Docs.findOne
-                user_id:user_id
-                model:'healthclub_checkin'
-                active:true
-        if checkedin_doc
-            Docs.update checkedin_doc._id,
-                $set:
-                    active:false
-                    logout_timestamp:Date.now()
-
-        Docs.insert
-            model:'log_event'
-            parent_id:user_id
-            object_id:user_id
-            user_id:user_id
-            body: "#{@first_name} #{@last_name} checked out."
-
 
 
     lookup_user: (username_query, role_filter)->
@@ -217,11 +175,6 @@ Meteor.methods
     #             username: {$regex:"#{username_query}", $options: 'i'}
     #             },{limit:10}).fetch()
 
-    lookup_user_by_code: (healthclub_code)->
-        unless isNaN(healthclub_code)
-            Meteor.users.findOne({
-                healthclub_code:healthclub_code
-                })
 
     lookup_doc: (guest_name, model_filter)->
         Docs.find({
@@ -332,6 +285,50 @@ Meteor.methods
 
         for doc in cursor.fetch()
             Meteor.call 'key', doc._id
+
+
+    add_seller_username: ->
+        cur = 
+            Docs.find(
+                seller_id:$exists:true
+                seller_username:$exists:false
+            )
+        console.log cur.count()
+        # old_count = Docs.find({"#{old}":$exists:true}).count()
+        # new_count = Docs.find({"#{newk}":$exists:true}).count()
+        # result = Docs.update({recipient_id:$exists:true}, {$rename:"recipient_id":"seller_id"}, {multi:true})
+        for doc in cur.fetch()
+            seller = 
+                Meteor.users.findOne doc.seller_id
+            if seller
+                Docs.update doc._id,
+                    $set:seller_username:seller.username
+                # console.log seller
+    update_debits: (old, newk)->
+        cur = 
+            Docs.find(
+                model:'debit'
+                # recipient_id:$exists:true
+                buyer_id:$exists:false
+            )
+        console.log cur.count()
+        # old_count = Docs.find({"#{old}":$exists:true}).count()
+        # new_count = Docs.find({"#{newk}":$exists:true}).count()
+        # result = Docs.update({buyer_id:$exists:false}, {$rename:"recipient_id":"seller_id"}, {multi:true})
+        # result = Docs.update({recipient_id:$exists:true}, {$rename:"recipient_id":"seller_id"})
+        # result2 = Docs.update({"#{old}":$exists:true}, {$rename:"_#{old}":"_#{newk}"}, {multi:true})
+
+        # > Docs.update({doc_sentiment_score:{$exists:true}},{$rename:{doc_sentiment_score:"sentiment_score"}},{multi:true})
+        # cursor = Docs.find({newk:$exists:true}, { fields:_id:1 })
+
+        for doc in cur.fetch()
+            buyer = 
+                Meteor.users.findOne doc._author_id
+            if buyer
+                Docs.update doc._id,
+                    $set:
+                        buyer_id:buyer._id
+                        buyer_username:buyer.username
 
 
 
