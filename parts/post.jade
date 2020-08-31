@@ -37,9 +37,10 @@ template(name='post_view')
                     if can_edit
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon
+                    div
                     if image_id
                         img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
-                    .ui.small.inline.header posted by
+                    .ui.small.inline.header by
                     a.ui.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.username}
@@ -47,7 +48,7 @@ template(name='post_view')
                     div
                     +array_view key='location_tags' label='location_tags' direct=true
                     div
-                    +single_user_view key='_author_id' label='author' direct=true
+                    // +single_user_view key='_author_id' label='author' direct=true
                     +multi_user_view key='coauthor_ids' label='coauthors' direct=true
     
                 .eight.wide.column
@@ -75,13 +76,17 @@ template(name='post_view')
                         .ui.styled.fluid.accordion 
                             each tippers
                                 .title
+                                    .ui.inline.header #{tipper_tips.count}
                                     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                    |#{username} #{total_tip_amount}
+                                    |#{username}
                                     i.dropdown.icon
                                 .content
                                     .ui.list
                                         each tipper_tips
-                                            .item #{when} 
+                                            .item 
+                                                |{{home_long_date _timestamp}} 
+                                                div
+                                                |#{when} 
                                     
                         // each tips
                         //     a.ui.item(href="/tip/#{_id}/view") 

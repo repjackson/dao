@@ -133,7 +133,7 @@ Template.registerHelper 'field_value', () ->
 
 
 Template.registerHelper 'lowered', (input)-> input.toLowerCase()
-Template.registerHelper 'money_format', (input)-> (input/100).toFixed()
+Template.registerHelper 'money_format', (input)-> (input/100).toFixed(2)
 
 Template.registerHelper 'session_key_value_is', (key, value) ->
     # console.log 'key', key
@@ -200,7 +200,7 @@ Template.registerHelper 'long_time', (input)->
         console.log 'long time', input
         moment(input).format("h:mm a")
 Template.registerHelper 'long_date', (input)-> moment(input).format("dddd, MMMM Do h:mm a")
-Template.registerHelper 'home_long_date', (input)-> moment(input).format("dd, MMM Do h:mm a")
+Template.registerHelper 'home_long_date', (input)-> moment(input).format("dd MMM D h:mma")
 Template.registerHelper 'short_date', (input)-> moment(input).format("dddd, MMMM Do")
 Template.registerHelper 'med_date', (input)-> moment(input).format("MMM D 'YY")
 # Template.registerHelper 'medium_date', (input)-> moment(input).format("MMMM Do YYYY")

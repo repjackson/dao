@@ -29,6 +29,12 @@ if Meteor.isClient
                     tipper_ids:Meteor.userId()
                     tipper_usernames:Meteor.user().username
             Meteor.call 'calc_post_stats', @_id, ->
+            $('body').toast({
+                class: 'success'
+                position: 'bottom right'
+                message: "#{@title} tipped"
+            })
+    
     
 
     Template.post_view.helpers
@@ -41,7 +47,7 @@ if Meteor.isClient
                 _id:$in:@tipper_ids
         
         tipper_tips: ->
-            console.log @
+            # console.log @
             Docs.find
                 model:'tip'
                 _author_id:@_id

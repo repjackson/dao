@@ -73,10 +73,10 @@ if Meteor.isClient
 #     Template.session_toggle_button.events
 #         'click .toggle': -> Session.set(@key, !Session.get(@key))
 #
-#     Template.comments.onRendered ->
-#         Meteor.setTimeout ->
-#             $('.accordion').accordion()
-#         , 1000
+    Template.comments.onRendered ->
+        Meteor.setTimeout ->
+            $('.menu .item').tab()
+        , 2000
     Template.comments.onCreated ->
         # if Router.current().params.doc_id
         #     parent = Docs.findOne Router.current().params.doc_id
