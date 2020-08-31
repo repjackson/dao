@@ -20,7 +20,7 @@ template(name='debit_card')
             .meta #{when}
             a.ui.inline.header
             .description.f11
-                |#{description}
+                |#{title}
             .spacer
             each tags 
                 .ui.small.basic.label #{this}
@@ -51,7 +51,7 @@ template(name='debit_edit')
                         // +time_edit key='time' label='time' direct=true   
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .six.wide.column
-                    +textarea_edit key='description' label='description' direct=true
+                    +textarea_edit key='title' label='title' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     div

@@ -4,6 +4,7 @@
 @seller_results = new Meteor.Collection 'seller_results'
 @buyer_results = new Meteor.Collection 'buyer_results'
 @Model_results = new Meteor.Collection 'model_results'
+@status_results = new Meteor.Collection 'status_results'
 @User_tags = new Meteor.Collection 'user_tags'
 
 

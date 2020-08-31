@@ -3,6 +3,7 @@ if Meteor.isClient
     @selected_models = new ReactiveArray []
     @selected_sellers = new ReactiveArray []
     @selected_buyers = new ReactiveArray []
+    @selected_statuses = new ReactiveArray []
     @selected_location_tags = new ReactiveArray []
     
     Template.body.events
@@ -29,6 +30,7 @@ if Meteor.isClient
             selected_location_tags.array()
             selected_sellers.array()
             selected_buyers.array()
+            selected_statuses.array()
             Session.get('view_purchased')
             # Session.get('view_incomplete')
             )
@@ -41,6 +43,7 @@ if Meteor.isClient
             selected_location_tags.array()
             selected_sellers.array()
             selected_buyers.array()
+            selected_statuses.array()
             Session.get('view_purchased')
             # Session.get('view_incomplete')
             )
@@ -63,6 +66,14 @@ if Meteor.isClient
         sort_button_class: ->
             if Session.equals('sort_key', @key) then 'active' else 'basic'
     Template.home.helpers
+        show_to: ->
+            selected_sellers.array().length > 0 or seller_results.find({}).count() > 0
+    
+        show_from: ->
+            selected_buyers.array().length > 0 or buyer_results.find({}).count() > 0
+    
+    
+    
         can_debit: -> Meteor.user().points > 0
         docs: ->
             Docs.find {
@@ -112,6 +123,12 @@ if Meteor.isClient
         buyer_results: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3 then buyer_results.find { count: $lt: doc_count } else buyer_results.find()
+       
+       
+        selected_statuses: -> selected_statuses.array()
+        status_results: ->
+            doc_count = Docs.find().count()
+            if 0 < doc_count < 3 then status_results.find { count: $lt: doc_count } else status_results.find()
 
     Template.home.events
         'click .delete': -> 
@@ -134,6 +151,10 @@ if Meteor.isClient
         'click .select_model': -> selected_models.push @name
         'click .unselect_model': -> selected_models.remove @valueOf()
         'click #clear_models': -> selected_models.clear()
+    
+        'click .select_status': -> selected_statuses.push @name
+        'click .unselect_status': -> selected_statuses.remove @valueOf()
+        'click #clear_statuses': -> selected_statuses.clear()
     
         'click .view_debit': ->
             Router.go "/debit/#{@_id}/view"
@@ -175,6 +196,7 @@ if Meteor.isServer
         selected_location_tags
         selected_sellers
         selected_buyers
+        selected_statuses
         )->
         match = {}
         if selected_models.length > 0 
@@ -189,6 +211,8 @@ if Meteor.isServer
             match.seller_username = $in:selected_sellers
         if selected_buyers.length > 0
             match.buyer_username = $in:selected_buyers
+        if selected_statuses.length > 0 then match.status = $all: selected_statuses
+            
         # console.log sort_key
         # console.log sort_direction
         # console.log match
@@ -206,6 +230,7 @@ if Meteor.isServer
         selected_location_tags
         selected_sellers
         selected_buyers
+        selected_statuses
         limit=10
         )->
         self = @
@@ -216,6 +241,7 @@ if Meteor.isServer
         if selected_models.length > 0 then match.model = $all: selected_models
         if selected_sellers.length > 0 then match.seller_username = $all: selected_sellers
         if selected_buyers.length > 0 then match.buyer_username = $all: selected_buyers
+        if selected_statuses.length > 0 then match.status = $all: selected_statuses
         
         
         tag_cloud = Docs.aggregate [
@@ -225,7 +251,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: limit }
+            { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter
@@ -268,6 +294,22 @@ if Meteor.isServer
             self.added 'seller_results', Random.id(),
                 name: seller.name
                 count: seller.count
+                index: i
+        
+        status_cloud = Docs.aggregate [
+            { $match: match }
+            { $group: _id: "$status", count: $sum: 1 }
+            { $match: _id: $nin: selected_statuses }
+            { $sort: count: -1, _id: 1 }
+            { $limit: limit }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'filter: ', filter
+        # console.log 'cloud: ', cloud
+        status_cloud.forEach (status, i) ->
+            self.added 'status_results', Random.id(),
+                name: status.name
+                count: status.count
                 index: i
         
         buyer_cloud = Docs.aggregate [

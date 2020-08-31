@@ -25,10 +25,34 @@ template(name='home')
                 each tag_results
                     a.ui.large.basic.label.select_tag(href='#')
                         strong #{name}
-                div        
-                .ui.inline.header
-                    i.user.outline.large.icon
-                    |to
+                if show_from
+                    div
+                    .ui.inline.header
+                        i.user.large.icon
+                        |from
+                if selected_buyers
+                    // #clear_buyers.ui.active.icon.compact.large.circular.button
+                    //     i.remove.icon
+                    each selected_buyers
+                        // .unselect_buyer.ui.active.compact.large.circular.button
+                        a.ui.big.active.image.label.unselect_buyer
+                            if selected_user.profile_image_id
+                                img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                            strong #{this}
+                each buyer_results
+                    // .ui.compact.large.circular.basic.button.select_buyer
+                    a.ui.large.image.basic.label.select_buyer
+                        if user_ob.profile_image_id
+                            img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                        if name
+                            strong #{name}
+                        else
+                            |none
+                if show_to
+                    div        
+                    .ui.inline.header
+                        i.user.outline.large.icon
+                        |to
                 if selected_sellers
                     // #clear_sellers.ui.active.icon.compact.large.circular.button
                     //     i.remove.icon
@@ -48,27 +72,30 @@ template(name='home')
                         else
                             |none
                 div        
+                // if show_status
+                div        
                 .ui.inline.header
-                    i.user.large.icon
-                    |from
-                if selected_buyers
-                    // #clear_buyers.ui.active.icon.compact.large.circular.button
+                    i.question.large.icon
+                    |status
+                if selected_statuses
+                    // #clear_statuses.ui.active.icon.compact.large.circular.button
                     //     i.remove.icon
-                    each selected_buyers
-                        // .unselect_buyer.ui.active.compact.large.circular.button
-                        a.ui.big.active.image.label.unselect_buyer
+                    each selected_statuses
+                        // .unselect_status.ui.active.compact.large.circular.button
+                        a.ui.big.active.image.label.unselect_status
                             if selected_user.profile_image_id
                                 img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                             strong #{this}
-                each buyer_results
-                    // .ui.compact.large.circular.basic.button.select_buyer
-                    a.ui.large.image.basic.label.select_buyer
+                each status_results
+                    // .ui.compact.large.circular.basic.button.select_status
+                    a.ui.large.image.basic.label.select_status
                         if user_ob.profile_image_id
                             img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                         if name
                             strong #{name}
                         else
                             |none
+                div        
                 unless one_result
                     div
                     i.large.sort.icon(title='sort')

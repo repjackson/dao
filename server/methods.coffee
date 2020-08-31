@@ -310,7 +310,8 @@ Meteor.methods
                 model:'debit'
                 # recipient_id:$exists:true
                 # buyer_id:$exists:false
-                amount:$exists:true
+                # amount:$exists:true
+                title:$exists:false
             )
         console.log cur.count()
         # old_count = Docs.find({"#{old}":$exists:true}).count()
@@ -325,7 +326,8 @@ Meteor.methods
         for doc in cur.fetch()
             Docs.update doc._id,
                 $rename:
-                    amount:"price"
+                    # amount:"price"
+                    description:"title"
 
         # for doc in cur.fetch()
         #     buyer = 
