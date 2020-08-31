@@ -35,14 +35,6 @@ Template.right_sidebar.events
             Session.set 'logging_out', false
             Router.go '/login'
             
-    'click .toggle_nightmode': ->
-        if Meteor.user().invert_class is 'invert'
-            Meteor.users.update Meteor.userId(),
-                $set:invert_class:''
-        else
-            Meteor.users.update Meteor.userId(),
-                $set:invert_class:'invert'
-            
 
 Template.nav.helpers
         
@@ -53,6 +45,7 @@ Template.nav.events
                 model:'debit'
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
+                status:'started'
         Router.go "/debit/#{new_debit_id}/edit"
     'click .request': ->
         new_request_id =

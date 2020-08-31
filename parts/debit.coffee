@@ -14,19 +14,6 @@ if Meteor.isClient
 
 
     Template.debit_edit.helpers
-        members: ->
-            debit = Docs.findOne Router.current().params.doc_id
-            Meteor.users.find({
-                # levels: $in: ['member','domain']
-                _id: $ne: Meteor.userId()
-            }, {
-                sort:points:1
-                limit:10
-                })
-        # subtotal: ->
-        #     debit = Docs.findOne Router.current().params.doc_id
-        #     debit.price*debit.seller_ids.length
-        
         point_max: ->
             if Meteor.user().username is 'one'
                 1000
@@ -37,24 +24,11 @@ if Meteor.isClient
             debit = Docs.findOne Router.current().params.doc_id
             debit.price and debit.seller_id
     Template.debit_edit.events
-        'blur .edit_description': (e,t)->
-            textarea_val = t.$('.edit_textarea').val()
-            Docs.update Router.current().params.doc_id,
-                $set:description:textarea_val
-    
-    
-        'blur .edit_text': (e,t)->
-            val = t.$('.edit_text').val()
-            Docs.update Router.current().params.doc_id,
-                $set:"#{@key}":val
-    
-    
         'blur .point_price': (e,t)->
             # console.log @
             val = parseInt t.$('.point_price').val()
             Docs.update Router.current().params.doc_id,
                 $set:price:val
-
 
 
         'click .cancel_debit': ->
@@ -118,24 +92,13 @@ if Meteor.isServer
                 $set:
                     submitted:true
                     submitted_timestamp:Date.now()
+                    status:'complete'
+                    
             return
             
             
             
-            
-            
-            
-            
-            
-            
-            
 if Meteor.isClient
-    Router.route '/debits/', (->
-        @layout 'layout'
-        @render 'debits'
-        ), name:'debits'
-    
-
     Router.route '/debit/:doc_id/view', (->
         @layout 'layout'
         @render 'debit_view'
@@ -145,5 +108,4 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'product_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'all_users'
                     

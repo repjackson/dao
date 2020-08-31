@@ -31,6 +31,8 @@ if Meteor.isClient
         'click .friend':->
             Meteor.users.update Meteor.userId(),
                 $addToSet: friend_ids:@_id
+            # Meteor.users.update @_id,    
+                
         'click .unfriend':->
             Meteor.users.update Meteor.userId(),
                 $pull: friend_ids:@_id

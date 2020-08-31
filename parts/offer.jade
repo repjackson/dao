@@ -6,6 +6,9 @@ template(name='offer_item')
             a.header(href="/offer/#{_id}/view")
                 i.store.icon
                 |#{title}
+                // if private  
+                //     i.lock.icon
+                
         if image_id
             a.image(href="/offer/#{_id}/view")
                 img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
@@ -37,6 +40,9 @@ template(name='offer_view')
                         small offer: 
                     .ui.inline.large.header 
                         |#{title}
+                        if private  
+                            i.lock.icon
+                        
                     if can_edit
                         a.ui.circular.icon.button.edit_offer(href="/offer/#{_id}/edit")
                             i.large.pencil.icon
@@ -127,6 +133,8 @@ template(name='offer_edit')
                     .ui.inline.large.header 
                         small edit offer:
                         |#{title}
+                        // if private  
+                        //     i.lock.icon
                     i.large.remove.link.circular.icon.delete_offer(title='delete offer')
             .row 
                 .four.wide.column
@@ -136,6 +144,10 @@ template(name='offer_edit')
                     +text_edit key='title' icon='header' direct=true
                     +boolean_edit key='rental' direct=true
                     +boolean_edit key='for_sale' label='for sale' direct=true
+                    div
+                    // +boolean_edit key='private' direct=true
+                    // if private
+                    //     +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
                 .six.wide.column
                     div
                     +boolean_edit key='has_description' label='description' direct=true
@@ -157,5 +169,5 @@ template(name='offer_edit')
                     +number_edit key='inventory' label='inventory' direct=true
                     div
                     +float_edit key='price' label='price' direct=true
-                    
+                    +single_user_edit key='seller_id' key2='seller_username' label='seller' direct=true
                     

@@ -212,8 +212,23 @@ if Meteor.isServer
         if selected_buyers.length > 0
             match.buyer_username = $in:selected_buyers
         if selected_statuses.length > 0 then match.status = $all: selected_statuses
-            
-        # console.log sort_key
+        # match.private = $ne:true
+        # match["$or"] = 
+        #     [ 
+        #         { private: $ne: true }, 
+        #         { viewable_user_ids: $in:[Meteor.userId()] } 
+        #     ]
+        # friended_by = 
+        #     Meteor.users.find(
+        #         {friend_ids:[Meteor.userId()]},
+        #         fields:
+        #             _id:1
+        #     ).fetch()
+        # console.log 'friended by',friended_by     
+        # plucked_ids = _.pluck friended_by, '_id'
+
+        # match._author_id = $in:plucked_ids
+        # console.log plucked_ids
         # console.log sort_direction
         # console.log match
         Docs.find match,
@@ -242,8 +257,22 @@ if Meteor.isServer
         if selected_sellers.length > 0 then match.seller_username = $all: selected_sellers
         if selected_buyers.length > 0 then match.buyer_username = $all: selected_buyers
         if selected_statuses.length > 0 then match.status = $all: selected_statuses
-        
-        
+        # match["$or"] = 
+        #     [ 
+        #         { private: $ne: true }, 
+        #         { viewable_user_ids: $in:[Meteor.userId()] } 
+        #     ]
+        # friended_by = 
+        #     Meteor.users.find(
+        #         {friend_ids:[Meteor.userId()]},
+        #         fields:
+        #             _id:1
+        #     ).fetch()
+        # console.log 'friended by',friended_by     
+        # plucked_ids = _.pluck friended_by, '_id'
+
+        # match._author_id = $in:plucked_ids
+
         tag_cloud = Docs.aggregate [
             { $match: match }
             { $project: "tags": 1 }

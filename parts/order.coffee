@@ -59,6 +59,7 @@ if Meteor.isClient
                         $set:
                             delivery_started: true
                             delivery_start_timestamp:Date.now()
+                            status:'delivery started'
                     Swal.fire(
                         position: 'top-start',
                         icon: 'success',
@@ -87,6 +88,7 @@ if Meteor.isClient
                             delivery_ended: true
                             delivery_end_timestamp:Date.now()
                             seller_complete:true
+                            status:'seller complete'
                     Swal.fire(
                         position: 'top-start',
                         icon: 'success',
@@ -116,6 +118,7 @@ if Meteor.isClient
                             delivery_accepted_timestamp:Date.now()
                             buyer_complete:true
                             order_complete:true
+                            status:'complete'
                     Swal.fire(
                         position: 'top-start',
                         icon: 'success',

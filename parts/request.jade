@@ -8,6 +8,8 @@ template(name='request_item')
                 |#{title}
                 if complete
                     i.green.checkmark.icon
+                // if private
+                //     i.large.lock.icon
             .meta
                 |by 
                 if _author.profile_image_id
@@ -39,9 +41,12 @@ template(name='request_view')
                         small request 
                     .ui.inline.large.header 
                         |#{title}
+                    // if private
+                    //     i.large.lock.icon(title='private')
+    
                     if can_edit
-                        a.edit_request(href="/request/#{_id}/edit")
-                            i.large.pencil.circular.link.icon
+                        a.ui.circular.icon.button.edit_request(href="/request/#{_id}/edit")
+                            i.large.pencil.icon
             .row 
                 .four.wide.column
                     .ui.header
@@ -63,8 +68,6 @@ template(name='request_view')
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
-                    if youtube_id
-                        +youtube_view key='youtube_id' direct=true
                     .spacer
                     i.large.tags.icon
                     each tags 
@@ -107,22 +110,26 @@ template(name='request_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .sixteen.wide.column
+                .four.wide.column
                     a.ui.green.icon.circular.button(href="/request/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
                         small edit request
                         |#{title}
+                        if private
+                            i.large.lock.icon(title='private')
                     i.large.remove.link.circular.icon.delete_request(title='cancel')
-            .row 
-                .four.wide.column
                     .ui.header 
                         small author
                         |#{_author.username}
                     +text_edit key='title' icon='header' direct=true
-                    +boolean_edit key='has_date' label='has date' direct=true
+                    +boolean_edit key='has_date' label='date' direct=true
                     if has_date
                         +date_edit key='date' label='date' icon='calendar' direct=true
+                    div
+                    // +boolean_edit key='private' direct=true
+                    // if private
+                    //     +multi_user_edit key='viewable_user_ids' label='viewable by' direct=true
                 .eight.wide.column
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true

@@ -96,7 +96,7 @@ if Meteor.isClient
                         icon: 'success',
                         title: 'request removed',
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1000
                     )
                     Router.go "/"
             )
@@ -156,14 +156,15 @@ if Meteor.isServer
             # target = Meteor.users.findOne request.recipient_id
             author = Meteor.users.findOne request._author_id
 
-            console.log 'publishing request', request
-            Meteor.users.update author._id,
-                $inc:
-                    points: -request.price
+            # console.log 'publishing request', request
+            # Meteor.users.update author._id,
+            #     $inc:
+            #         points: -request.price
             Docs.update request_id,
                 $set:
                     published:true
                     published_timestamp:Date.now()
+                    status:'published'
                     
                     
         unpublish_request: (request_id)->
@@ -171,14 +172,15 @@ if Meteor.isServer
             # target = Meteor.users.findOne request.recipient_id
             author = Meteor.users.findOne request._author_id
 
-            console.log 'unpublishing request', request
-            Meteor.users.update author._id,
-                $inc:
-                    points: request.price
+            # console.log 'unpublishing request', request
+            # Meteor.users.update author._id,
+            #     $inc:
+            #         points: request.price
             Docs.update request_id,
                 $set:
                     published:false
                     published_timestamp:null
+                    status:'unpublished'
                     
                     
                     

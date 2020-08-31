@@ -67,10 +67,10 @@ template(name='right_sidebar')
             i.large.concierge.bell.icon
         a.item.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
             | orders
-            i.large.cart.icon
+            i.large.reciept.icon
         a.item.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
             | offers
-            i.large.shop.icon
+            i.large.store.icon
         a.item.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
             | #{currentUser.credit} credit
             i.large.dollar.icon
