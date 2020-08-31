@@ -1073,7 +1073,11 @@ template(name='single_user_view')
             |#{label}
         with field_value
             with user_from_id this
-                +user_item
+                a.ui.item(href="/user/#{username}") 
+                    .content
+                        .header
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{username}
             
 
 
@@ -1170,7 +1174,12 @@ template(name='multi_user_view')
         //- #{key} #{label}
     each field_value
         with user_from_id this
-            +user_item
+            a.ui.item(href="/user/#{username}") 
+                .content
+                    .header
+                        img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{username}
+            
             div
             
 

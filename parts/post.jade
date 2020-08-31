@@ -12,9 +12,12 @@ template(name='post_card')
         .content
             .meta
                 |by 
-                if author.profile_image_id
-                    img.ui.avatar.compact.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                |#{author.username}
+                if _author.profile_image_id
+                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                |#{_author.username}
+            +multi_user_view key='coauthor_ids' label='coauthors' direct=true
+            |#{tip_count} tips
+
             .description
                 |!{blurb}
                 each tags
@@ -31,9 +34,6 @@ template(name='post_view')
                         small post: 
                     .ui.inline.large.header 
                         |#{title}
-                        if private  
-                            i.lock.icon
-                        
                     if can_edit
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon
@@ -44,13 +44,13 @@ template(name='post_view')
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.username}
                     .ui.inline.small.header #{when}
-                    +boolean_view key='rental' direct=true
-                    +boolean_view key='for_sale' label='for sale' direct=true
                     div
                     +array_view key='location_tags' label='location_tags' direct=true
                     div
-                    +voting_full
-                .six.wide.column
+                    +single_user_view key='_author_id' label='author' direct=true
+                    +multi_user_view key='coauthor_ids' label='coauthors' direct=true
+    
+                .eight.wide.column
                     .f13
                         |!{description}
                     // a.ui.header(href="/user/#{target.username}")
@@ -63,22 +63,34 @@ template(name='post_view')
                     .spacer
                     .spacer
                     +comments
-                .six.wide.column
+                .four.wide.column
                     .ui.dividing.header 
-                        i.donate.icon
-                        |#{post_purchases.count} tips
+                        i.coins.icon
+                        |#{tip_count} tips totaling #{tip_total}p
                     |tips cost 11p, give the author(s) 10p, are immediate and nonrefundable, and allow full data access and commenting
-                    .ui.fluid.button.tip
+                    .ui.green.fluid.button.tip
+                        i.donate.icon
                         |tip
-                    .ui.link.selection.list.medscroll
-                        each tips
-                            a.ui.item(href="/tip/#{_id}/view") 
+                    .ui.link.selection.list
+                        .ui.styled.fluid.accordion 
+                            each tippers
+                                .title
+                                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{username} #{total_tip_amount}
+                                    i.dropdown.icon
                                 .content
-                                    .header
-                                        .ui.inline.header #{total_tip_amount}10p
-                                        |#{when} 
-                                        img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        |#{author.username}
+                                    .ui.list
+                                        each tipper_tips
+                                            .item #{when} 
+                                    
+                        // each tips
+                        //     a.ui.item(href="/tip/#{_id}/view") 
+                        //         .content
+                        //             .header
+                        //                 .ui.inline.header #{total_tip_amount}10p
+                        //                 |#{when} 
+                        //                 img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        //                 |#{author.username}
                     
 
 template(name='post_edit')

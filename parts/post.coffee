@@ -14,19 +14,37 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'post_tips', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
 
-
+    Template.post_view.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 2000
 
     Template.post_view.events
         'click .tip': ->
             Docs.insert     
                 model:'tip'
                 post_id:@_id
-                
+            Docs.update @_id,
+                $addToSet:
+                    tipper_ids:Meteor.userId()
+                    tipper_usernames:Meteor.user().username
+            Meteor.call 'calc_post_stats', @_id, ->
+    
 
     Template.post_view.helpers
         tips: ->
             Docs.find
                 model:'tip'
+        
+        tippers: ->
+            Meteor.users.find
+                _id:$in:@tipper_ids
+        
+        tipper_tips: ->
+            console.log @
+            Docs.find
+                model:'tip'
+                _author_id:@_id
         
         can_claim: ->
             if @claimed_user_id
@@ -41,6 +59,25 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.methods 
+        calc_post_stats: (post_id)->
+            post = Docs.findOne post_id
+            tip_total = 0
+            
+            tip_cur = 
+                Docs.find 
+                    model:'tip'
+                    post_id:post_id
+            # for tip in tip_cur.fetch()
+            #     console.log tip
+            
+            tip_total = 10*tip_cur.count()
+            
+            Docs.update post_id,
+                $set:
+                    tip_total:tip_total
+                    tip_count:tip_cur.count()
+            
     Meteor.publish 'post_tips', (post_id)->
         Docs.find   
             model:'tip'
