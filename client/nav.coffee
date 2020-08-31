@@ -54,6 +54,13 @@ Template.nav.events
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
         Router.go "/request/#{new_request_id}/edit"
+    'click .post': ->
+        new_post_id =
+            Docs.insert
+                model:'post'
+                buyer_id:Meteor.userId()
+                buyer_username:Meteor.user().username
+        Router.go "/post/#{new_post_id}/edit"
     'click .offer': ->
         new_offer_id =
             Docs.insert

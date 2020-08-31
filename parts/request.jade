@@ -77,6 +77,10 @@ template(name='request_view')
                     +comments
                 .four.wide.column
                     .ui.header status: #{status}
+                    +boolean_view key='private' direct=true
+                    if private
+                        +multi_user_view key='available_user_ids' label='available to' direct=true
+                    
                     if can_claim
                         .ui.fluid.green.big.button.claim
                             i.grab.large.icon
@@ -127,9 +131,11 @@ template(name='request_edit')
                     if has_date
                         +date_edit key='date' label='date' icon='calendar' direct=true
                     div
-                    // +boolean_edit key='private' direct=true
-                    // if private
-                    //     +multi_user_edit key='viewable_user_ids' label='viewable by' direct=true
+                    .ui.header available
+                    .ui.small.header everythings always public but you can restrict who can claim this request
+                    +boolean_edit key='private' direct=true
+                    if private
+                        +multi_user_edit key='available_user_ids' label='available to' direct=true
                 .eight.wide.column
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true

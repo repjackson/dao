@@ -115,7 +115,7 @@ if Meteor.isClient
                     count: $lt: doc_count 
                 } 
             else 
-                Model_results.find({name:$in:['debit','order','request','offer']})
+                Model_results.find({name:$in:['debit','order','request','offer','post']})
         seller_results: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3 then seller_results.find { count: $lt: doc_count } else seller_results.find()
@@ -202,7 +202,7 @@ if Meteor.isServer
         if selected_models.length > 0 
             match.model = $all: selected_models
         else
-            match.model = $in:['debit','order','request','offer']
+            match.model = $in:['debit','order','request','offer','post']
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
