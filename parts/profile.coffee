@@ -384,17 +384,17 @@ if Meteor.isServer
             flow_volume += total_request_price
             
             
-            # topups = 
-            #     Docs.find
-            #         model:'topup'
-            #         _author_id:user_id
+            topups = 
+                Docs.find
+                    model:'topup'
+                    _author_id:user_id
             
-            # total_topup_price = 0        
-            # for topup in topups.fetch()
-            #     total_topup_price += topup.price*100
-            #     console.log 'adding', topup.price
-            # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_price+total_topup_price
-            points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_price
+            total_topup_price = 0        
+            for topup in topups.fetch()
+                total_topup_price += topup.amount*100
+                console.log 'adding', topup.amount
+            points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_price+total_topup_price
+            # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_price
             # points += total_fulfilled_price
             # points =- total_request_price
             
