@@ -2,26 +2,23 @@ template(name='post_card')
     .ui.card.pointer.post_item
         .content
             .right.floated
-                |#{price}p
+                |#{when}
             a.header(href="/post/#{_id}/view")
-                i.store.icon
+                i.newspaper.icon
                 |#{title}
-                // if private  
-                //     i.lock.icon
-                
         if image_id
             a.image(href="/post/#{_id}/view")
                 img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
             .meta
                 |by 
-                if seller.profile_image_id
-                    img.ui.avatar.compact.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                |#{seller.username}
-                // .ui.label #{when}
-    
+                if author.profile_image_id
+                    img.ui.avatar.compact.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                |#{author.username}
             .description
                 |!{blurb}
+                each tags
+                    .ui.basic.label #{this}
                 // +comments_view_small    
     // .ui.divider
 
@@ -67,54 +64,21 @@ template(name='post_view')
                     .spacer
                     +comments
                 .six.wide.column
-                    if is_author
-                        .ui.large.fluid.teal.circular.button.log_purchase(class=buy_button_class)
-                            i.cart.arrow.down.large.icon
-                            |log purchase for #{total_price}p
-                    else
-                        .ui.large.fluid.green.circular.button.buy(class=buy_button_class)
-                            i.cart.arrow.down.large.icon
-                            |buy for #{total_price}p
-                    .ui.header #{inventory} left
-                    
                     .ui.dividing.header 
-                        i.list.icon
-                        // +icolor name='activity-history' cl='ui inline image'
-                        |#{post_purchases.count} sales
+                        i.donate.icon
+                        |#{post_purchases.count} tips
+                    |tips cost 11p, give the author(s) 10p, are immediate and nonrefundable, and allow full data access and commenting
+                    .ui.fluid.button.tip
+                        |tip
                     .ui.link.selection.list.medscroll
-                        each orders
-                            a.ui.item(href="/order/#{_id}/view") 
+                        each tips
+                            a.ui.item(href="/tip/#{_id}/view") 
                                 .content
                                     .header
-                                        .ui.inline.header #{purchase_price}c
-                                        
+                                        .ui.inline.header #{total_tip_amount}10p
                                         |#{when} 
-                                        img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        |#{buyer.username}
-                                        .ui.small.header submitted: #{submitted}
-                                        .ui.small.header transfer: #{transfer}
-                                        if key_value_is 'transfer' 'delivery'
-                                            +datetime_view key='delivery_datetime' label='delivery time' direct=true
-                                            +textarea_view key='delivery_location' label='delivery location' direct=true
-                                            +textarea_view key='delivery_notes' label='delivery notes' direct=true
-                                            +text_view key='notes' label='notes' direct=true
-                                            +boolean_view key='delivery_started' direct=true
-                                            if delivery_started
-                                                div
-                                                +boolean_view key='delivery_complete' direct=true
-                                                if delivery_complete
-                                                    +image_view key='delivery_image' direct=true
-                                                
-                                                    .ui.header customer
-                                                    +boolean_view key='delivery_accepted' label='delivery accepted' direct=true                    
-                                        if key_value_is 'transfer' 'pickup'
-                                            +datetime_view key='pickup_datetime' label='pickup date time' direct=true
-                                            +textarea_view key='notes' label='notes' direct=true
-    
-                                        
-                                    // if can_edit 
-                                    //     i.
-                                    //     +icolor name='return-purchase' cl='ui mini inline image return crediter'
+                                        img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        |#{author.username}
                     
 
 template(name='post_edit')
