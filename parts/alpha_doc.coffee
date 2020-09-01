@@ -13,24 +13,21 @@ if Meteor.isClient
             console.log @
             "a#{@block_slug}_edit"
         viewing_module: ->
-            Session.equals('expand_module', @_id)
+            Session.equals('expand_module', @doc_key)
 
     Template.module_edit.events
         'click .toggle_section': ->
-            if Session.equals('expand_module', @_id)
+            if Session.equals('expand_module', @doc_key)
                 Session.set('expand_module', null)
             else
-                Session.set('expand_module', @_id)
+                Session.set('expand_module', @doc_key)
 
-        'blur .module_key': (e,t)->
-            val = t.$('.module_key').val()
+        'blur .doc_key': (e,t)->
+            val = t.$('.doc_key').val()
             console.log val
             console.log @
             doc_id = Router.current().params.doc_id
-            # Docs.update(
-            #     { _id:doc_id, "modules": sentence.sentence_id },
-            #     { $inc: { "tone.result.sentences_tone.$.weight": 1 } }
-            # )
+            Meteor.call 'update_module', doc_id, @, 'doc_key', val, ->
                 
                 
     Template.alpha_doc_edit.helpers
@@ -66,7 +63,7 @@ if Meteor.isClient
                         block_slug:@slug
                         block_title:@title
                         block_id:@_id
-                        module_key:"#{@slug}#{next_module}"
+                        doc_key:"#{@slug}#{next_module}"
 
         'click .remove_module': ->
             if confirm 'delete?'
@@ -78,8 +75,15 @@ if Meteor.isClient
         #     if confirm 'delete?'
         #         Docs.remove @_id
                 
+      
+ 
                 
-                
+Meteor.methods 
+    update_module: (doc_id, module, key, value)->
+        Docs.update(
+            { _id:doc_id, "modules": module },
+            { $set: { "modules.$.#{key}": value } }
+        )
                 
                 
                 
@@ -109,7 +113,7 @@ if Meteor.isClient
             Docs.find
                 model:'block'
 
-        modules: ->
-            Docs.find
-                model:'module'
-                parent_id: Router.current().params.doc_id                
+        # modules: ->
+        #     Docs.find
+        #         model:'module'
+        #         parent_id: Router.current().params.doc_id                

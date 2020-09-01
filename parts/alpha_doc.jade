@@ -27,29 +27,29 @@ template(name='alpha_doc_edit')
 template(name='module_edit')        
     .ui.fluid.segment
         a.ui.header.toggle_section.pointer
-            .ui.header block title: #{block_title}
-            small #{doc_key}:
+            small #{block_title}
+            | #{doc_key}:
             |#{alpha_value}
-            // if viewing_module
-            //     i.chevron.down.small.icon
-            // else
-            //     i.chevron.right.small.icon
-        // if viewing_module
-        .ui.header block slug: #{block_slug}
-        .ui.header block title: #{block_title}
-        .ui.header block id: #{block_id}
-        .ui.header module_key: #{module_key}
-        div
-        .ui.input 
-            label key
-            input.module_key(type='text')
-        +text_edit key='doc_key' direct=true
-        .ui.header key: #{doc_key}
-        .ui.small.header module type: #{block_title}
-        //- .ui.small.header block slug: #{block_slug}
-        +Template.dynamic template=alpha_field_edit
-        .ui.icon.button.remove_module
-            i.remove.icon
+            if viewing_module
+                i.chevron.down.small.icon
+            else
+                i.chevron.right.small.icon
+        if viewing_module
+            .ui.list
+                .item block slug: #{block_slug}
+                .item block title: #{block_title}
+                .item block id: #{block_id}
+                .item doc_key: #{doc_key}
+            div
+            .ui.input 
+                label key
+                input.doc_key(type='text' value=doc_key)
+            // +text_edit key='doc_key' direct=true
+            .ui.small.header module type: #{block_title}
+            //- .ui.small.header block slug: #{block_slug}
+            +Template.dynamic template=alpha_field_edit
+            .ui.icon.button.remove_module
+                i.remove.icon
 
         
         

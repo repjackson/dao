@@ -5,7 +5,7 @@ if Meteor.isClient
         ), name:'alpha'
 
     Template.registerHelper 'alpha_value', () ->
-        console.log @doc_key
+        # console.log @doc_key
         alpha_doc = Docs.findOne Router.current().params.doc_id
         alpha_doc["#{@doc_key}"]
 
