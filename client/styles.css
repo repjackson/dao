@@ -15,6 +15,12 @@ body {
     /* background: #0e0e44 !important; */
 }
 
+.tone_item {
+    transition: all .5s ease !important;
+}
+
+
+
 .adventure-vid {
     display: -webkit-box;
     display: -webkit-flex;

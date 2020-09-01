@@ -1,5 +1,5 @@
 NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
-# ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3')
+ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3')
 # VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3')
 # PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3')
 # TextToSpeechV1 = require('ibm-watson/text-to-speech/v1')
@@ -25,12 +25,12 @@ natural_language_understanding = new NaturalLanguageUnderstandingV1(
     })
     url: Meteor.settings.private.language.url)
 
-# tone_analyzer = new ToneAnalyzerV3(
-#     version: '2017-09-21'
-#     authenticator: new IamAuthenticator({
-#         apikey: Meteor.settings.private.tone.apikey
-#     })
-#     url: Meteor.settings.private.tone.url)
+tone_analyzer = new ToneAnalyzerV3(
+    version: '2017-09-21'
+    authenticator: new IamAuthenticator({
+        apikey: Meteor.settings.private.tone.apikey
+    })
+    url: Meteor.settings.private.tone.url)
 
 
 # visual_recognition = new VisualRecognitionV3({
@@ -54,20 +54,20 @@ Meteor.methods
         # console.log mode
         # if doc.html or doc.body
         #     # stringed = JSON.stringify(doc.html, null, 2)
-        if mode is 'html'
-            params =
-                toneInput:doc["#{key}"]
-                content_type:'text/html'
-        if mode is 'text'
-            params =
-                toneInput: { 'text': doc.body }
-                contentType: 'application/json'
+        # if mode is 'html'
+        #     params =
+        #         toneInput:doc.description
+        #         content_type:'text/html'
+        # if mode is 'text'
+        params =
+            toneInput: { 'text': doc.analyzed_text }
+            contentType: 'application/json'
         # console.log 'params', params
         tone_analyzer.tone params, Meteor.bindEnvironment((err, response)->
             if err
                 console.log err
             else
-                # console.dir response
+                console.dir response
                 Docs.update { _id: doc_id},
                     $set:
                         tone: response
@@ -151,6 +151,7 @@ Meteor.methods
         switch mode
             when 'html'
                 # parameters.html = doc["#{key}"]
+                parameters.returnAnalyzedText = true
                 parameters.html = doc.description
             when 'text'
                 parameters.text = doc["#{key}"]
@@ -190,7 +191,7 @@ Meteor.methods
                 # console.log(JSON.stringify(response, null, 2));
                 # console.log 'adding watson info', doc.title
                 response = response.result
-                console.log response
+                # console.log response
                 # console.log 'lowered keywords', lowered_keywords
                 # if Meteor.isDevelopment
                 #     console.log 'categories',response.categories

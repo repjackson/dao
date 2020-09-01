@@ -20,6 +20,7 @@ template(name='small_sentiment')
         .progress
 //- 
 template(name='doc_emotion') 
+    .spacer
     // .ui.dividing.header 
     //     | emotion
     //- with watson.emotion
@@ -49,10 +50,8 @@ template(name='doc_emotion')
     span.ui.large.red.text(class="{{calculated_size anger_percent}}") {{ to_percent anger_percent }}% anger 
         |&nbsp;
     //- .rounded(class=omega_dark_mode_class style="height:7px;width:{{to_percent anger_percent}}%;background-color:red" title="{{to_percent anger_percent}}% anger")
-    
-//- 
-//- 
-//- 
+    .spacer
+
 template(name='call_watson')
     .ui.circular.button.autotag
         i.chess.icon
@@ -66,7 +65,7 @@ template(name='call_visual')
 template(name='keywords')
     .ui.small.grey.header 
         |#{watson.keywords.length} keywords
-    .ui.two.column.stackable.grid
+    .ui.three.column.stackable.grid
         each watson.keywords
             .ui.column
                 span.large120(class="{{calculated_size 'relevance'}}" title="{{ to_percent relevance }}% relevant") #{text}
@@ -80,15 +79,15 @@ template(name='keywords')
                     if emotion
                         with emotion
                             span {{ to_percent sadness }}% sad
-                                .rounded.inverted(style="height:5px;width:{{to_percent sadness}}%;background-color:blue" title="{{to_percent sadness}}% sad")
+                                .rounded(style="height:5px;width:{{to_percent sadness}}%;background-color:blue" title="{{to_percent sadness}}% sad" class=currentUser.invert_class)
                             span {{ to_percent joy }}% joy
-                                .rounded.inverted(style="height:5px;width:{{to_percent joy}}%;background-color:green" title="{{to_percent joy}}% sadness")
+                                .rounded(style="height:5px;width:{{to_percent joy}}%;background-color:green" title="{{to_percent joy}}% sadness" class=currentUser.invert_class)
                             span {{ to_percent disgust }}% disgust
-                                .rounded.inverted(style="height:5px;width:{{to_percent disgust}}%;background-color:orange" title="{{to_percent disgust}}% disgust")
+                                .rounded(style="height:5px;width:{{to_percent disgust}}%;background-color:orange" title="{{to_percent disgust}}% disgust" class=currentUser.invert_class)
                             span {{ to_percent fear }}% fear
-                                .rounded.inverted(style="height:5px;width:{{to_percent fear}}%;background-color:black" title="{{to_percent fear}}% fear")
+                                .rounded(style="height:5px;width:{{to_percent fear}}%;background-color:black" title="{{to_percent fear}}% fear" class=currentUser.invert_class)
                             span {{ to_percent anger }}% anger
-                                .rounded.inverted(style="height:5px;width:{{to_percent anger}}%;background-color:red" title="{{to_percent anger}}% anger")
+                                .rounded(style="height:5px;width:{{to_percent anger}}%;background-color:red" title="{{to_percent anger}}% anger" class=currentUser.invert_class)
 
 
 
@@ -96,7 +95,7 @@ template(name='keywords')
 template(name='entities')
     .ui.grey.header 
         |#{watson.entities.length} entities
-    .ui.two.column.stackable.grid
+    .ui.three.column.stackable.grid
         each watson.entities
             .ui.column
                 .ui.small.grey.header #{type}
@@ -118,15 +117,15 @@ template(name='entities')
                 if emotion
                     with emotion
                         span {{ to_percent sadness }}% sad
-                            .rounded.inverted(style="height:5px;width:{{to_percent sadness}}%;background-color:blue" title="{{to_percent sadness}}% sad")
+                            .rounded(style="height:5px;width:{{to_percent sadness}}%;background-color:blue" title="{{to_percent sadness}}% sad" class=currentUser.invert_class)
                         span {{ to_percent joy }}% joy
-                            .rounded.inverted(style="height:5px;width:{{to_percent joy}}%;background-color:green" title="{{to_percent joy}}% sadness")
+                            .rounded(style="height:5px;width:{{to_percent joy}}%;background-color:green" title="{{to_percent joy}}% sadness" class=currentUser.invert_class)
                         span {{ to_percent disgust }}% disgust
-                            .rounded.inverted(style="height:5px;width:{{to_percent disgust}}%;background-color:orange" title="{{to_percent disgust}}% disgust")
+                            .rounded(style="height:5px;width:{{to_percent disgust}}%;background-color:orange" title="{{to_percent disgust}}% disgust" class=currentUser.invert_class)
                         span {{ to_percent fear }}% fear
-                            .rounded.inverted(style="height:5px;width:{{to_percent fear}}%;background-color:black" title="{{to_percent fear}}% fear")
+                            .rounded(style="height:5px;width:{{to_percent fear}}%;background-color:black" title="{{to_percent fear}}% fear" class=currentUser.invert_class)
                         span {{ to_percent anger }}% anger
-                            .rounded.inverted(style="height:5px;width:{{to_percent anger}}%;background-color:red" title="{{to_percent anger}}% anger")
+                            .rounded(style="height:5px;width:{{to_percent anger}}%;background-color:red" title="{{to_percent anger}}% anger" class=currentUser.invert_class)
 
 
 
@@ -261,10 +260,10 @@ template(name='consumption_preferences')
 //- 
 //- 
 template(name='tone')
-    //- h3 Tone
-    //- .ui.horizontal.list
-    //-     each tone.result.document_tone.tones
-    //-         .item #{tone_id} {{ to_percent score }}%
+    h3 tone
+    .ui.horizontal.list
+        each tone.result.document_tone.tones
+            .item #{tone_id} {{ to_percent score }}%
     .ui.large.list
         each tone.result.sentences_tone
             .item
@@ -275,13 +274,13 @@ template(name='tone')
                     //- i.chevron.down.link.grey.large.icon.downvote_sentence
                     |{{lowered text}}
                     //- .content
-                    //- .header(title="#{sentence_id}") {{lowered text}}
-                    //- |weight:#{weight}
-                    //- each tones
-                    //-     //- .ui.basic.small.circular.label(class="{{calculated_size 'score'}}") 
-                    //-     span.ui.grey.small.text
-                    //-         |#{tone_id} &nbsp;
-                        //- | {{ to_percent score }}% 
+                    // - .header(title="#{sentence_id}") {{lowered text}}
+                    // - |weight:#{weight}
+                    each tones
+                        .ui.basic.small.circular.label(class="{{calculated_size 'score'}}") 
+                            span.ui.grey.small.text
+                                |#{tone_id} &nbsp;
+                            | {{ to_percent score }}% 
     // unless tone                
     //- #call_tone.ui.icon.button
     //-     i.refresh.icon
@@ -289,7 +288,7 @@ template(name='tone')
 //- 
 //- 
 template(name='watson_view')
-    //- +tone
+    // +tone
     +doc_sentiment
     +doc_emotion
     .ui.stackable.grid 

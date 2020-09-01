@@ -23,6 +23,7 @@ if Meteor.isClient
         'click .autotag': ->
             console.log @
             Meteor.call 'call_watson', Router.current().params.doc_id, 'html', 'html', ->
+                Meteor.call 'call_tone', Router.current().params.doc_id, 'html', 'html', ->
 
 
     Template.home.onCreated ->
@@ -64,6 +65,20 @@ if Meteor.isClient
             else
                 Session.set('sort_direction', 1)
 
+
+    Template.tone.events
+        # 'click .upvote_sentence': ->
+        'click .tone_item': ->
+            # console.log @
+            doc_id = Docs.findOne()._id
+            if @weight is 3
+                Meteor.call 'reset_sentence', doc_id, @, ->
+            else
+                Meteor.call 'upvote_sentence', doc_id, @, ->
+        # 'click .downvote_sentence': ->
+        #     # console.log @
+        #     Meteor.call 'downvote_sentence', omega.selected_doc_id, @, ->
+
             
     Template.sort_button.helpers
         is_selected: -> 
@@ -73,6 +88,22 @@ if Meteor.isClient
         sort_button_class: ->
             if Session.equals('sort_key', @key) then 'black' else 'basic'
     Template.home.helpers
+        selected_tags_plural: -> selected_tags.array().length > 1
+        one_post: -> Docs.find().count() is 1
+    
+        two_posts: -> Docs.find().count() is 2
+        three_posts: -> Docs.find().count() is 3
+        four_posts: -> Docs.find().count() is 4
+        five_posts: -> Docs.find().count() is 5
+        six_posts: -> Docs.find().count() is 6
+        seven_posts: -> Docs.find().count() is 7
+        eight_posts: -> Docs.find().count() is 8
+        nine_posts: -> Docs.find().count() is 9
+        ten_posts: -> Docs.find().count() is 10
+        more_than_ten: -> Docs.find().count() > 10
+        one_result: ->
+            Docs.find().count() is 1
+    
         show_to: ->
             selected_sellers.array().length > 0 or seller_results.find({}).count() > 0
     

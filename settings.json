@@ -10,6 +10,14 @@
 		"stripe_live_secret": "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",
 		"cloudinary_key": "266883216256175",
 		"cloudinary_secret": "UeQl6B1CpdQKCFTuAhd1CuMp1js",
+		"tone": {
+            "apikey": "pIDLJyNdM8r4AB0lLmMNdGZtPSWUD3wXQfmXFBWxJ_l-",
+            "iam_apikey_description": "Auto-generated for key e64fad1b-3834-4775-baab-3e1dbaa6d62f",
+            "iam_apikey_name": "Auto-generated service credentials",
+            "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+            "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/34a2c275aeff460081c2074ab5abe5c6::serviceid:ServiceId-fb595bbc-0851-4600-b24a-ad5907094a81",
+            "url": "https://api.us-south.tone-analyzer.watson.cloud.ibm.com/instances/37f08ca3-6c5b-439e-8270-78d96b54d635"
+		},
 	    "language": {
 	        "apikey": "WfilOI8O3M5n3cbU8byEczW_hctUm4viZDVaBSV-Gju3",
 	        "iam_apikey_description": "Auto-generated for key 4149ce4a-7fdb-4481-9c49-92493045c5f8",

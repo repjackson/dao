@@ -37,24 +37,37 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .ten.wide.column.scrolling
+                .eleven.wide.column.scrolling
                     .ui.center.aligned.header 
                         |#{title}
-                    if youtube_id
-                        +youtube_view key='youtube_id' direct=true
-                    .f13
-                        |!{description}
-                    // a.ui.header(href="/user/#{target.username}")
-                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                    //     |#{target.username}
+                    
+                    +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
+                    +session_edit_value_button key='view_post_section' value='tone' label='tone' icon='smile'
+                    +session_edit_value_button key='view_post_section' value='analysis' label='analysis' icon='dna'
+                    +session_edit_value_button key='view_post_section' value='comments' label='comments' icon='chat'
+                    +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
+                    if session_key_value_is 'view_post_section' 'content'
+                        if youtube_id
+                            +youtube_view key='youtube_id' direct=true
+                        .f13
+                            |!{description}
+                        // a.ui.header(href="/user/#{target.username}")
+                        //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        //     |#{target.username}
+                    if session_key_value_is 'view_post_section' 'tone'
+                        +tone
+                    if session_key_value_is 'view_post_section' 'analysis'
+                        +watson_view
+                    if session_key_value_is 'view_post_section' 'comments'
+                        +comments
+                    if session_key_value_is 'view_post_section' 'tags'
+                        .spacer
+                        i.large.tag.icon
+                        each tags 
+                            .ui.basic.large.label #{this}
+                        .spacer
                     .spacer
-                    i.large.tag.icon
-                    each tags 
-                        .ui.basic.large.label #{this}
-                    .spacer
-                    .spacer
-                    +comments
-                .six.wide.column.scrolling
+                .five.wide.column.scrolling
                     // .ui.inline.header 
                     //     small post: 
                     if can_edit
@@ -98,17 +111,22 @@ template(name='post_view')
                                                 |{{home_long_date _timestamp}} 
                                                 div
                                                 |#{when} 
-                    if watson 
-                        +watson_view
+                    // if watson 
+                    //     +watson_view
                     +print_this
-                    
+                 
+template(name='post_section_button')                 
+    .ui.circular.compact.button 
+        if icon 
+            i.icon(class=icon)
+        |#{label}
 
 template(name='post_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
                 .four.wide.column
-                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save')
+                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit post:
