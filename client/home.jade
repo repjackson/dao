@@ -15,14 +15,14 @@ template(name='home')
                     i.search.icon
                     input.search_title(type='text' autofocus='' placeholder='title')
                 // div
+                if selected_tags
+                    a#clear_tags.ui.black.icon.compact.large.button.select_term
+                        i.remove.icon
+                    each selected_tags
+                        a.unselect_tag.ui.black.compact.large.button.select_termn
+                            strong #{this}
                 +session_boolean_toggle key='view_tags' label='tags' icon='large tag'
                 if session_is 'view_tags'
-                    if selected_tags
-                        a#clear_tags.ui.black.icon.compact.large.button.select_term
-                            i.remove.icon
-                        each selected_tags
-                            a.unselect_tag.ui.black.compact.large.button.select_termn
-                                strong #{this}
                     each tag_results
                         a.ui.large.basic.label.select_tag.select_term(href='#')
                             strong #{name}

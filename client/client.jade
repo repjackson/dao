@@ -50,8 +50,7 @@ template(name='layout')
         +left_sidebar
         +right_sidebar
                 
-        // #main_area.global_container.pusher(class='')
-        #main_area.global_container.pusher
+        #main_area.global_container.pusher(class=currentUser.invert_class)
             +yield
             // .scrolling
         // if currentUser

@@ -122,7 +122,6 @@ template(name='post_edit')
                         |#{_author.username}
                     if is_admin
                         +single_user_edit key='_author_id' key2='_author_username' direct=true
-                    +text_edit key='title' icon='header' direct=true
                     div
                     // +boolean_edit key='has_image' label='image' direct=true
                     // if has_image
@@ -132,6 +131,7 @@ template(name='post_edit')
                     // if private
                     //     +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
                 .twelve.wide.column
+                    +text_edit key='title' icon='header' direct=true
                     div
                     +html_edit key='description' label='description' direct=true
                     div

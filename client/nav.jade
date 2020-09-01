@@ -1,7 +1,7 @@
 template(name='nav')
     // .ui.fluid.fixed.menu.topnav(
     // .ui.fluid.borderless.attached.menu.topnav(class='')
-    .ui.fluid.attached.borderless.menu.topnav
+    .ui.fluid.attached.borderless.menu.topnav(class=currentUser.invert_class)
         a.icon.item.toggle_sidebar
             i.large.bars.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
@@ -39,6 +39,30 @@ template(name='nav')
                     |login
             
             
+template(name='topbar')
+    .ui.fluid.large.attached.segment(style="background-color:#{currentUser.theme_color};" class=currentUser.invert_class)
+        .ui.middle.aligned.divided.list
+            each recent_alerts
+                +recent_alert
+        a.ui.icon.attached.basic.inverted.button.item.close_topbar(href="/inbox")
+        a.ui.icon.attached.basic.button.item.close_topbar(href="/inbox")
+            i.inbox.large.icon
+            |inbox
+            
+
+template(name='recent_alert')        
+    .item.alert
+        .right.floated.content
+            i.circular.eye.link.large.icon.mark_read(title='mark read')
+        img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+        .content
+            .header
+                |#{description} 
+            .description #{author.name} #{made_when}
+            
+
+            
+            
 template(name='add')
     .ui.basic.center.aligned.segment
         a.ui.basic.huge.circular.button.debit
@@ -57,40 +81,48 @@ template(name='add')
             
             
 template(name='right_sidebar')
-    .ui.right.sidebar.vertical.borderless.menu(class='')
+    // .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
+    .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'user_dashboard'}}")
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'user_dashboard'}}")
             | dashboard (#{currentUser.points}p)
             i.large.dashboard.icon
         
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
             | #{currentUser.total_credit_amount}p received
             i.large.chevron.down.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActiveRoute 'user_sent'}}")
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActiveRoute 'user_sent'}}")
             | #{currentUser.total_debit_amount}p sent
             i.large.chevron.up.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActiveRoute 'user_requests'}}")
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActiveRoute 'user_requests'}}")
             | requests
             i.large.concierge.bell.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
             | orders
             i.large.reciept.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
             | offers
             i.large.store.icon
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
             | #{currentUser.credit} credit
             i.large.dollar.icon
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}")
         //     | chat
         //     i.chat.icon
         .ui.divider
-        a.item.toggle_rightbar(href="/user/#{currentUser.username}/edit" title='edit your account')
+        a.item.toggle_nightmode.zoom.toggle_rightbar(href="#")
+            i.yin.yang.large.icon
+            if currentUser.invert_class.length
+                |yin
+            else
+                |yang
+
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/edit" title='edit your account')
             i.cog.large.icon
             |settings
-        a.item.logout(href="#" class="{{isActiveRoute 'user_messages'}}" )
+        a.item.zoom.logout(href="#" class="{{isActiveRoute 'user_messages'}}" )
             |logout
             if is_logging_out
                 i.refresh.loading.icon
@@ -100,7 +132,7 @@ template(name='right_sidebar')
 
 
 template(name='left_sidebar')
-    .ui.left.sidebar.vertical.accordion.menu(class='')
+    .ui.left.sidebar.vertical.accordion.menu(class=currentUser.invert_class)
         // a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One
@@ -110,45 +142,45 @@ template(name='left_sidebar')
                 |posts
                 i.dropdown.icon
             .content
-                .item.toggle_sidebar.top_earned top earned
-                .item.toggle_sidebar.newest_posts newest
-                .item.toggle_sidebar.my_posts yours
+                .item.zoom.toggle_sidebar.top_earned top earned
+                .item.zoom.toggle_sidebar.newest_posts newest
+                .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
             .title
                 i.shop.large.icon
                 |offers
                 i.dropdown.icon
             .content
-                .item.toggle_sidebar.top_earned most ordered
-                .item.toggle_sidebar.most_recent_offers newest
-                .item.toggle_sidebar.my_posts yours
+                .item.zoom.toggle_sidebar.top_earned most ordered
+                .item.zoom.toggle_sidebar.most_recent_offers newest
+                .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
             .title
                 i.concierge.bell.large.icon
                 |requests
                 i.dropdown.icon
             .content
-                .item.toggle_sidebar.top_earned unclaimed
-                .item.toggle_sidebar.most_recent_offers newest
-                .item.toggle_sidebar.my_posts yours
+                .item.zoom.toggle_sidebar.top_earned unclaimed
+                .item.zoom.toggle_sidebar.most_recent_offers newest
+                .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
             .title
                 i.calendar.large.icon
                 |events
                 i.dropdown.icon
             .content
-                .item.toggle_sidebar.top_earned unclaimed
-                .item.toggle_sidebar.most_recent_offers newest
-                .item.toggle_sidebar.my_posts yours
+                .item.zoom.toggle_sidebar.top_earned unclaimed
+                .item.zoom.toggle_sidebar.most_recent_offers newest
+                .item.zoom.toggle_sidebar.my_posts yours
         if is_eric
-            a.item.toggle_dev.toggle_sidebar
+            a.item.zoom.toggle_dev.toggle_sidebar
                 |toggle dev
                 if is_dev
                     i.code.blue.large.icon
                 else
                     i.code.large.icon
         if is_in_admin
-            a.item.toggle_admin.toggle_sidebar
+            a.item.zoom.toggle_admin.toggle_sidebar
                 |toggle admin
                 if is_admin
                     i.shield.blue.large.icon

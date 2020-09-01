@@ -1,6 +1,6 @@
 template(name='profile_layout')
     +nav
-    .ui.bottom.attached.pushable.segment
+    .ui.bottom.attached.pushable.segment(class=currentUser.invert_class)
         // +top_sidebar
         +left_sidebar
         +right_sidebar
@@ -11,10 +11,10 @@ template(name='profile_layout')
                     .three.wide.column
                         span.mobile.only
                             a(href="/user/#{username}/")
-                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
+                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         span.mobile.hidden
                             a(href="/user/#{username}/")
-                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
                         a.ui.big.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
                         if is_admin
@@ -172,7 +172,7 @@ template(name='user_sale_card')
     .ui.card
         if image_id
             a(href="/order/#{_id}/view")
-                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}")
+                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
         .content.zoom.pointer
             a.header(href="/order/#{_id}/view")
                 |#{price}pts: #{title}
@@ -186,7 +186,7 @@ template(name='user_offer_card')
     .ui.card
         if image_id
             a(href="/offer/#{_id}/view")
-                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}")
+                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
         .content.zoom.pointer
             a.header(href="/offer/#{_id}/view")
                 |#{price}pts: #{title}
@@ -198,12 +198,12 @@ template(name='user_offer_card')
 template(name='user_credit_segment')
     .ui.segment.user_credit_segment.pointer.zoom
         if image_id
-            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}")
+            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .header
             strong #{amount}pt 
             // |from 
             if author.profile_image_id
-                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=300 gravity='face' crop='fill'}}")
+                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{_author.username}
         small #{when}
         div
@@ -216,12 +216,12 @@ template(name='user_credit_segment')
 template(name='user_debit_segment')
     .ui.segment.user_debit_segment.pointer.zoom
         if image_id
-            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}")
+            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .header
             strong #{amount}pt
             | to 
             if recipient.profile_image_id
-                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=300 gravity='face' crop='fill'}}")
+                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{recipient.username}
         small #{when}
         div
