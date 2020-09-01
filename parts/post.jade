@@ -1,5 +1,5 @@
 template(name='post_card')
-    .ui.card.pointer.post_item
+    .ui.card.zoom.pointer.view_post
         .content
             .right.floated
                 |#{when}
@@ -16,9 +16,15 @@ template(name='post_card')
                     img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 |#{_author.username}
             // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
-            |#{tip_count} tips
 
             .description
+                .ui.basic.label
+                    i.donate.icon
+                    |#{tip_count} tips
+                .ui.basic.label
+                    i.chat.outline.icon
+                    |#{comment_count} comments
+                
                 |!{blurb}
                 each tags
                     .ui.basic.label #{this}
@@ -49,26 +55,26 @@ template(name='post_view')
                     +array_view key='location_tags' label='location_tags' direct=true
                     div
                     // +single_user_view key='_author_id' label='author' direct=true
-                    +multi_user_view key='coauthor_ids' label='coauthors' direct=true
-                    .ui.header #{views}
-                .eight.wide.column
+                    // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
+                    .ui.header #{views} views
+                    .ui.header #{total_points}p total generated
+                .eight.wide.column.scrolling
                     .f13
                         |!{description}
                     // a.ui.header(href="/user/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
                     .spacer
-                    i.large.tags.icon
+                    i.large.tag.icon
                     each tags 
                         .ui.basic.large.label #{this}
                     .spacer
                     .spacer
                     +comments
                 .four.wide.column
-                    .ui.dividing.header 
+                    .ui.dividing.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
                         i.coins.icon
-                        |#{tip_count} tips totaling #{tip_total}p
-                    |tips cost 11p, give the author(s) 10p, are immediate and nonrefundable, and allow full data access and commenting
+                        |#{tip_total}p tipped
                     .ui.green.fluid.button.tip
                         i.donate.icon
                         |tip
@@ -79,6 +85,8 @@ template(name='post_view')
                                     .ui.inline.header #{tipper_tips.count}
                                     img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                     |#{username}
+                                    each three_tags
+                                        .ui.small.basic.label #{this}
                                     i.dropdown.icon
                                 .content
                                     .ui.list
@@ -102,36 +110,34 @@ template(name='post_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .sixteen.wide.column
+                .four.wide.column
                     a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit post:
                         |#{title}
-                        // if private  
-                        //     i.lock.icon
-                    i.large.remove.link.circular.icon.delete_post(title='delete post')
-            .row 
-                .four.wide.column
+                    i.remove.link.circular.icon.delete_post(title='delete post')
                     .ui.header 
                         small author
                         |#{_author.username}
+                    if is_admin
+                        +single_user_edit key='_author_id' key2='_author_username' direct=true
                     +text_edit key='title' icon='header' direct=true
                     div
+                    // +boolean_edit key='has_image' label='image' direct=true
+                    // if has_image
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
                     // +boolean_edit key='private' direct=true
                     // if private
                     //     +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
-                .eight.wide.column
+                .twelve.wide.column
                     div
                     +html_edit key='description' label='description' direct=true
                     div
-                    +boolean_edit key='has_image' label='image' direct=true
-                    if has_image
-                        +image_edit key='image_id' label='image' direct=true
-                    div 
-                    +array_edit key='tags' label='tags' icon='tags' direct=true
-                    div
-                .four.wide.column
-                    |coauthors split revenue evenly
-                    +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
+                    +smart_tagger
+                    // +array_edit key='tags' label='tags' icon='tags' direct=true
+                // .four.wide.column
+                    // |coauthors split revenue evenly
+                    // +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
                     

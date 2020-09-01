@@ -158,7 +158,7 @@ template(name='offer_edit')
                     if has_image
                         +image_edit key='image_id' label='image' direct=true
                     div 
-                    +array_edit key='tags' label='tags' icon='tags' direct=true
+                    +smart_tagger
                     div
                     +boolean_edit key='has_location' label='location' direct=true
                     if has_location

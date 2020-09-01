@@ -6,10 +6,10 @@ template(name='home')
                     // #clear_models.ui.black.icon.compact.large.button
                     //     i.remove.icon
                     each selected_models
-                        .unselect_model.ui.black.compact.large.circular.button
+                        .unselect_model.ui.black.compact.large.circular.button.select_term
                             strong #{this}
                 each model_results
-                    .ui.compact.large.circular.button.select_model
+                    .ui.compact.large.circular.button.select_term.select_model
                         strong #{this.name}
                 .ui.left.icon.input 
                     i.search.icon
@@ -31,10 +31,10 @@ template(name='home')
                         i.user.large.icon
                         |from
                 if selected_buyers
-                    // #clear_buyers.ui.black.icon.compact.large.circular.button
+                    // #clear_buyers.ui.black.icon.compact.large.circular.button.select_term
                     //     i.remove.icon
                     each selected_buyers
-                        // .unselect_buyer.ui.black.compact.large.circular.button
+                        // .unselect_buyer.ui.black.compact.large.circular.button.select_term
                         a.ui.big.black.image.label.unselect_buyer
                             if selected_user.profile_image_id
                                 img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
@@ -54,10 +54,10 @@ template(name='home')
                         i.user.outline.large.icon
                         |to
                 if selected_sellers
-                    // #clear_sellers.ui.black.icon.compact.large.circular.button
+                    // #clear_sellers.ui.black.icon.compact.large.circular.button.select_term
                     //     i.remove.icon
                     each selected_sellers
-                        // .unselect_seller.ui.black.compact.large.circular.button
+                        // .unselect_seller.ui.black.compact.large.circular.button.select_term
                         a.ui.big.black.image.label.unselect_seller
                             if selected_user.profile_image_id
                                 img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
@@ -77,10 +77,10 @@ template(name='home')
                     i.question.large.icon
                     |status
                 if selected_statuses
-                    // #clear_statuses.ui.black.icon.compact.large.circular.button
+                    // #clear_statuses.ui.black.icon.compact.large.circular.button.select_term
                     //     i.remove.icon
                     each selected_statuses
-                        // .unselect_status.ui.black.compact.large.circular.button
+                        // .unselect_status.ui.black.compact.large.circular.button.select_term
                         a.ui.big.black.image.label.unselect_status
                             if selected_user.profile_image_id
                                 img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
@@ -94,9 +94,9 @@ template(name='home')
                             strong #{name}
                         else
                             |none
-                div        
+                // div        
                 unless one_result
-                    div
+                    // div
                     i.large.sort.icon(title='sort')
                     +sort_button key='_timestamp' label='added' icon='clock'
                     +sort_button key='title' label='title' 

@@ -140,7 +140,7 @@ template(name='request_edit')
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
-                    +array_edit key='tags' label='tags' icon='tags' direct=true
+                    +smart_tagger
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                 .four.wide.column
                     .ui.header your points: #{currentUser.points}

@@ -15,19 +15,19 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
 
     Template.post_view.onRendered ->
+        Meteor.call 'log_view', Router.current().params.doc_id
         Meteor.setTimeout ->
             $('.ui.accordion').accordion()
         , 2000
 
+    Template.post_card.events
+        'click .view_post': ->
+            Router.go "/post/#{@_id}/view"
+
     Template.post_view.events
         'click .tip': ->
-            Docs.insert     
-                model:'tip'
-                post_id:@_id
-            Docs.update @_id,
-                $addToSet:
-                    tipper_ids:Meteor.userId()
-                    tipper_usernames:Meteor.user().username
+            Meteor.call 'tip', @_id, ->
+                
             Meteor.call 'calc_post_stats', @_id, ->
             Meteor.call 'calc_user_stats', Meteor.userId(), ->
             $('body').toast({
@@ -67,6 +67,15 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.methods 
+        tip: (post_id)->
+            Docs.insert     
+                model:'tip'
+                post_id:post_id
+            Docs.update post_id,
+                $addToSet:
+                    tipper_ids:Meteor.userId()
+                    tipper_usernames:Meteor.user().username
+            
         calc_post_stats: (post_id)->
             post = Docs.findOne post_id
             tip_total = 0
@@ -75,16 +84,27 @@ if Meteor.isServer
                 Docs.find 
                     model:'tip'
                     post_id:post_id
+            comment_cur = 
+                Docs.find 
+                    model:'comment'
+                    parent_id:post_id
             # for tip in tip_cur.fetch()
             #     console.log tip
             
             tip_total = 10*tip_cur.count()
             
+            total_points = comment_cur.count()+tip_total
+            
+            
             Docs.update post_id,
                 $set:
                     tip_total:tip_total
                     tip_count:tip_cur.count()
-            
+                    comment_count:comment_cur.count()
+                    total_points:total_points
+                    
+                    
+                    
     Meteor.publish 'post_tips', (post_id)->
         Docs.find   
             model:'tip'

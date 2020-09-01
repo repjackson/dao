@@ -50,9 +50,12 @@ Docs.helpers
 Meteor.users.helpers
     email_address: -> if @emails and @emails[0] then @emails[0].address
     email_verified: -> if @emails and @emails[0] then @emails[0].verified
-    first_five_tags: ->
+    five_tags: ->
         if @tags
             @tags[..5]
+    three_tags: ->
+        if @tags
+            @tags[..3]
     has_points: -> @points > 0
 
 

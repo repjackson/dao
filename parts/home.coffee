@@ -8,10 +8,10 @@ if Meteor.isClient
     
     Template.body.events
         'click a:not(.select_term)': ->
-            unless Meteor.user().invert_class is 'invert'
-                $('.global_container')
-                .transition('fade out', 200)
-                .transition('fade in', 200)
+            # unless Meteor.user().invert_class is 'invert'
+            $('.global_container')
+            .transition('fade out', 200)
+            .transition('fade in', 200)
 
     Router.route '/', (->
         @layout 'layout'
@@ -71,8 +71,6 @@ if Meteor.isClient
     
         show_from: ->
             selected_buyers.array().length > 0 or buyer_results.find({}).count() > 0
-    
-    
     
         can_debit: -> Meteor.user().points > 0
         docs: ->
@@ -160,8 +158,6 @@ if Meteor.isClient
             Router.go "/debit/#{@_id}/view"
         'click .view_request': ->
             Router.go "/request/#{@_id}/view"
-        'click .view_offer': ->
-            Router.go "/offer/#{@_id}/view"
 
         # 'click .debit': ->
         #     new_debit_id =
