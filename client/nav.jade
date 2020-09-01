@@ -21,21 +21,21 @@ template(name='nav')
         .item
             +status    
         .right.menu
-            if unread_count
-                a.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    i.large.bell.icon
-                    if unread_count
-                        |#{unread_count}
-            else
-                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                    i.large.outline.bell.icon
-            if is_dev 
-                .icon.item.toggle_dev
-                    i.large.code.icon
-            if is_admin
-                .icon.item.toggle_admin
-                    i.large.shield.icon(title='admin mode on')
             if currentUser
+                if unread_count
+                    a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                        i.large.bell.icon
+                        if unread_count
+                            |#{unread_count}
+                else
+                    a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                        i.large.outline.bell.icon
+                if is_dev 
+                    .icon.item.toggle_dev
+                        i.large.code.icon
+                if is_admin
+                    .icon.item.toggle_admin
+                        i.large.shield.icon(title='admin mode on')
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                     //- i.large.user.large.icon
                     |{{money_format currentUser.points}}c
@@ -94,6 +94,9 @@ template(name='add')
         a.ui.basic.huge.circular.button.post(title='post')
             i.newspaper.large.icon
             |+ post
+        a.ui.basic.huge.circular.button.alpha(title='post')
+            i.cubes.large.icon
+            |+ alpha
 
             
             

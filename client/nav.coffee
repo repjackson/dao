@@ -86,6 +86,13 @@ Template.add.events
                 seller_id:Meteor.userId()
                 seller_username:Meteor.user().username
         Router.go "/offer/#{new_offer_id}/edit"
+    'click .alpha': ->
+        new_alpha_id =
+            Docs.insert
+                model:'alpha'
+                seller_id:Meteor.userId()
+                seller_username:Meteor.user().username
+        Router.go "/alpha/#{new_alpha_id}/edit"
 
         
 Template.nav.events

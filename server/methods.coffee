@@ -229,7 +229,7 @@ Meteor.methods
         else
             cursor = Docs.find({
                 _keys:$exists:false
-            }, { fields:{_id:1} })
+            }, { fields:{_id:1}, limit:1000 })
 
         found = cursor.count()
 
@@ -243,7 +243,7 @@ Meteor.methods
     key: (doc_id)->
         doc = Docs.findOne doc_id
         keys = _.keys doc
-
+        console.log 'keying', doc_id, doc.title
         light_fields = _.reject( keys, (key)-> key.startsWith '_' )
 
         Docs.update doc._id,
