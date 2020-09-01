@@ -82,7 +82,9 @@ template(name='post_view')
                         |#{_author.username}
                     .ui.inline.small.header #{when}
                     div
-                    +array_view key='location_tags' label='location_tags' direct=true
+                    +array_view key='location_tags' label='location tags' direct=true
+                    div
+                    +date_view key='date' label='date' direct=true
                     div
                     // +single_user_view key='_author_id' label='author' direct=true
                     // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
@@ -125,24 +127,6 @@ template(name='post_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
-                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
-                        i.checkmark.big.icon
-                    .ui.inline.large.header 
-                        small edit post:
-                        |#{title}
-                    i.remove.link.circular.icon.delete_post(title='delete post')
-                    .ui.header 
-                        small author
-                        |#{_author.username}
-                    if is_admin
-                        +single_user_edit key='_author_id' key2='_author_username' direct=true
-                    div
-                    +image_edit key='image_id' label='image' direct=true
-                    div 
-                    // +boolean_edit key='private' direct=true
-                    // if private
-                    //     +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
                 .twelve.wide.column.scrolling
                     div
                     +text_edit key='title' icon='header' direct=true
@@ -157,3 +141,24 @@ template(name='post_edit')
                     // |coauthors split revenue evenly
                     // +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
                     
+                .four.wide.column
+                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
+                        i.checkmark.big.icon
+                    .ui.inline.large.header 
+                        small edit post:
+                        |#{title}
+                    i.remove.link.circular.icon.delete_post(title='delete post')
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    .spacer
+                    +date_edit key='date' label='date' direct=true
+                    .spacer
+                    if is_admin
+                        +single_user_edit key='_author_id' key2='_author_username' direct=true
+                    div
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    // +boolean_edit key='private' direct=true
+                    // if private
+                    //     +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
