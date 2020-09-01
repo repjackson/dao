@@ -19,6 +19,12 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
 
+    Template.call_watson.events
+        'click .autotag': ->
+            console.log @
+            Meteor.call 'call_watson', Router.current().params.doc_id, 'html', 'html', ->
+
+
     Template.home.onCreated ->
         Session.setDefault 'sort_key', '_timestamp'
         Session.setDefault 'sort_direction', -1

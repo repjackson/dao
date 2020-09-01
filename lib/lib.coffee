@@ -32,6 +32,9 @@ Docs.helpers
     is_anonymous: -> @published is 0
     is_private: -> @published is -1
     is_read: -> @read_ids and Meteor.userId() in @read_ids
+    seven_tags: ->
+        if @tags
+            @tags[..7]
     upvoters: ->
         if @upvoter_ids
             upvoters = []

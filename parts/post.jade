@@ -28,7 +28,7 @@ template(name='post_card')
                     |#{comment_count} comments
                 
                 |!{blurb}
-                each tags
+                each seven_tags
                     .ui.basic.label #{this}
                 // +comments_view_small    
     // .ui.divider
@@ -37,7 +37,7 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .eight.wide.column
+                .ten.wide.column.scrolling
                     .ui.center.aligned.header 
                         |#{title}
                     if youtube_id
@@ -54,7 +54,7 @@ template(name='post_view')
                     .spacer
                     .spacer
                     +comments
-                .four.wide.column
+                .six.wide.column.scrolling
                     // .ui.inline.header 
                     //     small post: 
                     if can_edit
@@ -75,7 +75,6 @@ template(name='post_view')
                     // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
                     .ui.header #{views} views
                     .ui.header #{total_points}p total generated
-                .four.wide.column
                     .ui.dividing.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
                         i.coins.icon
                         |#{tip_total}p tipped
@@ -99,15 +98,9 @@ template(name='post_view')
                                                 |{{home_long_date _timestamp}} 
                                                 div
                                                 |#{when} 
-                                    
-                        // each tips
-                        //     a.ui.item(href="/tip/#{_id}/view") 
-                        //         .content
-                        //             .header
-                        //                 .ui.inline.header #{total_tip_amount}10p
-                        //                 |#{when} 
-                        //                 img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        //                 |#{author.username}
+                    if watson 
+                        +watson_view
+                    +print_this
                     
 
 template(name='post_edit')
@@ -132,12 +125,14 @@ template(name='post_edit')
                     // +boolean_edit key='private' direct=true
                     // if private
                     //     +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
-                .twelve.wide.column
+                .twelve.wide.column.scrolling
                     div
                     +text_edit key='title' icon='header' direct=true
                     +youtube_edit key='youtube_id' label='youtube id' direct=true
                     +html_edit key='description' label='description' direct=true
                     div
+                    if watson
+                        +watson_view
                     +smart_tagger
                     // +array_edit key='tags' label='tags' icon='tags' direct=true
                 // .four.wide.column
