@@ -37,6 +37,23 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
+                .eight.wide.column
+                    .ui.center.aligned.header 
+                        |#{title}
+                    if youtube_id
+                        +youtube_view key='youtube_id' direct=true
+                    .f13
+                        |!{description}
+                    // a.ui.header(href="/user/#{target.username}")
+                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    //     |#{target.username}
+                    .spacer
+                    i.large.tag.icon
+                    each tags 
+                        .ui.basic.large.label #{this}
+                    .spacer
+                    .spacer
+                    +comments
                 .four.wide.column
                     // .ui.inline.header 
                     //     small post: 
@@ -58,23 +75,6 @@ template(name='post_view')
                     // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
                     .ui.header #{views} views
                     .ui.header #{total_points}p total generated
-                .eight.wide.column
-                    .ui.center.aligned.header 
-                        |#{title}
-                    if youtube_id
-                        +youtube_view key='youtube_id' direct=true
-                    .f13
-                        |!{description}
-                    // a.ui.header(href="/user/#{target.username}")
-                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                    //     |#{target.username}
-                    .spacer
-                    i.large.tag.icon
-                    each tags 
-                        .ui.basic.large.label #{this}
-                    .spacer
-                    .spacer
-                    +comments
                 .four.wide.column
                     .ui.dividing.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
                         i.coins.icon

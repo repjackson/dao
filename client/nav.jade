@@ -3,22 +3,32 @@ template(name='nav')
     // .ui.fluid.borderless.attached.menu.topnav(class='')
     .ui.fluid.attached.borderless.menu.topnav(class=currentUser.invert_class)
         a.icon.item.toggle_sidebar
-            i.large.bars.icon
+            i.large.ellipsis.vertical.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
             i.big.yin.yang.icon
-        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+        a.mobile.hidden.zoom.icon.item.events(href="/" class="{{isActivePath '/'}}")
             i.large.calendar.icon
-        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+        a.mobile.hidden.zoom.icon.item.posts(href="/" class="{{isActivePath '/'}}")
             i.large.newspaper.icon
-        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+        a.mobile.hidden.zoom.icon.item.requests(href="/" class="{{isActivePath '/'}}")
             i.large.concierge.bell.icon
-        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+        a.mobile.hidden.zoom.icon.item.debits(href="/" class="{{isActivePath '/'}}")
             i.large.exchange.icon
-        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
-            i.large.hand.holding.heart.icon
+        a.mobile.hidden.zoom.icon.item.offers(href="/" class="{{isActivePath '/'}}")
+            i.large.shop.icon
+        a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
+            i.large.plus.icon
         .item
             +status    
         .right.menu
+            if unread_count
+                a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                    i.large.bell.icon
+                    if unread_count
+                        |#{unread_count}
+            else
+                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                    i.large.outline.bell.icon
             if is_dev 
                 .icon.item.toggle_dev
                     i.large.code.icon
@@ -26,19 +36,17 @@ template(name='nav')
                 .icon.item.toggle_admin
                     i.large.shield.icon(title='admin mode on')
             if currentUser
-                a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
-                    i.large.plus.icon
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                     //- i.large.user.large.icon
                     |{{money_format currentUser.points}}c
                     |&nbsp;
                     if currentUser.profile_image_id
-                        img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                        img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                     else 
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
                 a.icon.large.item.toggle_rightbar.select_term
-                    i.bars.large.icon
+                    i.ellipsis.vertical.large.icon
             else
                 a.item(href="/register" title='register')
                     i.large.user.plus.icon
@@ -147,7 +155,7 @@ template(name='left_sidebar')
         //     |One
         a.item.select_term
             .title.zoom
-                i.newspaper.large.icon
+                i.newspaper.icon
                 |posts
                 i.dropdown.icon
             .content
@@ -156,7 +164,7 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
             .title.zoom
-                i.shop.large.icon
+                i.shop.icon
                 |offers
                 i.dropdown.icon
             .content
@@ -165,7 +173,7 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
             .title.zoom
-                i.concierge.bell.large.icon
+                i.concierge.bell.icon
                 |requests
                 i.dropdown.icon
             .content
@@ -174,13 +182,22 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
             .title.zoom
-                i.calendar.large.icon
+                i.calendar.icon
                 |events
                 i.dropdown.icon
             .content
                 .item.zoom.toggle_sidebar.top_earned unclaimed
                 .item.zoom.toggle_sidebar.most_recent_offers newest
                 .item.zoom.toggle_sidebar.my_posts yours
+        a.item.select_term
+            .title.zoom
+                i.exchange.icon
+                |transfers
+                i.dropdown.icon
+            .content
+                .item.zoom.toggle_sidebar.biggest_debits biggest
+                .item.zoom.toggle_sidebar.newest_debits newest
+                .item.zoom.toggle_sidebar.my_debits yours
         if is_eric
             a.item.zoom.toggle_dev.toggle_sidebar
                 |toggle dev

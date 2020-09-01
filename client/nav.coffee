@@ -52,6 +52,9 @@ Template.right_sidebar.events
 
 
 Template.nav.helpers
+    alert_toggle_class: ->
+        if Session.get('viewing_alerts') then 'active' else ''
+
         
 Template.add.events
     'click .debit': ->
@@ -105,7 +108,40 @@ Template.nav.events
         Meteor.call 'calc_user_points', Meteor.userId()
         
         
+Template.topbar.onCreated ->
+    @autorun => Meteor.subscribe 'my_received_messages'
+    @autorun => Meteor.subscribe 'my_sent_messages'
+
 Template.nav.helpers
+    unread_count: ->
+        Docs.find( 
+            model:'message'
+            recipient_id:Meteor.userId()
+            read_ids:$nin:[Meteor.userId()]
+        ).count()
+Template.topbar.helpers
+    recent_alerts: ->
+        Docs.find 
+            model:'message'
+            recipient_id:Meteor.userId()
+            read_ids:$nin:[Meteor.userId()]
+        , sort:_timestamp:-1
+        
+Template.recent_alert.events
+    'click .mark_read': (e,t)->
+        # console.log @
+        # console.log $(e.currentTarget).closest('.alert')
+        # $(e.currentTarget).closest('.alert').transition('slide left')
+        Docs.update @_id, 
+            $addToSet:read_ids:Meteor.userId()
+        # Meteor.setTimeout ->
+        # , 500
+        
+Template.topbar.events
+    'click .close_topbar': ->
+        Session.set('viewing_alerts', false)
+
+        
         
 Template.left_sidebar.onCreated ->
     Meteor.setTimeout ->

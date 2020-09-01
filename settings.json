@@ -9,7 +9,15 @@
 		"stripe_test_secret": "sk_test_6mQaKRMSWBoLX8HeBtNMvI6300QuPWkxYe",
 		"stripe_live_secret": "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",
 		"cloudinary_key": "266883216256175",
-		"cloudinary_secret": "UeQl6B1CpdQKCFTuAhd1CuMp1js"
+		"cloudinary_secret": "UeQl6B1CpdQKCFTuAhd1CuMp1js",
+	    "language": {
+	        "apikey": "WfilOI8O3M5n3cbU8byEczW_hctUm4viZDVaBSV-Gju3",
+	        "iam_apikey_description": "Auto-generated for key 4149ce4a-7fdb-4481-9c49-92493045c5f8",
+	        "iam_apikey_name": "Auto-generated service credentials",
+	        "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+	        "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/1a5125f977724658a10776a2be77fa4f::serviceid:ServiceId-29fd900e-ddab-4cfa-b56c-3c7be59485c4",
+	        "url": "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/b5195ac7-a729-46ea-b099-deb37d1dc65b"
+	    }
 	},
 	"galaxy.meteor.com": {
 		"env": {
