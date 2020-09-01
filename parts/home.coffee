@@ -1,3 +1,4 @@
+
 if Meteor.isClient
     @selected_tags = new ReactiveArray []
     @selected_models = new ReactiveArray []
@@ -156,8 +157,6 @@ if Meteor.isClient
     
         'click .view_debit': ->
             Router.go "/debit/#{@_id}/view"
-        'click .view_request': ->
-            Router.go "/request/#{@_id}/view"
 
         # 'click .debit': ->
         #     new_debit_id =
@@ -202,7 +201,7 @@ if Meteor.isServer
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
-            match.tags = $in:selected_tags
+            match.tags = $all:selected_tags
         if selected_sellers.length > 0
             match.seller_username = $in:selected_sellers
         if selected_buyers.length > 0

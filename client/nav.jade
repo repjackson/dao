@@ -6,9 +6,9 @@ template(name='nav')
             i.large.bars.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
             i.big.yin.yang.icon
-        if currentUser
-            a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
-                i.large.plus.icon
+        .item
+            +status    
+
         .right.menu
             if is_dev 
                 .icon.item.toggle_dev
@@ -17,6 +17,8 @@ template(name='nav')
                 .icon.item.toggle_admin
                     i.large.shield.icon(title='admin mode on')
             if currentUser
+                a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
+                    i.large.plus.icon
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                     //- i.large.user.large.icon
                     |{{money_format currentUser.points}}c

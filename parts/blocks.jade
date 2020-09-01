@@ -34,7 +34,7 @@ template(name='smart_tagger')
                 img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{title}
     each tags
-        .ui.big.basic.circular.label
+        .ui.large.basic.circular.label
             i.delete.icon.remove_element
             |#{this}
     if suggestions.count
@@ -53,7 +53,7 @@ template(name='print_this')
         i.orange.code.icon
 
 template(name='session_boolean_toggle')
-    .ui.compact.large.button.toggle_session_key(class=calculated_class)
+    .ui.compact.large.circular.button.toggle_session_key(class=calculated_class)
         // +icolor name=icon cl='ui avatar image'
         i.icon(class=icon)
         |#{label}

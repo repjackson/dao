@@ -23,6 +23,10 @@ if Meteor.isClient
     Template.request_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
+    Template.request_card.events
+        'click .view_request': ->
+            Router.go "/request/#{@_id}/view"
+
     Template.request_view.events
         'click .claim': ->
             Docs.update Router.current().params.doc_id,

@@ -532,7 +532,7 @@ if Meteor.isClient
             if @classes
                 res += @classes
             if Session.get(@key)
-                res += ' blue'
+                res += ' black'
             else
                 res += ' basic'
 

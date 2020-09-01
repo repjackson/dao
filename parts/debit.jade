@@ -34,7 +34,7 @@ template(name='debit_edit')
         .ui.stackable.padded.grid
             .row 
                 .five.wide.column
-                    .ui.large.fluid.basic.circular.button.cancel_debit
+                    .ui.fluid.basic.circular.button.cancel_debit
                         i.large.remove.red.icon
                         |cancel
                     // .ui.segment
@@ -44,7 +44,7 @@ template(name='debit_edit')
                     //         |#{_author.username}
                     if is_admin
                         +single_user_edit key='buyer_id' key2='buyer_username' label='select buyer' icon='user outline' direct=true
-                    +single_user_edit key='seller_id' key2='seller_username' label='select seller' icon='user' direct=true
+                    +single_user_edit key='seller_id' key2='seller_username' label='recipient' icon='user' direct=true
                     +boolean_edit key='has_datetime' label='has datetime' direct=true
                     if has_datetime
                         +datetime_edit key='datetime' label='datetime' direct=true   
@@ -58,7 +58,8 @@ template(name='debit_edit')
                     +smart_tagger
                 .five.wide.center.aligned.column
                     .ui.small.grey.header 100pts = 1 credit
-                    .ui.big.header #{price}pts
+                    .ui.big.header #{price}p
+                    .ui.large.grey.header ({{money_format price}}c)
                     .ui.big.input
                         input.point_price(type='number' value=price min='1')
                     div
@@ -109,7 +110,7 @@ template(name='debit_view')
                     if tags
                         i.tags.icon
                         each tags 
-                            .ui.big.basic.circular.label #{this}
+                            .ui.large.basic.circular.label #{this}
                     +voting_full
                     .ui.small.header
                         i.clock.icon

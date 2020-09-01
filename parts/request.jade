@@ -1,15 +1,14 @@
-template(name='request_item')
-    .ui.card.pointer.request_item
+template(name='request_card')
+    .ui.card.zoom.pointer.view_request
         if image_id
-            .image
+            a.image(href="/request/#{_id}/view")
                 img.ui.rounded.image(src="{{c.url image_id width=400 height=600 crop='fill'}}")    
         .content
-            a.header(href="/request/#{_id}/view")
-                |#{title}
-                if complete
-                    i.green.checkmark.icon
-                // if private
-                //     i.large.lock.icon
+            .header #{title}
+            if complete
+                i.green.checkmark.icon
+            // if private
+            //     i.large.lock.icon
             .meta
                 |by 
                 if _author.profile_image_id
@@ -26,8 +25,6 @@ template(name='request_item')
             .description
                 |!{description}
                 +comments_view_small
-        
-        .description
 
 
 template(name='request_view')

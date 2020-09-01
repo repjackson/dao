@@ -67,8 +67,8 @@ if Meteor.isClient
                             position: 'top-end',
                             timer: 1000
                         )
-                        Meteor.call 'calc_user_stats', seller_id, ->
-                        Meteor.call 'calc_user_stats', buyer_id, ->
+                        Meteor.call 'calc_user_stats', @seller_id, ->
+                        Meteor.call 'calc_user_stats', @buyer_id, ->
 
                         Router.go "/debit/#{@_id}/view"
             )
