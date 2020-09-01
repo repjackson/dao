@@ -98,19 +98,55 @@ template(name='right_sidebar')
 
 
 template(name='left_sidebar')
-    .ui.left.sidebar.vertical.borderless.menu(class='')
+    .ui.left.sidebar.vertical.accordion.menu(class='')
         // a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One
+        a.item.select_term
+            .title
+                i.newspaper.large.icon
+                |posts
+                i.dropdown.icon
+            .content
+                .item.toggle_sidebar.top_earned top earned
+                .item.toggle_sidebar.newest_posts newest
+                .item.toggle_sidebar.my_posts yours
+        a.item.select_term
+            .title
+                i.shop.large.icon
+                |offers
+                i.dropdown.icon
+            .content
+                .item.toggle_sidebar.top_earned most ordered
+                .item.toggle_sidebar.most_recent_offers newest
+                .item.toggle_sidebar.my_posts yours
+        a.item.select_term
+            .title
+                i.concierge.bell.large.icon
+                |requests
+                i.dropdown.icon
+            .content
+                .item.toggle_sidebar.top_earned unclaimed
+                .item.toggle_sidebar.most_recent_offers newest
+                .item.toggle_sidebar.my_posts yours
+        a.item.select_term
+            .title
+                i.calendar.large.icon
+                |events
+                i.dropdown.icon
+            .content
+                .item.toggle_sidebar.top_earned unclaimed
+                .item.toggle_sidebar.most_recent_offers newest
+                .item.toggle_sidebar.my_posts yours
         if is_eric
-            a.icon.item.toggle_dev.toggle_sidebar
+            a.item.toggle_dev.toggle_sidebar
                 |toggle dev
                 if is_dev
                     i.code.blue.large.icon
                 else
                     i.code.large.icon
         if is_in_admin
-            a.icon.item.toggle_admin.toggle_sidebar
+            a.item.toggle_admin.toggle_sidebar
                 |toggle admin
                 if is_admin
                     i.shield.blue.large.icon

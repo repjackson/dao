@@ -53,8 +53,9 @@ template(name='print_this')
         i.orange.code.icon
 
 template(name='session_boolean_toggle')
-    .ui.compact.button.toggle_session_key(class=calculated_class)
-        +icolor name=icon cl='ui avatar image'
+    .ui.compact.large.button.toggle_session_key(class=calculated_class)
+        // +icolor name=icon cl='ui avatar image'
+        i.icon(class=icon)
         |#{label}
         //- if icon_view 
         //- else 

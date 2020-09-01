@@ -6,7 +6,7 @@ template(name='home')
                     // #clear_models.ui.black.icon.compact.large.button
                     //     i.remove.icon
                     each selected_models
-                        .unselect_model.ui.black.compact.large.circular.button.select_term
+                        a.unselect_model.ui.black.compact.large.circular.button.select_term
                             strong #{this}
                 each model_results
                     .ui.compact.large.circular.button.select_term.select_model
@@ -15,92 +15,85 @@ template(name='home')
                     i.search.icon
                     input.search_title(type='text' autofocus='' placeholder='title')
                 // div
-                i.tag.large.icon
-                if selected_tags
-                    a#clear_tags.ui.black.icon.compact.large.button
-                        i.remove.icon
-                    each selected_tags
-                        a.unselect_tag.ui.black.compact.large.button
-                            strong #{this}
-                each tag_results
-                    a.ui.large.basic.label.select_tag(href='#')
-                        strong #{name}
-                if show_from
-                    // div
-                    .ui.inline.header
-                        i.user.large.icon
-                        |from
-                if selected_buyers
-                    // #clear_buyers.ui.black.icon.compact.large.circular.button.select_term
-                    //     i.remove.icon
-                    each selected_buyers
-                        // .unselect_buyer.ui.black.compact.large.circular.button.select_term
-                        a.ui.big.black.image.label.unselect_buyer
-                            if selected_user.profile_image_id
-                                img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
-                            strong #{this}
-                each buyer_results
-                    // .ui.compact.large.circular.basic.button.select_buyer
-                    a.ui.large.image.basic.label.select_buyer
-                        if user_ob.profile_image_id
-                            img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
-                        if name
+                +session_boolean_toggle key='view_tags' label='tags' icon='large tag'
+                if session_is 'view_tags'
+                    if selected_tags
+                        a#clear_tags.ui.black.icon.compact.large.button.select_term
+                            i.remove.icon
+                        each selected_tags
+                            a.unselect_tag.ui.black.compact.large.button.select_termn
+                                strong #{this}
+                    each tag_results
+                        a.ui.large.basic.label.select_tag.select_term(href='#')
                             strong #{name}
-                        else
-                            |none
-                if show_to
+                +session_boolean_toggle key='view_from' label='from' icon='large user outline'
+                if session_is 'view_from'
+                    if selected_buyers
+                        // #clear_buyers.ui.black.icon.compact.large.circular.button.select_term
+                        //     i.remove.icon
+                        each selected_buyers
+                            // .unselect_buyer.ui.black.compact.large.circular.button.select_term
+                            a.ui.big.black.image.label.unselect_buyer.select_term
+                                if selected_user.profile_image_id
+                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                strong #{this}
+                    each buyer_results
+                        // .ui.compact.large.circular.basic.button.select_buyer
+                        a.ui.large.image.basic.label.select_buyer.select_term
+                            if user_ob.profile_image_id
+                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                            if name
+                                strong #{name}
+                            else
+                                |none
+                +session_boolean_toggle key='view_to' label='to' icon='large user'
+                if session_is 'view_to'
+                    if selected_sellers
+                        // #clear_sellers.ui.black.icon.compact.large.circular.button.select_term
+                        //     i.remove.icon
+                        each selected_sellers
+                            // .unselect_seller.ui.black.compact.large.circular.button.select_term
+                            a.ui.big.black.image.label.unselect_seller.select_term
+                                if selected_user.profile_image_id
+                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                strong #{this}
+                    each seller_results
+                        // .ui.compact.large.circular.basic.button.select_seller.select_term
+                        a.ui.large.image.basic.label.select_seller.select_term
+                            if user_ob.profile_image_id
+                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                            if name
+                                strong #{name}
+                            else
+                                |none
+                +session_boolean_toggle key='view_status' label='status' icon='large clock'
+                if session_is 'view_status'
+                    if selected_statuses
+                        // #clear_statuses.ui.black.icon.compact.large.circular.button.select_term
+                        //     i.remove.icon
+                        each selected_statuses
+                            // .unselect_status.ui.black.compact.large.circular.button.select_term
+                            a.ui.big.black.image.label.unselect_status.select_term
+                                if selected_user.profile_image_id
+                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                strong #{this}
+                    each status_results
+                        // .ui.compact.large.circular.basic.button.select_status
+                        a.ui.large.image.basic.label.select_status.select_term
+                            if user_ob.profile_image_id
+                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                            if name
+                                strong #{name}
+                            else
+                                |none
                     // div        
-                    .ui.inline.header
-                        i.user.outline.large.icon
-                        |to
-                if selected_sellers
-                    // #clear_sellers.ui.black.icon.compact.large.circular.button.select_term
-                    //     i.remove.icon
-                    each selected_sellers
-                        // .unselect_seller.ui.black.compact.large.circular.button.select_term
-                        a.ui.big.black.image.label.unselect_seller
-                            if selected_user.profile_image_id
-                                img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
-                            strong #{this}
-                each seller_results
-                    // .ui.compact.large.circular.basic.button.select_seller
-                    a.ui.large.image.basic.label.select_seller
-                        if user_ob.profile_image_id
-                            img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
-                        if name
-                            strong #{name}
-                        else
-                            |none
-                // div        
-                // if show_status
-                .ui.inline.header
-                    i.question.large.icon
-                    |status
-                if selected_statuses
-                    // #clear_statuses.ui.black.icon.compact.large.circular.button.select_term
-                    //     i.remove.icon
-                    each selected_statuses
-                        // .unselect_status.ui.black.compact.large.circular.button.select_term
-                        a.ui.big.black.image.label.unselect_status
-                            if selected_user.profile_image_id
-                                img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
-                            strong #{this}
-                each status_results
-                    // .ui.compact.large.circular.basic.button.select_status
-                    a.ui.large.image.basic.label.select_status
-                        if user_ob.profile_image_id
-                            img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
-                        if name
-                            strong #{name}
-                        else
-                            |none
-                // div        
                 unless one_result
                     // div
                     i.large.sort.icon(title='sort')
                     +sort_button key='_timestamp' label='added' icon='clock'
                     +sort_button key='title' label='title' 
-                    +sort_button key='price' label='price' icon='coins'
+                    +sort_button key='price' label='price' icon='shop'
+                    +sort_button key='total_points' label='earned' icon='coins'
         .row
             .sixteen.wide.column
                 .ui.stackable.cards

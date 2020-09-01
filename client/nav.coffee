@@ -99,7 +99,35 @@ Template.nav.events
         
 Template.nav.helpers
         
+Template.left_sidebar.onCreated ->
+    Meteor.setTimeout ->
+        $('.accordion').accordion()
+    , 1000
+
 Template.left_sidebar.events
+    'click .posts': ->
+        Router.go '/'
+        selected_models.clear()
+        selected_models.push 'post'
+        
+    'click .top_earned': ->
+        Router.go '/'
+        selected_models.clear()
+        selected_models.push 'post'
+        Session.set('sort_key','total_points')
+        Session.set('sort_direction',-1)
+    'click .newest_posts': ->
+        Router.go '/'
+        selected_models.clear()
+        selected_models.push 'post'
+        Session.set('sort_key','_timestamp')
+        Session.set('sort_direction',-1)
+    'click .my_posts': ->
+        Router.go '/'
+        selected_models.clear()
+        selected_models.push 'post'
+        Session.set('sort_key','_timestamp')
+        Session.set('sort_direction',-1)
     # 'click .toggle_sidebar': ->
     #     $('.ui.sidebar')
     #         .sidebar('setting', 'transition', 'push')
