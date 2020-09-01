@@ -94,6 +94,15 @@ html.ios body {
   /*border-radius: 10px !important;*/
 }
 
+.bottom_rounded {
+  border-bottom-right-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+}
+.top_rounded {
+  border-top-right-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+}
+
 .topnav.menu {
     /*border-radius: 0 0 10px 10px !important; */
     transition: background-color 3s ease !important;

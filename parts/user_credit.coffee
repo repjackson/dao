@@ -10,8 +10,8 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'user_topups', Router.current().params.username
 
     Template.user_credit.events
-        'click .recalc_user_credit': ->
-            Meteor.call 'recalc_user_credit', Router.current().params.username, ->
+        'click .calc_user_credit': ->
+            Meteor.call 'calc_user_credit', Router.current().params.username, ->
         'keyup .new_debit': (e,t)->
             if e.which is 13
                 val = $('.new_debit').val()
@@ -198,7 +198,7 @@ if Meteor.isServer
             _author_id: current_user._id
     
     Meteor.methods 
-        recalc_user_credit: (username)->
+        calc_user_credit: (username)->
             user = Meteor.users.findOne username:username
             user_id = user._id
             # console.log classroom

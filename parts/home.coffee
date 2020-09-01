@@ -64,7 +64,7 @@ if Meteor.isClient
         sorting_up: -> 
             Session.equals('sort_direction', 1)
         sort_button_class: ->
-            if Session.equals('sort_key', @key) then 'active' else 'basic'
+            if Session.equals('sort_key', @key) then 'black' else 'basic'
     Template.home.helpers
         show_to: ->
             selected_sellers.array().length > 0 or seller_results.find({}).count() > 0

@@ -15,7 +15,7 @@ template(name='post_card')
                 if _author.profile_image_id
                     img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 |#{_author.username}
-            +multi_user_view key='coauthor_ids' label='coauthors' direct=true
+            // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
             |#{tip_count} tips
 
             .description
@@ -50,7 +50,7 @@ template(name='post_view')
                     div
                     // +single_user_view key='_author_id' label='author' direct=true
                     +multi_user_view key='coauthor_ids' label='coauthors' direct=true
-    
+                    .ui.header #{views}
                 .eight.wide.column
                     .f13
                         |!{description}

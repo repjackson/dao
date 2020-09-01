@@ -29,6 +29,7 @@ if Meteor.isClient
                     tipper_ids:Meteor.userId()
                     tipper_usernames:Meteor.user().username
             Meteor.call 'calc_post_stats', @_id, ->
+            Meteor.call 'calc_user_stats', Meteor.userId(), ->
             $('body').toast({
                 class: 'success'
                 position: 'bottom right'

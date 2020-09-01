@@ -17,7 +17,7 @@ if Meteor.isClient
         # Meteor.call 'calc_user_stats', user._id, ->
         Meteor.setTimeout ->
             if user
-                Meteor.call 'recalc_user_stats', user._id, ->
+                Meteor.call 'calc_user_stats', user._id, ->
         , 2000
 
 
@@ -34,7 +34,7 @@ if Meteor.isClient
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             # Meteor.call 'calc_user_stats', user._id, ->
-            Meteor.call 'recalc_user_stats', user._id, ->
+            Meteor.call 'calc_user_stats', user._id, ->
             Meteor.call 'calc_user_tags', user._id, ->
     
     Template.profile_layout.events
@@ -76,8 +76,8 @@ if Meteor.isClient
                         price:1
             Router.go "/request/#{new_id}/edit"
     
-        # 'click .recalc_user_cloud': ->
-        #     Meteor.call 'recalc_user_cloud', Router.current().params.username, ->
+        # 'click .calc_user_cloud': ->
+        #     Meteor.call 'calc_user_cloud', Router.current().params.username, ->
 
         'click .logout': ->
             # Router.go '/login'
@@ -138,7 +138,7 @@ if Meteor.isServer
         #     # this_week = moment().startOf('isoWeek')
 
 
-        # recalc_user_act_stats: (user_id)->
+        # calc_user_act_stats: (user_id)->
         #     user = Meteor.users.findOne user_id
         #     test_session_cursor =
         #         Docs.find
@@ -236,7 +236,7 @@ if Meteor.isServer
         #     # average_reading_percent
 
 
-        # recalc_user_cloud: (user_id)->
+        # calc_user_cloud: (user_id)->
         #     user = Meteor.users.findOne user_id
         #     test_session_cursor =
         #         Docs.find
@@ -314,7 +314,7 @@ if Meteor.isServer
 
 
 
-        recalc_user_stats: (user_id)->
+        calc_user_stats: (user_id)->
             user = Meteor.users.findOne user_id
             unless user
                 user = Meteor.users.findOne username
@@ -360,9 +360,9 @@ if Meteor.isServer
                 published:true
             })
             authored_count = requested.count()
-            total_request_price = 0
+            total_request_cost = 0
             for request in requested.fetch()
-                total_request_price += request.price
+                total_request_cost += request.price
             
             
             credits = Docs.find({
@@ -373,15 +373,43 @@ if Meteor.isServer
             total_credit_price = 0
             for credit in credits.fetch()
                 total_credit_price += credit.price
+            console.log 'total credit price', total_credit_price
+
+
+
+            comments = Docs.find({
+                model:'comment'
+                _author_id:Meteor.userId()
+            })
+            comment_count = comments.count()
+            total_comment_cost = 0
+            # for comment in comments.fetch()
+            #     total_comment_price += comment.price
 
             console.log 'total credit price', total_credit_price
-            calculated_user_balance = total_credit_price-total_debit_price
+            
+            
+            # calculated_user_balance = total_credit_price-total_debit_price-comment_count
 
             # average_credit_per_student = total_credit_price/student_count
             # average_debit_per_student = total_debit_price/student_count
             flow_volume = Math.abs(total_credit_price)+Math.abs(total_debit_price)
             flow_volume += total_fulfilled_price
-            flow_volume += total_request_price
+            flow_volume += total_request_cost
+            
+            
+            tipped_cur = 
+                Docs.find
+                    model:'tip'
+                    _author_id:user_id
+            tipped_count = tipped_cur.count()
+            
+            received_tips_cur = 
+                Docs.find
+                    model:'tip'
+                    _author_id:user_id
+                
+            received_tips_count = received_tips_cur.count()
             
             
             topups = 
@@ -393,10 +421,10 @@ if Meteor.isServer
             for topup in topups.fetch()
                 total_topup_price += topup.amount*100
                 console.log 'adding', topup.amount
-            points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_price+total_topup_price
-            # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_price
+            points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_cost+total_topup_price-comment_count-(tipped_count*11)+(received_tips_count*10)
+            # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_cost
             # points += total_fulfilled_price
-            # points =- total_request_price
+            # points =- total_request_cost
             
             if total_debit_price is 0 then total_debit_price++
             if total_credit_price is 0 then total_credit_price++
@@ -428,3 +456,6 @@ if Meteor.isServer
                     one_ratio: one_ratio
                     total_fulfilled_price:total_fulfilled_price
                     fulfilled_count:fulfilled_count
+                    tipped_count:tipped_count
+                    received_tips_count:received_tips_count
+                    comment_count:comment_count

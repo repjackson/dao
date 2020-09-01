@@ -1,3 +1,10 @@
+Router.route '/add', (->
+    @layout 'layout'
+    @render 'add'
+    ), name:'add'
+
+
+
 Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
     @autorun => Meteor.subscribe 'all_users'
@@ -38,7 +45,7 @@ Template.right_sidebar.events
 
 Template.nav.helpers
         
-Template.nav.events
+Template.add.events
     'click .debit': ->
         new_debit_id =
             Docs.insert
@@ -70,6 +77,7 @@ Template.nav.events
         Router.go "/offer/#{new_offer_id}/edit"
 
         
+Template.nav.events
     'click .toggle_admin': ->
         if 'admin' in Meteor.user().roles
             Meteor.users.update Meteor.userId(),

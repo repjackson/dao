@@ -3,10 +3,10 @@ template(name='home')
         .row
             .sixteen.wide.column
                 if selected_models
-                    // #clear_models.ui.active.icon.compact.large.button
+                    // #clear_models.ui.black.icon.compact.large.button
                     //     i.remove.icon
                     each selected_models
-                        .unselect_model.ui.active.compact.large.circular.button
+                        .unselect_model.ui.black.compact.large.circular.button
                             strong #{this}
                 each model_results
                     .ui.compact.large.circular.button.select_model
@@ -14,28 +14,28 @@ template(name='home')
                 .ui.left.icon.input 
                     i.search.icon
                     input.search_title(type='text' autofocus='' placeholder='title')
-                div
+                // div
                 i.tag.large.icon
                 if selected_tags
-                    a#clear_tags.ui.active.icon.compact.large.button
+                    a#clear_tags.ui.black.icon.compact.large.button
                         i.remove.icon
                     each selected_tags
-                        a.unselect_tag.ui.active.compact.large.button
+                        a.unselect_tag.ui.black.compact.large.button
                             strong #{this}
                 each tag_results
                     a.ui.large.basic.label.select_tag(href='#')
                         strong #{name}
                 if show_from
-                    div
+                    // div
                     .ui.inline.header
                         i.user.large.icon
                         |from
                 if selected_buyers
-                    // #clear_buyers.ui.active.icon.compact.large.circular.button
+                    // #clear_buyers.ui.black.icon.compact.large.circular.button
                     //     i.remove.icon
                     each selected_buyers
-                        // .unselect_buyer.ui.active.compact.large.circular.button
-                        a.ui.big.active.image.label.unselect_buyer
+                        // .unselect_buyer.ui.black.compact.large.circular.button
+                        a.ui.big.black.image.label.unselect_buyer
                             if selected_user.profile_image_id
                                 img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                             strong #{this}
@@ -49,16 +49,16 @@ template(name='home')
                         else
                             |none
                 if show_to
-                    div        
+                    // div        
                     .ui.inline.header
                         i.user.outline.large.icon
                         |to
                 if selected_sellers
-                    // #clear_sellers.ui.active.icon.compact.large.circular.button
+                    // #clear_sellers.ui.black.icon.compact.large.circular.button
                     //     i.remove.icon
                     each selected_sellers
-                        // .unselect_seller.ui.active.compact.large.circular.button
-                        a.ui.big.active.image.label.unselect_seller
+                        // .unselect_seller.ui.black.compact.large.circular.button
+                        a.ui.big.black.image.label.unselect_seller
                             if selected_user.profile_image_id
                                 img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                             strong #{this}
@@ -71,18 +71,17 @@ template(name='home')
                             strong #{name}
                         else
                             |none
-                div        
+                // div        
                 // if show_status
-                div        
                 .ui.inline.header
                     i.question.large.icon
                     |status
                 if selected_statuses
-                    // #clear_statuses.ui.active.icon.compact.large.circular.button
+                    // #clear_statuses.ui.black.icon.compact.large.circular.button
                     //     i.remove.icon
                     each selected_statuses
-                        // .unselect_status.ui.active.compact.large.circular.button
-                        a.ui.big.active.image.label.unselect_status
+                        // .unselect_status.ui.black.compact.large.circular.button
+                        a.ui.big.black.image.label.unselect_status
                             if selected_user.profile_image_id
                                 img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
                             strong #{this}

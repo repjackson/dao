@@ -114,7 +114,9 @@ if Meteor.isClient
                     model:'comment'
                     parent_model:parent.model
                     body:comment
+        
                 t.$('.add_comment').val('')
+                Meteor.call 'calc_user_stats', Meteor.userId(), ->
 
         'click .remove_comment': ->
             if confirm 'Confirm remove comment'

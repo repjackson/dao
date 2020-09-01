@@ -67,8 +67,8 @@ if Meteor.isClient
                             position: 'top-end',
                             timer: 1000
                         )
-                        Meteor.call 'recalc_user_stats', seller_id, ->
-                        Meteor.call 'recalc_user_stats', buyer_id, ->
+                        Meteor.call 'calc_user_stats', seller_id, ->
+                        Meteor.call 'calc_user_stats', buyer_id, ->
 
                         Router.go "/debit/#{@_id}/view"
             )
@@ -85,8 +85,8 @@ if Meteor.isServer
             debiter = Meteor.users.findOne debit._author_id
 
             console.log 'sending debit', debit
-            Meteor.call 'recalc_one_stats', seller._id, ->
-            Meteor.call 'recalc_one_stats', debit._author_id, ->
+            Meteor.call 'calc_one_stats', seller._id, ->
+            Meteor.call 'calc_one_stats', debit._author_id, ->
     
             Docs.update debit_id,
                 $set:
