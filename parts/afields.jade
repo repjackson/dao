@@ -645,11 +645,11 @@ template(name='ayoutube_edit')
             |youtube id
         input.youtube_id(type='text' value=afield_value placeholder=placeholder autocomplete="off")
     if afield_value
-        iframe.youtube_view(width='560' height='315' src="https://www.youtube.com/embed/#{afield_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+        iframe.youtube_view(width='560' height='315' src="https://www.youtube.com/embed/#{afield_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='' class=currentUser.invert_class)
 
 template(name='ayoutube_view')
     if afield_value
-        .ui.embed.youtube_view(data-source="youtube" data-id=afield_value)
+        .ui.embed.youtube_view(data-source="youtube" data-id=afield_value class=currentUser.invert_class)
 
         //// iframe(width='560' height='315' src="https://www.youtube.com/embed/#{afield_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
         //iframe(src="https://www.youtube.com/embed/#{afield_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')

@@ -21,19 +21,10 @@ if Meteor.isClient
     
 
 
-    Template.alpha.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'alpha'
-        @autorun => Meteor.subscribe 'model_docs', 'alpha_session'
-    Template.alpha.helpers
-        alpha_docs: ->
-            Docs.find
-                model:'alpha'
-    Template.alpha.events
-        'click .add_alpha': ->
-            new_id =
-                Docs.insert
-                    model:'alpha'
-            Router.go "/alpha/#{new_id}/edit"
+    Template.alpha_card.helpers
+        blocks: ->
+            console.log @
+
 
 
 

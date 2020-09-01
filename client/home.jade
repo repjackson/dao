@@ -110,6 +110,8 @@ template(name='home')
                             +order_card
                         else if key_value_is 'model' 'post'
                             +post_card
+                        else if key_value_is 'model' 'alpha'
+                            +alpha_card
                         else
                             .ui.header #{model}
                             if is_dev

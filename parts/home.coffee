@@ -29,6 +29,8 @@ if Meteor.isClient
     Template.home.onCreated ->
         Session.setDefault 'sort_key', '_timestamp'
         Session.setDefault 'sort_direction', -1
+        @autorun -> Meteor.subscribe('model_docs', 'block')
+        @autorun -> Meteor.subscribe('model_docs', 'module')
         @autorun -> Meteor.subscribe('tags',
             Session.get('sort_key')
             Session.get('sort_direction')
@@ -113,7 +115,7 @@ if Meteor.isClient
         can_debit: -> Meteor.user().points > 0
         docs: ->
             Docs.find {
-                # model:$in:selected_models.array()
+                model:$in:['debit','order','request','offer','post','alpha']
             },
                 sort:
                     "#{Session.get('sort_key')}": Session.get('sort_direction')
@@ -151,7 +153,7 @@ if Meteor.isClient
                     count: $lt: doc_count 
                 } 
             else 
-                Model_results.find({name:$in:['debit','order','request','offer','post']})
+                Model_results.find({name:$in:['debit','order','request','offer','post','alpha']})
         seller_results: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3 then seller_results.find { count: $lt: doc_count } else seller_results.find()
@@ -234,7 +236,7 @@ if Meteor.isServer
         if selected_models.length > 0 
             match.model = $all: selected_models
         else
-            match.model = $in:['debit','order','request','offer','post']
+            match.model = $in:['debit','order','request','offer','post','alpha']
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
