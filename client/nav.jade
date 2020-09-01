@@ -6,9 +6,18 @@ template(name='nav')
             i.large.bars.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
             i.big.yin.yang.icon
+        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+            i.large.calendar.icon
+        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+            i.large.newspaper.icon
+        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+            i.large.concierge.bell.icon
+        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+            i.large.exchange.icon
+        a.zoom.icon.item(href="/" class="{{isActivePath '/'}}")
+            i.large.hand.holding.heart.icon
         .item
             +status    
-
         .right.menu
             if is_dev 
                 .icon.item.toggle_dev
@@ -137,7 +146,7 @@ template(name='left_sidebar')
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One
         a.item.select_term
-            .title
+            .title.zoom
                 i.newspaper.large.icon
                 |posts
                 i.dropdown.icon
@@ -146,7 +155,7 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.newest_posts newest
                 .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
-            .title
+            .title.zoom
                 i.shop.large.icon
                 |offers
                 i.dropdown.icon
@@ -155,7 +164,7 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.most_recent_offers newest
                 .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
-            .title
+            .title.zoom
                 i.concierge.bell.large.icon
                 |requests
                 i.dropdown.icon
@@ -164,7 +173,7 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.most_recent_offers newest
                 .item.zoom.toggle_sidebar.my_posts yours
         a.item.select_term
-            .title
+            .title.zoom
                 i.calendar.large.icon
                 |events
                 i.dropdown.icon

@@ -2,7 +2,7 @@ template(name='request_card')
     .ui.card.zoom.pointer.view_request
         if image_id
             a.image(href="/request/#{_id}/view")
-                img.ui.rounded.image(src="{{c.url image_id width=400 height=600 crop='fill'}}")    
+                img.ui.rounded.image(src="{{c.url image_id width=400 height=600 crop='fill'}}" class=currentUser.invert_class)    
         .content
             .header #{title}
             if complete
@@ -12,7 +12,7 @@ template(name='request_card')
             .meta
                 |by 
                 if _author.profile_image_id
-                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 |#{_author.username}
                 .ui.label #{when}
                 .ui.big.basic.label
@@ -49,11 +49,11 @@ template(name='request_view')
                     .ui.header
                         |#{price}pts offered
                     if image_id
-                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
+                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
                     .ui.header 
                         small posted by
                     a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         |#{_author.username}
                     .ui.header #{when}
                     +array_view key='location_tags' label='location_tags' direct=true
@@ -63,7 +63,7 @@ template(name='request_view')
                     .f13
                         |!{description}
                     // a.ui.header(href="/user/#{target.username}")
-                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                     //     |#{target.username}
                     .spacer
                     i.large.tags.icon
@@ -85,7 +85,7 @@ template(name='request_view')
                     if claimer
                         .ui.header claimed by
                         a.ui.header(href="/user/#{claimer.name}")
-                            img.ui.avatar.image(src="{{c.url claimer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            img.ui.avatar.image(src="{{c.url claimer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{claimer.name}
                         unless complete
                             if can_unclaim

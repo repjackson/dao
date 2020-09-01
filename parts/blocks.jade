@@ -85,45 +85,45 @@ template(name='session_toggle_button')
 
 
 template(name='comments')
-    .ui.top.attached.tabular.menu.top_rounded.comments_menu
-        a.item.active(data-tab='first')
-            .ui.header 
-                i.chat.outline.icon
-                | #{doc_comments.count} comments
+    // .ui.top.attached.tabular.menu.top_rounded.comments_menu
+    //     a.item.active(data-tab='first')
+    .ui.header(data-tooltip='comments cost 1p each which goes to post op')
+        i.chat.outline.icon
+        | #{doc_comments.count} comments
         // a.item(data-tab='second') second
-        a.icon.item(data-tab='info') 
-            i.large.info.icon
-    .ui.bottom.attached.tab.segment.bottom_rounded.active(data-tab='first')
-        .ui.fluid.icon.large.input
-            i.plus.icon
-            input.add_comment(model='text' placeholder='comment (-1p)...')
-        if currentUser
-            .ui.comments
-                each doc_comments
-                    .comment
-                        a.avatar(href="/user/#{_author.username}") 
-                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
-                        .content
-                            a.author(href="/user/#{_author.username}") 
-                                |#{_author.username}
-                            .metadata
-                                span.date #{when}
-                            .text
-                                | !{body}
-                            span.meta
-                                if can_edit
-                                    +remove_icon
-                                // else
-                                +voting_small
-                                i.donate.link.icon
-                                i.gift.link.icon
+        // a.icon.item(data-tab='info') 
+        //     i.large.info.icon
+    // .ui.bottom.attached.tab.segment.bottom_rounded.active(data-tab='first')
+    .ui.fluid.icon.large.input
+        i.plus.icon
+        input.add_comment(model='text' placeholder='comment (-1p)...')
+    if currentUser
+        .ui.comments
+            each doc_comments
+                .comment
+                    a.avatar(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                    .content
+                        a.author(href="/user/#{_author.username}") 
+                            |#{_author.username}
+                        .metadata
+                            span.date #{when}
+                        .text
+                            | !{body}
+                        span.meta
+                            if can_edit
+                                +remove_icon
+                            // else
+                            +voting_small
+                            i.donate.link.icon
+                            i.gift.link.icon
         // |First
     // .ui.bottom.attached.tab.segment(data-tab='second')
     //     |second
-    .ui.bottom.attached.tab.segment.bottom_rounded(data-tab='info')
-        .ui.small.header comments cost 1p each which goes to post op
-        // .ui.small.header subcomments cost 1p per level which goes to each parent op
-        .ui.small.header each upvote costs 1p which goes to author
+    // .ui.bottom.attached.tab.segment.bottom_rounded(data-tab='info')
+    //     .ui.small.header comments cost 1p each which goes to post op
+    //     // .ui.small.header subcomments cost 1p per level which goes to each parent op
+    //     .ui.small.header each upvote costs 1p which goes to author
 
 
 

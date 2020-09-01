@@ -8,7 +8,7 @@ template(name='order_card')
                 |#{title} order
         if image_id
             a(href="/order/#{_id}/view")
-                img.ui.zoom.image(src="{{c.url image_id height=200 width=300 crop='fill'}}")
+                img.ui.zoom.image(src="{{c.url image_id height=200 width=300 crop='fill'}}" class=currentUser.invert_class)
         .content
             .header
                 |#{price}c
@@ -57,7 +57,7 @@ template(name='order_view')
             .row 
                 .five.wide.column
                     a.ui.zoom.pointer.card(href="/offer/#{offer_id}/view")
-                        img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .content
                             .ui.inline.header
                                 i.chevron.left.icon
@@ -78,7 +78,7 @@ template(name='order_view')
                                 i.user.outline.icon
                                 |author
                             .ui.inline.header
-                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 |#{_author.username}
                             
                     a.ui.pointer.zoom.card(href="/user/#{seller_username}")
@@ -87,7 +87,7 @@ template(name='order_view')
                                 i.user.outline.icon
                                 |seller
                             .ui.inline.header
-                                img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 |#{seller.username}
                             
                     a.ui.pointer.zoom.card(href="/user/#{buyer.username}")
@@ -96,7 +96,7 @@ template(name='order_view')
                                 i.user.icon
                                 |buyer
                             .ui.inline.header
-                                img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 |#{buyer.username}
                             
                     +textarea_view key='description' label='description' direct=true

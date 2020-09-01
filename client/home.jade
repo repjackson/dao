@@ -35,13 +35,13 @@ template(name='home')
                             // .unselect_buyer.ui.black.compact.large.circular.button.select_term
                             a.ui.big.black.image.label.unselect_buyer.select_term
                                 if selected_user.profile_image_id
-                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 strong #{this}
                     each buyer_results
                         // .ui.compact.large.circular.basic.button.select_buyer
                         a.ui.large.image.basic.label.select_buyer.select_term
                             if user_ob.profile_image_id
-                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             if name
                                 strong #{name}
                             else
@@ -55,13 +55,13 @@ template(name='home')
                             // .unselect_seller.ui.black.compact.large.circular.button.select_term
                             a.ui.big.black.image.label.unselect_seller.select_term
                                 if selected_user.profile_image_id
-                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 strong #{this}
                     each seller_results
                         // .ui.compact.large.circular.basic.button.select_seller.select_term
                         a.ui.large.image.basic.label.select_seller.select_term
                             if user_ob.profile_image_id
-                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             if name
                                 strong #{name}
                             else
@@ -75,13 +75,13 @@ template(name='home')
                             // .unselect_status.ui.black.compact.large.circular.button.select_term
                             a.ui.big.black.image.label.unselect_status.select_term
                                 if selected_user.profile_image_id
-                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                    img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 strong #{this}
                     each status_results
                         // .ui.compact.large.circular.basic.button.select_status
                         a.ui.large.image.basic.label.select_status.select_term
                             if user_ob.profile_image_id
-                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='')
+                                img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             if name
                                 strong #{name}
                             else
@@ -99,7 +99,7 @@ template(name='home')
                 .ui.stackable.centered.cards
                     each docs
                         if key_value_is 'model' 'request'
-                            +request_item
+                            +request_card
                         else if key_value_is 'model' 'offer'
                             +offer_item
                         else if key_value_is 'model' 'debit'

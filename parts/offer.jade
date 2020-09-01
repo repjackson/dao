@@ -11,12 +11,12 @@ template(name='offer_item')
                 
         if image_id
             a.image(href="/offer/#{_id}/view")
-                img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+                img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
             .meta
                 |by 
                 if seller.profile_image_id
-                    img.ui.avatar.compact.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    img.ui.avatar.compact.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 |#{seller.username}
                 // .ui.label #{when}
     
@@ -47,10 +47,10 @@ template(name='offer_view')
                         a.ui.circular.icon.button.edit_offer(href="/offer/#{_id}/edit")
                             i.large.pencil.icon
                     if image_id
-                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
+                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
                     .ui.small.inline.header posted by
                     a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         |#{_author.username}
                     .ui.inline.small.header #{when}
                     +boolean_view key='rental' direct=true
@@ -63,7 +63,7 @@ template(name='offer_view')
                     .f13
                         |!{description}
                     // a.ui.header(href="/user/#{target.username}")
-                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                     //     |#{target.username}
                     .spacer
                     i.large.tags.icon
@@ -95,7 +95,7 @@ template(name='offer_view')
                                         .ui.inline.header #{purchase_price}c
                                         
                                         |#{when} 
-                                        img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        img.ui.avatar.image(src="{{c.url buyer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                         |#{buyer.username}
                                         .ui.small.header submitted: #{submitted}
                                         .ui.small.header transfer: #{transfer}

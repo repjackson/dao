@@ -259,7 +259,7 @@ a.goto_article {
 }
 /*  */
 .pointer:hover {
-    transition: all .2s ease !important; 
+    transition: all .25s ease !important; 
     cursor: pointer !important;
     /* color: black !important; */
     /* font-size: 130% !important; */
