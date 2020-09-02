@@ -2,34 +2,26 @@ template(name='nav')
     // .ui.fluid.fixed.menu.topnav(
     // .ui.fluid.borderless.attached.menu.topnav(class='')
     .ui.fluid.attached.borderless.menu.topnav(class=currentUser.invert_class)
-        a.icon.item.toggle_sidebar
-            i.large.ellipsis.vertical.icon
-        a.header.icon.item(href="/" class="{{isActivePath '/'}}")
-            i.big.yin.yang.icon
-        a.mobile.hidden.zoom.icon.item.events(href="/" class="{{isActivePath '/'}}")
-            i.large.calendar.icon
-        a.mobile.hidden.zoom.icon.item.posts(href="/" class="{{isActivePath '/'}}")
-            i.large.newspaper.icon
-        a.mobile.hidden.zoom.icon.item.requests(href="/" class="{{isActivePath '/'}}")
-            i.large.concierge.bell.icon
-        a.mobile.hidden.zoom.icon.item.debits(href="/" class="{{isActivePath '/'}}")
-            i.large.exchange.icon
-        a.mobile.hidden.zoom.icon.item.offers(href="/" class="{{isActivePath '/'}}")
-            i.large.shop.icon
-        a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
-            i.large.plus.icon
+        // if currentUser
+        //     a.icon.item.toggle_sidebar
+        //         i.large.ellipsis.vertical.icon
+        if currentUser
+            a.header.icon.item(href="/" class="{{isActivePath '/'}}")
+                i.big.yin.yang.icon
+            a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
+                i.large.plus.icon
         .item
             +status    
         .right.menu
             if currentUser
-                if unread_count
-                    a.item.alerts.select_term(href="#" class=alert_toggle_class)
-                        i.large.bell.icon
-                        if unread_count
-                            |#{unread_count}
-                else
-                    a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                        i.large.outline.bell.icon
+                // if unread_count
+                //     a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                //         i.large.bell.icon
+                //         if unread_count
+                //             |#{unread_count}
+                // else
+                //     a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                //         i.large.outline.bell.icon
                 if is_dev 
                     .icon.item.toggle_dev
                         i.large.code.icon
@@ -50,10 +42,10 @@ template(name='nav')
             else
                 a.item(href="/register" title='register')
                     i.large.user.plus.icon
-                    |register
+                    // |register
                 a.item(href="/login" title='login')
-                    i.large.chevron.right.icon
-                    |login
+                    i.large.sign.in.alternate.icon
+                    // |login
             
             
 template(name='topbar')

@@ -1,5 +1,6 @@
 
 if Meteor.isClient
+    @selected_keys = new ReactiveArray []
     @selected_tags = new ReactiveArray []
     @selected_models = new ReactiveArray []
     @selected_sellers = new ReactiveArray []
@@ -35,6 +36,7 @@ if Meteor.isClient
             Session.get('sort_key')
             Session.get('sort_direction')
             Session.get('query')
+            selected_keys.array()
             selected_models.array()
             selected_tags.array()
             selected_location_tags.array()
@@ -48,6 +50,7 @@ if Meteor.isClient
             Session.get('sort_key')
             Session.get('sort_direction')
             Session.get('query')
+            selected_keys.array()
             selected_models.array()
             selected_tags.array()
             selected_location_tags.array()

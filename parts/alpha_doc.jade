@@ -4,9 +4,8 @@ template(name='alpha_doc_edit')
             .four.wide.column
                 .ui.header editing alpha
                 .ui.header #{title}
-                a.ui.large.fluid.button(href="/alpha/#{_id}/view")
-                    i.checkmark.icon   
-                    |save
+                a.ui.large.fluid.circular.icon.button(href="/alpha/#{_id}/view")
+                    i.checkmark.big.green.icon   
                 +print_this
                 .ui.header block menu
                 each blocks
@@ -62,12 +61,9 @@ template(name='alpha_doc_view')
     with current_doc
         .ui.stackable.padded.grid
             .four.wide.column
-                a.ui.fluid.button(href="/alpha")
-                    i.left.chevron.icon
-                    |alpha
                 .ui.header #{title}
                 a.ui.large.circular.icon.basic.button(href="/alpha/#{_id}/edit")
-                    i.pencil.icon
+                    i.pencil.large.icon
                 .ui.header #{_author_username}
                 +single_user_view key='_author_id'
                 // with _author_id
