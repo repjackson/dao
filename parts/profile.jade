@@ -42,25 +42,25 @@ template(name='profile_layout')
                                 +user_friend_button 
                         .mobile.hidden
                             if i_have_points
-                                .ui.basic.button.send(title='send points')
+                                .ui.button.send(title='send points')
                                     i.send.large.icon
                                     span send pts
                             if is_current_user
                                 a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                                    i.large.dollar.icon
+                                    // i.large.dollar.icon
                                     span credit
                         .mobile.only
                             if i_have_points
-                                .ui.basic.button.send(title='send points')
+                                .ui.button.send(title='send points')
                                     i.send.large.icon
                                     span send pts
-                            a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                            a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
                                 i.large.send.icon
                                 // span pts sent
                             if is_current_user
-                                a.ui.large.icon.basic.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                                    i.large.dollar.icon
-                                    // span credit
+                                a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                                    // i.large.dollar.icon
+                                    span credit
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
@@ -111,14 +111,14 @@ template(name='user_dashboard')
                     i.chevron.down.large.icon
                     |#{credit_count} credits
                     small (#{total_credit_amount}p)
-                .ui.basic.label #{total_credit_amount}p total received
+                .ui.label #{total_credit_amount}p total received
                 // |received
-                .ui.basic.label(title='received count') #{credit_count} total gifts 
-                .ui.basic.label(title='rank') ##{global_credit_count_rank} count rank
+                .ui.label(title='received count') #{credit_count} total gifts 
+                .ui.label(title='rank') ##{global_credit_count_rank} count rank
                     
                 i.tags.icon(title='credit tags')
                 each credit_tags
-                    .ui.basic.circular.label #{title}
+                    .ui.circular.label #{title}
                         small #{count}
                         // small #{count}
                 // .smallscroll.ui.segments
@@ -130,19 +130,19 @@ template(name='user_dashboard')
                     i.chevron.up.icon
                     |#{debit_count} debits
                     small (#{total_debit_amount}p)
-                    .ui.basic.label #{total_debit_amount}p total sent
-                    .ui.basic.label(title='debit count') #{debit_count} gifts sent
-                    .ui.basic.label(title='rank') ##{global_debit_count_rank} gift sent rank
+                    .ui.label #{total_debit_amount}p total sent
+                    .ui.label(title='debit count') #{debit_count} gifts sent
+                    .ui.label(title='rank') ##{global_debit_count_rank} gift sent rank
                         
                     i.tags.icon(title='credit tags')
                     each debit_tags
-                        .ui.basic.circular.label #{title}
+                        .ui.circular.label #{title}
                             small #{count}
                     
                     // small(title='rank') ##{global_debit_count_rank}
                 // i.tags.icon(title='credit tags')
                 each debit_tags
-                    .ui.small.basic.circular.label #{title} 
+                    .ui.small.circular.label #{title} 
                         // small #{count}
                 .ui.hidden.divider
             .four.wide.column
@@ -210,7 +210,7 @@ template(name='user_credit_segment')
         |#{description}
         div
         each tags
-            .ui.mini.basic.label #{this}
+            .ui.mini.label #{this}
 
 
 template(name='user_debit_segment')
@@ -228,4 +228,4 @@ template(name='user_debit_segment')
         |#{description}
         div
         each tags
-            .ui.mini.basic.label #{this}
+            .ui.mini.label #{this}

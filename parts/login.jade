@@ -1,5 +1,5 @@
 template(name='login')
-    .ui.padded.stackable.grid
+    .ui.padded.stackable.grid.invert
         .centered.row
             .eight.wide.column
                 .ui.center.aligned.basic.segment
@@ -25,7 +25,7 @@ template(name='login')
                     .spacer
                     .ui.fluid.big.circular.button.enter(title="login #{username}" class=enter_class)
                         // |login
-                        strong #{username}
+                        // strong #{username}
                         |&nbsp;
                         i.sign.in.alternate.icon
                 // .ui.center.aligned.basic.segment    
@@ -153,13 +153,12 @@ template(name='register')
                     //     // i.right.chevron.icon
                     //     +icon name='internal' cl='ui inline image'
                     //     |login
-                // .ui.center.aligned.basic.segment    
+                .ui.center.aligned.basic.segment    
                     // .ui.small.header by registering you agree to our 
                     //     a(href='/p/privacy' target="_window") privacy policy
                     // unless username
-                    //     .ui.small.header or
-                    //     a.ui.basic.sign.in.button(href='/login') 
-                    //         // i.chevron.right.icon
-                    //         +icon name='internal'
-                    //         |login
+                    a.ui.basic.sign.in.button(href='/login') 
+                        // i.chevron.right.icon
+                        +icon name='internal'
+                        |login
                     

@@ -1,6 +1,6 @@
 template(name='user_credit')  
     .ui.header.calc_user_credit
-        i.dollar.green.large.icon
+        // i.dollar.green.large.icon
         |fiat credit
     .ui.header total topup amount #{current_user.total_topup_amount}
     .ui.header total topup count #{current_user.topup_count}
@@ -52,7 +52,7 @@ template(name='user_credit')
             .column
                 .ui.segment
                     .ui.header 
-                        +icolor name='refund-2--v1'
+                        // +icolor name='refund-2--v1'
                         |topups
                     .ui.bulleted.list.medscroll
                         each user_topups
@@ -67,7 +67,7 @@ template(name='user_credit')
             .column
                 .ui.segment
                     .ui.header
-                        +icolor name='change'
+                        // +icolor name='change'
                         |your balance
                     .ui.small.inline.header current credit
                     .ui.green.inline.header #{current_user.credit}c
@@ -92,7 +92,7 @@ template(name='user_credit')
             .column
                 .ui.segment
                     .ui.header
-                        +icolor name='deposit'
+                        // +icolor name='deposit'
                         |sent credit
                     .ui.disabled.button.send_credit
                         |send credit
@@ -104,65 +104,65 @@ template(name='user_credit')
             .column
                 .ui.segment
                     .ui.header
-                        +icolor name='withdrawal'
+                        // +icolor name='withdrawal'
                         |received credits
                     .ui.button.request_credit
                         | credit
                     .ui.selection.animated.list
                         each received_credits
                             a.item(href="/transaction/#{_id}/view")
-        .three.column.row
-            .column
-                .ui.segment
-                    .ui.header 
-                        strong $#{udd.total_credit_amount}
-                        small total weekly income
-                    .ui.header
-                        strong #{udd.credit_count}
-                        small sales
-            .column
-                .ui.segment
-                    .ui.header
-                        strong $#{udd.total_debit_amount}
-                        small total weekly expenses
-                    .ui.header
-                        strong #{udd.debit_count}
-                        small debits
-            .column
-                .ui.segment
-                    .ui.header
-                        |growth from last week
-        .two.column.row
-            .column
-                .ui.segment
-                    .ui.header 
-                        i.chevron.down.icon
-                        |weekly debits
-                    .ui.feed.mediumscroll
-                        each user_debits
-                            .event 
-                                .label
-                                    if is_credit
-                                        i.chevron.up.icon
-                                    if is_debit
-                                        i.chevron.down.icon
-                                    else if icon
-                                        i.icon(class=icon)
-                                .content
-                                    .summary
-                                        a.user(href="/user/#{target_user.username}")
-                                            |#{target_user.name}
-                                        |#{text}
-                                        .date #{when}
-                                    .meta
-                                        +voting_small
-                                        //- a.like
-                                        //-     i.like.icon 
-                                        //-     |4 likes
-                                        a.remove
-                                            i.grey.undo.icon
-                                        //- if is_dev
-                                        //-     +remove_button
+        // .three.column.row
+        //     .column
+        //         .ui.segment
+        //             .ui.header 
+        //                 strong $#{udd.total_credit_amount}
+        //                 small total weekly income
+        //             .ui.header
+        //                 strong #{udd.credit_count}
+        //                 small sales
+        //     .column
+        //         .ui.segment
+        //             .ui.header
+        //                 strong $#{udd.total_debit_amount}
+        //                 small total weekly expenses
+        //             .ui.header
+        //                 strong #{udd.debit_count}
+        //                 small debits
+        //     .column
+        //         .ui.segment
+        //             .ui.header
+        //                 |growth from last week
+        // .two.column.row
+        //     .column
+        //         .ui.segment
+        //             .ui.header 
+        //                 i.chevron.down.icon
+        //                 |weekly debits
+        //             .ui.feed.mediumscroll
+        //                 each user_debits
+        //                     .event 
+        //                         .label
+        //                             if is_credit
+        //                                 i.chevron.up.icon
+        //                             if is_debit
+        //                                 i.chevron.down.icon
+        //                             else if icon
+        //                                 i.icon(class=icon)
+        //                         .content
+        //                             .summary
+        //                                 a.user(href="/user/#{target_user.username}")
+        //                                     |#{target_user.name}
+        //                                 |#{text}
+        //                                 .date #{when}
+        //                             .meta
+        //                                 +voting_small
+        //                                 //- a.like
+        //                                 //-     i.like.icon 
+        //                                 //-     |4 likes
+        //                                 a.remove
+        //                                     i.grey.undo.icon
+        //                                 //- if is_dev
+        //                                 //-     +remove_button
                         //- +range_edit                
             if is_admin
                 .column

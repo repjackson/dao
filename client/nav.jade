@@ -8,7 +8,8 @@ template(name='nav')
         if currentUser
             a.header.icon.item(href="/" class="{{isActivePath '/'}}")
                 i.big.yin.yang.icon
-            a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
+            // a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
+            a.icon.item.post(title='add')
                 i.large.plus.icon
         .item
             +status    
@@ -37,8 +38,8 @@ template(name='nav')
                     else 
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
-                a.icon.large.item.toggle_rightbar.select_term
-                    i.ellipsis.vertical.large.icon
+                // a.icon.large.item.toggle_rightbar.select_term
+                //     i.ellipsis.vertical.large.icon
             else
                 a.item(href="/register" title='register')
                     i.large.user.plus.icon

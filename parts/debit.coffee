@@ -48,30 +48,30 @@ if Meteor.isClient
             )
             
         'click .submit': ->
-            Swal.fire({
-                title: "confirm send #{@price}pts?"
-                text: ""
-                icon: 'question'
-                showCancelButton: true,
-                confirmButtonColor: 'green'
-                confirmButtonText: 'confirm'
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'send_debit', @_id, =>
-                        Swal.fire(
-                            title:"#{@price} sent"
-                            icon:'success'
-                            showConfirmButton: false
-                            position: 'top-end',
-                            timer: 1000
-                        )
-                        Meteor.call 'calc_user_stats', @seller_id, ->
-                        Meteor.call 'calc_user_stats', @buyer_id, ->
+            # Swal.fire({
+            #     title: "confirm send #{@price}pts?"
+            #     text: ""
+            #     icon: 'question'
+            #     showCancelButton: true,
+            #     confirmButtonColor: 'green'
+            #     confirmButtonText: 'confirm'
+            #     cancelButtonText: 'cancel'
+            #     reverseButtons: true
+            # }).then((result)=>
+            #     if result.value
+            Meteor.call 'send_debit', @_id, =>
+                # Swal.fire(
+                #     title:"#{@price} sent"
+                #     icon:'success'
+                #     showConfirmButton: false
+                #     position: 'top-end',
+                #     timer: 1000
+                # )
+                Meteor.call 'calc_user_stats', @seller_id, ->
+                Meteor.call 'calc_user_stats', @buyer_id, ->
 
-                        Router.go "/debit/#{@_id}/view"
-            )
+                Router.go "/debit/#{@_id}/view"
+            # )
 
 
     Template.debit_edit.helpers

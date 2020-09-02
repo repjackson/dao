@@ -1,36 +1,36 @@
 template(name='post_card')
     .ui.card.zoom.pointer.view_post
-        .content
-            a.header(href="/post/#{_id}/view")
-                i.newspaper.icon
-                |#{title}
-            .meta
-                |#{when}
         if youtube_id
             +youtube_view key='youtube_id' direct=true
         else if image_id
             a.image(href="/post/#{_id}/view")
                 img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
+            a.header(href="/post/#{_id}/view")
+                i.newspaper.icon
+                |#{title}
             .meta
-                |by 
-                if _author.profile_image_id
-                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                |#{_author.username}
+                |#{when}
+        // .content
+            // .meta
+            //     |by 
+            //     if _author.profile_image_id
+            //         img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                // |#{_author.username}
             // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
 
-            .description
-                .ui.basic.label
-                    i.donate.icon
-                    |#{tip_count} tips
-                .ui.basic.label
-                    i.chat.outline.icon
-                    |#{comment_count} comments
+            // .description
+            //     .ui.basic.label
+            //         i.donate.icon
+            //         |#{tip_count} tips
+            //     .ui.basic.label
+            //         i.chat.outline.icon
+            //         |#{comment_count} comments
                 
-                |!{blurb}
-                each seven_tags
-                    .ui.basic.label #{this}
-                // +comments_view_small    
+            //     |!{blurb}
+            //     each seven_tags
+            //         .ui.basic.label #{this}
+            //     // +comments_view_small    
     // .ui.divider
 
 template(name='post_view')
@@ -42,11 +42,16 @@ template(name='post_view')
                         |#{title}
                     
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
-                    +session_edit_value_button key='view_post_section' value='tone' label='tone' icon='smile'
-                    +session_edit_value_button key='view_post_section' value='analysis' label='analysis' icon='dna'
+                    if tone
+                        +session_edit_value_button key='view_post_section' value='tone' label='tone' icon='smile'
+                    if watson
+                        +session_edit_value_button key='view_post_section' value='analysis' label='analysis' icon='dna'
                     +session_edit_value_button key='view_post_section' value='comments' label='comments' icon='chat'
-                    +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
+                    .spacer
+                    // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
                     if session_key_value_is 'view_post_section' 'content'
+                        if image_id
+                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
                         if youtube_id
                             +youtube_view key='youtube_id' direct=true
                         .f13
@@ -54,6 +59,11 @@ template(name='post_view')
                         // a.ui.header(href="/user/#{target.username}")
                         //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         //     |#{target.username}
+                        .spacer
+                        i.large.tag.icon
+                        each tags 
+                            .ui.basic.large.label #{this}
+                        .spacer
                     if tone
                         if session_key_value_is 'view_post_section' 'tone'
                             +tone
@@ -62,12 +72,6 @@ template(name='post_view')
                             +watson_view
                     if session_key_value_is 'view_post_section' 'comments'
                         +comments
-                    if session_key_value_is 'view_post_section' 'tags'
-                        .spacer
-                        i.large.tag.icon
-                        each tags 
-                            .ui.basic.large.label #{this}
-                        .spacer
                     .spacer
                 .five.wide.column.scrolling
                     // .ui.inline.header 
@@ -76,12 +80,10 @@ template(name='post_view')
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon
                     div
-                    if image_id
-                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
-                    .ui.small.inline.header by
-                    a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        |#{_author.username}
+                    // .ui.small.inline.header by
+                    // a.ui.header(href="/user/#{_author.username}") 
+                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    //     |#{_author.username}
                     .ui.inline.small.header #{when}
                     div
                     +array_view key='location_tags' label='location tags' direct=true
@@ -91,13 +93,13 @@ template(name='post_view')
                     // +single_user_view key='_author_id' label='author' direct=true
                     // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
                     .ui.header #{views} views
-                    .ui.header #{total_points}p total generated
-                    .ui.dividing.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
-                        i.coins.icon
+                    .ui.header #{total_points}p generated
+                    .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
+                        // i.coins.icon
                         |#{tip_total}p tipped
-                    .ui.green.fluid.button.tip
+                    .ui.green.big.icon.circular.button.tip
                         i.donate.icon
-                        |tip
+                        // |tip
                     .ui.link.selection.list
                         .ui.styled.fluid.accordion 
                             each tippers

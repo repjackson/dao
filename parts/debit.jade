@@ -23,7 +23,7 @@ template(name='debit_card')
                 |#{title}
             .spacer
             each tags 
-                .ui.small.basic.label #{this}
+                .ui.small.label #{this}
             // +voting_tiny
             // if upvoter_ids
             +comments_view_small
@@ -34,7 +34,7 @@ template(name='debit_edit')
         .ui.stackable.padded.grid
             .row 
                 .five.wide.column
-                    .ui.fluid.basic.circular.button.cancel_debit
+                    .ui.fluid.circular.button.cancel_debit
                         i.large.remove.red.icon
                         |cancel
                     // .ui.segment
@@ -58,8 +58,8 @@ template(name='debit_edit')
                     +smart_tagger
                 .five.wide.center.aligned.column
                     .ui.small.grey.header 100pts = 1 credit
-                    .ui.big.header #{price}p
-                    .ui.large.grey.header ({{money_format price}}c)
+                    .ui.big.inline.header #{price}p
+                    .ui.inline.grey.header ({{money_format price}}c)
                     .ui.big.input
                         input.point_price(type='number' value=price min='1')
                     div
@@ -75,7 +75,7 @@ template(name='debit_edit')
                     +key_value_edit key='price' value=2000
                     +key_value_edit key='price' value=5000
                     .spacer
-                    .ui.center.aligned.basic.segment
+                    .ui.center.aligned.basic.egment
                         if can_submit
                             .ui.green.massive.circular.circular.icon.button.submit
                                 i.big.send.icon
@@ -110,7 +110,7 @@ template(name='debit_view')
                     if tags
                         i.tags.icon
                         each tags 
-                            .ui.large.basic.circular.label #{this}
+                            .ui.large.circular.label #{this}
                     +voting_full
                     .ui.small.header
                         i.clock.icon
