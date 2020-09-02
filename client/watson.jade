@@ -277,8 +277,8 @@ template(name='tone')
                     // - .header(title="#{sentence_id}") {{lowered text}}
                     // - |weight:#{weight}
                     each tones
-                        .ui.basic.small.circular.label(class="{{calculated_size 'score'}}") 
-                            span.ui.grey.small.text
+                        .ui.basic.inverted.invert.small.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
+                            span.ui.small.text
                                 |#{tone_id} &nbsp;
                             | {{ to_percent score }}% 
     // unless tone                

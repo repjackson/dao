@@ -44,10 +44,10 @@ template(name='profile_layout')
                             .ui.button.send(title='send points')
                                 i.send.large.icon
                                 span send pts
-                        if is_current_user
-                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                                // i.large.dollar.icon
-                                span credit
+                        // if is_current_user
+                        //     a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                        //         // i.large.dollar.icon
+                        //         span credit
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
@@ -115,14 +115,14 @@ template(name='user_dashboard')
                     each debit_tags
                         .ui.circular.label #{title}
                             |#{count}
-                    
-            //         //(title='rank') ##{global_debit_count_rank}
-            //     // i.tags.icon(title='credit tags')
-            //     each debit_tags
-            //         .ui.circular.label #{title} 
-            //         // #{count}
-            // .eight.wide.column
-            //     +user_friends
+                    //(title='rank') ##{global_debit_count_rank}
+                // i.tags.icon(title='credit tags')
+                each debit_tags
+                    .ui.circular.label #{title} 
+                    // #{count}
+            .eight.wide.column
+                +user_friends
+    +user_credit
                 
                 
 template(name='user_sale_card')

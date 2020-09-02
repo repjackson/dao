@@ -20,6 +20,15 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
 
+    Template.tone.helpers
+        tone_label_class: ->
+            console.log @
+            if @tone_id is 'analytical'
+                'orange'
+            else if @tone_id is 'sad'
+                'blue'
+            else if @tone_id is 'joy'
+                'green'
     Template.call_watson.events
         'click .autotag': ->
             console.log @
