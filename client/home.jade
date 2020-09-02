@@ -3,30 +3,20 @@ template(name='home')
         .row
             .sixteen.wide.center.aligned.column
                 // iframe(frameborder="0" width="400" height="200" src="https://drive.google.com/file/d/1_encX_RKyZhOU26r7_cNTtl0rLvEQSai/preview")
-
-                if selected_models
-                    // #clear_models.ui.black.icon.compact.large.button
-                    //     i.remove.icon
-                    each selected_models
-                        a.unselect_model.ui.black.compact.large.circular.button.select_term
-                            strong #{this}
-                each model_results
-                    .ui.compact.large.circular.button.select_term.select_model
-                        strong #{this.name}
                 .ui.left.icon.input 
                     i.search.icon
-                    input.search_title(type='text' autofocus='' placeholder='title')
+                    input.search_title(type='text' autofocus='')
                 // div
                 if selected_tags
-                    a#clear_tags.ui.black.icon.compact.large.button.select_term
+                    a#clear_tags.ui.black.icon.compact.large.circular.button.select_term
                         i.remove.icon
                     each selected_tags
-                        a.unselect_tag.ui.black.compact.large.button.select_termn
+                        a.unselect_tag.ui.black.compact.large.circular.button.select_termn
                             strong #{this}
                 // +session_boolean_toggle key='view_tags' label='tags' icon='large tag'
                 // if session_is 'view_tags'
                 each tag_results
-                    a.ui.large.compact.button.select_tag.select_term(href='#')
+                    a.ui.large.compact.circular.button.select_tag.select_term(href='#')
                         strong #{name}
                 // if selected_keys
                 //     a#clear_keys.ui.black.icon.compact.large.button.select_term

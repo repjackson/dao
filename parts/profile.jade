@@ -6,6 +6,12 @@ template(name='profile_layout')
         +right_sidebar
         // #main_area.global_container.pusher
         #main_area.global_container.pusher
+            .adventure-vid.w-background-video.w-background-video-atom(class=currentUser.invert_class data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
+            video(autoplay='', loop='', style='background-image:url("https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg")', muted='', playsinline='', data-wf-ignore='true', data-object-fit='cover')
+                source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4', data-wf-ignore='true')
+                source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-wf-ignore='true')
+    
+                
             with user
                 .ui.stackable.padded.grid
                     .three.wide.column
@@ -36,10 +42,10 @@ template(name='profile_layout')
                         if is_dev
                             .ui.inline.header #{_id}
         
-                        unless is_current_user
-                            if currentUser
-                                // div
-                                +user_friend_button 
+                        // unless is_current_user
+                        //     if currentUser
+                        //         // div
+                        //         +user_friend_button 
                         if i_have_points
                             .ui.button.send(title='send points')
                                 i.send.large.icon
@@ -120,8 +126,8 @@ template(name='user_dashboard')
                 each debit_tags
                     .ui.circular.label #{title} 
                     // #{count}
-            .eight.wide.column
-                +user_friends
+            // .eight.wide.column
+            //     +user_friends
     +user_credit
                 
                 
