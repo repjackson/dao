@@ -286,7 +286,7 @@ if Meteor.isServer
         # console.log sort_direction
         console.log match
         Docs.find match,
-            limit:10
+            limit:4
             sort:"#{sort_key}":sort_direction
                         
                         

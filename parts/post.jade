@@ -30,7 +30,8 @@ template(name='post_card')
             //     |!{blurb}
             //     each seven_tags
             //         .ui.basic.label #{this}
-            //     // +comments_view_small    
+            //     // +comments_view_small   
+        
     // .ui.divider
     
 template(name='one_post_view')
@@ -59,7 +60,8 @@ template(name='one_post_view')
                 |!{blurb}
                 each tags
                     .ui.compact.large.circular.button.add_tag #{this}
-                // +comments_view_small    
+                +comments_view_small  
+            +voting_full
     // .ui.divider
 
 template(name='post_view')
@@ -102,6 +104,7 @@ template(name='post_view')
                     //     small post: 
                     .ui.center.aligned.header 
                         |#{title}
+                    +voting_full
                     
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
                     if tone
