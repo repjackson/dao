@@ -39,8 +39,8 @@ if Meteor.isClient
     Template.home.onCreated ->
         Session.setDefault 'sort_key', '_timestamp'
         Session.setDefault 'sort_direction', -1
-        @autorun -> Meteor.subscribe('model_docs', 'block')
-        @autorun -> Meteor.subscribe('model_docs', 'module')
+        # @autorun -> Meteor.subscribe('model_docs', 'block')
+        # @autorun -> Meteor.subscribe('model_docs', 'module')
         @autorun -> Meteor.subscribe('tags',
             Session.get('sort_key')
             Session.get('sort_direction')
@@ -151,13 +151,13 @@ if Meteor.isClient
         
         # selected_models: -> selected_models.array()
         tag_results: ->
-            doc_count = Docs.find().count()
-            if 0 < doc_count < 3 
-                Tag_results.find({ 
-                    count:$lt:doc_count 
-                })
-            else 
-                Tag_results.find()
+            # doc_count = Docs.find().count()
+            # if 0 < doc_count < 3 
+            #     Tag_results.find({ 
+            #         count:$lt:doc_count 
+            #     })
+            # else 
+            Tag_results.find()
         # model_results: ->
         #     doc_count = Docs.find().count()
         #     if 0 < doc_count < 3 
@@ -230,6 +230,9 @@ if Meteor.isClient
         'keydown .search_title': (e,t)->
             search = $('.search_title').val()
             Session.set('query',search)
+            if e.which is 13
+                selected_tags.push search
+            search = $('.search_title').val('')
 
 
 

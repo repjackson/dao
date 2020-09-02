@@ -56,7 +56,7 @@ Template.nav.helpers
         if Session.get('viewing_alerts') then 'active' else ''
 
         
-Template.add.events
+Template.nav.events
     'click .debit': ->
         new_debit_id =
             Docs.insert
@@ -65,13 +65,6 @@ Template.add.events
                 buyer_username:Meteor.user().username
                 status:'started'
         Router.go "/debit/#{new_debit_id}/edit"
-    'click .request': ->
-        new_request_id =
-            Docs.insert
-                model:'request'
-                buyer_id:Meteor.userId()
-                buyer_username:Meteor.user().username
-        Router.go "/request/#{new_request_id}/edit"
     'click .post': ->
         new_post_id =
             Docs.insert
@@ -79,13 +72,6 @@ Template.add.events
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
         Router.go "/post/#{new_post_id}/edit"
-    'click .offer': ->
-        new_offer_id =
-            Docs.insert
-                model:'offer'
-                seller_id:Meteor.userId()
-                seller_username:Meteor.user().username
-        Router.go "/offer/#{new_offer_id}/edit"
     'click .alpha': ->
         new_alpha_id =
             Docs.insert
