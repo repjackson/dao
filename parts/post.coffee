@@ -37,6 +37,20 @@ if Meteor.isClient
             })
     
     
+        'click .add_tag': ->
+            # Meteor.call 'tip', @_id, ->
+                
+            # Meteor.call 'calc_post_stats', @_id, ->
+            # Meteor.call 'calc_user_stats', Meteor.userId(), ->
+            # $('body').toast({
+            #     class: 'success'
+            #     position: 'bottom right'
+            #     message: "#{@title} tipped"
+            # })
+            selected_tags.push @valueOf()
+            Router.go '/'
+    
+    
 
     Template.post_view.helpers
         tips: ->

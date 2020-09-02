@@ -58,7 +58,7 @@ template(name='post_view')
                                 .spacer
                                 i.large.tag.icon
                                 each tags 
-                                    .ui.compact.large.circular.button #{this}
+                                    .ui.compact.large.circular.button.add_tag #{this}
                                 .spacer
                                 +watson_view
                         if session_key_value_is 'view_post_section' 'comments'
