@@ -7,10 +7,10 @@ template(name='post_card')
                 img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
             a.header(href="/post/#{_id}/view")
-                i.newspaper.icon
+                // i.newspaper.icon
                 |#{title}
-            .meta
-                |#{when}
+            // .meta
+            //     |#{when}
         // .content
             // .meta
             //     |by 
@@ -37,7 +37,36 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .eleven.wide.column.scrolling
+                .eleven.wide.column
+                    .scrolling
+                        // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
+                        if session_key_value_is 'view_post_section' 'content'
+                            if image_id
+                                img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                            if youtube_id
+                                +youtube_view key='youtube_id' direct=true
+                            .f13
+                                |!{description}
+                            // a.ui.header(href="/user/#{target.username}")
+                            //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            //     |#{target.username}
+                        if tone
+                            if session_key_value_is 'view_post_section' 'tone'
+                                +tone
+                        if watson
+                            if session_key_value_is 'view_post_section' 'analysis'
+                                .spacer
+                                i.large.tag.icon
+                                each tags 
+                                    .ui.compact.large.circular.button #{this}
+                                .spacer
+                                +watson_view
+                        if session_key_value_is 'view_post_section' 'comments'
+                            +comments
+                        .spacer
+                .five.wide.column.scrolling
+                    // .ui.inline.header 
+                    //     small post: 
                     .ui.center.aligned.header 
                         |#{title}
                     
@@ -48,34 +77,6 @@ template(name='post_view')
                         +session_edit_value_button key='view_post_section' value='analysis' label='analysis' icon='dna'
                     +session_edit_value_button key='view_post_section' value='comments' label='comments' icon='chat'
                     .spacer
-                    // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
-                    if session_key_value_is 'view_post_section' 'content'
-                        if image_id
-                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
-                        if youtube_id
-                            +youtube_view key='youtube_id' direct=true
-                        .f13
-                            |!{description}
-                        // a.ui.header(href="/user/#{target.username}")
-                        //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        //     |#{target.username}
-                        .spacer
-                        i.large.tag.icon
-                        each tags 
-                            .ui.basic.large.label #{this}
-                        .spacer
-                    if tone
-                        if session_key_value_is 'view_post_section' 'tone'
-                            +tone
-                    if watson
-                        if session_key_value_is 'view_post_section' 'analysis'
-                            +watson_view
-                    if session_key_value_is 'view_post_section' 'comments'
-                        +comments
-                    .spacer
-                .five.wide.column.scrolling
-                    // .ui.inline.header 
-                    //     small post: 
                     if can_edit
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon

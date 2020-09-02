@@ -232,8 +232,11 @@ if Meteor.isClient
             Session.set('query',search)
             if e.which is 13
                 selected_tags.push search
-            search = $('.search_title').val('')
-
+                Session.set('query','')
+                search = $('.search_title').val('')
+            if e.which is 8
+                if search.legnth is 0
+                    selected_tags.pop()
 
 
 if Meteor.isServer
