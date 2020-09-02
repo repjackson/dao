@@ -4,7 +4,7 @@ template(name='post_card')
             +youtube_view key='youtube_id' direct=true
         else if image_id
             a.image(href="/post/#{_id}/view")
-                img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
+                img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)    
         .content
             a.header(href="/post/#{_id}/view")
                 // i.newspaper.icon
@@ -39,14 +39,14 @@ template(name='one_post_view')
             +youtube_view key='youtube_id' direct=true
         else if image_id
             a.image(href="/post/#{_id}/view")
-                img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
+                img.ui.image(src="{{c.url image_id width=1000 crop='fill'}}" class=currentUser.invert_class)    
         .content
             a.header(href="/post/#{_id}/view")
                 // i.newspaper.icon
                 |#{title}
             .meta
                 |#{when}
-            .description
+            .description.scrolling
                 |!{description}
             .description
                 .ui.basic.label
@@ -57,8 +57,8 @@ template(name='one_post_view')
                     |#{comment_count}
                 
                 |!{blurb}
-                each seven_tags
-                    .ui.basic.label #{this}
+                each tags
+                    .ui.compact.large.circular.button.add_tag #{this}
                 // +comments_view_small    
     // .ui.divider
 
@@ -67,6 +67,8 @@ template(name='post_view')
         .ui.stackable.padded.grid
             .row 
                 .eleven.wide.column.scrolling
+                    a.ui.circular.icon.button(href='/')
+                        i.yin.yang.large.icon
                     // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
                     if session_key_value_is 'view_post_section' 'content'
                         if image_id

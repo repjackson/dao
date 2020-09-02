@@ -56,7 +56,7 @@ Template.nav.helpers
         if Session.get('viewing_alerts') then 'active' else ''
 
         
-Template.nav.events
+Template.home.events
     'click .debit': ->
         new_debit_id =
             Docs.insert

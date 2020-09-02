@@ -51,16 +51,17 @@ template(name='home')
         .row
             .sixteen.wide.column
                 if two_posts
-                    .ui.stackable.centered.two.cards
+                    .ui.stackable.two.cards
                         each docs
                             +one_post_view
                 else if one_post
-                    .ui.stackable.centered.cards
+                    .ui.stackable.cards
                         each docs
                             +one_post_view
                 else
                     .ui.stackable.centered.cards
-                        +post_card
+                        each docs
+                            +post_card
 
 
             

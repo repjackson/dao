@@ -37,6 +37,13 @@ if Meteor.isClient
             })
     
     
+    Template.one_post_view.events
+        'click .add_tag': ->
+            selected_tags.push @valueOf()
+            # Router.go '/'
+    
+    
+    Template.post_view.events
         'click .add_tag': ->
             # Meteor.call 'tip', @_id, ->
                 
