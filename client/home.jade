@@ -18,108 +18,23 @@ template(name='home')
                 each tag_results
                     a.ui.large.compact.circular.button.select_tag.select_term(href='#')
                         strong #{name}
-                // if selected_keys
-                //     a#clear_keys.ui.black.icon.compact.large.button.select_term
-                //         i.remove.icon
-                //     each selected_keys
-                //         a.unselect_key.ui.black.compact.large.button.select_termn
-                //             strong #{this}
-                // +session_boolean_toggle key='view_keys' label='keys' icon='large key'
-                // if session_is 'view_keys'
-                //     each key_results
-                //         a.ui.large.basic.label.select_key.select_term(href='#')
-                //             strong #{name}
-                // +session_boolean_toggle key='view_from' label='from' icon='large user outline'
-                // if session_is 'view_from'
-                //     if selected_buyers
-                //         // #clear_buyers.ui.black.icon.compact.large.circular.button.select_term
-                //         //     i.remove.icon
-                //         each selected_buyers
-                //             // .unselect_buyer.ui.black.compact.large.circular.button.select_term
-                //             a.ui.big.black.image.label.unselect_buyer.select_term
-                //                 if selected_user.profile_image_id
-                //                     img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                //                 strong #{this}
-                //     each buyer_results
-                //         // .ui.compact.large.circular.basic.button.select_buyer
-                //         a.ui.large.image.basic.label.select_buyer.select_term
-                //             if user_ob.profile_image_id
-                //                 img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                //             if name
-                //                 strong #{name}
-                //             else
-                //                 |none
-                // +session_boolean_toggle key='view_to' label='to' icon='large user'
-                // if session_is 'view_to'
-                //     if selected_sellers
-                //         // #clear_sellers.ui.black.icon.compact.large.circular.button.select_term
-                //         //     i.remove.icon
-                //         each selected_sellers
-                //             // .unselect_seller.ui.black.compact.large.circular.button.select_term
-                //             a.ui.big.black.image.label.unselect_seller.select_term
-                //                 if selected_user.profile_image_id
-                //                     img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                //                 strong #{this}
-                //     each seller_results
-                //         // .ui.compact.large.circular.basic.button.select_seller.select_term
-                //         a.ui.large.image.basic.label.select_seller.select_term
-                //             if user_ob.profile_image_id
-                //                 img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                //             if name
-                //                 strong #{name}
-                //             else
-                //                 |none
-                // +session_boolean_toggle key='view_status' label='status' icon='large clock'
-                // if session_is 'view_status'
-                //     if selected_statuses
-                //         // #clear_statuses.ui.black.icon.compact.large.circular.button.select_term
-                //         //     i.remove.icon
-                //         each selected_statuses
-                //             // .unselect_status.ui.black.compact.large.circular.button.select_term
-                //             a.ui.big.black.image.label.unselect_status.select_term
-                //                 if selected_user.profile_image_id
-                //                     img.ui.avatar.image(src="{{c.url selected_user.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                //                 strong #{this}
-                //     each status_results
-                //         // .ui.compact.large.circular.basic.button.select_status
-                //         a.ui.large.image.basic.label.select_status.select_term
-                //             if user_ob.profile_image_id
-                //                 img.ui.avatar.image(src="{{c.url user_ob.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                //             if name
-                //                 strong #{name}
-                //             else
-                //                 |none
-                //     // div        
-                // unless one_result
-                //     // div
-                //     // i.large.sort.icon(title='sort')
-                //     +sort_button key='_timestamp' label='added' icon='clock'
-                //     +sort_button key='title' label='title' 
-                //     // +sort_button key='price' label='price' icon='shop'
-                //     // +sort_button key='total_points' label='earned' icon='coins'
         .row
             .sixteen.wide.column
                 .ui.stackable.centered.cards
                     each docs
-                        if key_value_is 'model' 'request'
-                            +request_card
-                        else if key_value_is 'model' 'offer'
-                            +offer_item
-                        else if key_value_is 'model' 'debit'
-                            +debit_card
-                        else if key_value_is 'model' 'order'
-                            +order_card
-                        else if key_value_is 'model' 'post'
-                            +post_card
-                        else if key_value_is 'model' 'alpha'
-                            +alpha_card
+                        if one_post
+                            +one_post_view
                         else
-                            .ui.header #{model}
-                            if is_dev
-                                i.remove.big.icon.link.delete
-                            each tags
-                                .ui.label #{this}
-                            +print_this
+                            +post_card
+                        // if key_value_is 'model' 'alpha'
+                            // +alpha_card
+                        // else
+                        //     .ui.header #{model}
+                        //     if is_dev
+                        //         i.remove.big.icon.link.delete
+                        //     each tags
+                        //         .ui.label #{this}
+                        //     +print_this
             
 template(name='sort_button')
     .ui.circular.button.toggle_sort(class=sort_button_class)

@@ -32,6 +32,35 @@ template(name='post_card')
             //         .ui.basic.label #{this}
             //     // +comments_view_small    
     // .ui.divider
+    
+template(name='one_post_view')
+    .ui.fluid.card.view_post
+        if youtube_id
+            +youtube_view key='youtube_id' direct=true
+        else if image_id
+            a.image(href="/post/#{_id}/view")
+                img.ui.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
+        .content
+            a.header(href="/post/#{_id}/view")
+                // i.newspaper.icon
+                |#{title}
+            .meta
+                |#{when}
+            .description
+                |!{description}
+            .description
+                .ui.basic.label
+                    i.donate.icon
+                    |#{tip_count}
+                .ui.basic.label
+                    i.chat.outline.icon
+                    |#{comment_count}
+                
+                |!{blurb}
+                each seven_tags
+                    .ui.basic.label #{this}
+                // +comments_view_small    
+    // .ui.divider
 
 template(name='post_view')
     with current_doc
