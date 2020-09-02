@@ -20,21 +20,19 @@ template(name='home')
                         strong #{name}
         .row
             .sixteen.wide.column
-                .ui.stackable.centered.cards
-                    each docs
-                        if one_post
+                if two_posts
+                    .ui.stackable.centered.two.cards
+                        each docs
                             +one_post_view
-                        else
-                            +post_card
-                        // if key_value_is 'model' 'alpha'
-                            // +alpha_card
-                        // else
-                        //     .ui.header #{model}
-                        //     if is_dev
-                        //         i.remove.big.icon.link.delete
-                        //     each tags
-                        //         .ui.label #{this}
-                        //     +print_this
+                else if one_post
+                    .ui.stackable.centered.cards
+                        each docs
+                            +one_post_view
+                else
+                    .ui.stackable.centered.cards
+                        +post_card
+
+
             
 template(name='sort_button')
     .ui.circular.button.toggle_sort(class=sort_button_class)
