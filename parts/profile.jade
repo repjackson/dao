@@ -31,36 +31,23 @@ template(name='profile_layout')
                         
                         // .ui.header $#{credit} credit
                         .ui.inline.header #{points}p
-                        .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
-                            i.refresh.icon
+                        // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
+                        //     i.refresh.icon
                         if is_dev
-                            .ui.small.inline.header #{_id}
+                            .ui.inline.header #{_id}
         
                         unless is_current_user
                             if currentUser
                                 // div
                                 +user_friend_button 
-                        .mobile.hidden
-                            if i_have_points
-                                .ui.button.send(title='send points')
-                                    i.send.large.icon
-                                    span send pts
-                            if is_current_user
-                                a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                                    // i.large.dollar.icon
-                                    span credit
-                        .mobile.only
-                            if i_have_points
-                                .ui.button.send(title='send points')
-                                    i.send.large.icon
-                                    span send pts
-                            a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
-                                i.large.send.icon
-                                // span pts sent
-                            if is_current_user
-                                a.ui.large.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                                    // i.large.dollar.icon
-                                    span credit
+                        if i_have_points
+                            .ui.button.send(title='send points')
+                                i.send.large.icon
+                                span send pts
+                        if is_current_user
+                            a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                                // i.large.dollar.icon
+                                span credit
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
@@ -87,85 +74,55 @@ template(name='user_dashboard')
     // .ui.hidden.divider
     .ui.stackable.grid
         .row
-            if is_dao
-                .four.wide.column
-                    .ui.header tax collected
-                    .ui.list
-                        each user_orders 
-                            .item 
-                                .content
-                                    .header #{order_offer.title}
-                                    |#{when}, #{purchase_price}c
-            .four.wide.column
-                a.ui.inline.spaced.header(href="/user/#{username}/offers")
-                    i.concierge.bell.icon
-                    |offers
-                .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
-                .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                // .smallscroll
-                //     each user_offers
-                //         +user_offer_card
-                // .ui.hidden.divider
-            .four.wide.column                 
+            // if is_dao
+            //     .four.wide.column
+            //         .ui.header tax collected
+            //         .ui.list
+            //             each user_orders 
+            //                 .item 
+            //                     .content
+            //                         .header #{order_offer.title}
+            //                         |#{when}, #{purchase_price}c
+            .eight.wide.column                 
                 a.ui.inline.header(href="/user/#{username}/credits")
                     i.chevron.down.large.icon
                     |#{credit_count} credits
-                    small (#{total_credit_amount}p)
+                | (#{total_credit_amount}p)
                 .ui.label #{total_credit_amount}p total received
                 // |received
                 .ui.label(title='received count') #{credit_count} total gifts 
-                .ui.label(title='rank') ##{global_credit_count_rank} count rank
+                .ui.label(title='rank') #{global_credit_count_rank} count rank
                     
                 i.tags.icon(title='credit tags')
                 each credit_tags
                     .ui.circular.label #{title}
-                        small #{count}
-                        // small #{count}
-                // .smallscroll.ui.segments
-                //     each user_credits
-                //         +user_credit_segment
+                        | #{count}
+                    #{count}
+                scroll.ui.segments
+                    each user_credits
+                        +user_credit_segment
                 .ui.hidden.divider
-            .four.wide.column
+            .eight.wide.column
                 a.ui.inline.spaced.header(href="/user/#{username}/debits")
                     i.chevron.up.icon
                     |#{debit_count} debits
-                    small (#{total_debit_amount}p)
+                    |(#{total_debit_amount}p)
                     .ui.label #{total_debit_amount}p total sent
                     .ui.label(title='debit count') #{debit_count} gifts sent
-                    .ui.label(title='rank') ##{global_debit_count_rank} gift sent rank
+                    .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
                         
                     i.tags.icon(title='credit tags')
                     each debit_tags
                         .ui.circular.label #{title}
-                            small #{count}
+                            |#{count}
                     
-                    // small(title='rank') ##{global_debit_count_rank}
-                // i.tags.icon(title='credit tags')
-                each debit_tags
-                    .ui.small.circular.label #{title} 
-                        // small #{count}
-                .ui.hidden.divider
-            .four.wide.column
-                a.ui.inline.spaced.header(href="/user/#{username}/requests")
-                    i.concierge.bell.icon
-                    |requests
-                .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
-                .ui.small.header (#{fulfilled_count}p total fulfilled count)
-                // .ui.hidden.divider
-            // .column
-            //     a.ui.inline.spaced.header(href="/user/#{username}/orders")
-            //         i.receipt.icon
-            //         |orders
-            //     // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
-            //     // .ui.small.header (#{fulfilled_count}p total fulfilled count)
-            .four.wide.column
-                a.ui.inline.spaced.header(href="/user/#{username}/sales")
-                    i.cart.icon
-                    |sales
-                // .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
-                // .ui.small.header (#{fulfilled_count}p total fulfilled count)
-            .eight.wide.column
-                +user_friends
+            //         //(title='rank') ##{global_debit_count_rank}
+            //     // i.tags.icon(title='credit tags')
+            //     each debit_tags
+            //         .ui.circular.label #{title} 
+            //         // #{count}
+            // .eight.wide.column
+            //     +user_friends
                 
                 
 template(name='user_sale_card')
@@ -205,7 +162,7 @@ template(name='user_credit_segment')
             if author.profile_image_id
                 img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{_author.username}
-        small #{when}
+     #{when}
         div
         |#{description}
         div
@@ -223,7 +180,7 @@ template(name='user_debit_segment')
             if recipient.profile_image_id
                 img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{recipient.username}
-        small #{when}
+     #{when}
         div
         |#{description}
         div
