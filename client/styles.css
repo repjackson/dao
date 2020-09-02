@@ -3,7 +3,7 @@ body {
     font-family: 'Ubuntu', sans-serif !important;
     /* font-family: 'Lato+Mono', sans-serif !important; */
     /* font-family: 'Lato', sans-serif !important; */
-     font-size: 110% !important; 
+     font-size: 120% !important; 
     /* line-height: 200% !important; */
     /* background: rgba(0,0,0,.8) !important; */
     /*scroll-behavior: smooth;*/
@@ -11,12 +11,12 @@ body {
     /*background: rgba(200,200,200,1) !important;*/
     /* filter: invert(1) !important; */
     /* overscroll-behavior: none; */
-    transition: all .5s ease !important;
+    transition: all 1s ease !important;
     /* background: #0e0e44 !important; */
 }
 
 .tone_item {
-    transition: all .5s ease !important;
+    transition: all 1s ease !important;
 }
 
 
@@ -229,7 +229,7 @@ html.ios body {
     /* z-index: 2000 !important; */
 }
 .global_container{
-    transition: transform .5s !important;
+    transition: transform 1s !important;
      /*margin-top: 3.5em !important; */
     /* box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
 }
@@ -572,7 +572,7 @@ body {
 
 
 .button, .selector, .card, .dark_mode, .ui.header, .ui.label, .item, p, img{
-    animation: fadein .5s !important;
+    animation: fadein 1s !important;
     /*-webkit-transition: opacity .2s ease-in !important;*/
     /* -webkit-transition: opacity .2s ease-out; */
     /* animation: fadeout .25s; */
@@ -609,7 +609,7 @@ body {
 }
 
 .result_column {
-  /* animation: fadein .5s; */
+  /* animation: fadein 1s; */
 }
 
 @media screen and (max-width: 1100px) {

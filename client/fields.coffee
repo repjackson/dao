@@ -163,6 +163,14 @@ Template.link_edit.events
             Meteor.users.update parent._id,
                 $set:"#{@key}":val
 
+Template.image_link_edit.events
+    'blur .edit_image_link': (e,t)->
+        val = t.$('.edit_image_link').val()
+        doc = Docs.findOne parent._id
+        parent = Template.parentData()
+        Docs.update parent._id,
+            $set:"image_link":val
+
 
 Template.icon_edit.events
     'blur .icon_val': (e,t)->
@@ -324,6 +332,23 @@ Template.text_edit.events
             Meteor.users.update parent._id,
                 $set:"#{@key}":val
 
+Template.link_edit.events
+    'blur .edit_link': (e,t)->
+        val = t.$('.edit_link').val()
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":val
+        else if user
+            Meteor.users.update parent._id,
+                $set:"#{@key}":val
+
 
 Template.address_edit.events
     'blur .edit_address': (e,t)->
@@ -344,7 +369,7 @@ Template.address_edit.events
 
 
 Template.slug_edit.events
-    'blur .edit_text': (e,t)->
+    'blur .edit_slug': (e,t)->
         val = t.$('.edit_text').val()
         if @direct
             parent = Template.parentData()

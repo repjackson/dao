@@ -86,6 +86,7 @@ template(name='html_edit')
                     |#{key}
                 else
                     |#{this}
+            +call_watson mode='html' key=key
     // .froala-container
     //     +froalaReactive getFEContext
     .ui.fluid.form
@@ -93,7 +94,6 @@ template(name='html_edit')
             textarea#sample.sun-editor-editable
                 |#{field_value}
     //- if is_dev
-    +call_watson mode='html' key=key
     //- div
     //- //- +tone mode='html'
     //- if watson
@@ -352,11 +352,11 @@ template(name='image_edit')
 
 template(name='image_link_edit')
     .ui.fluid.input
-        .ui.smoothed.label image link
+        // .ui.smoothed.label image link
         i.image.icon
-        input.edit_image_link(type='link' value=field_value placeholder='image link'  autocomplete="off")
-    if field_value
-        img.ui.fluid.image(src=field_value)
+        input.edit_image_link(type='link' value=image_link placeholder='image link'  autocomplete="off")
+    if image_link
+        img.ui.fluid.image(src=image_link)
     // +call_visual
 
 
