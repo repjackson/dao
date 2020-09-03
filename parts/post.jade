@@ -47,9 +47,10 @@ template(name='one_post_view')
         else if image_id
             a.image(href="/post/#{_id}/view")
                 img.ui.image(src="{{c.url image_id width=1000 crop='fill'}}" class=currentUser.invert_class) 
-        else if image_link
-            img.ui.rounded.image(src=image_link class=currentUser.invert_class)
-                
+        else
+            a.image(href="/post/#{_id}/view")
+                img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+ 
         .content
             a.inline.header(href="/post/#{_id}/view")
                 // i.newspaper.icon
@@ -93,6 +94,10 @@ template(name='post_view')
                             i.large.tag.icon
                             each tags 
                                 .ui.compact.large.circular.button.add_tag #{this}
+                        // a.image(href="/post/#{_id}/view")
+                        //     img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+
+                     
                         .f13
                             |!{description}
                             +tone
@@ -119,6 +124,8 @@ template(name='post_view')
                     .ui.center.aligned.header 
                         |#{title}
                     +voting_full
+                    a.image(href="/post/#{_id}/view")
+                        img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
                     
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
                     if tone

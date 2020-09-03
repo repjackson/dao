@@ -12,7 +12,7 @@ Meteor.methods
                 # console.log err
             else
 
-                console.log response
+                # console.log response
                 # console.log 'response'
 
                 found_doc =

@@ -22,13 +22,19 @@ if Meteor.isClient
 
     Template.tone.helpers
         tone_label_class: ->
-            console.log @
+            # console.log @
             if @tone_id is 'analytical'
                 'orange'
-            else if @tone_id is 'sad'
+            else if @tone_id is 'sadness'
                 'blue'
             else if @tone_id is 'joy'
                 'green'
+            else if @tone_id is 'anger'
+                'red'
+            else if @tone_id is 'tentative'
+                'yellow'
+            else if @tone_id is 'confident'
+                'teal'
     Template.call_watson.events
         'click .autotag': ->
             console.log @
@@ -39,35 +45,18 @@ if Meteor.isClient
     Template.home.onCreated ->
         Session.setDefault 'sort_key', '_timestamp'
         Session.setDefault 'sort_direction', -1
-        # @autorun -> Meteor.subscribe('model_docs', 'block')
-        # @autorun -> Meteor.subscribe('model_docs', 'module')
+        @autorun -> Meteor.subscribe('me')
         @autorun -> Meteor.subscribe('tags',
             Session.get('sort_key')
             Session.get('sort_direction')
             Session.get('query')
-            # selected_keys.array()
-            # selected_models.array()
             selected_tags.array()
-            # selected_location_tags.array()
-            # selected_sellers.array()
-            # selected_buyers.array()
-            # selected_statuses.array()
-            # Session.get('view_purchased')
-            # Session.get('view_incomplete')
             )
         @autorun -> Meteor.subscribe('docs',
             Session.get('sort_key')
             Session.get('sort_direction')
             Session.get('query')
-            # selected_keys.array()
-            # selected_models.array()
             selected_tags.array()
-            # selected_location_tags.array()
-            # selected_sellers.array()
-            # selected_buyers.array()
-            # selected_statuses.array()
-            # Session.get('view_purchased')
-            # Session.get('view_incomplete')
             )
 
         
@@ -172,7 +161,9 @@ if Meteor.isClient
             Router.go "/post/#{new_post_id}/edit"
 
         
-        'click .select_tag': -> selected_tags.push @name
+        'click .select_tag': -> 
+            selected_tags.push @name
+            Meteor.call 'call_wiki', @name, ->
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
     
@@ -185,7 +176,7 @@ if Meteor.isClient
             Session.set('query',search)
             if e.which is 13
                 selected_tags.push search
-                Meteor.call 'call_wiki', search
+                Meteor.call 'call_wiki', search, ->
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8
@@ -241,7 +232,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 42 }
+            { $limit: 33 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter
