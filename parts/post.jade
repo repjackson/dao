@@ -5,8 +5,11 @@ template(name='post_card')
         else if image_id
             a.image(href="/post/#{_id}/view")
                 img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)    
-        else if image_link
-            img.ui.rounded.image(src=image_link class=currentUser.invert_class)
+        else
+            a.image(href="/post/#{_id}/view")
+                img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+        // else if image_link
+        //     img.ui.rounded.image(src=image_link class=currentUser.invert_class)
                 
         .content
             a.header(href="/post/#{_id}/view")
@@ -54,7 +57,9 @@ template(name='one_post_view')
             .meta
                 |#{when}
             .description
+                +tone
                 |!{description}
+                // |!{analyzed_text}
             .description
                 .ui.basic.label
                     i.donate.icon
@@ -90,6 +95,7 @@ template(name='post_view')
                                 .ui.compact.large.circular.button.add_tag #{this}
                         .f13
                             |!{description}
+                            +tone
                         // a.ui.header(href="/user/#{target.username}")
                         //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         //     |#{target.username}

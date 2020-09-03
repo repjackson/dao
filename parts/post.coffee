@@ -13,6 +13,7 @@ if Meteor.isClient
     Template.post_view.onCreated ->
         @autorun -> Meteor.subscribe 'post_tips', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun -> Meteor.subscribe 'me'
         Session.setDefault 'view_post_section', 'content'
     Template.post_view.onRendered ->
         Meteor.call 'log_view', Router.current().params.doc_id

@@ -5,14 +5,12 @@ template(name='home')
                 // a.ui.button(href="/") 
                 //     i.yin.yang.icon
                 if currentUser
-                    a.icon.button.post(title='add')
-                        i.large.plus.circular.link.icon
+                    a.ui.icon.circular.button.post(title='add')
+                        i.large.plus.icon
                     if is_dev 
-                        .icon.item.toggle_dev
-                            i.large.code.icon
+                        i.large.code.icon.toggle_dev
                     if is_admin
-                        .icon.item.toggle_admin
-                            i.large.shield.icon(title='admin mode on')
+                        i.large.shield.icon.toggle_admin(title='admin mode on')
                     a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                         //- i.large.user.large.icon
                         |{{money_format currentUser.points}}c
@@ -25,10 +23,10 @@ template(name='home')
                     // a.icon.large.item.toggle_rightbar.select_term
                     //     i.ellipsis.vertical.large.icon
                 else
-                    a.item(href="/register" title='register')
+                    a(href="/register" title='register')
                         i.large.user.plus.icon
                         // |register
-                    a.item(href="/login" title='login')
+                    a(href="/login" title='login')
                         i.large.sign.in.alternate.icon
                         // |login
 
