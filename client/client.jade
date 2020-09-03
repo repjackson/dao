@@ -48,12 +48,12 @@ template(name='layout')
     // #main_area.scrolling.global_container
     
     .ui.bottom.attached.pushable.segment
-        .adventure-vid.w-background-video.w-background-video-atom(class=currentUser.invert_class data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
-            video(autoplay='', loop='', style='background-image:url("https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg")', muted='', playsinline='', data-wf-ignore='true', data-object-fit='cover')
-                source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4', data-wf-ignore='true')
-                source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-wf-ignore='true')
+        // .adventure-vid.w-background-video.w-background-video-atom(class='invert' data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
+        //     video(autoplay='', loop='', style='background-image:url("https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg")', muted='', playsinline='', data-wf-ignore='true', data-object-fit='cover')
+        //         source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4', data-wf-ignore='true')
+        //         source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-wf-ignore='true')
                 
-        #main_area.global_container.pusher(class=currentUser.invert_class)
+        #main_area.global_container.pusher(class='invert')
             +yield
             // .scrolling
         // if currentUser

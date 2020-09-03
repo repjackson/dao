@@ -204,7 +204,7 @@ if Meteor.isServer
             match.tags = $all:selected_tags
         console.log match
         Docs.find match,
-            limit:4
+            limit:20
             sort:"#{sort_key}":sort_direction
                         
                         

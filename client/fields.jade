@@ -6,14 +6,14 @@ template(name='youtube_edit')
             |youtube id
         input.youtube_id(type='text' value=field_value placeholder=placeholder autocomplete="off")
     if field_value
-        iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='' class=currentUser.invert_class)
+        iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='' class='invert')
 
 template(name='youtube_view')
     if field_value
         if icon
             +i name=icon
             //- i.icon(class=icon)
-        .ui.embed.rounded(data-source="youtube" data-id=field_value class=currentUser.invert_class)
+        .ui.embed.rounded(data-source="youtube" data-id=field_value class='invert')
 
         //- // iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
         //- iframe(src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
@@ -321,7 +321,7 @@ template(name='image_view')
         //-     img(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
         //- else 
         a(href="{{c.url field_value }}" target='_window')
-            img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}" class=currentUser.invert_class)
+            img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}" class='invert')
         //- a(href="{{c.url field_value gravity='face' crop='fit'}}")
         //-     |download
     //- +call_visual
@@ -344,7 +344,7 @@ template(name='image_edit')
             if field_value
                 //- label Image
                 a(href="{{c.url field_value }}" target='_window')
-                    img.ui.large.centered.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    img.ui.large.centered.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class='invert')
                 a#remove_photo.ui.right.corner.link.label
                     i.remove.link.icon
             else
@@ -1049,7 +1049,7 @@ template(name='single_user_edit')
                     each user_results
                         a.select_user.item(href='#')
                             .ui.small.inline.header
-                                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class='invert')
                                 |#{username}
     if field_value
         // +user_card field_value
@@ -1058,7 +1058,7 @@ template(name='single_user_edit')
         //- |#{this}
         with user_from_id field_value
             .ui.inline.header
-                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class='invert')
                 |#{username}
             i.pull_user.remove.link.circular.icon
 
@@ -1107,7 +1107,7 @@ template(name='multi_user_edit')
                 each user_results
                     a.select_user.item(href="#")
                         .ui.header
-                            img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class='invert')
                             small @#{username}
     +clear_value                
     each field_value
@@ -1115,7 +1115,7 @@ template(name='multi_user_edit')
         with user_from_id this
             div
             .ui.inline.header
-                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}" class='invert')
                 |#{username}
             i.pull_user.remove.link.circular.icon
 
@@ -1144,7 +1144,7 @@ template(name='multi_doc_input')
                 each doc_results
                     .select_doc.item
                         h2.ui.header
-                            //- img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            //- img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class='invert')
                             strong + #{guest_name} #{first_name} #{last_name}
         //- +clear_value                
         //- .ui.list
@@ -1158,7 +1158,7 @@ template(name='multi_doc_input')
                 //-         .right.floated.content
                 //-             i.pull_user.remove.link.icon
                 //-         .image
-                //-             img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                //-             img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class='invert')
                 //-         .content
                 //-             h4.ui.header
                 //-                 |#{first_name} #{last_name}

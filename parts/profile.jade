@@ -1,12 +1,12 @@
 template(name='profile_layout')
     // +nav
-    .ui.bottom.attached.pushable.segment(class=currentUser.invert_class)
+    .ui.bottom.attached.pushable.segment(class='invert')
         // +top_sidebar
-        +left_sidebar
-        +right_sidebar
+        // +left_sidebar
+        // +right_sidebar
         // #main_area.global_container.pusher
         #main_area.global_container.pusher
-            // .adventure-vid.w-background-video.w-background-video-atom(class=currentUser.invert_class data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
+            // .adventure-vid.w-background-video.w-background-video-atom(class='invert' data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
             // video(autoplay='', loop='', style='background-image:url("https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg")', muted='', playsinline='', data-wf-ignore='true', data-object-fit='cover')
             //     source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4', data-wf-ignore='true')
             //     source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-wf-ignore='true')
@@ -19,10 +19,10 @@ template(name='profile_layout')
                             i.large.yin.yang.icon
                         span.mobile.only
                             a(href="/user/#{username}/")
-                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
                         span.mobile.hidden
                             a(href="/user/#{username}/")
-                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
+                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert') 
                         a.ui.big.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
                         if is_admin
@@ -137,7 +137,7 @@ template(name='user_sale_card')
     .ui.card
         if image_id
             a(href="/order/#{_id}/view")
-                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
+                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class='invert')
         .content.zoom.pointer
             a.header(href="/order/#{_id}/view")
                 |#{price}pts: #{title}
@@ -151,7 +151,7 @@ template(name='user_offer_card')
     .ui.card
         if image_id
             a(href="/offer/#{_id}/view")
-                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
+                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class='invert')
         .content.zoom.pointer
             a.header(href="/offer/#{_id}/view")
                 |#{price}pts: #{title}
@@ -163,12 +163,12 @@ template(name='user_offer_card')
 template(name='user_credit_segment')
     .ui.segment.user_credit_segment.pointer.zoom
         if image_id
-            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class='invert')
         .header
             strong #{amount}pt 
             // |from 
             if author.profile_image_id
-                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class='invert')
             |#{_author.username}
      #{when}
         div
@@ -181,12 +181,12 @@ template(name='user_credit_segment')
 template(name='user_debit_segment')
     .ui.segment.user_debit_segment.pointer.zoom
         if image_id
-            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class='invert')
         .header
             strong #{amount}pt
             | to 
             if recipient.profile_image_id
-                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class='invert')
             |#{recipient.username}
      #{when}
         div

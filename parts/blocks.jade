@@ -31,7 +31,7 @@ template(name='smart_tagger')
     each terms 
         a.ui.large.circular.basic.button.select_term(href='#')
             if image
-                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class='invert')
             |#{title}
     each tags
         .ui.large.basic.circular.label
@@ -43,7 +43,7 @@ template(name='smart_tagger')
     each suggestions
         a.ui.large.circular.basic.button.select_term(href='#')
             // if image
-            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class='invert')
             |#{title}
 
 
