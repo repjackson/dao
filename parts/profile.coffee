@@ -37,6 +37,15 @@ if Meteor.isClient
         , 2000
 
 
+    Template.user_dashboard.events
+        'click .select_tag': ->
+            console.log @
+            Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'search_reddit', @name, ->
+                
+            selected_tags.push @name
+            Router.go '/'
+
     Template.user_dashboard.helpers
         love_results: ->
             love_results.find()

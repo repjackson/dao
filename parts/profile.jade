@@ -88,15 +88,18 @@ template(name='user_dashboard')
                     .column
                         .ui.header them
                         each current_user.upvoted_tags
-                            .ui.large.label #{title}:#{count}
+                            a.ui.large.label.select_tag #{title}
+                                small #{count}
                     .column
                         .ui.header union
                         each love_results
-                            .ui.huge.label #{name}: #{count}
+                            a.ui.huge.label.select_tag #{name}
+                                small #{count}
                     .column
                         .ui.header you #{currentUser.total_upvoted_points}
                         each currentUser.upvoted_tags
-                            .ui.large.label #{title}:#{count}
+                            a.ui.large.label.select_tag #{title}
+                                small #{count}
             .sixteen.wide.column
                 +user_friends
         // .row
