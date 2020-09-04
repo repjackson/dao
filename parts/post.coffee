@@ -40,10 +40,10 @@ if Meteor.isClient
     
     Template.one_post_view.events
         'click .add_tag': ->
-            Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', @valueOf(), ->
-                
             selected_tags.push @valueOf()
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+                
             # Router.go '/'
     
     
@@ -58,10 +58,10 @@ if Meteor.isClient
             #     position: 'bottom right'
             #     message: "#{@title} tipped"
             # })
-            Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', @valueOf(), ->
-
             selected_tags.push @valueOf()
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+
             Router.go '/'
     
     

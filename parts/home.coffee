@@ -163,7 +163,7 @@ if Meteor.isClient
             Router.go "/debit/#{@_id}/view"
 
         'keydown .search_title': (e,t)->
-            search = $('.search_title').val()
+            search = $('.search_title').val().toLowerCase().trim()
             Session.set('query',search)
             if e.which is 13
                 selected_tags.push search
@@ -223,7 +223,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 10 }
+            { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter
