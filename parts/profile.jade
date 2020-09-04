@@ -44,10 +44,10 @@ template(name='profile_layout')
                         if is_dev
                             .ui.inline.header #{_id}
         
-                        // unless is_current_user
-                        //     if currentUser
-                        //         // div
-                        //         +user_friend_button 
+                        unless is_current_user
+                            if currentUser
+                                // div
+                                +user_friend_button 
                         if i_have_points
                             .ui.button.send(title='send points')
                                 i.send.large.icon
@@ -128,8 +128,8 @@ template(name='user_dashboard')
                 each debit_tags
                     .ui.circular.label #{title} 
                     // #{count}
-            // .eight.wide.column
-            //     +user_friends
+            .eight.wide.column
+                +user_friends
     +user_credit
                 
                 
