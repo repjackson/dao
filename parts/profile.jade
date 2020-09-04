@@ -82,6 +82,20 @@ template(name='user_dashboard')
     // .ui.hidden.divider
     .ui.stackable.grid
         .row
+            .sixteen.wide.column
+                .ui.header authored overlap 
+                .ui.three.column.grid
+                    .column
+                        .ui.header them
+                        each target_authored_tags
+                            .ui.label #{name}:#{count}
+                    .column
+                        .ui.header union
+                    .column
+                        .ui.header you #{currentUser.total_authored_points}
+                        each currentUser.authored_tags
+                            .ui.label #{title}:#{count}
+        .row
             // if is_dao
             //     .four.wide.column
             //         .ui.header tax collected
@@ -133,33 +147,7 @@ template(name='user_dashboard')
     +user_credit
                 
                 
-template(name='user_sale_card')
-    .ui.card
-        if image_id
-            a(href="/order/#{_id}/view")
-                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class='invert')
-        .content.zoom.pointer
-            a.header(href="/order/#{_id}/view")
-                |#{price}pts: #{title}
-            // |!{description}
-            |status: #{status}
-            if complete 
-                |completed by #{completer.name}
-
                         
-template(name='user_offer_card')
-    .ui.card
-        if image_id
-            a(href="/offer/#{_id}/view")
-                img.ui.zoom.image(src="{{c.url image_id height=100 width=200}}" class='invert')
-        .content.zoom.pointer
-            a.header(href="/offer/#{_id}/view")
-                |#{price}pts: #{title}
-            // |!{description}
-
-                        
-                        
-
 template(name='user_credit_segment')
     .ui.segment.user_credit_segment.pointer.zoom
         if image_id

@@ -18,6 +18,7 @@ if Meteor.isClient
         Meteor.setTimeout ->
             if user
                 Meteor.call 'calc_user_stats', user._id, ->
+                Meteor.call 'calc_authored_tags', user._id, ->
         , 2000
 
 
@@ -34,9 +35,10 @@ if Meteor.isClient
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             # Meteor.call 'calc_user_stats', user._id, ->
-            Meteor.call 'calc_user_stats', user._id, ->
-            Meteor.call 'calc_user_tags', user._id, ->
-    
+            # Meteor.call 'calc_user_stats', user._id, ->
+            # Meteor.call 'calc_user_tags', user._id, ->
+            Meteor.call 'calc_authored_tags', user._id, ->
+
     Template.profile_layout.events
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
@@ -340,29 +342,41 @@ if Meteor.isServer
                 total_debit_price += debit.price
 
             console.log 'total debit price', total_debit_price
+           
+           
+           
+            authored_posts = Docs.find({
+                model:'post'
+                _author_id:user_id})
+            authored_count = authored_posts.count()
+            total_authored_points = 0
+            for post in authored_posts.fetch()
+                total_authored_points += post.points
 
-            fulfilled_requests = Docs.find({
-                model:'request'
-                price:$exists:true
-                claimed_user_id:user_id
-                complete:true
-            })
-            fulfilled_count = fulfilled_requests.count()
-            total_fulfilled_price = 0
-            for fulfilled in fulfilled_requests.fetch()
-                total_fulfilled_price += fulfilled.price
+            console.log 'total authored points', total_authored_points
+
+            # fulfilled_requests = Docs.find({
+            #     model:'request'
+            #     price:$exists:true
+            #     claimed_user_id:user_id
+            #     complete:true
+            # })
+            # fulfilled_count = fulfilled_requests.count()
+            # total_fulfilled_price = 0
+            # for fulfilled in fulfilled_requests.fetch()
+            #     total_fulfilled_price += fulfilled.price
             
             
-            requested = Docs.find({
-                model:'request'
-                price:$exists:true
-                _author_id:user_id
-                published:true
-            })
-            authored_count = requested.count()
-            total_request_cost = 0
-            for request in requested.fetch()
-                total_request_cost += request.price
+            # requested = Docs.find({
+            #     model:'request'
+            #     price:$exists:true
+            #     _author_id:user_id
+            #     published:true
+            # })
+            # authored_count = requested.count()
+            # total_request_cost = 0
+            # for request in requested.fetch()
+            #     total_request_cost += request.price
             
             
             credits = Docs.find({
@@ -394,8 +408,8 @@ if Meteor.isServer
             # average_credit_per_student = total_credit_price/student_count
             # average_debit_per_student = total_debit_price/student_count
             flow_volume = Math.abs(total_credit_price)+Math.abs(total_debit_price)
-            flow_volume += total_fulfilled_price
-            flow_volume += total_request_cost
+            # flow_volume += total_fulfilled_price
+            # flow_volume += total_request_cost
             
             
             tipped_cur = 
@@ -421,7 +435,8 @@ if Meteor.isServer
             for topup in topups.fetch()
                 total_topup_price += topup.amount*100
                 console.log 'adding', topup.amount
-            points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_cost+total_topup_price-comment_count-(tipped_count*11)+(received_tips_count*10)
+            # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_cost+total_topup_price-comment_count-(tipped_count*11)+(received_tips_count*10)
+            points = total_credit_price-total_debit_price+total_topup_price-comment_count-(tipped_count*11)+(received_tips_count*10)
             # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_cost
             # points += total_fulfilled_price
             # points =- total_request_cost
@@ -454,8 +469,9 @@ if Meteor.isServer
                     points:points
                     credit:points/100
                     one_ratio: one_ratio
-                    total_fulfilled_price:total_fulfilled_price
-                    fulfilled_count:fulfilled_count
+                    total_authored_points:total_authored_points    
+                    # total_fulfilled_price:total_fulfilled_price
+                    # fulfilled_count:fulfilled_count
                     tipped_count:tipped_count
                     received_tips_count:received_tips_count
                     comment_count:comment_count
