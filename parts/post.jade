@@ -21,11 +21,11 @@ template(name='post_card')
             // .meta
             //     |#{when}
         // .content
-            // .meta
-            //     |by 
-            //     if _author.profile_image_id
-            //         img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
-                // |#{_author.username}
+        //     a.meta(href=)
+        //         |by 
+        //         if _author.profile_image_id
+        //             img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+        //         |#{_author.username}
             // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
 
             // .description
@@ -58,6 +58,12 @@ template(name='one_post_view')
             a.inline.header(href="/post/#{_id}/view")
                 // i.newspaper.icon
                 |#{title}
+            a.meta(href="/user/#{_author.username}/")
+                |by 
+                if _author.profile_image_id
+                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+                |#{_author.username}
+                
             .meta
                 |#{when}
             .description

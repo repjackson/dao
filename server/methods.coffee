@@ -1,7 +1,8 @@
 Meteor.methods
 Meteor.methods
     search_reddit: (query)->
-        # console.log 'searching reddit for', query
+        console.log 'searching reddit for', query
+        console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
         HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=0&limit=10&include_facets=true",(err,response)=>
@@ -15,6 +16,11 @@ Meteor.methods
                     unless item.domain is "OneWordBan"
                         data = item.data
                         len = 200
+                        # if typeof(query) is String
+                        #     console.log 'is STRING'
+                        #     added_tags = [query]
+                        # else
+                        #     added_tags = query
                         # added_tags = [query]
                         # added_tags.push data.domain.toLowerCase()
                         # added_tags.push data.author.toLowerCase()
@@ -30,9 +36,10 @@ Meteor.methods
                             # root: query
                             selftext: false
                             # thumbnail: false
-                            tags: [query]
+                            tags: query
                             model:'post'
                             source:'reddit'
+                        console.log 'reddit post', reddit_post
                         existing_doc = Docs.findOne url:data.url
                         if existing_doc
                             # if Meteor.isDevelopment
@@ -46,7 +53,6 @@ Meteor.methods
                             Docs.update existing_doc._id,
                                 $addToSet: tags: $each: query
 
-                                # console.log 'existing doc', existing_doc.title
                             # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
                         unless existing_doc
                             # console.log 'importing url', data.url
@@ -152,7 +158,7 @@ Meteor.methods
                         url: "https://en.wikipedia.org/wiki/#{term}"
                         model:'post'
                 if found_doc
-                    console.log 'found wiki doc for term', term
+                    # console.log 'found wiki doc for term', term
                     # console.log 'found wiki doc for term', term, found_doc
                     Docs.update found_doc._id,
                         $pull:

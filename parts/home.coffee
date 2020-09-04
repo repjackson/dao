@@ -146,7 +146,7 @@ if Meteor.isClient
         'click .select_tag': -> 
             selected_tags.push @name
             Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'search_reddit', @name, ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
     
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
@@ -166,7 +166,7 @@ if Meteor.isClient
             if e.which is 13
                 selected_tags.push search
                 Meteor.call 'call_wiki', search, ->
-                Meteor.call 'search_reddit', search, ->
+                Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8
