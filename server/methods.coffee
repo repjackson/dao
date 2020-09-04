@@ -632,4 +632,58 @@ Meteor.methods
                 #     $set:
                 #         agg:agg.toArray()
         else
+            return null    
+            
+    calc_upvoted_tags: (user_id)->
+        upvoted_tags = Meteor.call 'uomega', user_id
+        # debit_tags = Meteor.call 'omega', user_id, 'debit', (err, res)->
+        console.log 'upvoted tags', upvoted_tags
+        # console.log 'res from async agg'
+        Meteor.users.update user_id, 
+            $set:
+                upvoted_tags:upvoted_tags
+
+
+    uomega: (user_id)->
+        user = Meteor.users.findOne user_id
+        console.log 'finding upvoted posts for ', user_id
+        options = {
+            explain:false
+            allowDiskUse:true
+        }
+        match = {}
+        match.model = 'post'
+        match.upvoter_ids = $in:[user_id]
+        
+        console.log 'found upvoted posts', Docs.find(match).count()
+        # if omega.selected_tags.length > 0
+        #     limit = 42
+        # else
+        # limit = 10
+        console.log 'omega_match', match
+        # { $match: tags:$all: omega.selected_tags }
+        pipe =  [
+            { $match: match }
+            { $project: tags: 1 }
+            { $unwind: "$tags" }
+            { $group: _id: "$tags", count: $sum: 1 }
+            # { $match: _id: $nin: omega.selected_tags }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, title: '$_id', count: 1 }
+        ]
+
+        if pipe
+            agg = global['Docs'].rawCollection().aggregate(pipe,options)
+            # else
+            res = {}
+            if agg
+                # console.log(agg.toArray())
+                agg.toArray()
+                # printed = console.log(agg.toArray())
+                # omega = Docs.findOne model:'omega_session'
+                # Docs.update omega._id,
+                #     $set:
+                #         agg:agg.toArray()
+        else
             return null

@@ -33,6 +33,7 @@ if Meteor.isClient
             if user
                 Meteor.call 'calc_user_stats', user._id, ->
                 Meteor.call 'calc_authored_tags', user._id, ->
+                Meteor.call 'calc_upvoted_tags', user._id, ->
         , 2000
 
 
@@ -55,6 +56,7 @@ if Meteor.isClient
             # Meteor.call 'calc_user_stats', user._id, ->
             # Meteor.call 'calc_user_tags', user._id, ->
             Meteor.call 'calc_authored_tags', user._id, ->
+            Meteor.call 'calc_upvoted_tags', user._id, ->
 
     Template.profile_layout.events
         'click .send': ->
@@ -126,10 +128,10 @@ if Meteor.isServer
         # if selected_authors.length > 0
         #     match._author_username = $all:selected_authors
         # match._author_id = $in:[Meteor.userId(), target_user._id]
-        match.upvoter_ids = $in:[Meteor.userId(), target_user._id]
+        match.upvoter_ids = $all:[Meteor.userId(), target_user._id]
         console.log match
         Docs.find match,
-            limit:10
+            limit:20
             sort:points:-1
                         
                         
@@ -151,7 +153,7 @@ if Meteor.isServer
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         # match._author_id = $in:[Meteor.userId(), target_user._id]
-        match.upvoter_ids = $in:[Meteor.userId(), target_user._id]
+        match.upvoter_ids = $all:[Meteor.userId(), target_user._id]
 
         tag_cloud = Docs.aggregate [
             { $match: match }
