@@ -83,20 +83,36 @@ template(name='user_dashboard')
     .ui.stackable.grid
         .row
             .sixteen.wide.column
-                .ui.header authored overlap 
+                .ui.header upvoted overlap 
                 .ui.three.column.grid
                     .column
                         .ui.header them
-                        each current_user.authored_tags
+                        each current_user.upvoted_tags
                             .ui.label #{title}:#{count}
                     .column
                         .ui.header union
                         each love_results
                             .ui.label #{name}: #{count}
                     .column
-                        .ui.header you #{currentUser.total_authored_points}
-                        each currentUser.authored_tags
+                        .ui.header you #{currentUser.total_upvoted_points}
+                        each currentUser.upvoted_tags
                             .ui.label #{title}:#{count}
+        // .row
+        //     .sixteen.wide.column
+        //         .ui.header authored overlap 
+        //         .ui.three.column.grid
+        //             .column
+        //                 .ui.header them
+        //                 each current_user.authored_tags
+        //                     .ui.label #{title}:#{count}
+        //             .column
+        //                 .ui.header union
+        //                 each love_results
+        //                     .ui.label #{name}: #{count}
+        //             .column
+        //                 .ui.header you #{currentUser.total_authored_points}
+        //                 each currentUser.authored_tags
+        //                     .ui.label #{title}:#{count}
         .row
             // if is_dao
             //     .four.wide.column

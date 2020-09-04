@@ -125,7 +125,8 @@ if Meteor.isServer
             match.tags = $all:selected_tags
         # if selected_authors.length > 0
         #     match._author_username = $all:selected_authors
-        match._author_id = $in:[Meteor.userId(), target_user._id]
+        # match._author_id = $in:[Meteor.userId(), target_user._id]
+        match.upvoter_ids = $in:[Meteor.userId(), target_user._id]
         console.log match
         Docs.find match,
             limit:10
@@ -149,7 +150,8 @@ if Meteor.isServer
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0 then match.tags = $all: selected_tags
-        match._author_id = $in:[Meteor.userId(), target_user._id]
+        # match._author_id = $in:[Meteor.userId(), target_user._id]
+        match.upvoter_ids = $in:[Meteor.userId(), target_user._id]
 
         tag_cloud = Docs.aggregate [
             { $match: match }
@@ -433,6 +435,17 @@ if Meteor.isServer
                 total_authored_points += post.points
 
             console.log 'total authored points', total_authored_points
+            
+            
+            upvoted_posts = Docs.find({
+                model:'post'
+                upvoter_ids:$in:[user_id]})
+            upvoted_count = upvoted_posts.count()
+            total_upvoted_points = 0
+            for post in upvoted_posts.fetch()
+                total_upvoted_points += post.points
+
+            console.log 'total upvoted points', total_upvoted_points
 
             # fulfilled_requests = Docs.find({
             #     model:'request'
