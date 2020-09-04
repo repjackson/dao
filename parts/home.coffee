@@ -1,12 +1,6 @@
 
 if Meteor.isClient
-    # @selected_keys = new ReactiveArray []
     @selected_tags = new ReactiveArray []
-    # @selected_models = new ReactiveArray []
-    # @selected_sellers = new ReactiveArray []
-    # @selected_buyers = new ReactiveArray []
-    # @selected_statuses = new ReactiveArray []
-    # @selected_location_tags = new ReactiveArray []
     
     Template.body.events
         # 'click a:not(.select_term)': ->
@@ -44,8 +38,6 @@ if Meteor.isClient
 
 
     Template.home.onCreated ->
-        # Session.setDefault 'sort_key', '_timestamp'
-        # Session.setDefault 'sort_direction', -1
         @autorun -> Meteor.subscribe('me')
         @autorun -> Meteor.subscribe('tags',
             Session.get('query')
@@ -93,22 +85,8 @@ if Meteor.isClient
     
         two_posts: -> Docs.find().count() is 2
         three_posts: -> Docs.find().count() is 3
-        # four_posts: -> Docs.find().count() is 4
-        # five_posts: -> Docs.find().count() is 5
-        # six_posts: -> Docs.find().count() is 6
-        # seven_posts: -> Docs.find().count() is 7
-        # eight_posts: -> Docs.find().count() is 8
-        # nine_posts: -> Docs.find().count() is 9
-        # ten_posts: -> Docs.find().count() is 10
-        # more_than_ten: -> Docs.find().count() > 10
-        one_result: ->
-            Docs.find().count() is 1
+        one_result: -> Docs.find().count() is 1
     
-        # show_to: ->
-        #     selected_sellers.array().length > 0 or seller_results.find({}).count() > 0
-    
-        # show_from: ->
-        #     selected_buyers.array().length > 0 or buyer_results.find({}).count() > 0
     
         can_debit: -> Meteor.user().points > 0
         docs: ->
@@ -120,10 +98,6 @@ if Meteor.isClient
                     _timestamp:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:10
-        # friends: ->
-        #     if Meteor.user()
-        #         Meteor.users.find({_id:$in:Meteor.user().friend_ids},
-        #             sort:points:1)
             
         selected_tags: -> selected_tags.array()
         selected_sellers: -> selected_sellers.array()

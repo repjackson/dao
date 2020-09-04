@@ -7,7 +7,9 @@ template(name='post_card')
             +youtube_view key='youtube_id' direct=true
         else if image_id
             a.image(href="/post/#{_id}/view")
-                img.ui.image(src="{{c.url image_id }}" class='invert')    
+                img.ui.image(src="{{c.url image_id }}" class='invert')
+        // img.invert(src=url)
+                
         // else if image_link
         //     img.ui.rounded.image(src=image_link class='invert')
                 
@@ -147,6 +149,9 @@ template(name='post_view')
                 .twelve.wide.column.scrolling
                     .ui.center.aligned.header 
                         |#{title}
+                    img.invert(src=url)
+                    each preview.images 
+                        img(src=source.url)
                     // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
                     if session_key_value_is 'view_post_section' 'content'
                         if image_id
