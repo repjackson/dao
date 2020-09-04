@@ -1,6 +1,7 @@
 
 if Meteor.isClient
     @selected_tags = new ReactiveArray []
+    @selected_authors = new ReactiveArray []
     
     Template.body.events
         # 'click a:not(.select_term)': ->
@@ -42,10 +43,12 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe('tags',
             Session.get('query')
             selected_tags.array()
+            selected_authors.array()
             )
         @autorun -> Meteor.subscribe('docs',
             Session.get('query')
             selected_tags.array()
+            selected_authors.array()
             )
 
         
@@ -95,12 +98,12 @@ if Meteor.isClient
                 model:'post'
             },
                 sort:
-                    _timestamp:-1
+                    points:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:10
             
         selected_tags: -> selected_tags.array()
-        selected_sellers: -> selected_sellers.array()
+        selected_authors: -> selected_authors.array()
         term: ->
             # console.log @
             Docs.find 
@@ -110,7 +113,6 @@ if Meteor.isClient
         one_result: ->
             Docs.find().count() < 2
         
-        # selected_models: -> selected_models.array()
         tag_results: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3 
@@ -119,6 +121,14 @@ if Meteor.isClient
                 })
             else 
                 Tag_results.find()
+        author_results: ->
+            doc_count = Docs.find().count()
+            if 0 < doc_count < 3 
+                author_results.find({ 
+                    count:$lt:doc_count 
+                })
+            else 
+                author_results.find()
 
     Template.home.events
         'click .delete': -> 
@@ -140,6 +150,11 @@ if Meteor.isClient
     
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
+    
+        'click .select_author': -> 
+            selected_authors.push @name
+        'click .unselect_author': -> selected_authors.remove @valueOf()
+        'click #clear_authors': -> selected_authors.clear()
     
     
         'click .view_debit': ->
@@ -163,6 +178,7 @@ if Meteor.isServer
     Meteor.publish 'docs', (
         query=''
         selected_tags
+        selected_authors
         )->
         match = {}
         match.model = 'post'
@@ -170,16 +186,18 @@ if Meteor.isServer
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
             match.tags = $all:selected_tags
+        if selected_authors.length > 0
+            match._author_username = $all:selected_authors
         console.log match
         Docs.find match,
             limit:10
-            sort:_timestamp:-1
+            sort:points:-1
                         
                         
     Meteor.publish 'tags', (
         query=''
-        # selected_models
         selected_tags
+        selected_authors
         limit=20
         )->
         self = @
@@ -190,6 +208,7 @@ if Meteor.isServer
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0 then match.tags = $all: selected_tags
+        if selected_authors.length > 0 then match._author_username = $all: selected_authors
 
         tag_cloud = Docs.aggregate [
             { $match: match }
@@ -207,6 +226,23 @@ if Meteor.isServer
             self.added 'tag_results', Random.id(),
                 name: tag.name
                 count: tag.count
+                index: i
+       
+        author_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "_author_username": 1 }
+            { $group: _id: "$_author_username", count: $sum: 1 }
+            { $match: _id: $nin: selected_authors }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'filter: ', filter
+        # console.log 'cloud: ', cloud
+        author_cloud.forEach (author, i) ->
+            self.added 'author_results', Random.id(),
+                name: author.name
+                count: author.count
                 index: i
        
         self.ready()

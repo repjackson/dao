@@ -328,10 +328,10 @@ template(name='bookmark_button')
 
 
 template(name='voting')
-    i.thumbs.up.large.link.icon.upvote(class=upvote_class title='upvote')
+    i.thumbs.up.large.link.circular.icon.upvote(class=upvote_class title='upvote')
     each upvoter_ids
         +user_info_small
-    i.thumbs.down.large.link.icon.downvote(class=downvote_class title='downvote')
+    i.thumbs.down.large.link.circular.icon.downvote(class=downvote_class title='downvote')
     each downvoter_ids
         +user_info_small
     if is_dev

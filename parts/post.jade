@@ -1,5 +1,5 @@
 template(name='post_card')
-    .ui.card.zoom.pointer.view_post
+    .ui.card
         a.image(href="/post/#{_id}/view")
             img.ui.image(src=rd.thumbnail class='invert')    
             img.ui.image(src=watson.metadata.image class='invert')    
@@ -17,6 +17,7 @@ template(name='post_card')
             a.header(href="/post/#{_id}/view")
                 // i.newspaper.icon
                 |#{title}
+            +voting
             // .meta
             //     |#{when}
         // .content

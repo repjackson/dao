@@ -1,7 +1,7 @@
 template(name='home')
     .ui.stackable.padded.grid 
         .row
-            .sixteen.wide.center.aligned.column
+            .four.wide.column
                 // a.ui.button(href="/") 
                 //     i.yin.yang.icon
                 if currentUser
@@ -46,8 +46,29 @@ template(name='home')
                 each tag_results
                     a.ui.large.compact.circular.button.select_tag.select_term(href='#')
                         strong #{name}
-        .row
-            .sixteen.wide.column
+                if selected_authors
+                    a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
+                        i.remove.icon
+                    each selected_authors
+                        a.unselect_author.ui.black.compact.large.circular.button.select_termn
+                            strong #{this}
+                // +session_boolean_toggle key='view_authors' label='authors' icon='large author'
+                // if session_is 'view_authors'
+                div
+                .ui.inline.header
+                    i.large.user.outline.icon
+                    |author
+                if selected_authors
+                    a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
+                        i.remove.icon
+                    each selected_authors
+                        a.unselect_author.ui.black.compact.large.circular.button.select_termn
+                            strong #{this}
+                    
+                each author_results
+                    a.ui.large.compact.circular.button.select_author.select_term(href='#')
+                        strong #{name}
+            .twelve.wide.center.aligned.column
                 if two_posts
                     .ui.stackable.two.cards
                         each docs
@@ -76,26 +97,6 @@ template(name='sort_button')
 
             
                                     
-                                    
-template(name='offer_card')
-    .ui.card.view_offer.pointer
-        .content
-            if image_id
-                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
-            .header
-                .ui.inline.header #{title}
-                if _author.profile_image_id
-                    with _author
-                        img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=user_class title=username)
-                | #{_author.username}
-            // |!{description}
-            .meta #{when}
-            if point_price
-                |#{point_price}p
-            // each tags 
-            //     .ui.tiny.basic.label #{this}
-            +comments_view_small
-            
             
 template(name='comments_view_small')            
     if doc_comments.count

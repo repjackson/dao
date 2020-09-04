@@ -155,10 +155,10 @@ Meteor.methods
                     console.log 'found wiki doc for term', term
                     # console.log 'found wiki doc for term', term, found_doc
                     Docs.update found_doc._id,
-                        $addToSet:
+                        $pull:
                             tags:'wikipedia'
                     # console.log 'found wiki doc', found_doc
-                    Meteor.call 'call_watson', found_doc._id, 'url','url', ->
+                    # Meteor.call 'call_watson', found_doc._id, 'url','url', ->
                 else
                     new_wiki_id = Docs.insert
                         title: query
