@@ -77,7 +77,7 @@ template(name='one_post_view')
                 each tags
                     .ui.compact.large.circular.button.add_tag #{this}
                 +comments_view_small  
-            +voting_full
+            +voting
     // .ui.divider
 
 template(name='post_view')
@@ -89,7 +89,6 @@ template(name='post_view')
                     //     small post: 
                     a.ui.circular.icon.button(href='/')
                         i.yin.yang.large.icon
-                    +voting_full
                     a.image(href="/post/#{_id}/view")
                         img.ui.image(src=watson.metadata.image class='invert')    
                         img.ui.image(src=rd.thumbnail class='invert')    
@@ -112,6 +111,8 @@ template(name='post_view')
                     //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
                     //     |#{_author.username}
                     .ui.inline.small.header #{when}
+                    div
+                    +voting
                     div
                     +array_view key='location_tags' label='location tags' direct=true
                     div

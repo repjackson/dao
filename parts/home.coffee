@@ -182,6 +182,8 @@ if Meteor.isServer
         )->
         match = {}
         match.model = 'post'
+        if Meteor.user()
+            match.downvoter_ids = $nin:[Meteor.userId()]
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
@@ -209,6 +211,8 @@ if Meteor.isServer
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         if selected_authors.length > 0 then match._author_username = $all: selected_authors
+        if Meteor.user()
+            match.downvoter_ids = $nin:[Meteor.userId()]
 
         tag_cloud = Docs.aggregate [
             { $match: match }
@@ -217,7 +221,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter

@@ -88,15 +88,15 @@ template(name='user_dashboard')
                     .column
                         .ui.header them
                         each current_user.upvoted_tags
-                            .ui.label #{title}:#{count}
+                            .ui.large.label #{title}:#{count}
                     .column
                         .ui.header union
                         each love_results
-                            .ui.label #{name}: #{count}
+                            .ui.large.label #{name}: #{count}
                     .column
                         .ui.header you #{currentUser.total_upvoted_points}
                         each currentUser.upvoted_tags
-                            .ui.label #{title}:#{count}
+                            .ui.large.label #{title}:#{count}
         // .row
         //     .sixteen.wide.column
         //         .ui.header authored overlap 
