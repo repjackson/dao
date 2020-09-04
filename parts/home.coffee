@@ -9,11 +9,11 @@ if Meteor.isClient
     # @selected_location_tags = new ReactiveArray []
     
     Template.body.events
-        'click a:not(.select_term)': ->
-            unless Meteor.user().invert_class is 'invert'
-                $('.global_container')
-                .transition('fade out', 200)
-                .transition('fade in', 200)
+        # 'click a:not(.select_term)': ->
+        #     $('.global_container')
+        #     .transition('fade out', 200)
+        #     .transition('fade in', 200)
+        #     # unless Meteor.user().invert_class is 'invert'
 
     Router.route '/', (->
         @layout 'layout'
@@ -38,35 +38,32 @@ if Meteor.isClient
     Template.call_watson.events
         'click .autotag': ->
             console.log @
-            Meteor.call 'call_watson', Router.current().params.doc_id, 'html', 'html', ->
-                Meteor.call 'call_tone', Router.current().params.doc_id, 'html', 'html', ->
+            Meteor.call 'call_watson', Router.current().params.doc_id, @key, @mode, ->
+                Meteor.call 'call_tone', Router.current().params.doc_id, @key, @mode, ->
+
 
 
     Template.home.onCreated ->
-        Session.setDefault 'sort_key', '_timestamp'
-        Session.setDefault 'sort_direction', -1
+        # Session.setDefault 'sort_key', '_timestamp'
+        # Session.setDefault 'sort_direction', -1
         @autorun -> Meteor.subscribe('me')
         @autorun -> Meteor.subscribe('tags',
-            Session.get('sort_key')
-            Session.get('sort_direction')
             Session.get('query')
             selected_tags.array()
             )
         @autorun -> Meteor.subscribe('docs',
-            Session.get('sort_key')
-            Session.get('sort_direction')
             Session.get('query')
             selected_tags.array()
             )
 
         
-    Template.sort_button.events
-        'click .toggle_sort': ->
-            Session.set('sort_key',@key)
-            if Session.equals('sort_direction', 1)
-                Session.set('sort_direction', -1)
-            else
-                Session.set('sort_direction', 1)
+    # Template.sort_button.events
+    #     'click .toggle_sort': ->
+    #         Session.set('sort_key',@key)
+    #         if Session.equals('sort_direction', 1)
+    #             Session.set('sort_direction', -1)
+    #         else
+    #             Session.set('sort_direction', 1)
 
 
     Template.tone.events
@@ -83,27 +80,27 @@ if Meteor.isClient
         #     Meteor.call 'downvote_sentence', omega.selected_doc_id, @, ->
 
             
-    Template.sort_button.helpers
-        is_selected: -> 
-            Session.equals('sort_key', @key)
-        sorting_up: -> 
-            Session.equals('sort_direction', 1)
-        sort_button_class: ->
-            if Session.equals('sort_key', @key) then 'black' else 'basic'
+    # Template.sort_button.helpers
+        # is_selected: -> 
+        #     Session.equals('sort_key', @key)
+        # sorting_up: -> 
+        #     Session.equals('sort_direction', 1)
+        # sort_button_class: ->
+        #     if Session.equals('sort_key', @key) then 'black' else 'basic'
     Template.home.helpers
         selected_tags_plural: -> selected_tags.array().length > 1
         one_post: -> Docs.find().count() is 1
     
         two_posts: -> Docs.find().count() is 2
         three_posts: -> Docs.find().count() is 3
-        four_posts: -> Docs.find().count() is 4
-        five_posts: -> Docs.find().count() is 5
-        six_posts: -> Docs.find().count() is 6
-        seven_posts: -> Docs.find().count() is 7
-        eight_posts: -> Docs.find().count() is 8
-        nine_posts: -> Docs.find().count() is 9
-        ten_posts: -> Docs.find().count() is 10
-        more_than_ten: -> Docs.find().count() > 10
+        # four_posts: -> Docs.find().count() is 4
+        # five_posts: -> Docs.find().count() is 5
+        # six_posts: -> Docs.find().count() is 6
+        # seven_posts: -> Docs.find().count() is 7
+        # eight_posts: -> Docs.find().count() is 8
+        # nine_posts: -> Docs.find().count() is 9
+        # ten_posts: -> Docs.find().count() is 10
+        # more_than_ten: -> Docs.find().count() > 10
         one_result: ->
             Docs.find().count() is 1
     
@@ -117,10 +114,11 @@ if Meteor.isClient
         docs: ->
             Docs.find {
                 # model:$in:['debit','order','request','offer','post','alpha']
-                model:$in:['post','alpha']
+                model:'post'
             },
                 sort:
-                    "#{Session.get('sort_key')}": Session.get('sort_direction')
+                    _timestamp:-1
+                    # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:10
         # friends: ->
         #     if Meteor.user()
@@ -128,12 +126,12 @@ if Meteor.isClient
         #             sort:points:1)
             
         selected_tags: -> selected_tags.array()
-        # selected_sellers: -> selected_sellers.array()
-        # selected_user: ->
-        #     # console.log @
-        #     Meteor.users.findOne username:@valueOf()
-        # user_ob: ->
-        #     Meteor.users.findOne username:@name
+        selected_sellers: -> selected_sellers.array()
+        term: ->
+            # console.log @
+            Docs.find 
+                model:'post'
+                title:@name
         
         one_result: ->
             Docs.find().count() < 2
@@ -164,6 +162,8 @@ if Meteor.isClient
         'click .select_tag': -> 
             selected_tags.push @name
             Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'search_reddit', @name, ->
+    
         'click .unselect_tag': -> selected_tags.remove @valueOf()
         'click #clear_tags': -> selected_tags.clear()
     
@@ -177,6 +177,7 @@ if Meteor.isClient
             if e.which is 13
                 selected_tags.push search
                 Meteor.call 'call_wiki', search, ->
+                Meteor.call 'search_reddit', search, ->
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8
@@ -186,31 +187,22 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'docs', (
-        sort_key='_timestamp'
-        sort_direction=1
         query=''
-        # selected_models
         selected_tags
         )->
         match = {}
-        # if selected_models.length > 0 
-        #     match.model = $all: selected_models
-        # else
-            # match.model = $in:['debit','order','request','offer','post','alpha']
-        match.model = $in:['post','alpha']
+        match.model = 'post'
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
             match.tags = $all:selected_tags
         console.log match
         Docs.find match,
-            limit:20
-            sort:"#{sort_key}":sort_direction
+            limit:10
+            sort:_timestamp:-1
                         
                         
     Meteor.publish 'tags', (
-        sort_key
-        sort_direction
         query=''
         # selected_models
         selected_tags
@@ -219,7 +211,7 @@ if Meteor.isServer
         self = @
         match = {}
         # match.model = $in:['post','alpha']
-        match.model = $in:['post']
+        match.model = 'post'
         
         if query.length > 0
             match.title = {$regex:"#{query}", $options: 'i'}
@@ -232,7 +224,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 33 }
+            { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter
