@@ -87,10 +87,12 @@ template(name='user_dashboard')
                 .ui.three.column.grid
                     .column
                         .ui.header them
-                        each target_authored_tags
-                            .ui.label #{name}:#{count}
+                        each current_user.authored_tags
+                            .ui.label #{title}:#{count}
                     .column
                         .ui.header union
+                        each love_results
+                            .ui.label #{name}: #{count}
                     .column
                         .ui.header you #{currentUser.total_authored_points}
                         each currentUser.authored_tags

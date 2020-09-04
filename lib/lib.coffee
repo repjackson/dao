@@ -2,6 +2,7 @@
 @Tag_results = new Meteor.Collection 'tag_results'
 @Terms = new Meteor.Collection 'terms'
 @author_results = new Meteor.Collection 'author_results'
+@love_results = new Meteor.Collection 'love_results'
 # @seller_results = new Meteor.Collection 'seller_results'
 # @buyer_results = new Meteor.Collection 'buyer_results'
 # @Model_results = new Meteor.Collection 'model_results'

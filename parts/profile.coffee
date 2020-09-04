@@ -4,7 +4,21 @@ if Meteor.isClient
         @render 'user_dashboard'
         ), name:'profile_layout'
 
+    @selected_love_tags = new ReactiveArray []
 
+    Template.user_dashboard.onCreated ->
+        @autorun -> Meteor.subscribe('love_tags',
+            Session.get('query')
+            selected_love_tags.array()
+            Router.current().params.username
+            )
+        @autorun -> Meteor.subscribe('love_docs',
+            Session.get('query')
+            selected_love_tags.array()
+            Router.current().params.username
+            )
+
+    
     Template.profile_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
     
@@ -22,6 +36,9 @@ if Meteor.isClient
         , 2000
 
 
+    Template.user_dashboard.helpers
+        love_results: ->
+            love_results.find()
     Template.profile_layout.helpers
         route_slug: -> "user_#{@slug}"
         user: -> Meteor.users.findOne username:Router.current().params.username
@@ -92,6 +109,68 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.publish 'love_docs', (
+        query=''
+        selected_tags
+        target_username
+        )->
+            
+        target_user = Meteor.users.findOne username:target_username    
+            
+        match = {}
+        match.model = 'post'
+        if query.length > 0
+            match.title = {$regex:"#{query}", $options: 'i'}
+        if selected_tags.length > 0
+            match.tags = $all:selected_tags
+        # if selected_authors.length > 0
+        #     match._author_username = $all:selected_authors
+        match._author_id = $in:[Meteor.userId(), target_user._id]
+        console.log match
+        Docs.find match,
+            limit:10
+            sort:points:-1
+                        
+                        
+    Meteor.publish 'love_tags', (
+        query=''
+        selected_tags
+        target_username
+        limit=20
+        )->
+        self = @
+        match = {}
+        # match.model = $in:['post','alpha']
+        match.model = 'post'
+        
+        target_user = Meteor.users.findOne username:target_username    
+
+        
+        if query.length > 0
+            match.title = {$regex:"#{query}", $options: 'i'}
+        if selected_tags.length > 0 then match.tags = $all: selected_tags
+        match._author_id = $in:[Meteor.userId(), target_user._id]
+
+        tag_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "tags": 1 }
+            { $unwind: "$tags" }
+            { $group: _id: "$tags", count: $sum: 1 }
+            { $match: _id: $nin: selected_tags }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'filter: ', filter
+        # console.log 'cloud: ', cloud
+        tag_cloud.forEach (tag, i) ->
+            self.added 'love_results', Random.id(),
+                name: tag.name
+                count: tag.count
+                index: i
+       
+        self.ready()
+                            
     Meteor.methods
         # calc_test_sessions: (user_id)->
         #     user = Meteor.users.findOne user_id
