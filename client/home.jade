@@ -46,12 +46,6 @@ template(name='home')
                 each tag_results
                     a.ui.large.compact.circular.button.select_tag.select_term(href='#')
                         strong #{name}
-                if selected_authors
-                    a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
-                        i.remove.icon
-                    each selected_authors
-                        a.unselect_author.ui.black.compact.large.circular.button.select_termn
-                            strong #{this}
                 // +session_boolean_toggle key='view_authors' label='authors' icon='large author'
                 // if session_is 'view_authors'
                 // div

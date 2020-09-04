@@ -148,7 +148,9 @@ if Meteor.isClient
             Meteor.call 'call_wiki', @name, ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
     
-        'click .unselect_tag': -> selected_tags.remove @valueOf()
+        'click .unselect_tag': -> 
+            selected_tags.remove @valueOf()
+            Meteor.call 'search_reddit', selected_tags.array(), ->
         'click #clear_tags': -> selected_tags.clear()
     
         'click .select_author': -> 
