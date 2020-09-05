@@ -1,8 +1,12 @@
 template(name='post_card')
     .ui.card
         a.image(href="/post/#{_id}/view")
-            img.ui.image(src=rd.thumbnail class='invert')    
-            img.ui.image(src=watson.metadata.image class='invert')    
+            if rd.thumbnail
+                img.ui.image(src=rd.thumbnail class='invert')    
+            if watson.metadata.image
+                img.ui.image(src=watson.metadata.image class='invert')   
+            if url
+                img.ui.image(src=url class='invert')    
         if youtube_id
             +youtube_view key='youtube_id' direct=true
         else if image_id
