@@ -42,10 +42,10 @@ if Meteor.isClient
     Template.user_dashboard.events
         'click .select_tag': ->
             console.log @
-            Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'search_reddit', @name, ->
+            Meteor.call 'call_wiki', @title, ->
+            Meteor.call 'search_reddit', @title, ->
                 
-            selected_tags.push @name
+            selected_tags.push @title
             Router.go '/'
         'click .select_user': ->
             Session.set('target_username', @username)
@@ -65,10 +65,10 @@ if Meteor.isClient
         user: -> Meteor.users.findOne username:Router.current().params.username
 
     Template.profile_layout.events
-        'click a.select_term': ->
-            $('.profile_yield')
-                .transition('fade out', 200)
-                .transition('fade in', 200)
+        # 'click a.select_term': ->
+        #     $('.profile_yield')
+        #         .transition('fade out', 200)
+        #         .transition('fade in', 200)
     
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
@@ -136,7 +136,8 @@ if Meteor.isServer
         selected_tags
         target_username
         )->
-            
+        
+        console.log target_username
         target_user = Meteor.users.findOne username:target_username    
             
         match = {}
