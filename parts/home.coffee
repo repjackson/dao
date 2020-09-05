@@ -84,7 +84,7 @@ if Meteor.isClient
         # sort_button_class: ->
         #     if Session.equals('sort_key', @key) then 'black' else 'basic'
     Template.tag_selector.onCreated ->
-        console.log @
+        # console.log @
         @autorun => Meteor.subscribe('doc_by_title', @data.name)
     Template.tag_selector.helpers
         term: ->
@@ -175,7 +175,7 @@ if Meteor.isClient
 
         'keydown .search_title': (e,t)->
             search = $('.search_title').val().toLowerCase().trim()
-            Session.set('query',search)
+            # Session.set('query',search)
             if e.which is 13
                 selected_tags.push search
                 Meteor.call 'call_wiki', search, ->
@@ -241,7 +241,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 10 }
+            { $limit: 15 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter

@@ -915,7 +915,7 @@ Template.multi_user_edit.events
         if e.which is 8
             t.user_results.set null
         else if search_value and search_value.length > 1
-            Meteor.call 'lookup_user', search_value, @role_filter, (err,res)=>
+            Meteor.call 'lookup_user', search_value, (err,res)=>
                 if err then console.error err
                 else
                     # console.log res 

@@ -22,7 +22,7 @@ if Meteor.isClient
 
     Template.user_edit_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
-        # @autorun -> Meteor.subscribe 'user_from_id', Router.current().params.user_id
+        @autorun -> Meteor.subscribe 'all_users'
 
     Template.user_edit_layout.onRendered ->
         # Meteor.setTimeout ->
