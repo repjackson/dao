@@ -18,7 +18,8 @@ template(name='post_card')
                 // i.newspaper.icon
                 |#{title}
             +voting
-        +print_this
+        if is_admin
+            +print_this
         // .meta
         //     |#{when}
         // .content
@@ -127,7 +128,7 @@ template(name='post_view')
                     div
                     // +single_user_view key='_author_id' label='author' direct=true
                     // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
-                    .ui.large.label #{views} views
+                    .ui.label #{views} views
                     .ui.large.label #{total_points}p generated
                     .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
                         // i.coins.icon

@@ -157,10 +157,16 @@ if Meteor.isClient
     Template.voting.events
         'click .upvote': (e,t)->
             # $(e.currentTarget).closest('.button').transition('pulse',200)
-            Meteor.call 'upvote', @, ->
+            if Meteor.user()
+                Meteor.call 'upvote', @, ->
+            else
+                Router.go "/register"
         'click .downvote': (e,t)->
             # $(e.currentTarget).closest('.button').transition('pulse',200)
-            Meteor.call 'downvote', @, ->
+            if Meteor.user()
+                Meteor.call 'downvote', @, ->
+            else
+                Router.go "/register"
     Template.voting_small.events
         'click .upvote': (e,t)->
             # $(e.currentTarget).closest('.button').transition('pulse',200)

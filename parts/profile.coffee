@@ -4,18 +4,20 @@ if Meteor.isClient
         @render 'user_dashboard'
         ), name:'profile_layout'
 
-    @selected_love_tags = new ReactiveArray []
+    @selected_overlap_tags = new ReactiveArray []
 
     Template.user_dashboard.onCreated ->
-        @autorun -> Meteor.subscribe('love_tags',
+        @autorun -> Meteor.subscribe('overlap_tags',
             Session.get('query')
-            selected_love_tags.array()
-            Router.current().params.username
+            selected_overlap_tags.array()
+            Session.get('target_username')
+            # Router.current().params.username
             )
-        @autorun -> Meteor.subscribe('love_docs',
+        @autorun -> Meteor.subscribe('overlap_docs',
             Session.get('query')
-            selected_love_tags.array()
-            Router.current().params.username
+            selected_overlap_tags.array()
+            Session.get('target_username')
+            # Router.current().params.username
             )
 
     
@@ -45,10 +47,19 @@ if Meteor.isClient
                 
             selected_tags.push @name
             Router.go '/'
+        'click .select_user': ->
+            Session.set('target_username', @username)
+
 
     Template.user_dashboard.helpers
-        love_results: ->
-            love_results.find()
+        friended_by: ->
+            Meteor.users.find
+                friend_ids:$in:[Meteor.userId()]
+    
+        users: ->
+            Meteor.users.find()
+        overlap_results: ->
+            overlap.find()
     Template.profile_layout.helpers
         route_slug: -> "user_#{@slug}"
         user: -> Meteor.users.findOne username:Router.current().params.username
@@ -120,7 +131,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'love_docs', (
+    Meteor.publish 'overlap_docs', (
         query=''
         selected_tags
         target_username
@@ -144,7 +155,7 @@ if Meteor.isServer
             sort:points:-1
                         
                         
-    Meteor.publish 'love_tags', (
+    Meteor.publish 'overlap_tags', (
         query=''
         selected_tags
         target_username
@@ -177,7 +188,7 @@ if Meteor.isServer
         # console.log 'filter: ', filter
         # console.log 'cloud: ', cloud
         tag_cloud.forEach (tag, i) ->
-            self.added 'love_results', Random.id(),
+            self.added 'overlap', Random.id(),
                 name: tag.name
                 count: tag.count
                 index: i

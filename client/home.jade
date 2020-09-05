@@ -4,31 +4,31 @@ template(name='home')
             .sixteen.wide.column
                 // a.ui.button(href="/") 
                 //     i.yin.yang.icon
-                if currentUser
-                    a.ui.icon.circular.button.post(title='add')
-                        i.large.plus.icon
-                    if is_dev 
-                        i.large.code.circular.icon.toggle_dev
-                    if is_admin
-                        i.large.shield.circular.icon.toggle_admin(title='admin mode on')
-                    a.ui.circular.button(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
-                        //- i.large.user.large.icon
-                        |{{money_format currentUser.points}}c
-                        |&nbsp;
-                        if currentUser.profile_image_id
-                            img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
-                        else 
-                            i.large.user.large.icon
-                        strong.mobile.hidden #{currentUser.username}
-                    // a.icon.large.item.toggle_rightbar.select_term
-                    //     i.ellipsis.vertical.large.icon
-                else
-                    a.ui.circular.icon.button(href="/register" title='register')
-                        i.large.user.plus.icon
-                        // |register
-                    a.ui.circular.icon.button(href="/login" title='login')
-                        i.large.sign.in.alternate.icon
-                        // |login
+                // if currentUser
+                //     a.ui.icon.circular.button.post(title='add')
+                //         i.large.plus.icon
+                //     if is_dev 
+                //         i.large.code.circular.icon.toggle_dev
+                //     if is_admin
+                //         i.large.shield.circular.icon.toggle_admin(title='admin mode on')
+                //     a.ui.circular.button(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
+                //         //- i.large.user.large.icon
+                //         |{{money_format currentUser.points}}c
+                //         |&nbsp;
+                //         if currentUser.profile_image_id
+                //             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+                //         else 
+                //             i.large.user.large.icon
+                //         strong.mobile.hidden #{currentUser.username}
+                //     // a.icon.large.item.toggle_rightbar.select_term
+                //     //     i.ellipsis.vertical.large.icon
+                // else
+                //     a.ui.circular.icon.button(href="/register" title='register')
+                //         i.large.user.plus.icon
+                //         // |register
+                //     a.ui.circular.icon.button(href="/login" title='login')
+                //         i.large.sign.in.alternate.icon
+                //         // |login
 
                 // iframe(frameborder="0" width="400" height="200" src="https://drive.google.com/file/d/1_encX_RKyZhOU26r7_cNTtl0rLvEQSai/preview")
                 .ui.left.icon.input 

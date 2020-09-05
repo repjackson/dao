@@ -1,5 +1,5 @@
 template(name='profile_layout')
-    // +nav
+    +nav
     .ui.bottom.attached.pushable.segment(class='invert')
         // +top_sidebar
         // +left_sidebar
@@ -15,8 +15,8 @@ template(name='profile_layout')
             with user
                 .ui.stackable.padded.grid
                     .three.wide.column
-                        a.ui.big.icon.button(href="/")
-                            i.large.yin.yang.icon
+                        // a.ui.big.icon.button(href="/")
+                        //     i.large.yin.yang.icon
                         span.mobile.only
                             a(href="/user/#{username}/")
                                 img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
@@ -26,16 +26,16 @@ template(name='profile_layout')
                         a.ui.big.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
                         if is_admin
-                            a.ui.large.icon.button(href="/user/#{username}/edit" title='admin edit account')
+                            a.ui.large.button(href="/user/#{username}/edit" title='admin edit account')
                                 i.shield.large.icon
-                                // |account
+                                |account
                         if is_current_user
-                            a.ui.icon.circular.button(href="/user/#{username}/edit" title='edit your account')
+                            a.ui.circular.button(href="/user/#{username}/edit" title='edit your account')
                                 i.cog.big.icon
-                                // |account
-                            a.ui.icon.circular.button.logout(href="#" title='log out')
+                                |account
+                            a.ui.circular.button.logout(href="#" title='log out')
                                 i.sign.out.big.icon
-                                // |log out
+                                |log out
                         
                         // .ui.header $#{credit} credit
                         .ui.inline.header #{points}p
@@ -68,11 +68,13 @@ template(name='profile_layout')
 
 template(name='user_friend_button')
     if is_friend
-        .ui.blue.large.icon.button.unfriend(title='unfriend')
+        .ui.blue.button.unfriend(title='unfriend')
             i.checkmark.large.icon
+            |friends
     else
-        .ui.large.icon.button.friend(title='friend')
+        .ui.button.friend(title='friend')
             i.user.plus.large.icon
+            |friend
 
 
 
@@ -86,18 +88,21 @@ template(name='user_dashboard')
                 .ui.header upvoted overlap 
                 .ui.three.column.grid
                     .column
-                        .ui.header them
-                        each current_user.upvoted_tags
+                        .ui.header you #{currentUser.total_upvoted_points}
+                        each currentUser.upvoted_tags
                             a.ui.large.label.select_tag #{title}
                                 small #{count}
                     .column
                         .ui.header union
-                        each love_results
+                        each overlap_results
                             a.ui.huge.label.select_tag #{name}
                                 small #{count}
                     .column
-                        .ui.header you #{currentUser.total_upvoted_points}
-                        each currentUser.upvoted_tags
+                        .ui.header them
+                        each friended_by
+                            a.ui.small.compact.button.select_user
+                                |#{username}
+                        each current_user.upvoted_tags
                             a.ui.large.label.select_tag #{title}
                                 small #{count}
             .sixteen.wide.column
@@ -112,7 +117,7 @@ template(name='user_dashboard')
         //                     .ui.label #{title}:#{count}
         //             .column
         //                 .ui.header union
-        //                 each love_results
+        //                 each overlap
         //                     .ui.label #{name}: #{count}
         //             .column
         //                 .ui.header you #{currentUser.total_authored_points}

@@ -27,15 +27,18 @@ if Meteor.isClient
 
     Template.post_view.events
         'click .tip': ->
-            Meteor.call 'tip', @_id, ->
-                
-            Meteor.call 'calc_post_stats', @_id, ->
-            Meteor.call 'calc_user_stats', Meteor.userId(), ->
-            $('body').toast({
-                class: 'success'
-                position: 'bottom right'
-                message: "#{@title} tipped"
-            })
+            if Meteor.user()
+                Meteor.call 'tip', @_id, ->
+                    
+                Meteor.call 'calc_post_stats', @_id, ->
+                Meteor.call 'calc_user_stats', Meteor.userId(), ->
+                $('body').toast({
+                    class: 'success'
+                    position: 'bottom right'
+                    message: "#{@title} tipped"
+                })
+            else 
+                Router.go '/login'
     
     
     Template.one_post_view.events
