@@ -244,7 +244,7 @@ template(name='user_info')
         // +user_status user
 
 template(name='user_info_small')
-    a(href="/user/#{user.username}/")
+    a.invert(href="/user/#{user.username}/")
         if user.profile_image_id
             img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
         else
@@ -328,10 +328,10 @@ template(name='bookmark_button')
 
 
 template(name='voting')
-    i.thumbs.up.large.link.circular.icon.upvote(class=upvote_class title='upvote')
+    i.thumbs.up.large.link.circular.icon.upvote.invert(class=upvote_class title='upvote')
     each upvoter_ids
         +user_info_small
-    i.thumbs.down.large.link.circular.icon.downvote(class=downvote_class title='downvote')
+    i.thumbs.down.large.link.circular.icon.downvote.invert(class=downvote_class title='downvote')
     each downvoter_ids
         +user_info_small
     if is_dev

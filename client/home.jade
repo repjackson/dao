@@ -11,7 +11,7 @@ template(name='home')
                         i.large.code.circular.icon.toggle_dev
                     if is_admin
                         i.large.shield.circular.icon.toggle_admin(title='admin mode on')
-                    a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
+                    a.ui.circular.button(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                         //- i.large.user.large.icon
                         |{{money_format currentUser.points}}c
                         |&nbsp;
@@ -44,8 +44,7 @@ template(name='home')
                 // +session_boolean_toggle key='view_tags' label='tags' icon='large tag'
                 // if session_is 'view_tags'
                 each tag_results
-                    a.ui.large.compact.circular.button.select_tag.select_term(href='#')
-                        strong #{name}
+                    +tag_selector
                 // +session_boolean_toggle key='view_authors' label='authors' icon='large author'
                 // if session_is 'view_authors'
                 // div
@@ -62,6 +61,7 @@ template(name='home')
                 each author_results
                     a.ui.large.compact.circular.button.select_author.select_term(href='#')
                         strong #{name}
+                .spacer
             .sixteen.wide.center.aligned.column
                 if two_posts
                     .ui.stackable.two.cards
@@ -75,6 +75,15 @@ template(name='home')
                     .ui.stackable.centered.cards
                         each docs
                             +post_card
+
+
+template(name='tag_selector')
+    a.ui.big.image.label.select_tag.select_term(href='#')
+        // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+        // img.ui.avatar.compact.image(src=term.rd.thumbnail class='invert')
+        if term
+            img.ui.avatar.compact.image(src=term.watson.metadata.image class='invert')    
+        | #{name}
 
 
             

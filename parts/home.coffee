@@ -1,4 +1,5 @@
 
+
 if Meteor.isClient
     @selected_tags = new ReactiveArray []
     @selected_authors = new ReactiveArray []
@@ -82,6 +83,15 @@ if Meteor.isClient
         #     Session.equals('sort_direction', 1)
         # sort_button_class: ->
         #     if Session.equals('sort_key', @key) then 'black' else 'basic'
+    Template.tag_selector.onCreated ->
+        console.log @
+        @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    Template.tag_selector.helpers
+        term: ->
+            Docs.findOne 
+                title:@name
+                
+                
     Template.home.helpers
         selected_tags_plural: -> selected_tags.array().length > 1
         one_post: -> Docs.find().count() is 1
@@ -130,6 +140,11 @@ if Meteor.isClient
             else 
                 author_results.find()
 
+    Template.tag_selector.events
+        'click .select_tag': -> 
+            selected_tags.push @name
+            Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
     Template.home.events
         'click .delete': -> 
             console.log @
@@ -143,10 +158,6 @@ if Meteor.isClient
             Router.go "/post/#{new_post_id}/edit"
 
         
-        'click .select_tag': -> 
-            selected_tags.push @name
-            Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
     
         'click .unselect_tag': -> 
             selected_tags.remove @valueOf()
@@ -177,6 +188,13 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.publish 'doc_by_title', (title)->
+        console.log title
+        Docs.find
+            title:title
+            model:'post'
+    
+    
     Meteor.publish 'docs', (
         query=''
         selected_tags
@@ -186,7 +204,7 @@ if Meteor.isServer
         match.model = 'post'
         if Meteor.user()
             match.downvoter_ids = $nin:[Meteor.userId()]
-        if query.length > 0
+        if query.length > 1
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
             match.tags = $all:selected_tags
@@ -209,7 +227,7 @@ if Meteor.isServer
         # match.model = $in:['post','alpha']
         match.model = 'post'
         
-        if query.length > 0
+        if query.length > 1
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         if selected_authors.length > 0 then match._author_username = $all: selected_authors
@@ -223,7 +241,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter
@@ -240,7 +258,7 @@ if Meteor.isServer
             { $group: _id: "$_author_username", count: $sum: 1 }
             { $match: _id: $nin: selected_authors }
             { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter

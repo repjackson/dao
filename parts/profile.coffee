@@ -111,9 +111,9 @@ if Meteor.isClient
 
         'click .logout': ->
             # Router.go '/login'
-            Session.set 'logging_out', true
-            Meteor.logout ->
-                Session.set 'logging_out', false
+            # Session.set 'logging_out', true
+            Meteor.logout()
+            # Session.set 'logging_out', false
 
 
 
