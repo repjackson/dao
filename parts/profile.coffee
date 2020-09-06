@@ -37,6 +37,7 @@ if Meteor.isClient
                 Meteor.call 'calc_user_stats', user._id, ->
                 Meteor.call 'calc_authored_tags', user._id, ->
                 Meteor.call 'calc_upvoted_tags', user._id, ->
+                Meteor.call 'calc_credit_tags', user._id, ->
         , 2000
 
 
@@ -79,6 +80,7 @@ if Meteor.isClient
             # Meteor.call 'calc_user_tags', user._id, ->
             Meteor.call 'calc_authored_tags', user._id, ->
             Meteor.call 'calc_upvoted_tags', user._id, ->
+            Meteor.call 'calc_credit_tags', user._id, ->
 
     Template.profile_layout.events
         'click .send': ->

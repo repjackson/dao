@@ -85,8 +85,7 @@ template(name='user_dashboard')
     .ui.stackable.grid
         .row
             .sixteen.wide.column
-                .ui.header upvoted overlap 
-                .ui.one.column.grid
+                .ui.two.column.grid
                     // .column
                     //     .ui.header you #{currentUser.total_upvoted_points}
                     //     each currentUser.upvoted_tags
@@ -98,11 +97,19 @@ template(name='user_dashboard')
                     //         a.ui.huge.label.select_tag #{name}
                     //             small #{count}
                     .column
-                        .ui.header them
+                        .ui.header mind
                         // each friended_by
                         //     a.ui.small.compact.button.select_user(class=friend_button_class)
                         //         |#{username}
                         each current_user.upvoted_tags
+                            a.ui.large.label.select_tag #{title}
+                                small #{count}
+                    .column
+                        .ui.header matter
+                        // each friended_by
+                        //     a.ui.small.compact.button.select_user(class=friend_button_class)
+                        //         |#{username}
+                        each current_user.credit_tags
                             a.ui.large.label.select_tag #{title}
                                 small #{count}
             .sixteen.wide.column
