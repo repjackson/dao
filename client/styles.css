@@ -600,7 +600,7 @@ body {
     /* font-family: 'Montserrat', sans-serif !important; */
      /*font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Lato+Mono', sans-serif !important; */
-    /*font-family: 'Ubuntu', sans-serif !important;*/
+    font-family: 'Ubuntu', sans-serif !important;
 }
 
 @keyframes fadein {

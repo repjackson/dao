@@ -1,11 +1,18 @@
 template(name='post_card')
     .ui.card
         a.image(href="/post/#{_id}/view")
-            if rd.thumbnail
-                img.ui.image(src=rd.thumbnail class='invert')    
+            if is_youtube
+                .ui.embed(data-source="youtube" data-id=youtube_parse class='invert')
+        
+            else if rd.thumbnail
+                unless is_image
+                    img.ui.image(src=rd.thumbnail class='invert')    
             if watson.metadata.image
-                img.ui.image(src=watson.metadata.image class='invert')   
-            if url
+                img.ui.image(src=watson.metadata.image class='invert') 
+            if reddit_image
+                // |reddit image
+                img.ui.image(src=reddit_image class='invert')   
+            if is_image
                 img.ui.image(src=url class='invert')    
         if youtube_id
             +youtube_view key='youtube_id' direct=true
@@ -54,6 +61,8 @@ template(name='one_post_view')
     .ui.fluid.card.view_post
         if youtube_id
             +youtube_view key='youtube_id' direct=true
+        if is_youtube
+            +youtube_view key='url' direct=true
         else if image_id
             a.image(href="/post/#{_id}/view")
                 img.ui.image(src="{{c.url image_id width=1000 crop='fill'}}" class='invert') 
@@ -169,6 +178,12 @@ template(name='post_view')
                     img.invert(src=url)
                     each preview.images 
                         img(src=source.url)
+                    if is_youtube
+                        .ui.embed.rounded(data-source="youtube" data-id=youtube_parse class='invert')
+                        // +youtube_view key='url' direct=true full=true
+                    // with rd.media_embed
+                    //     |!{content}
+        
                     // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
                     if session_key_value_is 'view_post_section' 'content'
                         if image_id

@@ -122,12 +122,16 @@ Meteor.methods
                         }, ->
                             # Meteor.call 'call_watson', doc_id, 'url', 'url', ->
                 # update_ob = {}
-
+                if rd.preview.images[0].source.url
+                    thumbnail = rd.preview.images[0].source.url
+                else
+                    thumbnail = rd.thumbnail
                 Docs.update doc_id,
                     $set:
                         rd: rd
                         url: rd.url
-                        thumbnail: rd.thumbnail
+                        reddit_image:rd.preview.images[0].source.url
+                        thumbnail: thumbnail
                         subreddit: rd.subreddit
                         rd_author: rd.author
                         is_video: rd.is_video

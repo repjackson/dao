@@ -13,9 +13,12 @@ template(name='youtube_view')
         if icon
             +i name=icon
             //- i.icon(class=icon)
-        .ui.embed.rounded(data-source="youtube" data-id=field_value class='invert')
+        if full
+            .ui.embed.rounded(data-source="youtube" data-id=youtube_parse class='invert')
+            // iframe(width='560' height='315' src=url frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+        else
+            .ui.embed.rounded(data-source="youtube" data-id=field_value class='invert')
 
-        //- // iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
         //- iframe(src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
 

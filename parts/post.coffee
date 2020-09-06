@@ -21,6 +21,14 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.ui.accordion').accordion()
         , 2000
+        Meteor.setTimeout ->
+            $('.ui.embed').embed();
+        , 1000
+    Template.post_card.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.embed').embed();
+        , 1000
+
 
     Template.post_card.events
         'click .view_post': ->

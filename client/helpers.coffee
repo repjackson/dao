@@ -7,6 +7,18 @@ Template.registerHelper 'in_role', (role)->
             false
     else
         false
+        
+        
+Template.registerHelper 'youtube_parse', (url) ->
+    regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    match = @url.match(regExp)
+    if match && match[2].length == 11
+        console.log match[2]
+        return match[2];
+    else
+        console.log 'error, not vid'
+        null
+        
 
     
 Template.registerHelper 'calculated_size', (metric) ->
@@ -229,6 +241,18 @@ Template.registerHelper 'can_buy', ()->
 Template.registerHelper 'has_enough', ()->
     Meteor.user().credit > @price
 
+
+Template.registerHelper 'is_image', ()->
+    if @domain is 'i.redd.it'
+        true
+    else 
+        false
+
+Template.registerHelper 'is_youtube', ()->
+    if @domain is 'youtube.com'
+        true
+    else 
+        false
 
 
 Template.registerHelper 'session_is', (key)->
