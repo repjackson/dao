@@ -103,10 +103,10 @@ if Meteor.isClient
     
         can_debit: -> Meteor.user().points > 0
         docs: ->
-            Docs.find {
-                # model:$in:['debit','order','request','offer','post','alpha']
-                model:'post'
-            },
+            match = {model:'post'}
+            if selected_tags.array().length>0
+                match.tags = $in:selected_tags.array()
+            Docs.find match,
                 sort:
                     points:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
@@ -189,7 +189,7 @@ if Meteor.isClient
 
 if Meteor.isServer
     Meteor.publish 'doc_by_title', (title)->
-        console.log title
+        # console.log title
         Docs.find
             title:title
             model:'post'
@@ -241,7 +241,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 15 }
+            { $limit: 17 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter

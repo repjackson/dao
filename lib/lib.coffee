@@ -141,74 +141,177 @@ Meteor.methods
                 $addToSet: subscribed_ids: Meteor.userId()
                 $inc: subscribed_count: 1
 
-    upvote: (doc)->
-        if Meteor.userId()
-            if doc.downvoter_ids and Meteor.userId() in doc.downvoter_ids
-                Docs.update doc._id,
-                    $pull: 
-                        downvoter_ids:Meteor.userId()
-                        downvoter_usernames:Meteor.user().username
-                    $addToSet: 
-                        upvoter_ids:Meteor.userId()
-                        upvoter_usernames :Meteor.user().username
-                    $inc:
-                        credit:.02
-                        upvotes:1
-                        downvotes:-1
-                        points:1
-            else if doc.upvoter_ids and Meteor.userId() in doc.upvoter_ids
-                Docs.update doc._id,
-                    $pull: 
-                        upvoter_ids:Meteor.userId()
-                        upvoter_usernames:Meteor.user().username
-                    $inc:
-                        credit:-.01
-                        upvotes:-1
-                        points:-1
-            else
-                Docs.update doc._id,
-                    $addToSet: 
-                        upvoter_ids:Meteor.userId()
-                        upvoter_usernames:Meteor.user().username
-                    $inc:
-                        points:1
-                        upvotes:1
-                        credit:.01
-            Meteor.users.update doc._author_id,
-                $inc:points:1
+    upvote: (doc_id)->
+        parent_doc = Docs.findOne doc_id
+        voting_doc = 
+            Docs.findOne 
+                model:'vote'
+                parent_id:doc_id
+        unless voting_doc
+            new_id = 
+                Docs.insert
+                    model:'vote'
+                    parent_id:doc_id
+            voting_doc = Docs.findOne new_id   
+        Docs.update voting_doc._id, 
+            $inc:points:1
+        Meteor.call 'calc_user_stats', Meteor.userId(), ->
+            
+    downvote: (doc_id)->
+        parent_doc = Docs.findOne doc_id
+        voting_doc = 
+            Docs.findOne 
+                model:'vote'
+                parent_id:doc_id
+        unless voting_doc
+            new_id = 
+                Docs.insert
+                    model:'vote'
+                    parent_id:doc_id
+            voting_doc = Docs.findOne new_id   
+        Docs.update voting_doc._id, 
+            $inc:points:-1
+        Meteor.call 'calc_user_stats', Meteor.userId(), ->
 
-    downvote: (doc)->
-        if Meteor.userId()
-            if doc.upvoter_ids and Meteor.userId() in doc.upvoter_ids
-                Docs.update doc._id,
-                    $pull: 
-                        upvoter_ids:Meteor.userId()
-                        upvoter_usernames:Meteor.user().username
-                    $addToSet: 
-                        downvoter_ids:Meteor.userId()
-                        downvoter_usernames:Meteor.user().username
-                    $inc:
-                        credit:-.02
-                        points:-2
-                        downvotes:1
-                        upvotes:-1
-            else if doc.downvoter_ids and Meteor.userId() in doc.downvoter_ids
-                Docs.update doc._id,
-                    $pull: 
-                        downvoter_ids:Meteor.userId()
-                        downvoter_usernames:Meteor.user().username
-                    $inc:
-                        points:1
-                        credit:.01
-                        downvotes:-1
-            else
-                Docs.update doc._id,
-                    $addToSet: 
-                        downvoter_ids:Meteor.userId()
-                        downvoter_usernames:Meteor.user().username
-                    $inc:
-                        points:-1
-                        credit:-.01
-                        downvotes:1
-            Meteor.users.update doc._author_id,
-                $inc:points:-1
+            
+        # if Meteor.userId()
+        #     if doc.downvoter_ids and Meteor.userId() in doc.downvoter_ids
+        #         Docs.update doc._id,
+        #             $pull: 
+        #                 downvoter_ids:Meteor.userId()
+        #                 downvoter_usernames:Meteor.user().username
+        #             $addToSet: 
+        #                 upvoter_ids:Meteor.userId()
+        #                 upvoter_usernames :Meteor.user().username
+        #             $inc:
+        #                 credit:.02
+        #                 upvotes:1
+        #                 downvotes:-1
+        #                 points:1
+        #     else if doc.upvoter_ids and Meteor.userId() in doc.upvoter_ids
+        #         Docs.update doc._id,
+        #             $pull: 
+        #                 upvoter_ids:Meteor.userId()
+        #                 upvoter_usernames:Meteor.user().username
+        #             $inc:
+        #                 credit:-.01
+        #                 upvotes:-1
+        #                 points:-1
+        #     else
+        #         Docs.update doc._id,
+        #             $addToSet: 
+        #                 upvoter_ids:Meteor.userId()
+        #                 upvoter_usernames:Meteor.user().username
+        #             $inc:
+        #                 points:1
+        #                 upvotes:1
+        #                 credit:.01
+        #     Meteor.users.update doc._author_id,
+        #         $inc:points:1
+
+    # downvote: (doc)->
+    #     if Meteor.userId()
+    #         if doc.upvoter_ids and Meteor.userId() in doc.upvoter_ids
+    #             Docs.update doc._id,
+    #                 $pull: 
+    #                     upvoter_ids:Meteor.userId()
+    #                     upvoter_usernames:Meteor.user().username
+    #                 $addToSet: 
+    #                     downvoter_ids:Meteor.userId()
+    #                     downvoter_usernames:Meteor.user().username
+    #                 $inc:
+    #                     credit:-.02
+    #                     points:-2
+    #                     downvotes:1
+    #                     upvotes:-1
+    #         else if doc.downvoter_ids and Meteor.userId() in doc.downvoter_ids
+    #             Docs.update doc._id,
+    #                 $pull: 
+    #                     downvoter_ids:Meteor.userId()
+    #                     downvoter_usernames:Meteor.user().username
+    #                 $inc:
+    #                     points:1
+    #                     credit:.01
+    #                     downvotes:-1
+    #         else
+    #             Docs.update doc._id,
+    #                 $addToSet: 
+    #                     downvoter_ids:Meteor.userId()
+    #                     downvoter_usernames:Meteor.user().username
+    #                 $inc:
+    #                     points:-1
+    #                     credit:-.01
+    #                     downvotes:1
+    #         Meteor.users.update doc._author_id,
+    #             $inc:points:-1
+    # upvote: (doc)->
+    #     if Meteor.userId()
+    #         if doc.downvoter_ids and Meteor.userId() in doc.downvoter_ids
+    #             Docs.update doc._id,
+    #                 $pull: 
+    #                     downvoter_ids:Meteor.userId()
+    #                     downvoter_usernames:Meteor.user().username
+    #                 $addToSet: 
+    #                     upvoter_ids:Meteor.userId()
+    #                     upvoter_usernames :Meteor.user().username
+    #                 $inc:
+    #                     credit:.02
+    #                     upvotes:1
+    #                     downvotes:-1
+    #                     points:1
+    #         else if doc.upvoter_ids and Meteor.userId() in doc.upvoter_ids
+    #             Docs.update doc._id,
+    #                 $pull: 
+    #                     upvoter_ids:Meteor.userId()
+    #                     upvoter_usernames:Meteor.user().username
+    #                 $inc:
+    #                     credit:-.01
+    #                     upvotes:-1
+    #                     points:-1
+    #         else
+    #             Docs.update doc._id,
+    #                 $addToSet: 
+    #                     upvoter_ids:Meteor.userId()
+    #                     upvoter_usernames:Meteor.user().username
+    #                 $inc:
+    #                     points:1
+    #                     upvotes:1
+    #                     credit:.01
+    #         Meteor.users.update doc._author_id,
+    #             $inc:points:1
+
+    # downvote: (doc)->
+    #     if Meteor.userId()
+    #         if doc.upvoter_ids and Meteor.userId() in doc.upvoter_ids
+    #             Docs.update doc._id,
+    #                 $pull: 
+    #                     upvoter_ids:Meteor.userId()
+    #                     upvoter_usernames:Meteor.user().username
+    #                 $addToSet: 
+    #                     downvoter_ids:Meteor.userId()
+    #                     downvoter_usernames:Meteor.user().username
+    #                 $inc:
+    #                     credit:-.02
+    #                     points:-2
+    #                     downvotes:1
+    #                     upvotes:-1
+    #         else if doc.downvoter_ids and Meteor.userId() in doc.downvoter_ids
+    #             Docs.update doc._id,
+    #                 $pull: 
+    #                     downvoter_ids:Meteor.userId()
+    #                     downvoter_usernames:Meteor.user().username
+    #                 $inc:
+    #                     points:1
+    #                     credit:.01
+    #                     downvotes:-1
+    #         else
+    #             Docs.update doc._id,
+    #                 $addToSet: 
+    #                     downvoter_ids:Meteor.userId()
+    #                     downvoter_usernames:Meteor.user().username
+    #                 $inc:
+    #                     points:-1
+    #                     credit:-.01
+    #                     downvotes:1
+    #         Meteor.users.update doc._author_id,
+    #             $inc:points:-1

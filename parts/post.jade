@@ -21,7 +21,7 @@ template(name='post_card')
             a.header(href="/post/#{_id}/view")
                 // i.newspaper.icon
                 |#{title}
-            +voting
+            +vote
         if is_admin
             +print_this
         // .meta
@@ -89,7 +89,8 @@ template(name='one_post_view')
                 each tags
                     .ui.compact.large.circular.button.add_tag #{this}
                 +comments_view_small  
-            +voting
+            // +voting
+            +vote
     // .ui.divider
 
 template(name='post_view')
@@ -124,7 +125,8 @@ template(name='post_view')
                     //     |#{_author.username}
                     .ui.inline.small.header #{when}
                     div
-                    +voting
+                    // +voting
+                    +vote
                     div
                     +array_view key='location_tags' label='location tags' direct=true
                     div

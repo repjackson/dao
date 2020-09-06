@@ -177,6 +177,39 @@ if Meteor.isClient
 #
 #
 #
+
+    Template.vote.onCreated ->
+        # console.log @
+        @autorun => Meteor.subscribe 'author_vote', @data._id
+
+    Template.vote.helpers
+        user_vote: ->
+            Docs.findOne 
+                model:'vote'
+                parent_id:@_id
+                _author_id:Meteor.userId()
+    Template.vote.events
+        'click .upvote': (e,t)->
+            # $(e.currentTarget).closest('.button').transition('pulse',200)
+            if Meteor.user()
+                Meteor.call 'upvote', @_id, ->
+            else
+                Router.go "/register"
+        'click .downvote': (e,t)->
+            # $(e.currentTarget).closest('.button').transition('pulse',200)
+            if Meteor.user()
+                Meteor.call 'downvote', @_id, ->
+            else
+                Router.go "/register"
+
+if Meteor.isServer
+    Meteor.publish 'author_vote', (parent_id)->
+        Docs.find 
+            model:'vote'
+            parent_id:parent_id
+
+
+if Meteor.isClient
 #     Template.doc_card.onCreated ->
 #         @autorun => Meteor.subscribe 'doc', Template.currentData().doc_id
 #     Template.doc_card.helpers

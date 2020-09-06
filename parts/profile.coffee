@@ -7,6 +7,7 @@ if Meteor.isClient
     @selected_overlap_tags = new ReactiveArray []
 
     Template.user_dashboard.onCreated ->
+        Session.setDefault('target_username','')
         @autorun -> Meteor.subscribe('overlap_tags',
             Session.get('query')
             selected_overlap_tags.array()
@@ -53,9 +54,10 @@ if Meteor.isClient
 
     Template.user_dashboard.helpers
         friended_by: ->
-            Meteor.users.find
-                friend_ids:$in:[Meteor.userId()]
-    
+            Meteor.users.find {}
+                # friend_ids:$in:[Meteor.userId()]
+        friend_button_class: ->
+            if Session.equals('target_username',@username) then 'active' else 'basic'
         users: ->
             Meteor.users.find()
         overlap_results: ->
@@ -72,7 +74,7 @@ if Meteor.isClient
     
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
-            # Meteor.call 'calc_user_stats', user._id, ->
+            Meteor.call 'calc_user_stats', user._id, ->
             # Meteor.call 'calc_user_stats', user._id, ->
             # Meteor.call 'calc_user_tags', user._id, ->
             Meteor.call 'calc_authored_tags', user._id, ->
@@ -139,21 +141,21 @@ if Meteor.isServer
         
         console.log target_username
         target_user = Meteor.users.findOne username:target_username    
-            
-        match = {}
-        match.model = 'post'
-        if query.length > 0
-            match.title = {$regex:"#{query}", $options: 'i'}
-        if selected_tags.length > 0
-            match.tags = $all:selected_tags
-        # if selected_authors.length > 0
-        #     match._author_username = $all:selected_authors
-        # match._author_id = $in:[Meteor.userId(), target_user._id]
-        match.upvoter_ids = $all:[Meteor.userId(), target_user._id]
-        console.log match
-        Docs.find match,
-            limit:20
-            sort:points:-1
+        if target_user
+            match = {}
+            match.model = 'post'
+            if query.length > 0
+                match.title = {$regex:"#{query}", $options: 'i'}
+            if selected_tags.length > 0
+                match.tags = $all:selected_tags
+            # if selected_authors.length > 0
+            #     match._author_username = $all:selected_authors
+            # match._author_id = $in:[Meteor.userId(), target_user._id]
+            match.upvoter_ids = $all:[Meteor.userId(), target_user._id]
+            console.log match
+            Docs.find match,
+                limit:20
+                sort:points:-1
                         
                         
     Meteor.publish 'overlap_tags', (
@@ -168,33 +170,32 @@ if Meteor.isServer
         match.model = 'post'
         
         target_user = Meteor.users.findOne username:target_username    
-
-        
-        if query.length > 0
-            match.title = {$regex:"#{query}", $options: 'i'}
-        if selected_tags.length > 0 then match.tags = $all: selected_tags
-        # match._author_id = $in:[Meteor.userId(), target_user._id]
-        match.upvoter_ids = $all:[Meteor.userId(), target_user._id]
-
-        tag_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "tags": 1 }
-            { $unwind: "$tags" }
-            { $group: _id: "$tags", count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
-            { $sort: count: -1, _id: 1 }
-            { $limit: 20 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # console.log 'filter: ', filter
-        # console.log 'cloud: ', cloud
-        tag_cloud.forEach (tag, i) ->
-            self.added 'overlap', Random.id(),
-                name: tag.name
-                count: tag.count
-                index: i
-       
-        self.ready()
+        if target_user
+            if query.length > 0
+                match.title = {$regex:"#{query}", $options: 'i'}
+            if selected_tags.length > 0 then match.tags = $all: selected_tags
+            # match._author_id = $in:[Meteor.userId(), target_user._id]
+            match.upvoter_ids = $all:[Meteor.userId(), target_user._id]
+    
+            tag_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: "tags": 1 }
+                { $unwind: "$tags" }
+                { $group: _id: "$tags", count: $sum: 1 }
+                { $match: _id: $nin: selected_tags }
+                { $sort: count: -1, _id: 1 }
+                { $limit: 20 }
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'filter: ', filter
+            # console.log 'cloud: ', cloud
+            tag_cloud.forEach (tag, i) ->
+                self.added 'overlap', Random.id(),
+                    name: tag.name
+                    count: tag.count
+                    index: i
+           
+            self.ready()
                             
     Meteor.methods
         # calc_test_sessions: (user_id)->
@@ -447,17 +448,29 @@ if Meteor.isServer
 
             console.log 'total debit price', total_debit_price
            
-           
-           
-            authored_posts = Docs.find({
-                model:'post'
+            votes = Docs.find({
+                model:'vote'
+                points:$exists:true
                 _author_id:user_id})
-            authored_count = authored_posts.count()
-            total_authored_points = 0
-            for post in authored_posts.fetch()
-                total_authored_points += post.points
+            vote_count = votes.count()
+            total_vote_cost = 0
+            for vote in votes.fetch()
+                absolute = Math.abs(vote.points)
+                total_vote_cost += absolute
 
-            console.log 'total authored points', total_authored_points
+            console.log 'total vote cost', total_vote_cost
+           
+           
+           
+            # authored_posts = Docs.find({
+            #     model:'post'
+            #     _author_id:user_id})
+            # authored_count = authored_posts.count()
+            # total_authored_points = 0
+            # for post in authored_posts.fetch()
+            #     total_authored_points += post.points
+
+            # console.log 'total authored points', total_authored_points
             
             
             upvoted_posts = Docs.find({
@@ -551,7 +564,7 @@ if Meteor.isServer
                 total_topup_price += topup.amount*100
                 console.log 'adding', topup.amount
             # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_cost+total_topup_price-comment_count-(tipped_count*11)+(received_tips_count*10)
-            points = total_credit_price-total_debit_price+total_topup_price-comment_count-(tipped_count*11)+(received_tips_count*10)
+            points = total_credit_price-total_debit_price+total_topup_price-comment_count-(tipped_count*11)+(received_tips_count*10)-total_vote_cost
             # points = total_credit_price-total_debit_price+total_fulfilled_price-total_request_cost
             # points += total_fulfilled_price
             # points =- total_request_cost
@@ -584,7 +597,7 @@ if Meteor.isServer
                     points:points
                     credit:points/100
                     one_ratio: one_ratio
-                    total_authored_points:total_authored_points    
+                    # total_authored_points:total_authored_points    
                     # total_fulfilled_price:total_fulfilled_price
                     # fulfilled_count:fulfilled_count
                     tipped_count:tipped_count
