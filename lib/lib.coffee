@@ -3,7 +3,7 @@
 @Terms = new Meteor.Collection 'terms'
 @author_results = new Meteor.Collection 'author_results'
 @overlap = new Meteor.Collection 'overlap'
-# @seller_results = new Meteor.Collection 'seller_results'
+@upvoter_results = new Meteor.Collection 'upvoter_results'
 # @buyer_results = new Meteor.Collection 'buyer_results'
 # @Model_results = new Meteor.Collection 'model_results'
 # @status_results = new Meteor.Collection 'status_results'
@@ -160,6 +160,16 @@ Meteor.methods
         unless parent_doc._author_id is Meteor.userId()
             Meteor.users.update parent_doc._author_id,
                 $inc:points:1
+        voting_doc = Docs.findOne voting_doc._id
+        if voting_doc.points > 0
+            Docs.update doc_id,
+                $addToSet:
+                    upvoter_usernames:Meteor.user().username  
+                $pull:
+                    downvoter_usernames:Meteor.user().username  
+        parent = Docs.findOne doc_id
+        console.log 'upvoting usernames', parent
+                
         # Meteor.call 'calc_user_stats', Meteor.userId(), ->
             
     downvote: (doc_id)->
@@ -181,6 +191,14 @@ Meteor.methods
         unless parent_doc._author_id is Meteor.userId()
             Meteor.users.update parent_doc._author_id,
                 $inc:points:-1
+                
+        voting_doc = Docs.findOne voting_doc._id
+        if voting_doc.points < 0
+            Docs.update doc_id,
+                $addToSet:
+                    downvoter_usernames:Meteor.user().username  
+                $pull:
+                    upvoter_usernames:Meteor.user().username  
             
         # Meteor.call 'calc_user_stats', Meteor.userId(), ->
 

@@ -61,6 +61,20 @@ template(name='home')
                 each author_results
                     a.ui.large.compact.circular.button.select_author.select_term(href='#')
                         strong #{name}
+                        
+                .ui.inline.header
+                    i.large.thumbs.up.outline.icon
+                    |upvoters
+                if selected_upvoters
+                    a#clear_upvoters.ui.black.icon.compact.large.circular.button.select_term
+                        i.remove.icon
+                    each selected_upvoters
+                        a.unselect_upvoter.ui.black.compact.large.circular.button.select_termn
+                            strong #{this}
+                    
+                each upvoter_results
+                    a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
+                        strong #{name}
                 .spacer
             .sixteen.wide.center.aligned.column
                 if two_posts

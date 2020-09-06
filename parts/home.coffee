@@ -3,6 +3,7 @@
 if Meteor.isClient
     @selected_tags = new ReactiveArray []
     @selected_authors = new ReactiveArray []
+    @selected_upvoters = new ReactiveArray []
     
     Template.body.events
         # 'click a:not(.select_term)': ->
@@ -45,11 +46,13 @@ if Meteor.isClient
             Session.get('query')
             selected_tags.array()
             selected_authors.array()
+            selected_upvoters.array()
             )
         @autorun -> Meteor.subscribe('docs',
             Session.get('query')
             selected_tags.array()
             selected_authors.array()
+            selected_upvoters.array()
             )
 
         
@@ -109,11 +112,10 @@ if Meteor.isClient
             Docs.find match,
                 sort:
                     points:-1
+                    _timestamp:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:10
             
-        selected_tags: -> selected_tags.array()
-        selected_authors: -> selected_authors.array()
         term: ->
             # console.log @
             Docs.find 
@@ -123,6 +125,7 @@ if Meteor.isClient
         one_result: ->
             Docs.find().count() < 2
         
+        selected_tags: -> selected_tags.array()
         tag_results: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3 
@@ -131,6 +134,7 @@ if Meteor.isClient
                 })
             else 
                 Tag_results.find()
+        selected_authors: -> selected_authors.array()
         author_results: ->
             doc_count = Docs.find().count()
             if 0 < doc_count < 3 
@@ -139,6 +143,15 @@ if Meteor.isClient
                 })
             else 
                 author_results.find()
+        selected_upvoters: -> selected_upvoters.array()
+        upvoter_results: ->
+            doc_count = Docs.find().count()
+            if 0 < doc_count < 3 
+                upvoter_results.find({ 
+                    count:$lt:doc_count 
+                })
+            else 
+                upvoter_results.find()
 
     Template.tag_selector.events
         'click .select_tag': -> 
@@ -168,6 +181,11 @@ if Meteor.isClient
             selected_authors.push @name
         'click .unselect_author': -> selected_authors.remove @valueOf()
         'click #clear_authors': -> selected_authors.clear()
+    
+        'click .select_upvoter': -> 
+            selected_upvoters.push @name
+        'click .unselect_upvoter': -> selected_upvoters.remove @valueOf()
+        'click #clear_upvoters': -> selected_upvoters.clear()
     
     
         'click .view_debit': ->
@@ -199,6 +217,7 @@ if Meteor.isServer
         query=''
         selected_tags
         selected_authors
+        selected_upvoters
         )->
         match = {}
         match.model = 'post'
@@ -210,6 +229,8 @@ if Meteor.isServer
             match.tags = $all:selected_tags
         if selected_authors.length > 0
             match._author_username = $all:selected_authors
+        if selected_upvoters.length > 0
+            match.upvoter_usernames = $all:selected_upvoters
         console.log match
         Docs.find match,
             limit:10
@@ -220,6 +241,7 @@ if Meteor.isServer
         query=''
         selected_tags
         selected_authors
+        selected_upvoters
         limit=20
         )->
         self = @
@@ -233,6 +255,8 @@ if Meteor.isServer
         if selected_authors.length > 0 then match._author_username = $all: selected_authors
         if Meteor.user()
             match.downvoter_ids = $nin:[Meteor.userId()]
+        if selected_upvoters.length > 0
+            match.upvoter_usernames = $all:selected_upvoters
 
         tag_cloud = Docs.aggregate [
             { $match: match }
@@ -267,6 +291,24 @@ if Meteor.isServer
             self.added 'author_results', Random.id(),
                 name: author.name
                 count: author.count
+                index: i
+       
+        upvoter_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "upvoter_usernames": 1 }
+            { $unwind: "$upvoter_usernames" }
+            { $group: _id: "$upvoter_usernames", count: $sum: 1 }
+            { $match: _id: $nin: selected_upvoters }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'filter: ', filter
+        # console.log 'cloud: ', cloud
+        upvoter_cloud.forEach (upvoter, i) ->
+            self.added 'upvoter_results', Random.id(),
+                name: upvoter.name
+                count: upvoter.count
                 index: i
        
         self.ready()
