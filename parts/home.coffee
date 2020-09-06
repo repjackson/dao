@@ -97,11 +97,19 @@ if Meteor.isClient
                 
     Template.home.helpers
         selected_tags_plural: -> selected_tags.array().length > 1
-        one_post: -> Docs.find().count() is 1
+        one_post: ->
+            match = {model:'post'}
+            if selected_tags.array().length>0
+                match.tags = $in:selected_tags.array()
+
+            Docs.find(match).count() is 1
     
-        two_posts: -> Docs.find().count() is 2
+        two_posts: -> 
+            match = {model:'post'}
+            if selected_tags.array().length>0
+                match.tags = $in:selected_tags.array()
+            Docs.find(match).count() is 2
         three_posts: -> Docs.find().count() is 3
-        one_result: -> Docs.find().count() is 1
     
     
         can_debit: -> Meteor.user().points > 0

@@ -615,7 +615,7 @@ Meteor.methods
         #     limit = 42
         # else
         # limit = 10
-        console.log 'omega_match', match
+        # console.log 'omega_match', match
         # { $match: tags:$all: omega.selected_tags }
         pipe =  [
             { $match: match }
@@ -646,7 +646,7 @@ Meteor.methods
     calc_upvoted_tags: (user_id)->
         upvoted_tags = Meteor.call 'uomega', user_id
         # debit_tags = Meteor.call 'omega', user_id, 'debit', (err, res)->
-        console.log 'upvoted tags', upvoted_tags
+        # console.log 'upvoted tags', upvoted_tags
         # console.log 'res from async agg'
         Meteor.users.update user_id, 
             $set:
@@ -655,7 +655,7 @@ Meteor.methods
 
     uomega: (user_id)->
         user = Meteor.users.findOne user_id
-        console.log 'finding upvoted posts for ', user_id
+        # console.log 'finding upvoted posts for ', user_id
         options = {
             explain:false
             allowDiskUse:true

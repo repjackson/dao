@@ -240,10 +240,6 @@ template(name='post_edit')
                     if watson
                         +watson_view
                     // +array_edit key='tags' label='tags' icon='tags' direct=true
-                // .four.wide.column
-                    // |coauthors split revenue evenly
-                    // +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
-                    
                 .four.wide.column
                     a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class='invert')
                         i.checkmark.big.icon
@@ -251,6 +247,8 @@ template(name='post_edit')
                         small edit post:
                         |#{title}
                     i.remove.link.circular.icon.delete_post(title='delete post')
+                    |coauthors split revenue evenly
+                    +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
                     .ui.header 
                         small author
                         |#{_author.username}

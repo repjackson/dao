@@ -86,22 +86,22 @@ template(name='user_dashboard')
         .row
             .sixteen.wide.column
                 .ui.header upvoted overlap 
-                .ui.three.column.grid
-                    .column
-                        .ui.header you #{currentUser.total_upvoted_points}
-                        each currentUser.upvoted_tags
-                            a.ui.large.label.select_tag #{title}
-                                small #{count}
-                    .column
-                        .ui.header union
-                        each overlap_results
-                            a.ui.huge.label.select_tag #{name}
-                                small #{count}
+                .ui.one.column.grid
+                    // .column
+                    //     .ui.header you #{currentUser.total_upvoted_points}
+                    //     each currentUser.upvoted_tags
+                    //         a.ui.large.label.select_tag #{title}
+                    //             small #{count}
+                    // .column
+                    //     .ui.header union
+                    //     each overlap_results
+                    //         a.ui.huge.label.select_tag #{name}
+                    //             small #{count}
                     .column
                         .ui.header them
-                        each friended_by
-                            a.ui.small.compact.button.select_user(class=friend_button_class)
-                                |#{username}
+                        // each friended_by
+                        //     a.ui.small.compact.button.select_user(class=friend_button_class)
+                        //         |#{username}
                         each current_user.upvoted_tags
                             a.ui.large.label.select_tag #{title}
                                 small #{count}

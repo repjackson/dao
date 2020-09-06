@@ -50,6 +50,8 @@ template(name='debit_edit')
                         +datetime_edit key='datetime' label='datetime' direct=true   
                         // +time_edit key='time' label='time' direct=true   
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                    +multi_user_edit key='related_user_ids' key2='related_usernames' label='related users' direct=true
+
                 .six.wide.column
                     +textarea_edit key='title' label='title' direct=true
                     +image_edit key='image_id' label='image' direct=true
@@ -117,6 +119,8 @@ template(name='debit_view')
                         | #{when}
                     .spacer
                     .spacer
+                    +multi_user_view key='related_user_ids' key2='related_usernames' label='related users' direct=true
+    
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
