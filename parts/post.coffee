@@ -12,6 +12,7 @@ if Meteor.isClient
 
     Template.post_view.onCreated ->
         @autorun -> Meteor.subscribe 'post_tips', Router.current().params.doc_id
+        @autorun -> Meteor.subscribe 'post_votes', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'me'
         Session.setDefault 'view_post_section', 'content'
@@ -73,6 +74,11 @@ if Meteor.isClient
         tips: ->
             Docs.find
                 model:'tip'
+        
+        votes: ->
+            Docs.find   
+                model:'vote'
+                parent_id:@_id
         
         tippers: ->
             Meteor.users.find
@@ -140,6 +146,11 @@ if Meteor.isServer
         Docs.find   
             model:'tip'
             post_id:post_id
+    
+    Meteor.publish 'post_votes', (post_id)->
+        Docs.find   
+            model:'vote'
+            parent_id:post_id
     
     
 if Meteor.isClient

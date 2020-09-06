@@ -155,7 +155,11 @@ Meteor.methods
             voting_doc = Docs.findOne new_id   
         Docs.update voting_doc._id, 
             $inc:points:1
-        Meteor.call 'calc_user_stats', Meteor.userId(), ->
+        Meteor.users.update Meteor.userId(),
+            $inc:points:-1
+        Meteor.users.update parent_doc._author_id,
+            $inc:points:1
+        # Meteor.call 'calc_user_stats', Meteor.userId(), ->
             
     downvote: (doc_id)->
         parent_doc = Docs.findOne doc_id
@@ -171,7 +175,12 @@ Meteor.methods
             voting_doc = Docs.findOne new_id   
         Docs.update voting_doc._id, 
             $inc:points:-1
-        Meteor.call 'calc_user_stats', Meteor.userId(), ->
+        Meteor.users.update Meteor.userId(),
+            $inc:points:-1
+        Meteor.users.update parent_doc._author_id,
+            $inc:points:-1
+            
+        # Meteor.call 'calc_user_stats', Meteor.userId(), ->
 
             
         # if Meteor.userId()

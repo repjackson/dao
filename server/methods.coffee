@@ -1,5 +1,4 @@
 Meteor.methods
-Meteor.methods
     search_reddit: (query)->
         console.log 'searching reddit for', query
         console.log 'type of query', typeof(query)
@@ -39,7 +38,7 @@ Meteor.methods
                             tags: query
                             model:'post'
                             source:'reddit'
-                        console.log 'reddit post', reddit_post
+                        # console.log 'reddit post', reddit_post
                         existing_doc = Docs.findOne url:data.url
                         if existing_doc
                             # if Meteor.isDevelopment

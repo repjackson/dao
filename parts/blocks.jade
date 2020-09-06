@@ -329,11 +329,6 @@ template(name='bookmark_button')
 
 template(name='vote')
     i.thumbs.up.big.link.circular.icon.upvote(class=upvote_class title='upvote')
-    each upvoter_ids
-        +user_info_small
-    i.thumbs.down.big.link.circular.icon.downvote(class=downvote_class title='downvote')
-    each downvoter_ids
-        +user_info_small
     with user_vote
         if is_dev
             +number_edit key='points' label='edit points' direct=true
@@ -341,6 +336,11 @@ template(name='vote')
             strong #{points} pts
         if anon_points
             strong #{anon_points} anon pts
+    i.thumbs.down.big.link.circular.icon.downvote(class=downvote_class title='downvote')
+    each upvoter_ids
+        +user_info_small
+    each downvoter_ids
+        +user_info_small
     
     
 template(name='voting')

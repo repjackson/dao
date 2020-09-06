@@ -30,9 +30,9 @@ if Meteor.isClient
             $('.profile_nav_item')
                 .popup()
         , 1000
-        user = Meteor.users.findOne(username:Router.current().params.username)
         # Meteor.call 'calc_user_stats', user._id, ->
         Meteor.setTimeout ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
             if user
                 Meteor.call 'calc_user_stats', user._id, ->
                 Meteor.call 'calc_authored_tags', user._id, ->
@@ -572,13 +572,13 @@ if Meteor.isServer
             if total_debit_price is 0 then total_debit_price++
             if total_credit_price is 0 then total_credit_price++
             # debit_credit_ratio = total_debit_price/total_credit_price
-            unless total_debit_price is 1
-                unless total_credit_price is 1
-                    one_ratio = total_debit_price/total_credit_price
-                else
-                    one_ratio = 0
-            else
-                one_ratio = 0
+            # unless total_debit_price is 1
+            #     unless total_credit_price is 1
+            #         one_ratio = total_debit_price/total_credit_price
+            #     else
+            #         one_ratio = 0
+            # else
+            #     one_ratio = 0
                     
             # dc_ratio_inverted = 1/debit_credit_ratio
 
@@ -595,8 +595,8 @@ if Meteor.isServer
                     total_debit_price: total_debit_price
                     flow_volume: flow_volume
                     points:points
-                    credit:points/100
-                    one_ratio: one_ratio
+                    # credit:points/100
+                    # one_ratio: one_ratio
                     # total_authored_points:total_authored_points    
                     # total_fulfilled_price:total_fulfilled_price
                     # fulfilled_count:fulfilled_count

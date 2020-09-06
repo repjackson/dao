@@ -22,6 +22,7 @@ template(name='post_card')
                 // i.newspaper.icon
                 |#{title}
             +vote
+            .ui.label #{points}
         if is_admin
             +print_this
         // .meta
@@ -97,14 +98,13 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .four.wide.column
+                .four.wide.column.scrolling
                     // .ui.inline.header 
                     //     small post: 
-                    a.ui.circular.icon.button(href='/')
-                        i.yin.yang.large.icon
-                    a.image(href="/post/#{_id}/view")
-                        img.ui.image(src=watson.metadata.image class='invert')    
-                        img.ui.image(src=rd.thumbnail class='invert')    
+                    // a.ui.circular.icon.button(href='/')
+                    //     i.yin.yang.large.icon
+                    img.ui.rounded.image(src=watson.metadata.image class='invert')    
+                    img.ui.rounded.image(src=rd.thumbnail class='invert')    
                     
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
                     if tone
@@ -135,21 +135,22 @@ template(name='post_view')
                     // +single_user_view key='_author_id' label='author' direct=true
                     // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
                     .ui.label #{views} views
-                    .ui.large.label #{total_points}p generated
-                    .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
-                        // i.coins.icon
-                        |#{tip_total}p tipped
-                    .ui.green.big.icon.circular.button.tip
-                        i.donate.icon
-                        // |tip
+                    // .ui.large.label #{total_points}p generated
+                    // .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
+                    //     // i.coins.icon
+                    //     |#{tip_total}p tipped
+                    // .ui.green.big.icon.circular.button.tip
+                    //     i.donate.icon
+                    //     // |tip
                     .ui.link.selection.list
                         .ui.fluid.accordion 
-                            each tippers
+                            each votes
                                 .title
-                                    a.ui.inline.header(href="/user/#{username}") #{tipper_tips.count}
-                                    img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
-                                    |#{username}
-                                    each three_tags
+                                    a.ui.inline.header(href="/user/#{_author.username}") 
+                                        |#{points}
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+                                        |#{_author.username}
+                                    each _author.three_tags
                                         .ui.small.basic.label #{this}
                                     // i.dropdown.icon
                                 // .content

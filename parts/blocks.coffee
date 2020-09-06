@@ -193,16 +193,35 @@ if Meteor.isClient
             # $(e.currentTarget).closest('.button').transition('pulse',200)
             if Meteor.user()
                 Meteor.call 'upvote', @_id, ->
+                Meteor.call 'calc_post_votes', @_id, ->
             else
                 Router.go "/register"
         'click .downvote': (e,t)->
             # $(e.currentTarget).closest('.button').transition('pulse',200)
             if Meteor.user()
                 Meteor.call 'downvote', @_id, ->
+                Meteor.call 'calc_post_votes', @_id, ->
             else
                 Router.go "/register"
 
 if Meteor.isServer
+    Meteor.methods 
+        calc_post_votes: (doc_id)->
+            doc = Docs.findOne doc_id
+            # console.log 'post', doc
+            votes = 
+                Docs.find 
+                    model:'vote'
+                    parent_id:doc_id
+            total_doc_points = 0
+            for vote in votes.fetch()
+                total_doc_points += vote.points
+                
+            Docs.update doc_id, 
+                $set:
+                    points:total_doc_points
+                    
+                    
     Meteor.publish 'author_vote', (parent_id)->
         Docs.find 
             model:'vote'
