@@ -157,8 +157,9 @@ Meteor.methods
             $inc:points:1
         Meteor.users.update Meteor.userId(),
             $inc:points:-1
-        Meteor.users.update parent_doc._author_id,
-            $inc:points:1
+        unless parent_doc._author_id is Meteor.userId()
+            Meteor.users.update parent_doc._author_id,
+                $inc:points:1
         # Meteor.call 'calc_user_stats', Meteor.userId(), ->
             
     downvote: (doc_id)->
@@ -177,8 +178,9 @@ Meteor.methods
             $inc:points:-1
         Meteor.users.update Meteor.userId(),
             $inc:points:-1
-        Meteor.users.update parent_doc._author_id,
-            $inc:points:-1
+        unless parent_doc._author_id is Meteor.userId()
+            Meteor.users.update parent_doc._author_id,
+                $inc:points:-1
             
         # Meteor.call 'calc_user_stats', Meteor.userId(), ->
 
