@@ -22,7 +22,7 @@ Template.nav.onRendered ->
                 scrollLock:false
             })
             .sidebar('attach events', '.toggle_sidebar')
-    , 1000
+    , 2000
     Meteor.setTimeout ->
         $('.ui.right.sidebar')
             .sidebar({
@@ -33,7 +33,7 @@ Template.nav.onRendered ->
                 scrollLock:false
             })
             .sidebar('attach events', '.toggle_rightbar')
-    , 1000
+    , 2000
 
 Template.right_sidebar.events
     'click .logout': ->

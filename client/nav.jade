@@ -6,7 +6,12 @@ template(name='nav')
             a.icon.item.toggle_sidebar
                 i.large.ellipsis.vertical.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
-            i.large.yin.yang.icon
+            // i.large.yin.yang.icon
+            i.large.newspaper.icon
+        a.header.icon.item(href="/requests" class="{{isActivePath '/requests'}}")
+            i.large.concierge.bell.icon
+        a.header.icon.item(href="/shop" class="{{isActivePath '/shop'}}")
+            i.large.store.icon
         .item
             +status    
         .right.menu
@@ -102,11 +107,11 @@ template(name='right_sidebar')
             | dashboard (#{currentUser.points}p)
             i.large.dashboard.icon
         
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
-            | #{currentUser.total_credit_amount}p received
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kin" class="{{isActiveRoute 'user_kin'}}")
+            | #{currentUser.total_credit_amount}p in
             i.large.chevron.down.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/debits" class="{{isActiveRoute 'user_sent'}}")
-            | #{currentUser.total_debit_amount}p sent
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kout" class="{{isActiveRoute 'user_kout'}}")
+            | #{currentUser.total_debit_amount}p out
             i.large.chevron.up.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActiveRoute 'user_requests'}}")
             | requests

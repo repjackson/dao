@@ -3,7 +3,7 @@ template(name='user_edit_layout')
     .ui.bottom.attached.pushable.segment
         // +left_sidebar
         // +right_sidebar
-        #main_area.global_container.pusher(class='invert')
+        #main_area.global_container.pusher(class=currentUser.invert_class)
             with current_user          
                 .ui.stackable.padded.grid
                     .row
@@ -11,7 +11,7 @@ template(name='user_edit_layout')
                             .ui.center.aligned.large.inline.header
                                 i.big.cog.icon
                                 | @#{current_user.username}
-                            img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}" class='invert')
+                            img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 
                             a.ui.big.green.circular.icon.button(href="/user/#{current_user.username}/") 
                                 i.checkmark.big.icon
@@ -19,7 +19,7 @@ template(name='user_edit_layout')
                             a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
                                 i.cog.large.icon 
                                 // |account
-                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}" class='invert') 
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}" class=currentUser.invert_class) 
                                 i.lock.privacy.large.icon 
                                 // | privacy
                         .twelve.wide.column

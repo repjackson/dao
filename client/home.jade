@@ -1,5 +1,5 @@
 template(name='home')
-    .ui.stackable.grid 
+    .ui.stackable.padded.grid 
         .row
             .four.wide.column
                 // a.ui.button(href="/") 
@@ -16,7 +16,7 @@ template(name='home')
                 //         |{{money_format currentUser.points}}c
                 //         |&nbsp;
                 //         if currentUser.profile_image_id
-                //             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+                //             img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 //         else 
                 //             i.large.user.large.icon
                 //         strong.mobile.hidden #{currentUser.username}
@@ -114,15 +114,15 @@ template(name='home')
 template(name='unselect_tag')
     a.unselect_tag.ui.black.compact.large.image.label.select_termn
         if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image class='invert')    
+            img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         strong #{this}
 
 template(name='tag_selector')
     a.ui.large.image.label.select_tag.select_term(href='#')
-        // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
-        // img.ui.avatar.compact.image(src=term.rd.thumbnail class='invert')
+        // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
         if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image class='invert')    
+            img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         | #{name}
 
 
