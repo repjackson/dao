@@ -80,6 +80,23 @@ template(name='home')
                         a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
                             strong #{name}
                 .spacer
+                div
+                +session_boolean_toggle key='view_sources' label='sources' icon='thumbs up outline large'
+                if session_is 'view_sources'
+                    // .ui.inline.header
+                    //     i.large.thumbs.up.outline.icon
+                    //     |sources
+                    if selected_sources
+                        a#clear_sources.ui.black.icon.compact.large.circular.button.select_term
+                            i.remove.icon
+                        each selected_sources
+                            a.unselect_source.ui.black.compact.large.circular.button.select_termn
+                                strong #{this}
+                        
+                    each source_results
+                        a.ui.large.compact.circular.button.select_source.select_term(href='#')
+                            strong #{name}
+                .spacer
             .twelve.wide.center.aligned.column
                 if two_posts
                     .ui.stackable.two.cards
@@ -96,7 +113,7 @@ template(name='home')
 
 
 template(name='tag_selector')
-    a.ui.big.image.label.select_tag.select_term(href='#')
+    a.ui.large.image.label.select_tag.select_term(href='#')
         // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
         // img.ui.avatar.compact.image(src=term.rd.thumbnail class='invert')
         if term

@@ -69,6 +69,7 @@ Template.nav.events
         new_post_id =
             Docs.insert
                 model:'post'
+                source:'self'
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
         Router.go "/post/#{new_post_id}/edit"

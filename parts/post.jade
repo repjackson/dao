@@ -26,7 +26,7 @@ template(name='post_card')
                 
         .content
             a.header(href="/post/#{_id}/view")
-                // i.newspaper.icon
+                i.right.chevron.circular.icon
                 |#{title}
             +vote
             .ui.label #{points}
@@ -72,7 +72,7 @@ template(name='one_post_view')
  
         .content
             a.inline.header(href="/post/#{_id}/view")
-                // i.newspaper.icon
+                i.right.chevron.circular.icon
                 |#{title}
             a.meta(href="/user/#{_author.username}/")
                 |by 
@@ -171,6 +171,9 @@ template(name='post_view')
                                 //                 |#{when} 
                     // if watson 
                     //     +watson_view
+                    each tags 
+                        .ui.compact.circular.button.add_tag #{this}
+                    
                     +print_this
                 .twelve.wide.column.scrolling
                     .ui.center.aligned.header 

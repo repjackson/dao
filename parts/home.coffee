@@ -4,6 +4,7 @@ if Meteor.isClient
     @selected_tags = new ReactiveArray []
     @selected_authors = new ReactiveArray []
     @selected_upvoters = new ReactiveArray []
+    @selected_sources = new ReactiveArray []
     
     Template.body.events
         # 'click a:not(.select_term)': ->
@@ -47,12 +48,14 @@ if Meteor.isClient
             selected_tags.array()
             selected_authors.array()
             selected_upvoters.array()
+            selected_sources.array()
             )
         @autorun -> Meteor.subscribe('docs',
             Session.get('query')
             selected_tags.array()
             selected_authors.array()
             selected_upvoters.array()
+            selected_sources.array()
             )
 
         
@@ -160,6 +163,15 @@ if Meteor.isClient
                 })
             else 
                 upvoter_results.find()
+        selected_sources: -> selected_sources.array()
+        source_results: ->
+            doc_count = Docs.find().count()
+            if 0 < doc_count < 3 
+                source_results.find({ 
+                    count:$lt:doc_count 
+                })
+            else 
+                source_results.find()
 
     Template.tag_selector.events
         'click .select_tag': -> 
@@ -196,6 +208,12 @@ if Meteor.isClient
         'click #clear_upvoters': -> selected_upvoters.clear()
     
     
+        'click .select_source': -> 
+            selected_sources.push @name
+        'click .unselect_source': -> selected_sources.remove @valueOf()
+        'click #clear_sources': -> selected_sources.clear()
+    
+    
         'click .view_debit': ->
             Router.go "/debit/#{@_id}/view"
 
@@ -226,6 +244,7 @@ if Meteor.isServer
         selected_tags
         selected_authors
         selected_upvoters
+        selected_sources
         )->
         match = {}
         match.model = 'post'
@@ -239,6 +258,9 @@ if Meteor.isServer
             match._author_username = $all:selected_authors
         if selected_upvoters.length > 0
             match.upvoter_usernames = $all:selected_upvoters
+        if selected_sources.length > 0
+            match.source_usernames = $all:selected_sources
+            
         console.log match
         Docs.find match,
             limit:10
@@ -250,6 +272,7 @@ if Meteor.isServer
         selected_tags
         selected_authors
         selected_upvoters
+        selected_sources
         limit=20
         )->
         self = @
@@ -265,6 +288,8 @@ if Meteor.isServer
             match.downvoter_ids = $nin:[Meteor.userId()]
         if selected_upvoters.length > 0
             match.upvoter_usernames = $all:selected_upvoters
+        if selected_sources.length > 0
+            match.source_usernames = $all:selected_sources
 
         tag_cloud = Docs.aggregate [
             { $match: match }
@@ -317,6 +342,24 @@ if Meteor.isServer
             self.added 'upvoter_results', Random.id(),
                 name: upvoter.name
                 count: upvoter.count
+                index: i
+       
+        source_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "source": 1 }
+            # { $unwind: "$source" }
+            { $group: _id: "$source", count: $sum: 1 }
+            { $match: _id: $nin: selected_sources }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'filter: ', filter
+        # console.log 'cloud: ', cloud
+        source_cloud.forEach (source, i) ->
+            self.added 'source_results', Random.id(),
+                name: source.name
+                count: source.count
                 index: i
        
         self.ready()
