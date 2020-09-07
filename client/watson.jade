@@ -264,7 +264,7 @@ template(name='tone')
     .ui.horizontal.list
         each tone.result.document_tone.tones
             .item #{tone_id} {{ to_percent score }}%
-    .ui.list
+    .ui.small.list
         each tone.result.sentences_tone
             .item
                 
@@ -277,7 +277,7 @@ template(name='tone')
                     // - .header(title="#{sentence_id}") {{lowered text}}
                     // - |weight:#{weight}
                     each tones
-                        .ui.basic.inverted.invert.small.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
+                        .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
                             span.ui.small.text
                                 |#{tone_id} &nbsp;
                             | {{ to_percent score }}% 

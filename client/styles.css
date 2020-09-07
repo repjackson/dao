@@ -203,6 +203,10 @@ html.ios body {
 	/*padding-left: 1em;*/
 }
 
+.hscroll::-webkit-scrollbar {
+    height: 2px !important;
+   /*border-radius: 10px !important; */
+}
 .secnav::-webkit-scrollbar {
     height: 1px !important;
    /*border-radius: 10px !important; */

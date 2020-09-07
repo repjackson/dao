@@ -2,27 +2,27 @@ template(name='post_card')
     .ui.card
         a.image(href="/post/#{_id}/view")
             if is_youtube
-                .ui.embed(data-source="youtube" data-id=youtube_parse class='invert')
+                .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
         
             // else if rd.thumbnail.length
             //     unless is_image
-            //         img.ui.image(src=rd.thumbnail class='invert')    
+            //         img.ui.image(src=rd.thumbnail class=currentUser.invert_class)    
             if watson.metadata.image
-                img.ui.image(src=watson.metadata.image class='invert') 
+                img.ui.image(src=watson.metadata.image class=currentUser.invert_class) 
             if reddit_image
                 // |reddit image
-                img.ui.image(src=reddit_image class='invert')   
+                img.ui.image(src=reddit_image class=currentUser.invert_class)   
             if is_image
-                img.ui.image(src=url class='invert')    
+                img.ui.image(src=url class=currentUser.invert_class)    
         if youtube_id
             +youtube_view key='youtube_id' direct=true
         else if image_id
             a.image(href="/post/#{_id}/view")
-                img.ui.image(src="{{c.url image_id }}" class='invert')
+                img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
         // img.invert(src=url)
                 
         // else if image_link
-        //     img.ui.rounded.image(src=image_link class='invert')
+        //     img.ui.rounded.image(src=image_link class=currentUser.invert_class)
                 
         .content
             a.header(href="/post/#{_id}/view")
@@ -38,7 +38,7 @@ template(name='post_card')
         //     a.meta(href=)
         //         |by 
         //         if _author.profile_image_id
-        //             img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+        //             img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         //         |#{_author.username}
             // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
 
@@ -65,10 +65,10 @@ template(name='one_post_view')
             +youtube_view key='url' direct=true
         else if image_id
             a.image(href="/post/#{_id}/view")
-                img.ui.image(src="{{c.url image_id width=1000 crop='fill'}}" class='invert') 
+                img.ui.image(src="{{c.url image_id width=1000 crop='fill'}}" class=currentUser.invert_class) 
         else
             a.image(href="/post/#{_id}/view")
-                img.ui.image(src=watson.metadata.image class='invert')    
+                img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
  
         .content
             a.inline.header(href="/post/#{_id}/view")
@@ -77,7 +77,7 @@ template(name='one_post_view')
             a.meta(href="/user/#{_author.username}/")
                 |by 
                 if _author.profile_image_id
-                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+                    img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                 |#{_author.username}
                 
             .meta
@@ -107,13 +107,62 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
+                .twelve.wide.column.scrolling
+                    .ui.center.aligned.header 
+                        |#{title}
+                    img.invert(src=url)
+                    each preview.images 
+                        img(src=source.url)
+                    if is_youtube
+                        .ui.embed.rounded(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
+                        // +youtube_view key='url' direct=true full=true
+                    // with rd.media_embed
+                    //     |!{content}
+        
+                    // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
+                    if session_key_value_is 'view_post_section' 'content'
+                        if image_id
+                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                        if image_link
+                            img.ui.rounded.image(src=image_link class=currentUser.invert_class)
+                        if youtube_id
+                            +youtube_view key='youtube_id' direct=true
+                            i.large.tag.icon
+                        // each tags 
+                        //     .ui.compact.large.circular.button.add_tag #{this}
+                        // a.image(href="/post/#{_id}/view")
+                        //     img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+                        a.ui.small.header(href=url target='_window') #{url}
+                     
+                        .f12
+                            |!{description}
+                            |!{body}
+                            +tone
+                        // a.ui.header(href="/user/#{target.username}")
+                        //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        //     |#{target.username}
+                        // each tags 
+                        //     .ui.compact.large.circular.button.add_tag #{this}
+                    if tone
+                        if session_key_value_is 'view_post_section' 'tone'
+                            +tone
+                    
+                    if watson
+                        if session_key_value_is 'view_post_section' 'analysis'
+                            .spacer
+                            i.large.tag.icon
+                            .spacer
+                            +watson_view
+                    if session_key_value_is 'view_post_section' 'comments'
+                        +comments
+                    .spacer
                 .four.wide.column.scrolling
                     // .ui.inline.header 
                     //     small post: 
                     // a.ui.circular.icon.button(href='/')
                     //     i.yin.yang.large.icon
-                    img.ui.rounded.image(src=watson.metadata.image class='invert')    
-                    img.ui.rounded.image(src=rd.thumbnail class='invert')    
+                    img.ui.rounded.image(src=watson.metadata.image class=currentUser.invert_class)    
+                    img.ui.rounded.image(src=rd.thumbnail class=currentUser.invert_class)    
                     
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
                     if tone
@@ -130,7 +179,7 @@ template(name='post_view')
                         +call_watson mode='url'
                     // .ui.small.inline.header by
                     // a.ui.header(href="/user/#{_author.username}") 
-                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                     //     |#{_author.username}
                     .ui.inline.small.header #{when}
                     div
@@ -157,7 +206,7 @@ template(name='post_view')
                                 .title
                                     a.ui.inline.header(href="/user/#{_author.username}") 
                                         |#{points}
-                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                         |#{_author.username}
                                     each _author.three_tags
                                         .ui.small.basic.label #{this}
@@ -175,55 +224,6 @@ template(name='post_view')
                         .ui.compact.circular.button.add_tag #{this}
                     
                     +print_this
-                .twelve.wide.column.scrolling
-                    .ui.center.aligned.header 
-                        |#{title}
-                    img.invert(src=url)
-                    each preview.images 
-                        img(src=source.url)
-                    if is_youtube
-                        .ui.embed.rounded(data-source="youtube" data-id=youtube_parse class='invert')
-                        // +youtube_view key='url' direct=true full=true
-                    // with rd.media_embed
-                    //     |!{content}
-        
-                    // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
-                    if session_key_value_is 'view_post_section' 'content'
-                        if image_id
-                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class='invert')
-                        if image_link
-                            img.ui.rounded.image(src=image_link class='invert')
-                        if youtube_id
-                            +youtube_view key='youtube_id' direct=true
-                            i.large.tag.icon
-                        // each tags 
-                        //     .ui.compact.large.circular.button.add_tag #{this}
-                        // a.image(href="/post/#{_id}/view")
-                        //     img.ui.image(src=watson.metadata.image class='invert')    
-                        a.ui.small.header(href=url target='_window') #{url}
-                     
-                        .f12
-                            |!{description}
-                            |!{body}
-                            +tone
-                        // a.ui.header(href="/user/#{target.username}")
-                        //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
-                        //     |#{target.username}
-                        each tags 
-                            .ui.compact.large.circular.button.add_tag #{this}
-                    if tone
-                        if session_key_value_is 'view_post_section' 'tone'
-                            +tone
-                    
-                    if watson
-                        if session_key_value_is 'view_post_section' 'analysis'
-                            .spacer
-                            i.large.tag.icon
-                            .spacer
-                            +watson_view
-                    if session_key_value_is 'view_post_section' 'comments'
-                        +comments
-                    .spacer
                  
 template(name='post_section_button')                 
     .ui.circular.compact.button 
@@ -244,7 +244,7 @@ template(name='post_edit')
                         +watson_view
                     // +array_edit key='tags' label='tags' icon='tags' direct=true
                 .four.wide.column
-                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class='invert')
+                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit post:

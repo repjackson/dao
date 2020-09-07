@@ -3,8 +3,8 @@ template(name='profile_layout')
     // .ui.bottom.attached.pushable.segment(class='invert')
     .ui.bottom.attached.pushable.segment
         // +top_sidebar
-        // +left_sidebar
-        // +right_sidebar
+        +left_sidebar
+        +right_sidebar
         // #main_area.global_container.pusher
         #main_area.global_container.pusher
             // .adventure-vid.w-background-video.w-background-video-atom(class='invert' data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
@@ -66,27 +66,30 @@ template(name='profile_layout')
                             +print_this
                     .thirteen.wide.column.profile_yield
                         .ui.menu.hscroll
-                            a.item(href="/user/#{username}/upvotes")
+                            a.item(href="/user/#{username}/upvotes" class="{{isActiveRoute 'user_upvotes'}}")
                                 i.thumbs.up.outline.icon
                                 |upvotes 
-                            a.item(href="/user/#{username}/downvotes")
+                            a.item(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
                                 i.thumbs.down.outline.icon
                                 |downvotes
-                            a.item(href="/user/#{username}/kin")
+                            a.item(href="/user/#{username}/kin" class="{{isActiveRoute 'user_kin'}}")
                                 i.chevron.down.icon
                                 |karma in
-                            a.item(href="/user/#{username}/kout")
+                            a.item(href="/user/#{username}/kout" class="{{isActiveRoute 'user_kout'}}")
                                 i.chevron.up.icon
                                 |karma out
-                            a.item(href="/user/#{username}/friends")
+                            a.item(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}")
                                 i.users.icon
                                 |friends
-                            a.item(href="/user/#{username}/events")
+                            a.item(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}")
                                 i.calendar.icon
                                 |events
-                            a.item(href="/user/#{username}/tribes")
+                            a.item(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
                                 i.fire.icon
                                 |tribes
+                            a.item(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}")
+                                i.fire.icon
+                                |badges
                         +yield    
                       
 

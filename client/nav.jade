@@ -2,9 +2,9 @@ template(name='nav')
     // .ui.fluid.fixed.menu.topnav(
     // .ui.fluid.borderless.attached.menu.topnav(class='')
     .ui.fluid.attached.borderless.menu.topnav(class='invert')
-        // if currentUser
-        //     a.icon.item.toggle_sidebar
-        //         i.large.ellipsis.vertical.icon
+        if currentUser
+            a.icon.item.toggle_sidebar
+                i.large.ellipsis.vertical.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
             i.large.yin.yang.icon
         .item
@@ -37,8 +37,8 @@ template(name='nav')
                     else 
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
-                // a.icon.large.item.toggle_rightbar.select_term
-                //     i.ellipsis.vertical.large.icon
+                a.icon.large.item.toggle_rightbar.select_term
+                    i.ellipsis.vertical.large.icon
             else
                 a.item(href="/register" title='register')
                     i.large.user.plus.icon
