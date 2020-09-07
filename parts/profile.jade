@@ -1,6 +1,7 @@
 template(name='profile_layout')
     +nav
-    .ui.bottom.attached.pushable.segment(class='invert')
+    // .ui.bottom.attached.pushable.segment(class='invert')
+    .ui.bottom.attached.pushable.segment
         // +top_sidebar
         // +left_sidebar
         // +right_sidebar
@@ -36,7 +37,12 @@ template(name='profile_layout')
                             a.ui.circular.button.logout(href="#" title='log out')
                                 i.sign.out.big.icon
                                 |log out
-                        
+                        a.ui.button(href="/user/#{username}/credits")
+                            i.coins.icon 
+                            |karma in
+                        a.ui.button(href="/user/#{username}/debits")
+                            i.coins.icon 
+                            |karma out
                         // .ui.header $#{credit} credit
                         .ui.inline.header #{points}p
                         // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
@@ -59,6 +65,12 @@ template(name='profile_layout')
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
+                        .ui.menu
+                            .item points out 
+                                
+                            .item points in
+                            .item credit in
+                            .item credit out
                         +yield    
                       
 
@@ -114,65 +126,65 @@ template(name='user_dashboard')
                                 small #{count}
             .sixteen.wide.column
                 +user_friends
-        // .row
-        //     .sixteen.wide.column
-        //         .ui.header authored overlap 
-        //         .ui.three.column.grid
-        //             .column
-        //                 .ui.header them
-        //                 each current_user.authored_tags
-        //                     .ui.label #{title}:#{count}
-        //             .column
-        //                 .ui.header union
-        //                 each overlap
-        //                     .ui.label #{name}: #{count}
-        //             .column
-        //                 .ui.header you #{currentUser.total_authored_points}
-        //                 each currentUser.authored_tags
-        //                     .ui.label #{title}:#{count}
-        // .row
-        //     // if is_dao
-        //     //     .four.wide.column
-        //     //         .ui.header tax collected
-        //     //         .ui.list
-        //     //             each user_orders 
-        //     //                 .item 
-        //     //                     .content
-        //     //                         .header #{order_offer.title}
-        //     //                         |#{when}, #{purchase_price}c
-        //     .eight.wide.column                 
-        //         a.ui.inline.header(href="/user/#{username}/credits")
-        //             i.chevron.down.large.icon
-        //             |#{credit_count} credits
-        //         | (#{total_credit_amount}p)
-        //         .ui.label #{total_credit_amount}p total received
-        //         // |received
-        //         .ui.label(title='received count') #{credit_count} total gifts 
-        //         .ui.label(title='rank') #{global_credit_count_rank} count rank
+            // .row
+            //     .sixteen.wide.column
+            //         .ui.header authored overlap 
+            //         .ui.three.column.grid
+            //             .column
+            //                 .ui.header them
+            //                 each current_user.authored_tags
+            //                     .ui.label #{title}:#{count}
+            //             .column
+            //                 .ui.header union
+            //                 each overlap
+            //                     .ui.label #{name}: #{count}
+            //             .column
+            //                 .ui.header you #{currentUser.total_authored_points}
+            //                 each currentUser.authored_tags
+            //                     .ui.label #{title}:#{count}
+            // .row
+            //     // if is_dao
+            //     //     .four.wide.column
+            //     //         .ui.header tax collected
+            //     //         .ui.list
+            //     //             each user_orders 
+            //     //                 .item 
+            //     //                     .content
+            //     //                         .header #{order_offer.title}
+            //     //                         |#{when}, #{purchase_price}c
+            .eight.wide.column                 
+                a.ui.inline.header(href="/user/#{username}/credits")
+                    i.chevron.down.large.icon
+                    |#{credit_count} credits
+                | (#{total_credit_amount}p)
+                .ui.label #{total_credit_amount}p total received
+                // |received
+                .ui.label(title='received count') #{credit_count} total gifts 
+                .ui.label(title='rank') #{global_credit_count_rank} count rank
                     
-        //         i.tags.icon(title='credit tags')
-        //         each credit_tags
-        //             .ui.circular.label #{title}
-        //                 | #{count}
-        //             #{count}
-        //         scroll.ui.segments
-        //             each user_credits
-        //                 +user_credit_segment
-        //         .ui.hidden.divider
-        //     .eight.wide.column
-        //         a.ui.inline.spaced.header(href="/user/#{username}/debits")
-        //             i.chevron.up.icon
-        //             |#{debit_count} debits
-        //             |(#{total_debit_amount}p)
-        //             .ui.label #{total_debit_amount}p total sent
-        //             .ui.label(title='debit count') #{debit_count} gifts sent
-        //             .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
+                i.tags.icon(title='credit tags')
+                each credit_tags
+                    .ui.circular.label #{title}
+                        | #{count}
+                    #{count}
+                scroll.ui.segments
+                    each user_credits
+                        +user_credit_segment
+                .ui.hidden.divider
+            .eight.wide.column
+                a.ui.inline.spaced.header(href="/user/#{username}/debits")
+                    i.chevron.up.icon
+                    |#{debit_count} debits
+                    |(#{total_debit_amount}p)
+                    .ui.label #{total_debit_amount}p total sent
+                    .ui.label(title='debit count') #{debit_count} gifts sent
+                    .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
                         
-        //             i.tags.icon(title='credit tags')
-        //             each debit_tags
-        //                 .ui.circular.label #{title}
-        //                     |#{count}
-        //             //(title='rank') ##{global_debit_count_rank}
+                    i.tags.icon(title='credit tags')
+                    each debit_tags
+                        .ui.circular.label #{title}
+                            |#{count}
+                    //(title='rank') ##{global_debit_count_rank}
         //         // i.tags.icon(title='credit tags')
         //         each debit_tags
         //             .ui.circular.label #{title} 

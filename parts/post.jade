@@ -4,7 +4,7 @@ template(name='post_card')
             if is_youtube
                 .ui.embed(data-source="youtube" data-id=youtube_parse class='invert')
         
-            else if rd.thumbnail
+            else if rd.thumbnail.length
                 unless is_image
                     img.ui.image(src=rd.thumbnail class='invert')    
             if watson.metadata.image
@@ -265,6 +265,7 @@ template(name='post_edit')
                         +single_user_edit key='_author_id' key2='_author_username' direct=true
                     div
                     +image_edit key='image_id' label='image upload' direct=true
+                    +text_edit key='source' label='source' direct=true
                     // div 
                     // +image_link_edit key='image_link' label='image link' direct=true
                     

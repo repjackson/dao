@@ -97,6 +97,18 @@ if Meteor.isClient
             Docs.findOne 
                 title:@name
                 
+    Template.unselect_tag.onCreated ->
+        console.log @
+        @autorun => Meteor.subscribe('doc_by_title', @data)
+    Template.unselect_tag.helpers
+        term: ->
+            Docs.findOne 
+                title:@valueOf()
+    Template.unselect_tag.events
+       'click .unselect_tag': -> 
+            selected_tags.remove @valueOf()
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+
                 
     Template.home.helpers
         selected_tags_plural: -> selected_tags.array().length > 1
@@ -192,9 +204,6 @@ if Meteor.isClient
 
         
     
-        'click .unselect_tag': -> 
-            selected_tags.remove @valueOf()
-            Meteor.call 'search_reddit', selected_tags.array(), ->
         'click #clear_tags': -> selected_tags.clear()
     
         'click .select_author': -> 
@@ -259,7 +268,7 @@ if Meteor.isServer
         if selected_upvoters.length > 0
             match.upvoter_usernames = $all:selected_upvoters
         if selected_sources.length > 0
-            match.source_usernames = $all:selected_sources
+            match.source = $all:selected_sources
             
         console.log match
         Docs.find match,
@@ -289,7 +298,7 @@ if Meteor.isServer
         if selected_upvoters.length > 0
             match.upvoter_usernames = $all:selected_upvoters
         if selected_sources.length > 0
-            match.source_usernames = $all:selected_sources
+            match.source = $all:selected_sources
 
         tag_cloud = Docs.aggregate [
             { $match: match }

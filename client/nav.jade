@@ -7,14 +7,13 @@ template(name='nav')
         //         i.large.ellipsis.vertical.icon
         a.header.icon.item(href="/" class="{{isActivePath '/'}}")
             i.large.yin.yang.icon
-        if currentUser
-            // a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
-            a.icon.item.post(title='add')
-                i.large.plus.icon
         .item
             +status    
         .right.menu
             if currentUser
+                // a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
+                a.icon.item.post(title='add')
+                    i.large.plus.icon
                 // if unread_count
                 //     a.item.alerts.select_term(href="#" class=alert_toggle_class)
                 //         i.large.bell.icon
