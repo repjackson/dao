@@ -1,15 +1,15 @@
 if Meteor.isClient
-    Router.route '/user/:username/credits', (->
+    Router.route '/user/:username/kin', (->
         @layout 'profile_layout'
-        @render 'user_credits'
-        ), name:'user_credits'
+        @render 'user_kin'
+        ), name:'user_kin'
 
 
-    Template.user_credits.onCreated ->
-        @autorun => Meteor.subscribe 'user_credits', Router.current().params.username
+    Template.user_kin.onCreated ->
+        @autorun => Meteor.subscribe 'user_kin', Router.current().params.username
         # @autorun => Meteor.subscribe 'model_docs', 'debit'
 
-    Template.user_credits.events
+    Template.user_kin.events
         # 'keyup .new_credit': (e,t)->
         #     if e.which is 13
         #         val = $('.new_credit').val()
@@ -22,8 +22,8 @@ if Meteor.isClient
 
 
 
-    Template.user_credits_small.helpers
-        user_credits: ->
+    Template.user_kin_small.helpers
+        user_kin: ->
             target_user = Meteor.users.findOne({username:Router.current().params.username})
             Docs.find {
                 model:'debit'
@@ -31,8 +31,8 @@ if Meteor.isClient
             },
                 sort:_timestamp:-1
 
-    Template.user_credits.helpers
-        user_credits: ->
+    Template.user_kin.helpers
+        user_kin: ->
             target_user = Meteor.users.findOne({username:Router.current().params.username})
             Docs.find {
                 model:'debit'
@@ -44,7 +44,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'user_credits', (username)->
+    Meteor.publish 'user_kin', (username)->
         user = Meteor.users.findOne username:username
         Docs.find
             model:'debit'

@@ -65,12 +65,28 @@ template(name='profile_layout')
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
-                        .ui.menu
-                            .item points out 
-                                
-                            .item points in
-                            .item credit in
-                            .item credit out
+                        .ui.menu.hscroll
+                            a.item(href="/user/#{username}/upvotes")
+                                i.thumbs.up.outline.icon
+                                |upvotes 
+                            a.item(href="/user/#{username}/downvotes")
+                                i.thumbs.down.outline.icon
+                                |downvotes
+                            a.item(href="/user/#{username}/kin")
+                                i.chevron.down.icon
+                                |karma in
+                            a.item(href="/user/#{username}/kout")
+                                i.chevron.up.icon
+                                |karma out
+                            a.item(href="/user/#{username}/friends")
+                                i.users.icon
+                                |friends
+                            a.item(href="/user/#{username}/events")
+                                i.calendar.icon
+                                |events
+                            a.item(href="/user/#{username}/tribes")
+                                i.fire.icon
+                                |tribes
                         +yield    
                       
 

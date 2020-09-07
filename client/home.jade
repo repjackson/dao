@@ -1,5 +1,5 @@
 template(name='home')
-    .ui.stackable.padded.grid 
+    .ui.stackable.grid 
         .row
             .four.wide.column
                 // a.ui.button(href="/") 
@@ -40,12 +40,12 @@ template(name='home')
                         i.remove.icon
                     each selected_tags
                         +unselect_tag
-                div
+                // div
                 +session_boolean_toggle key='view_tags' label='tags' icon='large tag'
                 if session_is 'view_tags'
                     each tag_results
                         +tag_selector
-                div
+                // div
                 +session_boolean_toggle key='view_authors' label='authors' icon='large user outline'
                 if session_is 'view_authors'
                     // div
@@ -62,7 +62,7 @@ template(name='home')
                     each author_results
                         a.ui.large.compact.circular.button.select_author.select_term(href='#')
                             strong #{name}
-                div
+                // div
                 +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline large'
                 if session_is 'view_upvoters'
                     // .ui.inline.header
@@ -78,9 +78,9 @@ template(name='home')
                     each upvoter_results
                         a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
                             strong #{name}
-                .spacer
-                div
-                +session_boolean_toggle key='view_sources' label='sources' icon='thumbs up outline large'
+                // .spacer
+                // div
+                +session_boolean_toggle key='view_sources' label='sources' icon='database large'
                 if session_is 'view_sources'
                     // .ui.inline.header
                     //     i.large.thumbs.up.outline.icon

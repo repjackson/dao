@@ -1,18 +1,14 @@
 if Meteor.isClient
-    Router.route '/user/:username/sent', (->
+    Router.route '/user/:username/kout', (->
         @layout 'profile_layout'
-        @render 'user_sent'
-        ), name:'user_sent'
-    Router.route '/user/:username/debits', (->
-        @layout 'profile_layout'
-        @render 'user_sent'
-        ), name:'user_debits'
+        @render 'user_kout'
+        ), name:'user_kout'
 
-    Template.user_sent.onCreated ->
+    Template.user_kout.onCreated ->
         # @autorun -> Meteor.subscribe 'user_model_docs', 'debit', Router.current().params.username
-        @autorun => Meteor.subscribe 'user_sent', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_kout', Router.current().params.username
 
-    Template.user_sent.events
+    Template.user_kout.events
         'keyup .new_debit': (e,t)->
             if e.which is 13
                 val = $('.new_debit').val()
@@ -25,7 +21,7 @@ if Meteor.isClient
 
 
 
-    Template.user_sent.helpers
+    Template.user_kout.helpers
         sent_items: ->
             current_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find {
@@ -42,7 +38,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'user_sent', (username)->
+    Meteor.publish 'user_kout', (username)->
         user = Meteor.users.findOne username:username
         Docs.find {
             model:'debit'
