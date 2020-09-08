@@ -748,6 +748,32 @@ Template.single_doc_edit.events
             else if user
                 Meteor.users.update parent._id,
                     $set: "#{ref_field.key}": @slug
+                    
+                    
+Template.single_tribe_edit.onCreated ->
+    @autorun => Meteor.subscribe 'model_docs', 'tribe'
+                    
+                    
+Template.single_tribe_edit.helpers
+    select_tribe_class: ->
+        parent = Docs.findOne Router.current().params.doc_id
+        if parent.tribe_id is @_id then 'active' else 'basic'
+    tribes: ->
+        Docs.find 
+            model:'tribe'
+
+Template.single_tribe_edit.events
+    'click .select_tribe': ->
+        selection = @
+        ref_field = Template.currentData()
+        parent = Template.parentData()
+        # key = ref_field.button_key
+        key = ref_field.key
+
+        Docs.update Router.current().params.doc_id,
+            $set:
+                tribe_id:@_id
+                tribe_title:@title
 
 
 Template.multi_doc_view.onCreated ->

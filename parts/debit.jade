@@ -14,6 +14,7 @@ template(name='debit_card')
                     with seller
                         img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
                 |#{seller.username}
+            +single_doc_view key='tribe_id' model='tribe' label='tribe' direct=true
         if image_id
             img.ui.image(src="{{c.url image_id height=200 width=500 crop='fill'}}" class='invert')
         .content
@@ -45,13 +46,14 @@ template(name='debit_edit')
                     if is_admin
                         +single_user_edit key='buyer_id' key2='buyer_username' label='select buyer' icon='user outline' direct=true
                     +single_user_edit key='seller_id' key2='seller_username' label='recipient' icon='user' direct=true
-                    +boolean_edit key='has_datetime' label='has datetime' direct=true
+                    +boolean_edit key='has_datetime' label='datetime' direct=true
                     if has_datetime
                         +datetime_edit key='datetime' label='datetime' direct=true   
                         // +time_edit key='time' label='time' direct=true   
-                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
-                    +multi_user_edit key='related_user_ids' key2='related_usernames' label='related users' direct=true
-
+                    +boolean_edit key='has_location' label='location' direct=true
+                        +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                    // +multi_user_edit key='related_user_ids' key2='related_usernames' label='related users' direct=true
+                    +single_tribe_edit key='tribe_id' ref_model='tribe' label='tribe' direct=true
                 .six.wide.column
                     +textarea_edit key='title' label='title' direct=true
                     +image_edit key='image_id' label='image' direct=true
@@ -117,6 +119,9 @@ template(name='debit_view')
                     .ui.small.header
                         i.clock.icon
                         | #{when}
+                    if tribe_id
+                        a.ui.button(href="/tribe/#{tribe_id}/view")
+                            |#{tribe_title}
                     .spacer
                     .spacer
                     +multi_user_view key='related_user_ids' key2='related_usernames' label='related users' direct=true

@@ -978,8 +978,17 @@ template(name='single_doc_edit')
                 //- i.grey.icon(class=icon)
                 +icon name=icon cl='ui middle aligned mini image'
                 //- +i name=icon cl='ui mini inline image'
-            |#{calculated_label}
+            |#{calculated_label} #{title}
             |#{slug}
+            
+            
+template(name='single_tribe_edit')
+    div
+    .ui.inline.header(title=key) 
+        |select tribe
+    each tribes
+        .ui.compact.button.select_tribe(class=select_tribe_class)
+            | #{title}
 
 
 template(name='multi_doc_edit')
