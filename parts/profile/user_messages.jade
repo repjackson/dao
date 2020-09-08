@@ -1,0 +1,41 @@
+template(name='user_messages')
+    .ui.center.aligned.header 
+        i.blue.chat.icon
+        |user messages
+    .ui.stackable.two.column.grid
+        .column
+            if currentUser
+                .ui.fluid.icon.big.input
+                    i.rss.link.submit_public_message.icon
+                    input.new_public_message(type='text' placeholder='new public message...')
+            .ui.small.basic.segments
+                each user_public_messages
+                    .ui.segment.raw
+                        .ui.small.inline.header #{body}
+                        // div
+                        +user_list_toggle key='read_by_ids' label='mark read' icon='eye'
+                        if can_edit
+                            +remove_icon
+                        //- div
+                        if is_admin
+                            +boolean_edit key='is_private' label='private' direct=true
+                        +author_info
+                        +creation_info
+                        +voting_small
+        .column
+            if currentUser
+                .ui.fluid.icon.big.input
+                    i.lock.link.submit_private_message.icon
+                    input.new_private_message(type='text' placeholder='new private message...')
+            .ui.small.basic.segments
+                each user_private_messages
+                    .ui.segment.raw
+                        .ui.small.inline.header #{body}
+                        if is_admin
+                            +boolean_edit key='is_private' label='private' direct=true
+                        if can_edit
+                            +remove_icon
+                        //- div
+                        +author_info
+                        +creation_info
+                        +voting_small

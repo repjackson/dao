@@ -1,0 +1,14 @@
+template(name='user_requests')  
+    .ui.center.aligned.header 
+        i.concierge.bell.icon
+        |#{current_user.name} requests
+    .scrolling
+        each requests
+            .ui.segment
+                a.ui.header(href="/m/request/#{_id}/view") #{bounty}pts: #{title}
+                | !{description}
+                div
+                if is_dev
+                    +remove_button
+                    +print_this
+                +creation_info

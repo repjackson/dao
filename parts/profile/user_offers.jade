@@ -1,0 +1,22 @@
+template(name='user_offers')  
+    .ui.center.aligned.header 
+        i.hand.holding.heart.icon
+        |user offers
+    .scrolling
+        each offers
+            .ui.segment
+                a.ui.header(href="/m/offer/#{_id}/view") 
+                    |#{title}
+                div
+                    |$#{usd_price}
+                    |#{point_price}pts
+                div
+                | !{description}
+                div
+                if is_admin
+                    +remove_button
+                    +print_this
+                
+                //- div
+                +author_info
+                +creation_info

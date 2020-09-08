@@ -42,6 +42,9 @@ template(name='profile_layout')
                         a.ui.button(href="/user/#{username}/debits")
                             i.coins.icon 
                             |karma out
+                        a.ui.button(href="/user/#{username}/food")
+                            i.food.icon 
+                            |food
                         // .ui.header $#{credit} credit
                         .ui.inline.header #{points}p
                         // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
@@ -89,6 +92,12 @@ template(name='profile_layout')
                             a.item(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}")
                                 i.fire.icon
                                 |badges
+                            a.item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}")
+                                i.concierge.bell.icon
+                                |requests
+                            a.item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}")
+                                i.shop.icon
+                                |offers
                         +yield    
                       
 

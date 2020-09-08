@@ -16,6 +16,12 @@ template(name='nav')
             i.large.calendar.icon
         a.header.icon.item(href="/tribes" class="{{isActivePath '/tribes'}}")
             i.large.fire.icon
+        a.header.icon.item(href="/tasks" class="{{isActivePath '/tasks'}}")
+            i.large.tasks.icon
+        a.header.icon.item(href="/food" class="{{isActivePath '/food'}}")
+            i.large.food.icon
+        a.header.icon.item(href="/badges" class="{{isActivePath '/badges'}}")
+            i.large.certificate.icon
         .item
             +status    
         .right.menu

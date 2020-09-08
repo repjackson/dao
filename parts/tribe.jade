@@ -1,43 +1,53 @@
-template(name='tasks')
-    .ui.header tasks
-    .ui.header projects
-    
+template(name='tribes')
+    .ui.stackable.padded.grid 
+        .four.wide.column
+            .ui.header 
+                i.fire.icon
+                |tribes
+            if currentUser
+                i.circular.plus.link.icon.add_tribe
+        .twelve.wide.column
+            each tribe_docs 
+                .ui.segment
+                    a.ui.header(href="/tribe/#{_id}/view") #{title}
+                        |hi
+                    if private 
+                        i.lock.icon
 
 
-
-template(name='project_card')
-    a.card(href="/project/#{_id}/view")
+template(name='tribe_card')
+    a.card(href="/tribe/#{_id}/view")
         .image
             if icon 
                 +icolorlg name=icon
             else
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/project/#{_id}/view")
+            a.ui.header(href="/tribe/#{_id}/view")
                 |#{location}: #{title}
             |!{description}
         
 
 
-template(name='project_view')
+template(name='tribe_view')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
                     // if can_edit
-                    a(href="/m/project" title='projects')
-                        +icolorlg name='project' cl='ui inline image pointer'
+                    a(href="/m/tribe" title='tribes')
+                        +icolorlg name='tribe' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
                     if icon
                         +icolorlg name=icon cl='ui inline image'
                     else
-                        +icolorlg name='project' cl='ui inline image'
+                        +icolorlg name='tribe' cl='ui inline image'
                     .ui.center.aligned.inline.header 
-                        small viewing project
+                        small viewing tribe
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit
-                        a.edit_project(href="/project/#{_id}/edit")
+                        a.edit_tribe(href="/tribe/#{_id}/edit")
                             i.big.blue.pencil.icon
             .row 
                 .four.wide.column
@@ -61,26 +71,26 @@ template(name='project_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     .ui.header 
-                        +icon name='project'
-                        |projects
+                        +icon name='tribe'
+                        |tribes
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
 
-template(name='project_edit')
+template(name='tribe_edit')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/project/#{_id}/view" title='save')
+                    a.ui.green.big.icon.button(href="/tribe/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.inline.header 
-                        +icon name='project'
-                        small edit project
+                        +icon name='tribe'
+                        small edit tribe
                         |#{title}
                 .four.wide.center.aligned.column
-                    i.link.big.remove.icon.delete_item(title='delete project')
+                    i.link.big.remove.icon.delete_item(title='delete tribe')
             .row 
                 .five.wide.column
                     +text_edit key='title' icon='header' direct=true
@@ -94,4 +104,4 @@ template(name='project_edit')
                     +textarea_edit key='goals' label='goals' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
                 .five.wide.column
-                    +boolean_edit key='published' direct=true
+                    +boolean_edit key='published' direct=true        
