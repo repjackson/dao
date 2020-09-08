@@ -6,9 +6,6 @@ template(name='event_view')
                     if currentUser
                         a(href="/events")
                             i.calendar.big.circular.link.icon
-                    a.pointer(href="http://oneboulder.one" target="_window")
-                        img.ui.inline.tiny.image(src="{{c.url 'one_logo' }}" class=currentUser.invert_class)
-                
                     .ui.large.inline.header #{title}
                     if can_edit
                         if published 

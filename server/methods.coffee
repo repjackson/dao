@@ -188,17 +188,17 @@ Meteor.methods
     #     # myobject = HTTP.get(Meteor.absoluteUrl("/public/tests.json")).data;
     #     myjson = JSON.parse(Assets.getText("tests.json"));
     #     console.log myjson
-    add_message: (body,classroom_id)->
-        new_message_id = Docs.insert
-            body: body
-            model: 'message'
-            classroom_id: classroom_id
-            read_ids:[Meteor.userId()]
-            tags: ['chat', 'message']
+    # add_message: (body,classroom_id)->
+    #     new_message_id = Docs.insert
+    #         body: body
+    #         model: 'message'
+    #         classroom_id: classroom_id
+    #         read_ids:[Meteor.userId()]
+    #         tags: ['chat', 'message']
 
-        chat_doc = Docs.findOne _id: classroom_id
-        message_doc = Docs.findOne new_message_id
-        message_author = Meteor.users.findOne message_doc.author_id
+    #     chat_doc = Docs.findOne _id: classroom_id
+    #     message_doc = Docs.findOne new_message_id
+    #     message_author = Meteor.users.findOne message_doc.author_id
 
         # message_link = "https://www.joyful-giver.com/chat"
 
