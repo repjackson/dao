@@ -20,7 +20,7 @@ template(name='inbox')
                                 .header
                                     |#{when} to #{recipient.name} #{target.name} #{to.name}
                                 |#{description} #{body}
-                                a(href="/m/message/#{_id}/view")
+                                a(href="/message/#{_id}/view")
                                    |view 
                                 +toggle_view_icon
                                 if can_edit
@@ -40,7 +40,7 @@ template(name='inbox')
                                     |#{when} from #{author.name}
                                 |#{description} #{body}
                                 .meta    
-                                    a(href="/m/message/#{_id}/view")
+                                    a(href="/message/#{_id}/view")
                                 +toggle_view_icon
                                 if can_edit
                                     +remove_icon

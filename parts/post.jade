@@ -4,9 +4,9 @@ template(name='post_card')
             if is_youtube
                 .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
         
-            // else if rd.thumbnail.length
-            //     unless is_image
-            //         img.ui.image(src=rd.thumbnail class=currentUser.invert_class)    
+            else if rd.thumbnail.length
+                unless is_image
+                    img.ui.image(src=rd.thumbnail class=currentUser.invert_class)    
             if watson.metadata.image
                 img.ui.image(src=watson.metadata.image class=currentUser.invert_class) 
             if reddit_image

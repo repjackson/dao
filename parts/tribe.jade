@@ -35,16 +35,18 @@ template(name='tribe_view')
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
                     // if can_edit
-                    a(href="/m/tribe" title='tribes')
-                        +icolorlg name='tribe' cl='ui inline image pointer'
+                    a(href="/tribes" title='tribes')
+                        i.circular.large.fire.icon
                 .eight.wide.center.aligned.column
                     if icon
-                        +icolorlg name=icon cl='ui inline image'
+                        i.icon(class=icon)
                     else
-                        +icolorlg name='tribe' cl='ui inline image'
+                        i.circular.large.fire.icon
                     .ui.center.aligned.inline.header 
                         small viewing tribe
                         |#{title}
+                        if private
+                            i.lock.icon(title='private')
                 .four.wide.center.aligned.column
                     if can_edit
                         a.edit_tribe(href="/tribe/#{_id}/edit")
@@ -72,7 +74,8 @@ template(name='tribe_view')
                 .four.wide.column
                     .ui.header 
                         +icon name='tribe'
-                        |tribes
+                        |members
+                    +multi_user_view key='member_ids' label='members' direct=true
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
@@ -103,5 +106,7 @@ template(name='tribe_edit')
                     +textarea_edit key='description' label='description' direct=true
                     +textarea_edit key='goals' label='goals' direct=true
                     //- +array_edit key='location_tags' label='location_tags' direct=true
+                    +multi_user_edit key='member_ids' label='members' direct=true
                 .five.wide.column
                     +boolean_edit key='published' direct=true        
+                    +boolean_edit key='private' icon='lock' direct=true        

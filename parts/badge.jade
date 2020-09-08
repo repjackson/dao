@@ -5,7 +5,7 @@ template(name='badges')
                 .ui.inline.header
                     i.certificate.icon
                     |badges
-                .ui.icon.button.add_bug 
+                .ui.icon.button.add_badge
                     i.plus.icon
                 // .ui.header 
                 //     i.grey.users.icon
@@ -27,7 +27,7 @@ template(name='badges')
 
 
 template(name='badge_card')
-    a.card(href="/m/badge/#{_id}/view")
+    a.card(href="/badge/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
@@ -39,20 +39,22 @@ template(name='badge_card')
             each badgers
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
                 // |#{name}
+
+
 template(name='badge_view')
     with current_doc
         .ui.stackable.padded.grid
             .row
                 .sixteen.wide.column
                     // if can_edit
-                    a.ui.icon.button(href="/m/badge")
+                    a.ui.icon.button(href="/badges")
                         i.big.certificate.icon
                     +icolorlg name=icon cl='ui inline image'
                     .ui.center.aligned.inline.header 
                         small viewing badge: 
                         |#{title}
                     if can_edit
-                        a.ui.icon.button.edit_badge(href="/m/badge/#{_id}/edit")
+                        a.ui.icon.button.edit_badge(href="/badge/#{_id}/edit")
                             i.big.pencil.big.icon
             .row 
                 .eight.wide.column
@@ -94,7 +96,7 @@ template(name='badge_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.green.cicular.icon.button(href="/m/badge/#{_id}/view" title='save')
+                    a.ui.green.cicular.icon.button(href="/badge/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header
                         small edit badge
@@ -119,14 +121,14 @@ template(name='badge_edit')
                     each badgers
                         a.ui.compact.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{name}
+                            |#{username}
                         i.remove.link.icon.remove_badger
                     .ui.segment
                         .ui.small.header add badgers
                         each unselected_badgers
                             .ui.basic.circular.compact.button.add_badger
                                 img.ui.avatar.circular.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{name}
+                                |#{username}
                     
                     // .ui.header
                     //     +honey_badger
