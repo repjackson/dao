@@ -1,0 +1,27 @@
+template(name='user_edit_privacy')
+    .ui.header
+        +icolor name='private' cl='ui image'
+        | privacy
+    .ui.grid 
+        .row 
+            .four.wide.column
+                +boolean_edit key='publish_profile' label='publish profile' direct=true
+            .twelve.wide.column
+                .ui.header 
+                    |make profile public 
+                .ui.small.header 
+                    |allow others to find your profile and follow you, allows you to follow others, enrolls you in public leaderboards
+        .row 
+            .sixteen.wide.column
+                a.ui.basic.compact.button.logout_other_clients(href="#")
+                    i.globe.icon
+                    |log out other clients
+                if is_admin
+                    a.ui.basic.compact.button.force_logout(href="#")
+                        i.shield.icon
+                        |force log out
+                
+                .ui.header sessions
+                .ui.large.list
+                    each current_user.services.resume.loginTokens
+                        .item #{when}: #{hashedToken}

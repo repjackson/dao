@@ -1,0 +1,36 @@
+template(name='user_edit_info')
+    .ui.one.column.stackable.grid
+        .column
+            .ui.header edit user info
+            .ui.segment
+                +text_edit key='spirit_animal' label='spirit animal' direct=true
+                if spirit_animal
+                    +icolor name=spirit_animal
+                a(href="https://icons8.com/icons/color" target="_window")
+                    |color icons lookup
+            div
+            +array_edit key='tags' label='tags' icon='tags' direct=true
+            div
+            div
+            +single_user_edit key='refered_by' label='refered by' icon='fork' direct=true
+            .spacer
+            +text_edit key='city' label='city' icon='city' direct=true
+            .spacer
+            +text_edit key='state' label='state' icon='country' direct=true
+            .spacer
+            +link_edit key='website' label='website' icon='link' direct=true
+            .spacer
+            +textarea_edit key='profile_excites_blurb' label='What excites you about being apart of this community?' direct=true
+            .spacer
+            +textarea_edit key='profile_community_blurb' label='What do you want this community to know about you?' direct=true
+            .spacer
+            +textarea_edit key='profile_contribute_blurb' label='What would you like to contribute (think: superpowers, talents, gifts, resources)' direct=true
+            .spacer
+            +textarea_edit key='profile_hope_receive' label='What do you hope to receive?' direct=true
+            .spacer
+            .ui.divider
+            // +array_edit key='pet_peeves' label='pet peeves' icon='annoyance' direct=true
+            .spacer
+            +textarea_edit key='emergency_contact_name' label='emergency contact name' icon='alert' direct=true
+            .spacer
+            +textarea_edit key='emergency_contact_number' label='emergency contact number' icon='alert' direct=true

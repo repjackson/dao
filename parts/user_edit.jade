@@ -18,12 +18,72 @@ template(name='user_edit_layout')
                                 // strong save
                             a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
                                 i.cog.large.icon 
-                                // |account
-                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}" class=currentUser.invert_class) 
+                                |account
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
+                                i.info.large.icon 
+                                |info
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
+                                i.bell.large.icon 
+                                |alerts
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
+                                i.dna.large.icon 
+                                |genekeys
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
                                 i.lock.privacy.large.icon 
-                                // | privacy
+                                | privacy
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
+                                i.users.large.icon 
+                                | friends
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
+                                i.certificate.large.icon
+                                |badges
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
+                                i.shield.large.icon
+                                | membership
+                            a.ui.large.basic.icon.circular.button(href="/user/#{current_user.username}/edit/tribes" class="{{isActiveRoute 'user_edit_tribe'}}" title='membership') 
+                                i.fire.large.icon
+                                | tribes
+                                
                         .twelve.wide.column
                             +yield
+
+template(name='user_edit_alerts')
+    .ui.header
+        i.rss.icon
+        | alerts
+    .ui.header notifiy when 
+    .ui.big.link.list
+        .item receive credit
+        .item invited to event 
+        .item invited to shift 
+        .item personal request received 
+
+template(name='user_edit_genekeys')
+    .ui.header
+        +icolor name='dna-helix' cl='ui image'
+        | genekeys
+    .ui.grid 
+        .row 
+            .sixteen.wide.column
+                +link_edit key='genekeys_link' label='report url' direct=true
+                .ui.segment
+                    a.ui.button(href="https://genekeys.com/" target='_window') 
+                        |1) get gene keys pdf report here (toggle everything)
+                    a.ui.button(href="https://pdf2png.com/" target='_window') 
+                        |2) convert to png here
+                    .ui.small.inline.header 
+                        |3) upload
+                    .ui.stackable.three.column.grid
+                        .column
+                            +image_edit key='gene1' label='gene keys 1' icon='dna' direct=true
+                        .column
+                            +image_edit key='gene2' label='gene keys 2' icon='dna' direct=true
+                        .column
+                            +image_edit key='gene3' label='gene keys 3' icon='dna' direct=true
+                +html_edit key='genekeys_report' label='report' direct=true
+
+
+
 
      
 template(name='phone_editor')
@@ -141,33 +201,3 @@ template(name='username_edit')
     .ui.icon.fluid.input
         input.new_username(type='text' placeholder='new username...')
         i.play.link.icon.change_username
-
-
-
-template(name='user_edit_privacy')
-    .ui.header
-        +icolor name='private' cl='ui image'
-        | privacy
-    .ui.grid 
-        .row 
-            .four.wide.column
-                +boolean_edit key='publish_profile' label='publish profile' direct=true
-            .twelve.wide.column
-                .ui.header 
-                    |make profile public 
-                .ui.small.header 
-                    |allow others to find your profile and follow you, allows you to follow others, enrolls you in public leaderboards
-        .row 
-            .sixteen.wide.column
-                a.ui.basic.compact.button.logout_other_clients(href="#")
-                    i.globe.icon
-                    |log out other clients
-                if is_admin
-                    a.ui.basic.compact.button.force_logout(href="#")
-                        i.shield.icon
-                        |force log out
-                
-                .ui.header sessions
-                .ui.large.list
-                    each current_user.services.resume.loginTokens
-                        .item #{when}: #{hashedToken}

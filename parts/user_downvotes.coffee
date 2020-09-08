@@ -48,4 +48,5 @@ if Meteor.isServer
         user = Meteor.users.findOne username:username
         Docs.find
             model:'vote'
+            points:$lt:0
             _author_id:user._id

@@ -1,0 +1,139 @@
+template(name='bugs')
+    .ui.stackable.padded.grid
+        .row
+            .four.wide.column
+                .ui.inline.header 
+                    +icon name='bug'
+                    |bugs
+                .ui.icon.button.add_bug 
+                    i.plus.icon
+                // .ui.header 
+                //     i.grey.users.icon
+                //     |members
+                // each members 
+                //     if profile_image_id
+                //         a(href="/user/#{username}")
+                //             img.ui.tiny.pointer.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            .twelve.wide.column
+                // .ui.segment
+                //     .ui.big.fluid.input
+                //         input(type='text' placeholder='write something...')
+                each bugs 
+                    +bug_card
+                    
+                    
+                    
+                    
+template(name='bug_card')
+    .ui.card
+        .content
+            a.ui.header.view_bug.pointer(href="/m/bug/#{_id}/view")
+                if complete
+                    i.green.checkmark.icon(title='complete')
+                |#{title}
+            |!{description}
+            div
+            i.tag.icon
+            each tags
+                .ui.basic.small.label #{this}
+            if location_tags
+                i.marker.icon
+                each location_tags
+                    .ui.basic.small.label #{this}
+            div
+            +voting
+            +author_info
+            div
+            if is_dev
+                +print_this
+            a.ui.basic.button(href="/m/bug/#{_id}/view")
+                |view
+                i.right.chevron.icon
+    
+        
+        
+
+template(name='bug_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .middle.aligned.row 
+                .sixteen.wide.column
+                    a(href="/m/bug")
+                        i.big.circular.link.bug.icon
+                    .ui.large.inline.header #{title}
+                    // div
+                    // .ui.inline.grey.header {{from_now start_datetime}}
+                    
+                    if can_edit
+                        a.ui.icon.button.edit_bug(href="/m/bug/#{_id}/edit" title='edit')
+                            i.large.pencil.icon
+
+            .row 
+                .four.wide.column
+                    img.ui.fluid.rounded.image(src="{{c.url image_id }}")
+                    .ui.tertiary.segment
+                        .ui.header 
+                            small author
+                        a.ui.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{_author.username}
+                    .ui.list
+                        .item #{views} views
+                    each viewers
+                        .ui.label #{username}
+                    .ui.hidden.divider
+                    +array_view key='tags' label='tags' icon='red tags' direct=true
+                    +array_view key='location_tags' label='location tags' icon='brown marker' direct=true
+                    div 
+                    +voting_full
+                .twelve.wide.column
+                    // a.ui.header(href="/user/#{target.username}")
+                    //     |#{target.username}
+                    .ui.segment
+                        |!{description}
+                    div 
+                    .spacer
+                    .spacer
+                    +comments
+                // .four.wide.column
+                
+
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+
+template(name='bug_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row 
+                .four.wide.column
+                    a.ui.icon.green.big.circular.button(href="/m/bug/#{_id}/view" title='save')
+                        i.checkmark.big.icon
+                    .ui.inline.header 
+                        i.bug.icon
+                        |edit bug
+                    .ui.icon.button.delete_item(title='delete')
+                        i.large.remove.icon
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                    +boolean_edit key='published' icon='visible' direct=true
+                    if is_admin 
+                        +text_edit key='model' label='model' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    // unless published
+                    //     a.ui.fluid.green.button.submit(href="/save")
+                    //         i.checkmark.icon
+                    //         |publish
+                    // else
+                    //     .ui.basic.button.unpublish 
+                    //         |unpublish
+                    // .ui.header
+                    //     |audience
+                .twelve.wide.column
+                    +text_edit key='title' label='title' direct=true
+                    +html_edit key='description' label='description' direct=true
+        

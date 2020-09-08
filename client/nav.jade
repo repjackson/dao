@@ -1,7 +1,7 @@
 template(name='nav')
     // .ui.fluid.fixed.menu.topnav(
     // .ui.fluid.borderless.attached.menu.topnav(class='')
-    .ui.fluid.attached.borderless.menu.topnav(class='invert')
+    .ui.fluid.attached.menu.topnav(class='invert')
         if currentUser
             a.icon.item.toggle_sidebar
                 i.large.ellipsis.vertical.icon
@@ -14,6 +14,8 @@ template(name='nav')
             i.large.store.icon
         a.header.icon.item(href="/events" class="{{isActivePath '/events'}}")
             i.large.calendar.icon
+        a.header.icon.item(href="/tribes" class="{{isActivePath '/tribes'}}")
+            i.large.fire.icon
         .item
             +status    
         .right.menu
@@ -21,14 +23,14 @@ template(name='nav')
                 // a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
                 a.icon.item.post(title='add')
                     i.large.plus.icon
-                // if unread_count
-                //     a.item.alerts.select_term(href="#" class=alert_toggle_class)
-                //         i.large.bell.icon
-                //         if unread_count
-                //             |#{unread_count}
-                // else
-                //     a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                //         i.large.outline.bell.icon
+                if unread_count
+                    a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                        i.large.bell.icon
+                        if unread_count
+                            |#{unread_count}
+                else
+                    a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                        i.large.outline.bell.icon
                 if is_dev 
                     .icon.item.toggle_dev
                         i.large.code.icon
@@ -200,6 +202,18 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.biggest_debits biggest
                 .item.zoom.toggle_sidebar.newest_debits newest
                 .item.zoom.toggle_sidebar.my_debits yours
+        a.item.zoom.toggle_sidebar
+            |wikipedia
+            i.wikipedia.large.icon
+        a.item.zoom.toggle_sidebar
+            |reddit
+            i.reddit.large.icon
+        a.item.zoom.toggle_sidebar
+            |youtube
+            i.youtube.large.icon
+        a.item.zoom.toggle_sidebar
+            |self
+            i.user.outline.large.icon
         if is_eric
             a.item.zoom.toggle_dev.toggle_sidebar
                 |toggle dev

@@ -169,7 +169,7 @@ Meteor.methods
                 $pull:
                     downvoter_usernames:Meteor.user().username  
         parent = Docs.findOne doc_id
-        console.log 'upvoting usernames', parent
+        # console.log 'upvoting usernames', parent
                 
         # Meteor.call 'calc_user_stats', Meteor.userId(), ->
             

@@ -1,13 +1,12 @@
 template(name='profile_layout')
     +nav
-    // .ui.bottom.attached.pushable.segment(class='invert')
-    .ui.bottom.attached.pushable.segment
+    .ui.bottom.attached.pushable.segment(class=currentUser.invert_class)
         // +top_sidebar
         +left_sidebar
         +right_sidebar
         // #main_area.global_container.pusher
         #main_area.global_container.pusher
-            // .adventure-vid.w-background-video.w-background-video-atom(class='invert' data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
+            // .adventure-vid.w-background-video.w-background-video-atom(class=currentUser.invert_class data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
             // video(autoplay='', loop='', style='background-image:url("https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg")', muted='', playsinline='', data-wf-ignore='true', data-object-fit='cover')
             //     source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4', data-wf-ignore='true')
             //     source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-wf-ignore='true')
@@ -20,10 +19,10 @@ template(name='profile_layout')
                         //     i.large.yin.yang.icon
                         span.mobile.only
                             a(href="/user/#{username}/")
-                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                                img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         span.mobile.hidden
                             a(href="/user/#{username}/")
-                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert') 
+                                img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
                         a.ui.big.header.refresh_user_stats(href="/user/#{username}") 
                             |@#{username}
                         if is_admin
@@ -204,45 +203,44 @@ template(name='user_dashboard')
                                 | #{count}
                             #{count}
                         scroll.ui.segments
-                            each user_credits
+                           each user_credits
                                 +user_credit_segment
-                        .ui.hidden.divider
-                .title 
-                    |debits
-                .content 
-                    a.ui.inline.spaced.header(href="/user/#{username}/debits")
-                        i.chevron.up.icon
-                        |#{debit_count} debits
-                        |(#{total_debit_amount}p)
-                        .ui.label #{total_debit_amount}p total sent
-                        .ui.label(title='debit count') #{debit_count} gifts sent
-                        .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
-                            
-                        i.tags.icon(title='credit tags')
+                    .title 
+                        |debits
+                    .content 
+                        a.ui.inline.spaced.header(href="/user/#{username}/debits")
+                            i.chevron.up.icon
+                            |#{debit_count} debits
+                            |(#{total_debit_amount}p)
+                            .ui.label #{total_debit_amount}p total sent
+                            .ui.label(title='debit count') #{debit_count} gifts sent
+                            .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
+                                
+                            i.tags.icon(title='credit tags')
+                            each debit_tags
+                                .ui.circular.label #{title}
+                                    |#{count}
+                            .ui.label(title='rank') ##{global_debit_count_rank}
+                        // i.tags.icon(title='credit tags')
                         each debit_tags
-                            .ui.circular.label #{title}
-                                |#{count}
-                        (title='rank') ##{global_debit_count_rank}
-                    // i.tags.icon(title='credit tags')
-                    each debit_tags
-                        .ui.circular.label #{title} 
-                        // #{count}
-                .title 
-                    |topups
-                .content
-                    +user_credit
+                            .ui.circular.label #{title} 
+                            // #{count}
+                    .title 
+                        |topups
+                    .content
+                        +user_credit
                 
                 
                         
 template(name='user_credit_segment')
     .ui.segment.user_credit_segment.pointer.zoom
         if image_id
-            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class='invert')
+            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .header
             strong #{amount}pt 
             // |from 
             if author.profile_image_id
-                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class='invert')
+                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{_author.username}
      #{when}
         div
@@ -255,12 +253,12 @@ template(name='user_credit_segment')
 template(name='user_debit_segment')
     .ui.segment.user_debit_segment.pointer.zoom
         if image_id
-            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class='invert')
+            img.ui.fluid.image(src="{{c.url image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .header
             strong #{amount}pt
             | to 
             if recipient.profile_image_id
-                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class='invert')
+                img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=300 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{recipient.username}
      #{when}
         div

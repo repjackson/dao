@@ -98,7 +98,7 @@ if Meteor.isClient
                 title:@name
                 
     Template.unselect_tag.onCreated ->
-        console.log @
+        # console.log @
         @autorun => Meteor.subscribe('doc_by_title', @data)
     Template.unselect_tag.helpers
         term: ->
