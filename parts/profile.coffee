@@ -22,6 +22,14 @@ if Meteor.isClient
             )
 
     
+    Template.user_dashboard.onRendered ->
+        Meteor.setTimeout ->
+            $('.accordion').accordion()
+        , 1000
+        
+
+        
+        
     Template.profile_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
     

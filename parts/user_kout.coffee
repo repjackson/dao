@@ -7,6 +7,20 @@ if Meteor.isClient
     Template.user_kout.onCreated ->
         # @autorun -> Meteor.subscribe 'user_model_docs', 'debit', Router.current().params.username
         @autorun => Meteor.subscribe 'user_kout', Router.current().params.username
+        @autorun -> Meteor.subscribe('tags',
+            Session.get('query')
+            selected_tags.array()
+            selected_authors.array()
+            selected_upvoters.array()
+            selected_sources.array()
+            )
+        @autorun -> Meteor.subscribe('docs',
+            Session.get('query')
+            selected_tags.array()
+            selected_authors.array()
+            selected_upvoters.array()
+            selected_sources.array()
+            )
 
     Template.user_kout.events
         'keyup .new_debit': (e,t)->

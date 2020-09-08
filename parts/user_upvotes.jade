@@ -1,7 +1,7 @@
-template(name='user_kin')  
+template(name='user_upvotes')  
     .ui.inline.header 
-        i.chevron.down.icon
-        |karma received
+        i.thumbs.up.icon
+        |upvotes
     .ui.basic.label #{total_credit_amount}p total received
     // |received
     .ui.basic.label(title='received count') #{credit_count} total gifts 
@@ -13,11 +13,11 @@ template(name='user_kin')
             small #{count}
         
     .ui.stackable.cards.scrolling
-        each user_kin
+        each user_upvotes
             a.ui.card(href="/m/debit/#{_id}/view")
                 .content
                     .header
-                        strong #{price}pt 
+                        strong #{amount}pt 
                         // |from 
                         if author.profile_image_id
                             img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -28,9 +28,8 @@ template(name='user_kin')
                     div
                     each tags
                         .ui.basic.label #{this}
-                    +print_this
 
-template(name='user_kin_small')
+template(name='user_upvotes_small')
     .ui.inline.header 
         i.minus.icon
         |#{total_credit_amount}p
@@ -39,13 +38,13 @@ template(name='user_kin_small')
             | ##{global_credit_count_rank}
     div
     .ui.link.list.scrolling
-        each user_kin
+        each user_upvotes
             .item
                 if author.profile_image_id
                     img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                 .content
                     .header
-                        strong #{price}pt 
+                        strong #{amount}pt 
                         |from 
                         a(href="/user/#{author.username}")
                             |#{author.username}

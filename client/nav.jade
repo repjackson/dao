@@ -12,6 +12,8 @@ template(name='nav')
             i.large.concierge.bell.icon
         a.header.icon.item(href="/shop" class="{{isActivePath '/shop'}}")
             i.large.store.icon
+        a.header.icon.item(href="/events" class="{{isActivePath '/events'}}")
+            i.large.calendar.icon
         .item
             +status    
         .right.menu
@@ -99,7 +101,7 @@ template(name='add')
             
 template(name='right_sidebar')
     // .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
-    .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
+    .ui.right.sidebar.vertical.borderless.inverted.menu(class=currentUser.invert_class)
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
@@ -149,7 +151,7 @@ template(name='right_sidebar')
 
 
 template(name='left_sidebar')
-    .ui.left.sidebar.vertical.accordion.menu(class=currentUser.invert_class)
+    .ui.left.sidebar.vertical.accordion.inverted.menu(class=currentUser.invert_class)
         // a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One
