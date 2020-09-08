@@ -16,7 +16,7 @@ if Meteor.isClient
             new_message_id =
                 Docs.insert
                     model:'message'
-            Router.go "/m/message/#{new_message_id}/edit"
+            Router.go "/message/#{new_message_id}/edit"
 
 
 

@@ -36,15 +36,18 @@ template(name='profile_layout')
                             a.ui.circular.button.logout(href="#" title='log out')
                                 i.sign.out.big.icon
                                 |log out
-                        a.ui.button(href="/user/#{username}/credits")
+                        a.ui.button(href="/user/#{username}/kin")
                             i.coins.icon 
                             |karma in
-                        a.ui.button(href="/user/#{username}/debits")
+                        a.ui.button(href="/user/#{username}/kout")
                             i.coins.icon 
                             |karma out
                         a.ui.button(href="/user/#{username}/food")
                             i.food.icon 
                             |food
+                        a.ui.button(href="/user/#{username}/messages")
+                            i.chat.icon 
+                            |chat
                         // .ui.header $#{credit} credit
                         .ui.inline.header #{points}p
                         // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')

@@ -5,25 +5,27 @@ template(name='nav')
         if currentUser
             a.icon.item.toggle_sidebar
                 i.large.ellipsis.vertical.icon
-        a.header.icon.item(href="/" class="{{isActivePath '/'}}")
+        a.icon.item(href="/" class="{{isActivePath '/'}}")
             // i.large.yin.yang.icon
             i.large.newspaper.icon
-        a.header.icon.item(href="/requests" class="{{isActivePath '/requests'}}")
+        a.icon.mobile.hidden.item(href="/requests" class="{{isActivePath '/requests'}}")
             i.large.concierge.bell.icon
-        a.header.icon.item(href="/offers" class="{{isActivePath '/offers'}}")
+        a.icon.mobile.hidden.item(href="/offers" class="{{isActivePath '/offers'}}")
             i.large.store.icon
-        a.header.icon.item(href="/events" class="{{isActivePath '/events'}}")
+        a.icon.mobile.hidden.item(href="/events" class="{{isActivePath '/events'}}")
             i.large.calendar.icon
-        a.header.icon.item(href="/tribes" class="{{isActivePath '/tribes'}}")
+        a.icon.mobile.hidden.item(href="/tribes" class="{{isActivePath '/tribes'}}")
             i.large.fire.icon
-        a.header.icon.item(href="/chat" class="{{isActivePath '/chat'}}")
+        a.icon.mobile.hidden.item(href="/chat" class="{{isActivePath '/chat'}}")
             i.large.chat.outline.icon
-        a.header.icon.item(href="/tasks" class="{{isActivePath '/tasks'}}")
+        a.icon.mobile.hidden.item(href="/tasks" class="{{isActivePath '/tasks'}}")
             i.large.tasks.icon
-        a.header.icon.item(href="/meals" class="{{isActivePath '/meals'}}")
+        a.icon.mobile.hidden.item(href="/meals" class="{{isActivePath '/meals'}}")
             i.large.food.icon
-        a.header.icon.item(href="/badges" class="{{isActivePath '/badges'}}")
+        a.icon.mobile.hidden.item(href="/badges" class="{{isActivePath '/badges'}}")
             i.large.certificate.icon
+        a.icon.mobile.hidden.item(href="/images" class="{{isActivePath '/images'}}")
+            i.large.image.icon
         .item
             +status    
         .right.menu
@@ -210,15 +212,43 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.biggest_debits biggest
                 .item.zoom.toggle_sidebar.newest_debits newest
                 .item.zoom.toggle_sidebar.my_debits yours
-        a.item.zoom.toggle_sidebar
+        a.item.zoom.toggle_sidebar.set_wikipedia
             |wikipedia
             i.wikipedia.large.icon
-        a.item.zoom.toggle_sidebar
+        a.item.zoom.toggle_sidebar.set_reddit
             |reddit
             i.reddit.large.icon
-        a.item.zoom.toggle_sidebar
+        a.item.zoom.toggle_sidebar.set_youtube
             |youtube
             i.youtube.large.icon
+        a.item.zoom.toggle_sidebar(href="/requests" class="{{isActivePath '/requests'}}")
+            |requests
+            i.large.concierge.bell.icon
+        a.item.zoom.toggle_sidebar(href="/offers" class="{{isActivePath '/offers'}}")
+            |offers
+            i.large.store.icon
+        a.item.zoom.toggle_sidebar(href="/events" class="{{isActivePath '/events'}}")
+            |events
+            i.large.calendar.icon
+        a.item.zoom.toggle_sidebar(href="/tribes" class="{{isActivePath '/tribes'}}")
+            |tribes
+            i.large.fire.icon
+        a.item.zoom.toggle_sidebar(href="/chat" class="{{isActivePath '/chat'}}")
+            |chat
+            i.large.chat.outline.icon
+        a.item.zoom.toggle_sidebar(href="/tasks" class="{{isActivePath '/tasks'}}")
+            |tasks
+            i.large.tasks.icon
+        a.item.zoom.toggle_sidebar(href="/meals" class="{{isActivePath '/meals'}}")
+            |meals
+            i.large.food.icon
+        a.item.zoom.toggle_sidebar(href="/badges" class="{{isActivePath '/badges'}}")
+            |badges
+            i.large.certificate.icon
+        a.item.zoom.toggle_sidebar(href="/images" class="{{isActivePath '/images'}}")
+            |images
+            i.large.image.icon
+            
         a.item.zoom.toggle_sidebar
             |self
             i.user.outline.large.icon

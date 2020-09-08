@@ -10,7 +10,6 @@ template(name='tribes')
             each tribe_docs 
                 .ui.segment
                     a.ui.header(href="/tribe/#{_id}/view") #{title}
-                        |hi
                     if private 
                         i.lock.icon
 
@@ -89,7 +88,7 @@ template(name='tribe_edit')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.inline.header 
-                        +icon name='tribe'
+                        i.fire.icon
                         small edit tribe
                         |#{title}
                 .four.wide.center.aligned.column
@@ -104,8 +103,7 @@ template(name='tribe_edit')
                     +array_edit key='tags' label='tags' direct=true
                 .six.wide.column
                     +textarea_edit key='description' label='description' direct=true
-                    +textarea_edit key='goals' label='goals' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    +array_edit key='location_tags' label='location_tags' direct=true
                     +multi_user_edit key='member_ids' label='members' direct=true
                 .five.wide.column
                     +boolean_edit key='published' direct=true        

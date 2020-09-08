@@ -79,7 +79,7 @@ template(name='badge_view')
                     each badgers
                         a.ui.basic.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{name}
+                            |#{username}
         
                     // .ui.header 
                     //     +honey_badger

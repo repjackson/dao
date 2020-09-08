@@ -1,17 +1,25 @@
 template(name='offers')
     .ui.stackable.padded.grid 
         .row
-            .sixteen.wide.column
+            .four.wide.column
                 .ui.inline.header 
                     i.hand.holding.heart.icon
                     |offers
                 i.circular.link.large.plus.icon.add_offer
+                +session_boolean_toggle key='view_available' label='available'
+                +session_key_value_edit key='offer_sort_key' label='price' label='cheapest'
+                +session_key_value_edit key='offer_sort_key' label='latest' label='latest'
                 .spacer
                 .spacer
                 .spacer
+            .twelve.wide.column
                 .ui.stackable.cards
                     each offers
                         +offer_card
+
+template(name='session_key_value_edit')
+    .ui.button.set_session_var
+        |#{label}
 
 
 template(name='offer_card')
@@ -29,7 +37,7 @@ template(name='offer_card')
         .content
             |by 
             if _author.profile_image_id
-                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{_author.name}
             .ui.big.basic.label
                 |$#{usd_price}
@@ -44,7 +52,7 @@ template(name='offer_item')
     .ui.item.pointer.offer_item
         if image_id
             .image
-                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
             .ui.header
                 |#{title}
@@ -55,7 +63,7 @@ template(name='offer_item')
         .content
             |by 
             if _author.profile_image_id
-                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{_author.name}
             .ui.big.basic.label
                 |$#{usd_price}
@@ -84,11 +92,11 @@ template(name='offer_view')
             .row 
                 .four.wide.column
                     if image_id
-                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
+                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
                     .ui.header 
                         small posted by
                     a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         |#{_author.name}
                     .ui.header #{when}
                     +array_view key='location_tags' label='location_tags' direct=true
@@ -186,7 +194,7 @@ template(name='offer_view')
                                             .ui.inline.header #{point_amount}pts
                                         
                                         |#{when} 
-                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                         |#{_author.name}
                                     // if can_edit 
                                     //     i.

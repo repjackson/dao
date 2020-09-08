@@ -1,0 +1,19 @@
+template(name='expense_card')
+    .card 
+        .content
+            .ui.header $#{dollar_amount} #{title}
+            |!{description}
+            .ui.small.header {{medium_date date}}
+            each tags
+                .ui.label #{this}
+            +user_info user_id
+            
+            
+template(name='expense_stats')
+    .ui.header.recalc_finance_stats expense stats
+    .ui.header total expense sum $#{fs.total_expense_sum}
+    .ui.header total expense count #{fs.total_expense_count}
+    .ui.header total membership sum $#{fs.total_membership_sum}
+    .ui.header total membership count #{fs.total_membership_count}
+    
+    
