@@ -100,6 +100,23 @@ if Meteor.isClient
             Router.go '/'
     
     
+    Template.join.helpers
+        is_member: ->
+            Meteor.userId() in @member_ids
+    
+    Template.join.events 
+        'click .join':->
+            Docs.update 
+                $addToSet:
+                    member_ids:Meteor.userId()
+                    member_usernames:Meteor.user().username
+        'click .leave':->
+            Docs.update 
+                $pull:
+                    member_ids:Meteor.userId()
+                    member_usernames:Meteor.user().username
+        
+
 
     Template.tribe_view.helpers
         tips: ->

@@ -15,6 +15,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'post_votes', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'me'
+        
         Session.setDefault 'view_post_section', 'content'
     Template.post_view.onRendered ->
         Meteor.call 'log_view', Router.current().params.doc_id
@@ -24,6 +25,8 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.ui.embed').embed();
         , 1000
+        Meteor.call 'mark_read', Router.current().params.doc_id, ->
+        
     Template.post_card.onRendered ->
         Meteor.setTimeout ->
             $('.ui.embed').embed();

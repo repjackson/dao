@@ -153,8 +153,8 @@ template(name='post_view')
                             i.large.tag.icon
                             .spacer
                             +watson_view
-                    if session_key_value_is 'view_post_section' 'comments'
-                        +comments
+                    +comments
+                    +viewing
                     .spacer
                 .four.wide.column.scrolling
                     // .ui.inline.header 

@@ -17,6 +17,23 @@ template(name='tribes')
                         .item #{post_count} posts
                         .item #{post_count} offers
                         .item #{post_count} requests
+                    +vote
+                    +viewing
+                    +join
+                    
+template(name='join')
+    if is_member
+        .ui.button.leave
+            |leave
+    else
+        unless private
+            .ui.button.join
+                |join
+        else
+            .ui.disabled.button
+                i.lock.icon
+                |private
+        
 
 
 template(name='tribe_card')
@@ -61,6 +78,7 @@ template(name='tribe_view')
                         i.newspaper.icon
                         |#{post_count}
                         |posts
+                    +vote
                     .ui.header 
                         i.hand.holding.icon
                         |#{offer_count}
