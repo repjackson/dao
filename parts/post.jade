@@ -120,6 +120,10 @@ template(name='post_view')
                     //     |!{content}
         
                     // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
+                    if session_key_value_is 'view_post_section' 'stats'
+                        .ui.header stats
+                        +viewing
+                        +vote
                     if session_key_value_is 'view_post_section' 'content'
                         if image_id
                             img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
@@ -165,6 +169,7 @@ template(name='post_view')
                     img.ui.rounded.image(src=rd.thumbnail class=currentUser.invert_class)    
                     
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
+                    +session_edit_value_button key='view_post_section' value='stats' label='stats' icon='line chart'
                     if tone
                         +session_edit_value_button key='view_post_section' value='tone' label='tone' icon='smile'
                     if watson
@@ -186,7 +191,7 @@ template(name='post_view')
                     a.ui.header(href="/tribe/#{tribe_id}/view") tribe
                         |#{tribe_id}
     
-                    +voting
+                    // +voting
                     +vote
                     div
                     +array_view key='location_tags' label='location tags' direct=true

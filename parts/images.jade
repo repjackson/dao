@@ -1,0 +1,133 @@
+template(name='pictures')
+    .ui.stackable.padded.grid 
+        .four.wide.column
+            .ui.header 
+                i.fire.icon
+                |pictures
+            if currentUser
+                i.circular.plus.link.icon.add_picture
+        .twelve.wide.column
+            each picture_docs 
+                .ui.segment
+                    a.ui.header(href="/picture/#{_id}/view") #{title}
+                    if private 
+                        i.lock.icon
+                    .ui.list
+                        .item #{member_ids.length} members
+                        .item #{post_count} posts
+                        .item #{post_count} offers
+                        .item #{post_count} requests
+                    +vote
+                    +viewing
+                    +join
+                    
+
+template(name='picture_card')
+    a.card(href="/picture/#{_id}/view")
+        .image
+            if icon 
+                +icolorlg name=icon
+            else
+                img.ui.raw.picture(src="{{c.url picture_id width=400 height=300 crop='fill'}}")    
+        .content
+            a.ui.header(href="/picture/#{_id}/view")
+                |#{location}: #{title}
+            |!{description}
+        
+
+
+template(name='picture_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row
+                .four.wide.center.aligned.column
+                    // if can_edit
+                    a(href="/pictures" title='pictures')
+                        i.circular.large.fire.link.icon
+                .eight.wide.center.aligned.column
+                    if icon
+                        i.icon(class=icon)
+                    else
+                        i.circular.large.fire.icon
+                    .ui.center.aligned.inline.header 
+                        small viewing picture
+                        |#{title}
+                        if private
+                            i.lock.icon(title='private')
+                .four.wide.center.aligned.column
+                    if can_edit
+                        a.edit_picture(href="/picture/#{_id}/edit")
+                            i.big.pencil.circular.link.icon
+            .row 
+                .four.wide.column
+                    .ui.header 
+                        i.newspaper.icon
+                        |#{post_count}
+                        |posts
+                    +vote
+                    .ui.header 
+                        i.hand.holding.icon
+                        |#{offer_count}
+                        |offers
+                    .ui.header
+                        i.marker.icon 
+                        |#{location}
+                    .ui.header 
+                        small leader
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.picture(src="{{c.url _author.profile_picture_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.username}
+                    +picture_view key='picture_id' label='picture' direct=true
+                .eight.wide.column
+                    .ui.header 
+                        i.newspaper.icon
+                        |posts
+                    .ui.icon.circular.button.add_picture_post
+                        i.plus.icon
+                    each picture_posts
+                        a.ui.header(href="/post/#{_id}/view") #{title}
+                    +textarea_view key='description' label='description' direct=true
+                    div 
+                    +array_view key='tags' label='tags' direct=true
+                    .spacer
+                    .spacer
+                    +comments
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    .ui.header 
+                        +icon name='picture'
+                        |members
+                    +multi_user_view key='member_ids' label='members' direct=true
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+
+template(name='picture_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row 
+                .four.wide.center.aligned.column
+                    a.ui.green.big.icon.button(href="/picture/#{_id}/view" title='save')
+                        i.checkmark.big.icon
+                .eight.wide.center.aligned.column
+                    .ui.inline.header 
+                        i.fire.icon
+                        small edit picture
+                        |#{title}
+                .four.wide.center.aligned.column
+                    i.link.big.remove.icon.delete_item(title='delete picture')
+            .row 
+                .five.wide.column
+                    +text_edit key='title' icon='header' direct=true
+                    +picture_edit key='picture_id' label='picture' direct=true
+                    +text_edit key='location' label='location' icon='marker' direct=true
+                    +icon_edit key='icon' label='icon' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                .six.wide.column
+                    +textarea_edit key='description' label='description' direct=true
+                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                    +multi_user_edit key='member_ids' label='members' direct=true
+                .five.wide.column
+                    +boolean_edit key='published' direct=true        
+                    +boolean_edit key='private' icon='lock' direct=true        
