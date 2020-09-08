@@ -177,29 +177,32 @@ template(name='post_view')
                     div
                     if url
                         +call_watson mode='url'
-                    // .ui.small.inline.header by
-                    // a.ui.header(href="/user/#{_author.username}") 
-                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                    //     |#{_author.username}
+                    .ui.small.inline.header by
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        |#{_author.username}
                     .ui.inline.small.header #{when}
                     div
-                    // +voting
+                    a.ui.header(href="/tribe/#{tribe_id}/view") tribe
+                        |#{tribe_id}
+    
+                    +voting
                     +vote
                     div
                     +array_view key='location_tags' label='location tags' direct=true
                     div
                     +date_view key='date' label='date' direct=true
                     div
-                    // +single_user_view key='_author_id' label='author' direct=true
-                    // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
+                    +single_user_view key='_author_id' label='author' direct=true
+                    +multi_user_view key='coauthor_ids' label='coauthors' direct=true
                     .ui.label #{views} views
-                    // .ui.large.label #{total_points}p generated
-                    // .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
-                    //     // i.coins.icon
-                    //     |#{tip_total}p tipped
-                    // .ui.green.big.icon.circular.button.tip
-                    //     i.donate.icon
-                    //     // |tip
+                    .ui.large.label #{total_points}p generated
+                    .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
+                        // i.coins.icon
+                        |#{tip_total}p tipped
+                    .ui.green.big.icon.circular.button.tip
+                        i.donate.icon
+                        // |tip
                     .ui.link.selection.list
                         .ui.fluid.accordion 
                             each votes
@@ -242,7 +245,6 @@ template(name='post_edit')
                     div
                     if watson
                         +watson_view
-                    // +array_edit key='tags' label='tags' icon='tags' direct=true
                 .four.wide.column
                     a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
                         i.checkmark.big.icon
@@ -257,8 +259,8 @@ template(name='post_edit')
                         |#{_author.username}
                     .spacer
                     +youtube_edit key='youtube_id' label='youtube id' direct=true
-                    // .spacer
-                    // +date_edit key='date' label='date' direct=true
+                    .spacer
+                    +date_edit key='date' label='date' direct=true
                     +smart_tagger
                     .spacer
                     if is_admin
@@ -266,9 +268,11 @@ template(name='post_edit')
                     div
                     +image_edit key='image_id' label='image upload' direct=true
                     +text_edit key='source' label='source' direct=true
-                    // div 
-                    // +image_link_edit key='image_link' label='image link' direct=true
+                    div 
+                    +image_link_edit key='image_link' label='image link' direct=true
                     
-                    // +boolean_edit key='private' direct=true
-                    // if private
-                    //     +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
+                    a.ui.header(href="/tribe/#{tribe_id}/view") tribe
+                        |#{tribe_id}
+                    +boolean_edit key='private' direct=true
+                    if private
+                        +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true

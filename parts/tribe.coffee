@@ -29,7 +29,7 @@ if Meteor.isClient
             
     Template.tribe_view.onCreated ->
         @autorun -> Meteor.subscribe 'tribe_tips', Router.current().params.doc_id
-        @autorun -> Meteor.subscribe 'tribe_votes', Router.current().params.doc_id
+        @autorun -> Meteor.subscribe 'tribe_posts', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'me'
         Session.setDefault 'view_tribe_section', 'content'
@@ -52,6 +52,12 @@ if Meteor.isClient
             Router.go "/tribe/#{@_id}/view"
 
     Template.tribe_view.events
+        'click .add_tribe_post': ->
+            new_id = 
+                Docs.insert
+                    model:'post'
+                    tribe_id:@_id
+            Router.go "/post/#{new_id}/edit"
         'click .tip': ->
             if Meteor.user()
                 Meteor.call 'tip', @_id, ->
@@ -100,10 +106,10 @@ if Meteor.isClient
             Docs.find
                 model:'tip'
         
-        votes: ->
+        tribe_posts: ->
             Docs.find   
-                model:'vote'
-                parent_id:@_id
+                model:'post'
+                tribe_id:@_id
         
         tippers: ->
             Meteor.users.find
@@ -131,6 +137,11 @@ if Meteor.isServer
     Meteor.methods 
                     
                     
+    Meteor.publish 'tribe_posts', (tribe_id)->
+        Docs.find   
+            model:'post'
+            tribe_id:tribe_id
+    
     Meteor.publish 'tribe_tips', (tribe_id)->
         Docs.find   
             model:'tip'

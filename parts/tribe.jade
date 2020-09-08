@@ -12,6 +12,11 @@ template(name='tribes')
                     a.ui.header(href="/tribe/#{_id}/view") #{title}
                     if private 
                         i.lock.icon
+                    .ui.list
+                        .item #{member_ids.length} members
+                        .item #{post_count} posts
+                        .item #{post_count} offers
+                        .item #{post_count} requests
 
 
 template(name='tribe_card')
@@ -35,7 +40,7 @@ template(name='tribe_view')
                 .four.wide.center.aligned.column
                     // if can_edit
                     a(href="/tribes" title='tribes')
-                        i.circular.large.fire.icon
+                        i.circular.large.fire.link.icon
                 .eight.wide.center.aligned.column
                     if icon
                         i.icon(class=icon)
@@ -49,9 +54,17 @@ template(name='tribe_view')
                 .four.wide.center.aligned.column
                     if can_edit
                         a.edit_tribe(href="/tribe/#{_id}/edit")
-                            i.big.blue.pencil.icon
+                            i.big.pencil.circular.link.icon
             .row 
                 .four.wide.column
+                    .ui.header 
+                        i.newspaper.icon
+                        |#{post_count}
+                        |posts
+                    .ui.header 
+                        i.hand.holding.icon
+                        |#{offer_count}
+                        |offers
                     .ui.header
                         i.marker.icon 
                         |#{location}
@@ -62,7 +75,13 @@ template(name='tribe_view')
                         |#{_author.username}
                     +image_view key='image_id' label='image' direct=true
                 .eight.wide.column
-                    +number_view key='bounty' label='bounty' direct=true
+                    .ui.header 
+                        i.newspaper.icon
+                        |posts
+                    .ui.icon.circular.button.add_tribe_post
+                        i.plus.icon
+                    each tribe_posts
+                        a.ui.header(href="/post/#{_id}/view") #{title}
                     +textarea_view key='description' label='description' direct=true
                     div 
                     +array_view key='tags' label='tags' direct=true
@@ -103,7 +122,7 @@ template(name='tribe_edit')
                     +array_edit key='tags' label='tags' direct=true
                 .six.wide.column
                     +textarea_edit key='description' label='description' direct=true
-                    +array_edit key='location_tags' label='location_tags' direct=true
+                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                     +multi_user_edit key='member_ids' label='members' direct=true
                 .five.wide.column
                     +boolean_edit key='published' direct=true        

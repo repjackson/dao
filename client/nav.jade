@@ -16,6 +16,8 @@ template(name='nav')
             i.large.calendar.icon
         a.icon.mobile.hidden.item(href="/tribes" class="{{isActivePath '/tribes'}}")
             i.large.fire.icon
+        a.icon.mobile.hidden.item(href="/rentals" class="{{isActivePath '/rentals'}}")
+            i.large.clock.icon
         a.icon.mobile.hidden.item(href="/chat" class="{{isActivePath '/chat'}}")
             i.large.chat.outline.icon
         a.icon.mobile.hidden.item(href="/tasks" class="{{isActivePath '/tasks'}}")
@@ -239,6 +241,9 @@ template(name='left_sidebar')
         a.item.zoom.toggle_sidebar(href="/tasks" class="{{isActivePath '/tasks'}}")
             |tasks
             i.large.tasks.icon
+        a.item.zoom.toggle_sidebar(href="/rentals" class="{{isActivePath '/rentals'}}")
+            |rentals
+            i.large.clock.icon
         a.item.zoom.toggle_sidebar(href="/meals" class="{{isActivePath '/meals'}}")
             |meals
             i.large.food.icon
