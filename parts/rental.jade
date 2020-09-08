@@ -1,0 +1,147 @@
+template(name='rentals')
+    .ui.stackable.padded.grid
+        .row
+            .four.wide.column
+                .ui.inline.header
+                    i.certificate.icon
+                    |rentals
+                .ui.icon.button.add_rental
+                    i.plus.icon
+                // .ui.header 
+                //     i.grey.users.icon
+                //     |members
+                // each members 
+                //     if profile_image_id
+                //         a(href="/user/#{username}")
+                //             img.ui.tiny.pointer.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+            .twelve.wide.column
+                // .ui.segment
+                //     .ui.big.fluid.input
+                //         input(type='text' placeholder='write something...')
+                .ui.stackable.cards
+                    each rentals 
+                        +rental_card
+                    
+
+
+
+
+template(name='rental_card')
+    a.card(href="/rental/#{_id}/view")
+        .image
+            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+        .content
+            .ui.header
+                |#{title}
+            // i.marker.icon
+            // |#{location} 
+            |!{description}
+            each rentalrs
+                img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
+                // |#{name}
+
+
+template(name='rental_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row
+                .sixteen.wide.column
+                    // if can_edit
+                    a.ui.icon.button(href="/rentals")
+                        i.big.certificate.icon
+                    +icolorlg name=icon cl='ui inline image'
+                    .ui.center.aligned.inline.header 
+                        small viewing rental: 
+                        |#{title}
+                    if can_edit
+                        a.ui.icon.button.edit_rental(href="/rental/#{_id}/edit")
+                            i.big.pencil.big.icon
+            .row 
+                .eight.wide.column
+                    .ui.header 
+                        small author
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.username}
+                            
+                    +number_view key='bounty' label='bounty' direct=true
+                    +textarea_view key='description' label='description' direct=true
+                    +image_view key='image_id' label='image' direct=true
+                    div 
+                    +array_view key='tags' label='tags' direct=true
+                    .spacer
+                    .spacer
+                    +comments
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .eight.wide.column
+                    .ui.header 
+                        |rentalrs
+                    each rentalrs
+                        a.ui.basic.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{username}
+        
+                    // .ui.header 
+                    //     +honey_rentalr
+                    //     |honey rentalrs
+                    // each honey_rentalrs
+                    //     a.ui.basic.button(href="/user/#{username}") 
+                    //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //         |#{name}
+                    // //- .ui.fluid.green.button.submit
+                    // //-     i.checkmark.icon
+                    // //-     |submit
+template(name='rental_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row 
+                .sixteen.wide.column
+                    a.ui.green.cicular.icon.button(href="/rental/#{_id}/view" title='save')
+                        i.checkmark.big.icon
+                    .ui.inline.header
+                        small edit rental
+                        |#{title}
+                    i.remove.circular.link.icon.delete_item
+            .row 
+                .eight.wide.column
+                    +text_edit key='title' icon='header' direct=true
+                    +slug_edit key='slug' icon='slug' direct=true
+                    // +text_edit key='location' label='location' icon='marker' direct=true
+                    +icon_edit key='icon' label='icon' direct=true
+                    +textarea_edit key='description' label='description' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                .eight.wide.column
+                    // +boolean_edit key='published' direct=true
+                    .ui.header
+                        +icolor name='rentalr'
+                        |rentalrs
+                    each rentalrs
+                        a.ui.compact.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{username}
+                        i.remove.link.icon.remove_rentalr
+                    .ui.segment
+                        .ui.small.header add rentalrs
+                        each unselected_rentalrs
+                            .ui.basic.circular.compact.button.add_rentalr
+                                img.ui.avatar.circular.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{username}
+                    
+                    // .ui.header
+                    //     +honey_rentalr
+                    //     |honey rentalrs
+                    // each honey_rentalrs
+                    //     a.ui.compact.button(href="/user/#{username}") 
+                    //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //         |#{name}
+                    //     i.remove.link.icon.remove_honey_rentalr
+                    // .ui.segment
+                    //     .ui.small.header add honey rentalrs
+                    //     each unselected_honey_rentalrs
+                    //         .ui.basic.button.add_honey_rentalr
+                    //             img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //             |#{name}
+                    

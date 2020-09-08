@@ -1,43 +1,59 @@
-template(name='projects')
-    .ui.header tasks
-    .ui.header projects
+template(name='tasks')
+    .ui.stackable.padded.grid
+        .ui.four.wide.column
+            .ui.header tasks
+            .ui.input
+                input.add_task(type='text' placeholder='quick task')
+            .ui.button.quick_task
+                |quick task 
+            
+            .ui.header projects
+        .ui.twelve.wide.column
+            each tasks 
+                .ui.card 
+                    if complete 
+                        i.checkmark.icon
+                    .content
+                        .header #{title}
+                    
+            .ui.header tasks
     
 
 
 
-template(name='project_card')
-    a.card(href="/project/#{_id}/view")
+template(name='task_card')
+    a.card(href="/task/#{_id}/view")
         .image
             if icon 
                 +icolorlg name=icon
             else
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/project/#{_id}/view")
+            a.ui.header(href="/task/#{_id}/view")
                 |#{location}: #{title}
             |!{description}
         
 
 
-template(name='project_view')
+template(name='task_view')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row
                 .four.wide.center.aligned.column
                     // if can_edit
-                    a(href="/m/project" title='projects')
-                        +icolorlg name='project' cl='ui inline image pointer'
+                    a(href="/m/task" title='tasks')
+                        +icolorlg name='task' cl='ui inline image pointer'
                 .eight.wide.center.aligned.column
                     if icon
                         +icolorlg name=icon cl='ui inline image'
                     else
-                        +icolorlg name='project' cl='ui inline image'
+                        +icolorlg name='task' cl='ui inline image'
                     .ui.center.aligned.inline.header 
-                        small viewing project
+                        small viewing task
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit
-                        a.edit_project(href="/project/#{_id}/edit")
+                        a.edit_task(href="/task/#{_id}/edit")
                             i.big.blue.pencil.icon
             .row 
                 .four.wide.column
@@ -61,26 +77,26 @@ template(name='project_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     .ui.header 
-                        +icon name='project'
-                        |projects
+                        +icon name='task'
+                        |tasks
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
 
-template(name='project_edit')
+template(name='task_edit')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/project/#{_id}/view" title='save')
+                    a.ui.green.big.icon.button(href="/task/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.inline.header 
-                        +icon name='project'
-                        small edit project
+                        +icon name='task'
+                        small edit task
                         |#{title}
                 .four.wide.center.aligned.column
-                    i.link.big.remove.icon.delete_item(title='delete project')
+                    i.link.big.remove.icon.delete_item(title='delete task')
             .row 
                 .five.wide.column
                     +text_edit key='title' icon='header' direct=true

@@ -3,10 +3,10 @@ template(name='nav')
     // .ui.fluid.borderless.attached.menu.topnav(class='')
     .ui.fluid.attached.menu.topnav(class='invert')
         if currentUser
-            a.icon.item.toggle_sidebar
-                i.large.ellipsis.vertical.icon
-        a.icon.item(href="/" class="{{isActivePath '/'}}")
-            // i.large.yin.yang.icon
+            a.icon.header.item.toggle_sidebar
+                // i.large.ellipsis.vertical.icon
+                i.large.yin.yang.icon
+        a.icon.mobile.hidden.item(href="/" class="{{isActivePath '/'}}")
             i.large.newspaper.icon
         a.icon.mobile.hidden.item(href="/requests" class="{{isActivePath '/requests'}}")
             i.large.concierge.bell.icon
@@ -115,7 +115,7 @@ template(name='add')
             
 template(name='right_sidebar')
     // .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
-    .ui.right.sidebar.vertical.borderless.inverted.menu(class=currentUser.invert_class)
+    .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
@@ -165,10 +165,7 @@ template(name='right_sidebar')
 
 
 template(name='left_sidebar')
-    .ui.left.sidebar.vertical.accordion.inverted.menu(class=currentUser.invert_class)
-        // a.item.toggle_sidebar(href="/" class="{{isActiveRoute '/'}}")
-        //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-        //     |One
+    .ui.left.sidebar.vertical.accordion.menu(class=currentUser.invert_class)
         a.item.select_term
             .title.zoom
                 i.newspaper.icon

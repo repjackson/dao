@@ -1,7 +1,7 @@
 template(name='requests')
     .ui.stackable.padded.grid 
         .row
-            .sixteen.wide.column
+            .four.wide.column
                 .ui.inline.header 
                     i.concierge.bell.icon
                     |requests
@@ -9,6 +9,7 @@ template(name='requests')
                 .spacer
                 .spacer
                 .spacer
+            .twelve.wide.column
                 .ui.stackable.cards
                     each requests
                         +request_card

@@ -1,10 +1,10 @@
 if Meteor.isClient
     @selected_user_levels = new ReactiveArray []
     
-    Router.route '/tasks/', (->
+    Router.route '/projects/', (->
         @layout 'layout'
-        @render 'tasks'
-        ), name:'tasks'
+        @render 'projects'
+        ), name:'projects'
     Router.route '/project/:doc_id/view', (->
         @layout 'layout'
         @render 'project_view'
