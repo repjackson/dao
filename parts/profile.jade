@@ -127,10 +127,11 @@ template(name='user_dashboard')
     .ui.stackable.grid
         .row
             .sixteen.wide.column
-                .ui.fluid.styled.large.accordion
+                .ui.fluid.styled.big.accordion
                     .title 
+                        i.brain.icon
                         |cloud comparison
-                        i.dropdown.icon
+                        // i.dropdown.icon
                     .content
                         .ui.two.column.grid
                             // .column
@@ -164,10 +165,23 @@ template(name='user_dashboard')
                                     a.ui.large.label.select_tag #{title}
                                         small #{count}
                     .title 
+                        i.users.icon
                         |friends
                         i.dropdown.icon
                     .content
                         +user_friends
+                    .title 
+                        i.concierge.bell.icon
+                        |requests
+                        i.dropdown.icon
+                    .content
+                        // +user_requests_small
+                    .title 
+                        i.shop.icon
+                        |offers
+                        i.dropdown.icon
+                    .content
+                        // +user_offers_small
                     .title 
                         |authored overlap
                         i.dropdown.icon

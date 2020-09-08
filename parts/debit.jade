@@ -98,11 +98,12 @@ template(name='debit_view')
             .centered.row 
                 .five.wide.column
                     a(href="/user/#{_author.username}") 
-                        img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
-                        .ui.large.center.aligned.header.pointer.zoom
+                        img.ui.circular.centered.pointer.zoom.image.mobile.hidden(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                        img.ui.circular.small.inline.pointer.zoom.image.mobile.only(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                        .ui.large.center.inline.aligned.header.pointer.zoom
                             |#{_author.username}
                 .five.wide.column
-                    .ui.huge.center.aligned.header
+                    .ui.huge.center.aligned.inline.header
                         |#{price}p
                     if is_dev
                         +remove_button
@@ -130,8 +131,11 @@ template(name='debit_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
                     a(href="/user/#{seller.username}")
-                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url seller.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
-                        .ui.large.center.aligned.header.pointer.zoom
+                        img.ui.circular.centered.pointer.zoom.image.mobile.hidden(src="{{c.url seller.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                        img.ui.circular.small.inline.pointer.zoom.image.mobile.only(src="{{c.url seller.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+
+                        // img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url seller.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                        .ui.large.center.aligned.inline.header.pointer.zoom
                             |#{seller.username}
                             
 

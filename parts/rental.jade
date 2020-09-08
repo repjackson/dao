@@ -36,7 +36,7 @@ template(name='rental_card')
             // i.marker.icon
             // |#{location} 
             |!{description}
-            each rentalrs
+            each reservations
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
                 // |#{name}
 
@@ -75,22 +75,13 @@ template(name='rental_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .eight.wide.column
                     .ui.header 
-                        |rentalrs
-                    each rentalrs
+                        |reservations
+                    each reservations
                         a.ui.basic.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{username}
-        
-                    // .ui.header 
-                    //     +honey_rentalr
-                    //     |honey rentalrs
-                    // each honey_rentalrs
-                    //     a.ui.basic.button(href="/user/#{username}") 
-                    //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //         |#{name}
-                    // //- .ui.fluid.green.button.submit
-                    // //-     i.checkmark.icon
-                    // //-     |submit
+
+
 template(name='rental_edit')
     with current_doc
         .ui.stackable.padded.grid
@@ -105,43 +96,23 @@ template(name='rental_edit')
             .row 
                 .eight.wide.column
                     +text_edit key='title' icon='header' direct=true
-                    +slug_edit key='slug' icon='slug' direct=true
-                    // +text_edit key='location' label='location' icon='marker' direct=true
-                    +icon_edit key='icon' label='icon' direct=true
+                    +text_edit key='location' label='location' icon='marker' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
-                    +array_edit key='tags' label='tags' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    +smart_tagger
                 .eight.wide.column
                     // +boolean_edit key='published' direct=true
                     .ui.header
-                        +icolor name='rentalr'
-                        |rentalrs
+                        |reservations
                     each rentalrs
                         a.ui.compact.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{username}
-                        i.remove.link.icon.remove_rentalr
+                        i.remove.link.icon.remove_reservation
                     .ui.segment
-                        .ui.small.header add rentalrs
-                        each unselected_rentalrs
+                        .ui.small.header add reservation
+                        each unselected_reservations
                             .ui.basic.circular.compact.button.add_rentalr
                                 img.ui.avatar.circular.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                                 |#{username}
-                    
-                    // .ui.header
-                    //     +honey_rentalr
-                    //     |honey rentalrs
-                    // each honey_rentalrs
-                    //     a.ui.compact.button(href="/user/#{username}") 
-                    //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //         |#{name}
-                    //     i.remove.link.icon.remove_honey_rentalr
-                    // .ui.segment
-                    //     .ui.small.header add honey rentalrs
-                    //     each unselected_honey_rentalrs
-                    //         .ui.basic.button.add_honey_rentalr
-                    //             img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //             |#{name}
-                    

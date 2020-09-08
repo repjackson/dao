@@ -6,20 +6,22 @@ template(name='tribes')
                 |tribes
             if currentUser
                 i.circular.plus.link.icon.add_tribe
-        .twelve.wide.column
-            each tribe_docs 
-                .ui.segment
-                    a.ui.header(href="/tribe/#{_id}/view") #{title}
-                    if private 
-                        i.lock.icon
-                    .ui.list
-                        .item #{member_ids.length} members
-                        .item #{post_count} posts
-                        .item #{post_count} offers
-                        .item #{post_count} requests
-                    +vote
-                    +viewing
-                    +join
+        .sixteen.wide.column
+            .ui.cards
+                each tribe_docs 
+                    .ui.card
+                        .content
+                            a.ui.header(href="/tribe/#{_id}/view") #{title}
+                            if private 
+                                i.lock.icon
+                            .ui.list
+                                .item #{member_ids.length} members
+                                .item #{post_count} posts
+                                .item #{post_count} offers
+                                .item #{post_count} requests
+                            +vote
+                            +viewing
+                            +join
                     
 template(name='join')
     if is_member
