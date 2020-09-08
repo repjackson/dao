@@ -18,7 +18,7 @@ template(name='offer_card')
     .card.pointer.offer_card
         if image_id
             .image
-                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
             .ui.header
                 |#{title}
