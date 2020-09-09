@@ -9,6 +9,11 @@ Template.registerHelper 'in_role', (role)->
         false
         
         
+Template.registerHelper 'my_tribes', (key)->
+    if Meteor.user()
+        Docs.find 
+            model:'tribe'
+            member_ids:$in:[Meteor.userId()]
 Template.registerHelper 'user_id_in', (key)->
     if Meteor.user()
         if Meteor.userId() in @["#{key}"]

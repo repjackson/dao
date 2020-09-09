@@ -1,5 +1,5 @@
 template(name='badge_card')
-    a.card(href="/badge/#{_id}/view")
+    a.card(href="/m/badge/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
@@ -8,9 +8,12 @@ template(name='badge_card')
             // i.marker.icon
             // |#{location} 
             |!{description}
+            i.users.icon
             each badgers
                 img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
-                // |#{name}
+            i.fire.icon
+            img.ui.avatar.image(src="{{c.url tribe.image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
+            // |#{name}
 
 
 template(name='badge_view')
@@ -19,14 +22,14 @@ template(name='badge_view')
             .row
                 .sixteen.wide.column
                     // if can_edit
-                    a.ui.icon.button(href="/badges")
+                    a.ui.icon.button(href="/m/badge")
                         i.big.certificate.icon
                     +icolorlg name=icon cl='ui inline image'
                     .ui.center.aligned.inline.header 
                         small viewing badge: 
                         |#{title}
                     if can_edit
-                        a.ui.icon.button.edit_badge(href="/badge/#{_id}/edit")
+                        a.ui.icon.button.edit_badge(href="/m/badge/#{_id}/edit")
                             i.big.pencil.big.icon
             .row 
                 .eight.wide.column
@@ -46,6 +49,8 @@ template(name='badge_view')
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .eight.wide.column
+                    with tribe 
+                        +tribe_card
                     .ui.header 
                         |badgers
                     each badgers
@@ -68,7 +73,7 @@ template(name='badge_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.green.cicular.icon.button(href="/badge/#{_id}/view" title='save')
+                    a.ui.green.cicular.icon.button(href="/m/badge/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header
                         small edit badge

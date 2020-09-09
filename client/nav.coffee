@@ -8,6 +8,7 @@ Router.route '/add', (->
 Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
     @autorun => Meteor.subscribe 'all_users'
+    @autorun => Meteor.subscribe 'model_docs', 'tribe'
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->

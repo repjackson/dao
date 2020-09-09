@@ -13,12 +13,13 @@ template(name='join')
         
 
 
+
 template(name='tribe_card')
-    a.card(href="/tribe/#{_id}/view")
+    a.ui.card(href="/m/tribe/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
-            a.ui.header(href="/tribe/#{_id}/view")
+            a.ui.header(href="/m/tribe/#{_id}/view")
                 if private 
                     i.lock.icon
                 |#{title}

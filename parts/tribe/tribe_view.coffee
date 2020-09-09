@@ -1,12 +1,8 @@
 if Meteor.isClient
-    Router.route '/tribe/:doc_id/view', (->
-        @layout 'layout'
-        @render 'tribe_view'
-        ), name:'tribe_view'
-
     Template.tribe_view.onCreated ->
         @autorun -> Meteor.subscribe 'tribe_tips', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'tribe_posts', Router.current().params.doc_id
+        @autorun -> Meteor.subscribe 'tribe_badges', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'tribe_docs', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'me'
@@ -21,6 +17,19 @@ if Meteor.isClient
         , 1000
 
 
+    Template.tribe_badges.helpers
+        badges: ->
+            Docs.find 
+                model:'badge'
+                # tribe_id:@tribe_id
+    Template.tribe_badges.events
+        'click .add_badge': ->
+            new_id = 
+                Docs.insert
+                    model:'badge'
+                    tribe_id:@_id
+            Router.go "/badge/#{new_id}/edit"
+    
     Template.tribe_view.events
         'click .add_tribe_post': ->
             new_id = 
@@ -28,12 +37,6 @@ if Meteor.isClient
                     model:'post'
                     tribe_id:@_id
             Router.go "/post/#{new_id}/edit"
-        'click .add_tribe_badge': ->
-            new_id = 
-                Docs.insert
-                    model:'badge'
-                    tribe_id:@_id
-            Router.go "/badge/#{new_id}/edit"
         'click .add_tribe_gift': ->
             new_id = 
                 Docs.insert

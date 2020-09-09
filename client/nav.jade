@@ -129,6 +129,12 @@ template(name='right_sidebar')
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
+        each my_tribes
+            a.item.zoom.toggle_rightbar(href="/m/tribe/#{_id}/view" class="{{isActiveRoute 'user_dashboard'}}")
+                img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                | #{title}
+                // i.large.icon(class=icon)
+            
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'user_dashboard'}}")
             | dashboard (#{currentUser.points}p)
             i.large.dashboard.icon
@@ -144,7 +150,7 @@ template(name='right_sidebar')
             i.large.concierge.bell.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
             | orders
-            i.large.reciept.icon
+            i.large.list.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
             | offers
             i.large.store.icon
