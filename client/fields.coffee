@@ -729,7 +729,7 @@ Template.single_doc_edit.events
 
 
         # if parent["#{key}"] and @["#{ref_field.button_key}"] in parent["#{key}"]
-        if parent["#{key}"] and @slug in parent["#{key}"]
+        if parent["#{key}"] and @_id in parent["#{key}"]
             doc = Docs.findOne parent._id
             user = Meteor.users.findOne parent._id
             if doc
@@ -744,10 +744,10 @@ Template.single_doc_edit.events
 
             if doc
                 Docs.update parent._id,
-                    $set: "#{ref_field.key}": @slug
+                    $set: "#{ref_field.key}": @_id
             else if user
                 Meteor.users.update parent._id,
-                    $set: "#{ref_field.key}": @slug
+                    $set: "#{ref_field.key}": @_id
                     
                     
 Template.single_tribe_edit.onCreated ->

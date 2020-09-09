@@ -17,6 +17,10 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'me'
         
         Session.setDefault 'view_post_section', 'content'
+    Template.post_edit.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 2000
     Template.post_view.onRendered ->
         Meteor.call 'log_view', Router.current().params.doc_id
         Meteor.setTimeout ->

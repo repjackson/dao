@@ -1,0 +1,80 @@
+template(name='post_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .ten.wide.column
+                    div
+                    +text_edit key='title' icon='header' direct=true
+                    +html_edit key='description' label='description' direct=true
+                    div
+                    if watson
+                        +watson_view
+                .six.wide.column
+                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
+                        i.checkmark.big.icon
+                    .ui.inline.large.header 
+                        small edit post:
+                        |#{title}
+                    .ui.big.accordion
+                        .title
+                            i.remove.icon  
+                            |delete
+                            i.dropdown.icon
+                        .content
+                            i.remove.link.circular.icon.delete_post(title='delete post')
+                        .title
+                            i.user.icon
+                            |authors
+                            i.dropdown.icon
+                        .content
+                            |coauthors split revenue evenly
+                            +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
+                            .ui.header 
+                                small author
+                                |#{_author.username}
+                            if is_admin
+                                .spacer
+                                +single_user_edit key='_author_id' key2='_author_username' direct=true
+                        .title
+                            i.video.icon
+                            |video
+                            i.dropdown.icon
+                        .content
+                            +youtube_edit key='youtube_id' label='youtube id' direct=true
+                        .title
+                            i.calendar.icon
+                            |date
+                            i.dropdown.icon
+                        .content
+                            +date_edit key='date' label='date' direct=true
+                        .title
+                            i.tags.icon
+                            |tags
+                            i.dropdown.icon
+                        .content
+                            +smart_tagger
+                        .title
+                            i.picture.icon
+                            |image
+                            i.dropdown.icon
+                        .content
+                            +image_edit key='image_id' label='image upload' direct=true
+                            div 
+                            +text_edit key='source' label='source' direct=true
+                            div 
+                            +image_link_edit key='image_link' label='image link' direct=true
+                        .title
+                            i.fire.icon
+                            |tribe
+                            i.dropdown.icon
+                        .content
+                            a.ui.header(href="/tribe/#{tribe_id}/view") tribe
+                                |#{tribe_id}
+                            +single_doc_edit ref_model='tribe' key='tribe_id' direct=true
+                        .title
+                            i.lock.icon
+                            |privacy
+                        .content
+                            +boolean_edit key='private' direct=true
+                            if private
+                                +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
