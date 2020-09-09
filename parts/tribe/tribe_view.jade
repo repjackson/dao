@@ -7,15 +7,16 @@ template(name='tribe_view')
                     a(href="/tribes" title='tribes')
                         i.circular.large.fire.link.icon
                 .eight.wide.center.aligned.column
-                    if icon
-                        i.icon(class=icon)
+                    if image_id
+                        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                     else
                         i.circular.large.fire.icon
                     .ui.center.aligned.inline.header 
-                        small viewing tribe
+                        small viewing 
                         |#{title}
                         if private
                             i.lock.icon(title='private')
+                        small tribe
                 .four.wide.center.aligned.column
                     if can_edit
                         a.edit_tribe(href="/tribe/#{_id}/edit")
@@ -42,33 +43,36 @@ template(name='tribe_view')
                         |#{_author.username}
                     +image_view key='image_id' label='image' direct=true
                 .eight.wide.column
-                    .ui.grey.header 
-                        i.rss.icon 
-                        |latest
-                    .ui.feed
-                        each latest_updates
-                            .event
-                                .label 
-                                    img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                    
-                                .content
-                                    .summary
-                                        a.user(href="/user/#{_author_username}") #{_author_username}
-                                        |#{title} #{price}
-                                        each tags 
-                                            .ui.label #{this}
-                                    .meta 
-                                        i.clock.icon 
-                                        |#{when}
-                                        +voting_small
-                                    if key_value_is 'model' 'debit'
-                                        i.large.gift.icon
-                                        |#{seller.username}
-                                    else if key_value_is 'model' 'post'
-                                        i.large.newspaper.icon
-                                    else
-                                        .ui.label #{model}
                     .ui.accordion
+                        .active.title
+                            .ui.grey.inline.header 
+                                i.rss.icon 
+                                |latest
+                            i.dropdown.icon
+                        .active.content
+                            .ui.feed
+                                each latest_updates
+                                    .event
+                                        .label 
+                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                            
+                                        .content
+                                            .summary
+                                                a.user(href="/user/#{_author_username}") #{_author_username}
+                                                |#{title} #{price}
+                                                each tags 
+                                                    .ui.label #{this}
+                                            .meta 
+                                                i.clock.icon 
+                                                |#{when}
+                                                +voting_small
+                                            if key_value_is 'model' 'debit'
+                                                i.large.gift.icon
+                                                |#{seller.username}
+                                            else if key_value_is 'model' 'post'
+                                                i.large.newspaper.icon
+                                            else
+                                                .ui.label #{model}
                         .title
                             .ui.inline.header 
                                 i.newspaper.icon
@@ -81,24 +85,34 @@ template(name='tribe_view')
                                 each tribe_posts
                                     a.item(href="/post/#{_id}/view") #{title}
                         .title
-                            .ui.header 
+                            .ui.inline.header 
                                 i.info.icon
                                 |info
+                            i.dropdown.icon
                         .content
                             +textarea_view key='description' label='description' direct=true
                             +array_view key='tags' label='tags' direct=true
                         .title
-                            .ui.header 
+                            .ui.inline.header 
                                 i.chat.icon
                                 |comments
+                            i.dropdown.icon
                         .content
                             +comments
                         .title
-                            .ui.header 
+                            .ui.inline.header 
                                 i.coins.icon
                                 |credits
+                            i.dropdown.icon
                         .content
-                            +comments
+                            +tribe_finance
+                        .title
+                            .ui.inline.header 
+                                i.certificate.icon
+                                |badges
+                            i.dropdown.icon
+                        .content
+                            +tribe_badges
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     .ui.button.add_tribe_gift
@@ -114,9 +128,15 @@ template(name='tribe_view')
                         i.concierge.bell.icon
                         |request
                     .ui.header 
-                        +icon name='tribe'
+                        i.chess.king.icon
+                        |chiefs
+                    +multi_user_view key='chief_ids' label='chiefs' direct=true
+                    .ui.header 
+                        i.users.icon
                         |members
                     +multi_user_view key='member_ids' label='members' direct=true
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
+
+
+
+template(name='tribe_badges')
+template(name='tribe_finance')
