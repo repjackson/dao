@@ -45,20 +45,41 @@ template(name='tribe_view')
                     .ui.grey.header 
                         i.rss.icon 
                         |latest
-                    .ui.list
+                    .ui.feed
                         each latest_updates
-                            .ui.item #{title}
+                            .event
+                                .label 
+                                    img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    
+                                .content
+                                    .summary
+                                        a.user(href="/user/#{_author_username}") #{_author_username}
+                                        |#{title} #{price}
+                                        each tags 
+                                            .ui.label #{this}
+                                    .meta 
+                                        i.clock.icon 
+                                        |#{when}
+                                        +voting_small
+                                    if key_value_is 'model' 'debit'
+                                        i.large.gift.icon
+                                        |#{seller.username}
+                                    else if key_value_is 'model' 'post'
+                                        i.large.newspaper.icon
+                                    else
+                                        .ui.label #{model}
                     .ui.accordion
                         .title
-                            .ui.header 
+                            .ui.inline.header 
                                 i.newspaper.icon
                                 |posts
-                                i.dropdown.icon
+                            i.dropdown.icon
                         .content
                             .ui.icon.circular.button.add_tribe_post
                                 i.plus.icon
-                            each tribe_posts
-                                a.ui.header(href="/post/#{_id}/view") #{title}
+                            .ui.link.large.selection.list
+                                each tribe_posts
+                                    a.item(href="/post/#{_id}/view") #{title}
                         .title
                             .ui.header 
                                 i.info.icon
