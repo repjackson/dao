@@ -56,6 +56,12 @@ Template.nav.helpers
         if Session.get('viewing_alerts') then 'active' else ''
 
         
+Template.leftbar_item.events
+    'click .set_model': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', @model, ->
+            Session.set 'loading', false
+
 Template.nav.events
     'keydown .search_dao': (e,t)->
         search = $('.search_dao').val().toLowerCase().trim()
@@ -78,26 +84,6 @@ Template.nav.events
     'click .set_reddit': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'reddit', ->
-            Session.set 'loading', false
-    'click .set_tribe': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'tribe', ->
-            Session.set 'loading', false
-    'click .set_rental': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'rental', ->
-            Session.set 'loading', false
-    'click .set_offer': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'offer', ->
-            Session.set 'loading', false
-    'click .set_event': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'event', ->
-            Session.set 'loading', false
-    'click .set_request': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'request', ->
             Session.set 'loading', false
     'click .set_task': ->
         Session.set 'loading', true

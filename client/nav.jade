@@ -178,137 +178,14 @@ template(name='right_sidebar')
 
 template(name='left_sidebar')
     .ui.left.sidebar.vertical.menu(class=currentUser.invert_class)
-        a.zoom.toggle_sidebar.set_wikipedia.item(href="/m/wikipedia")
-            |wikipedia
-            i.wikipedia.icon
-        a.zoom.toggle_sidebar.set_reddit.item(href="/m/reddit")
-            |reddit
-            i.reddit.icon
-        a.zoom.toggle_sidebar.set_post.item(href="/m/post")
-            |posts
-            i.newspaper.icon
-        a.zoom.toggle_sidebar.set_tribe.item(href="/m/tribe")
-            |tribes
-            i.fire.icon
-        .ui.accordion
-            a.item.select_term
-                .title.zoom
-                    i.newspaper.icon
-                    |posts
-                    i.dropdown.icon
-                .content
-                    .ui.list
-                        .item.zoom.toggle_sidebar.top_earned top earned
-                        .item.zoom.toggle_sidebar.newest_posts newest
-                        .item.zoom.toggle_sidebar.my_posts yours
-                        a.item.zoom.toggle_sidebar.set_reddit(href="/m/reddit")
-                            |reddit
-                            i.reddit.icon
-                        a.item.zoom.toggle_sidebar.set_youtube(href="/m/youtube")
-                            |youtube
-                            i.youtube.icon
-                        
-            a.item.select_term
-                .title.zoom
-                    i.shop.icon
-                    |offers
-                    i.dropdown.icon
-                .content
-                    .item.zoom.toggle_sidebar.top_earned most ordered
-                    .item.zoom.toggle_sidebar.most_recent_offers newest
-                    .item.zoom.toggle_sidebar.my_posts yours
-                    .item.toggle_sidebar
-                        |self
-                        i.user.outline.icon
-            a.item.select_term
-                .title.zoom
-                    i.concierge.bell.icon
-                    |requests
-                    i.dropdown.icon
-                .content
-                    .item.zoom.toggle_sidebar.top_earned unclaimed
-                    .item.zoom.toggle_sidebar.most_recent_offers newest
-                    .item.zoom.toggle_sidebar.my_posts yours
-            a.item.select_term
-                .title.zoom
-                    i.calendar.icon
-                    |events
-                    i.dropdown.icon
-                .content
-                    .item.zoom.toggle_sidebar.top_earned unclaimed
-                    .item.zoom.toggle_sidebar.most_recent_offers newest
-                    .item.zoom.toggle_sidebar.my_posts yours
-            a.item.select_term
-                .title.zoom
-                    i.exchange.icon
-                    |transfers
-                    i.dropdown.icon
-                .content
-                    .item.zoom.toggle_sidebar.biggest_debits biggest
-                    .item.zoom.toggle_sidebar.newest_debits newest
-                    .item.zoom.toggle_sidebar.my_debits yours
-            a.item.select_term
-                .title.zoom
-                    i.exchange.icon
-                    |commerce
-                    i.dropdown.icon
-                .content
-                    .item.zoom.toggle_sidebar(href="/rentals" class="{{isActivePath '/rentals'}}")
-                        |rentals
-                        i.clock.icon
-                    .item.zoom.toggle_sidebar(href="/meals" class="{{isActivePath '/meals'}}")
-                        |meals
-                        i.food.icon
-                    .item.zoom.toggle_sidebar.biggest_debits requests
-                    .item.zoom.toggle_sidebar.newest_debits offers
-                    a.item.zoom.toggle_sidebar.my_debits(href="/m/rental") rentals
-                    a.item.zoom.toggle_sidebar(href="/requests" class="{{isActivePath '/requests'}}")
-                        |requests
-                        i.concierge.bell.icon
-                    a.item.zoom.toggle_sidebar(href="/offers" class="{{isActivePath '/offers'}}")
-                        |offers
-                        i.store.icon
-            a.item.select_term
-                .title.zoom
-                    i.chat.icon
-                    |social
-                    i.dropdown.icon
-                .content
-                    a.item.zoom.toggle_sidebar(href="/tribes" class="{{isActivePath '/tribes'}}")
-                        |tribes
-                        i.fire.icon
-                    a.item.zoom.toggle_sidebar(href="/chat" class="{{isActivePath '/chat'}}")
-                        |chat
-                        i.chat.outline.icon
-                    a.item.zoom.toggle_sidebar(href="/badges" class="{{isActivePath '/badges'}}")
-                        |badges
-                        i.certificate.icon
-                    a.item.zoom.toggle_sidebar(href="/images" class="{{isActivePath '/images'}}")
-                        |images
-                        i.image.icon
-            a.item.select_term
-                .title.zoom
-                    i.cog.icon
-                    |management
-                    i.dropdown.icon
-                .content
-                    a.item.zoom.toggle_sidebar(href="/tribes" class="{{isActivePath '/tribes'}}")
-                        |tribes
-                        i.fire.icon
-                    a.item.zoom.toggle_sidebar(href="/tasks" class="{{isActivePath '/tasks'}}")
-                        |tasks
-                        i.tasks.icon
-                    a.item.zoom.toggle_sidebar(href="/chat" class="{{isActivePath '/chat'}}")
-                        |chat
-                        i.chat.outline.icon
-                    .item.zoom.toggle_sidebar.biggest_debits chat
-                    .item.zoom.toggle_sidebar.newest_debits 
-                        |badges
-                    a.item.zoom.toggle_sidebar.my_debits(href="/m/rental") rentals
-                    a.item.zoom.toggle_sidebar(href="/events" class="{{isActivePath '/events'}}")
-                        |events
-                        i.calendar.icon
-            
+        +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
+        +leftbar_item model='reddit' label='reddit' icon='reddit'
+        +leftbar_item model='post' label='post' icon='newspaper'
+        +leftbar_item model='youtube' label='youtube' icon='youtube'
+        +leftbar_item model='tribe' label='tribes' icon='fire'
+        +leftbar_item model='rental' label='rentals' icon='clock'
+        +leftbar_item model='request' label='requests' icon='concierge bell'
+        +leftbar_item model='offer' label='offers' icon='shop'
         if is_eric
             a.item.zoom.toggle_dev.toggle_sidebar
                 |toggle dev
@@ -327,3 +204,8 @@ template(name='left_sidebar')
             a.item.zoom.toggle_dev.toggle_sidebar(href="/m/model")
                 |delta
                 i.database.icon
+                
+template(name='leftbar_item')
+    a.zoom.toggle_sidebar.set_model.item(href="/m/#{model}")
+        |#{label}
+        i.icon(class=icon)
