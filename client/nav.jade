@@ -148,6 +148,9 @@ template(name='right_sidebar')
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
             | offers
             i.large.store.icon
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
+            | tribes
+            i.large.fire.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
             | #{currentUser.credit} credit
             i.large.dollar.icon

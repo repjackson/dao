@@ -14,9 +14,12 @@ template(name='user_tribes')
     .ui.header member of
     each user_member_tribes
         .ui.segment
+            if image_id
+                img.ui.tiny.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+
             a.ui.header(href="/m/tribe/#{_id}/view") #{title}
-            if is_current_user
-                +enter_tribe
+            // if is_current_user
+            //     +enter_tribe
             
             
             

@@ -39,13 +39,13 @@ if Meteor.isClient
             user = Meteor.users.findOne username:@username
             Docs.find
                 model:'tribe'
-                tribe_member_ids:$in:[user._id]
+                member_ids:$in:[user._id]
             
         user_leader_tribes: ->
             user = Meteor.users.findOne username:@username
             Docs.find
                 model:'tribe'
-                tribe_leader_ids:$in:[user._id]
+                leader_ids:$in:[user._id]
 
 
 
@@ -61,11 +61,11 @@ if Meteor.isServer
         user = Meteor.users.findOne username:username
         Docs.find
             model:'tribe'
-            tribe_member_ids:$in:[user._id]
+            member_ids:$in:[user._id]
             
     Meteor.publish 'user_leader_tribes', (username)->
         user = Meteor.users.findOne username:username
         Docs.find
             model:'tribe'
-            tribe_leader_ids:$in:[user._id]
+            leader_ids:$in:[user._id]
             

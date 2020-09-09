@@ -137,8 +137,8 @@ template(name='tribe_view')
                         |request
                     .ui.header 
                         i.chess.king.icon
-                        |chiefs
-                    +multi_user_view key='chief_ids' label='chiefs' direct=true
+                        |leaders
+                    +multi_user_view key='leader_ids' label='leaders' direct=true
                     .ui.header 
                         i.users.icon
                         |members
@@ -147,7 +147,7 @@ template(name='tribe_view')
 
 
 template(name='tribe_badges')
-    if user_id_in 'chief_ids'
+    if user_id_in 'leader_ids'
         i.large.plus.circular.icon.add_badge
     .ui.cards
         each badges
