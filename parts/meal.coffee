@@ -13,9 +13,6 @@ if Meteor.isClient
         @render 'meal_view'
         ), name:'meal_view'
 
-    Template.meals.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'meal'
-    
     Template.meal_edit.onCreated ->
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
     
@@ -23,24 +20,6 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
     
     
-    Router.route '/meals', (->
-        @layout 'layout'
-        @render 'meals'
-        ), name:'meals'
-    Template.meals.events
-        'click .add_meal': ->
-            new_id = 
-                Docs.insert 
-                    model:'meal'
-            Router.go "/meal/#{new_id}/edit"
-            
-    Template.meals.helpers
-        meals: ->
-            Docs.find 
-                model:'meal'
-                complete:$ne:true
-                published:true
-
     Template.meal_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id
 

@@ -159,7 +159,7 @@ Meteor.methods
                 found_doc =
                     Docs.findOne
                         url: "https://en.wikipedia.org/wiki/#{term}"
-                        model:'post'
+                        model:'wikipedia'
                 if found_doc
                     # console.log 'found wiki doc for term', term
                     # console.log 'found wiki doc for term', term, found_doc
@@ -173,7 +173,7 @@ Meteor.methods
                         title: query
                         tags:[query]
                         source: 'wikipedia'
-                        model:'post'
+                        model:'wikipedia'
                         # ups: 1000000
                         url:"https://en.wikipedia.org/wiki/#{term}"
                     Meteor.call 'call_watson', new_wiki_id, 'url','url', ->

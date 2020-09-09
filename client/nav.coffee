@@ -57,6 +57,14 @@ Template.nav.helpers
 
         
 Template.nav.events
+    'click .set_wikipedia': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'wikipedia', ->
+            Session.set 'loading', false
+    'click .set_reddit': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'reddit', ->
+            Session.set 'loading', false
     'click .set_tribe': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'tribe', ->
@@ -180,6 +188,15 @@ Template.left_sidebar.onCreated ->
     , 1000
 
 Template.left_sidebar.events
+    'click .set_wikipedia': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'wikipedia', ->
+            Session.set 'loading', false
+    'click .set_reddit': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'reddit', ->
+            Session.set 'loading', false
+
     'click .posts': ->
         Router.go '/'
         selected_models.clear()
