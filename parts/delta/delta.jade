@@ -7,7 +7,7 @@ template(name='delta')
             //             +model_top
             .row
                 if current_model.show_facets
-                    .four.wide.column
+                    .four.wide.column.scrolling
                         +model_top
                         each sorted_facets
                             +facet

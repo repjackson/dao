@@ -36,7 +36,7 @@ Meteor.methods
                             selftext: false
                             # thumbnail: false
                             tags: query
-                            model:'post'
+                            model:'reddit'
                             source:'reddit'
                         # console.log 'reddit post', reddit_post
                         existing_doc = Docs.findOne url:data.url
