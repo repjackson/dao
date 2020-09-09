@@ -244,6 +244,12 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.biggest_debits requests
                 .item.zoom.toggle_sidebar.newest_debits offers
                 a.item.zoom.toggle_sidebar.my_debits(href="/m/rental") rentals
+                a.item.zoom.toggle_sidebar(href="/requests" class="{{isActivePath '/requests'}}")
+                    |requests
+                    i.concierge.bell.icon
+                a.item.zoom.toggle_sidebar(href="/offers" class="{{isActivePath '/offers'}}")
+                    |offers
+                    i.store.icon
         a.item.select_term
             .title.zoom
                 i.chat.icon
@@ -256,25 +262,24 @@ template(name='left_sidebar')
                 a.item.zoom.toggle_sidebar(href="/chat" class="{{isActivePath '/chat'}}")
                     |chat
                     i.chat.outline.icon
-                .item.zoom.toggle_sidebar.biggest_debits chat
-                .item.zoom.toggle_sidebar.newest_debits 
-                    |badges
                 a.item.zoom.toggle_sidebar(href="/badges" class="{{isActivePath '/badges'}}")
                     |badges
                     i.certificate.icon
                 a.item.zoom.toggle_sidebar(href="/images" class="{{isActivePath '/images'}}")
                     |images
                     i.image.icon
-                a.item.zoom.toggle_sidebar.my_debits(href="/m/rental") rentals
         a.item.select_term
             .title.zoom
-                i.chat.icon
-                |commerce
+                i.cog.icon
+                |management
                 i.dropdown.icon
             .content
                 a.item.zoom.toggle_sidebar(href="/tribes" class="{{isActivePath '/tribes'}}")
                     |tribes
                     i.fire.icon
+                a.item.zoom.toggle_sidebar(href="/tasks" class="{{isActivePath '/tasks'}}")
+                    |tasks
+                    i.tasks.icon
                 a.item.zoom.toggle_sidebar(href="/chat" class="{{isActivePath '/chat'}}")
                     |chat
                     i.chat.outline.icon
@@ -282,18 +287,9 @@ template(name='left_sidebar')
                 .item.zoom.toggle_sidebar.newest_debits 
                     |badges
                 a.item.zoom.toggle_sidebar.my_debits(href="/m/rental") rentals
-        a.item.zoom.toggle_sidebar(href="/requests" class="{{isActivePath '/requests'}}")
-            |requests
-            i.concierge.bell.icon
-        a.item.zoom.toggle_sidebar(href="/offers" class="{{isActivePath '/offers'}}")
-            |offers
-            i.store.icon
-        a.item.zoom.toggle_sidebar(href="/events" class="{{isActivePath '/events'}}")
-            |events
-            i.calendar.icon
-        a.item.zoom.toggle_sidebar(href="/tasks" class="{{isActivePath '/tasks'}}")
-            |tasks
-            i.tasks.icon
+                a.item.zoom.toggle_sidebar(href="/events" class="{{isActivePath '/events'}}")
+                    |events
+                    i.calendar.icon
             
         if is_eric
             a.item.zoom.toggle_dev.toggle_sidebar

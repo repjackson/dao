@@ -1,0 +1,99 @@
+template(name='tribe_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row
+                .four.wide.center.aligned.column
+                    // if can_edit
+                    a(href="/tribes" title='tribes')
+                        i.circular.large.fire.link.icon
+                .eight.wide.center.aligned.column
+                    if icon
+                        i.icon(class=icon)
+                    else
+                        i.circular.large.fire.icon
+                    .ui.center.aligned.inline.header 
+                        small viewing tribe
+                        |#{title}
+                        if private
+                            i.lock.icon(title='private')
+                .four.wide.center.aligned.column
+                    if can_edit
+                        a.edit_tribe(href="/tribe/#{_id}/edit")
+                            i.big.pencil.circular.link.icon
+            .row 
+                .four.wide.column
+                    .ui.header 
+                        i.newspaper.icon
+                        |#{post_count}
+                        |posts
+                    +vote
+                    .ui.header 
+                        i.hand.holding.icon
+                        |#{offer_count}
+                        |offers
+                    .ui.header
+                        i.marker.icon 
+                        |#{location}
+                    .ui.header 
+                        small leader
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.username}
+                    +image_view key='image_id' label='image' direct=true
+                .eight.wide.column
+                    .ui.grey.header 
+                        i.rss.icon 
+                        |latest
+                    .ui.list
+                        each latest_updates
+                            .ui.item #{title}
+                    .ui.accordion
+                        .title
+                            .ui.header 
+                                i.newspaper.icon
+                                |posts
+                        .content
+                            .ui.icon.circular.button.add_tribe_post
+                                i.plus.icon
+                            each tribe_posts
+                                a.ui.header(href="/post/#{_id}/view") #{title}
+                        .title
+                            .ui.header 
+                                i.info.icon
+                                |info
+                        .content
+                            +textarea_view key='description' label='description' direct=true
+                            +array_view key='tags' label='tags' direct=true
+                        .title
+                            .ui.header 
+                                i.chat.icon
+                                |comments
+                        .content
+                            +comments
+                        .title
+                            .ui.header 
+                                i.coins.icon
+                                |credits
+                        .content
+                            +comments
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    .ui.button.add_tribe_gift
+                        i.large.gift.icon
+                        |gift
+                    .ui.button.add_tribe_post
+                        i.newspaper.large.icon
+                        |post
+                    .ui.button
+                        i.picture.icon
+                        |add image
+                    .ui.button
+                        i.concierge.bell.icon
+                        |request
+                    .ui.header 
+                        +icon name='tribe'
+                        |members
+                    +multi_user_view key='member_ids' label='members' direct=true
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
