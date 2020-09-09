@@ -357,9 +357,9 @@ template(name='image_link_edit')
     .ui.fluid.input
         // .ui.smoothed.label image link
         i.image.icon
-        input.edit_image_link(type='link' value=image_link placeholder='image link'  autocomplete="off")
-    if image_link
-        img.ui.fluid.image(src=image_link)
+        input.edit_image_link(type='link' value=field_value placeholder='image link'  autocomplete="off")
+    if field_value
+        img.ui.fluid.image(src=field_value)
     // +call_visual
 
 

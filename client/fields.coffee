@@ -166,10 +166,14 @@ Template.link_edit.events
 Template.image_link_edit.events
     'blur .edit_image_link': (e,t)->
         val = t.$('.edit_image_link').val()
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
         doc = Docs.findOne parent._id
         parent = Template.parentData()
         Docs.update parent._id,
-            $set:"image_link":val
+            $set:"#{@key}":val
 
 
 Template.icon_edit.events

@@ -1,12 +1,11 @@
 template(name='tribe_view')
     with current_doc
         .ui.stackable.padded.grid
-            .centered.middle.aligned.row
-                .four.wide.center.aligned.column
+            .centered.row
+                .four.wide.column
                     // if can_edit
-                    a(href="/tribes" title='tribes')
+                    a(href="/m/tribe" title='tribes')
                         i.circular.large.fire.link.icon
-                .eight.wide.center.aligned.column
                     if image_id
                         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                     else
@@ -17,12 +16,9 @@ template(name='tribe_view')
                         if private
                             i.lock.icon(title='private')
                         small tribe
-                .four.wide.center.aligned.column
                     if can_edit
                         a.edit_tribe(href="/tribe/#{_id}/edit")
                             i.big.pencil.circular.link.icon
-            .row 
-                .four.wide.column
                     .ui.header 
                         i.newspaper.icon
                         |#{post_count}
@@ -47,18 +43,19 @@ template(name='tribe_view')
                         .active.title
                             .ui.grey.inline.header 
                                 i.rss.icon 
-                                |latest
+                                |#{latest_updates.count} latest
                             i.dropdown.icon
-                        .active.content
+                        .active.content.smallscroll
                             .ui.feed
                                 each latest_updates
                                     .event
                                         .label 
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                            
+                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                         .content
                                             .summary
                                                 a.user(href="/user/#{_author_username}") #{_author_username}
+                                                if image_id
+                                                    img.ui.mini.rounded.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                                 |#{title} #{price}
                                                 each tags 
                                                     .ui.label #{this}
@@ -76,6 +73,7 @@ template(name='tribe_view')
                         .title
                             .ui.inline.header 
                                 i.newspaper.icon
+                                |#{tribe_posts.count}
                                 |posts
                             i.dropdown.icon
                         .content
@@ -90,6 +88,16 @@ template(name='tribe_view')
                                 |info
                             i.dropdown.icon
                         .content
+                            +textarea_view key='description' label='description' direct=true
+                            +array_view key='tags' label='tags' direct=true
+                        .title
+                            .ui.inline.header 
+                                i.picture.icon
+                                |pictures
+                            i.dropdown.icon
+                        .content
+                            each latest_photos
+                                img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             +textarea_view key='description' label='description' direct=true
                             +array_view key='tags' label='tags' direct=true
                         .title
@@ -139,4 +147,12 @@ template(name='tribe_view')
 
 
 template(name='tribe_badges')
+    if user_id_in 'chief_ids'
+        i.large.plus.circular.icon.add_badge
+    .ui.cards
+        each badges
+            .ui.card 
+                img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                .content
+                    .header #{title}
 template(name='tribe_finance')

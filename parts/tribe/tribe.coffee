@@ -1,28 +1,10 @@
 if Meteor.isClient
-    Router.route '/tribes', (->
-        @layout 'layout'
-        @render 'tribes'
-        ), name:'tribes'
     Router.route '/tribe/:doc_id/edit', (->
         @layout 'layout'
         @render 'tribe_edit'
         ), name:'tribe_edit'
 
 
-    Template.tribes.onCreated ->
-        @autorun -> Meteor.subscribe 'model_docs', 'tribe'
-    Template.tribes.helpers
-        tribe_docs: ->
-            Docs.find 
-                model:'tribe'
-    Template.tribes.events 
-        'click .add_tribe': ->
-            new_id = 
-                Docs.insert 
-                    model:'tribe'
-            Router.go "/tribe/#{new_id}/edit"        
-            
-            
     Template.tribe_card.onRendered ->
         Meteor.setTimeout ->
             $('.ui.embed').embed();

@@ -28,6 +28,12 @@ if Meteor.isClient
                     model:'post'
                     tribe_id:@_id
             Router.go "/post/#{new_id}/edit"
+        'click .add_tribe_badge': ->
+            new_id = 
+                Docs.insert
+                    model:'badge'
+                    tribe_id:@_id
+            Router.go "/badge/#{new_id}/edit"
         'click .add_tribe_gift': ->
             new_id = 
                 Docs.insert
@@ -54,6 +60,11 @@ if Meteor.isClient
                 model:'tip'
         
         tribe_posts: ->
+            Docs.find   
+                model:'post'
+                tribe_id:@_id
+        
+        latest_photos: ->
             Docs.find   
                 model:'post'
                 tribe_id:@_id

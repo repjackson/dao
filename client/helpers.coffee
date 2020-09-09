@@ -9,6 +9,16 @@ Template.registerHelper 'in_role', (role)->
         false
         
         
+Template.registerHelper 'user_id_in', (key)->
+    if Meteor.user()
+        if Meteor.userId() in @["#{key}"]
+            true
+        else
+            false
+    else
+        false
+        
+        
 Template.registerHelper 'youtube_parse', (url) ->
     regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     match = @url.match(regExp)

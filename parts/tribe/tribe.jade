@@ -1,18 +1,3 @@
-template(name='tribes')
-    .ui.stackable.padded.grid 
-        .four.wide.column
-            .ui.header 
-                i.fire.icon
-                |tribes
-            if currentUser
-                i.circular.plus.link.icon.add_tribe
-        .sixteen.wide.column
-            .ui.cards
-                each tribe_docs 
-                    .ui.card
-                        .content
-                            a.ui.header(href="/tribe/#{_id}/view") #{title}
-                    
 template(name='join')
     if is_member
         .ui.button.leave

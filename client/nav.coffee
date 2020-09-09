@@ -77,26 +77,6 @@ Template.nav.events
             if search.legnth is 0
                 selected_tags.pop()
 
-    'click .set_wikipedia': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'wikipedia', ->
-            Session.set 'loading', false
-    'click .set_reddit': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'reddit', ->
-            Session.set 'loading', false
-    'click .set_task': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'task', ->
-            Session.set 'loading', false
-    'click .set_badge': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'badge', ->
-            Session.set 'loading', false
-    'click .set_picture': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'picture', ->
-            Session.set 'loading', false
     'click .set_post': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'post', ->
@@ -126,8 +106,6 @@ Template.nav.events
                 seller_username:Meteor.user().username
         Router.go "/alpha/#{new_alpha_id}/edit"
 
-        
-Template.nav.events
     'click .toggle_admin': ->
         if 'admin' in Meteor.user().roles
             Meteor.users.update Meteor.userId(),
