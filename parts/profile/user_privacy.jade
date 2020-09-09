@@ -13,6 +13,10 @@ template(name='user_edit_privacy')
                     |allow others to find your profile and follow you, allows you to follow others, enrolls you in public leaderboards
         .row 
             .sixteen.wide.column
+                .ui.header safety
+                +multi_user_edit key='blocked_ids' label='blocked users' direct=true
+        .row 
+            .sixteen.wide.column
                 a.ui.basic.compact.button.logout_other_clients(href="#")
                     i.globe.icon
                     |log out other clients

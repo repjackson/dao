@@ -13,34 +13,34 @@ template(name='user_edit_layout')
                                 | @#{current_user.username}
                             img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 
-                            a.ui.big.green.circular.icon.button(href="/user/#{current_user.username}/") 
+                            a.ui.big.green.circular.compact.button(href="/user/#{current_user.username}/") 
                                 i.checkmark.big.icon
                                 strong save
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
                                 i.cog.large.icon 
                                 |account
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
                                 i.info.large.icon 
                                 |info
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
                                 i.bell.large.icon 
                                 |alerts
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
                                 i.dna.large.icon 
                                 |genekeys
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
                                 i.lock.privacy.large.icon 
                                 | privacy
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
                                 i.users.large.icon 
                                 | friends
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
                                 i.certificate.large.icon
                                 |badges
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
                                 i.shield.large.icon
                                 | membership
-                            a.ui.large.basic.circular.button(href="/user/#{current_user.username}/edit/tribes" class="{{isActiveRoute 'user_edit_tribe'}}" title='membership') 
+                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/tribes" class="{{isActiveRoute 'user_edit_tribe'}}" title='membership') 
                                 i.fire.large.icon
                                 | tribes
                                 
@@ -57,6 +57,12 @@ template(name='user_edit_alerts')
         .item invited to event 
         .item invited to shift 
         .item personal request received 
+        
+template(name='user_edit_friends')
+    .ui.header
+        i.users.icon
+        | friends
+    +multi_user_edit key='friend_ids' label='friends' direct=true
 
 template(name='user_edit_genekeys')
     .ui.header
@@ -174,6 +180,9 @@ template(name='user_edit_account')
             +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true
             +password_edit
         .column
+            +text_edit key='first_name' label='first name' direct=true
+            +text_edit key='last_name' label='last name' direct=true
+            +text_edit key='display_name' label='display name' direct=true
             .ui.header 
                 i.envelope.outline.icon
                 |emails
@@ -190,7 +199,6 @@ template(name='user_edit_account')
                             |delete user
             .spacer
             +phone_edit key='phone' label='phone' icon='phone' direct=true
-            +multi_user_edit key='friend_ids' label='friends' direct=true
             //- +phone_editor
             +array_edit key='tags' label='tags' direct=true
         

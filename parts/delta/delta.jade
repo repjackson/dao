@@ -217,6 +217,7 @@ template(name='set_view_mode')
         i.large.icon(class=icon)
         //- if icon 
         //- |#{title}
+        
 template(name='facet')
     div
     if filtering_res
@@ -236,7 +237,7 @@ template(name='facet')
         if viewing_results
             each filtering_res
                 // if name
-                a.selector.ui.compact.basic.circular.button.toggle_selection.select_term(class=toggle_value_class title=count)
+                a.selector.ui.compact.circular.button.toggle_selection.select_term(class=toggle_value_class title=count)
                     //- with ..
                     //- if parent_key_value_is 'field_type' 'color_icon'
                     //-     .ui.header icon
