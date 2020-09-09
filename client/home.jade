@@ -1,7 +1,7 @@
 template(name='home')
     .ui.stackable.padded.grid 
         .row
-            .four.wide.column
+            .sixteen.wide.column
                 // iframe(frameborder="0" width="400" height="200" src="https://drive.google.com/file/d/1_encX_RKyZhOU26r7_cNTtl0rLvEQSai/preview")
                 .ui.left.icon.input 
                     i.search.icon
@@ -13,10 +13,10 @@ template(name='home')
                     each selected_tags
                         +unselect_tag
                 // div
-                +session_boolean_toggle key='view_tags' label='tags' icon='tag'
-                if session_is 'view_tags'
-                    each tag_results
-                        +tag_selector
+                // +session_boolean_toggle key='view_tags' label='tags' icon='tag'
+                // if session_is 'view_tags'
+                each tag_results
+                    +tag_selector
                 // div
                 +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
                 if session_is 'view_authors'
@@ -68,7 +68,7 @@ template(name='home')
                         a.ui.large.compact.circular.button.select_source.select_term(href='#')
                             strong #{name}
                 .spacer
-            .twelve.wide.column
+            .sixteen.wide.column
                 if two_posts
                     .ui.stackable.two.cards
                         each docs

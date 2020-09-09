@@ -12,7 +12,10 @@ template(name='nav')
             i.wikipedia.large.icon
         a.icon.mobile.hidden.set_reddit.item(href="/m/reddit")
             i.reddit.large.icon
-            
+        .ui.input.item
+            .ui.icon.input
+                i.search.icon
+                input.search_dao(type='text')
         a.icon.mobile.hidden.item.set_post(href="/m/post" class="{{isActivePath '/m/post'}}")
             i.large.newspaper.icon
         a.icon.mobile.hidden.item.set_request(href="/m/request" class="{{isActivePath '/m/request'}}")

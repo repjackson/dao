@@ -113,14 +113,14 @@ if Meteor.isClient
     Template.home.helpers
         selected_tags_plural: -> selected_tags.array().length > 1
         one_post: ->
-            match = {model:'post'}
+            match = {model:$in:['post','reddit','wikipedia']}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
 
             Docs.find(match).count() is 1
     
         two_posts: -> 
-            match = {model:'post'}
+            match = {model:$in:['post','reddit','wikipedia']}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
             Docs.find(match).count() is 2
@@ -129,7 +129,7 @@ if Meteor.isClient
     
         can_debit: -> Meteor.user().points > 0
         docs: ->
-            match = {model:'post'}
+            match = {model:$in:['post','reddit','wikipedia']}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
             Docs.find match,
@@ -142,7 +142,7 @@ if Meteor.isClient
         term: ->
             # console.log @
             Docs.find 
-                model:'post'
+                model:$in:['wikipedia']
                 title:@name
         
         one_result: ->
@@ -197,7 +197,7 @@ if Meteor.isClient
         'click .post': ->
             new_post_id =
                 Docs.insert
-                    model:'post'
+                    model:$in:['post','reddit','wikipedia']
                     buyer_id:Meteor.userId()
                     buyer_username:Meteor.user().username
             Router.go "/post/#{new_post_id}/edit"
@@ -245,7 +245,7 @@ if Meteor.isServer
         # console.log title
         Docs.find
             title:title
-            model:'post'
+            model:$in:['post','reddit','wikipedia']
     
     
     Meteor.publish 'docs', (
@@ -256,7 +256,7 @@ if Meteor.isServer
         selected_sources
         )->
         match = {}
-        match.model = 'post'
+        match.model = $in:['post','reddit','wikipedia']
         if Meteor.user()
             match.downvoter_ids = $nin:[Meteor.userId()]
         if query.length > 1
@@ -287,7 +287,7 @@ if Meteor.isServer
         self = @
         match = {}
         # match.model = $in:['post','alpha']
-        match.model = 'post'
+        match.model = $in:['post','reddit','wikipedia']
         
         if query.length > 1
             match.title = {$regex:"#{query}", $options: 'i'}
