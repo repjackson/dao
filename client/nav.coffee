@@ -57,6 +57,43 @@ Template.nav.helpers
 
         
 Template.nav.events
+    'click .set_tribe': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'tribe', ->
+            Session.set 'loading', false
+    'click .set_rental': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'rental', ->
+            Session.set 'loading', false
+    'click .set_offer': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'offer', ->
+            Session.set 'loading', false
+    'click .set_event': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'event', ->
+            Session.set 'loading', false
+    'click .set_request': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'request', ->
+            Session.set 'loading', false
+    'click .set_task': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'task', ->
+            Session.set 'loading', false
+    'click .set_badge': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'badge', ->
+            Session.set 'loading', false
+    'click .set_picture': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'picture', ->
+            Session.set 'loading', false
+    'click .set_post': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'post', ->
+            Session.set 'loading', false
+
     'click .debit': ->
         new_debit_id =
             Docs.insert

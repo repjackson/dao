@@ -8,25 +8,25 @@ template(name='nav')
                 i.large.yin.yang.icon
         a.icon.mobile.hidden.item(href="/" class="{{isActivePath '/'}}")
             i.large.newspaper.icon
-        a.icon.mobile.hidden.item(href="/requests" class="{{isActivePath '/requests'}}")
+        a.icon.mobile.hidden.item.set_request(href="/m/request" class="{{isActivePath '/m/request'}}")
             i.large.concierge.bell.icon
-        a.icon.mobile.hidden.item(href="/offers" class="{{isActivePath '/offers'}}")
+        a.icon.mobile.hidden.item.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}")
             i.large.store.icon
-        a.icon.mobile.hidden.item(href="/events" class="{{isActivePath '/events'}}")
+        a.icon.mobile.hidden.item.set_event(href="/m/event" class="{{isActivePath '/m/event'}}")
             i.large.calendar.icon
-        a.icon.mobile.hidden.item(href="/tribes" class="{{isActivePath '/tribes'}}")
+        a.icon.mobile.hidden.item.set_tribe(href="/m/tribe" class="{{isActivePath '/m/tribe'}}")
             i.large.fire.icon
-        a.icon.mobile.hidden.item(href="/rentals" class="{{isActivePath '/rentals'}}")
+        a.icon.mobile.hidden.item.set_rental(href="/m/rental" class="{{isActivePath '/rentals'}}")
             i.large.clock.icon
         a.icon.mobile.hidden.item(href="/chat" class="{{isActivePath '/chat'}}")
             i.large.chat.outline.icon
-        a.icon.mobile.hidden.item(href="/tasks" class="{{isActivePath '/tasks'}}")
+        a.icon.mobile.hidden.item.set_task(href="/m/task" class="{{isActivePath '/m/task'}}")
             i.large.tasks.icon
-        a.icon.mobile.hidden.item(href="/meals" class="{{isActivePath '/meals'}}")
+        a.icon.mobile.hidden.item(href="/m/meal" class="{{isActivePath '/m/meal'}}")
             i.large.food.icon
-        a.icon.mobile.hidden.item(href="/badges" class="{{isActivePath '/badges'}}")
+        a.icon.mobile.hidden.item.set_badge(href="/m/badge" class="{{isActivePath '/m/badge'}}")
             i.large.certificate.icon
-        a.icon.mobile.hidden.item(href="/pictures" class="{{isActivePath '/pictures'}}")
+        a.icon.mobile.hidden.item.set_picture(href="/m/picture" class="{{isActivePath '/m/picture'}}")
             i.large.image.icon
         .item
             +status    
@@ -268,3 +268,7 @@ template(name='left_sidebar')
                     i.shield.blue.large.icon
                 else
                     i.shield.large.icon
+        if is_admin
+            a.item.zoom.toggle_dev.toggle_sidebar(href="/m/model")
+                |delta
+                i.database.large.icon

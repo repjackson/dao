@@ -80,12 +80,13 @@ if Meteor.isClient
 
     Template.registerHelper 'is_loading', () ->
         Session.get('loading')
+        
+        
     Template.registerHelper 'field_value', () ->
         # console.log @
         parent = Template.parentData()
         parent5 = Template.parentData(5)
         parent6 = Template.parentData(6)
-
 
         if @direct
             parent = Template.parentData()
