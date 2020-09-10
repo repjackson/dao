@@ -7,7 +7,8 @@ template(name='delta_result_card')
                 .content
                     if key_value_is 'model' 'model'
                         .ui.header
-                            i.icon(class=icon)
+                            // i.icon(class=icon)
+                            +i name=icon
                             |#{title}
                     else
                         each fields

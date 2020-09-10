@@ -91,7 +91,8 @@ template(name='tribe_view')
                         .ui.fitted.divider
                         .title
                             .ui.inline.header 
-                                i.newspaper.icon
+                                // i.newspaper.icon
+                                +i name='blog' cl='ui avatar image'
                                 |#{tribe_posts.count}
                                 |posts
                             i.dropdown.icon
@@ -104,12 +105,14 @@ template(name='tribe_view')
                         .ui.fitted.divider
                         .title
                             .ui.inline.header 
-                                i.info.icon
+                                // i.info.icon
+                                +i name='info' cl='ui avatar image'
                                 |info
                             i.dropdown.icon
                         .content
                             .ui.header
-                                i.marker.icon 
+                                +i name='marker' cl='ui avatar image'
+                                // i.marker.icon 
                                 |#{location}
                             +textarea_view key='description' label='description' direct=true
                             +array_view key='tags' label='tags' direct=true
@@ -117,7 +120,8 @@ template(name='tribe_view')
                         .ui.fitted.divider
                         .title
                             .ui.inline.header 
-                                i.shop.icon
+                                +i name='shop' cl='ui avatar image'
+                                // i.shop.icon
                                 |offers
                             i.dropdown.icon
                         .content
@@ -127,7 +131,8 @@ template(name='tribe_view')
                         .ui.fitted.divider
                         .title
                             .ui.inline.header 
-                                i.concierge.bell.icon
+                                // i.concierge.bell.icon
+                                +i name='service' cl='ui avatar image'
                                 |requests
                             i.dropdown.icon
                         .content
@@ -137,7 +142,8 @@ template(name='tribe_view')
                         .ui.fitted.divider
                         .title
                             .ui.inline.header 
-                                i.picture.icon
+                                +i name='picture' cl='ui avatar image'
+                                // i.picture.icon
                                 |pictures
                             each latest_photos
                                 img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
@@ -148,7 +154,8 @@ template(name='tribe_view')
                         .ui.fitted.divider
                         .title
                             .ui.inline.header 
-                                i.chat.icon
+                                +i name='chat' cl='ui avatar image'
+                                // i.chat.icon
                                 |comments
                             i.dropdown.icon
                         .content
@@ -156,7 +163,8 @@ template(name='tribe_view')
                         .ui.fitted.divider
                         .title
                             .ui.inline.header 
-                                i.coins.icon
+                                +i name='coins' cl='ui avatar image'
+                                // i.coins.icon
                                 |credits
                             i.dropdown.icon
                         .content
@@ -167,26 +175,31 @@ template(name='tribe_view')
                 .four.wide.column
                     +image_view key='image_id' label='image' direct=true
                     .ui.button.add_tribe_gift
-                        i.large.gift.icon
+                        // i.large.gift.icon
+                        +i name='gift' cl='ui avatar image'
                         |gift
                     .ui.button.add_tribe_post
-                        i.newspaper.large.icon
+                        // i.newspaper.large.icon
+                        +i name='compose-new' cl='ui avatar image'
                         |post
                     .ui.button
                         i.picture.icon
+                        +i name='picture' cl='ui avatar image'
                         |add image
                     .ui.button
-                        i.concierge.bell.icon
+                        // i.concierge.bell.icon
+                        +i name='bell' cl='ui avatar image'
                         |request
-                    +multi_user_view key='leader_ids' label='leaders' icon='chess king' direct=true
-                    +multi_user_view key='member_ids' label='members' icon='users' direct=true
+                    +multi_user_view key='leader_ids' label='leaders' icon='crown' direct=true
+                    +multi_user_view key='member_ids' label='members' icon='groups' direct=true
 
 
 
 template(name='tribe_badges')
     .title
         .ui.inline.header 
-            i.certificate.icon
+            // i.certificate.icon
+            +i name='certificate'
             |#{badges.count} badges
         each badges
             img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -203,7 +216,8 @@ template(name='tribe_badges')
 template(name='tribe_events')
     .title
         .ui.inline.header 
-            i.calendar.icon
+            // i.calendar.icon
+            +i name='calendar'
             |#{events.count} events
         each badges
             img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")

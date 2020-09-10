@@ -204,7 +204,7 @@ template(name='icon_edit')
     div
     if icon
         //- i.grey.icon(class=icon)
-        +icon name=icon cl='ui avatar image'
+        +i name=icon cl='ui avatar image'
     .ui.inline.header
         if title
             |#{title}
@@ -1182,7 +1182,8 @@ template(name='multi_doc_input')
 template(name='multi_user_view')
     .ui.header 
         if icon 
-            i.icon(class=icon)
+            // i.icon(class=icon)
+            +i name=icon cl='ui avatar image'
         |#{field_value.length}
         |#{title} #{label}
         //- #{key} #{label}

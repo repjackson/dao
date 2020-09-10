@@ -17,31 +17,40 @@ template(name='user_edit_layout')
                                 i.checkmark.big.icon
                                 strong save
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
-                                i.cog.large.icon 
+                                // i.cog.large.icon 
+                                +i name='account' cl='ui inline image'
                                 |account
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
-                                i.info.large.icon 
+                                // i.info.large.icon 
+                                +i name='info' cl='ui inline image'
                                 |info
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
-                                i.bell.large.icon 
+                                // i.bell.large.icon 
+                                +i name='bell' cl='ui inline image'
                                 |alerts
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
-                                i.dna.large.icon 
+                                // i.dna.large.icon 
+                                +i name='dna' cl='ui inline image'
                                 |genekeys
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
-                                i.lock.privacy.large.icon 
+                                // i.lock.privacy.large.icon 
+                                +i name='lock' cl='ui inline image'
                                 | privacy
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
-                                i.users.large.icon 
+                                +i name='groups' cl='ui inline image'
+                                // i.users.large.icon 
                                 | friends
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
-                                i.certificate.large.icon
+                                // i.certificate.large.icon
+                                +i name='sherrif' cl='ui inline image'
                                 |badges
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
-                                i.shield.large.icon
+                                +i name='id-badge' cl='ui inline image'
+                                // i.shield.large.icon
                                 | membership
                             a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/tribes" class="{{isActiveRoute 'user_edit_tribe'}}" title='membership') 
-                                i.fire.large.icon
+                                +i name='campfire' cl='ui inline image'
+                                // i.fire.large.icon
                                 | tribes
                                 
                         .twelve.wide.column

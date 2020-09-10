@@ -152,7 +152,9 @@ template(name='model_top')
                 a.ui.icon.basic.compact.button.go_home
                     i.big.home.icon
         a.ui.inline.large.header.reset(title="#{description}, #{views} views")
-            i.large.icon(class=icon)
+            // i.large.icon(class=icon)
+            +i name=icon
+            
             | #{current_model.title}
     unless is_loading
         if currentUser
@@ -176,7 +178,7 @@ template(name='model_top')
         else
             .create_delta.ui.big.green.button(title='new session')
                 i.plus.icon
-                | session
+                | start session
 
 
 
@@ -237,7 +239,7 @@ template(name='facet')
         if viewing_results
             each filtering_res
                 // if name
-                a.selector.ui.compact.button.toggle_selection.select_term(class=toggle_value_class title=count)
+                a.selector.ui.compact.basic.circular.button.toggle_selection.select_term(class=toggle_value_class title=count)
                     //- with ..
                     //- if parent_key_value_is 'field_type' 'color_icon'
                     //-     .ui.header icon

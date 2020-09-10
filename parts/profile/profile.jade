@@ -34,7 +34,8 @@ template(name='profile_layout')
                                 i.cog.icon
                                 |account
                             a.ui.circular.button.logout(href="#" title='log out')
-                                i.sign.out.icon
+                                // i.sign.out.icon
+                                +i name='exit-sign'
                                 |log out
                         a.ui.button(href="/user/#{username}/kin")
                             i.coins.icon 
@@ -47,7 +48,8 @@ template(name='profile_layout')
                             +i name='food'
                             |food
                         a.ui.button(href="/user/#{username}/social")
-                            i.rss.icon 
+                            // i.rss.icon 
+                            +i name='chat'
                             |social
                         a.ui.button(href="/user/#{username}/messages")
                             +i name='chat'
@@ -80,37 +82,47 @@ template(name='profile_layout')
                             i.thumbs.up.outline.icon
                             |karma 
                         a.ui.compact.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
-                            i.chat.outline.icon
+                            // i.chat.outline.icon
+                            +i name='chat' cl='ui inline image'
                             |chat
                         a.ui.compact.button(href="/user/#{username}/upvotes" class="{{isActiveRoute 'user_upvotes'}}")
                             i.thumbs.up.outline.icon
                             |upvotes 
                         a.ui.compact.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
-                            i.thumbs.down.outline.icon
+                            // i.thumbs.down.outline.icon
+                            +i name='downvote'
                             |downvotes
                         a.ui.compact.button(href="/user/#{username}/kin" class="{{isActiveRoute 'user_kin'}}")
-                            i.chevron.down.icon
+                            // i.chevron.down.icon
+                            +i name='coins'
                             |karma in
                         a.ui.compact.button(href="/user/#{username}/kout" class="{{isActiveRoute 'user_kout'}}")
-                            i.chevron.up.icon
+                            +i name='expense' cl='ui inline image'
+                            // i.chevron.up.icon
                             |karma out
                         a.ui.compact.button(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}")
-                            i.users.icon
+                            // i.users.icon
+                            +i name='groups' cl='ui inline image'
                             |friends
                         a.ui.compact.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}")
-                            i.calendar.icon
+                            // i.calendar.icon
+                            +i name='calendar' cl='ui inline image'
                             |events
                         a.ui.compact.button(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
-                            i.fire.icon
+                            // i.fire.icon
+                            +i name='campfire' cl='ui inline image'
                             |tribes
                         a.ui.compact.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}")
-                            i.fire.icon
+                            // i.fire.icon
+                            +i name='sheriff' cl='ui inline image'
                             |badges
                         a.ui.compact.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}")
-                            i.concierge.bell.icon
+                            // i.concierge.bell.icon
+                            +i name='front-desk' cl='ui inline image'
                             |requests
                         a.item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}")
-                            i.shop.icon
+                            // i.shop.icon
+                            +i name='shop' cl='ui inline image'
                             |offers
                         +yield    
                       

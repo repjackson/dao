@@ -14,24 +14,24 @@ template(name='tribe_edit')
                 .twelve.wide.column
                     +image_view kay='banner_id' direct=true height='200px'
                     .ui.big.styled.fluid.accordion
-                        .active.title
+                        .title
                             .ui.inline.header 
                                 i.info.icon
                                 |info
                             i.dropdown.icon
-                        .active.content
+                        .content
                             +text_edit key='title' icon='header' direct=true
                             +boolean_edit key='published' direct=true        
                             +textarea_edit key='description' label='description' direct=true
                             +icon_edit key='icon' label='icon' direct=true
                             div 
                             +array_edit key='tags' label='tags' direct=true
-                        .active.title
+                        .title
                             .ui.inline.header 
                                 i.phone.icon
                                 |contact
                             i.dropdown.icon
-                        .active.content
+                        .content
                             +text_edit key='phone' icon='phone' direct=true
                             div 
                             +text_edit key='location' label='location' icon='marker' direct=true
