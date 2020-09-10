@@ -15,13 +15,9 @@ template(name='tribe_view')
                     if can_edit
                         a.edit_tribe(href="/m/tribe/#{_id}/edit")
                             i.big.pencil.circular.link.icon
-                    +image_view key='image_id' label='image' direct=true
                     +vote
-                    .ui.header
-                        i.marker.icon 
-                        |#{location}
                 .eight.wide.column
-                    .ui.accordion
+                    .ui.big.accordion
                         .active.title
                             .ui.grey.inline.header 
                                 i.rss.icon 
@@ -52,6 +48,7 @@ template(name='tribe_view')
                                                 i.large.newspaper.icon
                                             else
                                                 .ui.label #{model}
+                        .ui.divider
                         .title
                             .ui.inline.header 
                                 i.newspaper.icon
@@ -64,14 +61,20 @@ template(name='tribe_view')
                             .ui.link.large.selection.list
                                 each tribe_posts
                                     a.item(href="/post/#{_id}/view") #{title}
+                        .ui.divider
                         .title
                             .ui.inline.header 
                                 i.info.icon
                                 |info
                             i.dropdown.icon
                         .content
+                            .ui.header
+                                i.marker.icon 
+                                |#{location}
                             +textarea_view key='description' label='description' direct=true
                             +array_view key='tags' label='tags' direct=true
+                            +array_view key='location_tags' label='location tags' direct=true
+                        .ui.divider
                         .title
                             .ui.inline.header 
                                 i.shop.icon
@@ -81,8 +84,17 @@ template(name='tribe_view')
                             each latest_offers
                                 a(href="/m/offer/#{_id}/view")
                                     img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            +textarea_view key='description' label='description' direct=true
-                            +array_view key='tags' label='tags' direct=true
+                        .ui.divider
+                        .title
+                            .ui.inline.header 
+                                i.concierge.bell.icon
+                                |requests
+                            i.dropdown.icon
+                        .content
+                            each latest_requests
+                                a(href="/m/request/#{_id}/view")
+                                    img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        .ui.divider
                         .title
                             .ui.inline.header 
                                 i.picture.icon
@@ -93,6 +105,7 @@ template(name='tribe_view')
                         .content
                             each latest_photos
                                 img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        .ui.divider
                         .title
                             .ui.inline.header 
                                 i.chat.icon
@@ -100,6 +113,7 @@ template(name='tribe_view')
                             i.dropdown.icon
                         .content
                             +comments
+                        .ui.divider
                         .title
                             .ui.inline.header 
                                 i.coins.icon
@@ -110,6 +124,7 @@ template(name='tribe_view')
                         +tribe_badges
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
+                    +image_view key='image_id' label='image' direct=true
                     .ui.button.add_tribe_gift
                         i.large.gift.icon
                         |gift

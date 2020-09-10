@@ -2,59 +2,61 @@ template(name='tribe_edit')
     with current_doc
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
-                .four.wide.center.aligned.column
+                .four.wide.column
                     a.ui.green.big.icon.button(href="/m/tribe/#{_id}/view" title='save')
                         i.checkmark.big.icon
-                .eight.wide.center.aligned.column
                     .ui.inline.header 
                         i.fire.icon
                         small edit 
                         |#{title}
                         small tribe
-                .four.wide.center.aligned.column
                     i.link.big.remove.icon.delete_item(title='delete tribe')
-            .row 
-                .four.wide.column
-                    +text_edit key='location' label='location' icon='marker' direct=true
-                    +icon_edit key='icon' label='icon' direct=true
-                    div 
-                    +array_edit key='tags' label='tags' direct=true
                 .eight.wide.column
-                    .ui.big.accordion
-                        .title
-                            i.info.icon
-                            |info
+                    .ui.big.styled.accordion
+                        .active.title
+                            .ui.inline.header 
+                                i.info.icon
+                                |info
                             i.dropdown.icon
-                        .content
+                        .active.content
                             +text_edit key='title' icon='header' direct=true
                             +boolean_edit key='published' direct=true        
                             +textarea_edit key='description' label='description' direct=true
+                            +icon_edit key='icon' label='icon' direct=true
+                            div 
+                            +text_edit key='location' label='location' icon='marker' direct=true
                             +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                            div 
+                            +array_edit key='tags' label='tags' direct=true
                         .title
-                            i.picture.icon
-                            |image
+                            .ui.inline.header 
+                                i.picture.icon
+                                |image
                             i.dropdown.icon
                         .content
                             +image_edit key='image_id' label='image' direct=true
                         .title
-                            i.users.icon
-                            |#{member_ids.length} people
+                            .ui.inline.header 
+                                i.users.icon
+                                |#{member_ids.length} people
                             i.dropdown.icon
                         .content
                             +multi_user_edit key='leader_ids' icon='chess king' direct=true        
                             +multi_user_edit key='member_ids' label='members' direct=true
                         .title
-                            if private 
-                                i.lock.icon
-                            |privacy
+                            .ui.inline.header 
+                                if private 
+                                    i.lock.icon
+                                |privacy
                             i.dropdown.icon
                         .content
                             +boolean_edit key='private' label='private' direct=true
                             unless private
                                 +boolean_edit key='publicy_visible' label='publicy visible' direct=true
                         .title
-                            i.cubes.icon
-                            |#{feature_ids.length} features
+                            .ui.inline.header 
+                                i.cubes.icon
+                                |#{feature_ids.length} features
                             i.dropdown.icon
                         .content
                             +multi_doc_edit key='feature_ids' ref_model='feaure' label='features' direct=true
