@@ -1,9 +1,10 @@
 template(name='nav')
     .ui.fluid.attached.borderless.menu.topnav(class=currentUser.invert_class)
-        if currentUser
-            a.icon.header.item.toggle_sidebar
-                // i.ellipsis.vertical.icon
-                i.large.yin.yang.icon
+        // if currentUser
+        a.icon.header.item.toggle_sidebar
+            i.bars.icon
+        a.icon.item.set_model(href="/m/model" class="{{isActivePath '/m/model'}}")
+            i.large.yin.yang.icon
         a.icon.item.set_post(href="/" class="{{isActivePath '/'}}")
             i.large.home.icon
         a.icon.mobile.hidden.set_wikipedia.item(href="/m/wikipedia" class="{{isActivePath '/m/wikipedia'}}")
@@ -52,10 +53,10 @@ template(name='nav')
                     a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                         i.large.outline.bell.icon
                 if is_dev 
-                    .icon.item.toggle_dev
+                    a.icon.item.toggle_dev
                         i.large.code.icon
                 if is_admin
-                    .icon.item.toggle_admin
+                    a.icon.item.toggle_admin
                         i.large.shield.icon(title='admin mode on')
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
                     //- i.large.user.large.icon
@@ -84,7 +85,6 @@ template(name='topbar')
         .ui.middle.aligned.divided.list
             each recent_alerts
                 +recent_alert
-        a.ui.icon.attached.basic.inverted.button.item.close_topbar(href="/inbox")
         a.ui.icon.attached.basic.button.item.close_topbar(href="/inbox")
             i.inbox.large.icon
             |inbox

@@ -82,6 +82,10 @@ Template.nav.events
         Session.set 'loading', true
         Meteor.call 'set_facets', 'post', ->
             Session.set 'loading', false
+    'click .set_model': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'model', ->
+            Session.set 'loading', false
 
     'click .debit': ->
         new_debit_id =

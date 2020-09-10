@@ -54,10 +54,8 @@ body {
     /*max-width:100% !important;*/
     min-width:110% !important;
     /*background-attachment: fixed !important;*/
-    width: 100%;
+    width: 120%;
     background-size: cover !important;
-}
-.w-background-video {
     background-size: cover !important;
     /*min-width: 120% !important;*/
     position: absolute;

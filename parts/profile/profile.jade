@@ -74,6 +74,13 @@ template(name='profile_layout')
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
+                        .ui.large.menu.hscroll
+                            a.item(href="/user/#{username}/karma" class="{{isActiveRoute 'user_karma'}}")
+                                i.thumbs.up.outline.icon
+                                |karma 
+                            a.item(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
+                                i.chat.outline.icon
+                                |chat
                         .ui.menu.hscroll
                             a.item(href="/user/#{username}/upvotes" class="{{isActiveRoute 'user_upvotes'}}")
                                 i.thumbs.up.outline.icon
