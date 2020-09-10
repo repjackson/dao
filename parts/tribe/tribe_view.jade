@@ -16,15 +16,20 @@ template(name='tribe_view')
                     if can_edit
                         a.edit_tribe(href="/m/tribe/#{_id}/edit")
                             i.big.pencil.circular.link.icon
-                    .ui.tertiary.segment
+                    .ui.segment
                         .ui.header about
                         +vote
                         .ui.list 
+                            .item #{followers} followers
+                            .item #{phone} 
+                            .item #{location}
+                            .item #{location}
                     .ui.header(data-tooltip="choose how you'll see posts from this page in your news feed")
                         i.rss.icon
                         |alerts
                     +key_value_edit key='alert_setting' value=null label='none'
-                    +key_value_edit key='alert_setting' value=null label=''
+                    +key_value_edit key='alert_setting' value=null label='priority'
+                    +key_value_edit key='alert_setting' value=null label='default'
                     .ui.list
                         .item
                             .content
@@ -54,81 +59,67 @@ template(name='tribe_view')
                                     |off
                 .eight.wide.column
                     +image_view key='banner_id' height='200' crop='crop' direct=true
-                
-                    .ui.big.accordion
-                        .active.title
-                            .ui.grey.inline.header 
-                                i.rss.icon 
-                                |#{latest_updates.count} latest
-                            i.dropdown.icon
-                        .active.content.smallscroll
-                            .ui.feed
-                                each latest_updates
-                                    .event
-                                        .label 
-                                            img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                        .content
-                                            .summary
-                                                a.user(href="/user/#{_author_username}") #{_author_username}
-                                                if image_id
-                                                    img.ui.mini.rounded.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                                a(href="/m/#{model}/#{_id}/view") #{title} #{price}
-                                                |!{description}
-                                                each tags 
-                                                    .ui.label #{this}
-                                            .meta
-                                                a(href="/m/post/#{_id}/view")
-                                                    i.clock.icon 
-                                                    |#{when}
-                                                +voting_small
-                                            if key_value_is 'model' 'debit'
-                                                i.large.gift.icon
-                                                |#{seller.username}
-                                            else if key_value_is 'model' 'post'
-                                                i.large.newspaper.icon
-                                            else
-                                                .ui.label #{model}
-                        .ui.fitted.divider
-                        .title
-                            .ui.inline.header 
-                                // i.newspaper.icon
-                                +i name='blog' cl='ui avatar image'
-                                |#{tribe_posts.count}
-                                |posts
-                            i.dropdown.icon
-                        .content
-                            .ui.icon.circular.button.add_tribe_post
-                                i.plus.icon
-                            .ui.link.large.selection.list
-                                each tribe_posts
-                                    a.item(href="/post/#{_id}/view") #{title}
-                        .ui.fitted.divider
-                        .title
-                            .ui.inline.header 
-                                // i.info.icon
-                                +i name='info' cl='ui avatar image'
-                                |info
-                            i.dropdown.icon
-                        .content
-                            .ui.header
-                                +i name='marker' cl='ui avatar image'
-                                // i.marker.icon 
-                                |#{location}
-                            +textarea_view key='description' label='description' direct=true
-                            +array_view key='tags' label='tags' direct=true
-                            +array_view key='location_tags' label='location tags' direct=true
-                        .ui.fitted.divider
-                        .title
-                            .ui.inline.header 
-                                +i name='shop' cl='ui avatar image'
-                                // i.shop.icon
-                                |offers
-                            i.dropdown.icon
-                        .content
-                            each latest_offers
-                                a(href="/m/offer/#{_id}/view")
-                                    img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        .ui.fitted.divider
+                    +session_edit_value_button key='view_tribe_section' value='latest' label='latest' icon='rss'
+                    +session_edit_value_button key='view_tribe_section' value='offers' label='offers' icon='shop'
+                    +session_edit_value_button key='view_tribe_section' value='requests' label='requests' icon='bell'
+                    +session_edit_value_button key='view_tribe_section' value='posts' label='posts' icon='blog'
+                    +session_edit_value_button key='view_tribe_section' value='info' label='info' icon='info'
+                    +session_edit_value_button key='view_tribe_section' value='credits' label='credits' icon='money'
+                    +session_edit_value_button key='view_tribe_section' value='events' label='events' icon='calendar'
+                    +session_edit_value_button key='view_tribe_section' value='badges' label='badges' icon='certificate'
+                    +session_edit_value_button key='view_tribe_section' value='comments' label='comments' icon='chat'
+                    if session_key_value_is 'view_tribe_section' 'latest'
+                        .ui.header stats
+                        +viewing
+                    if session_key_value_is 'view_tribe_section' 'posts'
+                        .ui.feed
+                            each latest_updates
+                                .event
+                                    .label 
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                    .content
+                                        .summary
+                                            a.user(href="/user/#{_author_username}") #{_author_username}
+                                            if image_id
+                                                img.ui.mini.rounded.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                            a(href="/m/#{model}/#{_id}/view") #{title} #{price}
+                                            |!{description}
+                                            each tags 
+                                                .ui.label #{this}
+                                        .meta
+                                            a(href="/m/post/#{_id}/view")
+                                                i.clock.icon 
+                                                |#{when}
+                                            +voting_small
+                                        if key_value_is 'model' 'debit'
+                                            i.large.gift.icon
+                                            |#{seller.username}
+                                        else if key_value_is 'model' 'post'
+                                            i.large.newspaper.icon
+                                        else
+                                            .ui.label #{model}
+                        .ui.icon.circular.button.add_tribe_post
+                            i.plus.icon
+                        .ui.link.large.selection.list
+                            each tribe_posts
+                                a.item(href="/post/#{_id}/view") #{title}
+                    if session_key_value_is 'view_tribe_section' 'latest'
+                        each latest_offers
+                            a(href="/m/offer/#{_id}/view")
+                                img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    if session_key_value_is 'view_tribe_section' 'info'
+                        .ui.inline.header 
+                            // i.info.icon
+                            +i name='info' cl='ui avatar image'
+                            |info
+                        .ui.header
+                            +i name='marker' cl='ui avatar image'
+                            // i.marker.icon 
+                            |#{location}
+                        +textarea_view key='description' label='description' direct=true
+                        +array_view key='tags' label='tags' direct=true
+                        +array_view key='location_tags' label='location tags' direct=true
+                    if session_key_value_is 'view_tribe_section' 'requests'
                         .title
                             .ui.inline.header 
                                 // i.concierge.bell.icon
@@ -140,6 +131,7 @@ template(name='tribe_view')
                                 a(href="/m/request/#{_id}/view")
                                     img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .ui.fitted.divider
+                    if session_key_value_is 'view_tribe_section' 'pictures'
                         .title
                             .ui.inline.header 
                                 +i name='picture' cl='ui avatar image'
@@ -152,41 +144,38 @@ template(name='tribe_view')
                             each latest_photos
                                 img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         .ui.fitted.divider
-                        .title
-                            .ui.inline.header 
-                                +i name='chat' cl='ui avatar image'
-                                // i.chat.icon
-                                |comments
-                            i.dropdown.icon
+                    if session_key_value_is 'view_tribe_section' 'comments'
+                        +i name='chat' cl='ui avatar image'
+                        // i.chat.icon
+                        |comments
                         .content
                             +comments
-                        .ui.fitted.divider
-                        .title
-                            .ui.inline.header 
-                                +i name='coins' cl='ui avatar image'
-                                // i.coins.icon
-                                |credits
-                            i.dropdown.icon
-                        .content
-                            +tribe_finance
+                    if session_key_value_is 'view_tribe_section' 'credits'
+                        .ui.inline.header 
+                            +i name='coins' cl='ui avatar image'
+                            // i.coins.icon
+                            |credits
+                        +tribe_finance
+                    if session_key_value_is 'view_tribe_section' 'events'
                         +tribe_events
+                    if session_key_value_is 'view_tribe_section' 'badges'
                         +tribe_badges
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .four.wide.column
                     +image_view key='image_id' label='image' direct=true
-                    .ui.button.add_tribe_gift
+                    .ui.circular.basic.button.add_tribe_gift
                         // i.large.gift.icon
                         +i name='gift' cl='ui avatar image'
                         |gift
-                    .ui.button.add_tribe_post
+                    .ui.circular.basic.button.add_tribe_post
                         // i.newspaper.large.icon
-                        +i name='compose-new' cl='ui avatar image'
+                        +i name='write' cl='ui avatar image'
                         |post
-                    .ui.button
-                        i.picture.icon
-                        +i name='picture' cl='ui avatar image'
-                        |add image
-                    .ui.button
+                    // .ui.circular.basic.button
+                    //     // i.picture.icon
+                    //     +i name='picture' cl='ui avatar image'
+                    //     |add image
+                    .ui.circular.basic.button.request
                         // i.concierge.bell.icon
                         +i name='bell' cl='ui avatar image'
                         |request

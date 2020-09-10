@@ -37,24 +37,6 @@ template(name='profile_layout')
                                 // i.sign.out.icon
                                 +i name='exit-sign'
                                 |log out
-                        a.ui.button(href="/user/#{username}/kin")
-                            i.coins.icon 
-                            |karma in
-                        a.ui.button(href="/user/#{username}/kout")
-                            i.coins.icon 
-                            |karma out
-                        a.ui.button(href="/user/#{username}/food")
-                            // i.food.icon 
-                            +i name='food'
-                            |food
-                        a.ui.button(href="/user/#{username}/social")
-                            // i.rss.icon 
-                            +i name='chat'
-                            |social
-                        a.ui.button(href="/user/#{username}/messages")
-                            +i name='chat'
-                            // i.chat.icon 
-                            |chat
                         +follow
                         // .ui.header $#{credit} credit
                         .ui.inline.header #{points}p
@@ -78,52 +60,187 @@ template(name='profile_layout')
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
-                        a.ui.compact.button(href="/user/#{username}/karma" class="{{isActiveRoute 'user_karma'}}")
-                            i.thumbs.up.outline.icon
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/karma" class="{{isActiveRoute 'user_karma'}}")
+                            // i.thumbs.up.outline.icon
+                            +i name='coins' cl='ui avatar image'
                             |karma 
-                        a.ui.compact.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
                             // i.chat.outline.icon
-                            +i name='chat' cl='ui inline image'
+                            +i name='chat' cl='ui avatar image'
                             |chat
-                        a.ui.compact.button(href="/user/#{username}/upvotes" class="{{isActiveRoute 'user_upvotes'}}")
-                            i.thumbs.up.outline.icon
-                            |upvotes 
-                        a.ui.compact.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
-                            // i.thumbs.down.outline.icon
-                            +i name='downvote'
-                            |downvotes
-                        a.ui.compact.button(href="/user/#{username}/kin" class="{{isActiveRoute 'user_kin'}}")
-                            // i.chevron.down.icon
-                            +i name='coins'
-                            |karma in
-                        a.ui.compact.button(href="/user/#{username}/kout" class="{{isActiveRoute 'user_kout'}}")
-                            +i name='expense' cl='ui inline image'
-                            // i.chevron.up.icon
-                            |karma out
-                        a.ui.compact.button(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}")
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/voting" class="{{isActiveRoute 'user_voting'}}")
+                            // i.thumbs.up.outline.icon
+                            +i name='elections' cl='ui avatar image'
+                            |voting
+                        // a.ui.compact.circular.basic.button(href="/user/#{username}/upvotes" class="{{isActiveRoute 'user_upvotes'}}")
+                        //     // i.thumbs.up.outline.icon
+                        //     +i name='upvote'
+                        //     |upvotes 
+                        // a.ui.compact.circular.basic.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
+                        //     // i.thumbs.down.outline.icon
+                        //     +i name='downvote'
+                        //     |downvotes
+                        // a.ui.compact.circular.basic.button(href="/user/#{username}/kin" class="{{isActiveRoute 'user_kin'}}")
+                        //     // i.chevron.down.icon
+                        //     +i name='coins'
+                        //     |karma in
+                        // a.ui.compact.circular.basic.button(href="/user/#{username}/kout" class="{{isActiveRoute 'user_kout'}}")
+                        //     +i name='expense' cl='ui avatar image'
+                        //     // i.chevron.up.icon
+                        //     |karma out
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}")
                             // i.users.icon
-                            +i name='groups' cl='ui inline image'
+                            +i name='groups' cl='ui avatar image'
                             |friends
-                        a.ui.compact.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}")
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}")
                             // i.calendar.icon
-                            +i name='calendar' cl='ui inline image'
+                            +i name='calendar' cl='ui avatar image'
                             |events
-                        a.ui.compact.button(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
                             // i.fire.icon
-                            +i name='campfire' cl='ui inline image'
+                            +i name='campfire' cl='ui avatar image'
                             |tribes
-                        a.ui.compact.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}")
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}")
                             // i.fire.icon
-                            +i name='sheriff' cl='ui inline image'
+                            +i name='sheriff' cl='ui avatar image'
                             |badges
-                        a.ui.compact.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}")
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}")
                             // i.concierge.bell.icon
-                            +i name='front-desk' cl='ui inline image'
+                            +i name='front-desk' cl='ui avatar image'
                             |requests
-                        a.item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}")
+                        a.ui.compact.circular.basic.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}")
                             // i.shop.icon
-                            +i name='shop' cl='ui inline image'
+                            +i name='shop' cl='ui avatar image'
                             |offers
+                        +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='exchange'
+                        if session_key_value_is 'view_user_section' 'user_feed'
+                            .ui.inline.header
+                                // i.brain.icon
+                                +i name='activity-feed'
+                                |feed
+                            // i.dropdown.icon
+                            .ui.input
+                                input.new_post(type='text' placeholder='add post -2k')
+                            
+                            each wall_posts
+                                .ui.segment
+                                    .ui.header #{text}
+                                    +viewing
+                                    // if can_edit 
+                                    //     +delete_button
+                        +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
+                        if session_key_value_is 'view_user_section' 'cloud_comparison'
+                            .ui.inline.header
+                                // i.brain.icon
+                                +i name='brain'
+                                |cloud comparison
+                            // i.dropdown.icon
+                            .ui.two.column.stackable.grid
+                                // .column
+                                //     .ui.header you #{currentUser.total_upvoted_points}
+                                //     each currentUser.upvoted_tags
+                                //         a.ui.large.label.select_tag #{title}
+                                //             small #{count}
+                                // .column
+                                //     .ui.header union
+                                //     each overlap_results
+                                //         a.ui.huge.label.select_tag #{name}
+                                //             small #{count}
+                                .column
+                                    .ui.header 
+                                        +i name='brain'
+                                        // i.brain.icon
+                                        |mind
+                                    // each friended_by
+                                    //     a.ui.small.compact.button.select_user(class=friend_button_class)
+                                    //         |#{username}
+                                    each current_user.upvoted_tags
+                                        a.ui.large.label.select_tag #{title}
+                                            small #{count}
+                                .column
+                                    .ui.header 
+                                        +i name='tree'
+                                        // i.cubes.icon
+                                        |matter
+                                    // each friended_by
+                                    //     a.ui.small.compact.button.select_user(class=friend_button_class)
+                                    //         |#{username}
+                                    each current_user.credit_tags
+                                        a.ui.large.label.select_tag #{title}
+                                            small #{count}
+                        +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='exchange'
+                        if session_key_value_is 'view_user_section' 'authored_overlap'
+                            .ui.inline.header
+                                i.edit.icon
+                                |authored overlap
+                            .ui.three.column.grid
+                                .column
+                                    .ui.header them
+                                    each current_user.authored_tags
+                                        .ui.label #{title}:#{count}
+                                .column
+                                    .ui.header union
+                                    each overlap
+                                        .ui.label #{name}: #{count}
+                                .column
+                                    .ui.header you #{currentUser.total_authored_points}
+                                    each currentUser.authored_tags
+                                        .ui.label #{title}:#{count}
+                        +session_edit_value_button key='view_user_section' value='orders' label='authored overlap' icon='receipt'
+                        if session_key_value_is 'view_user_section' 'orders'
+                            .ui.inline.header
+                                +i name='shop'
+                                |orders
+                            .ui.list
+                                each user_orders 
+                                    .item 
+                                        .content
+                                            .header #{order_offer.title}
+                                            |#{when}, #{purchase_price}c
+                        +session_edit_value_button key='view_user_section' value='kin' label='karma in' icon='chevron down'
+                        if session_key_value_is 'view_user_section' 'kin'
+                            |karma in
+                            a.ui.inline.header(href="/user/#{username}/credits")
+                                i.chevron.down.large.icon
+                                |#{credit_count} credits
+                            | (#{total_credit_amount}p)
+                            .ui.label #{total_credit_amount}p total received
+                            // |received
+                            .ui.label(title='received count') #{credit_count} total gifts 
+                            .ui.label(title='rank') #{global_credit_count_rank} count rank
+                                
+                            i.tags.icon(title='credit tags')
+                            each credit_tags
+                                .ui.circular.label #{title}
+                                    | #{count}
+                                #{count}
+                            scroll.ui.segments
+                               each user_credits
+                                    +user_credit_segment
+                        +session_edit_value_button key='view_user_section' value='kout' label='karma out' icon='receipt'
+                        if session_key_value_is 'view_user_section' 'kout'
+                            .ui.inline.header
+                                |karma out
+                            a.ui.inline.spaced.header(href="/user/#{username}/kout")
+                                i.chevron.up.icon
+                                |#{debit_count}k out
+                                |(#{total_debit_amount}p)
+                                .ui.label #{total_debit_amount}p total sent
+                                .ui.label(title='debit count') #{debit_count} gifts sent
+                                .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
+                                    
+                                i.tags.icon(title='credit tags')
+                                each debit_tags
+                                    .ui.label #{title}
+                                        |#{count}
+                                .ui.label(title='rank') ##{global_debit_count_rank}
+                        +session_edit_value_button key='view_user_section' value='topups' label='topups' icon='money'
+                        if session_key_value_is 'view_user_section' 'topups'
+                            .ui.inline.header
+                                +i name='request-money'
+                                |topups
+                            +user_credit
+                            
                         +yield    
                       
 
@@ -145,167 +262,140 @@ template(name='user_friend_button')
 
 
 template(name='user_dashboard')
-    // +user_about
-    // .ui.hidden.divider
-    .ui.stackable.grid
-        .row
-            .sixteen.wide.column
-                .ui.fluid.styled.big.accordion
-                    .title 
-                        .ui.inline.header
-                            // i.brain.icon
-                            +i name='activity-feed'
-                            |feed
-                        // i.dropdown.icon
-                    .content
-                        .ui.input
-                            input.new_post(type='text' placeholder='add post -2k')
+    // // +user_about
+    // // .ui.hidden.divider
+    // .ui.stackable.grid
+    //     .row
+    //         .sixteen.wide.column
+    //             +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='exchange'
+    //             if session_key_value_is 'view_user_section' 'user_feed'
+    //                 .ui.inline.header
+    //                     // i.brain.icon
+    //                     +i name='activity-feed'
+    //                     |feed
+    //                 // i.dropdown.icon
+    //                 .ui.input
+    //                     input.new_post(type='text' placeholder='add post -2k')
+                    
+    //                 each wall_posts
+    //                     .ui.segment
+    //                         .ui.header #{text}
+    //                         +viewing
+    //                         // if can_edit 
+    //                         //     +delete_button
+    //             +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
+    //             if session_key_value_is 'view_user_section' 'cloud_comparison'
+    //                 .ui.inline.header
+    //                     // i.brain.icon
+    //                     +i name='brain'
+    //                     |cloud comparison
+    //                 // i.dropdown.icon
+    //                 .ui.two.column.stackable.grid
+    //                     // .column
+    //                     //     .ui.header you #{currentUser.total_upvoted_points}
+    //                     //     each currentUser.upvoted_tags
+    //                     //         a.ui.large.label.select_tag #{title}
+    //                     //             small #{count}
+    //                     // .column
+    //                     //     .ui.header union
+    //                     //     each overlap_results
+    //                     //         a.ui.huge.label.select_tag #{name}
+    //                     //             small #{count}
+    //                     .column
+    //                         .ui.header 
+    //                             +i name='brain'
+    //                             // i.brain.icon
+    //                             |mind
+    //                         // each friended_by
+    //                         //     a.ui.small.compact.button.select_user(class=friend_button_class)
+    //                         //         |#{username}
+    //                         each current_user.upvoted_tags
+    //                             a.ui.large.label.select_tag #{title}
+    //                                 small #{count}
+    //                     .column
+    //                         .ui.header 
+    //                             +i name='tree'
+    //                             // i.cubes.icon
+    //                             |matter
+    //                         // each friended_by
+    //                         //     a.ui.small.compact.button.select_user(class=friend_button_class)
+    //                         //         |#{username}
+    //                         each current_user.credit_tags
+    //                             a.ui.large.label.select_tag #{title}
+    //                                 small #{count}
+    //             +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='exchange'
+    //             if session_key_value_is 'view_user_section' 'authored_overlap'
+    //                 .ui.inline.header
+    //                     i.edit.icon
+    //                     |authored overlap
+    //                 .ui.three.column.grid
+    //                     .column
+    //                         .ui.header them
+    //                         each current_user.authored_tags
+    //                             .ui.label #{title}:#{count}
+    //                     .column
+    //                         .ui.header union
+    //                         each overlap
+    //                             .ui.label #{name}: #{count}
+    //                     .column
+    //                         .ui.header you #{currentUser.total_authored_points}
+    //                         each currentUser.authored_tags
+    //                             .ui.label #{title}:#{count}
+    //             +session_edit_value_button key='view_user_section' value='orders' label='authored overlap' icon='receipt'
+    //             if session_key_value_is 'view_user_section' 'orders'
+    //                 .ui.inline.header
+    //                     +i name='shop'
+    //                     |orders
+    //                 .ui.list
+    //                     each user_orders 
+    //                         .item 
+    //                             .content
+    //                                 .header #{order_offer.title}
+    //                                 |#{when}, #{purchase_price}c
+    //             +session_edit_value_button key='view_user_section' value='kin' label='karma in' icon='chevron down'
+    //             if session_key_value_is 'view_user_section' 'kin'
+    //                 |karma in
+    //                 a.ui.inline.header(href="/user/#{username}/credits")
+    //                     i.chevron.down.large.icon
+    //                     |#{credit_count} credits
+    //                 | (#{total_credit_amount}p)
+    //                 .ui.label #{total_credit_amount}p total received
+    //                 // |received
+    //                 .ui.label(title='received count') #{credit_count} total gifts 
+    //                 .ui.label(title='rank') #{global_credit_count_rank} count rank
                         
-                        each wall_posts
-                            .ui.segment
-                                .ui.header #{text}
-                                +viewing
-                                // if can_edit 
-                                //     +delete_button
-                    .title 
-                        .ui.inline.header
-                            i.brain.icon
-                            |cloud comparison
-                        // i.dropdown.icon
-                    .content
-                        .ui.two.column.stackable.grid
-                            // .column
-                            //     .ui.header you #{currentUser.total_upvoted_points}
-                            //     each currentUser.upvoted_tags
-                            //         a.ui.large.label.select_tag #{title}
-                            //             small #{count}
-                            // .column
-                            //     .ui.header union
-                            //     each overlap_results
-                            //         a.ui.huge.label.select_tag #{name}
-                            //             small #{count}
-                            .column
-                                .ui.header 
-                                    +i name='brain'
-                                    // i.brain.icon
-                                    |mind
-                                // each friended_by
-                                //     a.ui.small.compact.button.select_user(class=friend_button_class)
-                                //         |#{username}
-                                each current_user.upvoted_tags
-                                    a.ui.large.label.select_tag #{title}
-                                        small #{count}
-                            .column
-                                .ui.header 
-                                    +i name='tool'
-                                    // i.cubes.icon
-                                    |matter
-                                // each friended_by
-                                //     a.ui.small.compact.button.select_user(class=friend_button_class)
-                                //         |#{username}
-                                each current_user.credit_tags
-                                    a.ui.large.label.select_tag #{title}
-                                        small #{count}
-                    .title 
-                        .ui.inline.header
-                            i.users.icon
-                            |friends
-                        i.dropdown.icon
-                    .content
-                        +user_friends
-                    .title 
-                        .ui.inline.header
-                            // i.concierge.bell.icon
-                            +i name='front-desk'
-                            |requests
-                        i.dropdown.icon
-                    .content
-                        // +user_requests
-                    .title 
-                        .ui.inline.header
-                            // i.shop.icon
-                            +i name='sell'
-                            |offers
-                        i.dropdown.icon
-                    .content
-                        // +user_offers
-                    .title 
-                        .ui.inline.header
-                            i.edit.icon
-                            |authored overlap
-                        i.dropdown.icon
-                    .content
-                        .ui.header authored overlap 
-                        .ui.three.column.grid
-                            .column
-                                .ui.header them
-                                each current_user.authored_tags
-                                    .ui.label #{title}:#{count}
-                            .column
-                                .ui.header union
-                                each overlap
-                                    .ui.label #{name}: #{count}
-                            .column
-                                .ui.header you #{currentUser.total_authored_points}
-                                each currentUser.authored_tags
-                                    .ui.label #{title}:#{count}
-                    .title 
-                        .ui.inline.header
-                            i.shop.icon
-                            |orders
-                        i.dropdown.icon
-                    .content
-                        .ui.header orders
-                        .ui.list
-                            each user_orders 
-                                .item 
-                                    .content
-                                        .header #{order_offer.title}
-                                        |#{when}, #{purchase_price}c
-                    .title
-                        |karma in
-                    .content
-                        a.ui.inline.header(href="/user/#{username}/credits")
-                            i.chevron.down.large.icon
-                            |#{credit_count} credits
-                        | (#{total_credit_amount}p)
-                        .ui.label #{total_credit_amount}p total received
-                        // |received
-                        .ui.label(title='received count') #{credit_count} total gifts 
-                        .ui.label(title='rank') #{global_credit_count_rank} count rank
+    //                 i.tags.icon(title='credit tags')
+    //                 each credit_tags
+    //                     .ui.circular.label #{title}
+    //                         | #{count}
+    //                     #{count}
+    //                 scroll.ui.segments
+    //                   each user_credits
+    //                         +user_credit_segment
+    //             +session_edit_value_button key='view_user_section' value='kout' label='karma out' icon='receipt'
+    //             if session_key_value_is 'view_user_section' 'kout'
+    //                 .ui.inline.header
+    //                     |karma out
+    //                 a.ui.inline.spaced.header(href="/user/#{username}/kout")
+    //                     i.chevron.up.icon
+    //                     |#{debit_count}k out
+    //                     |(#{total_debit_amount}p)
+    //                     .ui.label #{total_debit_amount}p total sent
+    //                     .ui.label(title='debit count') #{debit_count} gifts sent
+    //                     .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
                             
-                        i.tags.icon(title='credit tags')
-                        each credit_tags
-                            .ui.circular.label #{title}
-                                | #{count}
-                            #{count}
-                        scroll.ui.segments
-                           each user_credits
-                                +user_credit_segment
-                    .title 
-                        .ui.inline.header
-                            |karma out
-                    .content 
-                        a.ui.inline.spaced.header(href="/user/#{username}/kout")
-                            i.chevron.up.icon
-                            |#{debit_count}k out
-                            |(#{total_debit_amount}p)
-                            .ui.label #{total_debit_amount}p total sent
-                            .ui.label(title='debit count') #{debit_count} gifts sent
-                            .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
-                                
-                            i.tags.icon(title='credit tags')
-                            each debit_tags
-                                .ui.label #{title}
-                                    |#{count}
-                            .ui.label(title='rank') ##{global_debit_count_rank}
-                    .title 
-                        .ui.inline.header
-                            +i name='request-money'
-                            |topups
-                    .content
-                        +user_credit
-                
+    //                     i.tags.icon(title='credit tags')
+    //                     each debit_tags
+    //                         .ui.label #{title}
+    //                             |#{count}
+    //                     .ui.label(title='rank') ##{global_debit_count_rank}
+    //             +session_edit_value_button key='view_user_section' value='topups' label='topups' icon='money'
+    //             if session_key_value_is 'view_user_section' 'topups'
+    //                 .ui.inline.header
+    //                     +i name='request-money'
+    //                     |topups
+    //                 +user_credit
+            
                 
                         
 template(name='user_credit_segment')

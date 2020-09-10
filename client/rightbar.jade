@@ -1,6 +1,6 @@
 template(name='right_sidebar')
     // .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
-    .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
+    .ui.right.sidebar.vertical.menu(class=currentUser.invert_class)
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
@@ -12,7 +12,7 @@ template(name='right_sidebar')
             i.large.fire.icon
         each my_tribes
             a.item.zoom.toggle_rightbar(href="/m/tribe/#{_id}/view" class="{{isActiveRoute 'user_dashboard'}}")
-                img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                img.ui.avatar.compact.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                 | #{title}
                 // i.large.icon(class=icon)
             
