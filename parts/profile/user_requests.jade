@@ -1,6 +1,7 @@
 template(name='user_requests')  
     .ui.center.aligned.header 
         i.concierge.bell.icon
+        +i name='bell'
         |#{current_user.name} requests
     .scrolling
         each requests

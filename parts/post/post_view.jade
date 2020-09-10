@@ -2,7 +2,7 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .ten.wide.column
+                .twelve.wide.column
                     .ui.center.aligned.header 
                         |#{title}
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
@@ -40,7 +40,8 @@ template(name='post_view')
                             // a.image(href="/post/#{_id}/view")
                             //     img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
                             a.ui.small.header(href=url target='_window') #{url}
-                             iframe(width='560' height='315' src=url frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='' class=currentUser.invert_class)
+                            if url
+                                iframe(width='100%' height='500' src=url frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='' class=currentUser.invert_class)
     
                             .f12
                                 |!{description}
@@ -64,7 +65,7 @@ template(name='post_view')
                         +comments
                         +viewing
                         .spacer
-                .six.wide.column.scrolling
+                .four.wide.column.scrolling
                     // .ui.inline.header 
                     //     small post: 
                     // a.ui.circular.icon.button(href='/')

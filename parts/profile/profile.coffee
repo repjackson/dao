@@ -32,6 +32,7 @@ if Meteor.isClient
         
     Template.profile_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
+        @autorun -> Meteor.subscribe 'model_docs', 'message'
     
     Template.profile_layout.onRendered ->
         Meteor.setTimeout ->
@@ -60,8 +61,24 @@ if Meteor.isClient
         'click .select_user': ->
             Session.set('target_username', @username)
 
+        'keyup .new_post': (e,t)->
+            if e.which is 13
+                val = t.$('.new_post').val()
+                user = Meteor.users.findOne(username:Router.current().params.username)
+                Docs.insert
+                    model:'message'
+                    type:'wall_post'
+                    recipient_id:user._id
+                    text:val
 
     Template.user_dashboard.helpers
+        wall_posts: ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            Docs.find 
+                model:'message'
+                type:'wall_post'
+                recipient_id:user._id
+                # friend_ids:$in:[Meteor.userId()]
         friended_by: ->
             Meteor.users.find {}
                 # friend_ids:$in:[Meteor.userId()]

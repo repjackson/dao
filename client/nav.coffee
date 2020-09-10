@@ -63,6 +63,20 @@ Template.leftbar_item.events
         Meteor.call 'set_facets', @model, ->
             Session.set 'loading', false
 
+Template.left_sidebar.events
+    'keydown .search_leftbar': (e,t)->
+        search = $('.search_leftbar').val().toLowerCase().trim()
+        # Session.set('query',search)
+        if e.which is 13
+            Router.go "/"
+            selected_tags.push search
+            Meteor.call 'call_wiki', search, ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+            Session.set('query','')
+            search = $('.search_leftbar').val('')
+        if e.which is 8
+            if search.legnth is 0
+                selected_tags.pop()
 Template.nav.events
     'keydown .search_dao': (e,t)->
         search = $('.search_dao').val().toLowerCase().trim()

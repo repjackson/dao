@@ -52,3 +52,9 @@ if Meteor.isServer
     Meteor.publish 'inbox', (username)->
         Docs.find
             model:'offer'
+    Meteor.publish 'my_sent_messages', (username)->
+        Docs.find
+            model:'message'
+    Meteor.publish 'my_received_messages', (username)->
+        Docs.find
+            model:'message'

@@ -43,13 +43,15 @@ template(name='profile_layout')
                             i.coins.icon 
                             |karma out
                         a.ui.button(href="/user/#{username}/food")
-                            i.food.icon 
+                            // i.food.icon 
+                            +i name='food'
                             |food
                         a.ui.button(href="/user/#{username}/social")
                             i.rss.icon 
                             |social
                         a.ui.button(href="/user/#{username}/messages")
-                            i.chat.icon 
+                            +i name='chat'
+                            // i.chat.icon 
                             |chat
                         +follow
                         // .ui.header $#{credit} credit
@@ -74,44 +76,42 @@ template(name='profile_layout')
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
-                        .ui.large.menu.hscroll
-                            a.item(href="/user/#{username}/karma" class="{{isActiveRoute 'user_karma'}}")
-                                i.thumbs.up.outline.icon
-                                |karma 
-                            a.item(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
-                                i.chat.outline.icon
-                                |chat
-                        .ui.menu.hscroll
-                            a.item(href="/user/#{username}/upvotes" class="{{isActiveRoute 'user_upvotes'}}")
-                                i.thumbs.up.outline.icon
-                                |upvotes 
-                            a.item(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
-                                i.thumbs.down.outline.icon
-                                |downvotes
-                            a.item(href="/user/#{username}/kin" class="{{isActiveRoute 'user_kin'}}")
-                                i.chevron.down.icon
-                                |karma in
-                            a.item(href="/user/#{username}/kout" class="{{isActiveRoute 'user_kout'}}")
-                                i.chevron.up.icon
-                                |karma out
-                            a.item(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}")
-                                i.users.icon
-                                |friends
-                            a.item(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}")
-                                i.calendar.icon
-                                |events
-                            a.item(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
-                                i.fire.icon
-                                |tribes
-                            a.item(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}")
-                                i.fire.icon
-                                |badges
-                            a.item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}")
-                                i.concierge.bell.icon
-                                |requests
-                            a.item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}")
-                                i.shop.icon
-                                |offers
+                        a.ui.compact.button(href="/user/#{username}/karma" class="{{isActiveRoute 'user_karma'}}")
+                            i.thumbs.up.outline.icon
+                            |karma 
+                        a.ui.compact.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
+                            i.chat.outline.icon
+                            |chat
+                        a.ui.compact.button(href="/user/#{username}/upvotes" class="{{isActiveRoute 'user_upvotes'}}")
+                            i.thumbs.up.outline.icon
+                            |upvotes 
+                        a.ui.compact.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
+                            i.thumbs.down.outline.icon
+                            |downvotes
+                        a.ui.compact.button(href="/user/#{username}/kin" class="{{isActiveRoute 'user_kin'}}")
+                            i.chevron.down.icon
+                            |karma in
+                        a.ui.compact.button(href="/user/#{username}/kout" class="{{isActiveRoute 'user_kout'}}")
+                            i.chevron.up.icon
+                            |karma out
+                        a.ui.compact.button(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}")
+                            i.users.icon
+                            |friends
+                        a.ui.compact.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}")
+                            i.calendar.icon
+                            |events
+                        a.ui.compact.button(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
+                            i.fire.icon
+                            |tribes
+                        a.ui.compact.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}")
+                            i.fire.icon
+                            |badges
+                        a.ui.compact.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}")
+                            i.concierge.bell.icon
+                            |requests
+                        a.item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}")
+                            i.shop.icon
+                            |offers
                         +yield    
                       
 
@@ -141,6 +141,22 @@ template(name='user_dashboard')
                 .ui.fluid.styled.big.accordion
                     .title 
                         .ui.inline.header
+                            // i.brain.icon
+                            +i name='activity-feed'
+                            |feed
+                        // i.dropdown.icon
+                    .content
+                        .ui.input
+                            input.new_post(type='text' placeholder='add post -2k')
+                        
+                        each wall_posts
+                            .ui.segment
+                                .ui.header #{text}
+                                +viewing
+                                // if can_edit 
+                                //     +delete_button
+                    .title 
+                        .ui.inline.header
                             i.brain.icon
                             |cloud comparison
                         // i.dropdown.icon
@@ -158,7 +174,8 @@ template(name='user_dashboard')
                             //             small #{count}
                             .column
                                 .ui.header 
-                                    i.brain.icon
+                                    +i name='brain'
+                                    // i.brain.icon
                                     |mind
                                 // each friended_by
                                 //     a.ui.small.compact.button.select_user(class=friend_button_class)
@@ -168,7 +185,8 @@ template(name='user_dashboard')
                                         small #{count}
                             .column
                                 .ui.header 
-                                    i.cubes.icon
+                                    +i name='tool'
+                                    // i.cubes.icon
                                     |matter
                                 // each friended_by
                                 //     a.ui.small.compact.button.select_user(class=friend_button_class)
@@ -185,18 +203,20 @@ template(name='user_dashboard')
                         +user_friends
                     .title 
                         .ui.inline.header
-                            i.concierge.bell.icon
+                            // i.concierge.bell.icon
+                            +i name='front-desk'
                             |requests
                         i.dropdown.icon
                     .content
-                        // +user_requests_small
+                        // +user_requests
                     .title 
                         .ui.inline.header
-                            i.shop.icon
+                            // i.shop.icon
+                            +i name='sell'
                             |offers
                         i.dropdown.icon
                     .content
-                        // +user_offers_small
+                        // +user_offers
                     .title 
                         .ui.inline.header
                             i.edit.icon
@@ -253,7 +273,7 @@ template(name='user_dashboard')
                     .title 
                         .ui.inline.header
                             |karma out
-                        .content 
+                    .content 
                         a.ui.inline.spaced.header(href="/user/#{username}/kout")
                             i.chevron.up.icon
                             |#{debit_count}k out
@@ -269,8 +289,9 @@ template(name='user_dashboard')
                             .ui.label(title='rank') ##{global_debit_count_rank}
                     .title 
                         .ui.inline.header
+                            +i name='request-money'
                             |topups
-                        .content
+                    .content
                         +user_credit
                 
                 

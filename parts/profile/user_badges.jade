@@ -6,10 +6,7 @@ template(name='user_badges')
         i.plus.icon.add_badge
     .ui.small.centered.five.stackable.cards
         each user_badges
-            a.ui.card(href="/badge/#{_id}/view")
-                +icolorlg name=icon cl='ui fluid image'
-                .content
-                    .ui.header #{location}: #{title}
+            +badge_card
 
 
 template(name='user_edit_badges')
