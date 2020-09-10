@@ -61,7 +61,7 @@ template(name='request_view')
     with current_doc
         .ui.stackable.padded.grid
             .middle.aligned.row 
-                .sixteen.wide.column
+                .four.wide.column
                     a(href="/m/request" title='requests')
                         i.concierge.bell.big.circular.link.icon
                     .ui.inline.header 
@@ -69,10 +69,8 @@ template(name='request_view')
                     .ui.inline.large.header 
                         |#{title}
                     if can_edit
-                        a.edit_request(href="/request/#{_id}/edit")
+                        a.edit_request(href="/m/request/#{_id}/edit")
                             i.large.pencil.circular.link.icon
-            .row 
-                .four.wide.column
                     .ui.header
                         |#{point_bounty}pts offered
                     if image_id
@@ -85,7 +83,9 @@ template(name='request_view')
                     .ui.header #{when}
                     +array_view key='location_tags' label='location_tags' direct=true
                     div
-                    +voting_full
+                    +vote
+                    +viewing
+                    
                 .eight.wide.column
                     .f13
                         |!{description}

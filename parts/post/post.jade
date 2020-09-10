@@ -37,9 +37,19 @@ template(name='post_card')
                 |#{title}
             +vote
             .ui.label #{points}
-        if is_admin
-            +print_this
-            +text_edit key='model' direct=true
+            if is_admin
+                +print_this
+                +text_edit key='model' direct=true
+            +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
+            each seven_tags
+                .ui.basic.label #{this}
+            .ui.basic.label
+                i.donate.icon
+                |#{tip_count} tips
+            .ui.basic.label
+                i.chat.outline.icon
+                |#{comment_count} comments
+            
         // .meta
         //     |#{when}
         // .content
@@ -51,16 +61,8 @@ template(name='post_card')
             // +multi_user_view key='coauthor_ids' label='coauthors' direct=true
 
             // .description
-            //     .ui.basic.label
-            //         i.donate.icon
-            //         |#{tip_count} tips
-            //     .ui.basic.label
-            //         i.chat.outline.icon
-            //         |#{comment_count} comments
                 
             //     |!{blurb}
-            //     each seven_tags
-            //         .ui.basic.label #{this}
             //     // +comments_view_small   
         
     // .ui.divider

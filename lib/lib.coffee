@@ -65,6 +65,11 @@ Meteor.users.helpers
         if @tags
             @tags[..3]
     has_points: -> @points > 0
+    name: ->
+        if @nickname
+            @nickname
+        else 
+            @username
 
 
 

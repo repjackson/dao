@@ -135,7 +135,8 @@ template(name='left_sidebar')
         +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
         +leftbar_item model='reddit' label='reddit' icon='reddit'
         +leftbar_item model='post' label='posts' icon='newspaper'
-        +leftbar_item model='youtube' label='youtube' icon='youtube'
+        +leftbar_item model='youtube' label='video' icon='youtube'
+        +leftbar_item model='picture' label='picture' icon='picture'
         +leftbar_item model='tribe' label='tribes' icon='fire'
         +leftbar_item model='rental' label='rentals' icon='clock'
         +leftbar_item model='request' label='requests' icon='concierge bell'
@@ -155,12 +156,12 @@ template(name='left_sidebar')
                     i.shield.blue.icon
                 else
                     i.shield.icon
-        if is_admin
-            a.item.zoom.toggle_dev.toggle_sidebar(href="/m/model")
-                |delta
-                i.database.icon
+        // if is_admin
+        a.item.zoom.toggle_dev.toggle_sidebar(href="/m/model")
+            |all models
+            i.database.icon
                 
 template(name='leftbar_item')
     a.zoom.toggle_sidebar.set_model.item(href="/m/#{model}")
         |#{label}
-        i.icon(class=icon)
+        i.large.icon(class=icon)

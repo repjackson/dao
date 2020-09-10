@@ -5,39 +5,6 @@ if Meteor.isClient
         Meteor.users.findOne @completed_by_user_id
     
     
-    Router.route '/offers/', (->
-        @layout 'layout'
-        @render 'offers'
-        ), name:'offers'
-    Router.route '/offer/:doc_id/view', (->
-        @layout 'layout'
-        @render 'offer_view'
-        ), name:'offer_view'
-
-    
-    Router.route '/offer/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'offer_edit'
-        ), name:'offer_edit'
-
-    Template.offers.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'offer'
-    
-    
-    Template.offers.events
-        'click .add_offer': ->
-            new_id = 
-                Docs.insert 
-                    model:'offer'
-            Router.go "/offer/#{new_id}/edit"
-            
-    Template.offers.helpers
-        offers: ->
-            Docs.find 
-                model:'offer'
-                # complete:$ne:true
-                # published:true
-
     Template.offer_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id
 
@@ -136,8 +103,6 @@ if Meteor.isClient
 
 if Meteor.isClient
     Template.offer_edit.onRendered ->
-    Template.offer_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
 
     Template.offer_edit.events

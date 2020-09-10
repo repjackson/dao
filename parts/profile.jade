@@ -45,9 +45,13 @@ template(name='profile_layout')
                         a.ui.button(href="/user/#{username}/food")
                             i.food.icon 
                             |food
+                        a.ui.button(href="/user/#{username}/social")
+                            i.rss.icon 
+                            |social
                         a.ui.button(href="/user/#{username}/messages")
                             i.chat.icon 
                             |chat
+                        +follow
                         // .ui.header $#{credit} credit
                         .ui.inline.header #{points}p
                         // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
@@ -129,11 +133,12 @@ template(name='user_dashboard')
             .sixteen.wide.column
                 .ui.fluid.styled.big.accordion
                     .title 
-                        i.brain.icon
-                        |cloud comparison
+                        .ui.inline.header
+                            i.brain.icon
+                            |cloud comparison
                         // i.dropdown.icon
                     .content
-                        .ui.two.column.grid
+                        .ui.two.column.stackable.grid
                             // .column
                             //     .ui.header you #{currentUser.total_upvoted_points}
                             //     each currentUser.upvoted_tags
@@ -165,25 +170,30 @@ template(name='user_dashboard')
                                     a.ui.large.label.select_tag #{title}
                                         small #{count}
                     .title 
-                        i.users.icon
-                        |friends
+                        .ui.inline.header
+                            i.users.icon
+                            |friends
                         i.dropdown.icon
                     .content
                         +user_friends
                     .title 
-                        i.concierge.bell.icon
-                        |requests
+                        .ui.inline.header
+                            i.concierge.bell.icon
+                            |requests
                         i.dropdown.icon
                     .content
                         // +user_requests_small
                     .title 
-                        i.shop.icon
-                        |offers
+                        .ui.inline.header
+                            i.shop.icon
+                            |offers
                         i.dropdown.icon
                     .content
                         // +user_offers_small
                     .title 
-                        |authored overlap
+                        .ui.inline.header
+                            i.edit.icon
+                            |authored overlap
                         i.dropdown.icon
                     .content
                         .ui.header authored overlap 
@@ -201,7 +211,9 @@ template(name='user_dashboard')
                                 each currentUser.authored_tags
                                     .ui.label #{title}:#{count}
                     .title 
-                        |orders
+                        .ui.inline.header
+                            i.shop.icon
+                            |orders
                         i.dropdown.icon
                     .content
                         .ui.header orders
@@ -212,7 +224,7 @@ template(name='user_dashboard')
                                         .header #{order_offer.title}
                                         |#{when}, #{purchase_price}c
                     .title
-                        |credits
+                        |karma in
                     .content
                         a.ui.inline.header(href="/user/#{username}/credits")
                             i.chevron.down.large.icon
@@ -232,11 +244,12 @@ template(name='user_dashboard')
                            each user_credits
                                 +user_credit_segment
                     .title 
-                        |debits
-                    .content 
-                        a.ui.inline.spaced.header(href="/user/#{username}/debits")
+                        .ui.inline.header
+                            |karma out
+                        .content 
+                        a.ui.inline.spaced.header(href="/user/#{username}/kout")
                             i.chevron.up.icon
-                            |#{debit_count} debits
+                            |#{debit_count}k out
                             |(#{total_debit_amount}p)
                             .ui.label #{total_debit_amount}p total sent
                             .ui.label(title='debit count') #{debit_count} gifts sent
@@ -244,16 +257,13 @@ template(name='user_dashboard')
                                 
                             i.tags.icon(title='credit tags')
                             each debit_tags
-                                .ui.circular.label #{title}
+                                .ui.label #{title}
                                     |#{count}
                             .ui.label(title='rank') ##{global_debit_count_rank}
-                        // i.tags.icon(title='credit tags')
-                        each debit_tags
-                            .ui.circular.label #{title} 
-                            // #{count}
                     .title 
-                        |topups
-                    .content
+                        .ui.inline.header
+                            |topups
+                        .content
                         +user_credit
                 
                 

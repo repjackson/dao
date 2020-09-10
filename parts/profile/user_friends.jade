@@ -1,15 +1,56 @@
 template(name='user_friends')
+    .ui.stackable.grid
+        .one.column.row
+            .column
+                +user_friend_button
+                .ui.labeled.input
+                    .ui.label suggest a friend (-2k)
+                    input(type='text' placeholder='suggest user')
+        .two.column.row
+            .column
+                .ui.small.header 
+                    i.sign.out.icon
+                    |friended
+                .ui.middle.aligned.selection.animated.list.smallscroll
+                    each friended
+                        +user_segment
+            .column
+                .ui.small.header 
+                    i.sign.out.icon
+                    |friended by
+                .ui.middle.aligned.selection.animated.list
+                    each friended_by
+                        +user_segment
+        .two.column.row
+            .column
+                .ui.small.header 
+                    i.undo.icon
+                    |referred
+                .ui.label #{referred_revenue}k earned
+                .ui.middle.aligned.selection.animated.list
+                    each referred_users
+                        +user_segment
+            .column
+                .ui.small.header 
+                    i.sign.out.icon
+                    |invited
+                .ui.label #{invited_revenue}k earned
+                .ui.middle.aligned.selection.animated.list
+                    each invited_users
+                        +user_segment
+
+template(name='user_friends_edit')
     +user_friend_button
     .ui.stackable.grid
         .two.column.row
             .column
                 .ui.small.header friended
-                .ui.middle.aligned.selection.animated.large.list
+                .ui.middle.aligned.selection.animated.list
                     each friended
                         +user_segment
             .column
                 .ui.small.header friended by
-                .ui.middle.aligned.selection.animated.large.list
+                .ui.middle.aligned.selection.animated.list
                     each friended_by
                         +user_segment
 

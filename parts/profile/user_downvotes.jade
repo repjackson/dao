@@ -18,7 +18,7 @@ template(name='user_downvotes')
             +downvote
             
 template(name='downvote')            
-    a.ui.card(href="/vote/#{_id}/view")
+    a.ui.card(href="/m/vote/#{_id}/view")
         .content
             .header
                 strong #{points}pt 
@@ -32,6 +32,7 @@ template(name='downvote')
             div
             each tags
                 .ui.basic.label #{this}
+                
 
 template(name='user_downvotes_small')
     .ui.inline.header 
@@ -53,7 +54,7 @@ template(name='user_downvotes_small')
                         a(href="/user/#{author.username}")
                             |#{author.username}
                     .description
-                        a(href="/debit/#{_id}/view")
+                        a(href="/m/debit/#{_id}/view")
                             |#{when}
                 .content
                     .description

@@ -79,18 +79,16 @@ template(name='offer_view')
     with current_doc
         .ui.stackable.padded.grid
             .middle.aligned.row 
-                .sixteen.wide.column
-                    a(href="/offers" title='offers')
+                .four.wide.column
+                    a(href="/m/offer" title='offers')
                         i.hand.holding.heart.big.circular.link.icon
                     .ui.inline.header 
-                        small viewing offer 
-                    .ui.inline.large.header 
+                        small viewing 
                         |#{title}
+                        small offer 
                     if can_edit
                         a.edit_offer(href="/offer/#{_id}/edit")
                             i.large.pencil.circular.link.icon
-            .row 
-                .four.wide.column
                     if image_id
                         img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
                     .ui.header 
@@ -104,7 +102,8 @@ template(name='offer_view')
                     +datetime_view key='start_datetime' label='start' icon='clock' direct=true
                     +datetime_view key='end_datetime' label='end' icon='clock' direct=true
                     div
-                    +voting_full
+                    +vote
+                    +viewing
                 .six.wide.column
                     .f13
                         |!{description}

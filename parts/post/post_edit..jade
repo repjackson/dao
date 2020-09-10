@@ -17,14 +17,16 @@ template(name='post_edit')
                         |#{title}
                     .ui.big.accordion
                         .title
-                            i.remove.icon  
-                            |delete
+                            .ui.inline.header
+                                i.remove.icon  
+                                |delete
                             i.dropdown.icon
                         .content
                             i.remove.link.circular.icon.delete_post(title='delete post')
                         .title
-                            i.user.icon
-                            |author: #{_author_username}
+                            .ui.inline.header
+                                i.user.icon
+                                |author: #{_author_username}
                             i.dropdown.icon
                         .content
                             |coauthors split revenue evenly
@@ -36,31 +38,35 @@ template(name='post_edit')
                                 .spacer
                                 +single_user_edit key='_author_id' key2='_author_username' direct=true
                         .title
-                            i.video.icon
-                            |video
+                            .ui.inline.header
+                                i.video.icon
+                                |video
                             if youtube_id
                                 i.checkmark.icon
                             i.dropdown.icon
                         .content
                             +youtube_edit key='youtube_id' label='youtube id' direct=true
                         .title
-                            i.calendar.icon
-                            |date
+                            .ui.inline.header
+                                i.calendar.icon
+                                |date
                             i.dropdown.icon
                         .content
                             +date_edit key='date' label='date' direct=true
                         .title
-                            i.tags.icon
-                            |#{tags.length} tags
+                            .ui.inline.header
+                                i.tags.icon
+                                |#{tags.length} tags
                             i.dropdown.icon
                         .content
                             +smart_tagger
                         .title
-                            i.picture.icon
-                            if image_id
-                                img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-
-                            |image
+                            .ui.inline.header
+                                if image_id
+                                    img.ui.mini.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                else
+                                    i.picture.grey.icon
+                                |image
                             i.dropdown.icon
                         .content
                             +image_edit key='image_id' label='image upload' direct=true
@@ -69,8 +75,9 @@ template(name='post_edit')
                             div 
                             +image_link_edit key='image_link' label='image link' direct=true
                         .title
-                            i.fire.icon
-                            |tribe: #{tribe.title}
+                            .ui.inline.header
+                                i.fire.icon
+                                |tribe: #{tribe.title}
                             i.dropdown.icon
                         .content
                             with tribe 
@@ -79,15 +86,19 @@ template(name='post_edit')
                                 |#{tribe_id}
                             +single_doc_edit ref_model='tribe' key='tribe_id' direct=true
                         .title
-                            i.lock.icon
-                            |privacy
+                            .ui.inline.header
+                                i.lock.icon
+                                |privacy
+                            i.dropdown.icon
                         .content
                             +boolean_edit key='private' direct=true
                             if private
                                 +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
                         .title
-                            i.shield.icon
-                            |advanced
+                            .ui.inline.header
+                                i.shield.icon
+                                |advanced
+                            i.dropdown.icon
                         .content
                             +text_edit key='model' direct=true
                                 

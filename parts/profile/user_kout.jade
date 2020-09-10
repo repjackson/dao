@@ -16,11 +16,11 @@ template(name='user_kout')
             .ui.card
                 .content
                     .header
-                        strong #{price}pt
+                        strong #{price}k
                         | to 
                         if seller.profile_image_id
                             img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{seller.shortname}
+                        |#{seller.name}
                     small #{when}
                     div
                     |#{description}

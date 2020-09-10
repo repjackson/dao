@@ -9,7 +9,7 @@ if Meteor.isClient
 
     Template.request_card.events
         'click .request_card': ->
-            Router.go "/request/#{@_id}/view"
+            Router.go "/m/request/#{@_id}/view"
             Docs.update @_id,
                 $inc: views:1
 

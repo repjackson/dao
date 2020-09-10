@@ -1,6 +1,7 @@
 if Meteor.isClient
     Template.tribe_view.onCreated ->
         @autorun -> Meteor.subscribe 'tribe_tips', Router.current().params.doc_id
+        @autorun -> Meteor.subscribe 'tribe_events', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'tribe_posts', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'tribe_badges', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'tribe_docs', Router.current().params.doc_id
@@ -29,6 +30,19 @@ if Meteor.isClient
                     model:'badge'
                     tribe_id:@_id
             Router.go "/badge/#{new_id}/edit"
+    
+    Template.tribe_events.helpers
+        events: ->
+            Docs.find 
+                model:'event'
+                # tribe_id:@tribe_id
+    Template.tribe_events.events
+        'click .add_event': ->
+            new_id = 
+                Docs.insert
+                    model:'event'
+                    tribe_id:@_id
+            Router.go "/event/#{new_id}/edit"
     
     Template.tribe_view.events
         'click .add_tribe_post': ->

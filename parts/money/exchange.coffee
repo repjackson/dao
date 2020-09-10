@@ -1,10 +1,4 @@
 if Meteor.isClient
-    # Router.route '/debits/', (->
-    #     @layout 'layout'
-    #     @render 'debits'
-    #     ), name:'debits'
-    
-
     Template.expense_stats.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'finance_stat'
         

@@ -27,8 +27,8 @@ template(name='delta_result_card')
                                 span(title='views')
                                     i.grey.eye.icon
                                     | #{views}
-                                .ui.teal.label 
-                                    |#{app}
+                                // .ui.teal.label 
+                                //     |#{app}
                         else
                             if can_edit
                                 a.ui.icon.button(href="/m/#{current_model.slug}/#{_id}/edit" title='edit')
@@ -102,6 +102,8 @@ template(name='delta_list_result')
                                     .ui.small.inverted.label #{this}
                             +remove_button
                         //- +comments
+                        
+                        
 template(name='delta_result_table_row')
     tr.pointer.goto_doc
         //- if result.color_icon

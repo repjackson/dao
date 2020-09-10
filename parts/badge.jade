@@ -14,6 +14,8 @@ template(name='badge_card')
             i.fire.icon
             img.ui.avatar.image(src="{{c.url tribe.image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
             // |#{name}
+            +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
+    
 
 
 template(name='badge_view')
@@ -51,6 +53,8 @@ template(name='badge_view')
                 .eight.wide.column
                     with tribe 
                         +tribe_card
+                    +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
+    
                     .ui.header 
                         |badgers
                     each badgers

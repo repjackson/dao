@@ -43,7 +43,8 @@ if Meteor.isClient
                 _author_id: current_user._id
                 # target_user_id: target_user._id
             },
-                sort:_timestamp:-1
+                sort:_timestamp:1
+                limit:20
 
         slots: ->
             Docs.find
@@ -59,3 +60,4 @@ if Meteor.isServer
             _author_id: user._id
         }, 
             limit:100
+            sort:_timestamp:-1
