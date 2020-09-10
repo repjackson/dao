@@ -1,20 +1,3 @@
-template(name='requests')
-    .ui.stackable.padded.grid 
-        .row
-            .four.wide.column
-                .ui.inline.header 
-                    i.concierge.bell.icon
-                    |requests
-                i.circular.link.large.plus.icon.add_request
-                .spacer
-                .spacer
-                .spacer
-            .twelve.wide.column
-                .ui.stackable.cards
-                    each requests
-                        +request_card
-
-
 template(name='request_card')
     .card.pointer.request_card
         .image
@@ -79,7 +62,7 @@ template(name='request_view')
         .ui.stackable.padded.grid
             .middle.aligned.row 
                 .sixteen.wide.column
-                    a(href="/requests" title='requests')
+                    a(href="/m/request" title='requests')
                         i.concierge.bell.big.circular.link.icon
                     .ui.inline.header 
                         small viewing request 
@@ -154,7 +137,7 @@ template(name='request_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.icon.circular.button(href="/request/#{_id}/view" title='save')
+                    a.ui.green.icon.circular.button(href="/m/request/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
                         small edit request

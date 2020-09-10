@@ -4,43 +4,6 @@ if Meteor.isClient
     Template.registerHelper 'completer', () ->
         Meteor.users.findOne @completed_by_user_id
     
-    Router.route '/request/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'request_edit'
-        ), name:'request_edit'
-    Router.route '/request/:doc_id/view', (->
-        @layout 'layout'
-        @render 'request_view'
-        ), name:'request_view'
-
-    Template.requests.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'request'
-    
-    Template.request_edit.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
-    
-    Template.request_view.onCreated ->
-        @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
-    
-    
-    Router.route '/requests', (->
-        @layout 'layout'
-        @render 'requests'
-        ), name:'requests'
-    Template.requests.events
-        'click .add_request': ->
-            new_id = 
-                Docs.insert 
-                    model:'request'
-            Router.go "/request/#{new_id}/edit"
-            
-    Template.requests.helpers
-        requests: ->
-            Docs.find 
-                model:'request'
-                complete:$ne:true
-                published:true
-
     Template.request_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id
 

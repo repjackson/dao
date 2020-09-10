@@ -6,24 +6,6 @@ if Meteor.isClient
             Meteor.users.find   
                 _id:$in:@badger_ids
     
-    Router.route '/rental/:doc_id/view', (->
-        @layout 'layout'
-        @render 'rental_view'
-        ), name:'rental_view'
-
-    
-    Router.route '/rental/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'rental_edit'
-        ), name:'rental_edit'
-
-    Template.rental_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-
-    
-    Template.rental_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-
     
     Template.registerHelper 'honey_rentalrs', () ->
         rental = Docs.findOne Router.current().params.doc_id
@@ -31,13 +13,6 @@ if Meteor.isClient
             Meteor.users.find   
                 _id:$in:rental.honey_rentalr_ids
 
-    Router.route '/rentals', (->
-        @layout 'layout'
-        @render 'rentals'
-        ), name:'rentals'
-
-    Template.rentals.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'rental'
    
     Template.rental_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
@@ -57,16 +32,6 @@ if Meteor.isClient
                     Router.go "/rental/#{@_id}/view"
 
 
-    Template.rentals.events
-        'click .add_rental': ->
-            new_id = 
-                Docs.insert 
-                    model:'rental'
-            Router.go "/rental/#{new_id}/edit"
-    Template.rentals.helpers
-        rentals: ->
-            Docs.find   
-                model:'rental'
     
     Template.rental_view.helpers
     Template.rental_view.events

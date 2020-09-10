@@ -1,33 +1,6 @@
-template(name='rentals')
-    .ui.stackable.padded.grid
-        .row
-            .four.wide.column
-                .ui.inline.header
-                    i.certificate.icon
-                    |rentals
-                .ui.icon.button.add_rental
-                    i.plus.icon
-                // .ui.header 
-                //     i.grey.users.icon
-                //     |members
-                // each members 
-                //     if profile_image_id
-                //         a(href="/user/#{username}")
-                //             img.ui.tiny.pointer.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-            .twelve.wide.column
-                // .ui.segment
-                //     .ui.big.fluid.input
-                //         input(type='text' placeholder='write something...')
-                .ui.stackable.cards
-                    each rentals 
-                        +rental_card
-                    
-
-
-
 
 template(name='rental_card')
-    a.card(href="/rental/#{_id}/view")
+    a.card(href="/m/rental/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
@@ -54,7 +27,7 @@ template(name='rental_view')
                         small viewing rental: 
                         |#{title}
                     if can_edit
-                        a.ui.icon.button.edit_rental(href="/rental/#{_id}/edit")
+                        a.ui.icon.button.edit_rental(href="/m/rental/#{_id}/edit")
                             i.big.pencil.big.icon
             .row 
                 .eight.wide.column
@@ -87,7 +60,7 @@ template(name='rental_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.green.cicular.icon.button(href="/rental/#{_id}/view" title='save')
+                    a.ui.green.cicular.icon.button(href="/m/rental/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header
                         small edit rental

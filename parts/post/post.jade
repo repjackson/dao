@@ -39,6 +39,7 @@ template(name='post_card')
             .ui.label #{points}
         if is_admin
             +print_this
+            +text_edit key='model' direct=true
         // .meta
         //     |#{when}
         // .content
