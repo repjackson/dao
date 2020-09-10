@@ -10,7 +10,7 @@ template(name='nav')
             i.wikipedia.large.icon
         a.icon.mobile.hidden.set_reddit.item(href="/m/reddit" class="{{isActivePath '/m/reddit'}}")
             i.reddit.large.icon
-        .ui.input.item
+        .ui.input.item.mobile.hidden
             .ui.icon.input
                 i.search.icon
                 input.search_dao(type='text')
@@ -67,7 +67,7 @@ template(name='nav')
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
                 a.icon.large.item.toggle_rightbar.select_term
-                    i.ellipsis.vertical.large.icon
+                    i.bars.large.icon
             else
                 a.item(href="/register" title='register')
                     i.large.user.plus.icon
@@ -123,71 +123,18 @@ template(name='add')
 
             
             
-template(name='right_sidebar')
-    // .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
-    .ui.right.sidebar.vertical.borderless.menu(class=currentUser.invert_class)
-        // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
-        //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-        //     |#{currentUser.name}
-        each my_tribes
-            a.item.zoom.toggle_rightbar(href="/m/tribe/#{_id}/view" class="{{isActiveRoute 'user_dashboard'}}")
-                img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                | #{title}
-                // i.large.icon(class=icon)
-            
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'user_dashboard'}}")
-            | dashboard (#{currentUser.points}p)
-            i.large.dashboard.icon
-        
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kin" class="{{isActiveRoute 'user_kin'}}")
-            | #{currentUser.total_credit_amount}p in
-            i.large.chevron.down.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kout" class="{{isActiveRoute 'user_kout'}}")
-            | #{currentUser.total_debit_amount}p out
-            i.large.chevron.up.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActiveRoute 'user_requests'}}")
-            | requests
-            i.large.concierge.bell.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
-            | orders
-            i.large.list.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
-            | offers
-            i.large.store.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
-            | tribes
-            i.large.fire.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
-            | #{currentUser.credit} credit
-            i.large.dollar.icon
-        // a.item.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}")
-        //     | chat
-        //     i.chat.icon
-        .ui.divider
-        a.item.toggle_nightmode.zoom.toggle_rightbar(href="#")
-            i.yin.yang.large.icon
-            if currentUser.invert_class.length
-                |yin
-            else
-                |yang
-
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/edit" title='edit your account')
-            i.cog.large.icon
-            |settings
-        a.item.zoom.logout(href="#" class="{{isActiveRoute 'user_messages'}}" )
-            |logout
-            if is_logging_out
-                i.refresh.loading.icon
-            else
-                i.sign.out.icon
-
 
 
 template(name='left_sidebar')
     .ui.left.sidebar.vertical.borderless.large.menu(class=currentUser.invert_class)
+        .ui.input.item
+            .ui.icon.input
+                i.search.icon
+                input.search_dao(type='text')
+    
         +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
         +leftbar_item model='reddit' label='reddit' icon='reddit'
-        +leftbar_item model='post' label='post' icon='newspaper'
+        +leftbar_item model='post' label='posts' icon='newspaper'
         +leftbar_item model='youtube' label='youtube' icon='youtube'
         +leftbar_item model='tribe' label='tribes' icon='fire'
         +leftbar_item model='rental' label='rentals' icon='clock'

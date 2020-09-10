@@ -9,6 +9,9 @@ Template.registerHelper 'in_role', (role)->
         false
         
         
+Template.registerHelper 'page_doc', (key)->
+    Docs.findOne 
+        _id:Router.current().params.doc_id
 Template.registerHelper 'my_tribes', (key)->
     if Meteor.user()
         Docs.find 

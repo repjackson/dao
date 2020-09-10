@@ -2,7 +2,7 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .twelve.wide.column.scrolling
+                .ten.wide.column.scrolling
                     .ui.center.aligned.header 
                         |#{title}
                     img.invert(src=url)
@@ -55,7 +55,7 @@ template(name='post_view')
                     +comments
                     +viewing
                     .spacer
-                .four.wide.column.scrolling
+                .six.wide.column.scrolling
                     // .ui.inline.header 
                     //     small post: 
                     // a.ui.circular.icon.button(href='/')
@@ -83,8 +83,8 @@ template(name='post_view')
                         |#{_author.username}
                     .ui.inline.small.header #{when}
                     div
-                    a.ui.header(href="/tribe/#{tribe_id}/view") tribe
-                        |#{tribe_id}
+                    with tribe 
+                        +tribe_card_small
     
                     // +voting
                     +vote

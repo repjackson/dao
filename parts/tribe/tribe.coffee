@@ -1,15 +1,22 @@
 if Meteor.isClient
-    Router.route '/tribe/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'tribe_edit'
-        ), name:'tribe_edit'
-
-
     Template.tribe_card.onRendered ->
         Meteor.setTimeout ->
             $('.ui.embed').embed();
         , 1000
 
+    Template.tribe_edit.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 2000
+    Template.tribe_view.onRendered ->
+        Meteor.call 'log_view', Router.current().params.doc_id
+        Meteor.setTimeout ->
+            $('.ui.accordion').accordion()
+        , 2000
+        Meteor.setTimeout ->
+            $('.ui.embed').embed();
+        , 1000
+        Meteor.call 'mark_read', Router.current().params.doc_id, ->
 
     Template.tribe_card.events
         'click .view_tribe': ->

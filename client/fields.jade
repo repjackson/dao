@@ -89,7 +89,7 @@ template(name='html_edit')
                     |#{key}
                 else
                     |#{this}
-            +call_watson mode='html' key=key
+                +call_watson mode='html' key=key
     // .froala-container
     //     +froalaReactive getFEContext
     .ui.fluid.form
@@ -964,7 +964,7 @@ template(name='single_doc_view')
                 //- i.grey.icon(class=icon)
                 +icon name=icon cl='ui avatar image'
             |#{field_value}
-
+            |#{doc.title}
 
 template(name='single_doc_edit')
     div

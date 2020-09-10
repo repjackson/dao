@@ -3,7 +3,7 @@ template(name='tribe_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/tribe/#{_id}/view" title='save')
+                    a.ui.green.big.icon.button(href="/m/tribe/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.inline.header 
@@ -14,18 +14,49 @@ template(name='tribe_edit')
                 .four.wide.center.aligned.column
                     i.link.big.remove.icon.delete_item(title='delete tribe')
             .row 
-                .five.wide.column
-                    +text_edit key='title' icon='header' direct=true
-                    +image_edit key='image_id' label='image' direct=true
+                .four.wide.column
                     +text_edit key='location' label='location' icon='marker' direct=true
                     +icon_edit key='icon' label='icon' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
-                .six.wide.column
-                    +textarea_edit key='description' label='description' direct=true
-                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
-                    +multi_user_edit key='member_ids' label='members' direct=true
-                .five.wide.column
-                    +boolean_edit key='published' direct=true        
-                    +boolean_edit key='private' icon='lock' direct=true        
-                    +multi_user_edit key='leader_ids' icon='chess king' direct=true        
+                .eight.wide.column
+                    .ui.big.accordion
+                        .title
+                            i.info.icon
+                            |info
+                            i.dropdown.icon
+                        .content
+                            +text_edit key='title' icon='header' direct=true
+                            +boolean_edit key='published' direct=true        
+                            +textarea_edit key='description' label='description' direct=true
+                            +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                        .title
+                            i.picture.icon
+                            |image
+                            i.dropdown.icon
+                        .content
+                            +image_edit key='image_id' label='image' direct=true
+                        .title
+                            i.users.icon
+                            |#{member_ids.length} people
+                            i.dropdown.icon
+                        .content
+                            +multi_user_edit key='leader_ids' icon='chess king' direct=true        
+                            +multi_user_edit key='member_ids' label='members' direct=true
+                        .title
+                            if private 
+                                i.lock.icon
+                            |privacy
+                            i.dropdown.icon
+                        .content
+                            +boolean_edit key='private' label='private' direct=true
+                            unless private
+                                +boolean_edit key='publicy_visible' label='publicy visible' direct=true
+                        .title
+                            i.cubes.icon
+                            |#{feature_ids.length} features
+                            i.dropdown.icon
+                        .content
+                            +multi_doc_edit key='feature_ids' ref_model='feaure' label='features' direct=true
+                        
+                .four.wide.column

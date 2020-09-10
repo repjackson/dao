@@ -13,22 +13,13 @@ template(name='tribe_view')
                             i.lock.icon(title='private')
                         small tribe
                     if can_edit
-                        a.edit_tribe(href="/tribe/#{_id}/edit")
+                        a.edit_tribe(href="/m/tribe/#{_id}/edit")
                             i.big.pencil.circular.link.icon
                     +image_view key='image_id' label='image' direct=true
                     +vote
-                    .ui.header 
-                        i.hand.holding.icon
-                        |#{offer_count}
-                        |offers
                     .ui.header
                         i.marker.icon 
                         |#{location}
-                    .ui.header 
-                        small leader
-                    a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.username}
                 .eight.wide.column
                     .ui.accordion
                         .active.title
@@ -47,7 +38,7 @@ template(name='tribe_view')
                                                 a.user(href="/user/#{_author_username}") #{_author_username}
                                                 if image_id
                                                     img.ui.mini.rounded.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                                |#{title} #{price}
+                                                a(href="/m/#{model}/#{_id}/view") #{title} #{price}
                                                 each tags 
                                                     .ui.label #{this}
                                             .meta 
@@ -131,14 +122,8 @@ template(name='tribe_view')
                     .ui.button
                         i.concierge.bell.icon
                         |request
-                    .ui.header 
-                        i.chess.king.icon
-                        |leaders
-                    +multi_user_view key='leader_ids' label='leaders' direct=true
-                    .ui.header 
-                        i.users.icon
-                        |members
-                    +multi_user_view key='member_ids' label='members' direct=true
+                    +multi_user_view key='leader_ids' label='leaders' icon='chess king' direct=true
+                    +multi_user_view key='member_ids' label='members' icon='users' direct=true
 
 
 

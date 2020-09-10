@@ -159,11 +159,11 @@ template(name='model_top')
             unless key_value_is current_delta.model_filter 'model'
                 unless key_value_is current_model.collection 'user'
                     // if is_admin
-                    i.plus.large.green.link.icon.add_model_doc(title="add #{slug}")
+                    i.plus.large.link.circular.icon.add_model_doc(title="add #{slug}")
             else 
                 if is_admin
                     .ui.icon.basic.button.add_model_doc(title="add #{slug}")
-                        i.plus.large.green.icon
+                        i.plus.large.icon
         //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
         if is_admin
             i.cog.large.link.icon.edit_model(title='edit model')
@@ -176,7 +176,7 @@ template(name='model_top')
         else
             .create_delta.ui.big.green.button(title='new session')
                 i.plus.icon
-                |start your session
+                | session
 
 
 

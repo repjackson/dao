@@ -24,6 +24,13 @@ if Meteor.isClient
 
 
     Template.user_edit_membership.helpers
+        months: ->
+            [
+                'jan'
+                'feb'
+                'march'
+                'april'
+            ]
         user_edit_membership: ->
             target_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find

@@ -7,8 +7,8 @@ template(name='post_edit')
                     +text_edit key='title' icon='header' direct=true
                     +html_edit key='description' label='description' direct=true
                     div
-                    if watson
-                        +watson_view
+                    // if watson
+                    //     +watson_view
                 .six.wide.column
                     a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
                         i.checkmark.big.icon
@@ -24,7 +24,7 @@ template(name='post_edit')
                             i.remove.link.circular.icon.delete_post(title='delete post')
                         .title
                             i.user.icon
-                            |authors
+                            |author: #{_author_username}
                             i.dropdown.icon
                         .content
                             |coauthors split revenue evenly
@@ -38,6 +38,8 @@ template(name='post_edit')
                         .title
                             i.video.icon
                             |video
+                            if youtube_id
+                                i.checkmark.icon
                             i.dropdown.icon
                         .content
                             +youtube_edit key='youtube_id' label='youtube id' direct=true
@@ -49,12 +51,15 @@ template(name='post_edit')
                             +date_edit key='date' label='date' direct=true
                         .title
                             i.tags.icon
-                            |tags
+                            |#{tags.length} tags
                             i.dropdown.icon
                         .content
                             +smart_tagger
                         .title
                             i.picture.icon
+                            if image_id
+                                img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+
                             |image
                             i.dropdown.icon
                         .content
@@ -65,9 +70,11 @@ template(name='post_edit')
                             +image_link_edit key='image_link' label='image link' direct=true
                         .title
                             i.fire.icon
-                            |tribe
+                            |tribe: #{tribe.title}
                             i.dropdown.icon
                         .content
+                            with tribe 
+                                +tribe_card_small
                             a.ui.header(href="/tribe/#{tribe_id}/view") tribe
                                 |#{tribe_id}
                             +single_doc_edit ref_model='tribe' key='tribe_id' direct=true
@@ -78,3 +85,9 @@ template(name='post_edit')
                             +boolean_edit key='private' direct=true
                             if private
                                 +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
+                        .title
+                            i.shield.icon
+                            |advanced
+                        .content
+                            +text_edit key='model' direct=true
+                                

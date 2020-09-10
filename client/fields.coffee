@@ -675,9 +675,12 @@ Template.textarea_view.onRendered ->
 
 
 Template.single_doc_view.onCreated ->
-    # @autorun => Meteor.subscribe 'model_docs', @data.ref_model
+    @autorun => Meteor.subscribe 'model_docs', @data.ref_model
 
 Template.single_doc_view.helpers
+    doc: ->
+        Docs.findOne
+            _id:Template.currentData().tribe_id
     choices: ->
         Docs.find
             model:@ref_model
