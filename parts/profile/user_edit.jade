@@ -28,35 +28,26 @@ template(name='user_edit_layout')
                                 // i.bell.large.icon 
                                 +i name='bell' cl='ui inline image'
                                 |alerts
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/genekeys" class="{{isActiveRoute 'user_edit_genekeys'}}") 
-                                // i.dna.large.icon 
-                                +i name='dna' cl='ui inline image'
-                                |genekeys
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
-                                // i.lock.privacy.large.icon 
-                                +i name='lock' cl='ui inline image'
-                                | privacy
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/friends" class="{{isActiveRoute 'user_edit_friends'}}") 
-                                +i name='groups' cl='ui inline image'
-                                // i.users.large.icon 
-                                | friends
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
-                                // i.certificate.large.icon
-                                +i name='sherrif' cl='ui inline image'
-                                |badges
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/membership" class="{{isActiveRoute 'user_edit_membership'}}" title='membership') 
-                                +i name='id-badge' cl='ui inline image'
-                                // i.shield.large.icon
-                                | membership
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/tribes" class="{{isActiveRoute 'user_edit_tribe'}}" title='membership') 
-                                +i name='campfire' cl='ui inline image'
-                                // i.fire.large.icon
-                                | tribes
-                            +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='feed'
-                            if session_key_value_is 'view_user_section' 'karma'
-                                +user_karma
-
                         .twelve.wide.column
+                            +session_edit_value_button key='useredit_section' value='genekeys' label='genekeys' icon='dna-helix'
+                            if session_key_value_is 'useredit_section' 'genekeys'
+                                +user_edit_genekeys
+                            +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
+                            if session_key_value_is 'useredit_section' 'privacy'
+                                +user_edit_privacy
+                            +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
+                            if session_key_value_is 'useredit_section' 'friends'
+                                +user_edit_friends
+                            +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
+                            if session_key_value_is 'useredit_section' 'badges'
+                                +user_edit_badges
+                            +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='id-badge'
+                            if session_key_value_is 'useredit_section' 'membership'
+                                +user_edit_membership
+                            +session_edit_value_button key='useredit_section' value='tribes' label='tribes' icon='campfire'
+                            if session_key_value_is 'useredit_section' 'tribes'
+                                +user_edit_tribes
+
                             +yield
 
 template(name='user_edit_alerts')
