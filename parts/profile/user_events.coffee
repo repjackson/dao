@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/user/:username/events', (->
-        @layout 'profile_layout'
-        @render 'user_events'
-        ), name:'user_events'
-
     Template.user_events.onCreated ->
         @autorun -> Meteor.subscribe 'user_model_docs', 'event', Router.current().params.username
         # @autorun => Meteor.subscribe 'user_events', Router.current().params.username
@@ -13,7 +8,7 @@ if Meteor.isClient
         'keyup .new_event': (e,t)->
             if e.which is 13
                 val = $('.new_event').val()
-                console.log val
+                # console.log val
                 target_user = Meteor.users.findOne(username:Router.current().params.username)
                 Docs.insert
                     model:'event'

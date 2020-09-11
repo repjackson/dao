@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/user/:username/edit/finance', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_finance'
-        ), name:'user_edit_finance'
-
     Template.user_edit_finance.onCreated ->
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable

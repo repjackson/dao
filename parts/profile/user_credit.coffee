@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/user/:username/credit', (->
-        @layout 'profile_layout'
-        @render 'user_credit'
-        ), name:'user_credit'
-
     Template.user_credit.onCreated ->
         @autorun -> Meteor.subscribe 'received_dollar_debits', Router.current().params.username
         @autorun -> Meteor.subscribe 'sent_dollar_debits', Router.current().params.username

@@ -22,7 +22,7 @@ if Meteor.isClient
 
     
         'click .add_five_credits': ->
-            console.log Template.instance()
+            # console.log Template.instance()
             if confirm 'add 5 credits?'
                 Session.set('topup_amount',5)
                 Template.instance().checkout.open

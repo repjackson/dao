@@ -1,10 +1,4 @@
 if Meteor.isClient
-    Router.route '/user/:username/downvotes', (->
-        @layout 'profile_layout'
-        @render 'user_downvotes'
-        ), name:'user_downvotes'
-
-
     Template.user_downvotes.onCreated ->
         @autorun => Meteor.subscribe 'user_downvotes', Router.current().params.username
         # @autorun => Meteor.subscribe 'model_docs', 'debit'

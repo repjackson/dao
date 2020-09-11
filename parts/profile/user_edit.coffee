@@ -48,15 +48,15 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'model_docs', 'transaction'
 
     Template.user_edit_alerts.events
-        'keyup .new_picture': (e,t)->
-            if e.which is 13
-                val = $('.new_picture').val()
-                console.log val
-                target_user = Meteor.users.findOne(username:Router.current().params.username)
-                Docs.insert
-                    model:'picture'
-                    body: val
-                    target_user_id: target_user._id
+        # 'keyup .new_picture': (e,t)->
+        #     if e.which is 13
+        #         val = $('.new_picture').val()
+        #         # console.log val
+        #         target_user = Meteor.users.findOne(username:Router.current().params.username)
+        #         Docs.insert
+        #             model:'picture'
+        #             body: val
+        #             target_user_id: target_user._id
 
 
 

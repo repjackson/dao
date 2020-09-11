@@ -51,27 +51,17 @@ template(name='badge_view')
                     +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .eight.wide.column
-                    with tribe 
-                        +tribe_card
-                    +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
-    
                     .ui.header 
-                        |badgers
+                        |awarded to
                     each badgers
                         a.ui.basic.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{username}
+                    with tribe 
+                        +tribe_card
+                    +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
+    
         
-                    // .ui.header 
-                    //     +honey_badger
-                    //     |honey badgers
-                    // each honey_badgers
-                    //     a.ui.basic.button(href="/user/#{username}") 
-                    //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //         |#{name}
-                    // //- .ui.fluid.green.button.submit
-                    // //-     i.checkmark.icon
-                    // //-     |submit
 template(name='badge_edit')
     with current_doc
         .ui.stackable.padded.grid

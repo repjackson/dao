@@ -1,10 +1,4 @@
 if Meteor.isClient
-    Router.route '/user/:username/edit/membership', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_membership'
-        ), name:'user_edit_membership'
-
-
     Template.user_edit_membership.onCreated ->
         @autorun => Meteor.subscribe 'user_edit_membership', Router.current().params.username
         # @autorun => Meteor.subscribe 'model_docs', 'picture'

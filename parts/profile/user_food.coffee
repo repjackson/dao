@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/user/:username/food', (->
-        @layout 'profile_layout'
-        @render 'user_food'
-        ), name:'user_food'
-    
     Template.user_food.onCreated ->
         @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'thought'
 
@@ -16,7 +11,7 @@ if Meteor.isClient
         'keyup .new_public_message': (e,t)->
             if e.which is 13
                 val = $('.new_public_message').val()
-                console.log val
+                # console.log val
                 target_user = Meteor.users.findOne(username:Router.current().params.username)
                 Docs.insert
                     model:'message'

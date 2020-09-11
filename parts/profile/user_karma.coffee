@@ -1,10 +1,4 @@
 if Meteor.isClient
-    Router.route '/user/:username/karma', (->
-        @layout 'profile_layout'
-        @render 'user_karma'
-        ), name:'user_karma'
-
-
     Template.user_karma.onCreated ->
         @autorun => Meteor.subscribe 'user_karma', Router.current().params.username
         # @autorun => Meteor.subscribe 'model_docs', 'debit'
