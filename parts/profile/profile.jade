@@ -33,7 +33,7 @@ template(name='profile_layout')
                                 |account
                         if is_current_user
                             a.ui.circular.button(href="/user/#{username}/edit" title='edit your account')
-                                +i name='setting' cl='ui avatar image'
+                                +i name='settings' cl='ui avatar image'
                                 |account
                             a.ui.circular.button.logout(href="#" title='log out')
                                 // i.sign.out.icon

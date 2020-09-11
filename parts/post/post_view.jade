@@ -37,7 +37,7 @@ template(name='post_view')
                                 i.large.tag.icon
                             // each tags 
                             //     .ui.compact.large.circular.button.add_tag #{this}
-                            // a.image(href="/post/#{_id}/view")
+                            // a.image(href="/m/post/#{_id}/view")
                             //     img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
                             a.ui.small.header(href=url target='_window') #{url}
                             if url
@@ -75,7 +75,7 @@ template(name='post_view')
                     
                     .spacer
                     if can_edit
-                        a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
+                        a.ui.circular.icon.button.edit_post(href="/m/post/#{_id}/edit")
                             i.large.pencil.icon
                     div
                     if url

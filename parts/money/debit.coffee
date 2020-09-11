@@ -1,10 +1,4 @@
 if Meteor.isClient
-    Router.route '/debit/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'debit_edit'
-        ), name:'debit_edit'
-        
-        
     Template.debit_edit.onCreated ->
         @autorun => Meteor.subscribe 'seller_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
@@ -70,7 +64,7 @@ if Meteor.isClient
                 Meteor.call 'calc_user_stats', @seller_id, ->
                 Meteor.call 'calc_user_stats', @buyer_id, ->
 
-                Router.go "/debit/#{@_id}/view"
+                Router.go "/m/debit/#{@_id}/view"
             # )
 
 
@@ -99,11 +93,6 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/debit/:doc_id/view', (->
-        @layout 'layout'
-        @render 'debit_view'
-        ), name:'debit_view'
-
     Template.debit_view.onCreated ->
         @autorun => Meteor.subscribe 'product_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id

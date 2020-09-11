@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.menu.topnav(class=currentUser.invert_class)
+    .ui.fluid.attached.borderless.menu.inverted.topnav(class=currentUser.invert_class)
         // if currentUser
         a.icon.header.zoom.item.toggle_sidebar
             i.bars.icon
@@ -53,7 +53,7 @@ template(name='nav')
                 a.zoom.item(href="/login" title='login')
                     i.large.sign.in.alternate.icon
                     |login
-    .ui.attached.invert.menu.hscroll
+    .ui.attached.menu.hscroll(class=currentUser.invert_class)
         each nav_models
             a.icon.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
                 +i name=icon

@@ -5,21 +5,6 @@ if Meteor.isClient
         Meteor.users.findOne @completed_by_user_id
     
     
-    Router.route '/businesss/', (->
-        @layout 'layout'
-        @render 'businesss'
-        ), name:'businesss'
-    Router.route '/business/:doc_id/view', (->
-        @layout 'layout'
-        @render 'business_view'
-        ), name:'business_view'
-
-    
-    Router.route '/business/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'business_edit'
-        ), name:'business_edit'
-
     Template.businesss.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'business'
     

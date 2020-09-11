@@ -3,22 +3,6 @@ if Meteor.isClient
         @layout 'user_edit_layout'
         @render 'user_edit_account'
         ), name:'user_edit_home'
-    Router.route '/user/:username/edit/info', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_info'
-        ), name:'user_edit_info'
-    Router.route '/user/:username/edit/badges', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_badges'
-        ), name:'user_edit_badges'
-    Router.route '/user/:username/edit/payment', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_payment'
-        ), name:'user_edit_payment'
-    Router.route '/user/:username/edit/account', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_account'
-        ), name:'user_edit_account'
 
     Template.user_edit_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
@@ -34,13 +18,6 @@ if Meteor.isClient
     # Template.phone_editor.helpers
     #     'newNumber': ->
     #         Phoneformat.formatLocal 'US', Meteor.user().profile.phone
-
-if Meteor.isClient
-    Router.route '/user/:username/edit/alerts', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_alerts'
-        ), name:'user_edit_alerts'
-
 
     Template.user_edit_alerts.onCreated ->
         @autorun => Meteor.subscribe 'user_edit_alerts', Router.current().params.username
@@ -82,11 +59,6 @@ if Meteor.isServer
             model:'picture'
 
 if Meteor.isClient
-    Router.route '/user/:username/edit/genekeys', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_genekeys'
-        ), name:'user_edit_genekeys'
-
     Template.user_edit_genekeys.onRendered ->
 
     Template.user_edit_genekeys.events

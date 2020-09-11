@@ -21,50 +21,47 @@ body {
 
 
 
-.adventure-vid {
-    /*display: -webkit-box;*/
-    /*display: -webkit-flex;*/
-    /*display: -ms-flexbox;*/
-    /*display: flex;*/
-    /*-webkit-box-orient: vertical;*/
-    /*-webkit-box-direction: normal;*/
-    /*-webkit-flex-direction: column;*/
-    /*-ms-flex-direction: column;*/
-    /*flex-direction: column;*/
-    /*-webkit-box-pack: center;*/
-    /*-webkit-justify-content: center;*/
-    /*-ms-flex-pack: center;*/
-    /*justify-content: center;*/
-    /*-webkit-flex-wrap: nowrap;*/
-    /*-ms-flex-wrap: nowrap;*/
-    /*flex-wrap: nowrap;*/
-    /*-webkit-box-align: center;*/
-    /*-webkit-align-items: center;*/
-    /*-ms-flex-align: center;*/
-    /*align-items: center;*/
-    /*-webkit-align-self: auto;*/
-    /*-ms-flex-item-align: auto;*/
-    /*align-self: auto;*/
-    /*-webkit-box-flex: 1;*/
-    /*-webkit-flex: 1;*/
-    /*-ms-flex: 1;*/
-    /*flex: 1;*/
-    /*background-color: rgba(19, 47, 68, 0.78);*/
+.adventure-vidm {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    background-color: rgba(19, 47, 68, 0.78);
     background-attachment: fixed !important;
     /*max-width:100% !important;*/
-    min-width:110% !important;
-    /*background-attachment: fixed !important;*/
-    width: 120%;
-    background-size: cover !important;
+    /*min-width:110% !important;*/
+    /*width: 120%;*/
     background-size: cover !important;
     /*min-width: 120% !important;*/
     position: absolute;
     overflow: hidden;
     /*height: 500px;*/
-    height: 100%;
-    width: 100%;
+    /*height: 100%;*/
+    /*width: 100%;*/
     /*color: white;*/
-    background-attachment: fixed !important;
     /*background-repeat: no-repeat !important;*/
     
 }
@@ -165,7 +162,7 @@ html.ios body {
 .topnav.menu {
     /*border-radius: 0 0 10px 10px !important; */
     transition: background-color 3s ease !important;
-    /* background-color: rgba(250,250,250,.6) !important; */
+    background-color: rgba(250,250,250,1) !important; 
     /*background-color: rgba(50,110,100,1) !important; */
 
     /* opacity: .7 !important; */

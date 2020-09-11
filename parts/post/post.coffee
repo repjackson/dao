@@ -1,15 +1,4 @@
 if Meteor.isClient
-    Router.route '/post/:doc_id/view', (->
-        @layout 'layout'
-        @render 'post_view'
-        ), name:'post_view'
-    Router.route '/post/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'post_edit'
-        ), name:'post_edit'
-
-
-
     Template.post_view.onCreated ->
         @autorun -> Meteor.subscribe 'post_tips', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'post_votes', Router.current().params.doc_id
