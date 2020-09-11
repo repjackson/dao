@@ -4,7 +4,7 @@ template(name='event_view')
             .middle.aligned.row 
                 .sixteen.wide.column
                     if currentUser
-                        a(href="/events")
+                        a(href="/m/event")
                             i.calendar.big.circular.link.icon
                     .ui.large.inline.header #{title}
                     if can_edit

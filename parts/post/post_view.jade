@@ -77,27 +77,29 @@ template(name='post_view')
                     if can_edit
                         a.ui.circular.icon.button.edit_post(href="/m/post/#{_id}/edit")
                             i.large.pencil.icon
-                    div
+                    // div
                     if url
+                        +link_view key='url' direct=true
                         +call_watson mode='url'
                     .ui.small.inline.header by
-                    a.ui.header(href="/user/#{_author.username}") 
+                    a.ui.inline.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         |#{_author.username}
                     .ui.inline.small.header #{when}
-                    div
+                    // div
                     with tribe 
                         +tribe_card_small
     
                     // +voting
                     +vote
-                    div
+                    // div
                     +array_view key='location_tags' label='location tags' direct=true
-                    div
+                    // div
                     +date_view key='date' label='date' direct=true
-                    div
+                    // div
                     +single_user_view key='_author_id' label='author' direct=true
-                    +multi_user_view key='coauthor_ids' label='coauthors' direct=true
+                    if coauthor_ids
+                        +multi_user_view key='coauthor_ids' label='coauthors' direct=true
                     .ui.label #{views} views
                     .ui.large.label #{total_points}p generated
                     .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")

@@ -24,12 +24,15 @@ template(name='user_edit_layout')
                             +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
                             +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
                             +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
+                            +session_edit_value_button key='useredit_section' value='features' label='features' icon='module'
                             +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
                             +session_edit_value_button key='useredit_section' value='genekeys' label='genekeys' icon='biotech'
                             if session_key_value_is 'useredit_section' 'genekeys'
                                 +user_edit_genekeys
                             if session_key_value_is 'useredit_section' 'privacy'
                                 +user_edit_privacy
+                            if session_key_value_is 'useredit_section' 'features'
+                                +user_edit_features
                             if session_key_value_is 'useredit_section' 'friends'
                                 +user_edit_friends
                             if session_key_value_is 'useredit_section' 'alerts'
@@ -64,6 +67,11 @@ template(name='user_edit_friends')
         i.users.icon
         | friends
     +multi_user_edit key='friend_ids' label='friends' direct=true
+template(name='user_edit_features')
+    .ui.header
+        +i name='module'
+        | features
+    +multi_doc_edit key='feature_ids' ref_model='feature' label='enabled features' direct=true
 
 template(name='user_edit_genekeys')
     .ui.header

@@ -138,7 +138,7 @@ if Meteor.isClient
     Template.delta.helpers
         result_column_class: ->
             delta = Docs.findOne model:'delta'
-            model = Docs.findOne model:'model'
+            model = Docs.findOne {model:'model',slug:Router.current().params.model_slug}
             if model.show_facets
                 'twelve wide column'
             else

@@ -2,28 +2,29 @@ template(name='post_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .ten.wide.column
+                .sixteen.wide.column
                     div
                     +text_edit key='title' icon='header' direct=true
-                    +html_edit key='description' label='description' direct=true
                     div
                     // if watson
                     //     +watson_view
-                .six.wide.column
                     a.ui.green.icon.circular.large.button(href="/m/post/#{_id}/view" title='save' class=currentUser.invert_class)
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit post:
                         |#{title}
+                    +session_edit_value_button key='post_edit_section' value='description' label='description' icon='content'
                     +session_edit_value_button key='post_edit_section' value='advanced' label='advanced' icon='settings'
                     +session_edit_value_button key='post_edit_section' value='delete' label='delete' icon='delete'
                     +session_edit_value_button key='post_edit_section' value='authors' label='authors' icon='groups'
                     +session_edit_value_button key='post_edit_section' value='tribes' label='tribes' icon='campfire'
                     +session_edit_value_button key='post_edit_section' value='image' label='image' icon='image'
                     +session_edit_value_button key='post_edit_section' value='privacy' label='privacy' icon='shield'
-                    +session_edit_value_button key='post_edit_section' value='tags' label='tags' icon='tag'
+                    +session_edit_value_button key='post_edit_section' value='tags' label='tags' icon='price-tag'
                     +session_edit_value_button key='post_edit_section' value='video' label='video' icon='video'
                     +session_edit_value_button key='post_edit_section' value='date' label='date' icon='calendar'
+                    if session_key_value_is 'post_edit_section' 'description'
+                        +html_edit key='description' label='description' direct=true
                     if session_key_value_is 'post_edit_section' 'date'
                         .ui.inline.header
                             // i.calendar.icon
@@ -45,12 +46,11 @@ template(name='post_edit')
                             else
                                 i.picture.grey.icon
                             |image
-                        i.dropdown.icon
                         +image_edit key='image_id' label='image upload' direct=true
-                        div 
-                        +text_edit key='source' label='source' direct=true
-                        div 
-                        +image_link_edit key='image_link' label='image link' direct=true
+                        // div 
+                        // +text_edit key='source' label='source' direct=true
+                        // div 
+                        // +image_link_edit key='image_link' label='image link' direct=true
                     if session_key_value_is 'post_edit_section' 'tribes'
                         .ui.inline.header
                             i.fire.icon
@@ -71,12 +71,11 @@ template(name='post_edit')
                         i.dropdown.icon
                         +youtube_edit key='youtube_id' label='youtube id' direct=true
                     if session_key_value_is 'post_edit_section' 'delete'
-                        i.remove.link.circular.icon.delete_post(title='delete post')
+                        i.remove.link.circular.big.red.icon.delete_post(title='delete post')
                     if session_key_value_is 'post_edit_section' 'privacy'
                         .ui.inline.header
                             i.lock.icon
                             |privacy
-                        i.dropdown.icon
                         +boolean_edit key='private' direct=true
                         if private
                             +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
@@ -84,13 +83,11 @@ template(name='post_edit')
                         .ui.inline.header
                             i.shield.icon
                             |advanced
-                        i.dropdown.icon
                         +text_edit key='model' direct=true
                     if session_key_value_is 'post_edit_section' 'authors'
                         .ui.inline.header
                             i.user.icon
                             |author: #{_author_username}
-                        i.dropdown.icon
                         |coauthors split revenue evenly
                         +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
                         .ui.header 
