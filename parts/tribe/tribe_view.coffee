@@ -7,7 +7,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'tribe_docs', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'me'
-        Session.setDefault 'view_tribe_section', 'content'
+        Session.setDefault 'view_tribe_section', 'posts'
     Template.tribe_view.onRendered ->
         Meteor.call 'log_view', Router.current().params.doc_id
         Meteor.setTimeout ->

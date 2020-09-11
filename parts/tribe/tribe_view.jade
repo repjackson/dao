@@ -7,10 +7,7 @@ template(name='tribe_view')
                     a(href="/m/tribe" title='tribes')
                         i.circular.large.fire.link.icon
                     .ui.center.aligned.inline.header 
-                        small viewing 
                         |#{title}
-                        if private
-                            i.lock.icon(title='private')
                         small tribe
                     div
                     if can_edit
@@ -20,10 +17,11 @@ template(name='tribe_view')
                     .ui.segment
                         .ui.header about
                         +vote
+                        if private
+                            i.lock.icon(title='private')
                         .ui.list 
                             .item #{followers} followers
                             .item #{phone} 
-                            .item #{location}
                             .item #{location}
                     .ui.circular.basic.button.add_tribe_gift
                         // i.large.gift.icon
@@ -31,7 +29,7 @@ template(name='tribe_view')
                         |gift
                     .ui.circular.basic.button.add_tribe_post
                         // i.newspaper.large.icon
-                        +i name='write' cl='ui avatar image'
+                        +i name='new-post' cl='ui avatar image'
                         |post
                     .ui.circular.basic.button
                         // i.picture.icon
@@ -42,14 +40,14 @@ template(name='tribe_view')
                         +i name='bell' cl='ui avatar image'
                         |request
                 .twelve.wide.column
-                    +image_view key='banner_id' height='200' crop='crop' direct=true
-                    +session_edit_value_button key='view_tribe_section' value='latest' label='latest' icon='rss'
-                    +session_edit_value_button key='view_tribe_section' value='offers' label='offers' icon='shop'
-                    +session_edit_value_button key='view_tribe_section' value='requests' label='requests' icon='bell'
+                    // +image_view key='banner_id' height='200' crop='crop' direct=true
                     +session_edit_value_button key='view_tribe_section' value='posts' label='posts' icon='blog'
+                    // +session_edit_value_button key='view_tribe_section' value='latest' label='latest' icon='rss'
+                    // +session_edit_value_button key='view_tribe_section' value='offers' label='offers' icon='shop'
+                    // +session_edit_value_button key='view_tribe_section' value='requests' label='requests' icon='bell'
                     +session_edit_value_button key='view_tribe_section' value='info' label='info' icon='info'
                     +session_edit_value_button key='view_tribe_section' value='credits' label='credits' icon='money'
-                    +session_edit_value_button key='view_tribe_section' value='alerts' label='alerts' icon='rss'
+                    // +session_edit_value_button key='view_tribe_section' value='alerts' label='alerts' icon='rss'
                     +session_edit_value_button key='view_tribe_section' value='events' label='events' icon='calendar'
                     +session_edit_value_button key='view_tribe_section' value='people' label='people' icon='groups'
                     +session_edit_value_button key='view_tribe_section' value='badges' label='badges' icon='certificate'
@@ -62,20 +60,21 @@ template(name='tribe_view')
                     if session_key_value_is 'view_tribe_section' 'people'
                         +tribe_people
                     if session_key_value_is 'view_tribe_section' 'posts'
-                        .ui.feed
+                        .ui.feed.scrolling
                             each latest_updates
-                                .event
+                                .event.zoom
                                     .label 
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                     .content
                                         .summary
                                             a.user(href="/user/#{_author_username}") #{_author_username}
                                             if image_id
-                                                img.ui.mini.rounded.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                                a.zoom(href="/m/#{model}/#{_id}/view")
+                                                    img.ui.mini.rounded.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                             a(href="/m/#{model}/#{_id}/view") #{title} #{price}
                                             |!{description}
                                             each tags 
-                                                .ui.label #{this}
+                                                .ui.large.basic.label #{this}
                                         .meta
                                             a(href="/m/post/#{_id}/view")
                                                 i.clock.icon 
