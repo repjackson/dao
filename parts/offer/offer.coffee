@@ -10,13 +10,13 @@ if Meteor.isClient
 
     Template.offer_card.events
         'click .offer_card': ->
-            Router.go "/offer/#{@_id}/view"
+            Router.go "/m/offer/#{@_id}/view"
             Docs.update @_id,
                 $inc: views:1
 
     Template.offer_item.events
         'click .offer_item': ->
-            Router.go "/offer/#{@_id}/view"
+            Router.go "/m/offer/#{@_id}/view"
             Docs.update @_id,
                 $inc: views:1
 

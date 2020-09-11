@@ -1,31 +1,3 @@
-template(name='events')
-    .ui.stackable.padded.grid 
-        .row
-            .four.wide.column
-                .ui.header room
-                each rooms 
-                    .ui.circular.button.select_room(class=room_button_class)
-                        img.ui.avatar.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        |#{title}
-            .twelve.wide.column
-                .ui.inline.header
-                    i.orange.calendar.icon
-                    |events
-                if currentUser
-                    .ui.circular.basic.icon.button.add_event(title='add event')
-                        i.plus.big.green.icon
-                .ui.large.basic.circular.button.toggle_past
-                    if viewing_past
-                        i.checkmark.large.green.icon
-                    else
-                        i.circle.outline.large.icon
-                    |past
-                .spacer
-                .spacer
-                .ui.stackable.five.cards
-                    each events
-                        +event_card
-
 template(name='event_card')
     .ui.card
         if image_id

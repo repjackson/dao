@@ -44,10 +44,10 @@ template(name='event_view')
                             a.ui.header(href="/user/#{_author.username}") 
                                 img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                 |#{_author.name}
-                    if facilitator
+                    if leader
                         .ui.dividing.header 
                             i.chess.king.grey.icon
-                            |facilitator
+                            |leader
                         a.ui.header(href="/user/#{fac.username}") 
                             img.ui.avatar.image(src="{{c.url fac.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{fac.name}
@@ -99,10 +99,7 @@ template(name='event_view')
                         .ui.header your ticket
                         with my_ticket
                             .ui.segment
-                                if is_usd
-                                    .ui.inline.green.header ${{money_format amount}}
-                                else
-                                    .ui.inline.header #{point_amount}pts
+                                .ui.inline.header #{price}pts
                                 |#{when} 
                                 if is_usd
                                     .ui.button.request_refund
@@ -113,38 +110,11 @@ template(name='event_view')
                                         i.undo.icon
                                         |return
                     unless my_ticket
-                        .ui.huge.fluid.action.left.icon.input
-                            i.dollar.icon
-                            input.usd_input(type='number' min=usd_price value=usd_price)
-                            .ui.green.icon.button.buy_for_usd
+                        .ui.big.fluid.action.left.icon.input
+                            i.hashtag.icon
+                            input.point_input(type='number' min=point_price value=point_price)
+                            .ui.teal.icon.button.buy_for_points
                                 i.checkmark.large.icon
-                        // unless currentUser
-                        //     .ui.green.large.fluid.button
-                        //         i.sun.icon
-                        //         |add on day membership +$10
-                        if currentUser
-                            .ui.horizontal.divider or
-                            .ui.big.fluid.action.left.icon.input
-                                i.hashtag.icon
-                                input.point_input(type='number' min=point_price value=point_price)
-                                .ui.teal.icon.button.buy_for_points
-                                    i.checkmark.large.icon
-                    // .ui.big.green.fluid.button.buy_for_usd
-                    //     i.cart.icon
-                    //     |buy for min
-                    //     |$#{usd_price} 
-                    // if currentUser
-                    //     .ui.horizontal.divider or
-                    //     if currentUser.has_points
-                    //         .ui.big.teal.fluid.button.buy_for_points
-                    //             // i.cart.icon
-                    //             // |buy for 
-                    //             |#{point_price}pts
-                    //     else
-                    //         .ui.big.teal.disabled.fluid.button
-                    //             // i.cart.icon
-                    //             // |buy for 
-                    //             |#{point_price}pts
                     if currentUser
                         .spacer
                         .spacer

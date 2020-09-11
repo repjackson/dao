@@ -1,22 +1,3 @@
-template(name='offers')
-    .ui.stackable.padded.grid 
-        .row
-            .four.wide.column
-                .ui.inline.header 
-                    i.hand.holding.heart.icon
-                    |offers
-                i.circular.link.large.plus.icon.add_offer
-                +session_boolean_toggle key='view_available' label='available'
-                +session_key_value_edit key='offer_sort_key' label='price' label='cheapest'
-                +session_key_value_edit key='offer_sort_key' label='latest' label='latest'
-                .spacer
-                .spacer
-                .spacer
-            .twelve.wide.column
-                .ui.stackable.cards
-                    each offers
-                        +offer_card
-
 template(name='session_key_value_edit')
     .ui.button.set_session_var
         |#{label}
@@ -40,9 +21,7 @@ template(name='offer_card')
                 img.ui.avatar.compact.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             |#{_author.name}
             .ui.big.basic.label
-                |$#{usd_price}
-            .ui.big.basic.label
-                |#{point_price}pts
+                |#{point_price}k
             if rental
                 .ui.small.header
                     i.checkmark.icon
@@ -87,7 +66,7 @@ template(name='offer_view')
                         |#{title}
                         small offer 
                     if can_edit
-                        a.edit_offer(href="/offer/#{_id}/edit")
+                        a.edit_offer(href="/m/offer/#{_id}/edit")
                             i.large.pencil.circular.link.icon
                     if image_id
                         img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
@@ -184,7 +163,7 @@ template(name='offer_view')
                         |#{offer_purchases.count} purchases
                     .ui.large.link.selection.list
                         each offer_purchases
-                            a.ui.item(href="/receipt/#{_id}/view") 
+                            a.ui.item(href="/m/receipt/#{_id}/view") 
                                 .content
                                     .header
                                         if is_usd
@@ -207,7 +186,7 @@ template(name='offer_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.icon.button(href="/offer/#{_id}/view" title='save')
+                    a.ui.green.icon.button(href="/m/offer/#{_id}/view" title='save')
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit offer
@@ -239,28 +218,19 @@ template(name='offer_edit')
                         if rentable
                             +boolean_edit key='is_rentable_hourly' label='rentable hourly' direct=true
                             if is_rentable_hourly
-                                +number_edit key='rentable_hourly_usd' label='rentable hourly $' direct=true
                                 +number_edit key='rentable_hourly_points' label='rentable hourly points' direct=true
                             +boolean_edit key='is_rentable_daily' label='rentable daily' direct=true
                             if is_rentable_daily
-                                +number_edit key='rentable_daily_usd' label='daily $' direct=true
                                 +number_edit key='rentable_daily_points' label='daily points' direct=true
                             +boolean_edit key='is_rentable_weekly' label='rentable weekly' direct=true
                             if is_rentable_weekly
-                                +number_edit key='rentable_weekly_usd' label='weekly $' direct=true
                                 +number_edit key='rentable_weekly_points' label='weekly points' direct=true
                             +boolean_edit key='is_rentable_monthly' label='rentable monthly' direct=true
                             if is_rentable_monthly
-                                +number_edit key='rentable_monthly_usd' label='monthly $' direct=true
                                 +number_edit key='rentable_monthly_points' label='monthly points' direct=true
                             
                     .ui.segment
                         +boolean_edit key='for_sale' label='for sale' direct=true
                         if for_sale
-                            +boolean_edit key='is_for_sale_usd' label='for sale $' direct=true
-                            if is_for_sale_usd
-                                +number_edit key='sale_usd_price' label='for sale $ price' direct=true
-                            +boolean_edit key='is_for_sale_points' label='for sale points' direct=true
-                            if is_for_sale_points
-                                +number_edit key='sale_point_price' label='for sale pointsS' direct=true
+                            +number_edit key='sale_point_price' label='for sale pointsS' direct=true
                     

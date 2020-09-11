@@ -17,21 +17,21 @@ template(name='right_sidebar')
                 // i.large.icon(class=icon)
             
         
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kin" class="{{isActiveRoute 'user_kin'}}")
-            | #{currentUser.total_credit_amount}p in
-            i.large.chevron.down.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kout" class="{{isActiveRoute 'user_kout'}}")
-            | #{currentUser.total_debit_amount}p out
-            i.large.chevron.up.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActiveRoute 'user_requests'}}")
-            | requests
-            i.large.concierge.bell.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
-            | orders
-            i.large.list.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
-            | offers
-            i.large.store.icon
+        // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kin" class="{{isActiveRoute 'user_kin'}}")
+        //     | #{currentUser.total_credit_amount}p in
+        //     i.large.chevron.down.icon
+        // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kout" class="{{isActiveRoute 'user_kout'}}")
+        //     | #{currentUser.total_debit_amount}p out
+        //     i.large.chevron.up.icon
+        // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/requests" class="{{isActiveRoute 'user_requests'}}")
+        //     | requests
+        //     i.large.concierge.bell.icon
+        // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/orders" class="{{isActiveRoute 'user_orders'}}")
+        //     | orders
+        //     i.large.list.icon
+        // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
+        //     | offers
+        //     i.large.store.icon
         a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
             | #{currentUser.credit} credit
             i.large.dollar.icon
