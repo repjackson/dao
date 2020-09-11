@@ -13,8 +13,10 @@ Template.nav.onCreated ->
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
-        # $('.menu .item')
-        #     .popup()
+        $('.menu .item')
+            .popup(
+                inverted:true
+                )
         $('.ui.left.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
@@ -106,29 +108,11 @@ Template.nav.events
         Meteor.call 'set_facets', @slug, ->
             Session.set 'loading', false
 
-    'click .debit': ->
-        new_debit_id =
-            Docs.insert
-                model:'debit'
-                buyer_id:Meteor.userId()
-                buyer_username:Meteor.user().username
-                status:'started'
-        Router.go "/debit/#{new_debit_id}/edit"
-    'click .post': ->
-        new_post_id =
-            Docs.insert
-                model:'post'
-                source:'self'
-                buyer_id:Meteor.userId()
-                buyer_username:Meteor.user().username
-        Router.go "/post/#{new_post_id}/edit"
-    'click .alpha': ->
-        new_alpha_id =
-            Docs.insert
-                model:'alpha'
-                seller_id:Meteor.userId()
-                seller_username:Meteor.user().username
-        Router.go "/alpha/#{new_alpha_id}/edit"
+    'click .set_root': ->
+        Session.set 'loading', true
+        Meteor.call 'set_facets', 'model', ->
+            Session.set 'loading', false
+
 
     'click .toggle_admin': ->
         if 'admin' in Meteor.user().roles
@@ -152,6 +136,41 @@ Template.nav.events
 Template.topbar.onCreated ->
     @autorun => Meteor.subscribe 'my_received_messages'
     @autorun => Meteor.subscribe 'my_sent_messages'
+
+Template.add.events
+    'click .debit': ->
+        new_debit_id =
+            Docs.insert
+                model:'debit'
+                buyer_id:Meteor.userId()
+                buyer_username:Meteor.user().username
+                status:'started'
+        Router.go "/debit/#{new_debit_id}/edit"
+    'click .event': ->
+        new_event_id =
+            Docs.insert
+                model:'event'
+                buyer_id:Meteor.userId()
+                buyer_username:Meteor.user().username
+                status:'started'
+        Router.go "/event/#{new_event_id}/edit"
+    'click .post': ->
+        new_post_id =
+            Docs.insert
+                model:'post'
+                source:'self'
+                buyer_id:Meteor.userId()
+                buyer_username:Meteor.user().username
+        Router.go "/post/#{new_post_id}/edit"
+    'click .alpha': ->
+        new_alpha_id =
+            Docs.insert
+                model:'alpha'
+                seller_id:Meteor.userId()
+                seller_username:Meteor.user().username
+        Router.go "/alpha/#{new_alpha_id}/edit"
+
+
 
 Template.nav.helpers
     unread_count: ->

@@ -238,19 +238,19 @@ template(name='facet')
                 //- div
         if viewing_results
             each filtering_res
-                // if name
-                a.selector.ui.compact.basic.circular.button.toggle_selection.select_term(class=toggle_value_class title=count)
-                    //- with ..
-                    //- if parent_key_value_is 'field_type' 'color_icon'
-                    //-     .ui.header icon
-                    //- else 
-                    strong #{name}
-                    if is_admin
-                        small #{cal_count} #{count}
-                // else
-                //     a.selector.ui.compact.basic.button.toggle_selection(class=toggle_value_class)
-                //         strong none/false
-                //         //- small #{cal_count}
+                if name
+                    a.selector.ui.compact.basic.circular.button.toggle_selection.select_term(class=toggle_value_class title=count)
+                        //- with ..
+                        //- if parent_key_value_is 'field_type' 'color_icon'
+                        //-     .ui.header icon
+                        //- else 
+                        strong #{name}
+                        if is_admin
+                            small #{cal_count} #{count}
+                else
+                    a.selector.ui.compact.basic.button.toggle_selection(class=toggle_value_class)
+                        strong none/false
+                        //- small #{cal_count}
             //- .ui.hidden.divider
         .spacer
 

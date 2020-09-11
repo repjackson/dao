@@ -1,8 +1,8 @@
 template(name='user_edit_layout')
     +nav
     .ui.bottom.attached.pushable.segment
-        // +left_sidebar
-        // +right_sidebar
+        +left_sidebar
+        +right_sidebar
         #main_area.global_container.pusher(class=currentUser.invert_class)
             with current_user          
                 .ui.stackable.padded.grid
@@ -17,36 +17,37 @@ template(name='user_edit_layout')
                                 i.checkmark.big.icon
                                 strong save
                         .twelve.wide.column
-                            +session_edit_value_button key='useredit_section' value='account' label='account' icon='dna-helix'
-                            if session_key_value_is 'useredit_section' 'account'
-                                +user_edit_account
-                            +session_edit_value_button key='useredit_section' value='info' label='info' icon='dna-helix'
-                            if session_key_value_is 'useredit_section' 'info'
-                                +user_edit_info
-                            +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='dna-helix'
-                            if session_key_value_is 'useredit_section' 'alerts'
-                                +user_edit_alerts
-                            +session_edit_value_button key='useredit_section' value='genekeys' label='genekeys' icon='dna-helix'
+                            +session_edit_value_button key='useredit_section' value='account' label='account' icon='settings'
+                            +session_edit_value_button key='useredit_section' value='info' label='info' icon='info'
+                            +session_edit_value_button key='useredit_section' value='tribes' label='tribes' icon='campfire'
+                            +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='rss'
+                            +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
+                            +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
+                            +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
+                            +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
+                            +session_edit_value_button key='useredit_section' value='genekeys' label='genekeys' icon='biotech'
                             if session_key_value_is 'useredit_section' 'genekeys'
                                 +user_edit_genekeys
-                            +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
                             if session_key_value_is 'useredit_section' 'privacy'
                                 +user_edit_privacy
-                            +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
                             if session_key_value_is 'useredit_section' 'friends'
                                 +user_edit_friends
-                            +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
+                            if session_key_value_is 'useredit_section' 'alerts'
+                                +user_edit_alerts
                             if session_key_value_is 'useredit_section' 'badges'
                                 +user_edit_badges
-                            +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='id-badge'
+                            if session_key_value_is 'useredit_section' 'info'
+                                +user_edit_info
                             if session_key_value_is 'useredit_section' 'membership'
                                 +user_edit_membership
-                            +session_edit_value_button key='useredit_section' value='tribes' label='tribes' icon='campfire'
+                            if session_key_value_is 'useredit_section' 'account'
+                                +user_edit_account
                             if session_key_value_is 'useredit_section' 'tribes'
                                 +user_edit_tribes
 
-                            +yield
+                            // +yield
 
+template(name='user_edit_tribes')
 template(name='user_edit_alerts')
     .ui.header
         i.rss.icon

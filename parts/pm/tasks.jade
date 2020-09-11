@@ -1,12 +1,12 @@
 template(name='task_card')
-    a.card(href="/task/#{_id}/view")
+    a.card(href="/m/task/#{_id}/view")
         .image
             if icon 
                 +i name=icon
             else
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/task/#{_id}/view")
+            a.ui.header(href="/m/task/#{_id}/view")
                 |#{location}: #{title}
             |!{description}
         
