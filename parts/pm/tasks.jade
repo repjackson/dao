@@ -1,31 +1,8 @@
-template(name='tasks')
-    .ui.stackable.padded.grid
-        .ui.four.wide.column
-            .ui.header tasks
-            .ui.input
-                input.add_task(type='text' placeholder='quick task')
-            .ui.button.quick_task
-                |quick task 
-            
-            .ui.header projects
-        .ui.twelve.wide.column
-            each tasks 
-                .ui.card 
-                    if complete 
-                        i.checkmark.icon
-                    .content
-                        .header #{title}
-                    
-            .ui.header tasks
-    
-
-
-
 template(name='task_card')
     a.card(href="/task/#{_id}/view")
         .image
             if icon 
-                +icolorlg name=icon
+                +i name=icon
             else
                 img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
@@ -101,13 +78,23 @@ template(name='task_edit')
                 .five.wide.column
                     +text_edit key='title' icon='header' direct=true
                     +image_edit key='image_id' label='image' direct=true
-                    +text_edit key='location' label='location' icon='marker' direct=true
                     +icon_edit key='icon' label='icon' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
                 .six.wide.column
-                    +textarea_edit key='description' label='description' direct=true
+                    +boolean_edit key='has_assigned_users' label='has assigments' direct=true
+                    if has_assigned_users
+                        +multi_user_edit key='assigned_user_ids' direct=true
+                    +boolean_edit key='requires_approval' label='requires approval' direct=true
+                    if requires_approval
+                        +multi_user_edit key='approval_required_user_ids' direct=true
+                    +boolean_edit key='has_location' label='has location' direct=true
+                    if has_location
+                        +text_edit key='location' label='location' icon='marker' direct=true
+                        +array_edit key='location_tags' label='location_tags' direct=true
+                    +boolean_edit key='has_description' label='has description' direct=true
+                    if has_description
+                        +textarea_edit key='description' label='description' direct=true
                     +textarea_edit key='goals' label='goals' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
                 .five.wide.column
                     +boolean_edit key='published' direct=true

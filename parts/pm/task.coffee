@@ -1,19 +1,6 @@
 if Meteor.isClient
     @selected_user_levels = new ReactiveArray []
     
-    Router.route '/tasks/', (->
-        @layout 'layout'
-        @render 'tasks'
-        ), name:'tasks'
-    Router.route '/task/:doc_id/view', (->
-        @layout 'layout'
-        @render 'task_view'
-        ), name:'task_view'
-
-    Template.task_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-   
-   
     Template.task_view.onRendered ->
 
 
@@ -58,13 +45,6 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Router.route '/task/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'task_edit'
-        ), name:'task_edit'
-
-    Template.task_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
     Template.task_edit.onRendered ->
 
 

@@ -164,7 +164,7 @@ template(name='tribe_badges')
             img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
         i.dropdown.icon
     .content
-        if user_id_in 'leader_ids'
+        if user_id_in 'admin_ids'
             i.large.plus.circular.link.icon.add_badge
         .ui.cards
             each badges
@@ -182,7 +182,7 @@ template(name='tribe_events')
             img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
         i.dropdown.icon
     .content
-        if user_id_in 'leader_ids'
+        if user_id_in 'admin_ids'
             i.large.plus.circular.link.icon.add_badge
         .ui.cards
             each badges
@@ -230,5 +230,5 @@ template(name='tribe_alerts')
 
 
 template(name='tribe_people')
-    +multi_user_view key='leader_ids' label='leaders' icon='crown' direct=true
+    +multi_user_view key='admin_ids' label='admins' icon='shield' direct=true
     +multi_user_view key='member_ids' label='members' icon='groups' direct=true
