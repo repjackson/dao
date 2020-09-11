@@ -16,6 +16,7 @@ template(name='tribe_view')
                     if can_edit
                         a.edit_tribe(href="/m/tribe/#{_id}/edit")
                             i.big.pencil.circular.link.icon
+                    +image_view key='image_id' label='image' direct=true
                     .ui.segment
                         .ui.header about
                         +vote
@@ -24,40 +25,23 @@ template(name='tribe_view')
                             .item #{phone} 
                             .item #{location}
                             .item #{location}
-                    .ui.header(data-tooltip="choose how you'll see posts from this page in your news feed")
-                        i.rss.icon
-                        |alerts
-                    +key_value_edit key='alert_setting' value=null label='none'
-                    +key_value_edit key='alert_setting' value=null label='priority'
-                    +key_value_edit key='alert_setting' value=null label='default'
-                    .ui.list
-                        .item
-                            .content
-                                .header(data-tooltip='see new posts from this page at the top of your news feed')
-                                |priority
-                        .item
-                            .content
-                                .header(data-tooltip='see posts in their usual order from this page')
-                                    |default
-                        .item
-                            .content(data-tooltip='never see posts from this page in your feed')
-                                .header off
-                    .ui.header(data-tooltip='choose what types of posts you want to be notified about')
-                        |notifications
-                    .ui.selection.list
-                        a.item
-                            .content
-                                .header(data-tooltip='all notifications from this page, up to 5 per day')
-                                    |standard
-                        a.item
-                            .content
-                                .header(data-tooltip='notifications about suggested posts from this page')
-                                    |highlights
-                        a.item
-                            .content
-                                .header(data-tooltip='ever receive notifications about posts from this page')
-                                    |off
-                .eight.wide.column
+                    .ui.circular.basic.button.add_tribe_gift
+                        // i.large.gift.icon
+                        +i name='gift' cl='ui avatar image'
+                        |gift
+                    .ui.circular.basic.button.add_tribe_post
+                        // i.newspaper.large.icon
+                        +i name='write' cl='ui avatar image'
+                        |post
+                    .ui.circular.basic.button
+                        // i.picture.icon
+                        +i name='picture' cl='ui avatar image'
+                        |add image
+                    .ui.circular.basic.button.request
+                        // i.concierge.bell.icon
+                        +i name='bell' cl='ui avatar image'
+                        |request
+                .twelve.wide.column
                     +image_view key='banner_id' height='200' crop='crop' direct=true
                     +session_edit_value_button key='view_tribe_section' value='latest' label='latest' icon='rss'
                     +session_edit_value_button key='view_tribe_section' value='offers' label='offers' icon='shop'
@@ -65,12 +49,18 @@ template(name='tribe_view')
                     +session_edit_value_button key='view_tribe_section' value='posts' label='posts' icon='blog'
                     +session_edit_value_button key='view_tribe_section' value='info' label='info' icon='info'
                     +session_edit_value_button key='view_tribe_section' value='credits' label='credits' icon='money'
+                    +session_edit_value_button key='view_tribe_section' value='alerts' label='alerts' icon='rss'
                     +session_edit_value_button key='view_tribe_section' value='events' label='events' icon='calendar'
+                    +session_edit_value_button key='view_tribe_section' value='people' label='people' icon='groups'
                     +session_edit_value_button key='view_tribe_section' value='badges' label='badges' icon='certificate'
                     +session_edit_value_button key='view_tribe_section' value='comments' label='comments' icon='chat'
                     if session_key_value_is 'view_tribe_section' 'latest'
                         .ui.header stats
                         +viewing
+                    if session_key_value_is 'view_tribe_section' 'alerts'
+                        +tribe_alerts
+                    if session_key_value_is 'view_tribe_section' 'people'
+                        +tribe_people
                     if session_key_value_is 'view_tribe_section' 'posts'
                         .ui.feed
                             each latest_updates
@@ -161,26 +151,6 @@ template(name='tribe_view')
                     if session_key_value_is 'view_tribe_section' 'badges'
                         +tribe_badges
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                .four.wide.column
-                    +image_view key='image_id' label='image' direct=true
-                    .ui.circular.basic.button.add_tribe_gift
-                        // i.large.gift.icon
-                        +i name='gift' cl='ui avatar image'
-                        |gift
-                    .ui.circular.basic.button.add_tribe_post
-                        // i.newspaper.large.icon
-                        +i name='write' cl='ui avatar image'
-                        |post
-                    // .ui.circular.basic.button
-                    //     // i.picture.icon
-                    //     +i name='picture' cl='ui avatar image'
-                    //     |add image
-                    .ui.circular.basic.button.request
-                        // i.concierge.bell.icon
-                        +i name='bell' cl='ui avatar image'
-                        |request
-                    +multi_user_view key='leader_ids' label='leaders' icon='crown' direct=true
-                    +multi_user_view key='member_ids' label='members' icon='groups' direct=true
 
 
 
@@ -221,3 +191,44 @@ template(name='tribe_events')
                     .content
                         .header #{title}
 template(name='tribe_finance')
+
+
+template(name='tribe_alerts')
+    .ui.header(data-tooltip="choose how you'll see posts from this page in your news feed")
+        i.rss.icon
+        |alerts
+    +key_value_edit key='alert_setting' value=null label='none'
+    +key_value_edit key='alert_setting' value=null label='priority'
+    +key_value_edit key='alert_setting' value=null label='default'
+    .ui.list
+        .item
+            .content
+                .header(data-tooltip='see new posts from this page at the top of your news feed')
+                |priority
+        .item
+            .content
+                .header(data-tooltip='see posts in their usual order from this page')
+                    |default
+        .item
+            .content(data-tooltip='never see posts from this page in your feed')
+                .header off
+    .ui.header(data-tooltip='choose what types of posts you want to be notified about')
+        |notifications
+    .ui.selection.list
+        a.item
+            .content
+                .header(data-tooltip='all notifications from this page, up to 5 per day')
+                    |standard
+        a.item
+            .content
+                .header(data-tooltip='notifications about suggested posts from this page')
+                    |highlights
+        a.item
+            .content
+                .header(data-tooltip='ever receive notifications about posts from this page')
+                    |off
+
+
+template(name='tribe_people')
+    +multi_user_view key='leader_ids' label='leaders' icon='crown' direct=true
+    +multi_user_view key='member_ids' label='members' icon='groups' direct=true

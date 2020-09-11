@@ -39,7 +39,8 @@ template(name='post_edit')
                                 +single_user_edit key='_author_id' key2='_author_username' direct=true
                         .title
                             .ui.inline.header
-                                i.video.icon
+                                // i.video.icon
+                                +i name='video' cl='ui avatar image'
                                 |video
                             if youtube_id
                                 i.checkmark.icon
@@ -48,14 +49,16 @@ template(name='post_edit')
                             +youtube_edit key='youtube_id' label='youtube id' direct=true
                         .title
                             .ui.inline.header
-                                i.calendar.icon
+                                // i.calendar.icon
+                                +i name='calendar' cl='ui avatar image'
                                 |date
                             i.dropdown.icon
                         .content
                             +date_edit key='date' label='date' direct=true
                         .title
                             .ui.inline.header
-                                i.tags.icon
+                                // i.tags.icon
+                                +i name='tags' cl='ui avatar image'
                                 |#{tags.length} tags
                             i.dropdown.icon
                         .content

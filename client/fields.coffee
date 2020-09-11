@@ -1052,7 +1052,7 @@ Template.range_edit.onRendered ->
         type: 'datetime'
         today: true
         # type:'time'
-        inline: true
+        inline: false
         endCalendar: $('#rangeend')
         formatter: {
             date: (date, settings)->
@@ -1065,7 +1065,7 @@ Template.range_edit.onRendered ->
         type: 'datetime'
         today: true
         # type:'time'
-        inline: true
+        inline: false
         startCalendar: $('#rangestart')
         formatter: {
             date: (date, settings)->
