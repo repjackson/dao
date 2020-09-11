@@ -16,19 +16,16 @@ template(name='user_edit_layout')
                             a.ui.big.green.circular.compact.button(href="/user/#{current_user.username}/") 
                                 i.checkmark.big.icon
                                 strong save
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
-                                // i.cog.large.icon 
-                                +i name='account' cl='ui inline image'
-                                |account
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
-                                // i.info.large.icon 
-                                +i name='info' cl='ui inline image'
-                                |info
-                            a.ui.large.basic.circular.compact.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
-                                // i.bell.large.icon 
-                                +i name='bell' cl='ui inline image'
-                                |alerts
                         .twelve.wide.column
+                            +session_edit_value_button key='useredit_section' value='account' label='account' icon='dna-helix'
+                            if session_key_value_is 'useredit_section' 'account'
+                                +user_edit_account
+                            +session_edit_value_button key='useredit_section' value='info' label='info' icon='dna-helix'
+                            if session_key_value_is 'useredit_section' 'info'
+                                +user_edit_info
+                            +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='dna-helix'
+                            if session_key_value_is 'useredit_section' 'alerts'
+                                +user_edit_alerts
                             +session_edit_value_button key='useredit_section' value='genekeys' label='genekeys' icon='dna-helix'
                             if session_key_value_is 'useredit_section' 'genekeys'
                                 +user_edit_genekeys

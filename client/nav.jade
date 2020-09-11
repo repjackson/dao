@@ -7,10 +7,10 @@ template(name='nav')
             i.large.yin.yang.icon
         a.icon.item.set_post(href="/" class="{{isActivePath '/'}}")
             i.large.home.icon
-        a.icon.mobile.hidden.set_wikipedia.item(href="/m/wikipedia" class="{{isActivePath '/m/wikipedia'}}")
-            i.wikipedia.large.icon
-        a.icon.mobile.hidden.set_reddit.item(href="/m/reddit" class="{{isActivePath '/m/reddit'}}")
-            i.reddit.large.icon
+        // a.icon.mobile.hidden.set_wikipedia.item(href="/m/wikipedia" class="{{isActivePath '/m/wikipedia'}}")
+        //     i.wikipedia.large.icon
+        // a.icon.mobile.hidden.set_reddit.item(href="/m/reddit" class="{{isActivePath '/m/reddit'}}")
+        //     i.reddit.large.icon
         .ui.input.item.mobile.hidden
             .ui.icon.input
                 i.search.icon
@@ -19,9 +19,9 @@ template(name='nav')
             +status    
         .right.menu
             if currentUser
-                // a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
-                a.icon.item.post(title='add')
+                a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
                     i.large.plus.icon
+                // a.icon.item.post(title='add')
                 if unread_count
                     a.item.alerts.select_term(href="#" class=alert_toggle_class)
                         i.large.bell.icon
@@ -50,13 +50,13 @@ template(name='nav')
             else
                 a.item(href="/register" title='register')
                     i.large.user.plus.icon
-                    // |register
+                    |register
                 a.item(href="/login" title='login')
                     i.large.sign.in.alternate.icon
-                    // |login
+                    |login
     .ui.attached.invert.menu.hscroll
         each nav_models
-            a.icon.item.set_model(href="/m/#{model}" class="{{isActivePath '/m/post'}}")
+            a.icon.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}")
                 +i name=icon
         // a.icon.item.set_request(href="/m/request" class="{{isActivePath '/m/request'}}")
         //     +i name='bell'

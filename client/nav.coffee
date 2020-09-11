@@ -65,7 +65,7 @@ Template.nav.helpers
 Template.leftbar_item.events
     'click .set_model': ->
         Session.set 'loading', true
-        Meteor.call 'set_facets', @model, ->
+        Meteor.call 'set_facets', @slug, ->
             Session.set 'loading', false
 
 Template.left_sidebar.events
@@ -103,7 +103,7 @@ Template.nav.events
             Session.set 'loading', false
     'click .set_model': ->
         Session.set 'loading', true
-        Meteor.call 'set_facets', 'model', ->
+        Meteor.call 'set_facets', @slug, ->
             Session.set 'loading', false
 
     'click .debit': ->
