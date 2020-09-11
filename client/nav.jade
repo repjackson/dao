@@ -55,28 +55,29 @@ template(name='nav')
                     i.large.sign.in.alternate.icon
                     // |login
     .ui.attached.invert.menu.hscroll
-        a.icon.item.set_post(href="/m/post" class="{{isActivePath '/m/post'}}")
-            +i name='blog'
-        a.icon.item.set_request(href="/m/request" class="{{isActivePath '/m/request'}}")
-            +i name='bell'
-        a.icon.item.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}")
-            +i name='shop'
-        a.icon.item.set_event(href="/m/event" class="{{isActivePath '/m/event'}}")
-            +i name='calendar'
-        a.icon.item.set_tribe(href="/m/tribe" class="{{isActivePath '/m/tribe'}}")
-            +i name='campfire'
-        a.icon.item.set_rental(href="/m/rental" class="{{isActivePath '/rentals'}}")
-            +i name='clock'
-        a.icon.item(href="/chat" class="{{isActivePath '/chat'}}")
-            +i name='chat'
-        a.icon.item.set_task(href="/m/task" class="{{isActivePath '/m/task'}}")
-            +i name='tasks'
-        a.icon.item(href="/m/meal" class="{{isActivePath '/m/meal'}}")
-            +i name='food'
-        a.icon.item.set_badge(href="/m/badge" class="{{isActivePath '/m/badge'}}")
-            +i name='certificate'
-        a.icon.item.set_picture(href="/m/picture" class="{{isActivePath '/m/picture'}}")
-            +i name='image'
+        each nav_models
+            a.icon.item.set_model(href="/m/#{model}" class="{{isActivePath '/m/post'}}")
+                +i name=icon
+        // a.icon.item.set_request(href="/m/request" class="{{isActivePath '/m/request'}}")
+        //     +i name='bell'
+        // a.icon.item.set_offer(href="/m/offer" class="{{isActivePath '/m/offer'}}")
+        //     +i name='shop'
+        // a.icon.item.set_event(href="/m/event" class="{{isActivePath '/m/event'}}")
+        //     +i name='calendar'
+        // a.icon.item.set_tribe(href="/m/tribe" class="{{isActivePath '/m/tribe'}}")
+        //     +i name='campfire'
+        // a.icon.item.set_rental(href="/m/rental" class="{{isActivePath '/rentals'}}")
+        //     +i name='clock'
+        // a.icon.item(href="/chat" class="{{isActivePath '/chat'}}")
+        //     +i name='chat'
+        // a.icon.item.set_task(href="/m/task" class="{{isActivePath '/m/task'}}")
+        //     +i name='tasks'
+        // a.icon.item(href="/m/meal" class="{{isActivePath '/m/meal'}}")
+        //     +i name='food'
+        // a.icon.item.set_badge(href="/m/badge" class="{{isActivePath '/m/badge'}}")
+        //     +i name='certificate'
+        // a.icon.item.set_picture(href="/m/picture" class="{{isActivePath '/m/picture'}}")
+        //     +i name='image'
         
     if session_is 'viewing_alerts'
         +topbar

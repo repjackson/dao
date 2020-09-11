@@ -9,6 +9,7 @@ Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
     @autorun => Meteor.subscribe 'all_users'
     @autorun => Meteor.subscribe 'model_docs', 'tribe'
+    @autorun => Meteor.subscribe 'model_docs', 'model'
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
@@ -53,6 +54,10 @@ Template.right_sidebar.events
 
 
 Template.nav.helpers
+    nav_models: ->
+        Docs.find 
+            model:'model'
+            nav:true
     alert_toggle_class: ->
         if Session.get('viewing_alerts') then 'active' else ''
 

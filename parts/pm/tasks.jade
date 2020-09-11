@@ -30,7 +30,7 @@ template(name='task_view')
                         |#{title}
                 .four.wide.center.aligned.column
                     if can_edit
-                        a.edit_task(href="/task/#{_id}/edit")
+                        a.edit_task(href="/m/task/#{_id}/edit")
                             i.big.blue.pencil.icon
             .row 
                 .four.wide.column
@@ -65,7 +65,7 @@ template(name='task_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .four.wide.center.aligned.column
-                    a.ui.green.big.icon.button(href="/task/#{_id}/view" title='save')
+                    a.ui.green.big.icon.button(href="/m/task/#{_id}/view" title='save')
                         i.checkmark.big.icon
                 .eight.wide.center.aligned.column
                     .ui.inline.header 
@@ -95,6 +95,5 @@ template(name='task_edit')
                     +boolean_edit key='has_description' label='has description' direct=true
                     if has_description
                         +textarea_edit key='description' label='description' direct=true
-                    +textarea_edit key='goals' label='goals' direct=true
                 .five.wide.column
                     +boolean_edit key='published' direct=true
