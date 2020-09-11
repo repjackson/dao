@@ -150,7 +150,7 @@ html.ios body {
 
 .segment:not(.pushable) {
   transition: height 1s linear;
-  /*border-radius: 10px !important;*/
+  border-radius: 10px !important;
 }
 
 .bottom_rounded {
@@ -314,7 +314,7 @@ html.ios body {
 
 .card {
     /* background: black !important; */
-    /*border-radius: 10px !important; */
+    border-radius: 10px !important; 
 }
 
 a.goto_article {

@@ -24,18 +24,18 @@ template(name='profile_layout')
                             a(href="/user/#{username}/")
                                 img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
                         a.ui.big.header.refresh_user_stats(href="/user/#{username}") 
-                            |@#{username}
+                            |@#{name}
                         if is_admin
                             a.ui.button(href="/user/#{username}/edit" title='admin edit account')
                                 i.shield.icon
                                 |account
                         if is_current_user
                             a.ui.circular.button(href="/user/#{username}/edit" title='edit your account')
-                                i.cog.icon
+                                +i name='setting' cl='ui avatar image'
                                 |account
                             a.ui.circular.button.logout(href="#" title='log out')
                                 // i.sign.out.icon
-                                +i name='exit-sign'
+                                +i name='exit' cl='ui avatar image'
                                 |log out
                         +follow
                         // .ui.header $#{credit} credit
@@ -50,9 +50,10 @@ template(name='profile_layout')
                                 // div
                                 +user_friend_button 
                         if i_have_points
-                            .ui.button.send(title='send points')
-                                i.send.icon
-                                span send pts
+                            .ui.circular.basic.button.send(title='send points')
+                                // i.send.icon
+                                +i name='donation' cl='ui avatar image'
+                                span send k
                         // if is_current_user
                         //     a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
                         //         // i.large.dollar.icon
@@ -60,59 +61,46 @@ template(name='profile_layout')
                         if is_dev
                             +print_this
                     .thirteen.wide.column.profile_yield
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/karma" class="{{isActiveRoute 'user_karma'}}")
-                            // i.thumbs.up.outline.icon
-                            +i name='coins' cl='ui avatar image'
-                            |karma 
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
-                            // i.chat.outline.icon
-                            +i name='chat' cl='ui avatar image'
-                            |chat
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/voting" class="{{isActiveRoute 'user_voting'}}")
-                            // i.thumbs.up.outline.icon
-                            +i name='elections' cl='ui avatar image'
-                            |voting
-                        // a.ui.compact.circular.basic.button(href="/user/#{username}/upvotes" class="{{isActiveRoute 'user_upvotes'}}")
-                        //     // i.thumbs.up.outline.icon
-                        //     +i name='upvote'
-                        //     |upvotes 
-                        // a.ui.compact.circular.basic.button(href="/user/#{username}/downvotes" class="{{isActiveRoute 'user_downvotes'}}")
-                        //     // i.thumbs.down.outline.icon
-                        //     +i name='downvote'
-                        //     |downvotes
-                        // a.ui.compact.circular.basic.button(href="/user/#{username}/kin" class="{{isActiveRoute 'user_kin'}}")
-                        //     // i.chevron.down.icon
-                        //     +i name='coins'
-                        //     |karma in
-                        // a.ui.compact.circular.basic.button(href="/user/#{username}/kout" class="{{isActiveRoute 'user_kout'}}")
-                        //     +i name='expense' cl='ui avatar image'
-                        //     // i.chevron.up.icon
-                        //     |karma out
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}")
-                            // i.users.icon
-                            +i name='groups' cl='ui avatar image'
-                            |friends
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}")
-                            // i.calendar.icon
-                            +i name='calendar' cl='ui avatar image'
-                            |events
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
-                            // i.fire.icon
-                            +i name='campfire' cl='ui avatar image'
-                            |tribes
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}")
-                            // i.fire.icon
-                            +i name='sheriff' cl='ui avatar image'
-                            |badges
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}")
-                            // i.concierge.bell.icon
-                            +i name='front-desk' cl='ui avatar image'
-                            |requests
-                        a.ui.compact.circular.basic.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}")
-                            // i.shop.icon
-                            +i name='shop' cl='ui avatar image'
-                            |offers
-                        +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='exchange'
+                        +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
+                        +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
+                        +session_edit_value_button key='view_user_section' value='events' label='events' icon='calendar'
+                        +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
+                        +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
+                        +session_edit_value_button key='view_user_section' value='orders' label='orders' icon='list'
+                        +session_edit_value_button key='view_user_section' value='kin' label='kin' icon='donate'
+                        +session_edit_value_button key='view_user_section' value='kout' label='kout' icon='receive-cash'
+                        +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
+                        +session_edit_value_button key='view_user_section' value='topups' label='topups' icon='money'
+                        +session_edit_value_button key='view_user_section' value='upvotes' label='upvotes' icon='sort-up'
+                        +session_edit_value_button key='view_user_section' value='downvotes' label='downvotes' icon='sort-down'
+                        +session_edit_value_button key='view_user_section' value='offers' label='offers' icon='shop'
+                        +session_edit_value_button key='view_user_section' value='requests' label='requests' icon='list'
+                        +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
+                        +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='feed'
+                        if session_key_value_is 'view_user_section' 'karma'
+                            +user_karma
+                        if session_key_value_is 'view_user_section' 'chat'
+                            +user_chat
+                        if session_key_value_is 'view_user_section' 'upvotes'
+                            +user_upvotes
+                        if session_key_value_is 'view_user_section' 'downvotes'
+                            +user_downvotes
+                        if session_key_value_is 'view_user_section' 'kin'
+                            +user_kin
+                        if session_key_value_is 'view_user_section' 'kout'
+                            +user_kout
+                        if session_key_value_is 'view_user_section' 'friends'
+                            +user_friends
+                        if session_key_value_is 'view_user_section' 'events'
+                            +user_events
+                        if session_key_value_is 'view_user_section' 'tribes'
+                            +user_tribes                        
+                        if session_key_value_is 'view_user_section' 'orders'
+                            +user_orders
+                        if session_key_value_is 'view_user_section' 'requests'
+                            +user_requests
+                        if session_key_value_is 'view_user_section' 'offers'
+                            +user_offers
                         if session_key_value_is 'view_user_section' 'user_feed'
                             .ui.inline.header
                                 // i.brain.icon
@@ -128,7 +116,6 @@ template(name='profile_layout')
                                     +viewing
                                     // if can_edit 
                                     //     +delete_button
-                        +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
                         if session_key_value_is 'view_user_section' 'cloud_comparison'
                             .ui.inline.header
                                 // i.brain.icon
@@ -168,7 +155,6 @@ template(name='profile_layout')
                                     each current_user.credit_tags
                                         a.ui.large.label.select_tag #{title}
                                             small #{count}
-                        +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='exchange'
                         if session_key_value_is 'view_user_section' 'authored_overlap'
                             .ui.inline.header
                                 i.edit.icon
@@ -186,7 +172,6 @@ template(name='profile_layout')
                                     .ui.header you #{currentUser.total_authored_points}
                                     each currentUser.authored_tags
                                         .ui.label #{title}:#{count}
-                        +session_edit_value_button key='view_user_section' value='orders' label='authored overlap' icon='receipt'
                         if session_key_value_is 'view_user_section' 'orders'
                             .ui.inline.header
                                 +i name='shop'
@@ -197,7 +182,6 @@ template(name='profile_layout')
                                         .content
                                             .header #{order_offer.title}
                                             |#{when}, #{purchase_price}c
-                        +session_edit_value_button key='view_user_section' value='kin' label='karma in' icon='chevron down'
                         if session_key_value_is 'view_user_section' 'kin'
                             |karma in
                             a.ui.inline.header(href="/user/#{username}/credits")
@@ -217,7 +201,6 @@ template(name='profile_layout')
                             scroll.ui.segments
                                each user_credits
                                     +user_credit_segment
-                        +session_edit_value_button key='view_user_section' value='kout' label='karma out' icon='receipt'
                         if session_key_value_is 'view_user_section' 'kout'
                             .ui.inline.header
                                 |karma out
@@ -234,7 +217,6 @@ template(name='profile_layout')
                                     .ui.label #{title}
                                         |#{count}
                                 .ui.label(title='rank') ##{global_debit_count_rank}
-                        +session_edit_value_button key='view_user_section' value='topups' label='topups' icon='money'
                         if session_key_value_is 'view_user_section' 'topups'
                             .ui.inline.header
                                 +i name='request-money'
@@ -245,7 +227,32 @@ template(name='profile_layout')
                       
 
 
+template(name='user_badges')
+    .ui.center.aligned.header 
+        +icon name='prize'
+        |user badges
+    if is_admin
+        i.plus.icon.add_badge
+    .ui.small.centered.five.stackable.cards
+        each user_badges
+            +badge_card
 
+
+template(name='user_edit_badges')
+    .ui.header
+        i.certificate.icon
+        | badges
+    .ui.grid 
+        .row 
+            .sixteen.wide.column
+                if is_admin
+                    +array_edit key='badges' label='badges' icon='certificate' direct=true
+                
+                .ui.divider
+                each badges
+                    a.ui.button(href="/badge/#{this}/view")
+                
+                .spacer
 
 
 template(name='user_friend_button')

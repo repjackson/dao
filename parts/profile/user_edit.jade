@@ -52,7 +52,10 @@ template(name='user_edit_layout')
                                 +i name='campfire' cl='ui inline image'
                                 // i.fire.large.icon
                                 | tribes
-                                
+                            +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='feed'
+                            if session_key_value_is 'view_user_section' 'karma'
+                                +user_karma
+
                         .twelve.wide.column
                             +yield
 
@@ -210,6 +213,7 @@ template(name='user_edit_account')
             +phone_edit key='phone' label='phone' icon='phone' direct=true
             //- +phone_editor
             +array_edit key='tags' label='tags' direct=true
+            +boolean_edit key='beta_tester' label='beta tester' direct=true
         
 template(name='username_edit')
     .ui.small.header 
