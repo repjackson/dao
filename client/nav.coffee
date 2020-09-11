@@ -145,7 +145,7 @@ Template.add.events
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
                 status:'started'
-        Router.go "/debit/#{new_debit_id}/edit"
+        Router.go "/m/debit/#{new_debit_id}/edit"
     'click .event': ->
         new_event_id =
             Docs.insert
@@ -153,7 +153,7 @@ Template.add.events
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
                 status:'started'
-        Router.go "/event/#{new_event_id}/edit"
+        Router.go "/m/event/#{new_event_id}/edit"
     'click .post': ->
         new_post_id =
             Docs.insert
@@ -161,14 +161,14 @@ Template.add.events
                 source:'self'
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
-        Router.go "/post/#{new_post_id}/edit"
+        Router.go "/m/post/#{new_post_id}/edit"
     'click .alpha': ->
         new_alpha_id =
             Docs.insert
                 model:'alpha'
                 seller_id:Meteor.userId()
                 seller_username:Meteor.user().username
-        Router.go "/alpha/#{new_alpha_id}/edit"
+        Router.go "/m/alpha/#{new_alpha_id}/edit"
 
 
 
@@ -204,9 +204,9 @@ Template.topbar.events
         
         
 Template.left_sidebar.onCreated ->
-    Meteor.setTimeout ->
-        $('.accordion').accordion()
-    , 1000
+    # Meteor.setTimeout ->
+    #     $('.accordion').accordion()
+    # , 1000
 
 Template.left_sidebar.events
     'click .set_wikipedia': ->

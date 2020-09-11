@@ -28,7 +28,7 @@ if Meteor.isClient
 
     Template.post_card.events
         'click .view_post': ->
-            Router.go "/post/#{@_id}/view"
+            Router.go "/m/post/#{@_id}/view"
 
     Template.post_view.events
         'click .tip': ->

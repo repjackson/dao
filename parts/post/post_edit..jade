@@ -10,98 +10,93 @@ template(name='post_edit')
                     // if watson
                     //     +watson_view
                 .six.wide.column
-                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
+                    a.ui.green.icon.circular.large.button(href="/m/post/#{_id}/view" title='save' class=currentUser.invert_class)
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit post:
                         |#{title}
-                    .ui.big.accordion
-                        .title
-                            .ui.inline.header
-                                i.remove.icon  
-                                |delete
-                            i.dropdown.icon
-                        .content
-                            i.remove.link.circular.icon.delete_post(title='delete post')
-                        .title
-                            .ui.inline.header
-                                i.user.icon
-                                |author: #{_author_username}
-                            i.dropdown.icon
-                        .content
-                            |coauthors split revenue evenly
-                            +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
-                            .ui.header 
-                                small author
-                                |#{_author.username}
-                            if is_admin
-                                .spacer
-                                +single_user_edit key='_author_id' key2='_author_username' direct=true
-                        .title
-                            .ui.inline.header
-                                // i.video.icon
-                                +i name='video' cl='ui avatar image'
-                                |video
-                            if youtube_id
-                                i.checkmark.icon
-                            i.dropdown.icon
-                        .content
-                            +youtube_edit key='youtube_id' label='youtube id' direct=true
-                        .title
-                            .ui.inline.header
-                                // i.calendar.icon
-                                +i name='calendar' cl='ui avatar image'
-                                |date
-                            i.dropdown.icon
-                        .content
-                            +date_edit key='date' label='date' direct=true
-                        .title
-                            .ui.inline.header
-                                // i.tags.icon
-                                +i name='tags' cl='ui avatar image'
-                                |#{tags.length} tags
-                            i.dropdown.icon
-                        .content
-                            +smart_tagger
-                        .title
-                            .ui.inline.header
-                                if image_id
-                                    img.ui.mini.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                else
-                                    i.picture.grey.icon
-                                |image
-                            i.dropdown.icon
-                        .content
-                            +image_edit key='image_id' label='image upload' direct=true
-                            div 
-                            +text_edit key='source' label='source' direct=true
-                            div 
-                            +image_link_edit key='image_link' label='image link' direct=true
-                        .title
-                            .ui.inline.header
-                                i.fire.icon
-                                |tribe: #{tribe.title}
-                            i.dropdown.icon
-                        .content
-                            with tribe 
-                                +tribe_card_small
-                            a.ui.header(href="/tribe/#{tribe_id}/view") tribe
-                                |#{tribe_id}
-                            +single_doc_edit ref_model='tribe' key='tribe_id' direct=true
-                        .title
-                            .ui.inline.header
-                                i.lock.icon
-                                |privacy
-                            i.dropdown.icon
-                        .content
-                            +boolean_edit key='private' direct=true
-                            if private
-                                +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
-                        .title
-                            .ui.inline.header
-                                i.shield.icon
-                                |advanced
-                            i.dropdown.icon
-                        .content
-                            +text_edit key='model' direct=true
-                                
+                    +session_edit_value_button key='post_edit_section' value='advanced' label='advanced' icon='settings'
+                    +session_edit_value_button key='post_edit_section' value='delete' label='delete' icon='delete'
+                    +session_edit_value_button key='post_edit_section' value='authors' label='authors' icon='groups'
+                    +session_edit_value_button key='post_edit_section' value='tribes' label='tribes' icon='campfire'
+                    +session_edit_value_button key='post_edit_section' value='image' label='image' icon='image'
+                    +session_edit_value_button key='post_edit_section' value='privacy' label='privacy' icon='shield'
+                    +session_edit_value_button key='post_edit_section' value='tags' label='tags' icon='tag'
+                    +session_edit_value_button key='post_edit_section' value='video' label='video' icon='video'
+                    +session_edit_value_button key='post_edit_section' value='date' label='date' icon='calendar'
+                    if session_key_value_is 'post_edit_section' 'date'
+                        .ui.inline.header
+                            // i.calendar.icon
+                            +i name='calendar' cl='ui avatar image'
+                            |date
+                        i.dropdown.icon
+                        +date_edit key='date' label='date' direct=true
+                    if session_key_value_is 'post_edit_section' 'tags'
+                        .ui.inline.header
+                            // i.tags.icon
+                            +i name='tags' cl='ui avatar image'
+                            |#{tags.length} tags
+                        i.dropdown.icon
+                        +smart_tagger
+                    if session_key_value_is 'post_edit_section' 'image'
+                        .ui.inline.header
+                            if image_id
+                                img.ui.mini.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            else
+                                i.picture.grey.icon
+                            |image
+                        i.dropdown.icon
+                        +image_edit key='image_id' label='image upload' direct=true
+                        div 
+                        +text_edit key='source' label='source' direct=true
+                        div 
+                        +image_link_edit key='image_link' label='image link' direct=true
+                    if session_key_value_is 'post_edit_section' 'tribes'
+                        .ui.inline.header
+                            i.fire.icon
+                            |tribe: #{tribe.title}
+                        i.dropdown.icon
+                        with tribe 
+                            +tribe_card_small
+                        a.ui.header(href="/m/tribe/#{tribe_id}/view") tribe
+                            |#{tribe_id}
+                        +single_doc_edit ref_model='tribe' key='tribe_id' direct=true
+                    if session_key_value_is 'post_edit_section' 'video'
+                        .ui.inline.header
+                            // i.video.icon
+                            +i name='video' cl='ui avatar image'
+                            |video
+                        if youtube_id
+                            i.checkmark.icon
+                        i.dropdown.icon
+                        +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    if session_key_value_is 'post_edit_section' 'delete'
+                        i.remove.link.circular.icon.delete_post(title='delete post')
+                    if session_key_value_is 'post_edit_section' 'privacy'
+                        .ui.inline.header
+                            i.lock.icon
+                            |privacy
+                        i.dropdown.icon
+                        +boolean_edit key='private' direct=true
+                        if private
+                            +multi_user_edit key='viewable_user_ids' key2='viewable_user_usernames' label='viewable by' direct=true
+                    if session_key_value_is 'post_edit_section' 'advanced'
+                        .ui.inline.header
+                            i.shield.icon
+                            |advanced
+                        i.dropdown.icon
+                        +text_edit key='model' direct=true
+                    if session_key_value_is 'post_edit_section' 'authors'
+                        .ui.inline.header
+                            i.user.icon
+                            |author: #{_author_username}
+                        i.dropdown.icon
+                        |coauthors split revenue evenly
+                        +multi_user_edit key='coauthor_ids' key2='coauthor_usernames' label='coauthors' direct=true
+                        .ui.header 
+                            small author
+                            |#{_author.username}
+                        if is_admin
+                            .spacer
+                            +single_user_edit key='_author_id' key2='_author_username' direct=true
+                            
