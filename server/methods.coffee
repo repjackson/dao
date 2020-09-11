@@ -555,7 +555,7 @@ Meteor.methods
         if direction is 'credit'
             match.recipient_id = user_id
 
-        console.log 'found debits', Docs.find(match).count()
+        # console.log 'found debits', Docs.find(match).count()
         # if omega.selected_tags.length > 0
         #     limit = 42
         # else
@@ -592,7 +592,7 @@ Meteor.methods
     calc_authored_tags: (user_id)->
         authored_tags = Meteor.call 'aomega', user_id
         # debit_tags = Meteor.call 'omega', user_id, 'debit', (err, res)->
-        console.log 'authored tags', authored_tags
+        # console.log 'authored tags', authored_tags
         # console.log 'res from async agg'
         Meteor.users.update user_id, 
             $set:
@@ -610,7 +610,7 @@ Meteor.methods
         match.model = 'post'
         match._author_id = user_id
         
-        console.log 'found authored posts', Docs.find(match).count()
+        # console.log 'found authored posts', Docs.find(match).count()
         # if omega.selected_tags.length > 0
         #     limit = 42
         # else
@@ -664,12 +664,12 @@ Meteor.methods
         match.model = 'post'
         match.upvoter_ids = $in:[user_id]
         
-        console.log 'found upvoted posts', Docs.find(match).count()
+        # console.log 'found upvoted posts', Docs.find(match).count()
         # if omega.selected_tags.length > 0
         #     limit = 42
         # else
         # limit = 10
-        console.log 'omega_match', match
+        # console.log 'omega_match', match
         # { $match: tags:$all: omega.selected_tags }
         pipe =  [
             { $match: match }
@@ -719,12 +719,12 @@ Meteor.methods
         match.model = 'debit'
         match.seller_id = user_id
         
-        console.log 'found credited posts', Docs.find(match).count()
+        # console.log 'found credited posts', Docs.find(match).count()
         # if omega.selected_tags.length > 0
         #     limit = 42
         # else
         # limit = 10
-        console.log 'credit omega_match', match
+        # console.log 'credit omega_match', match
         # { $match: tags:$all: omega.selected_tags }
         pipe =  [
             { $match: match }

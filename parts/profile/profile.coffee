@@ -93,6 +93,10 @@ if Meteor.isClient
         user: -> Meteor.users.findOne username:Router.current().params.username
 
     Template.profile_layout.events
+        'click .mute': ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            Meteor.call 'mute_user', user._id, ->
+
         # 'click a.select_term': ->
         #     $('.profile_yield')
         #         .transition('fade out', 200)
@@ -160,6 +164,33 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.methods 
+        mute_user: (user_id)->
+            Meteor.users.update user_id,
+                $set:muted:true
+            console.log moment().add(10,'mins').format("HH:MM a")
+            console.log moment().format("HH:MM a")
+            end = moment(Date.now()).add(1,'mins').format("HH:MM a")
+            
+
+            
+            SyncedCron.add({
+                name: 'unmute user',
+                schedule: (parser)->
+                    # # // parser is a later.parse object
+                    console.log parser.recur().on(end).fullDate();
+                    parser.recur().on(end).fullDate();
+                    # parser.text("at #{end}")
+                job: ()=>
+                    # numbersCrunched = CrushSomeNumbers();
+                    # numbersCrunched
+                    Meteor.call 'unmute_user', user_id, ->
+                    console.log 'unmuting user', user_id, Date.now()
+            });
+
+        unmute_user: (user_id)->
+            Meteor.users.update user_id,
+                $set:muted:false
     Meteor.publish 'overlap_docs', (
         query=''
         selected_tags

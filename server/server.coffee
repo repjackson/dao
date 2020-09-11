@@ -1,15 +1,15 @@
 # tsqp-gebk-xhpz-eobp-agle
 
-SyncedCron.add({
-    name: 'Crunch some important numbers for the marketing department',
-    schedule: (parser)->
-        # # // parser is a later.parse object
-        parser.text('every 1 minute');
-    job: ()->
-        # numbersCrunched = CrushSomeNumbers();
-        # numbersCrunched
-        console.log 'running now', Date.now()
-});
+# SyncedCron.add({
+#     name: 'Crunch some important numbers for the marketing department',
+#     schedule: (parser)->
+#         # # // parser is a later.parse object
+#         parser.text('every 1 minute');
+#     job: ()->
+#         # numbersCrunched = CrushSomeNumbers();
+#         # numbersCrunched
+#         console.log 'running now', Date.now()
+# });
 
 Meteor.startup ->
     SyncedCron.start();
