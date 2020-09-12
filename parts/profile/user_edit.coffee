@@ -59,15 +59,6 @@ if Meteor.isServer
             model:'picture'
 
 if Meteor.isClient
-    Template.user_edit_genekeys.onRendered ->
-
-    Template.user_edit_genekeys.events
-
-
-
-
-
-
     Template.user_edit_layout.events
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."

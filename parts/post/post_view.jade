@@ -5,14 +5,19 @@ template(name='post_view')
                 .twelve.wide.column
                     .ui.center.aligned.header 
                         |#{title}
-                    +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
-                    +session_edit_value_button key='view_post_section' value='stats' label='stats' icon='line-chart'
+                    // +session_edit_value_button key='view_post_section' value='stats' label='stats' icon='line-chart'
                     if tone
                         +session_edit_value_button key='view_post_section' value='tone' label='tone' icon='tuning-fork'
+                        if session_key_value_is 'view_post_section' 'tone'
+                            +tone
                     if watson
                         +session_edit_value_button key='view_post_section' value='analysis' label='analysis' icon='biotech'
-                    +session_edit_value_button key='view_post_section' value='comments' label='comments' icon='chat'
-                    .scrolling
+                        if session_key_value_is 'view_post_section' 'analysis'
+                            +watson_view
+            
+                    // +session_edit_value_button key='view_post_section' value='comments' label='comments' icon='chat'
+                    +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
+                        // .scrolling
                         img(src=url class=currentUser.invert_class)
                         each preview.images 
                             img(src=source.url)
@@ -46,22 +51,12 @@ template(name='post_view')
                             .f12
                                 |!{description}
                                 |!{body}
-                                +tone
                             // a.ui.header(href="/user/#{target.username}")
                             //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             //     |#{target.username}
                             // each tags 
                             //     .ui.compact.large.circular.button.add_tag #{this}
-                        if tone
-                            if session_key_value_is 'view_post_section' 'tone'
-                                +tone
                         
-                        if watson
-                            if session_key_value_is 'view_post_section' 'analysis'
-                                .spacer
-                                i.large.tag.icon
-                                .spacer
-                                +watson_view
                         +comments
                         +viewing
                         .spacer

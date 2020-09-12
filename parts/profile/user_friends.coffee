@@ -20,8 +20,6 @@ if Meteor.isClient
     Template.user_friend_button.helpers
         is_friend: ->
             Meteor.user() and Meteor.user().friend_ids and @_id in Meteor.user().friend_ids
-
-
     Template.user_friend_button.events
         'click .friend':->
             Meteor.users.update Meteor.userId(),
@@ -31,6 +29,35 @@ if Meteor.isClient
         'click .unfriend':->
             Meteor.users.update Meteor.userId(),
                 $pull: friend_ids:@_id
+   
+   
+   
+   
+    Template.user_member_button.helpers
+        is_member: ->
+            Meteor.user() and Meteor.user().member_ids and @_id in Meteor.user().member_ids
+    Template.user_member_button.events
+        'click .member':->
+            Meteor.users.update Meteor.userId(),
+                $addToSet: member_ids:@_id
+            # Meteor.users.update @_id,    
+                
+        'click .unmember':->
+            Meteor.users.update Meteor.userId(),
+                $pull: member_ids:@_id
+
+    Template.user_subscribed_button.helpers
+        is_subscribed: ->
+            Meteor.user() and Meteor.user().subscribed_ids and @_id in Meteor.user().subscribed_ids
+    Template.user_subscribed_button.events
+        'click .subscribed':->
+            Meteor.users.update Meteor.userId(),
+                $addToSet: subscribed_ids:@_id
+            # Meteor.users.update @_id,    
+                
+        'click .unsubscribed':->
+            Meteor.users.update Meteor.userId(),
+                $pull: subscribed_ids:@_id
 
         # 'keyup .assign_earn': (e,t)->
         #     if e.which is 13

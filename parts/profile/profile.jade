@@ -26,7 +26,9 @@ template(name='profile')
                         // i.sign.out.icon
                         +i name='exit' cl='ui avatar image'
                         |log out
-                +follow
+                // +follow
+                +user_subscribed_button
+                +user_member_button
                 // .ui.header $#{credit} credit
                 .ui.inline.header #{points}p
                 // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
@@ -59,6 +61,7 @@ template(name='profile')
             .thirteen.wide.column.profile_yield
                 +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
                 +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
+                // if key_value_is currentu'calendar' 
                 +session_edit_value_button key='view_user_section' value='events' label='events' icon='calendar'
                 +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
                 +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
@@ -67,13 +70,12 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='kout' label='kout' icon='receive-cash'
                 +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
                 +session_edit_value_button key='view_user_section' value='topups' label='topups' icon='money'
-                +session_edit_value_button key='view_user_section' value='upvotes' label='upvotes' icon='sort-up'
                 +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
-                +session_edit_value_button key='view_user_section' value='downvotes' label='downvotes' icon='sort-down'
+                +session_edit_value_button key='view_user_section' value='votes' label='votes' icon='sort-up'
                 +session_edit_value_button key='view_user_section' value='offers' label='offers' icon='shop'
                 +session_edit_value_button key='view_user_section' value='requests' label='requests' icon='list'
                 +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
-                +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='feed'
+                // +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='feed'
                 +session_edit_value_button key='view_user_section' value='posts' label='blog' icon='blog'
                 +session_edit_value_button key='view_user_section' value='delta' label='delta' icon='database'
                 if session_key_value_is 'view_user_section' 'delta'
@@ -88,9 +90,8 @@ template(name='profile')
                     +user_karma
                 if session_key_value_is 'view_user_section' 'chat'
                     +user_chat
-                if session_key_value_is 'view_user_section' 'upvotes'
+                if session_key_value_is 'view_user_section' 'votes'
                     +user_upvotes
-                if session_key_value_is 'view_user_section' 'downvotes'
                     +user_downvotes
                 if session_key_value_is 'view_user_section' 'kin'
                     +user_kin
@@ -232,6 +233,7 @@ template(name='profile')
                     +user_credit
          
          
+         
 template(name='user_features')
     .ui.header
         +i name='module'
@@ -282,6 +284,27 @@ template(name='user_friend_button')
         .ui.button.friend(title='friend')
             i.user.plus.large.icon
             |friend
+
+template(name='user_subscribed_button')
+    if is_subscribed
+        .ui.blue.button.unsubscribe(title='unfriend')
+            i.checkmark.large.icon
+            |subscribed
+    else
+        .ui.button.subscribe(title='friend')
+            i.user.plus.large.icon
+            |subscribe
+
+
+template(name='user_member_button')
+    if is_member
+        .ui.gold.button.leave(title='leave' class=currentUser.invert_class)
+            i.checkmark.large.icon
+            |member
+    else
+        .ui.button.join(title='join')
+            i.user.plus.large.icon
+            |join
 
 
 
