@@ -77,7 +77,9 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='posts' label='blog' icon='blog'
                 +session_edit_value_button key='view_user_section' value='delta' label='delta' icon='database'
                 if session_key_value_is 'view_user_section' 'delta'
-                    +user_delta
+                    +udelta
+                    a.ui.button(href="/user/#{current_user.username}/m/post")
+                        |delta
                 if session_key_value_is 'view_user_section' 'posts'
                     +user_karma
                 if session_key_value_is 'view_user_section' 'karma'
@@ -227,7 +229,6 @@ template(name='profile')
                         |topups
                     +user_credit
                     
-template(name='user_delta')
 
 template(name='user_badges')
     .ui.center.aligned.header 

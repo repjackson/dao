@@ -1,17 +1,18 @@
 if Meteor.isClient
-    Router.route '/user/:username/m/:model_slug', (->
-        @render 'udelta'
-        ), name:'udelta'
+    # Router.route '/user/:username/m/:model_slug', (->
+    #     @render 'udelta'
+    #     ), name:'udelta'
 
     Template.udelta.onCreated ->
+        Session.setDefault('current_user_delta_model','post')
         @autorun -> Meteor.subscribe 'me'
-        @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug
+        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_user_delta_model
+        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_user_delta_model
         @autorun -> Meteor.subscribe 'my_delta'
         @autorun -> Meteor.subscribe 'all_users'
 
         Session.set 'loading', true
-        Meteor.call 'set_facets', Router.current().params.model_slug, ->
+        Meteor.call 'set_facets', Meteor.user().current_user_delta_model, ->
             Session.set 'loading', false
     # Template.delta.onRendered ->
     #     Meteor.call 'log_view', @_id, ->
@@ -19,7 +20,7 @@ if Meteor.isClient
     Template.udelta.helpers
         result_column_class: ->
             delta = Docs.findOne model:'delta'
-            model = Docs.findOne {model:'model',slug:Router.current().params.model_slug}
+            model = Docs.findOne {model:'model',slug:Meteor.user().current_user_delta_model}
             if model.show_facets
                 'twelve wide column'
             else
@@ -53,7 +54,7 @@ if Meteor.isClient
         current_model: ->
             Docs.findOne
                 model:'model'
-                slug: Router.current().params.model_slug
+                slug: Meteor.user().current_user_delta_model
 
         sorting_up: ->
             delta = Docs.findOne model:'delta'
@@ -86,13 +87,13 @@ if Meteor.isClient
             # if count is 1 then true else false
 
         model_stats_exists: ->
-            current_model = Router.current().params.model_slug
+            current_model = Meteor.user().current_user_delta_model
             if Template["#{current_model}_stats"]
                 return true
             else
                 return false
         model_stats: ->
-            current_model = Router.current().params.model_slug
+            current_model = Meteor.user().current_user_delta_model
             "#{current_model}_stats"
 
 
@@ -113,7 +114,7 @@ if Meteor.isClient
         'click .create_model': ->
             new_model_id = Docs.insert
                 model:'model'
-                slug: Router.current().params.model_slug
+                slug: Meteor.user().current_user_delta_model
             new_model = Docs.findOne new_model_id
             Router.go "/model/edit/#{new_model._id}"
 
@@ -157,14 +158,14 @@ if Meteor.isClient
                 model:'delta'
                 view_mode:'cards'
                 app:'dao'
-                model_filter: Router.current().params.model_slug
+                model_filter: Meteor.user().current_user_delta_model
 
         'click .print_delta': (e,t)->
             delta = Docs.findOne model:'delta'
             console.log delta
 
         'click .reset': ->
-            model_slug =  Router.current().params.model_slug
+            model_slug =  Meteor.user().current_user_delta_model
             Session.set 'loading', true
             Meteor.call 'set_facets', model_slug, true, ->
                 Session.set 'loading', false
@@ -181,7 +182,7 @@ if Meteor.isClient
         'click .add_model_doc': ->
             model = Docs.findOne
                 model:'model'
-                slug: Router.current().params.model_slug
+                slug: Meteor.user().current_user_delta_model
             # console.log model
             if model.collection and model.collection is 'users'
                 name = prompt 'first and last name'
@@ -217,7 +218,7 @@ if Meteor.isClient
         'click .edit_model': ->
             model = Docs.findOne
                 model:'model'
-                slug: Router.current().params.model_slug
+                slug: Meteor.user().current_user_delta_model
             Router.go "/model/edit/#{model._id}"
 
         # 'click .page_up': (e,t)->
