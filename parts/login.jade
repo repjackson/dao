@@ -4,20 +4,20 @@ template(name='login')
             .eight.wide.column
                 .ui.center.aligned.basic.segment
                     // a.ui.icon.button(href='/')
-                    .ui.inline.big.inline.header 
+                    .ui.big.header 
                         i.yin.yang.big.icon
-                        i.sign.in.alternate.icon
+                        |login
                 div
                 // if message
                 //     h4.ui.center.aligned.header #{message}
-                // .ui.inline.small.header 
-                //     |username
+                .ui.inline.small.header 
+                    |username
                 .ui.fluid.large.icon.input(class=login_class title='username')
                     i.user.outline.icon
                     input.username(type='text')
                 .spacer
-                // .ui.inline.small.header 
-                //     | password
+                .ui.inline.small.header 
+                    | password
                 .ui.fluid.large.icon.input(class=login_class title='password')
                     i.lock.icon
                     input.password(type='password')
@@ -25,14 +25,14 @@ template(name='login')
                 if logging_in
                     .spacer
                     .ui.fluid.big.button.enter(title="login #{username}" class=enter_class)
-                        // |login
-                        // strong #{username}
+                        |login
+                        strong #{username}
                         |&nbsp;
                         i.sign.in.alternate.icon
-                // .ui.center.aligned.basic.segment    
-                //     a.ui.basic.button(href='/forgot_password')
-                //         i.refresh.icon
-                //         |forgot password
+                .ui.center.aligned.basic.segment    
+                    a.ui.basic.button(href='/forgot_password')
+                        i.refresh.icon
+                        |forgot password
 
 
 template(name='forgot_password')
@@ -46,13 +46,13 @@ template(name='forgot_password')
                 if message
                     h4.ui.center.aligned.header #{message}
                 .ui.center.aligned.basic.segment
-                    // .ui.inline.header
-                    //     //- +i name='user'
-                    //     | username
-                    // .ui.large.input(class=login_class)
-                    //     input.username(type='text')
-                    // .ui.submit.button.submit_username submit
-                    // .ui.header or
+                    .ui.inline.header
+                        //- +i name='user'
+                        | username
+                    .ui.large.input(class=login_class)
+                        input.username(type='text')
+                    .ui.submit.button.submit_username submit
+                    .ui.header or
                     .ui.inline.header
                         +icon name='email'
                         | email
@@ -70,11 +70,11 @@ template(name='forgot_password')
                             a(href='/choose_persona') register
                 .ui.center.aligned.basic.segment    
                     a.ui.big.basic.button(href='/login') 
-                        i.sign.in.icon
+                        i.sign.in.alternate.icon
                         |login
-                    // a.ui.big.basic.button(href='/register')
-                    //     +icon name='add-user-male' cl='ui mini inline image'
-                    //     |register
+                    a.ui.big.basic.button(href='/register')
+                        +icon name='add-user-male' cl='ui mini inline image'
+                        |register
 
 
 template(name='reset_password')
@@ -109,7 +109,9 @@ template(name='register')
                     //-     i.large.home.icon
                     .ui.big.inline.header 
                         // i.yin.yang.icon
-                        i.user.plus.icon
+                        +i name='add-user-male'
+                        // i.user.plus.icon
+                        |register
                 //- if message
                 //-     h4.ui.center.aligned.header #{message}
                 .ui.small.inline.header 
@@ -158,8 +160,8 @@ template(name='register')
                     // .ui.small.header by registering you agree to our 
                     //     a(href='/p/privacy' target="_window") privacy policy
                     // unless username
-                    a.ui.basic.sign.in.button(href='/login') 
+                    a.ui.sign.in.button(href='/login') 
                         // i.chevron.right.icon
-                        +icon name='internal'
+                        +i name='login-rounded-right' cl='ui avatar image'
                         |login
                     

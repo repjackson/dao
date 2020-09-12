@@ -1010,7 +1010,10 @@ template(name='multi_doc_edit')
             if icon
                 //- i.grey.icon(class=icon)
                 +i name=icon cl='ui avatar image'
+            if image_id
+                img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
             // |#{title} #{slug}
+
             |#{title}
     //- .ui.sub.header 
     //-     if icon

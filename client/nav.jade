@@ -8,14 +8,19 @@ template(name='nav')
                 i.large.yin.yang.loading.icon
             else
                 i.large.yin.yang.icon
+        unless connected
+            .item
+                .ui.green.header not connected
+        +status    
         a.icon.zoom.item.set_post(href="/" class="{{isActivePath '/'}}")
             i.large.home.icon
-        .ui.input.zoom.item.mobile.hidden
-            .ui.icon.input
-                i.search.icon
-                input.search_dao(type='text')
-        .zoom.item
-            +status    
+        // .ui.input.zoom.item.mobile.hidden
+        .ui.left.icon.input
+            i.search.icon
+            input.search_dao(type='text')
+        each enabled_features
+            a.icon.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
+                +i name=icon cl='ui avatar image'
         .right.menu
             if currentUser
                 a.icon.zoom.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
@@ -44,8 +49,6 @@ template(name='nav')
                     else 
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
-                a.icon.large.zoom.item.toggle_rightbar.select_term
-                    i.bars.large.icon
             else
                 a.zoom.item(href="/register" title='register')
                     i.large.user.plus.icon
@@ -53,11 +56,10 @@ template(name='nav')
                 a.zoom.item(href="/login" title='login')
                     i.large.sign.in.alternate.icon
                     |login
-    .ui.attached.menu.hscroll(class=currentUser.invert_class)
+            a.icon.large.zoom.item.toggle_rightbar.select_term
+                i.bars.large.icon
+    // .ui.attached.menu.hscroll(class=currentUser.invert_class)
         // each nav_models
-        each enabled_features
-            a.icon.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
-                +i name=icon cl='ui avatar image'
     if session_is 'viewing_alerts'
         +topbar
 
@@ -119,17 +121,21 @@ template(name='left_sidebar')
             .ui.icon.input
                 i.search.icon
                 input.search_leftbar(type='text')
-    
-        +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
-        +leftbar_item model='reddit' label='reddit' icon='reddit'
-        +leftbar_item model='post' label='posts' icon='newspaper'
-        +leftbar_item model='youtube' label='video' icon='youtube'
-        +leftbar_item model='picture' label='picture' icon='picture'
-        +leftbar_item model='tribe' label='tribes' icon='fire'
-        +leftbar_item model='rental' label='rentals' icon='clock'
-        +leftbar_item model='request' label='requests' icon='concierge bell'
-        +leftbar_item model='offer' label='offers' icon='shop'
-        +leftbar_item model='event' label='events' icon='calendar'
+        each enabled_features
+            a.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
+                +i name=icon cl='ui avatar image'
+                |#{title}
+
+        // +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
+        // +leftbar_item model='reddit' label='reddit' icon='reddit'
+        // +leftbar_item model='post' label='posts' icon='newspaper'
+        // +leftbar_item model='youtube' label='video' icon='youtube'
+        // +leftbar_item model='picture' label='picture' icon='picture'
+        // +leftbar_item model='tribe' label='tribes' icon='fire'
+        // +leftbar_item model='rental' label='rentals' icon='clock'
+        // +leftbar_item model='request' label='requests' icon='concierge bell'
+        // +leftbar_item model='offer' label='offers' icon='shop'
+        // +leftbar_item model='event' label='events' icon='calendar'
         if is_eric
             a.item.zoom.toggle_dev.toggle_sidebar
                 |toggle dev

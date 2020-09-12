@@ -62,21 +62,22 @@ template(name='tribe_view')
                     if session_key_value_is 'view_tribe_section' 'posts'
                         .ui.feed.scrolling
                             each latest_updates
-                                .event.zoom
+                                .event
                                     .label 
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                     .content
                                         .summary
                                             a.user(href="/user/#{_author_username}") #{_author_username}
-                                            if image_id
-                                                a.zoom(href="/m/#{model}/#{_id}/view")
-                                                    img.ui.medium.rounded.inline.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                             a(href="/m/#{model}/#{_id}/view") #{title} #{price}
                                             |!{description}
                                             each tags 
                                                 .ui.large.basic.label #{this}
+                                        if image_id
+                                            .extra.images
+                                                a.superzoom(href="/m/#{model}/#{_id}/view")
+                                                    img.ui.medium.rounded.inline.superzoom.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                         .meta
-                                            a(href="/m/post/#{_id}/view")
+                                            a.date(href="/m/post/#{_id}/view")
                                                 i.clock.icon 
                                                 |#{when}
                                             +voting_small

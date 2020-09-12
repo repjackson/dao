@@ -198,9 +198,11 @@ Meteor.methods
         if voting_doc.points > 0
             Docs.update doc_id,
                 $addToSet:
+                    upvoter_ids:Meteor.userId()  
                     upvoter_usernames:Meteor.user().username  
                 $pull:
                     downvoter_usernames:Meteor.user().username  
+                    downvoter_ids:Meteor.userId()  
         parent = Docs.findOne doc_id
         # console.log 'upvoting usernames', parent
                 
@@ -230,8 +232,10 @@ Meteor.methods
         if voting_doc.points < 0
             Docs.update doc_id,
                 $addToSet:
+                    downvoter_ids:Meteor.userId()  
                     downvoter_usernames:Meteor.user().username  
                 $pull:
+                    upvoter_ids:Meteor.userId()  
                     upvoter_usernames:Meteor.user().username  
             
         # Meteor.call 'calc_user_stats', Meteor.userId(), ->

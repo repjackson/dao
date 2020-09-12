@@ -38,13 +38,12 @@ template(name='tribe_card')
 
 
 template(name='tribe_card_small')
-    a.ui.horizontal.card(href="/m/tribe/#{_id}/view")
-        .image
-            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
+    a.ui.card(href="/m/tribe/#{_id}/view")
+        img.ui.raw.image(src="{{c.url image_id width=400 height=400 crop='fill'}}" class=currentUser.invert_class)    
         .content
-            a.ui.header(href="/m/tribe/#{_id}/view")
-                if private 
-                    i.lock.icon
+            a.header(href="/m/tribe/#{_id}/view")
+                // if private 
+                //     i.lock.icon
                 |#{title}
         
 

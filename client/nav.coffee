@@ -22,7 +22,7 @@ Template.nav.onRendered ->
                 context: $('.bottom.segment')
                 transition:'overlay'
                 exclusive:true
-                duration:150
+                duration:100
                 scrollLock:false
             })
             .sidebar('attach events', '.toggle_sidebar')
@@ -33,7 +33,7 @@ Template.nav.onRendered ->
                 context: $('.bottom.segment')
                 transition:'overlay'
                 exclusive:true
-                duration:150
+                duration:100
                 scrollLock:false
             })
             .sidebar('attach events', '.toggle_rightbar')

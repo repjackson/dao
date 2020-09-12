@@ -28,29 +28,29 @@ template(name='post_view')
                         //     |!{content}
             
                         // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
-                        if session_key_value_is 'view_post_section' 'stats'
-                            .ui.header stats
-                            +viewing
-                            +vote
-                        if session_key_value_is 'view_post_section' 'content'
-                            if image_id
-                                img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
-                            if image_link
-                                img.ui.rounded.image(src=image_link class=currentUser.invert_class)
-                            if youtube_id
-                                +youtube_view key='youtube_id' direct=true
-                                i.large.tag.icon
-                            // each tags 
-                            //     .ui.compact.large.circular.button.add_tag #{this}
-                            // a.image(href="/m/post/#{_id}/view")
-                            //     img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
-                            a.ui.small.header(href=url target='_window') #{url}
-                            if url
-                                iframe(width='100%' height='500' src=url frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='' class=currentUser.invert_class)
-    
-                            .f12
-                                |!{description}
-                                |!{body}
+                    if session_key_value_is 'view_post_section' 'stats'
+                        .ui.header stats
+                        +viewing
+                        +vote
+                    if session_key_value_is 'view_post_section' 'content'
+                        if image_id
+                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                        if image_link
+                            img.ui.rounded.image(src=image_link class=currentUser.invert_class)
+                        if youtube_id
+                            +youtube_view key='youtube_id' direct=true
+                            i.large.tag.icon
+                        // each tags 
+                        //     .ui.compact.large.circular.button.add_tag #{this}
+                        // a.image(href="/m/post/#{_id}/view")
+                        //     img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+                        a.ui.small.header(href=url target='_window') #{url}
+                        if url
+                            iframe(width='100%' height='500' src=url frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='' class=currentUser.invert_class)
+
+                        .f12
+                            |!{description}
+                            |!{body}
                             // a.ui.header(href="/user/#{target.username}")
                             //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             //     |#{target.username}
@@ -60,7 +60,7 @@ template(name='post_view')
                         +comments
                         +viewing
                         .spacer
-                .four.wide.column.scrolling
+                .four.wide.column
                     // .ui.inline.header 
                     //     small post: 
                     // a.ui.circular.icon.button(href='/')
