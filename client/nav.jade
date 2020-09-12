@@ -2,7 +2,7 @@ template(name='nav')
     .ui.fluid.attached.borderless.menu.topnav(class=currentUser.invert_class)
         // if currentUser
         a.icon.header.zoom.item.toggle_sidebar
-            i.bars.icon
+            i.bars.large.icon
         a.icon.zoom.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
             if session_is 'loading'
                 i.large.yin.yang.loading.icon
@@ -125,17 +125,16 @@ template(name='left_sidebar')
             a.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
                 +i name=icon cl='ui avatar image'
                 |#{title}
-
-        // +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
-        // +leftbar_item model='reddit' label='reddit' icon='reddit'
-        // +leftbar_item model='post' label='posts' icon='newspaper'
-        // +leftbar_item model='youtube' label='video' icon='youtube'
-        // +leftbar_item model='picture' label='picture' icon='picture'
-        // +leftbar_item model='tribe' label='tribes' icon='fire'
-        // +leftbar_item model='rental' label='rentals' icon='clock'
-        // +leftbar_item model='request' label='requests' icon='concierge bell'
-        // +leftbar_item model='offer' label='offers' icon='shop'
-        // +leftbar_item model='event' label='events' icon='calendar'
+        +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
+        +leftbar_item model='reddit' label='reddit' icon='reddit'
+        +leftbar_item model='post' label='posts' icon='newspaper'
+        +leftbar_item model='youtube' label='video' icon='youtube'
+        +leftbar_item model='picture' label='picture' icon='picture'
+        +leftbar_item model='tribe' label='tribes' icon='fire'
+        +leftbar_item model='rental' label='rentals' icon='clock'
+        +leftbar_item model='request' label='requests' icon='concierge bell'
+        +leftbar_item model='offer' label='offers' icon='shop'
+        +leftbar_item model='event' label='events' icon='calendar'
         if is_eric
             a.item.zoom.toggle_dev.toggle_sidebar
                 |toggle dev

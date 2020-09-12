@@ -502,12 +502,12 @@ a.title, #title {
 
 input {
     margin: 5px !important;
-    /*border-radius: 15px !important; */
+    border-radius: 15px !important; 
 }
 
 ::-webkit-scrollbar {
   width: 3px !important;
-  /*border-radius: 10px !important;*/
+  border-radius: 10px !important;
 }
 .wrap_input {
     text-align:center !important;

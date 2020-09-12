@@ -60,55 +60,50 @@ template(name='profile')
                     +print_this
             .thirteen.wide.column.profile_yield
                 +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
+                if session_key_value_is 'view_user_section' 'karma'
+                    +user_kin
+                    +user_kout
+                    +user_karma
                 +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
-                // if key_value_is currentu'calendar' 
+                if session_key_value_is 'view_user_section' 'tribes'
+                    +user_tribes                        
                 +session_edit_value_button key='view_user_section' value='events' label='events' icon='calendar'
+                if session_key_value_is 'view_user_section' 'events'
+                    +user_events
                 +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
+                if session_key_value_is 'view_user_section' 'friends'
+                    +user_friends
                 +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
                 +session_edit_value_button key='view_user_section' value='orders' label='orders' icon='list'
-                +session_edit_value_button key='view_user_section' value='kin' label='kin' icon='donate'
-                +session_edit_value_button key='view_user_section' value='kout' label='kout' icon='receive-cash'
                 +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
-                +session_edit_value_button key='view_user_section' value='topups' label='topups' icon='money'
+                +session_edit_value_button key='view_user_section' value='finance' label='finance' icon='money'
                 +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
+                if session_key_value_is 'view_user_section' 'features'
+                    +user_features
                 +session_edit_value_button key='view_user_section' value='votes' label='votes' icon='sort-up'
+                if session_key_value_is 'view_user_section' 'votes'
+                    +user_upvotes
+                    +user_downvotes
                 +session_edit_value_button key='view_user_section' value='offers' label='offers' icon='shop'
+                if session_key_value_is 'view_user_section' 'offers'
+                    +user_offers
                 +session_edit_value_button key='view_user_section' value='requests' label='requests' icon='list'
                 +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
+                if session_key_value_is 'view_user_section' 'chat'
+                    +user_chat
                 // +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='feed'
                 +session_edit_value_button key='view_user_section' value='posts' label='blog' icon='blog'
+                if session_key_value_is 'view_user_section' 'posts'
+                    +user_posts
                 +session_edit_value_button key='view_user_section' value='delta' label='delta' icon='database'
                 if session_key_value_is 'view_user_section' 'delta'
                     +udelta
                     a.ui.button(href="/user/#{current_user.username}/m/post")
                         |delta
-                if session_key_value_is 'view_user_section' 'features'
-                    +user_features
-                if session_key_value_is 'view_user_section' 'posts'
-                    +user_karma
-                if session_key_value_is 'view_user_section' 'karma'
-                    +user_karma
-                if session_key_value_is 'view_user_section' 'chat'
-                    +user_chat
-                if session_key_value_is 'view_user_section' 'votes'
-                    +user_upvotes
-                    +user_downvotes
-                if session_key_value_is 'view_user_section' 'kin'
-                    +user_kin
-                if session_key_value_is 'view_user_section' 'kout'
-                    +user_kout
-                if session_key_value_is 'view_user_section' 'friends'
-                    +user_friends
-                if session_key_value_is 'view_user_section' 'events'
-                    +user_events
-                if session_key_value_is 'view_user_section' 'tribes'
-                    +user_tribes                        
                 if session_key_value_is 'view_user_section' 'orders'
                     +user_orders
                 if session_key_value_is 'view_user_section' 'requests'
                     +user_requests
-                if session_key_value_is 'view_user_section' 'offers'
-                    +user_offers
                 if session_key_value_is 'view_user_section' 'user_feed'
                     .ui.inline.header
                         // i.brain.icon
@@ -484,36 +479,6 @@ template(name='user_debit_segment')
 
 
 
-template(name='user_kout')  
-    .ui.inline.header 
-        i.send.icon
-        |karma out
-    .ui.basic.label #{total_debit_amount}p total sent
-    .ui.basic.label(title='debit count') #{debit_count} gifts sent
-    .ui.basic.label(title='rank') ##{global_debit_count_rank} gift sent rank
-        
-    i.tags.icon(title='credit tags')
-    each debit_tags
-        .ui.basic.circular.label #{title}
-            small #{count}
-        
-    .ui.stackable.cards.scrolling
-        each sent_items
-            .ui.card
-                .content
-                    .header
-                        strong #{price}k
-                        | to 
-                        if seller.profile_image_id
-                            img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{seller.name}
-                    small #{when}
-                    div
-                    |#{description}
-                    div
-                    each tags
-                        .ui.mini.basic.label #{this}
-                +print_this
 
 
 
@@ -533,68 +498,6 @@ template(name='user_food')
 
 
 
-template(name='user_kin')  
-    .ui.inline.header 
-        i.chevron.down.icon
-        |karma received
-    .ui.basic.label #{total_credit_amount}p total received
-    // |received
-    .ui.basic.label(title='received count') #{credit_count} total gifts 
-    .ui.basic.label(title='rank') ##{global_credit_count_rank} count rank
-        
-    i.tags.icon(title='credit tags')
-    each credit_tags
-        .ui.basic.circular.label #{title}
-            small #{count}
-        
-    .ui.stackable.cards.scrolling
-        each user_kin
-            a.ui.card(href="/m/debit/#{_id}/view")
-                .content
-                    .header
-                        strong #{price}pt 
-                        // |from 
-                        if author.profile_image_id
-                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.shortname}
-                    small #{when}
-                    div
-                    |#{description}
-                    div
-                    each tags
-                        .ui.basic.label #{this}
-                    +print_this
-
-template(name='user_kin_small')
-    .ui.inline.header 
-        i.minus.icon
-        |#{total_credit_amount}p
-        |received
-        .ui.basic.label #{credit_count} credits
-            | ##{global_credit_count_rank}
-    div
-    .ui.link.list.scrolling
-        each user_kin
-            .item
-                if author.profile_image_id
-                    img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                .content
-                    .header
-                        strong #{price}pt 
-                        |from 
-                        a(href="/user/#{author.username}")
-                            |#{author.username}
-                    .description
-                        a(href="/debit/#{_id}/view")
-                            |#{when}
-                .content
-                    .description
-                        |#{description}
-                        each tags
-                            .ui.basic.label #{this}
-                if is_admin 
-                    +remove_button
-                .spacer
 
 
 template(name='food_order_view')
@@ -640,9 +543,9 @@ template(name='user_downvotes')
         .ui.basic.circular.label #{title}
             small #{count}
         
-    .ui.stackable.cards.scrolling
-        each user_downvotes
-            +downvote
+    // .ui.stackable.cards.scrolling
+    //     each user_downvotes
+    //         +downvote
             
 template(name='downvote')            
     a.ui.card(href="/m/vote/#{_id}/view")

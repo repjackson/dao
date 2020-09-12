@@ -1,8 +1,8 @@
 template(name='user_karma')  
-    .ui.stackable.grid 
+    .ui.stackable.padded.grid 
         .row
             .sixteen.wide.column
-                .ui.inline.header 
+                .ui.header 
                     i.coins.icon
                     |karma
                 i.refresh.circular.link.icon.refresh_karma_stats
@@ -56,7 +56,7 @@ template(name='karma')
                 
 
 template(name='user_karma_small')
-    .ui.inline.header 
+    .ui.header 
         i.minus.icon
         |#{total_karma_amount}p
         |received
@@ -85,3 +85,99 @@ template(name='user_karma_small')
                 if is_admin 
                     +remove_button
                 .spacer
+                
+template(name='user_kin')  
+    .ui.header 
+        i.chevron.down.icon
+        |karma received
+    .ui.basic.label #{total_credit_amount}p total received
+    // |received
+    .ui.basic.label(title='received count') #{credit_count} total gifts 
+    .ui.basic.label(title='rank') ##{global_credit_count_rank} count rank
+        
+    i.tags.icon(title='credit tags')
+    each credit_tags
+        .ui.basic.circular.label #{title}
+            small #{count}
+        
+    .ui.stackable.cards.scrolling
+        each user_kin
+            a.ui.card(href="/m/debit/#{_id}/view")
+                .content
+                    .header
+                        strong #{price}pt 
+                        // |from 
+                        if author.profile_image_id
+                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.shortname}
+                    small #{when}
+                    div
+                    |#{description}
+                    div
+                    each tags
+                        .ui.basic.label #{this}
+                    +print_this
+
+template(name='user_kin_small')
+    .ui.header 
+        i.minus.icon
+        |#{total_credit_amount}p
+        |received
+        .ui.basic.label #{credit_count} credits
+            | ##{global_credit_count_rank}
+    div
+    .ui.link.list.scrolling
+        each user_kin
+            .item
+                if author.profile_image_id
+                    img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                .content
+                    .header
+                        strong #{price}pt 
+                        |from 
+                        a(href="/user/#{author.username}")
+                            |#{author.username}
+                    .description
+                        a(href="/debit/#{_id}/view")
+                            |#{when}
+                .content
+                    .description
+                        |#{description}
+                        each tags
+                            .ui.basic.label #{this}
+                if is_admin 
+                    +remove_button
+                .spacer
+                
+                
+template(name='user_kout')  
+    .ui.header 
+        i.send.icon
+        |karma out
+    .ui.basic.label #{total_debit_amount}p total sent
+    .ui.basic.label(title='debit count') #{debit_count} gifts sent
+    .ui.basic.label(title='rank') ##{global_debit_count_rank} gift sent rank
+        
+    i.tags.icon(title='credit tags')
+    each debit_tags
+        .ui.basic.circular.label #{title}
+            small #{count}
+        
+    // .ui.stackable.cards.scrolling
+    //     each sent_items
+    //         .ui.card
+    //             .content
+    //                 .header
+    //                     strong #{price}k
+    //                     | to 
+    //                     if seller.profile_image_id
+    //                         img.ui.avatar.image(src="{{c.url seller.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+    //                     |#{seller.name}
+    //                 small #{when}
+    //                 div
+    //                 |#{description}
+    //                 div
+    //                 each tags
+    //                     .ui.mini.basic.label #{this}
+    //             +print_this
+                

@@ -563,7 +563,10 @@ if Meteor.isClient
         'click .set_session_value': ->
             # console.log @key
             # console.log @value
-            Session.set(@key, @value)
+            if Session.equals(@key,@value)
+                Session.set(@key, null)
+            else
+                Session.set(@key, @value)
 
     Template.session_edit_value_button.helpers
         calculated_class: ->
@@ -574,7 +577,7 @@ if Meteor.isClient
             if Session.equals(@key,@value)
                 res += ' active'
             else
-                res += ' basic'
+                res += ' compact'
             # console.log res
             res
 
