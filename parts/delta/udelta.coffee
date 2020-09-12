@@ -393,33 +393,3 @@ if Meteor.isClient
             else if facet.filters.length > 0 and @name in facet.filters
                 'active'
             else ''
-
-
-
-
-if Meteor.isServer
-    Meteor.publish 'model_from_slug', (model_slug)->
-        # if model_slug in ['model','brick','field','tribe','block','page']
-        #     Docs.find
-        #         model:'model'
-        #         slug:model_slug
-        # else
-        match = {}
-        # if tribe_slug then match.slug = tribe_slug
-        match.model = 'model'
-        match.slug = model_slug
-
-        Docs.find match
-
-
-    Meteor.publish 'my_delta', ->
-        # Docs.find
-        #     model:'delta'
-        if Meteor.userId()
-            Docs.find
-                _author_id:Meteor.userId()
-                model:'delta'
-        else
-            Docs.find
-                _author_id:null
-                model:'delta'

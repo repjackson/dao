@@ -73,9 +73,6 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
                 if session_key_value_is 'view_user_section' 'friends'
                     +user_friends
-                +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
-                +session_edit_value_button key='view_user_section' value='orders' label='orders' icon='list'
-                +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
                 +session_edit_value_button key='view_user_section' value='finance' label='finance' icon='money'
                 +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
                 if session_key_value_is 'view_user_section' 'features'
@@ -119,6 +116,7 @@ template(name='profile')
                             +viewing
                             // if can_edit 
                             //     +delete_button
+                +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
                 if session_key_value_is 'view_user_section' 'cloud_comparison'
                     .ui.inline.header
                         // i.brain.icon
@@ -158,6 +156,7 @@ template(name='profile')
                             each current_user.credit_tags
                                 a.ui.large.label.select_tag #{title}
                                     small #{count}
+                +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
                 if session_key_value_is 'view_user_section' 'authored_overlap'
                     .ui.inline.header
                         i.edit.icon
@@ -175,6 +174,7 @@ template(name='profile')
                             .ui.header you #{currentUser.total_authored_points}
                             each currentUser.authored_tags
                                 .ui.label #{title}:#{count}
+                +session_edit_value_button key='view_user_section' value='orders' label='orders' icon='list'
                 if session_key_value_is 'view_user_section' 'orders'
                     .ui.inline.header
                         +i name='shop'
@@ -230,16 +230,17 @@ template(name='profile')
          
          
 template(name='user_features')
-    .ui.header
+    div
+    .ui.inline.header
         +i name='module'
         | features
-    +session_toggle_button key='edit_mode' label='edit mode' icon='pencil'
+        
+    +multi_doc_view key='feature_ids' ref_model='feature' label='enabled features' direct=true
     if is_current_user
+        +session_toggle_button key='edit_mode' label='edit mode' icon='pencil'
         if session_is 'edit_mode'
             +multi_doc_edit key='feature_ids' ref_model='model' label='enabled features' direct=true
-    else
-        +multi_doc_view key='feature_ids' ref_model='feature' label='enabled features' direct=true
-
+    div
                     
 
 template(name='user_badges')

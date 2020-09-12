@@ -4,14 +4,14 @@ template(name='right_sidebar')
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'user_dashboard'}}")
+        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/" class="{{isActiveRoute 'profile'}}")
             | dashboard (#{currentUser.points}p)
             i.large.dashboard.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
-            | tribes
-            i.large.fire.icon
+        // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
+        //     | tribes
+        //     i.large.fire.icon
         each my_tribes
-            a.item.zoom.toggle_rightbar(href="/m/tribe/#{_id}/view" class="{{isActiveRoute 'user_dashboard'}}")
+            a.item.zoom.toggle_rightbar(href="/m/tribe/#{_id}/view" class="{{isActiveRoute 'profile'}}")
                 img.ui.avatar.compact.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                 | #{title}
                 // i.large.icon(class=icon)
@@ -32,9 +32,9 @@ template(name='right_sidebar')
         // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/offers" class="{{isActiveRoute 'user_offers'}}")
         //     | offers
         //     i.large.store.icon
-        a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
-            | #{currentUser.credit} credit
-            i.large.dollar.icon
+        // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute 'user_credit'}}")
+        //     | #{currentUser.credit} credit
+        //     i.large.dollar.icon
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}/messages" class="{{isActiveRoute 'user_messages'}}")
         //     | chat
         //     i.chat.icon

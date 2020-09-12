@@ -40,7 +40,7 @@ template(name='nav')
                 if is_admin
                     a.icon.zoom.item.toggle_admin
                         i.large.shield.icon(title='admin mode on')
-                a.large.zoom.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_dashboard'}}")
+                a.large.zoom.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'profile'}}")
                     //- i.large.user.large.icon
                     |{{money_format currentUser.points}}c
                     |&nbsp;

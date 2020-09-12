@@ -1,6 +1,6 @@
 Meteor.methods
     set_facets: (model_slug, force)->
-        console.log 'setting model slug', model_slug
+        # console.log 'setting model slug', model_slug
         if Meteor.userId()
             delta = Docs.findOne
                 model:'delta'
@@ -131,7 +131,7 @@ Meteor.methods
             total = Meteor.users.find(built_query).count()
         else
             total = Docs.find(built_query).count()
-        console.log 'built query', built_query
+        # console.log 'built query', built_query
         # response
         for facet in delta.facets
             values = []
@@ -144,7 +144,7 @@ Meteor.methods
                 Docs.update { _id:delta._id, 'facets.key':facet.key},
                     { $set: 'facets.$.res': agg_res }
         if delta.sort_key
-            console.log 'found sort key', delta.sort_key
+            # console.log 'found sort key', delta.sort_key
             sort_by = delta.sort_key
         else
             sort_by = 'views'
@@ -174,14 +174,14 @@ Meteor.methods
         else
             results_cursor = Docs.find built_query, modifier
 
-        console.log built_query, modifier
+        # console.log built_query, modifier
     
         # if total is 1
         #     result_ids = results_cursor.fetch()
         # else
         #     result_ids = []
         result_ids = results_cursor.fetch()
-        console.log 'res ids', result_ids
+        # console.log 'res ids', result_ids
 
         Docs.update {_id:delta._id},
             {$set:
@@ -194,9 +194,9 @@ Meteor.methods
         # delta = Docs.findOne delta_id
 
     agg: (query, key, collection)->
-        console.log 'running agg', query
-        console.log 'running key', key
-        console.log 'running agg collection', collection
+        # console.log 'running agg', query
+        # console.log 'running key', key
+        # console.log 'running agg collection', collection
         limit=10
         options = { explain:false }
         pipe =  [
