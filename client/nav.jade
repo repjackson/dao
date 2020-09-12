@@ -54,9 +54,10 @@ template(name='nav')
                     i.large.sign.in.alternate.icon
                     |login
     .ui.attached.menu.hscroll(class=currentUser.invert_class)
-        each nav_models
+        // each nav_models
+        each enabled_features
             a.icon.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
-                +i name=icon
+                +i name=icon cl='ui avatar image'
     if session_is 'viewing_alerts'
         +topbar
 

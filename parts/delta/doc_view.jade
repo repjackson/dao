@@ -8,7 +8,8 @@ template(name='model_doc_view')
                     .four.wide.column
                         .ui.circular.basic.large.button.back_to_model
                             i.chevron.left.icon
-                            i.big.icon(class=current_model.icon)
+                            // i.big.icon(class=current_model.icon)
+                            +i name=current_model.icon
                             |#{current_model.title}
                         if can_edit
                             a.ui.large.icon.circular.button(href="/m/#{current_model.slug}/#{_id}/edit" title='Edit')

@@ -80,6 +80,8 @@ template(name='profile')
                     +udelta
                     a.ui.button(href="/user/#{current_user.username}/m/post")
                         |delta
+                if session_key_value_is 'view_user_section' 'features'
+                    +user_features
                 if session_key_value_is 'view_user_section' 'posts'
                     +user_karma
                 if session_key_value_is 'view_user_section' 'karma'
@@ -151,7 +153,7 @@ template(name='profile')
                                     small #{count}
                         .column
                             .ui.header 
-                                +i name='tree'
+                                +i name='mountain'
                                 // i.cubes.icon
                                 |matter
                             // each friended_by
@@ -228,6 +230,19 @@ template(name='profile')
                         +i name='request-money'
                         |topups
                     +user_credit
+         
+         
+template(name='user_features')
+    .ui.header
+        +i name='module'
+        | features
+    +session_toggle_button key='edit_mode' label='edit mode' icon='pencil'
+    if is_current_user
+        if session_is 'edit_mode'
+            +multi_doc_edit key='feature_ids' ref_model='model' label='enabled features' direct=true
+    else
+        +multi_doc_view key='feature_ids' ref_model='feature' label='enabled features' direct=true
+
                     
 
 template(name='user_badges')
