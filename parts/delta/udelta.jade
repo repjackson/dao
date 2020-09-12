@@ -1,4 +1,4 @@
-template(name='delta')
+template(name='udelta')
     .ui.stackable.padded.grid
         with current_model
             // unless current_model.show_facets
@@ -141,7 +141,7 @@ template(name='delta')
                     i.big.loading.grey.yin.yang.icon
 
 
-template(name='model_top')
+template(name='umodel_top')
     if is_loading
         .ui.header
             i.grey.loading.yin.yang.icon
@@ -182,13 +182,13 @@ template(name='model_top')
 
 
 
-template(name='toggle_visible_field')            
+template(name='utoggle_visible_field')            
     .item.toggle_visibility
         if field_visible
             i.green.checkmark.icon
         | #{title}
 
-//- template(name='delta_table')
+//- template(name='udelta_table')
 //-     .ui.table
 //-         thead
 //-             each fields
@@ -201,7 +201,7 @@ template(name='toggle_visible_field')
 //-                             |#{field_value}   
 //- 
                             
-template(name='delta_list')
+template(name='udelta_list')
     each current_delta.result_ids
         //- .column
         +delta_list_result
@@ -211,16 +211,16 @@ template(name='delta_list')
 
 
 
-template(name='set_limit')
+template(name='uset_limit')
     .item.set_limit #{amount}
 
-template(name='set_view_mode')
+template(name='uset_view_mode')
     a.ui.tertiary.icon.button.set_view_mode(title=title)
         i.large.icon(class=icon)
         //- if icon 
         //- |#{title}
         
-template(name='facet')
+template(name='ufacet')
     div
     if filtering_res
         .ui.inline.header.pointer.toggle_view_facet
@@ -255,7 +255,7 @@ template(name='facet')
         .spacer
 
 
-template(name='toggle_delta_config')
+template(name='utoggle_delta_config')
     if boolean_true
         .ui.active.icon.button.disable_key(title=label)
             // | #{label}

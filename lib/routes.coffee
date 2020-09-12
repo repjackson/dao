@@ -59,6 +59,7 @@ Router.route '*', -> @render 'home'
 # Router.route '/user/:username/m/:type', -> @render 'profile_layout', 'user_section'
 
 Router.route '/forgot_password', -> @render 'forgot_password'
+Router.route '/user/:username', -> @render 'profile'
 
 
 Router.route '/reset_password/:token', (->

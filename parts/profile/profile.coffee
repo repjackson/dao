@@ -1,98 +1,98 @@
 if Meteor.isClient
-    Router.route '/user/:username', (->
-        @layout 'profile_layout'
-        @render 'user_dashboard'
-        ), name:'profile_layout'
+    # Router.route '/user/:username', (->
+    #     @layout 'layout'
+    #     @render 'profile'
+    #     ), name:'layout'
 
     @selected_overlap_tags = new ReactiveArray []
 
-    Template.user_dashboard.onCreated ->
-        Session.setDefault('target_username','')
-        @autorun -> Meteor.subscribe('overlap_tags',
-            Session.get('query')
-            selected_overlap_tags.array()
-            Session.get('target_username')
-            # Router.current().params.username
-            )
-        @autorun -> Meteor.subscribe('overlap_docs',
-            Session.get('query')
-            selected_overlap_tags.array()
-            Session.get('target_username')
-            # Router.current().params.username
-            )
+    # Template.user_dashboard.onCreated ->
+    #     Session.setDefault('target_username','')
+    #     @autorun -> Meteor.subscribe('overlap_tags',
+    #         Session.get('query')
+    #         selected_overlap_tags.array()
+    #         Session.get('target_username')
+    #         # Router.current().params.username
+    #         )
+    #     @autorun -> Meteor.subscribe('overlap_docs',
+    #         Session.get('query')
+    #         selected_overlap_tags.array()
+    #         Session.get('target_username')
+    #         # Router.current().params.username
+    #         )
 
     
-    Template.user_dashboard.onRendered ->
-        Meteor.setTimeout ->
-            $('.accordion').accordion()
-        , 1000
+    # Template.user_dashboard.onRendered ->
+    #     Meteor.setTimeout ->
+    #         $('.accordion').accordion()
+    #     , 1000
         
 
         
         
-    Template.profile_layout.onCreated ->
+    Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
-        @autorun -> Meteor.subscribe 'model_docs', 'message'
+        # @autorun -> Meteor.subscribe 'model_docs', 'message'
     
-    Template.profile_layout.onRendered ->
+    Template.profile.onRendered ->
         Meteor.setTimeout ->
             $('.profile_nav_item')
                 .popup()
         , 1000
         # Meteor.call 'calc_user_stats', user._id, ->
-        Meteor.setTimeout ->
-            user = Meteor.users.findOne(username:Router.current().params.username)
-            if user
-                Meteor.call 'calc_user_stats', user._id, ->
-                Meteor.call 'calc_authored_tags', user._id, ->
-                Meteor.call 'calc_upvoted_tags', user._id, ->
-                Meteor.call 'calc_credit_tags', user._id, ->
-        , 2000
+        # Meteor.setTimeout ->
+        #     user = Meteor.users.findOne(username:Router.current().params.username)
+        #     if user
+        #         Meteor.call 'calc_user_stats', user._id, ->
+        #         Meteor.call 'calc_authored_tags', user._id, ->
+        #         Meteor.call 'calc_upvoted_tags', user._id, ->
+        #         Meteor.call 'calc_credit_tags', user._id, ->
+        # , 2000
 
 
-    Template.user_dashboard.events
-        'click .select_tag': ->
-            console.log @
-            Meteor.call 'call_wiki', @title, ->
-            Meteor.call 'search_reddit', @title, ->
+    # Template.user_dashboard.events
+    #     'click .select_tag': ->
+    #         console.log @
+    #         Meteor.call 'call_wiki', @title, ->
+    #         Meteor.call 'search_reddit', @title, ->
                 
-            selected_tags.push @title
-            Router.go '/'
-        'click .select_user': ->
-            Session.set('target_username', @username)
+    #         selected_tags.push @title
+    #         Router.go '/'
+    #     'click .select_user': ->
+    #         Session.set('target_username', @username)
 
-        'keyup .new_post': (e,t)->
-            if e.which is 13
-                val = t.$('.new_post').val()
-                user = Meteor.users.findOne(username:Router.current().params.username)
-                Docs.insert
-                    model:'message'
-                    type:'wall_post'
-                    recipient_id:user._id
-                    text:val
+    #     'keyup .new_post': (e,t)->
+    #         if e.which is 13
+    #             val = t.$('.new_post').val()
+    #             user = Meteor.users.findOne(username:Router.current().params.username)
+    #             Docs.insert
+    #                 model:'message'
+    #                 type:'wall_post'
+    #                 recipient_id:user._id
+    #                 text:val
 
-    Template.user_dashboard.helpers
-        wall_posts: ->
-            user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.find 
-                model:'message'
-                type:'wall_post'
-                recipient_id:user._id
-                # friend_ids:$in:[Meteor.userId()]
-        friended_by: ->
-            Meteor.users.find {}
-                # friend_ids:$in:[Meteor.userId()]
-        friend_button_class: ->
-            if Session.equals('target_username',@username) then 'active' else 'basic'
-        users: ->
-            Meteor.users.find()
-        overlap_results: ->
-            overlap.find()
-    Template.profile_layout.helpers
+    # Template.user_dashboard.helpers
+    #     wall_posts: ->
+    #         user = Meteor.users.findOne(username:Router.current().params.username)
+    #         Docs.find 
+    #             model:'message'
+    #             type:'wall_post'
+    #             recipient_id:user._id
+    #             # friend_ids:$in:[Meteor.userId()]
+    #     friended_by: ->
+    #         Meteor.users.find {}
+    #             # friend_ids:$in:[Meteor.userId()]
+    #     friend_button_class: ->
+    #         if Session.equals('target_username',@username) then 'active' else 'basic'
+    #     users: ->
+    #         Meteor.users.find()
+    #     overlap_results: ->
+    #         overlap.find()
+    Template.profile.helpers
         route_slug: -> "user_#{@slug}"
         user: -> Meteor.users.findOne username:Router.current().params.username
 
-    Template.profile_layout.events
+    Template.profile.events
         'click .mute': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             Meteor.call 'mute_user', user._id, ->
@@ -111,7 +111,7 @@ if Meteor.isClient
             Meteor.call 'calc_upvoted_tags', user._id, ->
             Meteor.call 'calc_credit_tags', user._id, ->
 
-    Template.profile_layout.events
+    Template.profile.events
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             if Meteor.userId() is user._id
@@ -661,3 +661,93 @@ if Meteor.isServer
                     tipped_count:tipped_count
                     received_tips_count:received_tips_count
                     comment_count:comment_count
+                    
+                    
+                    
+if Meteor.isClient
+    Template.user_food.onCreated ->
+        @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'thought'
+
+
+    Template.user_food.onCreated ->
+        # @autorun => Meteor.subscribe 'user_food', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_model_docs', 'food_order', Router.current().params.username
+
+    Template.user_food.events
+        'keyup .new_public_message': (e,t)->
+            if e.which is 13
+                val = $('.new_public_message').val()
+                # console.log val
+                target_user = Meteor.users.findOne(username:Router.current().params.username)
+                Docs.insert
+                    model:'message'
+                    body: val
+                    is_private:false
+                    target_user_id: target_user._id
+                val = $('.new_public_message').val('')
+
+        'click .submit_public_message': (e,t)->
+            val = $('.new_public_message').val()
+            console.log val
+            target_user = Meteor.users.findOne(username:Router.current().params.username)
+            Docs.insert
+                model:'message'
+                is_private:false
+                body: val
+                target_user_id: target_user._id
+            val = $('.new_public_message').val('')
+
+
+        'keyup .new_private_message': (e,t)->
+            if e.which is 13
+                val = $('.new_private_message').val()
+                console.log val
+                target_user = Meteor.users.findOne(username:Router.current().params.username)
+                Docs.insert
+                    model:'message'
+                    body: val
+                    is_private:true
+                    target_user_id: target_user._id
+                val = $('.new_private_message').val('')
+
+        'click .submit_private_message': (e,t)->
+            val = $('.new_private_message').val()
+            console.log val
+            target_user = Meteor.users.findOne(username:Router.current().params.username)
+            Docs.insert
+                model:'message'
+                body: val
+                is_private:true
+                target_user_id: target_user._id
+            val = $('.new_private_message').val('')
+
+
+
+    Template.user_food.helpers
+        food_orders: ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            Docs.find
+                model:'food_order'
+                # _author_id:user._id
+
+
+
+if Meteor.isServer
+    Meteor.publish 'user_public_food', (username)->
+        target_user = Meteor.users.findOne(username:Router.current().params.username)
+        Docs.find
+            model:'message'
+            target_user_id: target_user._id
+            is_private:false
+
+    Meteor.publish 'user_private_food', (username)->
+        target_user = Meteor.users.findOne(username:Router.current().params.username)
+        Docs.find
+            model:'message'
+            target_user_id: target_user._id
+            is_private:true
+            _author_id:Meteor.userId()
+
+
+
+                    

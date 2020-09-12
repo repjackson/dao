@@ -50,13 +50,19 @@ if Meteor.isClient
                 Docs.insert
                     model:'post'
                     tribe_id:@_id
-            Router.go "/post/#{new_id}/edit"
+            Router.go "/m/post/#{new_id}/edit"
         'click .add_tribe_gift': ->
             new_id = 
                 Docs.insert
                     model:'debit'
                     tribe_id:@_id
-            Router.go "/debit/#{new_id}/edit"
+            Router.go "/m/debit/#{new_id}/edit"
+        'click .add_tribe_request': ->
+            new_id = 
+                Docs.insert
+                    model:'request'
+                    tribe_id:@_id
+            Router.go "/m/request/#{new_id}/edit"
         'click .tip': ->
             if Meteor.user()
                 Meteor.call 'tip', @_id, ->
