@@ -42,13 +42,12 @@ template(name='post_card')
                 +text_edit key='model' direct=true
             +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
             each seven_tags
-                .ui.basic.label #{this}
-            .ui.basic.label
-                i.donate.icon
-                |#{tip_count} tips
-            .ui.basic.label
+                .ui.label #{this}
+            .ui.label
+                |#{points}p
+            .ui.label
+                |#{comment_count}
                 i.chat.outline.icon
-                |#{comment_count} comments
             
         // .meta
         //     |#{when}

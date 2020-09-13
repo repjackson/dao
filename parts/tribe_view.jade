@@ -170,7 +170,7 @@ template(name='tribe_images')
     .content.scrolling
         if user_id_in 'admin_ids'
             i.large.plus.circular.link.icon.add_badge
-        .ui.cards
+        .ui.centered.stackable.cards
             each images
                 .ui.card
                     a(href="/m/post/#{_id}/view") 

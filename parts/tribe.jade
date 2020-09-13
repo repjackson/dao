@@ -15,7 +15,7 @@ template(name='join')
 
 
 template(name='tribe_card')
-    a.ui.card(href="/m/tribe/#{_id}/view")
+    a.ui.link.card(href="/m/tribe/#{_id}/view")
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
@@ -23,18 +23,20 @@ template(name='tribe_card')
                 if private 
                     i.lock.icon
                 |#{title}
-            i.marker.icon
-            |#{location} 
-            |!{description}
-            .ui.list
-                .item #{member_ids.length} members
-                .item #{post_count} posts
-                .item #{post_count} offers
-                .item #{post_count} requests
-            +vote
-            +viewing
-            +join
-        
+            .description
+                i.marker.icon
+                |#{location} 
+                i.info.icon
+                |!{description}
+                // .ui.list
+                //     .item #{member_ids.length} members
+                //     .item #{post_count} posts
+                //     .item #{post_count} offers
+                //     .item #{post_count} requests
+                // +vote
+                // +viewing
+                // +join
+            
 
 
 template(name='tribe_card_small')

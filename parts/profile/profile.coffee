@@ -733,11 +733,11 @@ if Meteor.isClient
     Template.tribe_images.helpers
         images: ->
             user = Meteor.users.findOne(username:Router.current().params.username)
-            Docs.find
+            Docs.find {
                 model:'post'
                 image_id: $exists:true
                 # _author_id:user._id
-
+            }, sort:_timestamp:-1
 
 
 if Meteor.isServer
