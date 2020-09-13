@@ -29,7 +29,7 @@ if Meteor.isClient
                 Docs.insert
                     model:'badge'
                     tribe_id:@_id
-            Router.go "/badge/#{new_id}/edit"
+            Router.go "/m/badge/#{new_id}/edit"
     
     Template.tribe_events.helpers
         events: ->
@@ -42,7 +42,21 @@ if Meteor.isClient
                 Docs.insert
                     model:'event'
                     tribe_id:@_id
-            Router.go "/event/#{new_id}/edit"
+            Router.go "/m/event/#{new_id}/edit"
+    
+    
+    
+    Template.tribe_finance.helpers
+        events: ->
+            Docs.find 
+                model:'event'
+                # tribe_id:@tribe_id
+    Template.tribe_finance.events
+        'click .calc_tribe_finance': ->
+            Meteor.call 'calc_tribe_finance', Router.current().params.doc_id, ->
+                
+    
+    
     
     Template.tribe_view.events
         'click .add_tribe_post': ->
@@ -136,6 +150,17 @@ if Meteor.isClient
     
 
 if Meteor.isServer
+    Meteor.methods 
+        calc_tribe_finance: (tribe_id)->
+            tribe = Docs.findOne tribe_id
+            child_doc_count = 
+                Docs.find(
+                    tribe_id:tribe_id
+                ).count()
+            Docs.update tribe_id, 
+                $set:total_child_docs:child_doc_count
+    
+    
     Meteor.publish 'tribe_docs', (tribe_id)->
         Docs.find
             tribe_id:tribe_id

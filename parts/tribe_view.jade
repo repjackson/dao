@@ -215,6 +215,18 @@ template(name='tribe_events')
                     .content
                         .header #{title}
 template(name='tribe_finance')
+    .ui.icon.button.calc_tribe_finance
+        i.refresh.icon
+    .ui.header #{total_child_docs} total tribe docs
+    .ui.header inner exchange volume
+    .ui.list 
+        .item #{inner_transaction_count} inner transaction count
+        .item #{inner_transaction_amount} inner transaction amount
+    .ui.header imports
+    |karma from nonmembers
+    // each imports
+    // .ui.header exports
+    // |karma to nonmembers
 
 
 template(name='tribe_alerts')
