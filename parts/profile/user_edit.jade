@@ -19,10 +19,10 @@ template(name='user_edit_layout')
                         .twelve.wide.column
                             +session_edit_value_button key='useredit_section' value='account' label='account' icon='settings'
                             +session_edit_value_button key='useredit_section' value='info' label='info' icon='info'
-                            +session_edit_value_button key='useredit_section' value='tribes' label='tribes' icon='campfire'
+                            // +session_edit_value_button key='useredit_section' value='tribes' label='tribes' icon='campfire'
                             +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='rss'
                             +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
-                            +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
+                            // +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
                             +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
                             +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
                             if session_key_value_is 'useredit_section' 'privacy'
@@ -35,12 +35,12 @@ template(name='user_edit_layout')
                                 +user_edit_badges
                             if session_key_value_is 'useredit_section' 'info'
                                 +user_edit_info
-                            if session_key_value_is 'useredit_section' 'membership'
-                                +user_edit_membership
+                            // if session_key_value_is 'useredit_section' 'membership'
+                            //     +user_edit_membership
                             if session_key_value_is 'useredit_section' 'account'
                                 +user_edit_account
-                            if session_key_value_is 'useredit_section' 'tribes'
-                                +user_edit_tribes
+                            // if session_key_value_is 'useredit_section' 'tribes'
+                            //     +user_edit_tribes
 
                             // +yield
 
