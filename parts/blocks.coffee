@@ -194,7 +194,7 @@ if Meteor.isClient
             
     Template.vote.events
         'click .upvote': (e,t)->
-            # $(e.currentTarget).closest('.button').transition('pulse',200)
+            $(e.currentTarget).closest('.button').transition('pulse',200)
             if Meteor.user()
                 Meteor.call 'upvote', @_id, ->
                 Meteor.call 'calc_post_votes', @_id, ->
