@@ -81,10 +81,10 @@ template(name='profile')
                 if session_key_value_is 'view_user_section' 'votes'
                     +user_upvotes
                     +user_downvotes
-                +session_edit_value_button key='view_user_section' value='offers' label='offers' icon='shop'
-                if session_key_value_is 'view_user_section' 'offers'
-                    +user_offers
-                +session_edit_value_button key='view_user_section' value='requests' label='requests' icon='list'
+                // +session_edit_value_button key='view_user_section' value='offers' label='offers' icon='shop'
+                // if session_key_value_is 'view_user_section' 'offers'
+                //     +user_offers
+                // +session_edit_value_button key='view_user_section' value='requests' label='requests' icon='list'
                 +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
                 if session_key_value_is 'view_user_section' 'chat'
                     +user_chat
@@ -92,15 +92,15 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='posts' label='blog' icon='blog'
                 if session_key_value_is 'view_user_section' 'posts'
                     +user_posts
-                +session_edit_value_button key='view_user_section' value='delta' label='delta' icon='database'
-                if session_key_value_is 'view_user_section' 'delta'
-                    +udelta
-                    a.ui.button(href="/user/#{current_user.username}/m/post")
-                        |delta
+                // +session_edit_value_button key='view_user_section' value='delta' label='delta' icon='database'
+                // if session_key_value_is 'view_user_section' 'delta'
+                //     +udelta
+                //     a.ui.button(href="/user/#{current_user.username}/m/post")
+                //         |delta
                 if session_key_value_is 'view_user_section' 'orders'
                     +user_orders
-                if session_key_value_is 'view_user_section' 'requests'
-                    +user_requests
+                // if session_key_value_is 'view_user_section' 'requests'
+                //     +user_requests
                 if session_key_value_is 'view_user_section' 'user_feed'
                     .ui.inline.header
                         // i.brain.icon

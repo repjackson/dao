@@ -60,12 +60,12 @@ Template.nav.helpers
         Docs.find 
             model:'model'
             nav:true
-    enabled_features: ->
-        if Meteor.user()
-            Docs.find 
-                _id:$in:Meteor.user().feature_ids
-                model:'model'
-                # nav:true
+    # enabled_features: ->
+    #     if Meteor.user()
+    #         Docs.find 
+    #             _id:$in:Meteor.user().feature_ids
+    #             model:'model'
+    #             # nav:true
     alert_toggle_class: ->
         if Session.get('viewing_alerts') then 'active' else ''
 

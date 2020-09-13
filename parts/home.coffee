@@ -113,14 +113,14 @@ if Meteor.isClient
     Template.home.helpers
         selected_tags_plural: -> selected_tags.array().length > 1
         one_post: ->
-            match = {model:$in:['post','reddit','wikipedia']}
+            match = {model:$in:['post']}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
 
             Docs.find(match).count() is 1
     
         two_posts: -> 
-            match = {model:$in:['post','reddit','wikipedia']}
+            match = {model:$in:['post']}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
             Docs.find(match).count() is 2
@@ -129,7 +129,7 @@ if Meteor.isClient
     
         can_debit: -> Meteor.user().points > 0
         docs: ->
-            match = {model:$in:['post','reddit','wikipedia']}
+            match = {model:$in:['post']}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
             Docs.find match,
@@ -188,8 +188,8 @@ if Meteor.isClient
     Template.tag_selector.events
         'click .select_tag': -> 
             selected_tags.push @name
-            Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+            # Meteor.call 'call_wiki', @name, ->
+            # Meteor.call 'search_reddit', selected_tags.array(), ->
     Template.home.events
         'click .delete': -> 
             console.log @
@@ -197,7 +197,7 @@ if Meteor.isClient
         'click .post': ->
             new_post_id =
                 Docs.insert
-                    model:$in:['post','reddit','wikipedia']
+                    model:$in:['post']
                     buyer_id:Meteor.userId()
                     buyer_username:Meteor.user().username
             Router.go "/post/#{new_post_id}/edit"
@@ -224,15 +224,15 @@ if Meteor.isClient
     
     
         'click .view_debit': ->
-            Router.go "/debit/#{@_id}/view"
+            Router.go "/m/debit/#{@_id}/view"
 
         'keydown .search_title': (e,t)->
             search = $('.search_title').val().toLowerCase().trim()
             # Session.set('query',search)
             if e.which is 13
                 selected_tags.push search
-                Meteor.call 'call_wiki', search, ->
-                Meteor.call 'search_reddit', selected_tags.array(), ->
+                # Meteor.call 'call_wiki', search, ->
+                # Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8
@@ -245,7 +245,7 @@ if Meteor.isServer
         # console.log title
         Docs.find
             title:title
-            model:$in:['post','reddit','wikipedia']
+            model:$in:['post']
     
     
     Meteor.publish 'docs', (
@@ -256,7 +256,7 @@ if Meteor.isServer
         selected_sources
         )->
         match = {}
-        match.model = $in:['post','reddit','wikipedia']
+        match.model = $in:['post']
         if Meteor.user()
             match.downvoter_ids = $nin:[Meteor.userId()]
         if query.length > 1
@@ -287,7 +287,7 @@ if Meteor.isServer
         self = @
         match = {}
         # match.model = $in:['post','alpha']
-        match.model = $in:['post','reddit','wikipedia']
+        match.model = $in:['post']
         
         if query.length > 1
             match.title = {$regex:"#{query}", $options: 'i'}

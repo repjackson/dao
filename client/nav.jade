@@ -3,26 +3,27 @@ template(name='nav')
         // if currentUser
         a.icon.header.zoom.item.toggle_sidebar
             i.bars.large.icon
-        a.icon.zoom.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
-            if session_is 'loading'
-                i.large.yin.yang.loading.icon
-            else
-                // +i name=''
-                i.large.yin.yang.icon
-        // unless connected
-        //     .item
-        //         .ui.green.header not connected
         +status    
-        a.icon.zoom.item.set_post(href="/" class="{{isActivePath '/'}}")
-            // i.large.home.icon
-            +i name='home' cl='ui avatar image'
-        // .ui.input.zoom.item.mobile.hidden
-        .ui.left.icon.mobile.hidden.input
-            i.search.icon
-            input.search_dao(type='text')
-        each enabled_features
-            a.icon.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
-                +i name=icon cl='ui avatar image'
+        if connected
+            if is_admin
+                a.icon.zoom.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
+                    if session_is 'loading'
+                        i.large.yin.yang.loading.icon
+                    else
+                        // +i name=''
+                        i.large.yin.yang.icon
+                // .item
+                //     .ui.green.header not connected
+            a.icon.zoom.item.set_post(href="/" class="{{isActivePath '/'}}")
+                // i.large.home.icon
+                +i name='home' cl='ui avatar image'
+            // .ui.input.zoom.item.mobile.hidden
+            .ui.left.icon.mobile.hidden.input
+                i.search.icon
+                input.search_dao(type='text')
+            // each enabled_features
+            //     a.icon.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
+            //         +i name=icon cl='ui avatar image'
         .right.menu
             if currentUser
                 a.icon.zoom.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
@@ -123,15 +124,15 @@ template(name='left_sidebar')
             .ui.icon.input
                 i.search.icon
                 input.search_leftbar(type='text')
-        each enabled_features
-            a.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
-                +i name=icon cl='ui avatar image'
-                |#{title}
-        +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
-        +leftbar_item model='reddit' label='reddit' icon='reddit'
+        // each enabled_features
+        //     a.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
+        //         +i name=icon cl='ui avatar image'
+        //         |#{title}
+        // +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
+        // +leftbar_item model='reddit' label='reddit' icon='reddit'
         +leftbar_item model='post' label='posts' icon='newspaper'
-        +leftbar_item model='youtube' label='video' icon='youtube'
-        +leftbar_item model='picture' label='picture' icon='picture'
+        // +leftbar_item model='youtube' label='video' icon='youtube'
+        // +leftbar_item model='picture' label='picture' icon='picture'
         +leftbar_item model='tribe' label='tribes' icon='fire'
         // +leftbar_item model='rental' label='rentals' icon='clock'
         // +leftbar_item model='request' label='requests' icon='concierge bell'
