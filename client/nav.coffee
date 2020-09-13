@@ -274,10 +274,10 @@ Template.left_sidebar.events
                 recipient_id: @_id
         Router.go "/debit/#{new_gift_id}/edit"
 
-    'click .add_request': ->
-        # user = Meteor.users.findOne(username:@username)
-        new_id =
-            Docs.insert
-                model:'request'
-                recipient_id: @_id
-        Router.go "/request/#{new_id}/edit"
+    # 'click .add_request': ->
+    #     # user = Meteor.users.findOne(username:@username)
+    #     new_id =
+    #         Docs.insert
+    #             model:'request'
+    #             recipient_id: @_id
+    #     Router.go "/request/#{new_id}/edit"

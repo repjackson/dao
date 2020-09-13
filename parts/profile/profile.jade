@@ -67,9 +67,9 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
                 if session_key_value_is 'view_user_section' 'tribes'
                     +user_tribes                        
-                +session_edit_value_button key='view_user_section' value='events' label='events' icon='calendar'
-                if session_key_value_is 'view_user_section' 'events'
-                    +user_events
+                // +session_edit_value_button key='view_user_section' value='events' label='events' icon='calendar'
+                // if session_key_value_is 'view_user_section' 'events'
+                //     +user_events
                 +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
                 if session_key_value_is 'view_user_section' 'friends'
                     +user_friends
