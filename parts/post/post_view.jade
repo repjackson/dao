@@ -112,7 +112,7 @@ template(name='post_view')
                                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                                         |#{_author.username}
                                     each _author.three_tags
-                                        .ui.small.basic.label #{this}
+                                        .ui.small.label #{this}
                                     // i.dropdown.icon
                                 // .content
                                 //     .ui.list.smallscroll

@@ -25,7 +25,6 @@ template(name='user_edit_layout')
                             +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
                             +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
                             +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
-                            +session_edit_value_button key='useredit_section' value='genekeys' label='genekeys' icon='biotech'
                             if session_key_value_is 'useredit_section' 'privacy'
                                 +user_edit_privacy
                             if session_key_value_is 'useredit_section' 'friends'

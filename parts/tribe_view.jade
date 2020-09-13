@@ -3,6 +3,9 @@ template(name='tribe_view')
         .ui.stackable.padded.grid
             .centered.row
                 .twelve.wide.column
+                    .ui.inline.header(title='tribe')
+                        i.grey.fire.icon
+                        |#{title}
                     // +image_view key='banner_id' height='200' crop='crop' direct=true
                     +session_edit_value_button key='view_tribe_section' value='images' label='images' icon='picture'
                     +session_edit_value_button key='view_tribe_section' value='posts' label='posts' icon='blog'
@@ -10,7 +13,7 @@ template(name='tribe_view')
                     // +session_edit_value_button key='view_tribe_section' value='offers' label='offers' icon='shop'
                     // +session_edit_value_button key='view_tribe_section' value='requests' label='requests' icon='bell'
                     +session_edit_value_button key='view_tribe_section' value='info' label='info' icon='info'
-                    +session_edit_value_button key='view_tribe_section' value='credits' label='credits' icon='money'
+                    +session_edit_value_button key='view_tribe_section' value='karma' label='karma' icon='money'
                     // +session_edit_value_button key='view_tribe_section' value='alerts' label='alerts' icon='rss'
                     +session_edit_value_button key='view_tribe_section' value='events' label='events' icon='calendar'
                     +session_edit_value_button key='view_tribe_section' value='people' label='people' icon='groups'
@@ -106,11 +109,11 @@ template(name='tribe_view')
                         |comments
                         .content
                             +comments
-                    if session_key_value_is 'view_tribe_section' 'credits'
+                    if session_key_value_is 'view_tribe_section' 'karma'
                         .ui.inline.header 
                             +i name='coins' cl='ui avatar image'
                             // i.coins.icon
-                            |credits
+                            |karma
                         +tribe_finance
                     if session_key_value_is 'view_tribe_section' 'events'
                         +tribe_events
@@ -121,10 +124,6 @@ template(name='tribe_view')
                     // if can_edit
                     a(href="/m/tribe" title='tribes')
                         i.circular.large.fire.link.icon
-                    .ui.center.aligned.inline.header 
-                        |#{title}
-                        small tribe
-                    div
                     if can_edit
                         a.edit_tribe(href="/m/tribe/#{_id}/edit")
                             i.big.pencil.circular.link.icon
@@ -138,22 +137,26 @@ template(name='tribe_view')
                             .item #{followers} followers
                             .item #{phone} 
                             .item #{location}
-                    .ui.circular.basic.button.add_tribe_gift
+                    .ui.circular.button.add_tribe_gift
                         // i.large.gift.icon
                         +i name='gift' cl='ui avatar image'
                         |gift
-                    .ui.circular.basic.button.add_tribe_post
+                    .ui.circular.button.add_tribe_post
                         // i.newspaper.large.icon
-                        +i name='new-post' cl='ui avatar image'
+                        +i name='add-rule' cl='ui avatar image'
                         |post
-                    .ui.circular.basic.button
+                    .ui.circular.button
                         // i.picture.icon
-                        +i name='picture' cl='ui avatar image'
-                        |add image
-                    .ui.circular.basic.button.request
+                        +i name='add-image' cl='ui avatar image'
+                        |image
+                    .ui.circular.button.request
                         // i.concierge.bell.icon
-                        +i name='bell' cl='ui avatar image'
+                        +i name='add-reminder' cl='ui avatar image'
                         |request
+                    .ui.circular.button.offer
+                        // i.concierge.bell.icon
+                        +i name='product' cl='ui avatar image'
+                        |offer
 
 
 
@@ -164,7 +167,7 @@ template(name='tribe_images')
         |#{images.count} images
     // each images
     //     img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-    .content
+    .content.scrolling
         if user_id_in 'admin_ids'
             i.large.plus.circular.link.icon.add_badge
         .ui.cards

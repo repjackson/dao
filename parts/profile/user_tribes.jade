@@ -7,26 +7,29 @@ template(name='user_tribes')
         a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/tribes")
             i.pencil.icon
     .ui.header 
-        +i name='native-american-chief'
-        |leader of
-    each user_leader_tribes
-        .ui.segment
-            if image_id
-                img.ui.tiny.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-            a.ui.header(href="/m/tribe/#{_id}/view") #{title}
-            // if is_current_user
-            //     +enter_tribe
+        +i name='shield'
+        |leading
+    .ui.cards
+        each user_leader_tribes
+            a.ui.horizontal.card(href="/m/tribe/#{_id}/view")
+                if image_id
+                    img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                .content
+                    .ui.header #{title}
+                // if is_current_user
+                //     +enter_tribe
     .ui.header 
-        +i name='membership-card'
+        +i name='security-pass'
         |member of
-    each user_member_tribes
-        .ui.segment
-            if image_id
-                img.ui.tiny.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-
-            a.ui.header(href="/m/tribe/#{_id}/view") #{title}
-            // if is_current_user
-            //     +enter_tribe
+    .ui.cards
+        each user_member_tribes
+            a.ui.horizontal.card(href="/m/tribe/#{_id}/view")
+                if image_id
+                    img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                .content
+                    .ui.header #{title}
+                // if is_current_user
+                //     +enter_tribe
             
             
             

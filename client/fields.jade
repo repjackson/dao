@@ -977,7 +977,10 @@ template(name='single_doc_edit')
     .ui.inline.header(title=key) 
         if icon
             //- i.grey.icon(class=icon)
-            +icon name=icon
+            +i name=icon
+            if image_id 
+                img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+
         |#{label} #{title}
     each choices
         .ui.compact.button.select_choice(class=choice_class)
