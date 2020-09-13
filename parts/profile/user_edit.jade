@@ -18,9 +18,9 @@ template(name='user_edit_layout')
                                 strong save
                         .twelve.wide.column
                             +session_edit_value_button key='useredit_section' value='account' label='account' icon='settings'
-                            +session_edit_value_button key='useredit_section' value='info' label='info' icon='info'
+                            // +session_edit_value_button key='useredit_section' value='info' label='info' icon='info'
                             // +session_edit_value_button key='useredit_section' value='tribes' label='tribes' icon='campfire'
-                            +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='rss'
+                            // +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='rss'
                             // +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
                             // +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
                             +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
@@ -29,12 +29,10 @@ template(name='user_edit_layout')
                                 +user_edit_privacy
                             if session_key_value_is 'useredit_section' 'friends'
                                 +user_edit_friends
-                            if session_key_value_is 'useredit_section' 'alerts'
-                                +user_edit_alerts
                             // if session_key_value_is 'useredit_section' 'badges'
                             //     +user_edit_badges
-                            if session_key_value_is 'useredit_section' 'info'
-                                +user_edit_info
+                            // if session_key_value_is 'useredit_section' 'info'
+                            //     +user_edit_info
                             // if session_key_value_is 'useredit_section' 'membership'
                             //     +user_edit_membership
                             if session_key_value_is 'useredit_section' 'account'
@@ -44,16 +42,6 @@ template(name='user_edit_layout')
 
                             // +yield
 
-template(name='user_edit_alerts')
-    .ui.header
-        i.rss.icon
-        | alerts
-    .ui.header notifiy when 
-    .ui.big.link.list
-        .item receive credit
-        .item invited to event 
-        .item invited to shift 
-        .item personal request received 
         
 template(name='user_edit_friends')
     .ui.header
@@ -151,8 +139,8 @@ template(name='user_edit_account')
             +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true
             +password_edit
         .column
-            +text_edit key='first_name' label='first name' direct=true
-            +text_edit key='last_name' label='last name' direct=true
+            // +text_edit key='first_name' label='first name' direct=true
+            // +text_edit key='last_name' label='last name' direct=true
             +text_edit key='display_name' label='display name' direct=true
             .ui.header 
                 i.envelope.outline.icon

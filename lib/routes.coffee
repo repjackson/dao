@@ -54,6 +54,17 @@ Router.route('verify-email', {
 })
 
 
+Router.route '/post/:doc_id/view', (->
+    @layout 'layout'
+    @render 'post_view'
+    ), name:'post_view'
+
+Router.route '/post/:doc_id/edit', (->
+    @layout 'layout'
+    @render 'post_edit'
+    ), name:'post_edit'
+
+
 Router.route '/verification_confirmation', -> @render 'verification_confirmation'
 Router.route '*', -> @render 'home'
 

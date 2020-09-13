@@ -4,7 +4,7 @@ if Meteor.isClient
     @selected_tags = new ReactiveArray []
     @selected_authors = new ReactiveArray []
     @selected_upvoters = new ReactiveArray []
-    @selected_sources = new ReactiveArray []
+    # @selected_sources = new ReactiveArray []
     
     Template.body.events
         # 'click a:not(.select_term)': ->
@@ -27,14 +27,14 @@ if Meteor.isClient
             selected_tags.array()
             selected_authors.array()
             selected_upvoters.array()
-            selected_sources.array()
+            # selected_sources.array()
             )
         @autorun -> Meteor.subscribe('docs',
             Session.get('query')
             selected_tags.array()
             selected_authors.array()
             selected_upvoters.array()
-            selected_sources.array()
+            # selected_sources.array()
             )
 
         
@@ -56,23 +56,23 @@ if Meteor.isClient
         #     if Session.equals('sort_key', @key) then 'black' else 'basic'
     Template.tag_selector.onCreated ->
         # console.log @
-        @autorun => Meteor.subscribe('doc_by_title', @data.name)
+        # @autorun => Meteor.subscribe('doc_by_title', @data.name)
     Template.tag_selector.helpers
-        term: ->
-            Docs.findOne 
-                title:@name
+        # term: ->
+        #     Docs.findOne 
+        #         title:@name
                 
     Template.unselect_tag.onCreated ->
         # console.log @
         @autorun => Meteor.subscribe('doc_by_title', @data)
     Template.unselect_tag.helpers
-        term: ->
-            Docs.findOne 
-                title:@valueOf()
+        # term: ->
+        #     Docs.findOne 
+        #         title:@valueOf()
     Template.unselect_tag.events
        'click .unselect_tag': -> 
             selected_tags.remove @valueOf()
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+            # Meteor.call 'search_reddit', selected_tags.array(), ->
 
                 
     Template.home.helpers
@@ -104,11 +104,11 @@ if Meteor.isClient
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:10
             
-        term: ->
-            # console.log @
-            Docs.find 
-                model:$in:['wikipedia']
-                title:@name
+        # term: ->
+        #     # console.log @
+        #     Docs.find 
+        #         model:$in:['wikipedia']
+        #         title:@name
         
         one_result: ->
             Docs.find().count() < 2
@@ -140,15 +140,15 @@ if Meteor.isClient
                 })
             else 
                 upvoter_results.find()
-        selected_sources: -> selected_sources.array()
-        source_results: ->
-            doc_count = Docs.find().count()
-            if 0 < doc_count < 3 
-                source_results.find({ 
-                    count:$lt:doc_count 
-                })
-            else 
-                source_results.find()
+        # selected_sources: -> selected_sources.array()
+        # source_results: ->
+        #     doc_count = Docs.find().count()
+        #     if 0 < doc_count < 3 
+        #         source_results.find({ 
+        #             count:$lt:doc_count 
+        #         })
+        #     else 
+        #         source_results.find()
 
     Template.tag_selector.events
         'click .select_tag': -> 
@@ -162,7 +162,7 @@ if Meteor.isClient
         'click .post': ->
             new_post_id =
                 Docs.insert
-                    model:$in:['post']
+                    model:'post'
                     buyer_id:Meteor.userId()
                     buyer_username:Meteor.user().username
             Router.go "/post/#{new_post_id}/edit"
@@ -182,10 +182,10 @@ if Meteor.isClient
         'click #clear_upvoters': -> selected_upvoters.clear()
     
     
-        'click .select_source': -> 
-            selected_sources.push @name
-        'click .unselect_source': -> selected_sources.remove @valueOf()
-        'click #clear_sources': -> selected_sources.clear()
+        # 'click .select_source': -> 
+        #     selected_sources.push @name
+        # 'click .unselect_source': -> selected_sources.remove @valueOf()
+        # 'click #clear_sources': -> selected_sources.clear()
     
     
         'click .view_debit': ->
@@ -218,7 +218,7 @@ if Meteor.isServer
         selected_tags
         selected_authors
         selected_upvoters
-        selected_sources
+        # selected_sources
         )->
         match = {}
         match.model = $in:['post']
@@ -232,8 +232,8 @@ if Meteor.isServer
             match._author_username = $all:selected_authors
         if selected_upvoters.length > 0
             match.upvoter_usernames = $all:selected_upvoters
-        if selected_sources.length > 0
-            match.source = $all:selected_sources
+        # if selected_sources.length > 0
+        #     match.source = $all:selected_sources
             
         console.log match
         Docs.find match,
@@ -246,7 +246,7 @@ if Meteor.isServer
         selected_tags
         selected_authors
         selected_upvoters
-        selected_sources
+        # selected_sources
         limit=20
         )->
         self = @
@@ -258,12 +258,12 @@ if Meteor.isServer
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0 then match.tags = $all: selected_tags
         if selected_authors.length > 0 then match._author_username = $all: selected_authors
-        if Meteor.user()
-            match.downvoter_ids = $nin:[Meteor.userId()]
+        # if Meteor.user()
+        #     match.downvoter_ids = $nin:[Meteor.userId()]
         if selected_upvoters.length > 0
             match.upvoter_usernames = $all:selected_upvoters
-        if selected_sources.length > 0
-            match.source = $all:selected_sources
+        # if selected_sources.length > 0
+        #     match.source = $all:selected_sources
 
         tag_cloud = Docs.aggregate [
             { $match: match }
@@ -318,23 +318,23 @@ if Meteor.isServer
                 count: upvoter.count
                 index: i
        
-        source_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "source": 1 }
-            # { $unwind: "$source" }
-            { $group: _id: "$source", count: $sum: 1 }
-            { $match: _id: $nin: selected_sources }
-            { $sort: count: -1, _id: 1 }
-            { $limit: 10 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # console.log 'filter: ', filter
-        # console.log 'cloud: ', cloud
-        source_cloud.forEach (source, i) ->
-            self.added 'source_results', Random.id(),
-                name: source.name
-                count: source.count
-                index: i
+        # source_cloud = Docs.aggregate [
+        #     { $match: match }
+        #     { $project: "source": 1 }
+        #     # { $unwind: "$source" }
+        #     { $group: _id: "$source", count: $sum: 1 }
+        #     { $match: _id: $nin: selected_sources }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $limit: 10 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # # console.log 'filter: ', filter
+        # # console.log 'cloud: ', cloud
+        # source_cloud.forEach (source, i) ->
+        #     self.added 'source_results', Random.id(),
+        #         name: source.name
+        #         count: source.count
+        #         index: i
        
         self.ready()
                         

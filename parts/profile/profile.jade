@@ -48,10 +48,10 @@ template(name='profile')
                         // div
                         +user_friend_button 
                 if i_have_points
-                    .ui.circular.basic.button.send(title='send points')
+                    .ui.circular.large.button.send(title='send points')
                         // i.send.icon
                         +i name='donation' cl='ui avatar image'
-                        span send k
+                        span send p
                 // if is_current_user
                 //     a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
                 //         // i.large.dollar.icon
@@ -59,11 +59,11 @@ template(name='profile')
                 if is_dev
                     +print_this
             .thirteen.wide.column.profile_yield
-                +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
-                if session_key_value_is 'view_user_section' 'karma'
-                    +user_kin
-                    +user_kout
-                    +user_karma
+                // +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
+                // if session_key_value_is 'view_user_section' 'karma'
+                //     +user_kin
+                //     +user_kout
+                //     +user_karma
                 // +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
                 // if session_key_value_is 'view_user_section' 'tribes'
                 //     +user_tribes                        
@@ -73,7 +73,7 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
                 if session_key_value_is 'view_user_section' 'friends'
                     +user_friends
-                +session_edit_value_button key='view_user_section' value='finance' label='finance' icon='money'
+                // +session_edit_value_button key='view_user_section' value='finance' label='finance' icon='money'
                 // +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
                 // if session_key_value_is 'view_user_section' 'features'
                 //     +user_features
@@ -85,13 +85,13 @@ template(name='profile')
                 // if session_key_value_is 'view_user_section' 'offers'
                 //     +user_offers
                 // +session_edit_value_button key='view_user_section' value='requests' label='requests' icon='list'
-                +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
-                if session_key_value_is 'view_user_section' 'chat'
-                    +user_chat
+                // +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
+                // if session_key_value_is 'view_user_section' 'chat'
+                //     +user_chat
                 // +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='feed'
-                +session_edit_value_button key='view_user_section' value='posts' label='blog' icon='blog'
-                if session_key_value_is 'view_user_section' 'posts'
-                    +user_posts
+                // +session_edit_value_button key='view_user_section' value='posts' label='blog' icon='blog'
+                // if session_key_value_is 'view_user_section' 'posts'
+                //     +user_posts
                 // +session_edit_value_button key='view_user_section' value='delta' label='delta' icon='database'
                 // if session_key_value_is 'view_user_section' 'delta'
                 //     +udelta
@@ -174,17 +174,17 @@ template(name='profile')
                             .ui.header you #{currentUser.total_authored_points}
                             each currentUser.authored_tags
                                 .ui.label #{title}:#{count}
-                +session_edit_value_button key='view_user_section' value='orders' label='orders' icon='list'
-                if session_key_value_is 'view_user_section' 'orders'
-                    .ui.inline.header
-                        +i name='shop'
-                        |orders
-                    .ui.list
-                        each user_orders 
-                            .item 
-                                .content
-                                    .header #{order_offer.title}
-                                    |#{when}, #{purchase_price}c
+                // +session_edit_value_button key='view_user_section' value='orders' label='orders' icon='list'
+                // if session_key_value_is 'view_user_section' 'orders'
+                //     .ui.inline.header
+                //         +i name='shop'
+                //         |orders
+                //     .ui.list
+                //         each user_orders 
+                //             .item 
+                //                 .content
+                //                     .header #{order_offer.title}
+                //                     |#{when}, #{purchase_price}c
                 if session_key_value_is 'view_user_section' 'kin'
                     |karma in
                     a.ui.inline.header(href="/user/#{username}/credits")
