@@ -29,14 +29,14 @@ template(name='nav')
                 a.icon.zoom.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
                     i.large.plus.icon
                 // a.icon.zoom.item.post(title='add')
-                if unread_count
-                    a.zoom.item.alerts.select_term(href="#" class=alert_toggle_class)
-                        i.large.bell.icon
-                        if unread_count
-                            |#{unread_count}
-                else
-                    a.icon.zoom.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                        i.large.outline.bell.icon
+                // if unread_count
+                //     a.zoom.item.alerts.select_term(href="#" class=alert_toggle_class)
+                //         i.large.bell.icon
+                //         if unread_count
+                //             |#{unread_count}
+                // else
+                //     a.icon.zoom.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                //         i.large.outline.bell.icon
                 if is_dev 
                     a.icon.zoom.item.toggle_dev
                         i.large.code.icon

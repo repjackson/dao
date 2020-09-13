@@ -6,15 +6,15 @@ template(name='post_view')
                     .ui.center.aligned.header 
                         |#{title}
                     // +session_edit_value_button key='view_post_section' value='stats' label='stats' icon='line-chart'
-                    if tone
-                        +session_edit_value_button key='view_post_section' value='tone' label='tone' icon='tuning-fork'
-                        if session_key_value_is 'view_post_section' 'tone'
-                            +tone
-                    if watson
-                        +session_edit_value_button key='view_post_section' value='analysis' label='analysis' icon='biotech'
-                        if session_key_value_is 'view_post_section' 'analysis'
-                            .scrolling
-                                +watson_view
+                    // if tone
+                    //     +session_edit_value_button key='view_post_section' value='tone' label='tone' icon='tuning-fork'
+                    //     if session_key_value_is 'view_post_section' 'tone'
+                    //         +tone
+                    // if watson
+                    //     +session_edit_value_button key='view_post_section' value='analysis' label='analysis' icon='biotech'
+                    //     if session_key_value_is 'view_post_section' 'analysis'
+                    //         .scrolling
+                    //             +watson_view
             
                     // +session_edit_value_button key='view_post_section' value='comments' label='comments' icon='chat'
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
@@ -28,12 +28,6 @@ template(name='post_view')
                         // with rd.media_embed
                         //     |!{content}
             
-                        // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
-                    if session_key_value_is 'view_post_section' 'stats'
-                        .ui.header stats
-                        +viewing
-                        +vote
-                    if session_key_value_is 'view_post_section' 'content'
                         if image_id
                             img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
                         if image_link
@@ -41,6 +35,12 @@ template(name='post_view')
                         if youtube_id
                             +youtube_view key='youtube_id' direct=true
                             i.large.tag.icon
+                        // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
+                        +viewing
+                        +vote
+                    // if session_key_value_is 'view_post_section' 'stats'
+                    //     .ui.header stats
+                    // if session_key_value_is 'view_post_section' 'content'
                         // each tags 
                         //     .ui.compact.large.circular.button.add_tag #{this}
                         // a.image(href="/m/post/#{_id}/view")
@@ -66,25 +66,25 @@ template(name='post_view')
                     //     small post: 
                     // a.ui.circular.icon.button(href='/')
                     //     i.yin.yang.large.icon
-                    img.ui.rounded.image(src=watson.metadata.image class=currentUser.invert_class)    
-                    img.ui.rounded.image(src=rd.thumbnail class=currentUser.invert_class)    
+                    // img.ui.rounded.image(src=watson.metadata.image class=currentUser.invert_class)    
+                    // img.ui.rounded.image(src=rd.thumbnail class=currentUser.invert_class)    
                     
-                    .spacer
+                    // .spacer
                     if can_edit
                         a.ui.circular.icon.button.edit_post(href="/m/post/#{_id}/edit")
                             i.large.pencil.icon
                     // div
                     if url
                         +link_view key='url' direct=true
-                        +call_watson mode='url'
+                        // +call_watson mode='url'
                     .ui.small.inline.header by
                     a.ui.inline.header(href="/user/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                         |#{_author.username}
                     .ui.inline.small.header #{when}
                     // div
-                    with tribe 
-                        +tribe_card_small
+                    // with tribe 
+                    //     +tribe_card_small
     
                     // +voting
                     +vote

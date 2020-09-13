@@ -21,7 +21,7 @@ template(name='user_edit_layout')
                             +session_edit_value_button key='useredit_section' value='info' label='info' icon='info'
                             // +session_edit_value_button key='useredit_section' value='tribes' label='tribes' icon='campfire'
                             +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='rss'
-                            +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
+                            // +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
                             // +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
                             +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
                             +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
@@ -31,8 +31,8 @@ template(name='user_edit_layout')
                                 +user_edit_friends
                             if session_key_value_is 'useredit_section' 'alerts'
                                 +user_edit_alerts
-                            if session_key_value_is 'useredit_section' 'badges'
-                                +user_edit_badges
+                            // if session_key_value_is 'useredit_section' 'badges'
+                            //     +user_edit_badges
                             if session_key_value_is 'useredit_section' 'info'
                                 +user_edit_info
                             // if session_key_value_is 'useredit_section' 'membership'

@@ -10,11 +10,11 @@ template(name='right_sidebar')
         // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/tribes" class="{{isActiveRoute 'user_tribes'}}")
         //     | tribes
         //     i.large.fire.icon
-        each my_tribes
-            a.item.zoom.toggle_rightbar(href="/m/tribe/#{_id}/view" class="{{isActiveRoute 'profile'}}")
-                img.ui.avatar.compact.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                | #{title}
-                // i.large.icon(class=icon)
+        // each my_tribes
+        //     a.item.zoom.toggle_rightbar(href="/m/tribe/#{_id}/view" class="{{isActiveRoute 'profile'}}")
+        //         img.ui.avatar.compact.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+        //         | #{title}
+        //         // i.large.icon(class=icon)
             
         
         // a.item.zoom.toggle_rightbar(href="/user/#{currentUser.username}/kin" class="{{isActiveRoute 'user_kin'}}")
