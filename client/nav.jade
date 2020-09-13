@@ -5,11 +5,11 @@ template(name='nav')
         //     i.bars.large.icon
         +status    
         if connected
-            if is_admin
-                a.icon.zoom.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
+            // if is_admin
+                // a.icon.zoom.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
                 // .item
                 //     .ui.green.header not connected
-            a.icon.zoom.item.set_post(href="/" class="{{isActivePath '/'}}")
+            a.icon.zoom.item(href="/" class="{{isActivePath '/'}}")
                 // i.large.home.icon
                 if session_is 'loading'
                     i.large.yin.yang.loading.icon

@@ -54,18 +54,18 @@ if Meteor.isClient
         #     Session.equals('sort_direction', 1)
         # sort_button_class: ->
         #     if Session.equals('sort_key', @key) then 'black' else 'basic'
-    Template.tag_selector.onCreated ->
+    # Template.tag_selector.onCreated ->
         # console.log @
         # @autorun => Meteor.subscribe('doc_by_title', @data.name)
-    Template.tag_selector.helpers
+    # Template.tag_selector.helpers
         # term: ->
         #     Docs.findOne 
         #         title:@name
                 
-    Template.unselect_tag.onCreated ->
-        # console.log @
-        @autorun => Meteor.subscribe('doc_by_title', @data)
-    Template.unselect_tag.helpers
+    # Template.unselect_tag.onCreated ->
+    #     # console.log @
+    #     @autorun => Meteor.subscribe('doc_by_title', @data)
+    # Template.unselect_tag.helpers
         # term: ->
         #     Docs.findOne 
         #         title:@valueOf()
@@ -94,7 +94,7 @@ if Meteor.isClient
     
         can_debit: -> Meteor.user().points > 0
         docs: ->
-            match = {model:$in:['post']}
+            match = {model:'post'}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
             Docs.find match,
@@ -163,8 +163,8 @@ if Meteor.isClient
             new_post_id =
                 Docs.insert
                     model:'post'
-                    buyer_id:Meteor.userId()
-                    buyer_username:Meteor.user().username
+                    # buyer_id:Meteor.userId()
+                    # buyer_username:Meteor.user().username
             Router.go "/post/#{new_post_id}/edit"
 
         
@@ -210,7 +210,7 @@ if Meteor.isServer
         # console.log title
         Docs.find
             title:title
-            model:$in:['post']
+            model:'post'
     
     
     Meteor.publish 'docs', (
@@ -221,9 +221,9 @@ if Meteor.isServer
         # selected_sources
         )->
         match = {}
-        match.model = $in:['post']
-        if Meteor.user()
-            match.downvoter_ids = $nin:[Meteor.userId()]
+        match.model = 'post'
+        # if Meteor.user()
+        #     match.downvoter_ids = $nin:[Meteor.userId()]
         if query.length > 1
             match.title = {$regex:"#{query}", $options: 'i'}
         if selected_tags.length > 0
@@ -252,7 +252,7 @@ if Meteor.isServer
         self = @
         match = {}
         # match.model = $in:['post','alpha']
-        match.model = $in:['post']
+        match.model = 'post'
         
         if query.length > 1
             match.title = {$regex:"#{query}", $options: 'i'}

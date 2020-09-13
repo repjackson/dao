@@ -107,11 +107,11 @@ template(name='comments')
         .ui.comments
             each doc_comments
                 .comment
-                    a.avatar(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                    // a.avatar(href="/user/#{_author.username}") 
+                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
                     .content
-                        a.author(href="/user/#{_author.username}") 
-                            |#{_author.username}
+                        // a.author(href="/user/#{_author.username}") 
+                        //     |#{_author.username}
                         .metadata
                             span.date #{when}
                         .text
@@ -120,7 +120,7 @@ template(name='comments')
                             if can_edit
                                 +remove_icon
                             // else
-                            +voting_small
+                            // +voting_small
                             // i.donate.link.icon
                             // i.gift.link.icon
         // |First

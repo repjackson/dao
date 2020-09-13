@@ -53,12 +53,11 @@ template(name='post_view')
                         //     |#{target.username}
                     // each tags 
                     //     .ui.compact.large.circular.button.add_tag #{this}
-                    +viewing
+                    if is_admin
+                        +viewing
                     +vote
                     
                     +comments
-                    +viewing
-                    .spacer
                 .six.wide.column
                     // .ui.inline.header 
                     //     small post: 
@@ -102,24 +101,24 @@ template(name='post_view')
                     // .ui.green.big.icon.circular.button.tip
                     //     i.donate.icon
                         // |tip
-                    .ui.link.selection.list
-                        .ui.fluid.accordion 
-                            each votes
-                                .title
-                                    a.ui.inline.header(href="/user/#{_author.username}") 
-                                        |#{points}
-                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                        |#{_author.username}
-                                    each _author.three_tags
-                                        .ui.small.label #{this}
-                                    // i.dropdown.icon
-                                // .content
-                                //     .ui.list.smallscroll
-                                //         each tipper_tips
-                                //             .item 
-                                //                 |{{home_long_date _timestamp}} 
-                                //                 div
-                                //                 |#{when} 
+                    // .ui.link.selection.list
+                    //     .ui.fluid.accordion 
+                    //         each votes
+                    //             .title
+                    //                 a.ui.inline.header(href="/user/#{_author.username}") 
+                    //                     |#{points}
+                    //                     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    //                     |#{_author.username}
+                    //                 each _author.three_tags
+                    //                     .ui.small.label #{this}
+                    //                 // i.dropdown.icon
+                    //             // .content
+                    //             //     .ui.list.smallscroll
+                    //             //         each tipper_tips
+                    //             //             .item 
+                    //             //                 |{{home_long_date _timestamp}} 
+                    //             //                 div
+                    //             //                 |#{when} 
                     // if watson 
                     //     +watson_view
                     each tags 
