@@ -172,10 +172,12 @@ template(name='tribe_images')
             i.large.plus.circular.link.icon.add_badge
         .ui.cards
             each images
-                a.ui.card(href="/m/post/#{_id}/view") 
-                    img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                .ui.card
+                    a(href="/m/post/#{_id}/view") 
+                        img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                     .content
                         .header #{title}
+                        +vote
 template(name='tribe_badges')
     .title
         .ui.inline.header 

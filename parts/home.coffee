@@ -272,7 +272,7 @@ if Meteor.isServer
             
         console.log match
         Docs.find match,
-            limit:10
+            limit:5
             sort:points:-1
                         
                         

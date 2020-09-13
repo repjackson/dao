@@ -2,7 +2,7 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .twelve.wide.column
+                .ten.wide.column
                     .ui.center.aligned.header 
                         |#{title}
                     // +session_edit_value_button key='view_post_section' value='stats' label='stats' icon='line-chart'
@@ -13,7 +13,8 @@ template(name='post_view')
                     if watson
                         +session_edit_value_button key='view_post_section' value='analysis' label='analysis' icon='biotech'
                         if session_key_value_is 'view_post_section' 'analysis'
-                            +watson_view
+                            .scrolling
+                                +watson_view
             
                     // +session_edit_value_button key='view_post_section' value='comments' label='comments' icon='chat'
                     +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
@@ -60,7 +61,7 @@ template(name='post_view')
                         +comments
                         +viewing
                         .spacer
-                .four.wide.column
+                .six.wide.column
                     // .ui.inline.header 
                     //     small post: 
                     // a.ui.circular.icon.button(href='/')
@@ -96,12 +97,12 @@ template(name='post_view')
                     if coauthor_ids
                         +multi_user_view key='coauthor_ids' label='coauthors' direct=true
                     .ui.label #{views} views
-                    .ui.large.label #{total_points}p generated
-                    .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
-                        // i.coins.icon
-                        |#{tip_total}p tipped
-                    .ui.green.big.icon.circular.button.tip
-                        i.donate.icon
+                    // .ui.large.label #{total_points}p generated
+                    // .ui.inline.header(data-position='left center' data-tooltip="tips cost 11p, pay author(s) 10p, are nonrefundable, and allow full data access and commenting")
+                    //     // i.coins.icon
+                    //     |#{tip_total}p tipped
+                    // .ui.green.big.icon.circular.button.tip
+                    //     i.donate.icon
                         // |tip
                     .ui.link.selection.list
                         .ui.fluid.accordion 

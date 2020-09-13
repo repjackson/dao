@@ -188,6 +188,10 @@ if Meteor.isClient
                 model:'vote'
                 parent_id:@_id
                 _author_id:Meteor.userId()
+    Template.vote_button.events
+        'click .add_amount': (e,t)->
+            Meteor.call 'upvote', Template.parentData()._id, @amount,  ->
+            
     Template.vote.events
         'click .upvote': (e,t)->
             # $(e.currentTarget).closest('.button').transition('pulse',200)

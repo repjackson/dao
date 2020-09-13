@@ -339,12 +339,16 @@ template(name='bookmark_button')
 
 
 template(name='vote')
-    i.thumbs.up.big.link.circular.icon.upvote(class=upvote_class title='upvote')
+    // i.thumbs.up.big.link.circular.icon.upvote(class=upvote_class title='upvote')
+    +vote_button amount=1
+    // +vote_button amount=5
+    +vote_button amount=10
+    // +vote_button amount=25
     with user_vote
         if is_dev
             +number_edit key='points' label='edit points' direct=true
         if points
-            strong #{points}k
+            strong #{points}p
         // if anon_points
         //     strong #{anon_points} anon pts
     // i.thumbs.down.big.link.circular.icon.downvote(class=downvote_class title='downvote')
@@ -352,7 +356,12 @@ template(name='vote')
         +user_info_small
     // each downvoter_ids
     //     +user_info_small
-    
+
+template(name='vote_button')
+    .ui.circular.large.compact.button.add_amount
+        |+#{amount}
+
+
     
 template(name='voting')
     i.thumbs.up.big.link.circular.icon.upvote(class=upvote_class title='upvote')
