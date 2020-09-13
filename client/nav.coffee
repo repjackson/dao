@@ -151,7 +151,7 @@ Template.add.events
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
                 status:'started'
-        Router.go "/m/debit/#{new_debit_id}/edit"
+        Router.go "/debit/#{new_debit_id}/edit"
     # 'click .event': ->
     #     new_event_id =
     #         Docs.insert
@@ -167,7 +167,7 @@ Template.add.events
                 source:'self'
                 buyer_id:Meteor.userId()
                 buyer_username:Meteor.user().username
-        Router.go "/m/post/#{new_post_id}/edit"
+        Router.go "/post/#{new_post_id}/edit"
     # 'click .alpha': ->
     #     new_alpha_id =
     #         Docs.insert

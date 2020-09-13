@@ -1,21 +1,5 @@
 # tsqp-gebk-xhpz-eobp-agle
 
-# SyncedCron.add({
-#     name: 'Crunch some important numbers for the marketing department',
-#     schedule: (parser)->
-#         # # // parser is a later.parse object
-#         parser.text('every 1 minute');
-#     job: ()->
-#         # numbersCrunched = CrushSomeNumbers();
-#         # numbersCrunched
-#         console.log 'running now', Date.now()
-# });
-
-Meteor.startup ->
-    SyncedCron.start();
-
-
-
 Docs.allow
     insert: (user_id, doc) ->
         true
@@ -31,9 +15,6 @@ Docs.allow
             true
         else if user.roles and 'admin' in user.roles
             true
-        else if doc.model is 'event'
-            if Meteor.userId() is doc.facilitator_id
-                true
     remove: (user_id, doc) ->
         user = Meteor.users.findOne user_id
         if user.roles and 'admin' in user.roles
