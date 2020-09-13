@@ -730,6 +730,14 @@ if Meteor.isClient
                 model:'food_order'
                 # _author_id:user._id
 
+    Template.tribe_images.helpers
+        images: ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            Docs.find
+                model:'post'
+                image_id: $exists:true
+                # _author_id:user._id
+
 
 
 if Meteor.isServer
