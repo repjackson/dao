@@ -18,27 +18,6 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
 
-    Template.tone.helpers
-        tone_label_class: ->
-            # console.log @
-            if @tone_id is 'analytical'
-                'orange'
-            else if @tone_id is 'sadness'
-                'blue'
-            else if @tone_id is 'joy'
-                'green'
-            else if @tone_id is 'anger'
-                'red'
-            else if @tone_id is 'tentative'
-                'yellow'
-            else if @tone_id is 'confident'
-                'teal'
-    Template.call_watson.events
-        'click .autotag': ->
-            console.log @
-            Meteor.call 'call_watson', Router.current().params.doc_id, @key, @mode, ->
-                Meteor.call 'call_tone', Router.current().params.doc_id, @key, @mode, ->
-
 
 
     Template.home.onCreated ->
@@ -68,20 +47,6 @@ if Meteor.isClient
     #             Session.set('sort_direction', 1)
 
 
-    Template.tone.events
-        # 'click .upvote_sentence': ->
-        'click .tone_item': ->
-            # console.log @
-            doc_id = Docs.findOne()._id
-            if @weight is 3
-                Meteor.call 'reset_sentence', doc_id, @, ->
-            else
-                Meteor.call 'upvote_sentence', doc_id, @, ->
-        # 'click .downvote_sentence': ->
-        #     # console.log @
-        #     Meteor.call 'downvote_sentence', omega.selected_doc_id, @, ->
-
-            
     # Template.sort_button.helpers
         # is_selected: -> 
         #     Session.equals('sort_key', @key)
@@ -307,7 +272,7 @@ if Meteor.isServer
             { $group: _id: "$tags", count: $sum: 1 }
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
-            { $limit: 10 }
+            { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'filter: ', filter

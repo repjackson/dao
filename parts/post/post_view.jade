@@ -17,27 +17,25 @@ template(name='post_view')
                     //             +watson_view
             
                     // +session_edit_value_button key='view_post_section' value='comments' label='comments' icon='chat'
-                    +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
-                        // .scrolling
-                        img(src=url class=currentUser.invert_class)
-                        each preview.images 
-                            img(src=source.url)
-                        if is_youtube
-                            .ui.embed.rounded(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
-                            // +youtube_view key='url' direct=true full=true
-                        // with rd.media_embed
-                        //     |!{content}
-            
-                        if image_id
-                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
-                        if image_link
-                            img.ui.rounded.image(src=image_link class=currentUser.invert_class)
-                        if youtube_id
-                            +youtube_view key='youtube_id' direct=true
-                            i.large.tag.icon
-                        // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
-                        +viewing
-                        +vote
+                    // +session_edit_value_button key='view_post_section' value='content' label='content' icon='content'
+                    // .scrolling
+                    img(src=url class=currentUser.invert_class)
+                    each preview.images 
+                        img(src=source.url)
+                    if is_youtube
+                        .ui.embed.rounded(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
+                        // +youtube_view key='url' direct=true full=true
+                    // with rd.media_embed
+                    //     |!{content}
+        
+                    if image_id
+                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                    if image_link
+                        img.ui.rounded.image(src=image_link class=currentUser.invert_class)
+                    if youtube_id
+                        +youtube_view key='youtube_id' direct=true
+                        i.large.tag.icon
+                    // +session_edit_value_button key='view_post_section' value='related' label='related' icon='fork'
                     // if session_key_value_is 'view_post_section' 'stats'
                     //     .ui.header stats
                     // if session_key_value_is 'view_post_section' 'content'
@@ -49,18 +47,20 @@ template(name='post_view')
                         if url
                             iframe(width='100%' height='500' src=url frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='' class=currentUser.invert_class)
 
-                        .f12
-                            |!{description}
-                            |!{body}
-                            // a.ui.header(href="/user/#{target.username}")
-                            //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            //     |#{target.username}
-                            // each tags 
-                            //     .ui.compact.large.circular.button.add_tag #{this}
-                        
-                        +comments
-                        +viewing
-                        .spacer
+                    .f12
+                        |!{description}
+                        |!{body}
+                        // a.ui.header(href="/user/#{target.username}")
+                        //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        //     |#{target.username}
+                    each tags 
+                        .ui.compact.large.circular.button.add_tag #{this}
+                    +viewing
+                    +vote
+                    
+                    +comments
+                    +viewing
+                    .spacer
                 .six.wide.column
                     // .ui.inline.header 
                     //     small post: 

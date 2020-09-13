@@ -52,21 +52,21 @@ template(name='home')
                             strong #{name}
                 // .spacer
                 // div
-                +session_boolean_toggle key='view_sources' label='sources' icon='database'
-                if session_is 'view_sources'
-                    // .ui.inline.header
-                    //     i.large.thumbs.up.outline.icon
-                    //     |sources
-                    if selected_sources
-                        a#clear_sources.ui.black.icon.compact.large.circular.button.select_term
-                            i.remove.icon
-                        each selected_sources
-                            a.unselect_source.ui.black.compact.large.circular.button.select_termn
-                                strong #{this}
+                // +session_boolean_toggle key='view_sources' label='sources' icon='database'
+                // if session_is 'view_sources'
+                //     // .ui.inline.header
+                //     //     i.large.thumbs.up.outline.icon
+                //     //     |sources
+                //     if selected_sources
+                //         a#clear_sources.ui.black.icon.compact.large.circular.button.select_term
+                //             i.remove.icon
+                //         each selected_sources
+                //             a.unselect_source.ui.black.compact.large.circular.button.select_termn
+                //                 strong #{this}
                         
-                    each source_results
-                        a.ui.large.compact.circular.button.select_source.select_term(href='#')
-                            strong #{name}
+                //     each source_results
+                //         a.ui.large.compact.circular.button.select_source.select_term(href='#')
+                //             strong #{name}
                 .spacer
             .sixteen.wide.column
                 if two_posts

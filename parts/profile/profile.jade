@@ -27,22 +27,22 @@ template(name='profile')
                         +i name='exit' cl='ui avatar image'
                         |log out
                 // +follow
-                +user_subscribed_button
-                +user_member_button
+                // +user_subscribed_button
+                // +user_member_button
                 // .ui.header $#{credit} credit
                 .ui.inline.header #{points}p
                 // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //     i.refresh.icon
                 if is_dev
                     .ui.inline.header #{_id}
-                if muted
-                    .ui.header 
-                        i.green.checkmark.icon
-                        |muted
-                else
-                    .ui.header.unmuted
-                .ui.button.mute
-                    |mute
+                // if muted
+                //     .ui.header 
+                //         i.green.checkmark.icon
+                //         |muted
+                // else
+                //     .ui.header.unmuted
+                // .ui.button.mute
+                //     |mute
                 unless is_current_user
                     if currentUser
                         // div
@@ -64,9 +64,9 @@ template(name='profile')
                     +user_kin
                     +user_kout
                     +user_karma
-                +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
-                if session_key_value_is 'view_user_section' 'tribes'
-                    +user_tribes                        
+                // +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
+                // if session_key_value_is 'view_user_section' 'tribes'
+                //     +user_tribes                        
                 // +session_edit_value_button key='view_user_section' value='events' label='events' icon='calendar'
                 // if session_key_value_is 'view_user_section' 'events'
                 //     +user_events
@@ -97,25 +97,25 @@ template(name='profile')
                 //     +udelta
                 //     a.ui.button(href="/user/#{current_user.username}/m/post")
                 //         |delta
-                if session_key_value_is 'view_user_section' 'orders'
-                    +user_orders
+                // if session_key_value_is 'view_user_section' 'orders'
+                //     +user_orders
                 // if session_key_value_is 'view_user_section' 'requests'
                 //     +user_requests
-                if session_key_value_is 'view_user_section' 'user_feed'
-                    .ui.inline.header
-                        // i.brain.icon
-                        +i name='activity-feed'
-                        |feed
-                    // i.dropdown.icon
-                    .ui.input
-                        input.new_post(type='text' placeholder='add post -2k')
+                // if session_key_value_is 'view_user_section' 'user_feed'
+                //     .ui.inline.header
+                //         // i.brain.icon
+                //         +i name='activity-feed'
+                //         |feed
+                //     // i.dropdown.icon
+                //     .ui.input
+                //         input.new_post(type='text' placeholder='add post -2k')
                     
-                    each wall_posts
-                        .ui.segment
-                            .ui.header #{text}
-                            +viewing
-                            // if can_edit 
-                            //     +delete_button
+                //     each wall_posts
+                //         .ui.segment
+                //             .ui.header #{text}
+                //             +viewing
+                //             // if can_edit 
+                //             //     +delete_button
                 +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
                 if session_key_value_is 'view_user_section' 'cloud_comparison'
                     .ui.inline.header
