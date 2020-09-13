@@ -74,9 +74,9 @@ template(name='profile')
                 if session_key_value_is 'view_user_section' 'friends'
                     +user_friends
                 +session_edit_value_button key='view_user_section' value='finance' label='finance' icon='money'
-                +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
-                if session_key_value_is 'view_user_section' 'features'
-                    +user_features
+                // +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
+                // if session_key_value_is 'view_user_section' 'features'
+                //     +user_features
                 +session_edit_value_button key='view_user_section' value='votes' label='votes' icon='sort-up'
                 if session_key_value_is 'view_user_section' 'votes'
                     +user_upvotes
