@@ -14,8 +14,8 @@ template(name='profile')
                     |@#{name}
                 if i_have_points
                     .ui.circular.large.button.send(title='send points')
-                        // i.send.icon
-                        +i name='donation' cl='ui avatar image'
+                        i.send.icon
+                        // +i name='donation' cl='ui avatar image'
                         span send p
                 if is_admin
                     a.ui.button(href="/user/#{username}/edit" title='admin edit account')
@@ -23,11 +23,12 @@ template(name='profile')
                         |account
                 if is_current_user
                     a.ui.circular.button(href="/user/#{username}/edit" title='edit your account')
-                        +i name='settings' cl='ui avatar image'
+                        // +i name='settings' cl='ui avatar image'
+                        i.cog.icon
                         |account
                     a.ui.circular.button.logout(href="#" title='log out')
-                        // i.sign.out.icon
-                        +i name='exit' cl='ui avatar image'
+                        i.sign.out.icon
+                        // +i name='exit' cl='ui avatar image'
                         |log out
                 .ui.inline.header #{points}p
                 // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
@@ -41,11 +42,15 @@ template(name='profile')
                 if is_dev
                     +print_this
             .thirteen.wide.column.profile_yield
-                .ui.header karma out
+                .ui.header 
+                    i.chevron.up.icon
+                    |karma out
                 |#{upvoted_count} # of tips
                 each expenses
                     .ui.header #{when}
-                .ui.header karma in
+                .ui.header 
+                    i.chevron.up.icon
+                    |karma in
                 each accounts_received
                     .ui.header #{when}
                 .ui.header deposit

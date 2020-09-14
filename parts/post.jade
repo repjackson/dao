@@ -105,3 +105,57 @@ template(name='post_section_button')
             i.icon(class=icon)
         |#{label}
 
+
+
+template(name='post_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .sixteen.wide.column
+                    // div
+                    // +text_edit key='title' icon='header' direct=true
+                    // div
+                    // if watson
+                    //     +watson_view
+                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
+                        i.checkmark.big.icon
+                    .ui.inline.large.header 
+                        small edit post
+                        // |#{title}
+                    +image_edit key='image_id' label='image' direct=true
+                    +smart_tagger
+                    +html_edit key='description' label='description' direct=true
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    // if session_key_value_is 'post_edit_section' 'delete'
+                    i.remove.link.circular.big.red.icon.delete_post(title='delete post')
+                    
+                    
+template(name='post_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .ten.wide.column
+                    // img(src=url class=currentUser.invert_class)
+                    if image_id
+                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                    if image_link
+                        img.ui.rounded.image(src=image_link class=currentUser.invert_class)
+                    if youtube_id
+                        +youtube_view key='youtube_id' direct=true
+                    .f12
+                        |!{description}
+                    if is_admin
+                        +viewing
+                    +comments
+                .six.wide.column
+                    if can_edit
+                        a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
+                            i.large.pencil.icon
+                    if url
+                        +link_view key='url' direct=true
+                    .ui.inline.small.header #{when}
+                    +vote
+                    .ui.label #{views} views
+                    each tags 
+                        .ui.compact.circular.button.add_tag #{this}
+                    +print_this

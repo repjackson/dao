@@ -1,8 +1,8 @@
 if Meteor.isClient
     Router.route '/user/:username/edit/', (->
-        @layout 'user_edit'
-        @render 'user_edit_account'
-        ), name:'user_edit_home'
+        @layout 'layout'
+        @render 'user_edit'
+        ), name:'user_edit'
 
     Template.user_edit.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username

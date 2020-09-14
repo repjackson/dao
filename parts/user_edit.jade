@@ -1,44 +1,18 @@
 template(name='user_edit')
-    +nav
-    .ui.bottom.attached.pushable.segment
-        #main_area.global_container.pusher(class=currentUser.invert_class)
-            with current_user          
-                .ui.stackable.padded.grid
-                    .row
-                        .four.wide.column
-                            .ui.center.aligned.large.inline.header
-                                i.big.cog.icon
-                                | @#{current_user.username}
-                            img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                
-                            a.ui.big.green.circular.compact.button(href="/user/#{current_user.username}/") 
-                                i.checkmark.big.icon
-                                strong save
-                        .twelve.wide.column
-                            // +session_edit_value_button key='useredit_section' value='account' label='account' icon='settings'
-                            // +session_edit_value_button key='useredit_section' value='info' label='info' icon='info'
-                            // +session_edit_value_button key='useredit_section' value='tribes' label='tribes' icon='campfire'
-                            // +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='rss'
-                            // +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
-                            // +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
-                            // +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
-                            // +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
-                            // if session_key_value_is 'useredit_section' 'privacy'
-                            // if session_key_value_is 'useredit_section' 'friends'
-                            //     +user_edit_friends
-                            // if session_key_value_is 'useredit_section' 'badges'
-                            //     +user_edit_badges
-                            // if session_key_value_is 'useredit_section' 'info'
-                            //     +user_edit_info
-                            // if session_key_value_is 'useredit_section' 'membership'
-                            //     +user_edit_membership
-                            // if session_key_value_is 'useredit_section' 'account'
-                            +user_edit_account
-                            +user_edit_privacy
-                            // if session_key_value_is 'useredit_section' 'tribes'
-                            //     +user_edit_tribes
-
-                            // +yield
+    with current_user          
+        .ui.stackable.padded.grid
+            .row
+                .four.wide.column
+                    .ui.center.aligned.large.inline.header
+                        i.big.cog.icon
+                        | @#{current_user.username}
+                    img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        
+                    a.ui.big.circular.icon.button(href="/user/#{current_user.username}/") 
+                        i.checkmark.big.icon
+                .twelve.wide.column
+                    +user_edit_account
+                    +user_edit_privacy
 
         
 template(name='user_edit_friends')
@@ -106,7 +80,7 @@ template(name='emails_edit')
                 //         .ui.button Verify
                 .content
                     if verified
-                        .ui.large.green.label(title='verified')
+                        .ui.large.label(title='verified')
                             | #{address}
                             i.checkmark.icon
                     else
@@ -116,7 +90,7 @@ template(name='emails_edit')
                         .send_verification_email.ui.button 
                             |verify
                             i.caret.right.icon
-                    .ui.small.icon.basic.button.remove_email
+                    .ui.small.icon.button.remove_email
                         i.remove.icon
     .ui.action.large.fluid.action.input
         input#new_email(type='email' placeholder='add new address' autocomplete="off")
@@ -158,7 +132,7 @@ template(name='user_edit_account')
             +phone_edit key='phone' label='phone' icon='phone' direct=true
             //- +phone_editor
             +array_edit key='tags' label='tags' direct=true
-            +boolean_edit key='beta_tester' label='beta tester' direct=true
+            // +boolean_edit key='beta_tester' label='beta tester' direct=true
         
 template(name='username_edit')
     .ui.small.header 
@@ -167,3 +141,20 @@ template(name='username_edit')
     .ui.icon.fluid.input
         input.new_username(type='text' placeholder='new username...')
         i.play.link.icon.change_username
+
+
+
+template(name='user_edit_privacy')
+    +boolean_edit key='publish_profile' label='publish profile' direct=true
+    a.ui.compact.button.logout_other_clients(href="#")
+        i.globe.icon
+        |log out other clients
+    if is_admin
+        a.ui.compact.button.force_logout(href="#")
+            i.shield.icon
+            |force log out
+    
+    .ui.header sessions
+    .ui.large.list
+        each current_user.services.resume.loginTokens
+            .item #{when}: #{hashedToken}

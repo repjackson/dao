@@ -1,15 +1,15 @@
 template(name='nav')
     .ui.fluid.attached.borderless.menu.topnav(class=currentUser.invert_class)
         // if currentUser
-        // a.icon.header.zoom.item.toggle_sidebar
+        // a.icon.header.item.toggle_sidebar
         //     i.bars.large.icon
         +status    
         if connected
             // if is_admin
-                // a.icon.zoom.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
+                // a.icon.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
                 // .item
                 //     .ui.green.header not connected
-            a.icon.zoom.item(href="/" class="{{isActivePath '/'}}")
+            a.icon.item(href="/" class="{{isActivePath '/'}}")
                 // i.large.home.icon
                 if session_is 'loading'
                     i.large.yin.yang.loading.icon
@@ -17,36 +17,36 @@ template(name='nav')
                     // +i name=''
                     i.large.yin.yang.icon
                 // +i name='home' cl='ui avatar image'
-            // .ui.input.zoom.item.mobile.hidden
+            // .ui.input.item.mobile.hidden
             // .ui.left.icon.mobile.hidden.input
             //     i.search.icon
             //     input.search_dao(type='text')
             // each enabled_features
-            //     a.icon.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
+            //     a.icon.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
             //         +i name=icon cl='ui avatar image'
         .right.menu
             if currentUser
-                a.icon.zoom.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
+                a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
                     i.large.plus.icon
-                // a.icon.zoom.item.post(title='add')
+                // a.icon.item.post(title='add')
                 // if unread_count
-                //     a.zoom.item.alerts.select_term(href="#" class=alert_toggle_class)
+                //     a.item.alerts.select_term(href="#" class=alert_toggle_class)
                 //         i.large.bell.icon
                 //         if unread_count
                 //             |#{unread_count}
                 // else
-                //     a.icon.zoom.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                //     a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                 //         i.large.outline.bell.icon
-                a.item.toggle_nightmode.zoom(href="#")
+                a.item.toggle_nightmode(href="#")
                     i.lightbulb.large.icon
                 
                 if is_dev 
-                    a.icon.zoom.item.toggle_dev
+                    a.icon.item.toggle_dev
                         i.large.code.icon
                 if is_admin
-                    a.icon.zoom.item.toggle_admin
+                    a.icon.item.toggle_admin
                         i.large.shield.icon(title='admin mode on')
-                a.large.zoom.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'profile'}}")
+                a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'profile'}}")
                     //- i.large.user.large.icon
                     |{{money_format currentUser.points}}c
                     |&nbsp;
@@ -56,13 +56,13 @@ template(name='nav')
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
             else
-                a.zoom.item(href="/register" title='register')
+                a.item(href="/register" title='register')
                     i.large.user.plus.icon
                     |register
-                a.zoom.item(href="/login" title='login')
+                a.item(href="/login" title='login')
                     i.large.sign.in.alternate.icon
                     |login
-            // a.icon.large.zoom.item.toggle_rightbar.select_term
+            // a.icon.large.item.toggle_rightbar.select_term
             //     i.bars.large.icon
     // .ui.attached.menu.hscroll(class=currentUser.invert_class)
         // each nav_models
@@ -116,51 +116,3 @@ template(name='add')
         //     +i name='blog'
         //     i.cubes.large.icon
         //     |+ alpha
-
-            
-            
-
-
-template(name='left_sidebar')
-    .ui.left.sidebar.vertical.borderless.large.menu(class=currentUser.invert_class)
-        .ui.input.item
-            .ui.icon.input
-                i.search.icon
-                input.search_leftbar(type='text')
-        // each enabled_features
-        //     a.zoom.item.set_model(href="/m/#{slug}" class="{{isActivePath '/m/post'}}" title=title)
-        //         +i name=icon cl='ui avatar image'
-        //         |#{title}
-        // +leftbar_item model='wikipedia' label='wikipedia' icon='wikipedia'
-        // +leftbar_item model='reddit' label='reddit' icon='reddit'
-        +leftbar_item model='post' label='posts' icon='newspaper'
-        // +leftbar_item model='youtube' label='video' icon='youtube'
-        // +leftbar_item model='picture' label='picture' icon='picture'
-        +leftbar_item model='tribe' label='tribes' icon='fire'
-        // +leftbar_item model='rental' label='rentals' icon='clock'
-        // +leftbar_item model='request' label='requests' icon='concierge bell'
-        // +leftbar_item model='offer' label='offers' icon='shop'
-        // +leftbar_item model='event' label='events' icon='calendar'
-        if is_eric
-            a.item.zoom.toggle_dev.toggle_sidebar
-                |toggle dev
-                if is_dev
-                    i.code.blue.icon
-                else
-                    i.code.icon
-        if is_in_admin
-            a.item.zoom.toggle_admin.toggle_sidebar
-                |toggle admin
-                if is_admin
-                    i.shield.blue.icon
-                else
-                    i.shield.icon
-        // if is_admin
-        a.item.zoom.toggle_dev.toggle_sidebar(href="/m/model")
-            |all models
-            i.database.icon
-                
-template(name='leftbar_item')
-    a.zoom.toggle_sidebar.set_model.item(href="/m/#{model}")
-        |#{label}
-        i.large.icon(class=icon)
