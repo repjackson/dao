@@ -39,20 +39,20 @@ Template.nav.onCreated ->
 #             .sidebar('attach events', '.toggle_rightbar')
 #     , 2000
 
-# Template.right_sidebar.events
+Template.nav.events
 #     'click .logout': ->
 #         Session.set 'logging_out', true
 #         Meteor.logout ->
 #             Session.set 'logging_out', false
 #             Router.go '/login'
     
-#     'click .toggle_nightmode': ->
-#         if Meteor.user().invert_class is 'invert'
-#             Meteor.users.update Meteor.userId(),
-#                 $set:invert_class:''
-#         else
-#             Meteor.users.update Meteor.userId(),
-#                 $set:invert_class:'invert'
+    'click .toggle_nightmode': ->
+        if Meteor.user().invert_class is 'invert'
+            Meteor.users.update Meteor.userId(),
+                $set:invert_class:''
+        else
+            Meteor.users.update Meteor.userId(),
+                $set:invert_class:'invert'
 
 
 # Template.nav.helpers
