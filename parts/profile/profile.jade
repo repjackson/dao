@@ -59,6 +59,10 @@ template(name='profile')
                 if is_dev
                     +print_this
             .thirteen.wide.column.profile_yield
+                .ui.header karma out
+                .ui.header karma in
+                .ui.header deposit
+                .ui.header cash out
                 // +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
                 // if session_key_value_is 'view_user_section' 'karma'
                 //     +user_kin
@@ -77,10 +81,10 @@ template(name='profile')
                 // +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
                 // if session_key_value_is 'view_user_section' 'features'
                 //     +user_features
-                +session_edit_value_button key='view_user_section' value='votes' label='votes' icon='sort-up'
-                if session_key_value_is 'view_user_section' 'votes'
-                    +user_upvotes
-                    +user_downvotes
+                // +session_edit_value_button key='view_user_section' value='votes' label='votes' icon='sort-up'
+                // if session_key_value_is 'view_user_section' 'votes'
+                // +user_upvotes
+                // +user_downvotes
                 // +session_edit_value_button key='view_user_section' value='offers' label='offers' icon='shop'
                 // if session_key_value_is 'view_user_section' 'offers'
                 //     +user_offers
@@ -116,64 +120,64 @@ template(name='profile')
                 //             +viewing
                 //             // if can_edit 
                 //             //     +delete_button
-                +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
-                if session_key_value_is 'view_user_section' 'cloud_comparison'
-                    .ui.inline.header
-                        // i.brain.icon
-                        +i name='brain'
-                        |cloud comparison
-                    // i.dropdown.icon
-                    .ui.two.column.stackable.grid
-                        // .column
-                        //     .ui.header you #{currentUser.total_upvoted_points}
-                        //     each currentUser.upvoted_tags
-                        //         a.ui.large.label.select_tag #{title}
-                        //             small #{count}
-                        // .column
-                        //     .ui.header union
-                        //     each overlap_results
-                        //         a.ui.huge.label.select_tag #{name}
-                        //             small #{count}
-                        .column
-                            .ui.header 
-                                +i name='brain'
-                                // i.brain.icon
-                                |mind
-                            // each friended_by
-                            //     a.ui.small.compact.button.select_user(class=friend_button_class)
-                            //         |#{username}
-                            each current_user.upvoted_tags
-                                a.ui.large.label.select_tag #{title}
-                                    small #{count}
-                        .column
-                            .ui.header 
-                                +i name='autumn'
-                                // i.cubes.icon
-                                |matter
-                            // each friended_by
-                            //     a.ui.small.compact.button.select_user(class=friend_button_class)
-                            //         |#{username}
-                            each current_user.credit_tags
-                                a.ui.large.label.select_tag #{title}
-                                    small #{count}
-                +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
-                if session_key_value_is 'view_user_section' 'authored_overlap'
-                    .ui.inline.header
-                        i.edit.icon
-                        |authored overlap
-                    .ui.three.column.grid
-                        .column
-                            .ui.header them
-                            each current_user.authored_tags
-                                .ui.label #{title}:#{count}
-                        .column
-                            .ui.header union
-                            each overlap
-                                .ui.label #{name}: #{count}
-                        .column
-                            .ui.header you #{currentUser.total_authored_points}
-                            each currentUser.authored_tags
-                                .ui.label #{title}:#{count}
+                // +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
+                // if session_key_value_is 'view_user_section' 'cloud_comparison'
+                //     .ui.inline.header
+                //         // i.brain.icon
+                //         +i name='brain'
+                //         |cloud comparison
+                //     // i.dropdown.icon
+                //     .ui.two.column.stackable.grid
+                //         // .column
+                //         //     .ui.header you #{currentUser.total_upvoted_points}
+                //         //     each currentUser.upvoted_tags
+                //         //         a.ui.large.label.select_tag #{title}
+                //         //             small #{count}
+                //         // .column
+                //         //     .ui.header union
+                //         //     each overlap_results
+                //         //         a.ui.huge.label.select_tag #{name}
+                //         //             small #{count}
+                //         .column
+                //             .ui.header 
+                //                 +i name='brain'
+                //                 // i.brain.icon
+                //                 |mind
+                //             // each friended_by
+                //             //     a.ui.small.compact.button.select_user(class=friend_button_class)
+                //             //         |#{username}
+                //             each current_user.upvoted_tags
+                //                 a.ui.large.label.select_tag #{title}
+                //                     small #{count}
+                //         .column
+                //             .ui.header 
+                //                 +i name='autumn'
+                //                 // i.cubes.icon
+                //                 |matter
+                //             // each friended_by
+                //             //     a.ui.small.compact.button.select_user(class=friend_button_class)
+                //             //         |#{username}
+                //             each current_user.credit_tags
+                //                 a.ui.large.label.select_tag #{title}
+                //                     small #{count}
+                // +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
+                // if session_key_value_is 'view_user_section' 'authored_overlap'
+                //     .ui.inline.header
+                //         i.edit.icon
+                //         |authored overlap
+                //     .ui.three.column.grid
+                //         .column
+                //             .ui.header them
+                //             each current_user.authored_tags
+                //                 .ui.label #{title}:#{count}
+                //         .column
+                //             .ui.header union
+                //             each overlap
+                //                 .ui.label #{name}: #{count}
+                //         .column
+                //             .ui.header you #{currentUser.total_authored_points}
+                //             each currentUser.authored_tags
+                //                 .ui.label #{title}:#{count}
                 // +session_edit_value_button key='view_user_section' value='orders' label='orders' icon='list'
                 // if session_key_value_is 'view_user_section' 'orders'
                 //     .ui.inline.header

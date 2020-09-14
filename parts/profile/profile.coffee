@@ -4,7 +4,7 @@ if Meteor.isClient
     #     @render 'profile'
     #     ), name:'layout'
 
-    @selected_overlap_tags = new ReactiveArray []
+    # @selected_overlap_tags = new ReactiveArray []
 
     # Template.user_dashboard.onCreated ->
     #     Session.setDefault('target_username','')
@@ -89,13 +89,13 @@ if Meteor.isClient
     #     overlap_results: ->
     #         overlap.find()
     Template.profile.helpers
-        route_slug: -> "user_#{@slug}"
+        # route_slug: -> "user_#{@slug}"
         user: -> Meteor.users.findOne username:Router.current().params.username
 
     Template.profile.events
-        'click .mute': ->
-            user = Meteor.users.findOne(username:Router.current().params.username)
-            Meteor.call 'mute_user', user._id, ->
+        # 'click .mute': ->
+        #     user = Meteor.users.findOne(username:Router.current().params.username)
+        #     Meteor.call 'mute_user', user._id, ->
 
         # 'click a.select_term': ->
         #     $('.profile_yield')

@@ -6,13 +6,20 @@ if Meteor.isClient
         
     Template.debit_edit.onRendered ->
 
+    Router.route '/debit/:doc_id/edit', (->
+        @layout 'layout'
+        @render 'debit_edit'
+        ), name:'debit_edit'
+        
+    Router.route '/debit/:doc_id/view', (->
+        @layout 'layout'
+        @render 'debit_view'
+        ), name:'debit_view'
+        
 
     Template.debit_edit.helpers
         point_max: ->
-            if Meteor.user().username is 'one'
-                1000
-            else 
-                Meteor.user().points
+            Meteor.user().points
         
         can_submit: ->
             debit = Docs.findOne Router.current().params.doc_id
@@ -64,7 +71,7 @@ if Meteor.isClient
                 Meteor.call 'calc_user_stats', @seller_id, ->
                 Meteor.call 'calc_user_stats', @buyer_id, ->
 
-                Router.go "/m/debit/#{@_id}/view"
+                Router.go "/debit/#{@_id}/view"
             # )
 
 
