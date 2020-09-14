@@ -469,9 +469,17 @@ Meteor.methods
         # debit_tags = Meteor.call 'omega', user_id, 'debit', (err, res)->
         # console.log 'upvoted tags', upvoted_tags
         # console.log 'res from async agg'
+        upvoted_count = 
+            Docs.find(
+                model:'vote'
+                _author_id:Meteor.userId()
+            ).count()
+        console.log upvoted_count
+        
         Meteor.users.update user_id, 
             $set:
                 upvoted_tags:upvoted_tags
+                upvoted_count:upvoted_count
 
 
     uomega: (user_id)->

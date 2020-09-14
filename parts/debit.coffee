@@ -1,6 +1,6 @@
 if Meteor.isClient
     Template.debit_edit.onCreated ->
-        @autorun => Meteor.subscribe 'seller_from_debit_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         
@@ -23,7 +23,7 @@ if Meteor.isClient
         
         can_submit: ->
             debit = Docs.findOne Router.current().params.doc_id
-            debit.price and debit.seller_id
+            debit.price and debit.recipient_id
     Template.debit_edit.events
         'blur .point_price': (e,t)->
             # console.log @
@@ -68,7 +68,7 @@ if Meteor.isClient
                 #     position: 'top-end',
                 #     timer: 1000
                 # )
-                Meteor.call 'calc_user_stats', @seller_id, ->
+                Meteor.call 'calc_user_stats', @recipient_id, ->
                 Meteor.call 'calc_user_stats', @buyer_id, ->
 
                 Router.go "/debit/#{@_id}/view"
@@ -82,11 +82,11 @@ if Meteor.isServer
     Meteor.methods
         send_debit: (debit_id)->
             debit = Docs.findOne debit_id
-            seller = Meteor.users.findOne debit.seller_id
+            recipient = Meteor.users.findOne debit.recipient_id
             debiter = Meteor.users.findOne debit._author_id
 
             console.log 'sending debit', debit
-            Meteor.call 'calc_one_stats', seller._id, ->
+            Meteor.call 'calc_one_stats', recipient._id, ->
             Meteor.call 'calc_one_stats', debit._author_id, ->
     
             Docs.update debit_id,
@@ -101,7 +101,7 @@ if Meteor.isServer
             
 if Meteor.isClient
     Template.debit_view.onCreated ->
-        @autorun => Meteor.subscribe 'product_from_debit_id', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'product_from_debit_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
                     

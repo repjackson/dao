@@ -1,5 +1,3 @@
-template(name='user_chat')
-
 template(name='profile')
     with user
         .ui.stackable.padded.grid
@@ -26,27 +24,11 @@ template(name='profile')
                         // i.sign.out.icon
                         +i name='exit' cl='ui avatar image'
                         |log out
-                // +follow
-                // +user_subscribed_button
-                // +user_member_button
-                // .ui.header $#{credit} credit
                 .ui.inline.header #{points}p
                 // .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //     i.refresh.icon
                 if is_dev
                     .ui.inline.header #{_id}
-                // if muted
-                //     .ui.header 
-                //         i.green.checkmark.icon
-                //         |muted
-                // else
-                //     .ui.header.unmuted
-                // .ui.button.mute
-                //     |mute
-                // unless is_current_user
-                //     if currentUser
-                //         // div
-                //         +user_friend_button 
                 if i_have_points
                     .ui.circular.large.button.send(title='send points')
                         // i.send.icon
@@ -60,66 +42,25 @@ template(name='profile')
                     +print_this
             .thirteen.wide.column.profile_yield
                 .ui.header karma out
+                |#{upvoted_count} # of tips
+                each expenses
+                    .ui.header #{when}
                 .ui.header karma in
+                each accounts_received
+                    .ui.header #{when}
                 .ui.header deposit
+                .ui.button
+                    |topup
+                +user_credit
+                
                 .ui.header cash out
+                .ui.button 
+                    |cash out at $100
                 // +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
                 // if session_key_value_is 'view_user_section' 'karma'
                 //     +user_kin
                 //     +user_kout
                 //     +user_karma
-                // +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
-                // if session_key_value_is 'view_user_section' 'tribes'
-                //     +user_tribes                        
-                // +session_edit_value_button key='view_user_section' value='events' label='events' icon='calendar'
-                // if session_key_value_is 'view_user_section' 'events'
-                //     +user_events
-                // +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
-                // if session_key_value_is 'view_user_section' 'friends'
-                //     +user_friends
-                // +session_edit_value_button key='view_user_section' value='finance' label='finance' icon='money'
-                // +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
-                // if session_key_value_is 'view_user_section' 'features'
-                //     +user_features
-                // +session_edit_value_button key='view_user_section' value='votes' label='votes' icon='sort-up'
-                // if session_key_value_is 'view_user_section' 'votes'
-                // +user_upvotes
-                // +user_downvotes
-                // +session_edit_value_button key='view_user_section' value='offers' label='offers' icon='shop'
-                // if session_key_value_is 'view_user_section' 'offers'
-                //     +user_offers
-                // +session_edit_value_button key='view_user_section' value='requests' label='requests' icon='list'
-                // +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
-                // if session_key_value_is 'view_user_section' 'chat'
-                //     +user_chat
-                // +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='feed'
-                // +session_edit_value_button key='view_user_section' value='posts' label='blog' icon='blog'
-                // if session_key_value_is 'view_user_section' 'posts'
-                //     +user_posts
-                // +session_edit_value_button key='view_user_section' value='delta' label='delta' icon='database'
-                // if session_key_value_is 'view_user_section' 'delta'
-                //     +udelta
-                //     a.ui.button(href="/user/#{current_user.username}/m/post")
-                //         |delta
-                // if session_key_value_is 'view_user_section' 'orders'
-                //     +user_orders
-                // if session_key_value_is 'view_user_section' 'requests'
-                //     +user_requests
-                // if session_key_value_is 'view_user_section' 'user_feed'
-                //     .ui.inline.header
-                //         // i.brain.icon
-                //         +i name='activity-feed'
-                //         |feed
-                //     // i.dropdown.icon
-                //     .ui.input
-                //         input.new_post(type='text' placeholder='add post -2k')
-                    
-                //     each wall_posts
-                //         .ui.segment
-                //             .ui.header #{text}
-                //             +viewing
-                //             // if can_edit 
-                //             //     +delete_button
                 // +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
                 // if session_key_value_is 'view_user_section' 'cloud_comparison'
                 //     .ui.inline.header
@@ -178,17 +119,6 @@ template(name='profile')
                 //             .ui.header you #{currentUser.total_authored_points}
                 //             each currentUser.authored_tags
                 //                 .ui.label #{title}:#{count}
-                // +session_edit_value_button key='view_user_section' value='orders' label='orders' icon='list'
-                // if session_key_value_is 'view_user_section' 'orders'
-                //     .ui.inline.header
-                //         +i name='shop'
-                //         |orders
-                //     .ui.list
-                //         each user_orders 
-                //             .item 
-                //                 .content
-                //                     .header #{order_offer.title}
-                //                     |#{when}, #{purchase_price}c
                 if session_key_value_is 'view_user_section' 'kin'
                     |karma in
                     a.ui.inline.header(href="/user/#{username}/credits")
@@ -229,222 +159,9 @@ template(name='profile')
                     .ui.inline.header
                         +i name='request-money'
                         |topups
-                    +user_credit
          
          
          
-// template(name='user_features')
-//     div
-//     .ui.inline.header
-//         +i name='module'
-//         | features
-        
-//     +multi_doc_view key='feature_ids' ref_model='feature' label='enabled features' direct=true
-//     if is_current_user
-//         +session_toggle_button key='edit_mode' label='edit mode' icon='pencil'
-//         if session_is 'edit_mode'
-//             +multi_doc_edit key='feature_ids' ref_model='model' label='enabled features' direct=true
-//     div
-                    
-
-// template(name='user_badges')
-//     .ui.center.aligned.header 
-//         +icon name='prize'
-//         |user badges
-//     if is_admin
-//         i.plus.icon.add_badge
-//     .ui.small.centered.five.stackable.cards
-//         each user_badges
-//             +badge_card
-
-
-// template(name='user_edit_badges')
-//     .ui.header
-//         i.certificate.icon
-//         | badges
-//     .ui.grid 
-//         .row 
-//             .sixteen.wide.column
-//                 if is_admin
-//                     +array_edit key='badges' label='badges' icon='certificate' direct=true
-                
-//                 .ui.divider
-//                 each badges
-//                     a.ui.button(href="/badge/#{this}/view")
-                
-//                 .spacer
-
-
-template(name='user_friend_button')
-    if is_friend
-        .ui.blue.button.unfriend(title='unfriend')
-            i.checkmark.large.icon
-            |friends
-    else
-        .ui.button.friend(title='friend')
-            i.user.plus.large.icon
-            |friend
-
-template(name='user_subscribed_button')
-    if is_subscribed
-        .ui.blue.button.unsubscribe(title='unfriend')
-            i.checkmark.large.icon
-            |subscribed
-    else
-        .ui.button.subscribe(title='friend')
-            i.user.plus.large.icon
-            |subscribe
-
-
-template(name='user_member_button')
-    if is_member
-        .ui.gold.button.leave(title='leave' class=currentUser.invert_class)
-            i.checkmark.large.icon
-            |member
-    else
-        .ui.button.join(title='join')
-            i.user.plus.large.icon
-            |join
-
-
-
-
-template(name='user_dashboard')
-    // // +user_about
-    // // .ui.hidden.divider
-    // .ui.stackable.grid
-    //     .row
-    //         .sixteen.wide.column
-    //             +session_edit_value_button key='view_user_section' value='user_feed' label='feed' icon='exchange'
-    //             if session_key_value_is 'view_user_section' 'user_feed'
-    //                 .ui.inline.header
-    //                     // i.brain.icon
-    //                     +i name='activity-feed'
-    //                     |feed
-    //                 // i.dropdown.icon
-    //                 .ui.input
-    //                     input.new_post(type='text' placeholder='add post -2k')
-                    
-    //                 each wall_posts
-    //                     .ui.segment
-    //                         .ui.header #{text}
-    //                         +viewing
-    //                         // if can_edit 
-    //                         //     +delete_button
-    //             +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
-    //             if session_key_value_is 'view_user_section' 'cloud_comparison'
-    //                 .ui.inline.header
-    //                     // i.brain.icon
-    //                     +i name='brain'
-    //                     |cloud comparison
-    //                 // i.dropdown.icon
-    //                 .ui.two.column.stackable.grid
-    //                     // .column
-    //                     //     .ui.header you #{currentUser.total_upvoted_points}
-    //                     //     each currentUser.upvoted_tags
-    //                     //         a.ui.large.label.select_tag #{title}
-    //                     //             small #{count}
-    //                     // .column
-    //                     //     .ui.header union
-    //                     //     each overlap_results
-    //                     //         a.ui.huge.label.select_tag #{name}
-    //                     //             small #{count}
-    //                     .column
-    //                         .ui.header 
-    //                             +i name='brain'
-    //                             // i.brain.icon
-    //                             |mind
-    //                         // each friended_by
-    //                         //     a.ui.small.compact.button.select_user(class=friend_button_class)
-    //                         //         |#{username}
-    //                         each current_user.upvoted_tags
-    //                             a.ui.large.label.select_tag #{title}
-    //                                 small #{count}
-    //                     .column
-    //                         .ui.header 
-    //                             +i name='tree'
-    //                             // i.cubes.icon
-    //                             |matter
-    //                         // each friended_by
-    //                         //     a.ui.small.compact.button.select_user(class=friend_button_class)
-    //                         //         |#{username}
-    //                         each current_user.credit_tags
-    //                             a.ui.large.label.select_tag #{title}
-    //                                 small #{count}
-    //             +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='exchange'
-    //             if session_key_value_is 'view_user_section' 'authored_overlap'
-    //                 .ui.inline.header
-    //                     i.edit.icon
-    //                     |authored overlap
-    //                 .ui.three.column.grid
-    //                     .column
-    //                         .ui.header them
-    //                         each current_user.authored_tags
-    //                             .ui.label #{title}:#{count}
-    //                     .column
-    //                         .ui.header union
-    //                         each overlap
-    //                             .ui.label #{name}: #{count}
-    //                     .column
-    //                         .ui.header you #{currentUser.total_authored_points}
-    //                         each currentUser.authored_tags
-    //                             .ui.label #{title}:#{count}
-    //             +session_edit_value_button key='view_user_section' value='orders' label='authored overlap' icon='receipt'
-    //             if session_key_value_is 'view_user_section' 'orders'
-    //                 .ui.inline.header
-    //                     +i name='shop'
-    //                     |orders
-    //                 .ui.list
-    //                     each user_orders 
-    //                         .item 
-    //                             .content
-    //                                 .header #{order_offer.title}
-    //                                 |#{when}, #{purchase_price}c
-    //             +session_edit_value_button key='view_user_section' value='kin' label='karma in' icon='chevron down'
-    //             if session_key_value_is 'view_user_section' 'kin'
-    //                 |karma in
-    //                 a.ui.inline.header(href="/user/#{username}/credits")
-    //                     i.chevron.down.large.icon
-    //                     |#{credit_count} credits
-    //                 | (#{total_credit_amount}p)
-    //                 .ui.label #{total_credit_amount}p total received
-    //                 // |received
-    //                 .ui.label(title='received count') #{credit_count} total gifts 
-    //                 .ui.label(title='rank') #{global_credit_count_rank} count rank
-                        
-    //                 i.tags.icon(title='credit tags')
-    //                 each credit_tags
-    //                     .ui.circular.label #{title}
-    //                         | #{count}
-    //                     #{count}
-    //                 scroll.ui.segments
-    //                   each user_credits
-    //                         +user_credit_segment
-    //             +session_edit_value_button key='view_user_section' value='kout' label='karma out' icon='receipt'
-    //             if session_key_value_is 'view_user_section' 'kout'
-    //                 .ui.inline.header
-    //                     |karma out
-    //                 a.ui.inline.spaced.header(href="/user/#{username}/kout")
-    //                     i.chevron.up.icon
-    //                     |#{debit_count}k out
-    //                     |(#{total_debit_amount}p)
-    //                     .ui.label #{total_debit_amount}p total sent
-    //                     .ui.label(title='debit count') #{debit_count} gifts sent
-    //                     .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
-                            
-    //                     i.tags.icon(title='credit tags')
-    //                     each debit_tags
-    //                         .ui.label #{title}
-    //                             |#{count}
-    //                     .ui.label(title='rank') ##{global_debit_count_rank}
-    //             +session_edit_value_button key='view_user_section' value='topups' label='topups' icon='money'
-    //             if session_key_value_is 'view_user_section' 'topups'
-    //                 .ui.inline.header
-    //                     +i name='request-money'
-    //                     |topups
-    //                 +user_credit
-            
-                
                         
 template(name='user_credit_segment')
     .ui.segment.user_credit_segment.pointer.zoom
@@ -480,122 +197,3 @@ template(name='user_debit_segment')
         div
         each tags
             .ui.mini.label #{this}
-
-
-
-
-
-
-
-template(name='user_food')
-    .ui.inline.header
-        +icolor name='food'
-        |user food
-    if is_current_user
-        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/food")
-            i.pencil.icon
-    div
-    +array_view key='allergens' label='allergens'
-    +array_view key='food_likes' label='food likes'
-    +array_view key='food_dislikes' label='food dislikes'
-    each food_orders
-        +food_order_view
-
-
-
-
-
-template(name='food_order_view')
-    .ui.segment
-        a.ui.header(href="/m/food_order/#{_id}/view") #{when}
-        if charge 
-            .ui.header charge
-        if is_dev
-            |#{charge.result.id}
-        .ui.header $#{charge.result.amount}
-        if can_edit 
-            unless submitted
-                +date_edit key='date' label='date' direct=true
-                +text_edit key='notes' label='notes' direct=true
-                +key_value_edit key='tiffen_type' value='meat' direct=true
-                +key_value_edit key='tiffen_type' value='veggie' direct=true
-                .ui.green.button.submit_order
-                    |submit order
-            else
-                +date_view key='date' label='date' direct=true
-                +text_view key='notes' label='notes' direct=true
-                .ui.large.label
-                    |tiffen type: #{tiffen_type}
-                +boolean_edit key='delivery' label='add delivery' direct=true                    
-        if is_dev
-            +remove_button
-            +print_this
-
-
-
-template(name='user_downvotes')  
-    .ui.inline.header 
-        i.chevron.down.icon
-        |downvotes
-        
-    .ui.basic.label #{total_downvote_amount}k downvotes
-    // |received
-    .ui.basic.label(title='downvoted count') #{credit_count} total gifts 
-    .ui.basic.label(title='rank') ##{global_credit_count_rank} count rank
-        
-    i.tags.icon(title='credit tags')
-    each downvote_tags
-        .ui.basic.circular.label #{title}
-            small #{count}
-        
-    // .ui.stackable.cards.scrolling
-    //     each user_downvotes
-    //         +downvote
-            
-template(name='downvote')            
-    a.ui.card(href="/m/vote/#{_id}/view")
-        .content
-            .header
-                strong #{points}pt 
-                // |from 
-                if author.profile_image_id
-                    img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                |#{_author.shortname}
-            small #{when}
-            div
-            |#{description}
-            div
-            each tags
-                .ui.basic.label #{this}
-                
-
-template(name='user_downvotes_small')
-    .ui.inline.header 
-        i.minus.icon
-        |#{total_downvote_amount}p
-        |received
-        .ui.basic.label #{downvote_count} downvotes
-            | ##{global_downvote_count_rank}
-    div
-    .ui.link.list.scrolling
-        each user_downvotes
-            .item
-                if author.profile_image_id
-                    img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-                .content
-                    .header
-                        strong #{amount}pt 
-                        |from 
-                        a(href="/user/#{author.username}")
-                            |#{author.username}
-                    .description
-                        a(href="/m/debit/#{_id}/view")
-                            |#{when}
-                .content
-                    .description
-                        |#{description}
-                        each tags
-                            .ui.basic.label #{this}
-                if is_admin 
-                    +remove_button
-                .spacer
