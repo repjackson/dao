@@ -2,7 +2,7 @@
 
 @Tags = new Meteor.Collection 'tags'
 @Tag_results = new Meteor.Collection 'tag_results'
-# @Terms = new Meteor.Collection 'terms'
+@Terms = new Meteor.Collection 'terms'
 @author_results = new Meteor.Collection 'author_results'
 @overlap = new Meteor.Collection 'overlap'
 # @source_results = new Meteor.Collection 'source_results'

@@ -43,10 +43,10 @@ template(name='profile')
                 //     .ui.header.unmuted
                 // .ui.button.mute
                 //     |mute
-                unless is_current_user
-                    if currentUser
-                        // div
-                        +user_friend_button 
+                // unless is_current_user
+                //     if currentUser
+                //         // div
+                //         +user_friend_button 
                 if i_have_points
                     .ui.circular.large.button.send(title='send points')
                         // i.send.icon
@@ -70,9 +70,9 @@ template(name='profile')
                 // +session_edit_value_button key='view_user_section' value='events' label='events' icon='calendar'
                 // if session_key_value_is 'view_user_section' 'events'
                 //     +user_events
-                +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
-                if session_key_value_is 'view_user_section' 'friends'
-                    +user_friends
+                // +session_edit_value_button key='view_user_section' value='friends' label='friends' icon='groups'
+                // if session_key_value_is 'view_user_section' 'friends'
+                //     +user_friends
                 // +session_edit_value_button key='view_user_section' value='finance' label='finance' icon='money'
                 // +session_edit_value_button key='view_user_section' value='features' label='features' icon='module'
                 // if session_key_value_is 'view_user_section' 'features'

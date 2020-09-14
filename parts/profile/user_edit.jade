@@ -23,12 +23,12 @@ template(name='user_edit_layout')
                             // +session_edit_value_button key='useredit_section' value='alerts' label='alerts' icon='rss'
                             // +session_edit_value_button key='useredit_section' value='badges' label='badges' icon='certificate'
                             // +session_edit_value_button key='useredit_section' value='membership' label='membership' icon='badge'
-                            +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
+                            // +session_edit_value_button key='useredit_section' value='friends' label='friends' icon='groups'
                             +session_edit_value_button key='useredit_section' value='privacy' label='privacy' icon='lock'
                             if session_key_value_is 'useredit_section' 'privacy'
                                 +user_edit_privacy
-                            if session_key_value_is 'useredit_section' 'friends'
-                                +user_edit_friends
+                            // if session_key_value_is 'useredit_section' 'friends'
+                            //     +user_edit_friends
                             // if session_key_value_is 'useredit_section' 'badges'
                             //     +user_edit_badges
                             // if session_key_value_is 'useredit_section' 'info'

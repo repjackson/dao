@@ -3,16 +3,16 @@ template(name='post_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    div
-                    +text_edit key='title' icon='header' direct=true
-                    div
+                    // div
+                    // +text_edit key='title' icon='header' direct=true
+                    // div
                     // if watson
                     //     +watson_view
                     a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
                         i.checkmark.big.icon
                     .ui.inline.large.header 
-                        small edit post:
-                        |#{title}
+                        small edit post
+                        // |#{title}
                     // +session_edit_value_button key='post_edit_section' value='description' label='description' icon='content'
                     // +session_edit_value_button key='post_edit_section' value='advanced' label='advanced' icon='settings'
                     // +session_edit_value_button key='post_edit_section' value='delete' label='delete' icon='delete'
@@ -33,19 +33,13 @@ template(name='post_edit')
                     // i.dropdown.icon
                     // +date_edit key='date' label='date' direct=true
                     // if session_key_value_is 'post_edit_section' 'tags'
-                    .ui.inline.header
-                        // i.tags.icon
-                        +i name='tags' cl='ui avatar image'
-                        |#{tags.length} tags
+                    // .ui.inline.header
+                    //     // i.tags.icon
+                    //     +i name='tags' cl='ui avatar image'
+                    //     |#{tags.length} tags
                     // i.dropdown.icon
                     +smart_tagger
                     // if session_key_value_is 'post_edit_section' 'image'
-                    .ui.inline.header
-                        if image_id
-                            img.ui.mini.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        else
-                            i.picture.grey.icon
-                        |image
                     +image_edit key='image_id' label='image upload' direct=true
                     // div 
                     // +text_edit key='source' label='source' direct=true
@@ -61,17 +55,17 @@ template(name='post_edit')
                     //     a.ui.header(href="/tribe/#{tribe_id}/view") tribe
                     //         |#{tribe_id}
                     //     +single_doc_edit ref_model='tribe' key='tribe_id' direct=true
-                    if session_key_value_is 'post_edit_section' 'video'
-                        .ui.inline.header
-                            // i.video.icon
-                            +i name='video' cl='ui avatar image'
-                            |video
-                        if youtube_id
-                            i.checkmark.icon
-                        i.dropdown.icon
-                        +youtube_edit key='youtube_id' label='youtube id' direct=true
-                    if session_key_value_is 'post_edit_section' 'delete'
-                        i.remove.link.circular.big.red.icon.delete_post(title='delete post')
+                    // if session_key_value_is 'post_edit_section' 'video'
+                    .ui.inline.header
+                        // i.video.icon
+                        +i name='video' cl='ui avatar image'
+                        |video
+                    if youtube_id
+                        i.checkmark.icon
+                    i.dropdown.icon
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    // if session_key_value_is 'post_edit_section' 'delete'
+                    i.remove.link.circular.big.red.icon.delete_post(title='delete post')
                     if session_key_value_is 'post_edit_section' 'privacy'
                         .ui.inline.header
                             i.lock.icon

@@ -26,7 +26,7 @@ template(name='post_card')
             .ui.label #{points}
             if is_admin
                 +print_this
-                +text_edit key='model' direct=true
+                // +text_edit key='model' direct=true
             // +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
             each seven_tags
                 .ui.label #{this}
