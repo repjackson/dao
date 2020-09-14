@@ -15,8 +15,8 @@ template(name='post_card')
             .description.f12
                 |!{description}
             +vote
-            a(href="/post/#{_id}/view")
-                i.right.chevron.circular.link.big.icon
+            // a(href="/post/#{_id}/view")
+            //     i.right.chevron.circular.link.big.icon
             .ui.label #{points}
             if is_admin
                 +print_this
@@ -24,8 +24,8 @@ template(name='post_card')
                 .ui.label #{this}
         .meta
             |#{when}
-        .description
-            +comments_view_small   
+        // .description
+        //     +comments_view_small   
         
     // .ui.divider
     
@@ -48,7 +48,7 @@ template(name='one_post_view')
             .description
                 each tags
                     .ui.compact.large.circular.button.add_tag #{this}
-                +comments_view_small  
+                // +comments_view_small  
             +vote
     // .ui.divider
 
@@ -91,7 +91,7 @@ template(name='post_view')
                         |!{description}
                     if is_admin
                         +viewing
-                    +comments
+                    // +comments
                 .six.wide.column
                     if can_edit
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")

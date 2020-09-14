@@ -3,7 +3,7 @@ template(name='home')
         .row
             .sixteen.wide.column
                 // iframe(frameborder="0" width="400" height="200" src="https://drive.google.com/file/d/1_encX_RKyZhOU26r7_cNTtl0rLvEQSai/preview")
-                .ui.left.icon.input 
+                .ui.left.icon.transparent.input 
                     i.search.icon
                     input.search_title(type='text' autofocus='')
                 // div
@@ -18,38 +18,38 @@ template(name='home')
                 each tag_results
                     +tag_selector
                 // div
-                +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
-                if session_is 'view_authors'
-                    // div
-                    // .ui.inline.header
-                    //     i.large.user.outline.icon
-                    //     |author
-                    if selected_authors
-                        a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
-                            i.remove.icon
-                        each selected_authors
-                            a.unselect_author.ui.black.compact.large.circular.button.select_termn
-                                strong #{this}
+                // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
+                // if session_is 'view_authors'
+                //     // div
+                //     // .ui.inline.header
+                //     //     i.large.user.outline.icon
+                //     //     |author
+                //     if selected_authors
+                //         a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
+                //             i.remove.icon
+                //         each selected_authors
+                //             a.unselect_author.ui.black.compact.large.circular.button.select_termn
+                //                 strong #{this}
                         
-                    each author_results
-                        a.ui.large.compact.circular.button.select_author.select_term(href='#')
-                            strong #{name}
+                //     each author_results
+                //         a.ui.large.compact.circular.button.select_author.select_term(href='#')
+                //             strong #{name}
                 // div
-                +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline'
-                if session_is 'view_upvoters'
-                    // .ui.inline.header
-                    //     i.large.thumbs.up.outline.icon
-                    //     |upvoters
-                    if selected_upvoters
-                        a#clear_upvoters.ui.black.icon.compact.large.circular.button.select_term
-                            i.remove.icon
-                        each selected_upvoters
-                            a.unselect_upvoter.ui.black.compact.large.circular.button.select_termn
-                                strong #{this}
+                // +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline'
+                // if session_is 'view_upvoters'
+                //     // .ui.inline.header
+                //     //     i.large.thumbs.up.outline.icon
+                //     //     |upvoters
+                //     if selected_upvoters
+                //         a#clear_upvoters.ui.black.icon.compact.large.circular.button.select_term
+                //             i.remove.icon
+                //         each selected_upvoters
+                //             a.unselect_upvoter.ui.black.compact.large.circular.button.select_termn
+                //                 strong #{this}
                         
-                    each upvoter_results
-                        a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
-                            strong #{name}
+                //     each upvoter_results
+                //         a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
+                //             strong #{name}
                 // .spacer
                 // div
                 // +session_boolean_toggle key='view_sources' label='sources' icon='database'
@@ -90,7 +90,7 @@ template(name='unselect_tag')
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.tertiary.button.select_tag.select_term(href='#')
+    a.ui.tertiary.large.button.select_tag.select_term(href='#')
         // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
         // if term
