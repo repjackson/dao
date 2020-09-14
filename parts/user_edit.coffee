@@ -1,14 +1,14 @@
 if Meteor.isClient
     Router.route '/user/:username/edit/', (->
-        @layout 'user_edit_layout'
+        @layout 'user_edit'
         @render 'user_edit_account'
         ), name:'user_edit_home'
 
-    Template.user_edit_layout.onCreated ->
+    Template.user_edit.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
-        @autorun -> Meteor.subscribe 'all_users'
+        # @autorun -> Meteor.subscribe 'all_users'
 
-    Template.user_edit_layout.onRendered ->
+    Template.user_edit.onRendered ->
         # Meteor.setTimeout ->
         #     $('.button').popup()
         # , 2000
@@ -20,7 +20,7 @@ if Meteor.isClient
     #         Phoneformat.formatLocal 'US', Meteor.user().profile.phone
 
 if Meteor.isClient
-    Template.user_edit_layout.events
+    Template.user_edit.events
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id

@@ -113,7 +113,7 @@ if Meteor.isClient
         
         selected_tags: -> selected_tags.array()
         tag_results: ->
-            doc_count = Docs.find().count()
+            doc_count = Docs.find({model:'post'}).count()
             if 0 < doc_count < 3 
                 Tag_results.find({ 
                     count:$lt:doc_count 

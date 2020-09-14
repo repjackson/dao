@@ -12,6 +12,11 @@ template(name='profile')
                         img.ui.centered.fluid.circular.pointer.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class) 
                 a.ui.big.header.refresh_user_stats(href="/user/#{username}") 
                     |@#{name}
+                if i_have_points
+                    .ui.circular.large.button.send(title='send points')
+                        // i.send.icon
+                        +i name='donation' cl='ui avatar image'
+                        span send p
                 if is_admin
                     a.ui.button(href="/user/#{username}/edit" title='admin edit account')
                         i.shield.icon
@@ -29,11 +34,6 @@ template(name='profile')
                 //     i.refresh.icon
                 if is_dev
                     .ui.inline.header #{_id}
-                if i_have_points
-                    .ui.circular.large.button.send(title='send points')
-                        // i.send.icon
-                        +i name='donation' cl='ui avatar image'
-                        span send p
                 // if is_current_user
                 //     a.ui.large.compact.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
                 //         // i.large.dollar.icon

@@ -20,7 +20,7 @@ template(name='post_card')
             a.header(href="/post/#{_id}/view")
                 i.right.chevron.circular.icon
                 |#{title}
-            .description
+            .description.f12
                 |!{description}
             +vote
             .ui.label #{points}
@@ -78,7 +78,7 @@ template(name='one_post_view')
                 
             .meta
                 |#{when}
-            .description
+            .description.f12
                 // +tone
                 |!{description}
                 |!{body}
@@ -91,7 +91,6 @@ template(name='one_post_view')
                 //     i.chat.outline.icon
                 //     |#{comment_count}
                 
-                |!{blurb}
                 each tags
                     .ui.compact.large.circular.button.add_tag #{this}
                 // +comments_view_small  
