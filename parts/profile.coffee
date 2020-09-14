@@ -22,16 +22,11 @@ if Meteor.isClient
     #         )
 
     
-    # Template.user_dashboard.onRendered ->
-    #     Meteor.setTimeout ->
-    #         $('.accordion').accordion()
-    #     , 1000
-        
-
-        
         
     Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
+        @autorun -> Meteor.subscribe 'expenses_from_username', Router.current().params.username
+        @autorun -> Meteor.subscribe 'model_docs', 'post'
         # @autorun -> Meteor.subscribe 'model_docs', 'message'
     
     Template.profile.onRendered ->
@@ -71,37 +66,21 @@ if Meteor.isClient
     #                 recipient_id:user._id
     #                 text:val
 
-    # Template.user_dashboard.helpers
-    #     wall_posts: ->
-    #         user = Meteor.users.findOne(username:Router.current().params.username)
-    #         Docs.find 
-    #             model:'message'
-    #             type:'wall_post'
-    #             recipient_id:user._id
-    #             # friend_ids:$in:[Meteor.userId()]
-    #     friended_by: ->
-    #         Meteor.users.find {}
-    #             # friend_ids:$in:[Meteor.userId()]
-    #     friend_button_class: ->
-    #         if Session.equals('target_username',@username) then 'active' else 'basic'
-    #     users: ->
-    #         Meteor.users.find()
-    #     overlap_results: ->
-    #         overlap.find()
     Template.profile.helpers
         # route_slug: -> "user_#{@slug}"
         user: -> Meteor.users.findOne username:Router.current().params.username
-
+        expenses: ->
+            user = Meteor.users.findOne username:Router.current().params.username
+            Docs.find 
+                model:'vote'
+                _author_id:user._id
+        kin: ->
+            user = Meteor.users.findOne username:Router.current().params.username
+            Docs.find 
+                model:'post'
+                points:$gt:0
+                _author_id:user._id
     Template.profile.events
-        # 'click .mute': ->
-        #     user = Meteor.users.findOne(username:Router.current().params.username)
-        #     Meteor.call 'mute_user', user._id, ->
-
-        # 'click a.select_term': ->
-        #     $('.profile_yield')
-        #         .transition('fade out', 200)
-        #         .transition('fade in', 200)
-    
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             Meteor.call 'calc_user_stats', user._id, ->
@@ -164,33 +143,19 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.methods 
-        mute_user: (user_id)->
-            Meteor.users.update user_id,
-                $set:muted:true
-            console.log moment().add(10,'mins').format("HH:MM a")
-            console.log moment().format("HH:MM a")
-            end = moment(Date.now()).add(1,'mins').format("HH:MM a")
-            
-
-            
-            SyncedCron.add({
-                name: 'unmute user',
-                schedule: (parser)->
-                    # # // parser is a later.parse object
-                    console.log parser.recur().on(end).fullDate();
-                    parser.recur().on(end).fullDate();
-                    # parser.text("at #{end}")
-                job: ()=>
-                    # numbersCrunched = CrushSomeNumbers();
-                    # numbersCrunched
-                    Meteor.call 'unmute_user', user_id, ->
-                    console.log 'unmuting user', user_id, Date.now()
-            });
-
-        unmute_user: (user_id)->
-            Meteor.users.update user_id,
-                $set:muted:false
+    Meteor.publish 'expenses_from_username', (username)->
+        user = Meteor.users.findOne username:username
+        Docs.find({
+            model:'vote'
+            _author_id:user._id
+        },limit:10)
+    Meteor.publish 'kin_from_username', (username)->
+        user = Meteor.users.findOne username:username
+        Docs.find({
+            model:'post'
+            points:$gt:0
+            _author_id:user._id
+        },limit:10)
     Meteor.publish 'overlap_docs', (
         query=''
         selected_tags

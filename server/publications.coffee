@@ -103,7 +103,7 @@ Meteor.publish 'tag_results', (
     self = @
     match = {}
 
-    match.model = $in: ['debit','request','offer','post']
+    match.model = $in: ['debit','post']
     # console.log 'query length', query.length
     # if query
     # if query and query.length > 1
@@ -206,7 +206,7 @@ Meteor.publish 'doc_results', (
     # console.log 'got selected tags', selected_tags
     # else
     self = @
-    match = {model:$in:['reddit','wikipedia']}
+    match = {model:$in:['post']}
     # if selected_tags.length > 0
     # console.log date_setting
     if date_setting

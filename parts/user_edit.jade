@@ -6,8 +6,6 @@ template(name='user_edit')
                     .ui.center.aligned.large.inline.header
                         i.big.cog.icon
                         | @#{current_user.username}
-                    img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        
                     a.ui.big.circular.icon.button(href="/user/#{current_user.username}/") 
                         i.checkmark.big.icon
                 .twelve.wide.column
@@ -103,9 +101,6 @@ template(name='emails_edit')
     
 
 template(name='user_edit_account')
-    .ui.header 
-        i.cog.icon
-        |account
     .ui.two.column.stackable.grid
         .column
             +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true

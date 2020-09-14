@@ -34,7 +34,9 @@ if Meteor.isClient
                 Meteor.call 'log_term', element_val, ->
                 Session.set('searching', false)
                 Session.set('current_query', '')
-                Session.set('dummy', !Session.get('dummy'))
+                Meteor.call 'add_tag', @_id, ->
+    
+                # Session.set('dummy', !Session.get('dummy'))
                 t.$('.new_tag').val('')
         , 500)
 
@@ -200,13 +202,13 @@ if Meteor.isClient
                 Meteor.call 'calc_post_votes', @_id, ->
             else
                 Router.go "/register"
-        'click .downvote': (e,t)->
-            # $(e.currentTarget).closest('.button').transition('pulse',200)
-            if Meteor.user()
-                Meteor.call 'downvote', @_id, ->
-                Meteor.call 'calc_post_votes', @_id, ->
-            else
-                Router.go "/register"
+        # 'click .downvote': (e,t)->
+        #     # $(e.currentTarget).closest('.button').transition('pulse',200)
+        #     if Meteor.user()
+        #         Meteor.call 'downvote', @_id, ->
+        #         Meteor.call 'calc_post_votes', @_id, ->
+        #     else
+        #         Router.go "/register"
 
 if Meteor.isServer
     Meteor.methods 
@@ -224,6 +226,13 @@ if Meteor.isServer
             Docs.update doc_id, 
                 $set:
                     points:total_doc_points
+                    
+                    
+        add_tag: (doc_id)->
+            doc = Docs.findOne doc_id
+            # console.log 'post', doc
+            Meteor.users.update Meteor.userId(),
+                $inc:points:-1
                     
                     
     Meteor.publish 'author_vote', (parent_id)->

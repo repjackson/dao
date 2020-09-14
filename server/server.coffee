@@ -66,17 +66,19 @@ Meteor.publish 'docs', (
         match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0
         match.tags = $all:selected_tags
+        sort_key = 'points'
+    else
+        sort_key = '_timestamp'
     if selected_authors.length > 0
         match._author_username = $all:selected_authors
     if selected_upvoters.length > 0
         match.upvoter_usernames = $all:selected_upvoters
     # if selected_sources.length > 0
     #     match.source = $all:selected_sources
-        
     console.log match
     Docs.find match,
         limit:5
-        sort:points:-1
+        sort:"#{sort_key}":-1
                     
                     
 Meteor.publish 'tags', (
