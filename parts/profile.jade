@@ -133,45 +133,45 @@ template(name='profile')
                     //             .ui.header you #{currentUser.total_authored_points}
                     //             each currentUser.authored_tags
                     //                 .ui.label #{title}:#{count}
-                    |karma in
-                    a.ui.inline.header(href="/user/#{username}/credits")
-                        i.chevron.down.large.icon
-                        |#{credit_count} credits
-                    | (#{total_credit_amount}p)
-                    .ui.label #{total_credit_amount}p total received
-                    // |received
-                    .ui.label(title='received count') #{credit_count} total gifts 
-                    .ui.label(title='rank') #{global_credit_count_rank} count rank
+                    // |karma in
+                    // a.ui.inline.header(href="/user/#{username}/credits")
+                    //     i.chevron.down.large.icon
+                    //     |#{credit_count} credits
+                    // | (#{total_credit_amount}p)
+                    // .ui.label #{total_credit_amount}p total received
+                    // // |received
+                    // .ui.label(title='received count') #{credit_count} total gifts 
+                    // .ui.label(title='rank') #{global_credit_count_rank} count rank
                         
-                    i.tags.icon(title='credit tags')
-                    each credit_tags
-                        .ui.circular.label #{title}
-                            | #{count}
-                        #{count}
-                    scroll.ui.segments
-                       each user_credits
-                            +user_credit_segment
-                if session_key_value_is 'view_user_section' 'kout'
-                    +user_kout
-                    .ui.inline.header
-                        |karma out
-                    a.ui.inline.spaced.header(href="/user/#{username}/kout")
-                        i.chevron.up.icon
-                        |#{debit_count}k out
-                        |(#{total_debit_amount}p)
-                        .ui.label #{total_debit_amount}p total sent
-                        .ui.label(title='debit count') #{debit_count} gifts sent
-                        .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
+                    // i.tags.icon(title='credit tags')
+                    // each credit_tags
+                    //     .ui.circular.label #{title}
+                    //         | #{count}
+                    //     #{count}
+                    // scroll.ui.segments
+                    //   each user_credits
+                    //         +user_credit_segment
+                // if session_key_value_is 'view_user_section' 'kout'
+                //     +user_kout
+                //     .ui.inline.header
+                //         |karma out
+                //     a.ui.inline.spaced.header(href="/user/#{username}/kout")
+                //         i.chevron.up.icon
+                //         |#{debit_count}k out
+                //         |(#{total_debit_amount}p)
+                //         .ui.label #{total_debit_amount}p total sent
+                //         .ui.label(title='debit count') #{debit_count} gifts sent
+                //         .ui.label(title='rank') #{global_debit_count_rank} gift sent rank
                             
-                        i.tags.icon(title='credit tags')
-                        each debit_tags
-                            .ui.label #{title}
-                                |#{count}
-                        .ui.label(title='rank') ##{global_debit_count_rank}
-                if session_key_value_is 'view_user_section' 'topups'
-                    .ui.inline.header
-                        +i name='request-money'
-                        |topups
+                //         i.tags.icon(title='credit tags')
+                //         each debit_tags
+                //             .ui.label #{title}
+                //                 |#{count}
+                //         .ui.label(title='rank') ##{global_debit_count_rank}
+                // if session_key_value_is 'view_user_section' 'topups'
+                //     .ui.inline.header
+                //         +i name='request-money'
+                //         |topups
          
          
          

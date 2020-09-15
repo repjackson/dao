@@ -22,11 +22,11 @@ template(name='post_card')
                 +print_this
             each tags
                 .ui.label #{this}
-        .meta
-            |#{when}
-        if can_edit 
-            a.ui.circular.icon.button(href="/post/#{_id}/edit")
-                i.pencil.icon
+            .meta
+                |#{when}
+                if can_edit 
+                    a.ui.circular.icon.button(href="/post/#{_id}/edit")
+                        i.pencil.icon
         // .description
         //     +comments_view_small   
         
@@ -87,7 +87,8 @@ template(name='post_view')
             .row 
                 .ten.wide.column
                     if image_id
-                        img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                        a(href="{{c.url image_id }}" target='_window')
+                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
                     if youtube_id
                         +youtube_view key='youtube_id' direct=true
                     .f12

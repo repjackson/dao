@@ -47,7 +47,7 @@ Template.color_edit.events
 
 Template.html_edit.onRendered ->
     @editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
-        codeMirror: CodeMirror
+        # codeMirror: CodeMirror
         height:'200px'
         buttonList: [
             [
