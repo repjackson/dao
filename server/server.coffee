@@ -77,7 +77,7 @@ Meteor.publish 'docs', (
     #     match.source = $all:selected_sources
     console.log match
     Docs.find match,
-        limit:5
+        limit:10
         sort:"#{sort_key}":-1
                     
                     
@@ -112,7 +112,7 @@ Meteor.publish 'tags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 42 }
+        { $limit: 20 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'filter: ', filter

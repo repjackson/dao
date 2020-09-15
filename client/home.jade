@@ -3,7 +3,7 @@ template(name='home')
         .row
             .sixteen.wide.column
                 // iframe(frameborder="0" width="400" height="200" src="https://drive.google.com/file/d/1_encX_RKyZhOU26r7_cNTtl0rLvEQSai/preview")
-                .ui.left.icon.transparent.input 
+                .ui.left.icon.input 
                     i.search.icon
                     input.search_title(type='text' autofocus='')
                 // div
@@ -90,12 +90,12 @@ template(name='unselect_tag')
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.tertiary.large.button.select_tag.select_term(href='#')
+    a.ui.large.button.select_tag.select_term(href='#')
         // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
         // if term
         //     img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
-        | #{name}
+        strong #{name}
 
 
             

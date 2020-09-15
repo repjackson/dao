@@ -24,6 +24,9 @@ template(name='post_card')
                 .ui.label #{this}
         .meta
             |#{when}
+        if can_edit 
+            a.ui.circular.icon.button(href="/post/#{_id}/edit")
+                i.pencil.icon
         // .description
         //     +comments_view_small   
         
