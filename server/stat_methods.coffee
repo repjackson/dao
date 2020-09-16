@@ -1,4 +1,33 @@
 Meteor.methods
+    calc_post_votes: (doc_id)->
+        doc = Docs.findOne doc_id
+        # console.log 'post', doc
+        votes = 
+            Docs.find 
+                model:'vote'
+                parent_id:doc_id
+        total_doc_points = 0
+        for vote in votes.fetch()
+            # console.log 'found vote', vote
+            total_doc_points += vote.points
+            # console.log 'found total_doc_points', total_doc_points
+        # console.log 'found total_doc_points final', total_doc_points
+        Docs.update doc._id, 
+            $set:points:total_doc_points
+        imported_points_cur = 
+            Docs.find 
+                model:'vote'
+                parent_id:post_id
+                _author_id:$ne:post._author_id
+        imported_point_total = 0
+        for vote in imported_points_cur.fetch()
+            imported_point_total += vote.points
+        Docs.update doc._id, 
+            $set:
+                imported_points: imported_point_total
+        console.log 'end find doc', Docs.findOne doc_id
+        console.log 'found total_doc_points final', total_doc_points
+
     # calc_user_stats: (user_id)->
     #     user = Meteor.users.findOne user_id
     #     gift_count =

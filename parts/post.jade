@@ -12,6 +12,7 @@ template(name='post_card')
             a.image(href="/post/#{_id}/view")
                 img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
         .content
+            .ui.header #{title}
             .description.f12
                 |!{description}
             +vote
@@ -50,6 +51,9 @@ template(name='one_post_view')
                 // +tone
                 |!{description}
             .description
+                .ui.label #{points}p
+                .ui.label #{imported_points}ip
+            
                 each tags
                     .ui.compact.large.circular.button.add_tag #{this}
                 // +comments_view_small  
@@ -102,7 +106,12 @@ template(name='post_view')
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon
                     .ui.inline.small.header #{when}
+                    .ui.label #{points}p
+                    .ui.label #{imported_points}ip
+                    
                     +vote
+                    each votes
+                        .ui.header #{_author_username} #{points} #{when}
                     .ui.label #{views} views
                     |#{tags.length} tags
                     each tags 
