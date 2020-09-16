@@ -12,9 +12,9 @@ if Meteor.isClient
         , 2000
     Template.post_view.onRendered ->
         Meteor.call 'log_view', Router.current().params.doc_id
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 2000
+        # Meteor.setTimeout ->
+        #     $('.ui.accordion').accordion()
+        # , 2000
         Meteor.setTimeout ->
             $('.ui.embed').embed();
         , 1000
@@ -28,7 +28,7 @@ if Meteor.isClient
 
     Template.post_card.events
         'click .view_post': ->
-            Router.go "/m/post/#{@_id}/view"
+            Router.go "/post/#{@_id}/view"
 
     Template.post_view.events
         'click .tip': ->
@@ -119,30 +119,31 @@ if Meteor.isServer
             
         calc_post_stats: (post_id)->
             post = Docs.findOne post_id
-            tip_total = 0
+            vote_point_total = 0
             
-            tip_cur = 
+            vote_cur = 
                 Docs.find 
-                    model:'tip'
-                    post_id:post_id
-            comment_cur = 
-                Docs.find 
-                    model:'comment'
+                    model:'vote'
                     parent_id:post_id
-            # for tip in tip_cur.fetch()
-            #     console.log tip
+            # comment_cur = 
+            #     Docs.find 
+            #         model:'comment'
+            #         parent_id:post_id
+            for vote in vote_cur.fetch()
+                # console.log vote
+                vote_point_total += vote.points
+            # console.log 'point total', vote_point_total
+            # tip_total = 10*tip_cur.count()
             
-            tip_total = 10*tip_cur.count()
-            
-            total_points = comment_cur.count()+tip_total
+            # total_points = comment_cur.count()+tip_total
             
             
             Docs.update post_id,
                 $set:
-                    tip_total:tip_total
-                    tip_count:tip_cur.count()
-                    comment_count:comment_cur.count()
-                    total_points:total_points
+                    # tip_total:tip_total
+                    # tip_count:tip_cur.count()
+                    # comment_count:comment_cur.count()
+                    points:vote_point_total
                     
                     
                     

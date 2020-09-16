@@ -485,6 +485,20 @@ if Meteor.isServer
            
            
            
+            votes_in = Docs.find({
+                model:'vote'
+                points:$exists:true
+                _author_id:user_id})
+            vote_count = votes.count()
+            total_vote_cost = 0
+            for vote in votes.fetch()
+                absolute = Math.abs(vote.points)
+                total_vote_cost += absolute
+
+            console.log 'total vote cost', total_vote_cost
+           
+           
+           
             # authored_posts = Docs.find({
             #     model:'post'
             #     _author_id:user_id})

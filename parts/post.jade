@@ -69,6 +69,8 @@ template(name='post_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
+                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
+                        i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit post
                         // |#{title}
@@ -77,8 +79,6 @@ template(name='post_edit')
                     +html_edit key='description' label='description' direct=true
                     +youtube_edit key='youtube_id' label='youtube id' direct=true
                     i.remove.link.circular.big.red.icon.delete_post(title='delete post')
-                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
-                        i.checkmark.big.icon
                     
                     
 template(name='post_view')

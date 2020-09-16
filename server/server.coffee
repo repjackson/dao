@@ -59,6 +59,8 @@ Meteor.publish 'docs', (
     # selected_sources
     )->
     match = {}
+    # match.model = $in:['post','wikipedia','reddit']
+    
     match.model = 'post'
     # if Meteor.user()
     #     match.downvoter_ids = $nin:[Meteor.userId()]
@@ -91,7 +93,7 @@ Meteor.publish 'tags', (
     )->
     self = @
     match = {}
-    # match.model = $in:['post','alpha']
+    # match.model = $in:['post','wikipedia','reddit']
     match.model = 'post'
     
     if query.length > 1
