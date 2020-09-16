@@ -117,35 +117,6 @@ if Meteor.isServer
                     tipper_ids:Meteor.userId()
                     tipper_usernames:Meteor.user().username
             
-        calc_post_stats: (post_id)->
-            post = Docs.findOne post_id
-            vote_point_total = 0
-            
-            vote_cur = 
-                Docs.find 
-                    model:'vote'
-                    parent_id:post_id
-            # comment_cur = 
-            #     Docs.find 
-            #         model:'comment'
-            #         parent_id:post_id
-            for vote in vote_cur.fetch()
-                # console.log vote
-                vote_point_total += vote.points
-            # console.log 'point total', vote_point_total
-            # tip_total = 10*tip_cur.count()
-            
-            # total_points = comment_cur.count()+tip_total
-            
-            
-            Docs.update post_id,
-                $set:
-                    # tip_total:tip_total
-                    # tip_count:tip_cur.count()
-                    # comment_count:comment_cur.count()
-                    points:vote_point_total
-                    
-                    
                     
     Meteor.publish 'post_tips', (post_id)->
         Docs.find   

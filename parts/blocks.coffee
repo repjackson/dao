@@ -31,14 +31,14 @@ if Meteor.isClient
                 Docs.update Router.current().params.doc_id,
                     $addToSet:tags:element_val
                 selected_tags.push element_val
-                Meteor.call 'log_term', element_val, ->
+                # Meteor.call 'log_term', element_val, ->
                 Session.set('searching', false)
                 Session.set('current_query', '')
                 Meteor.call 'add_tag', @_id, ->
     
                 # Session.set('dummy', !Session.get('dummy'))
                 t.$('.new_tag').val('')
-        , 500)
+        , 250)
 
         'click .remove_element': (e,t)->
             element = @valueOf()
@@ -214,19 +214,30 @@ if Meteor.isServer
     Meteor.methods 
         calc_post_votes: (doc_id)->
             doc = Docs.findOne doc_id
-            # console.log 'post', doc
+            console.log 'post', doc
             votes = 
                 Docs.find 
                     model:'vote'
                     parent_id:doc_id
             total_doc_points = 0
             for vote in votes.fetch()
+                console.log 'found vote', vote
                 total_doc_points += vote.points
-                
+                console.log 'found total_doc_points', total_doc_points
+            console.log 'found total_doc_points final', total_doc_points
+            imported_points_cur = 
+                Docs.find 
+                    model:'vote'
+                    parent_id:post_id
+                    _author_id:$ne:post._author_id
+            for vote in imported_points_cur.fetch()
+                imported_point_total += vote.points
+  
             Docs.update doc_id, 
                 $set:
                     points:total_doc_points
-                    
+                    imported_points:imported_point_total
+
                     
         add_tag: (doc_id)->
             doc = Docs.findOne doc_id

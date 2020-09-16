@@ -1,6 +1,6 @@
 Router.configure
     layoutTemplate: 'layout'
-    notFoundTemplate: 'not_found'
+    notFoundTemplate: 'home'
     loadingTemplate: 'splash'
     trackPageView: false
 
@@ -15,7 +15,6 @@ Router.onBeforeAction(force_loggedin, {
     except: [
         'home'
         'post_view'
-        'model_doc_view'
         'register'
         'login'
         'verify-email'

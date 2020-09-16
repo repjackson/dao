@@ -107,56 +107,9 @@ Docs.before.insert (userId, doc)->
 
 
 Meteor.methods
-    add_facet_filter: (delta_id, key, filter)->
-        # if key is '_keys'
-        #     new_facet_ob = {
-        #         key:filter
-        #         filters:[]
-        #         res:[]
-        #     }
-        #     Docs.update { _id:delta_id },
-        #         $addToSet: facets: new_facet_ob
-        console.log delta_id
-        console.log key
-        console.log filter
-        Docs.update { _id:delta_id, "facets.key":key},
-            $addToSet: "facets.$.filters": filter
-
-        Meteor.call 'fum', delta_id, (err,res)->
-
-
-    remove_facet_filter: (delta_id, key, filter)->
-        # if key is '_keys'
-        #     Docs.update { _id:delta_id },
-        #         $pull:facets: {key:filter}
-        Docs.update { _id:delta_id, "facets.key":key},
-            $pull: "facets.$.filters": filter
-        Meteor.call 'fum', delta_id, (err,res)->
-
-
-    pin: (doc)->
-        if doc.pinned_ids and Meteor.userId() in doc.pinned_ids
-            Docs.update doc._id,
-                $pull: pinned_ids: Meteor.userId()
-                $inc: pinned_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: pinned_ids: Meteor.userId()
-                $inc: pinned_count: 1
-
-    subscribe: (doc)->
-        if doc.subscribed_ids and Meteor.userId() in doc.subscribed_ids
-            Docs.update doc._id,
-                $pull: subscribed_ids: Meteor.userId()
-                $inc: subscribed_count: -1
-        else
-            Docs.update doc._id,
-                $addToSet: subscribed_ids: Meteor.userId()
-                $inc: subscribed_count: 1
-
     upvote: (doc_id,amount)->
-        console.log 'doc_id', doc_id
-        console.log 'amount', amount
+        # console.log 'doc_id', doc_id
+        # console.log 'amount', amount
         parent_doc = Docs.findOne doc_id
         vote_doc = 
             Docs.findOne 
@@ -185,7 +138,7 @@ Meteor.methods
                     downvoter_usernames:Meteor.user().username  
                     downvoter_ids:Meteor.userId()  
         parent = Docs.findOne doc_id
-        Meteor.call 'calc_post_stats', doc_id, ->
+        Meteor.call 'calc_post_votes', doc_id, ->
         
         # console.log 'upvoting usernames', parent
                 

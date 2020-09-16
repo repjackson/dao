@@ -17,7 +17,8 @@ template(name='post_card')
             +vote
             // a(href="/post/#{_id}/view")
             //     i.right.chevron.circular.link.big.icon
-            .ui.label #{points}
+            .ui.label #{points}p
+            .ui.label #{imported_points}ip
             if is_admin
                 +print_this
             each tags
