@@ -108,7 +108,7 @@ Docs.before.insert (userId, doc)->
 
 Meteor.methods
     upvote: (doc_id)->
-        console.log 'doc_id', doc_id
+        # console.log 'doc_id', doc_id
         # console.log '1', 1
         parent_doc = Docs.findOne doc_id
         vote_doc = 
@@ -124,7 +124,7 @@ Meteor.methods
             vote_doc = Docs.findOne new_id   
         Docs.update vote_doc._id, 
             $inc:points:1
-        console.log 'vote doc', vote_doc
+        # console.log 'vote doc', vote_doc
         Meteor.users.update Meteor.userId(),
             $inc:points:-1
         unless parent_doc._author_id is Meteor.userId()
@@ -140,7 +140,7 @@ Meteor.methods
             #     downvoter_usernames:Meteor.user().username  
             #     downvoter_ids:Meteor.userId()  
         parent = Docs.findOne doc_id
-        console.log 'parent', parent
+        # console.log 'parent', parent
         Meteor.call 'calc_post_votes', doc_id, ->
         
         # console.log 'upvoting usernames', parent

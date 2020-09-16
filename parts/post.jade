@@ -54,10 +54,10 @@ template(name='one_post_view')
                 .ui.label #{points}p
                 .ui.label #{imported_points}ip
             
+                +vote
                 each tags
                     .ui.compact.large.circular.button.add_tag #{this}
                 // +comments_view_small  
-            +vote
     // .ui.divider
 
                  
@@ -74,7 +74,7 @@ template(name='post_edit')
         .ui.stackable.padded.grid
             .row 
                 .sixteen.wide.column
-                    a.ui.green.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
+                    a.ui.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit post
@@ -83,7 +83,7 @@ template(name='post_edit')
                     +smart_tagger
                     +html_edit key='description' label='description' direct=true
                     +youtube_edit key='youtube_id' label='youtube id' direct=true
-                    i.remove.link.circular.big.red.icon.delete_post(title='delete post')
+                    i.remove.link.circular.big.icon.delete_post(title='delete post')
                     
                     
 template(name='post_view')
@@ -110,8 +110,9 @@ template(name='post_view')
                     .ui.label #{imported_points}ip
                     
                     +vote
-                    each votes
-                        .ui.header #{_author_username} #{points} #{when}
+                    .ui.large.link.list
+                        each votes
+                            a.item(href="/user/#{_author_username}/view") #{_author_username} #{points} #{when}
                     .ui.label #{views} views
                     |#{tags.length} tags
                     each tags 
