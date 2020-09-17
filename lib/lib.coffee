@@ -47,13 +47,6 @@ Docs.helpers
                 upvoter = Meteor.users.findOne upvoter_id
                 upvoters.push upvoter
             upvoters
-    downvoters: ->
-        if @downvoter_ids
-            downvoters = []
-            for downvoter_id in @downvoter_ids
-                downvoter = Meteor.users.findOne downvoter_id
-                downvoters.push downvoter
-            downvoters
 
 Meteor.users.helpers
     email_address: -> if @emails and @emails[0] then @emails[0].address
@@ -110,7 +103,7 @@ Meteor.methods
     upvote: (doc_id)->
         # console.log 'doc_id', doc_id
         # console.log '1', 1
-        parent_doc = Docs.findOne doc_id
+        post = Docs.findOne doc_id
         vote_doc = 
             Docs.findOne 
                 model:'vote'
@@ -121,25 +114,26 @@ Meteor.methods
                 Docs.insert
                     model:'vote'
                     parent_id:doc_id
+                    post_author_username:post._author_username
+                    post_author_id:post._author_id
+                    post_title:post.title
+                    post_tags:post.tags
             vote_doc = Docs.findOne new_id   
         Docs.update vote_doc._id, 
             $inc:points:1
         # console.log 'vote doc', vote_doc
         Meteor.users.update Meteor.userId(),
             $inc:points:-1
-        unless parent_doc._author_id is Meteor.userId()
-            Meteor.users.update parent_doc._author_id,
+        unless post._author_id is Meteor.userId()
+            Meteor.users.update post._author_id,
                 $inc:points:1
-        vote_doc = Docs.findOne vote_doc._id
+        # vote_doc = Docs.findOne vote_doc._id
         # if vote_doc.points > 0
         Docs.update doc_id,
             $addToSet:
                 upvoter_ids:Meteor.userId()  
                 upvoter_usernames:Meteor.user().username  
-            # $pull:
-            #     downvoter_usernames:Meteor.user().username  
-            #     downvoter_ids:Meteor.userId()  
-        parent = Docs.findOne doc_id
+        # parent = Docs.findOne doc_id
         # console.log 'parent', parent
         Meteor.call 'calc_post_votes', doc_id, ->
         

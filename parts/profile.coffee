@@ -1,9 +1,4 @@
 if Meteor.isClient
-    # Router.route '/user/:username', (->
-    #     @layout 'layout'
-    #     @render 'profile'
-    #     ), name:'layout'
-
     # @selected_overlap_tags = new ReactiveArray []
 
     # Template.user_dashboard.onCreated ->
@@ -25,8 +20,8 @@ if Meteor.isClient
         
     Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
-        @autorun -> Meteor.subscribe 'expenses_from_username', Router.current().params.username
-        @autorun -> Meteor.subscribe 'model_docs', 'post'
+        # @autorun -> Meteor.subscribe 'expenses_from_username', Router.current().params.username
+        # @autorun -> Meteor.subscribe 'model_docs', 'debit'
         # @autorun -> Meteor.subscribe 'model_docs', 'message'
     
     Template.profile.onRendered ->
@@ -74,12 +69,30 @@ if Meteor.isClient
             Docs.find 
                 model:'vote'
                 _author_id:user._id
-        kin: ->
+   
+   
+    Template.votes_in.onCreated ->
+        @autorun => Meteor.subscribe 'votes_in', Router.current().params.username
+    Template.votes_in.helpers
+        votes: ->
             user = Meteor.users.findOne username:Router.current().params.username
             Docs.find 
-                model:'post'
-                points:$gt:0
+                model:'vote'
+                # points:$gt:0
+                post_author_id:user._id
+  
+    Template.votes_out.onCreated ->
+        @autorun => Meteor.subscribe 'votes_out', Router.current().params.username
+    Template.votes_out.helpers
+        votes: ->
+            user = Meteor.users.findOne username:Router.current().params.username
+            Docs.find 
+                model:'vote'
+                # points:$gt:0
                 _author_id:user._id
+  
+  
+  
     Template.profile.events
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
@@ -97,38 +110,15 @@ if Meteor.isClient
                 new_debit_id =
                     Docs.insert
                         model:'debit'
-                        price:1
+                        price:10
             else
                 new_debit_id =
                     Docs.insert
                         model:'debit'
-                        price:1
+                        price:10
                         seller_id: user._id
             Router.go "/debit/#{new_debit_id}/edit"
 
-
-        'click .tip': ->
-            # user = Meteor.users.findOne(username:@username)
-            new_debit_id =
-                Docs.insert
-                    model:'dollar_debit'
-            Router.go "/dollar_debit/#{new_debit_id}/edit"
-
-        'click .request': ->
-            user = Meteor.users.findOne(username:@username)
-            if Meteor.userId() is user._id
-                new_id =
-                    Docs.insert
-                        model:'request'
-                        price:1
-            else    
-                new_id =
-                    Docs.insert
-                        model:'request'
-                        buyer_id: user._id
-                        price:1
-            Router.go "/request/#{new_id}/edit"
-    
         # 'click .calc_user_cloud': ->
         #     Meteor.call 'calc_user_cloud', Router.current().params.username, ->
 
@@ -141,3 +131,18 @@ if Meteor.isClient
 
 
 
+if Meteor.isServer
+    Meteor.publish 'votes_in', (username)->
+        user = Meteor.users.findOne username:username
+        Docs.find    
+            model:'vote'
+            post_author_id:user._id
+        
+    Meteor.publish 'votes_out', (username)->
+        user = Meteor.users.findOne username:username
+        Docs.find    
+            model:'vote'
+            _author_id:user._id
+        
+        
+        

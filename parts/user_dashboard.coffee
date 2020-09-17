@@ -1,18 +1,14 @@
 # if Meteor.isClient
-#     Router.route '/user/:username/dashboard', (->
-#         @layout 'profile_layout'
-#         @render 'user_dashboard'
-#         ), name:'user_dashboard'
         
         
 #     Template.user_dashboard.onCreated ->
 #         @autorun -> Meteor.subscribe 'user_offers', Router.current().params.username
-#         @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
-#         @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
-#         @autorun -> Meteor.subscribe 'user_requests', Router.current().params.username
-#         @autorun -> Meteor.subscribe 'user_completed_requests', Router.current().params.username
-#         @autorun -> Meteor.subscribe 'user_orders', Router.current().params.username
-#         @autorun -> Meteor.subscribe 'model_docs', 'offer'
+#         # @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
+#         # @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
+#         # @autorun -> Meteor.subscribe 'user_requests', Router.current().params.username
+#         # @autorun -> Meteor.subscribe 'user_completed_requests', Router.current().params.username
+#         # @autorun -> Meteor.subscribe 'user_orders', Router.current().params.username
+#         # @autorun -> Meteor.subscribe 'model_docs', 'offer'
         
 #     Template.user_dashboard.events
 #         'click .user_credit_segment': ->
@@ -23,7 +19,16 @@
             
             
             
-#     Template.user_dashboard.helpers
+#     Template.votes_in.helpers
+#         votes: ->
+#             current_user = Meteor.users.findOne(username:Router.current().params.username)
+#             Docs.find {
+#                 model:'vote'
+#                 _author_id: current_user._id
+#             }, 
+#                 limit: 10
+#                 sort: _timestamp:-1
+#     Template.user_debits.helpers
 #         user_debits: ->
 #             current_user = Meteor.users.findOne(username:Router.current().params.username)
 #             Docs.find {
@@ -32,6 +37,7 @@
 #             }, 
 #                 limit: 10
 #                 sort: _timestamp:-1
+#     Template.user_credits.helpers
 #         user_credits: ->
 #             current_user = Meteor.users.findOne(username:Router.current().params.username)
 #             Docs.find {
