@@ -119,7 +119,13 @@ template(name='post_view')
                     +vote
                     .ui.large.link.list
                         each votes
-                            a.item(href="/user/#{_author_username}") #{_author_username} #{points} #{when}
+                            .item
+                                a(href="/user/#{_author_username}") #{_author_username}
+                                |#{points} #{when}
+                                if can_edit
+                                    +array_edit key='tags' label='tags' direct=true
+                                else
+                                    +array_viewe key='tags' label='tags' direct=true
                     .ui.label #{views} views
                     |#{tags.length} tags
                     each tags 
