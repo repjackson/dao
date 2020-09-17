@@ -114,6 +114,7 @@ Meteor.methods
                 Docs.insert
                     model:'vote'
                     parent_id:doc_id
+                    post_id:doc_id
                     post_author_username:post._author_username
                     post_author_id:post._author_id
                     post_title:post.title

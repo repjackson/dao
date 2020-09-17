@@ -85,9 +85,9 @@ if Meteor.isClient
             Docs.find(match).count() is 1
     
         two_posts: -> 
-            # match = {model:$in:['post','wikipedia','reddit']}
+            match = {model:$in:['post','wikipedia','reddit']}
             
-            match = {model:'post'}
+            # match = {model:'post'}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
             Docs.find(match).count() is 2
@@ -96,9 +96,9 @@ if Meteor.isClient
     
         can_debit: -> Meteor.user().points > 0
         docs: ->
-            # match = {model:$in:['post','wikipedia','reddit']}
+            match = {model:$in:['post','wikipedia','reddit']}
             
-            match = {model:'post'}
+            # match = {model:'post'}
             if selected_tags.array().length>0
                 match.tags = $in:selected_tags.array()
             Docs.find match,

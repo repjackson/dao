@@ -66,53 +66,16 @@ template(name='nav')
             //     i.bars.large.icon
     // .ui.attached.menu.hscroll(class=currentUser.invert_class)
         // each nav_models
-    if session_is 'viewing_alerts'
-        +topbar
-
-            
-template(name='topbar')
-    .ui.fluid.large.attached.segment(style="background-color:#{currentUser.theme_color};" class=currentUser.invert_class)
-        .ui.middle.aligned.divided.list
-            each recent_alerts
-                +recent_alert
-        a.ui.icon.attached.basic.button.item.close_topbar(href="/inbox")
-            i.inbox.large.icon
-            |inbox
-            
-
-template(name='recent_alert')        
-    .item.alert
-        .right.floated.content
-            i.circular.eye.link.large.icon.mark_read(title='mark read')
-        img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-        .content
-            .header
-                |#{description} 
-            .description #{author.name} #{made_when}
-            
-
             
             
 template(name='add')
     .ui.basic.center.aligned.segment
         i.huge.plus.icon
         a.ui.basic.huge.circular.button.debit
-            // i.gift.large.icon
-            +i name='gift' cl='ui avatar image'
+            i.gift.large.icon
+            // +i name='gift' cl='ui avatar image'
             |gift
-        // a.ui.basic.huge.circular.button.request
-        //     // i.concierge.bell.large.icon
-        //     +i name='request-service' cl='ui avatar image'
-        //     |request
-        // a.ui.basic.huge.circular.button.offer(title='offer')
-        //     // i.store.large.icon
-        //     +i name='shop' cl='ui avatar image'
-        //     |offer
         a.ui.basic.huge.circular.button.post(title='post')
-            +i name='blog' cl='ui avatar image'
-            // i.newspaper.large.icon
+            // +i name='blog' cl='ui avatar image'
+            i.newspaper.large.icon
             |post
-        // a.ui.basic.huge.circular.button.alpha(title='post')
-        //     +i name='blog'
-        //     i.cubes.large.icon
-        //     |+ alpha

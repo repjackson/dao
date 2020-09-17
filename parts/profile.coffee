@@ -76,21 +76,24 @@ if Meteor.isClient
     Template.votes_in.helpers
         votes: ->
             user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find 
+            Docs.find {
                 model:'vote'
                 # points:$gt:0
                 post_author_id:user._id
-  
+            }, 
+                limit:20
+                sort:_timestamp:-1
+
     Template.votes_out.onCreated ->
         @autorun => Meteor.subscribe 'votes_out', Router.current().params.username
     Template.votes_out.helpers
         votes: ->
             user = Meteor.users.findOne username:Router.current().params.username
-            Docs.find 
+            Docs.find  {
                 model:'vote'
                 # points:$gt:0
                 _author_id:user._id
-  
+            }, sort:_timestamp:-1
   
   
     Template.profile.events
@@ -134,15 +137,20 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'votes_in', (username)->
         user = Meteor.users.findOne username:username
-        Docs.find    
+        Docs.find {
             model:'vote'
             post_author_id:user._id
+        }, 
+            limit:20
+            sort:_timestamp:-1
         
     Meteor.publish 'votes_out', (username)->
         user = Meteor.users.findOne username:username
-        Docs.find    
+        Docs.find {
             model:'vote'
             _author_id:user._id
-        
+        }, 
+            limit:20
+            sort:_timestamp:-1
         
         

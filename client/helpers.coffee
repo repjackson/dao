@@ -138,6 +138,11 @@ Template.registerHelper 'doc_comments', () ->
     Docs.find
         model:'comment'
         parent_id:@_id
+        
+Template.registerHelper 'post', () ->
+    Docs.find
+        model:'post'
+        _id:@post_id
 
 Template.registerHelper 'is_logging_out', () -> Session.get('logging_out')
 

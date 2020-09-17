@@ -172,17 +172,18 @@ template(name='votes_out')
     .ui.link.list.scrolling
         each votes
             a.ui.item(href="/vote/#{_id}/view") 
-                |#{points}p #{when} 
+                |#{points}p #{when} #{_author_username} #{model}
                 each tags 
                     .ui.label #{this}
 
 template(name='votes_in')
     .ui.header 
-        i.chevron.up.icon
+        i.chevron.down.icon
         |votes in
     .ui.link.list.scrolling
         each votes
-            a.ui.item(href="/post/#{_id}/view") #{points}p #{when}
+            a.ui.item(href="/post/#{_id}/view") 
+                |#{points}p #{when} #{_author_username} #{model}
                 each tags 
                     .ui.label #{this}
 

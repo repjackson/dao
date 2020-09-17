@@ -17,41 +17,41 @@ template(name='home')
                 // if session_is 'view_tags'
                 each tag_results
                     +tag_selector
-                // div
-                // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
-                // if session_is 'view_authors'
-                //     // div
-                //     // .ui.inline.header
-                //     //     i.large.user.outline.icon
-                //     //     |author
-                //     if selected_authors
-                //         a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
-                //             i.remove.icon
-                //         each selected_authors
-                //             a.unselect_author.ui.black.compact.large.circular.button.select_termn
-                //                 strong #{this}
+                div
+                +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
+                if session_is 'view_authors'
+                    // div
+                    // .ui.inline.header
+                    //     i.large.user.outline.icon
+                    //     |author
+                    if selected_authors
+                        a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
+                            i.remove.icon
+                        each selected_authors
+                            a.unselect_author.ui.black.compact.large.circular.button.select_termn
+                                strong #{this}
                         
-                //     each author_results
-                //         a.ui.large.compact.circular.button.select_author.select_term(href='#')
-                //             strong #{name}
-                // div
-                // +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline'
-                // if session_is 'view_upvoters'
-                //     // .ui.inline.header
-                //     //     i.large.thumbs.up.outline.icon
-                //     //     |upvoters
-                //     if selected_upvoters
-                //         a#clear_upvoters.ui.black.icon.compact.large.circular.button.select_term
-                //             i.remove.icon
-                //         each selected_upvoters
-                //             a.unselect_upvoter.ui.black.compact.large.circular.button.select_termn
-                //                 strong #{this}
+                    each author_results
+                        a.ui.large.compact.circular.button.select_author.select_term(href='#')
+                            strong #{name}
+                div
+                +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline'
+                if session_is 'view_upvoters'
+                    // .ui.inline.header
+                    //     i.large.thumbs.up.outline.icon
+                    //     |upvoters
+                    if selected_upvoters
+                        a#clear_upvoters.ui.black.icon.compact.large.circular.button.select_term
+                            i.remove.icon
+                        each selected_upvoters
+                            a.unselect_upvoter.ui.black.compact.large.circular.button.select_termn
+                                strong #{this}
                         
-                //     each upvoter_results
-                //         a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
-                //             strong #{name}
-                // .spacer
-                // div
+                    each upvoter_results
+                        a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
+                            strong #{name}
+                .spacer
+                div
                 // +session_boolean_toggle key='view_sources' label='sources' icon='database'
                 // if session_is 'view_sources'
                 //     // .ui.inline.header

@@ -63,6 +63,16 @@ Router.route '/post/:doc_id/edit', (->
     @render 'post_edit'
     ), name:'post_edit'
 
+Router.route '/reddit/:doc_id/view', (->
+    @layout 'layout'
+    @render 'reddit_view'
+    ), name:'reddit_view'
+
+Router.route '/reddit/:doc_id/edit', (->
+    @layout 'layout'
+    @render 'reddit_edit'
+    ), name:'reddit_edit'
+
 
 Router.route '/verification_confirmation', -> @render 'verification_confirmation'
 Router.route '*', -> @render 'home'
