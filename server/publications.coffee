@@ -328,7 +328,7 @@ Meteor.publish 'overlap_docs', (
         #     match._author_username = $all:selected_authors
         # match._author_id = $in:[Meteor.userId(), target_user._id]
         match.upvoter_ids = $all:[Meteor.userId(), target_user._id]
-        console.log match
+        # console.log match
         Docs.find match,
             limit:20
             sort:points:-1

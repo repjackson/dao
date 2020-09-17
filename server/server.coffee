@@ -48,7 +48,7 @@ Meteor.publish 'doc_by_title', (title)->
     # console.log title
     Docs.find
         title:title
-        model:'post'
+        model:'wikipedia'
 
 
 Meteor.publish 'docs', (

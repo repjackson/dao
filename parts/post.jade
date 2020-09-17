@@ -93,6 +93,10 @@ template(name='post_view')
         .ui.stackable.padded.grid
             .row 
                 .ten.wide.column
+                    if title 
+                        .ui.header #{title}
+                    if url 
+                        a(href=url target='_window') #{url}
                     if image_id
                         a(href="{{c.url image_id }}" target='_window')
                             img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
@@ -112,7 +116,6 @@ template(name='post_view')
                     .ui.inline.small.header #{when}
                     .ui.label #{points}p
                     .ui.label #{imported_points}ip
-                    
                     +vote
                     .ui.large.link.list
                         each votes

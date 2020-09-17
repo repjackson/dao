@@ -3,10 +3,10 @@ template(name='debit_card')
         .content
             a.header(href="/debit/#{_id}/view") 
                 i.send.icon
-                if buyer.profile_image_id
-                    with buyer
+                if sender.profile_image_id
+                    with sender
                         img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
-                | #{buyer.username}
+                | #{sender.username}
                 small >
                 |#{price}p    
                 small >
@@ -44,7 +44,8 @@ template(name='debit_edit')
                     //         img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
                     //         |#{_author.username}
                     if is_admin
-                        +single_user_edit key='buyer_id' key2='buyer_username' label='select buyer' icon='user outline' direct=true
+                        +single_user_edit key='sender_id' key2='sender_username' label='select sender' icon='user outline' direct=true
+                    
                     +single_user_edit key='recipient_id' key2='recipient_username' label='recipient' icon='user' direct=true
                     +boolean_edit key='has_datetime' label='datetime' direct=true
                     if has_datetime

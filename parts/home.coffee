@@ -52,21 +52,21 @@ if Meteor.isClient
         #     Session.equals('sort_direction', 1)
         # sort_button_class: ->
         #     if Session.equals('sort_key', @key) then 'black' else 'basic'
-    # Template.tag_selector.onCreated ->
+    Template.tag_selector.onCreated ->
         # console.log @
-        # @autorun => Meteor.subscribe('doc_by_title', @data.name)
-    # Template.tag_selector.helpers
-        # term: ->
-        #     Docs.findOne 
-        #         title:@name
+        @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    Template.tag_selector.helpers
+        term: ->
+            Docs.findOne 
+                title:@name
                 
-    # Template.unselect_tag.onCreated ->
-    #     # console.log @
-    #     @autorun => Meteor.subscribe('doc_by_title', @data)
-    # Template.unselect_tag.helpers
-        # term: ->
-        #     Docs.findOne 
-        #         title:@valueOf()
+    Template.unselect_tag.onCreated ->
+        # console.log @
+        @autorun => Meteor.subscribe('doc_by_title', @data)
+    Template.unselect_tag.helpers
+        term: ->
+            Docs.findOne 
+                title:@valueOf()
     Template.unselect_tag.events
        'click .unselect_tag': -> 
             selected_tags.remove @valueOf()
@@ -108,11 +108,11 @@ if Meteor.isClient
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:10
             
-        # term: ->
-        #     # console.log @
-        #     Docs.find 
-        #         model:$in:['wikipedia']
-        #         title:@name
+        term: ->
+            # console.log @
+            Docs.find 
+                model:$in:['wikipedia']
+                title:@name
         
         one_result: ->
             Docs.find().count() < 2
@@ -157,8 +157,9 @@ if Meteor.isClient
     Template.tag_selector.events
         'click .select_tag': -> 
             selected_tags.push @name
-            # Meteor.call 'call_wiki', @name, ->
-            # Meteor.call 'search_reddit', selected_tags.array(), ->
+            if Meteor.user()
+                Meteor.call 'call_wiki', @name, ->
+                Meteor.call 'search_reddit', selected_tags.array(), ->
     Template.home.events
         # 'click .delete': -> 
         #     console.log @
@@ -169,6 +170,7 @@ if Meteor.isClient
                     model:'post'
                     # buyer_id:Meteor.userId()
                     # buyer_username:Meteor.user().username
+                    
             Router.go "/post/#{new_post_id}/edit"
 
         
@@ -200,8 +202,9 @@ if Meteor.isClient
             # Session.set('query',search)
             if e.which is 13
                 selected_tags.push search
-                # Meteor.call 'call_wiki', search, ->
-                # Meteor.call 'search_reddit', selected_tags.array(), ->
+                if Meteor.user()
+                    Meteor.call 'call_wiki', search, ->
+                    Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8
