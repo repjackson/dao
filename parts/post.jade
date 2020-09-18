@@ -14,6 +14,7 @@ template(name='post_card')
             a.ui.header(href="/post/#{_id}/view") #{title}
             .description.f12
                 |!{description}
+                |!{body}
             +vote
             // a(href="/post/#{_id}/view")
             //     i.right.chevron.circular.link.big.icon
@@ -21,6 +22,7 @@ template(name='post_card')
             .ui.label #{imported_points}ip
             if is_admin
                 +print_this
+            +array_edit key='tags' direct=true
             each tags
                 .ui.label #{this}
             .meta
@@ -56,6 +58,8 @@ template(name='one_post_view')
                 .ui.label #{imported_points}ip
             
                 +vote
+                +array_edit key='tags' direct=true
+
                 each tags
                     .ui.compact.large.circular.button.add_tag #{this}
                 // +comments_view_small  

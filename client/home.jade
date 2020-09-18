@@ -20,20 +20,20 @@ template(name='home')
                 div
                 // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
                 // if session_is 'view_authors'
-                //     // div
-                //     // .ui.inline.header
-                //     //     i.large.user.outline.icon
-                //     //     |author
-                //     if selected_authors
-                //         a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
-                //             i.remove.icon
-                //         each selected_authors
-                //             a.unselect_author.ui.black.compact.large.circular.button.select_termn
-                //                 strong #{this}
-                        
-                //     each author_results
-                //         a.ui.large.compact.circular.button.select_author.select_term(href='#')
-                //             strong #{name}
+                // div
+                // .ui.inline.header
+                //     i.large.user.outline.icon
+                //     |author
+                if selected_authors
+                    a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
+                        i.remove.icon
+                    each selected_authors
+                        a.unselect_author.ui.black.compact.large.circular.button.select_termn
+                            strong #{this}
+                    
+                each author_results
+                    a.ui.large.compact.circular.button.select_author.select_term(href='#')
+                        strong #{name}
                 // div
                 // +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline'
                 // if session_is 'view_upvoters'

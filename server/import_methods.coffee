@@ -131,7 +131,7 @@ Meteor.methods
                     $set:
                         rd: rd
                         url: rd.url
-                        reddit_image:rd.preview.images[0].source.url
+                        # reddit_image:rd.preview.images[0].source.url
                         thumbnail: thumbnail
                         subreddit: rd.subreddit
                         rd_author: rd.author
