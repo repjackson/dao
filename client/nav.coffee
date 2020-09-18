@@ -74,7 +74,7 @@ Template.nav.events
     'click .view_profile': ->
         Meteor.call 'calc_user_points', Meteor.userId()
         
-Template.add.events
+Template.nav.events
     'click .debit': ->
         new_debit_id =
             Docs.insert

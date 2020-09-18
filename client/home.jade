@@ -18,38 +18,38 @@ template(name='home')
                 each tag_results
                     +tag_selector
                 div
-                +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
-                if session_is 'view_authors'
-                    // div
-                    // .ui.inline.header
-                    //     i.large.user.outline.icon
-                    //     |author
-                    if selected_authors
-                        a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
-                            i.remove.icon
-                        each selected_authors
-                            a.unselect_author.ui.black.compact.large.circular.button.select_termn
-                                strong #{this}
+                // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
+                // if session_is 'view_authors'
+                //     // div
+                //     // .ui.inline.header
+                //     //     i.large.user.outline.icon
+                //     //     |author
+                //     if selected_authors
+                //         a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
+                //             i.remove.icon
+                //         each selected_authors
+                //             a.unselect_author.ui.black.compact.large.circular.button.select_termn
+                //                 strong #{this}
                         
-                    each author_results
-                        a.ui.large.compact.circular.button.select_author.select_term(href='#')
-                            strong #{name}
-                div
-                +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline'
-                if session_is 'view_upvoters'
-                    // .ui.inline.header
-                    //     i.large.thumbs.up.outline.icon
-                    //     |upvoters
-                    if selected_upvoters
-                        a#clear_upvoters.ui.black.icon.compact.large.circular.button.select_term
-                            i.remove.icon
-                        each selected_upvoters
-                            a.unselect_upvoter.ui.black.compact.large.circular.button.select_termn
-                                strong #{this}
+                //     each author_results
+                //         a.ui.large.compact.circular.button.select_author.select_term(href='#')
+                //             strong #{name}
+                // div
+                // +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline'
+                // if session_is 'view_upvoters'
+                //     // .ui.inline.header
+                //     //     i.large.thumbs.up.outline.icon
+                //     //     |upvoters
+                //     if selected_upvoters
+                //         a#clear_upvoters.ui.black.icon.compact.large.circular.button.select_term
+                //             i.remove.icon
+                //         each selected_upvoters
+                //             a.unselect_upvoter.ui.black.compact.large.circular.button.select_termn
+                //                 strong #{this}
                         
-                    each upvoter_results
-                        a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
-                            strong #{name}
+                //     each upvoter_results
+                //         a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
+                //             strong #{name}
                 .spacer
                 div
                 // +session_boolean_toggle key='view_sources' label='sources' icon='database'
@@ -84,13 +84,13 @@ template(name='home')
 
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.large.image.label.select_termn
+    a.unselect_tag.ui.black.big.image.label.select_termn
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.large.image.label.select_tag.select_term(href='#')
+    a.ui.big.image.label.select_tag.select_term(href='#')
         // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
         if term
