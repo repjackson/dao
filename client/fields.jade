@@ -1,6 +1,6 @@
 template(name='youtube_edit')
     .ui.labeled.fluid.icon.input
-        .ui.basic.label 
+        .ui.label 
             // if icon
             //     i.icon(class=icon)
             |youtube id
@@ -801,7 +801,7 @@ template(name='array_edit')
         //- +clear_value                
     if field_value
         each field_value
-            .ui.large.basic.label
+            .ui.large.label
                 i.delete.icon.remove_element
                 |#{this}
                 
@@ -814,7 +814,7 @@ template(name='array_view')
             .ui.inline.small.grey.header(title=title)
                 |#{label}
         each field_value
-            .ui.basic.label #{this}
+            .ui.label #{this}
 
 
 template(name='children_edit')

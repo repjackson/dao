@@ -1,5 +1,5 @@
 template(name='post_card')
-    .ui.card
+    .ui.horizontal.fluid.card
         a.image(href="/post/#{_id}/view")
             if is_youtube
                 .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
@@ -14,7 +14,7 @@ template(name='post_card')
             a.ui.header(href="/post/#{_id}/view") #{title}
             .description.f12
                 |!{description}
-                |!{body}
+                // |!{body}
             +vote
             // a(href="/post/#{_id}/view")
             //     i.right.chevron.circular.link.big.icon
@@ -23,8 +23,8 @@ template(name='post_card')
             if is_admin
                 +print_this
             +array_edit key='tags' direct=true
-            each tags
-                .ui.label #{this}
+            // each tags
+            //     .ui.label #{this}
             .meta
                 |#{when}
                 if can_edit 
@@ -112,6 +112,8 @@ template(name='post_view')
                     .f12
                         |{{nl2br body}}
                         |!{description}
+                        if tone
+                            +tone
                         if key_value_is 'model' 'reddit'
                             |!{body}
                     if is_admin
@@ -124,6 +126,7 @@ template(name='post_view')
                     .ui.inline.small.header #{when}
                     .ui.label #{points}p
                     .ui.label #{imported_points}ip
+                    +call_watson key='url' mode='url'
                     +vote
                     .ui.large.link.list
                         each votes

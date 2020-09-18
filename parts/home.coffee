@@ -70,7 +70,7 @@ if Meteor.isClient
     Template.unselect_tag.events
        'click .unselect_tag': -> 
             selected_tags.remove @valueOf()
-            # Meteor.call 'search_reddit', selected_tags.array(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
 
                 
     Template.home.helpers
