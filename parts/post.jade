@@ -82,9 +82,11 @@ template(name='post_edit')
                         // |#{title}
                     +image_edit key='image_id' label='image' direct=true
                 .eight.wide.column
-                    // |points are -1p each
-                    // +smart_tagger
-                    +html_edit key='description' label='description' direct=true
+                    |tag = -1p
+                    +smart_tagger
+                    +textarea_edit key='body' label='body' direct=true
+                    if description
+                        +html_edit key='description' label='description' direct=true
                     +youtube_edit key='youtube_id' label='youtube id' direct=true
                     i.remove.link.circular.big.icon.delete_post(title='delete post')
                     
@@ -104,6 +106,7 @@ template(name='post_view')
                     if youtube_id
                         +youtube_view key='youtube_id' direct=true
                     .f12
+                        |{{nl2br body}}
                         |!{description}
                         if key_value_is 'model' 'reddit'
                             |!{body}
