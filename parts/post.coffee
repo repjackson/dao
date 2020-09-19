@@ -53,6 +53,13 @@ if Meteor.isClient
             Meteor.call 'search_reddit', selected_tags.array(), ->
                 
             # Router.go '/'
+    Template.post_card.events
+        'click .add_tag': ->
+            selected_tags.push @valueOf()
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+                
+            # Router.go '/'
     
     
     Template.post_view.events

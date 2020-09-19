@@ -114,7 +114,7 @@ Meteor.publish 'tags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 20 }
+        { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'filter: ', filter
@@ -125,40 +125,40 @@ Meteor.publish 'tags', (
             count: tag.count
             index: i
    
-    author_cloud = Docs.aggregate [
-        { $match: match }
-        { $project: "_author_username": 1 }
-        { $group: _id: "$_author_username", count: $sum: 1 }
-        { $match: _id: $nin: selected_authors }
-        { $sort: count: -1, _id: 1 }
-        { $limit: 10 }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'filter: ', filter
-    # console.log 'cloud: ', cloud
-    author_cloud.forEach (author, i) ->
-        self.added 'author_results', Random.id(),
-            name: author.name
-            count: author.count
-            index: i
+    # author_cloud = Docs.aggregate [
+    #     { $match: match }
+    #     { $project: "_author_username": 1 }
+    #     { $group: _id: "$_author_username", count: $sum: 1 }
+    #     { $match: _id: $nin: selected_authors }
+    #     { $sort: count: -1, _id: 1 }
+    #     { $limit: 10 }
+    #     { $project: _id: 0, name: '$_id', count: 1 }
+    #     ]
+    # # console.log 'filter: ', filter
+    # # console.log 'cloud: ', cloud
+    # author_cloud.forEach (author, i) ->
+    #     self.added 'author_results', Random.id(),
+    #         name: author.name
+    #         count: author.count
+    #         index: i
    
-    upvoter_cloud = Docs.aggregate [
-        { $match: match }
-        { $project: "upvoter_usernames": 1 }
-        { $unwind: "$upvoter_usernames" }
-        { $group: _id: "$upvoter_usernames", count: $sum: 1 }
-        { $match: _id: $nin: selected_upvoters }
-        { $sort: count: -1, _id: 1 }
-        { $limit: 10 }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'filter: ', filter
-    # console.log 'cloud: ', cloud
-    upvoter_cloud.forEach (upvoter, i) ->
-        self.added 'upvoter_results', Random.id(),
-            name: upvoter.name
-            count: upvoter.count
-            index: i
+    # upvoter_cloud = Docs.aggregate [
+    #     { $match: match }
+    #     { $project: "upvoter_usernames": 1 }
+    #     { $unwind: "$upvoter_usernames" }
+    #     { $group: _id: "$upvoter_usernames", count: $sum: 1 }
+    #     { $match: _id: $nin: selected_upvoters }
+    #     { $sort: count: -1, _id: 1 }
+    #     { $limit: 10 }
+    #     { $project: _id: 0, name: '$_id', count: 1 }
+    #     ]
+    # # console.log 'filter: ', filter
+    # # console.log 'cloud: ', cloud
+    # upvoter_cloud.forEach (upvoter, i) ->
+    #     self.added 'upvoter_results', Random.id(),
+    #         name: upvoter.name
+    #         count: upvoter.count
+    #         index: i
    
     self.ready()
                     

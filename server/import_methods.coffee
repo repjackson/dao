@@ -56,6 +56,8 @@ Meteor.methods
                         unless existing_doc
                             # console.log 'importing url', data.url
                             new_reddit_post_id = Docs.insert reddit_post
+                            Meteor.users.update Meteor.userId(),
+                                $inc:points:-1
                             # console.log 'calling watson on ', reddit_post.title
                             Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
                                 # console.log 'get post res', res

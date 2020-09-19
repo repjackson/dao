@@ -26,11 +26,11 @@ Meteor.methods
         for imported in imported_points_cur.fetch()
             console.log 'imported', imported
             imported_point_total += imported.points
-        console.log 'imported', imported_point_total
+        # console.log 'imported', imported_point_total
         Docs.update post._id, 
             $set:
                 imported_points: imported_point_total
-        console.log 'end find doc', Docs.findOne doc_id
+        # console.log 'end find doc', Docs.findOne post._id
 
     # calc_user_stats: (user_id)->
     #     user = Meteor.users.findOne user_id
