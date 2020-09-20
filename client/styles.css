@@ -147,7 +147,7 @@ html.ios body {
 
 .segment:not(.pushable) {
   transition: height 1s linear;
-  border-radius: 10px !important;
+  /*border-radius: 10px !important;*/
 }
 
 .bottom_rounded {
@@ -311,7 +311,7 @@ html.ios body {
 
 .card {
     /* background: black !important; */
-    border-radius: 10px !important; 
+    /*border-radius: 10px !important; */
 }
 
 a.goto_article {
@@ -319,7 +319,7 @@ a.goto_article {
 }
 
 .ui.button:not(.circular) { 
-    border-radius: 10px !important;
+    /*border-radius: 10px !important;*/
 }
 .ui.button {
     margin: 2px !important;
@@ -497,17 +497,17 @@ a.title, #title {
 
 .label {
   margin:3px !important;
-  border-radius: 10px !important; 
+  /*border-radius: 10px !important; */
 }
 
 input {
     margin: 5px !important;
-    border-radius: 10px !important; 
+    /*border-radius: 10px !important; */
 }
 
 ::-webkit-scrollbar {
   width: 3px !important;
-  border-radius: 10px !important;
+  /*border-radius: 10px !important;*/
 }
 .wrap_input {
     text-align:center !important;
