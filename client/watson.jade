@@ -58,6 +58,12 @@ template(name='call_watson')
         |autotag
     if page_doc.watson 
         i.checkmark.icon
+template(name='call_tone')
+    .ui.circular.button.call
+        i.chess.icon
+        |call tone
+    if page_doc.tone 
+        i.checkmark.icon
 //- 
 template(name='call_visual')
     #call_visual.ui.large.icon.button(title='analyze')

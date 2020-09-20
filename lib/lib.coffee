@@ -89,7 +89,7 @@ Docs.before.insert (userId, doc)->
     doc.points = 0
     if Meteor.user()
         Meteor.users.update Meteor.userId(),
-            $inc:points:-1
+            $inc:points:1
     # date_array = [ap, "hour #{hour}", "min #{minute}", weekday, month, date, year]
     date_array = [ap, weekday, month, date, year]
     if _

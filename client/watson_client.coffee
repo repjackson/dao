@@ -74,6 +74,19 @@ Template.call_watson.events
         # Meteor.call 'call_watson', doc._id, @key, @mode, ->
 
 
+Template.call_tone.events
+    'click .call': ->
+        console.log @
+        # console.log Template.currentData()
+        console.log Template.parentData()
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        doc = Template.parentData()
+        Meteor.call 'call_tone', Router.current().params.doc_id, parent.key, @mode, ->
+        # Meteor.call 'call_watson', doc._id, @key, @mode, ->
+
+
 
 
 Template.personality.events

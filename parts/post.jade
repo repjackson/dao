@@ -41,9 +41,10 @@ template(name='post_card')
                             i.pencil.icon
                     a.ui.icon.button(href="/post/#{_id}/view")
                         i.chevron.right.icon
-            .description
-                // +comments_view_small   
-                +call_watson mode='url' key='url'
+                    // +comments_view_small   
+                    +call_watson mode='url' key='url'
+                    if watson
+                        +call_tone mode='url' key='url'
             
         // .ui.divider
     
@@ -146,6 +147,9 @@ template(name='post_view')
                     .ui.label #{points}p
                     .ui.label #{imported_points}ip
                     +call_watson key='url' mode='url'
+                    if watson
+                        +call_tone mode='url' key='url'
+                    
                     +vote
                     .ui.large.link.list
                         each votes

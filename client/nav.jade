@@ -50,10 +50,10 @@ template(name='nav')
                     //- i.large.user.large.icon
                     |{{money_format currentUser.points}}c
                     |&nbsp;
-                    if currentUser.profile_image_id
-                        img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                    else 
-                        i.large.user.large.icon
+                    // if currentUser.profile_image_id
+                    //     img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    // else 
+                    //     i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
             else
                 a.item(href="/register" title='register')
