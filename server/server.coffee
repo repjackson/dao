@@ -79,7 +79,7 @@ Meteor.publish 'docs', (
     #     match.source = $all:selected_sources
     console.log match
     Docs.find match,
-        limit:10
+        limit:5
         sort:"#{sort_key}":-1
                     
                     

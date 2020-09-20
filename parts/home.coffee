@@ -99,14 +99,14 @@ if Meteor.isClient
             match = {model:$in:['post','wikipedia','reddit']}
             
             # match = {model:'post'}
-            if selected_tags.array().length>0
-                match.tags = $in:selected_tags.array()
+            # if selected_tags.array().length>0
+            match.tags = $all:selected_tags.array()
             Docs.find match,
                 sort:
                     points:-1
                     _timestamp:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
-                limit:10
+                limit:5
             
         term: ->
             # console.log @
@@ -157,9 +157,9 @@ if Meteor.isClient
     Template.tag_selector.events
         'click .select_tag': -> 
             selected_tags.push @name
-            if Meteor.user()
-                Meteor.call 'call_wiki', @name, ->
-                Meteor.call 'search_reddit', selected_tags.array(), ->
+            # if Meteor.user()
+            Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
     Template.home.events
         # 'click .delete': -> 
         #     console.log @
@@ -203,9 +203,9 @@ if Meteor.isClient
             # Session.set('query',search)
             if e.which is 13
                 selected_tags.push search
-                if Meteor.user()
-                    Meteor.call 'call_wiki', search, ->
-                    Meteor.call 'search_reddit', selected_tags.array(), ->
+                # if Meteor.user()
+                Meteor.call 'call_wiki', search, ->
+                Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8

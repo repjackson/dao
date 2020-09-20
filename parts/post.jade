@@ -1,51 +1,58 @@
 template(name='post_card')
-    .ui.horizontal.fluid.card
-        a.image(href="/post/#{_id}/view")
-            if watson.metadata.image
-                img(src=watson.metadata.image class=currentUser.invert_class)    
-            if is_youtube
-                .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
-            if is_image
+    .ui.stackable.grid
+        .four.wide.column
+            a.ui.fluid.image(href="/post/#{_id}/view")
+                if watson.metadata.image
+                    img(src=watson.metadata.image class=currentUser.invert_class)    
+                if is_youtube
+                    .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
+                // if is_image
                 img.ui.image(src=url class=currentUser.invert_class)    
-        if youtube_id
-            +youtube_view key='youtube_id' direct=true
-        if image_id
-            a.image(href="/post/#{_id}/view")
-                img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
-        .content
-            a.ui.header(href="/post/#{_id}/view") #{title}
-            .description.f12
-                |!{description}
-                // if tone
-                //     +tone
-                // |!{body}
-            +vote
-            // a(href="/post/#{_id}/view")
-            //     i.right.chevron.circular.link.big.icon
-            .ui.label #{points}p
-            .ui.label #{imported_points}ip
-            if is_admin
-                +print_this
-            +array_edit key='tags' direct=true
-            each tags
-                .ui.compact.large.circular.button.add_tag #{this}
-            .meta
-                |#{when}
-                if can_edit 
-                    a.ui.circular.icon.button(href="/post/#{_id}/edit")
-                        i.pencil.icon
-            a.ui.icon.button(href="/post/#{_id}/view")
-                i.chevron.right.icon
-        .description
-            // +comments_view_small   
-        
-    // .ui.divider
+            if youtube_id
+                +youtube_view key='youtube_id' direct=true
+            if image_id
+                a.image(href="/post/#{_id}/view")
+                    img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+        .twelve.wide.column
+            .content
+                a.ui.header(href="/post/#{_id}/view") #{title}
+                .description.f12
+                    |!{description}
+                    // if tone
+                    //     +tone
+                    // |!{body}
+                +vote
+                // a(href="/post/#{_id}/view")
+                //     i.right.chevron.circular.link.big.icon
+                .ui.label #{points}p
+                .ui.label #{imported_points}ip
+                if is_admin
+                    +print_this
+                // +array_edit key='tags' direct=true
+                each tags
+                    .ui.label
+                        i.minus.link.grey.icon.minus_tag(title='pay a point to lessen tag')
+                        a.add_tag #{this}
+                        i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
+                .meta
+                    |#{when}
+                    if can_edit 
+                        a.ui.circular.icon.button(href="/post/#{_id}/edit")
+                            i.pencil.icon
+                    a.ui.icon.button(href="/post/#{_id}/view")
+                        i.chevron.right.icon
+            .description
+                // +comments_view_small   
+                +call_watson mode='url' key='url'
+            
+        // .ui.divider
     
 template(name='one_post_view')
     .ui.fluid.card.view_post
         if watson.metadata.image
             img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
-        
+        img.ui.image(src=url class=currentUser.invert_class)    
+
         if youtube_id
             +youtube_view key='youtube_id' direct=true
         else if image_id
@@ -112,6 +119,8 @@ template(name='post_view')
                         .ui.header #{title}
                     if url 
                         a(href=url target='_window') #{url}
+                        img.ui.image(src=url class=currentUser.invert_class)    
+                        
                     if image_id
                         a(href="{{c.url image_id }}" target='_window')
                             img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
