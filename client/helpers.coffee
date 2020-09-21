@@ -266,7 +266,7 @@ Template.registerHelper 'has_enough', ()->
 
 
 Template.registerHelper 'is_image', ()->
-    if @domain in ['i.redd.it','i.imgur.com']
+    if @domain in ['i.redd.it','i.imgur.com','gyfycat.com']
         true
     else 
         false

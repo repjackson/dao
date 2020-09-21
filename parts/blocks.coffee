@@ -6,16 +6,16 @@ if Meteor.isClient
             
             
     Template.smart_tagger.onCreated ->
-        @autorun => @subscribe 'tag_results',
-            # Router.current().params.doc_id
-            selected_tags.array()
-            Session.get('searching')
-            Session.get('current_query')
-            Session.get('dummy')
+        # @autorun => @subscribe 'tag_results',
+        #     # Router.current().params.doc_id
+        #     selected_tags.array()
+        #     Session.get('searching')
+        #     Session.get('current_query')
+        #     Session.get('dummy')
 
     Template.smart_tagger.helpers        
-        terms: -> Terms.find()
-        suggestions: -> Tag_results.find()
+        # terms: -> Terms.find()
+        # suggestions: -> Tag_results.find()
 
     Template.smart_tagger.events
         'keyup .new_tag': _.throttle((e,t)->

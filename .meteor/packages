@@ -31,10 +31,8 @@ constellation:subscriptions
 constellation:session
 babrahams:temple
 accounts-password@1.6.2
-zimme:active-route
 lepozepo:cloudinary
 dburles:collection-helpers
-mrgalaxy:stripe
 francocatena:status
 flowkey:hotkeys
 ecmascript@0.14.3
