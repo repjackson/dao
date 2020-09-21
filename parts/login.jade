@@ -30,9 +30,12 @@ template(name='login')
                         |&nbsp;
                         i.sign.in.alternate.icon
                 .ui.center.aligned.basic.segment    
-                    a.ui.basic.button(href='/forgot_password')
+                    a.ui.button(href='/forgot_password')
                         i.refresh.icon
                         |forgot password
+                    a.ui.button(href='/register')
+                        i.plus.icon
+                        |register
 
 
 template(name='forgot_password')
@@ -69,10 +72,10 @@ template(name='forgot_password')
                             .ui.small.grey.header username "#{username}" not found
                             a(href='/choose_persona') register
                 .ui.center.aligned.basic.segment    
-                    a.ui.big.basic.button(href='/login') 
+                    a.ui.big.button(href='/login') 
                         i.sign.in.alternate.icon
                         |login
-                    a.ui.big.basic.button(href='/register')
+                    a.ui.big.button(href='/register')
                         +icon name='add-user-male' cl='ui mini inline image'
                         |register
 
@@ -108,15 +111,15 @@ template(name='register')
                     //- a.ui.icon.button(href="/")
                     //-     i.large.home.icon
                     .ui.big.inline.header 
-                        // i.yin.yang.icon
-                        +i name='add-user-male'
-                        // i.user.plus.icon
-                        |register
+                        i.yin.yang.icon
+                        // +i name='add-user-male'
+                        i.user.plus.icon
+                        // |register
                 //- if message
                 //-     h4.ui.center.aligned.header #{message}
                 .ui.small.inline.header 
                     i.user.outline.icon
-                    |username
+                    // |username
                 .ui.fluid.icon.input(class=login_class)
                     //- if email_valid
                     // if username_valid
@@ -134,7 +137,7 @@ template(name='register')
                 .ui.small.inline.header 
                     i.lock.grey.icon
                     // +icon name='password'
-                    | password
+                    // | password
                 .ui.fluid.input(class=login_class)
                     input.password(type='password')
                 //- .ui.fluid.labeled.input(class=login_class)

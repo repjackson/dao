@@ -6,8 +6,8 @@ template(name='post_card')
                     img(src=watson.metadata.image class=currentUser.invert_class)    
                 if is_youtube
                     .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
-                // if is_image
-                img.ui.image(src=url class=currentUser.invert_class)    
+                if is_image
+                    img.ui.image(src=url class=currentUser.invert_class)    
             if youtube_id
                 +youtube_view key='youtube_id' direct=true
             if image_id
@@ -18,14 +18,15 @@ template(name='post_card')
                 a.ui.header(href="/post/#{_id}/view") #{title}
                 .description.f12
                     |!{description}
+                .ui.label domain: #{domain}
                     // if tone
                     //     +tone
                     // |!{body}
-                +vote
+                // +vote
                 // a(href="/post/#{_id}/view")
                 //     i.right.chevron.circular.link.big.icon
-                .ui.label #{points}p
-                .ui.label #{imported_points}ip
+                // .ui.label #{points}p
+                // .ui.label #{imported_points}ip
                 if is_admin
                     +print_this
                 +array_edit key='tags' direct=true
@@ -34,17 +35,16 @@ template(name='post_card')
                 //         i.minus.link.grey.icon.minus_tag(title='pay a point to lessen tag')
                 //         a.add_tag #{this}
                 //         i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
-                .meta
-                    |#{when}
-                    if can_edit 
-                        a.ui.circular.icon.button(href="/post/#{_id}/edit")
-                            i.pencil.icon
-                    a.ui.icon.button(href="/post/#{_id}/view")
-                        i.chevron.right.icon
-                    // +comments_view_small   
-                    +call_watson mode='url' key='url'
-                    if watson
-                        +call_tone mode='url' key='url'
+                |#{when}
+                if can_edit 
+                    a.ui.circular.icon.button(href="/post/#{_id}/edit")
+                        i.pencil.icon
+                a.ui.icon.button(href="/post/#{_id}/view")
+                    i.chevron.right.icon
+                // +comments_view_small   
+                +call_watson mode='url' key='url'
+                if watson
+                    +call_tone mode='url' key='url'
             
         // .ui.divider
     
@@ -69,10 +69,10 @@ template(name='one_post_view')
                 // +tone
                 |!{description}
             .description
-                .ui.label #{points}p
-                .ui.label #{imported_points}ip
+                // .ui.label #{points}p
+                // .ui.label #{imported_points}ip
             
-                +vote
+                // +vote
                 +array_edit key='tags' direct=true
 
                 // each tags
@@ -145,23 +145,23 @@ template(name='post_view')
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon
                     .ui.inline.small.header #{when}
-                    .ui.label #{points}p
-                    .ui.label #{imported_points}ip
+                    // .ui.label #{points}p
+                    // .ui.label #{imported_points}ip
                     +call_watson key='url' mode='url'
                     if watson
                         +call_tone mode='url' key='url'
                     
                     // +vote
-                    .ui.large.link.list
-                        each votes
-                            .item
-                                a(href="/user/#{_author_username}") #{_author_username}
-                                |#{points} #{when}
-                                if can_edit
-                                    +array_edit key='tags' label='tags' direct=true
-                                else
-                                    +array_view key='tags' label='tags' direct=true
-                            .ui.divider
+                    // .ui.large.link.list
+                    //     each votes
+                    //         .item
+                    //             a(href="/user/#{_author_username}") #{_author_username}
+                    //             |#{points} #{when}
+                    //             if can_edit
+                    //                 +array_edit key='tags' label='tags' direct=true
+                    //             else
+                    //                 +array_view key='tags' label='tags' direct=true
+                    //         .ui.divider
                     .ui.label #{views} views
                     |#{tags.length} tags
                     +array_edit key='tags' direct=true
