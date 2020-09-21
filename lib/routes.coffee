@@ -15,6 +15,7 @@ Router.onBeforeAction(force_loggedin, {
     except: [
         'home'
         'post_view'
+        'post_edit'
         'register'
         'login'
         'verify-email'

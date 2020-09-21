@@ -425,9 +425,9 @@ template(name='pdf_edit')
         .field
             if field_value
                 label Uploaded PDF
-                a.ui.circular.button(href="{{c.url field_value gravity='face' crop='fit'}}")
+                a.ui.button(href="{{c.url field_value gravity='face' crop='fit'}}")
                     |Download PDF
-                #remove_photo.ui.icon.circular.button
+                #remove_photo.ui.icon.button
                     i.remove.red.icon
             else
                 //- if icon
@@ -905,7 +905,7 @@ template(name='child_view')
 
 template(name='boolean_edit')
     //- div
-    .ui.circular.button.toggle_boolean(class="#{boolean_toggle_class} #{classes}" title=tooltip)
+    .ui.button.toggle_boolean(class="#{boolean_toggle_class} #{classes}" title=tooltip)
         if field_value
             i.green.checkmark.icon
         else

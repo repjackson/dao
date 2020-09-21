@@ -58,7 +58,7 @@ template(name='print_this')
         i.orange.code.icon
 
 template(name='session_boolean_toggle')
-    .ui.compact.large.circular.button.toggle_session_key(class=calculated_class)
+    .ui.compact.large.button.toggle_session_key(class=calculated_class)
         // +icolor name=icon cl='ui avatar image'
         i.icon(class=icon)
         |#{label}
@@ -71,7 +71,7 @@ template(name='session_boolean_toggle')
                 
                 
 template(name='session_edit_value_button')
-    .ui.circular.button.set_session_value(class=calculated_class)
+    .ui.button.set_session_value(class=calculated_class)
         if icon
             // i.icon(class=icon)
             +i name=icon cl='ui avatar image'
@@ -242,7 +242,7 @@ template(name='big_user_card')
 
 
 template(name='user_info')
-    a.ui.compact.basic.circular.button(href="/user/#{user.username}/")
+    a.ui.compact.basic.button(href="/user/#{user.username}/")
         if user.profile_image_id
             img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
         //- .visible.content
@@ -299,11 +299,11 @@ template(name='creation_info')
 template(name='user_list_toggle')
     if currentUser
         if in_list
-            .ui.icon.compact.circular.button.toggle(class=user_list_toggle_class title=label)
+            .ui.icon.compact.button.toggle(class=user_list_toggle_class title=label)
                 i.large.icon(class=remove_icon)
                 // |#{label}
         else
-            .ui.icon.compact.circular.button.toggle(class=user_list_toggle_class title=label)
+            .ui.icon.compact.button.toggle(class=user_list_toggle_class title=label)
                 i.large.icon(class=add_icon)
         each list_users
             +user_info
@@ -491,7 +491,7 @@ template(name='user_string_toggle')
 
 
 template(name='key_value_edit')
-    a.ui.compact.large.circular.button.set_key_value.select_term(class=set_key_value_class title=value href='#')
+    a.ui.compact.large.button.set_key_value.select_term(class=set_key_value_class title=value href='#')
         if icon
             // +icon name=icon cl='ui avatar image'
             i.icon(class=icon)

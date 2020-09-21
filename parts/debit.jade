@@ -27,7 +27,7 @@ template(name='debit_card')
                 .ui.small.label #{this}
             // +voting_tiny
             // if upvoter_ids
-            +comments_view_small
+            // +comments_view_small
                                     
 
 template(name='debit_edit')
@@ -35,7 +35,7 @@ template(name='debit_edit')
         .ui.stackable.padded.grid
             .row 
                 .five.wide.column
-                    .ui.fluid.circular.button.cancel_debit
+                    .ui.fluid.button.cancel_debit
                         i.large.remove.red.icon
                         |cancel
                     // .ui.segment

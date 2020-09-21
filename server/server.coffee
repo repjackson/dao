@@ -8,13 +8,13 @@ Docs.allow
         # else
         #     user_id is doc._author_id
     update: (user_id, doc) ->
-        user = Meteor.users.findOne user_id
+        # user = Meteor.users.findOne user_id
         # console.log user_id
         # console.log doc._author_id
-        if user_id is doc._author_id
-            true
-        else if user.roles and 'admin' in user.roles
-            true
+        true
+        # if user_id is doc._author_id
+        # else if user.roles and 'admin' in user.roles
+        #     true
     remove: (user_id, doc) ->
         user = Meteor.users.findOne user_id
         if user.roles and 'admin' in user.roles
@@ -114,7 +114,7 @@ Meteor.publish 'tags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 10 }
+        { $limit: 7 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'filter: ', filter

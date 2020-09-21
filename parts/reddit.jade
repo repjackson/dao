@@ -28,7 +28,7 @@ template(name='reddit_view')
                     .ui.label #{views} views
                     |#{tags.length} tags
                     each tags 
-                        .ui.compact.circular.button.add_tag #{this}
+                        .ui.compact.button.add_tag #{this}
                     if is_admin
                         +print_this
 
@@ -94,7 +94,7 @@ template(name='one_reddit_view')
             
                 +vote
                 each tags
-                    .ui.compact.large.circular.button.add_tag #{this}
+                    .ui.compact.large.button.add_tag #{this}
                 +comments_view_small  
     // .ui.divider
 

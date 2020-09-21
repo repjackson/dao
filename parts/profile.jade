@@ -22,11 +22,11 @@ template(name='profile')
                         i.shield.icon
                         |account
                 if is_current_user
-                    a.ui.circular.button(href="/user/#{username}/edit" title='edit your account')
+                    a.ui.button(href="/user/#{username}/edit" title='edit your account')
                         // +i name='settings' cl='ui avatar image'
                         i.cog.icon
                         |account
-                    a.ui.circular.button.logout(href="#" title='log out')
+                    a.ui.button.logout(href="#" title='log out')
                         i.sign.out.icon
                         // +i name='exit' cl='ui avatar image'
                         |log out

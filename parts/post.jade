@@ -28,12 +28,12 @@ template(name='post_card')
                 .ui.label #{imported_points}ip
                 if is_admin
                     +print_this
-                // +array_edit key='tags' direct=true
-                each tags
-                    .ui.label
-                        i.minus.link.grey.icon.minus_tag(title='pay a point to lessen tag')
-                        a.add_tag #{this}
-                        i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
+                +array_edit key='tags' direct=true
+                // each tags
+                //     .ui.label
+                //         i.minus.link.grey.icon.minus_tag(title='pay a point to lessen tag')
+                //         a.add_tag #{this}
+                //         i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
                 .meta
                     |#{when}
                     if can_edit 
@@ -75,8 +75,8 @@ template(name='one_post_view')
                 +vote
                 +array_edit key='tags' direct=true
 
-                each tags
-                    .ui.compact.large.circular.button.add_tag #{this}
+                // each tags
+                //     .ui.compact.large.button.add_tag #{this}
                 // +comments_view_small  
     // .ui.divider
 
@@ -101,7 +101,7 @@ template(name='post_edit')
                         // |#{title}
                     +image_edit key='image_id' label='image' direct=true
                 .eight.wide.column
-                    |tag = -1p
+                    // |tag = -1p
                     +smart_tagger
                     +textarea_edit key='body' label='body' direct=true
                     if description
@@ -128,15 +128,16 @@ template(name='post_view')
                     if youtube_id
                         +youtube_view key='youtube_id' direct=true
                     .f12
-                        |{{nl2br body}}
-                        |!{description}
+                        // |{{nl2br body}}
                         if tone
                             +tone
                         if key_value_is 'model' 'reddit'
                             |!{body}
+                        else
+                            |!{description}
                     if is_admin
                         +viewing
-                    +comments
+                    // +comments
                 .six.wide.column.scrolling
                     if watson.metadata.image
                         img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
@@ -150,7 +151,7 @@ template(name='post_view')
                     if watson
                         +call_tone mode='url' key='url'
                     
-                    +vote
+                    // +vote
                     .ui.large.link.list
                         each votes
                             .item
@@ -163,8 +164,10 @@ template(name='post_view')
                             .ui.divider
                     .ui.label #{views} views
                     |#{tags.length} tags
-                    each tags 
-                        .ui.compact.circular.button.add_tag #{this}
+                    +array_edit key='tags' direct=true
+                    
+                    // each tags 
+                    //     .ui.compact.button.add_tag #{this}
                     if is_admin
                         +print_this
                         
