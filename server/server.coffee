@@ -52,8 +52,8 @@ Meteor.publish 'doc_by_title', (title)->
 
 
 Meteor.publish 'docs', (
-    # query=''
     selected_tags
+    # query=''
     )->
     match = {}
     match.model = $in:['post','wikipedia','reddit']
@@ -63,8 +63,8 @@ Meteor.publish 'docs', (
     #     match.downvoter_ids = $nin:[Meteor.userId()]
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}
-    # if selected_tags.length > 0
-    match.tags = $all:selected_tags
+    if selected_tags.length > 0
+        match.tags = $all:selected_tags
     #     sort_key = 'tags'
     # else
     #     sort_key = '_timestamp'
@@ -85,10 +85,10 @@ Meteor.publish 'tags', (
     
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}
-    # if selected_tags.length > 0 
-    match.tags = $all: selected_tags
-    # else
-    #     match.tags = $in:['dao']
+    if selected_tags.length > 0 
+        match.tags = $all: selected_tags
+    else
+        match.tags = $in:['dao']
 
     tag_cloud = Docs.aggregate [
         { $match: match }
@@ -100,8 +100,8 @@ Meteor.publish 'tags', (
         { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
-    # console.log 'filter: ', filter
-    # console.log 'cloud: ', cloud
+    console.log 'cloud: ', tag_cloud
+    console.log 'tag match', match
     tag_cloud.forEach (tag, i) ->
         self.added 'tag_results', Random.id(),
             name: tag.name

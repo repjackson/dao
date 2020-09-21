@@ -28,8 +28,8 @@ if Meteor.isClient
             # selected_sources.array()
             )
         @autorun -> Meteor.subscribe('docs',
-            # Session.get('query')
             selected_tags.array()
+            # Session.get('query')
             # selected_authors.array()
             # selected_upvoters.array()
             # selected_sources.array()
@@ -94,7 +94,6 @@ if Meteor.isClient
         three_posts: -> Docs.find().count() is 3
     
     
-        can_debit: -> Meteor.user().points > 0
         docs: ->
             match = {model:$in:['post','wikipedia','reddit']}
             
@@ -119,47 +118,20 @@ if Meteor.isClient
         
         selected_tags: -> selected_tags.array()
         tag_results: ->
-            doc_count = Docs.find({model:'post'}).count()
+            doc_count = Docs.find({model:$in:['post','wikipedia','reddit']}).count()
             if 0 < doc_count < 3 
                 Tag_results.find({ 
                     count:$lt:doc_count 
                 })
             else 
                 Tag_results.find()
-        # selected_authors: -> selected_authors.array()
-        # author_results: ->
-        #     doc_count = Docs.find().count()
-        #     if 0 < doc_count < 3 
-        #         author_results.find({ 
-        #             count:$lt:doc_count 
-        #         })
-        #     else 
-        #         author_results.find()
-        # selected_upvoters: -> selected_upvoters.array()
-        # upvoter_results: ->
-        #     doc_count = Docs.find().count()
-        #     if 0 < doc_count < 3 
-        #         upvoter_results.find({ 
-        #             count:$lt:doc_count 
-        #         })
-        #     else 
-        #         upvoter_results.find()
-        # selected_sources: -> selected_sources.array()
-        # source_results: ->
-        #     doc_count = Docs.find().count()
-        #     if 0 < doc_count < 3 
-        #         source_results.find({ 
-        #             count:$lt:doc_count 
-        #         })
-        #     else 
-        #         source_results.find()
 
     Template.tag_selector.events
         'click .select_tag': -> 
             selected_tags.push @name
             # if Meteor.user()
-            Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+            # Meteor.call 'call_wiki', @name, ->
+            # Meteor.call 'search_reddit', selected_tags.array(), ->
     Template.home.events
         # 'click .delete': -> 
         #     console.log @
@@ -178,27 +150,12 @@ if Meteor.isClient
     
         'click #clear_tags': -> selected_tags.clear()
     
-        # 'click .select_author': -> 
-        #     selected_authors.push @name
-        # 'click .unselect_author': -> selected_authors.remove @valueOf()
-        # 'click #clear_authors': -> selected_authors.clear()
-    
-        # 'click .select_upvoter': -> 
-        #     selected_upvoters.push @name
-        # 'click .unselect_upvoter': -> selected_upvoters.remove @valueOf()
-        # 'click #clear_upvoters': -> selected_upvoters.clear()
-    
-    
-        # 'click .select_source': -> 
-        #     selected_sources.push @name
-        # 'click .unselect_source': -> selected_sources.remove @valueOf()
-        # 'click #clear_sources': -> selected_sources.clear()
-    
     
         'keydown .search_title': (e,t)->
             search = $('.search_title').val().toLowerCase().trim()
             # Session.set('query',search)
             if e.which is 13
+                console.log search
                 selected_tags.push search
                 # if Meteor.user()
                 # Meteor.call 'call_wiki', search, ->
@@ -206,5 +163,5 @@ if Meteor.isClient
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8
-                if search.legnth is 0
+                if search.length is 0
                     selected_tags.pop()
