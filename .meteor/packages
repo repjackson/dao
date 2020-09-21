@@ -34,7 +34,6 @@ accounts-password@1.6.2
 lepozepo:cloudinary
 dburles:collection-helpers
 francocatena:status
-flowkey:hotkeys
 ecmascript@0.14.3
 modules@0.15.0
 http@1.4.2

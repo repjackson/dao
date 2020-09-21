@@ -148,7 +148,7 @@ template(name='post_view')
                     if watson
                         +call_tone mode='url' key='url'
                     
-                    .ui.label #{views} views
+                    // .ui.label #{views} views
                     |#{tags.length} tags
                     +array_edit key='tags' direct=true
                     

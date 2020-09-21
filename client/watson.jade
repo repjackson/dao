@@ -286,8 +286,9 @@ template(name='tone')
                     // - |weight:#{weight}
                     each tones
                         // .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
-                        .ui.text
-                            |#{tone_id} &nbsp;
+                        .ui.basic.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
+                            span.ui.text
+                                |#{tone_id} &nbsp;
                             | {{ to_percent score }}% 
     // unless tone                
     //- #call_tone.ui.icon.button
