@@ -162,5 +162,5 @@ template(name='post_view')
 template(name='post_tag')
     .ui.compact.button.add_tag 
         if tag_term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
+            img.ui.avatar.image(src=tag_term.watson.metadata.image)    
         |#{this}
