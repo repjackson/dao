@@ -64,13 +64,13 @@ Meteor.publish 'docs', (
     # match.model = 'post'
     # if Meteor.user()
     #     match.downvoter_ids = $nin:[Meteor.userId()]
-    if query.length > 1
-        match.title = {$regex:"#{query}", $options: 'i'}
+    # if query.length > 1
+    #     match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0
         match.tags = $all:selected_tags
-        sort_key = 'tags'
-    else
-        sort_key = '_timestamp'
+    #     sort_key = 'tags'
+    # else
+    #     sort_key = '_timestamp'
     # if selected_authors.length > 0
     #     match._author_username = $all:selected_authors
     # if selected_upvoters.length > 0
@@ -89,19 +89,19 @@ Meteor.publish 'tags', (
     # selected_authors
     # selected_upvoters
     # selected_sources
-    limit=20
+    # limit=20
     )->
     self = @
     match = {}
     match.model = $in:['post','wikipedia','reddit']
     # match.model = 'post'
     
-    if query.length > 1
-        match.title = {$regex:"#{query}", $options: 'i'}
-    if selected_tags.length > 0 
-        match.tags = $all: selected_tags
-    else
-        match.tags = $in:['dao']
+    # if query.length > 1
+    #     match.title = {$regex:"#{query}", $options: 'i'}
+    # if selected_tags.length > 0 
+    match.tags = $all: selected_tags
+    # else
+    #     match.tags = $in:['dao']
     # if selected_authors.length > 0 then match._author_username = $all: selected_authors
     # if Meteor.user()
     #     match.downvoter_ids = $nin:[Meteor.userId()]
@@ -165,9 +165,3 @@ Meteor.publish 'tags', (
    
     self.ready()
                     
-                    
-Meteor.publish 'user_kin', (username)->
-    user = Meteor.users.findOne username:username
-    Docs.find
-        model:'debit'
-        recipient_id:user._id                    

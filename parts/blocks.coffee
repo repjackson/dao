@@ -159,16 +159,16 @@ if Meteor.isClient
     Template.voting.events
         'click .upvote': (e,t)->
             # $(e.currentTarget).closest('.button').transition('pulse',200)
-            if Meteor.user()
-                Meteor.call 'upvote', @, ->
-            else
-                Router.go "/register"
+            # if Meteor.user()
+            Meteor.call 'upvote', @, ->
+            # else
+            #     Router.go "/register"
         'click .downvote': (e,t)->
             # $(e.currentTarget).closest('.button').transition('pulse',200)
-            if Meteor.user()
-                Meteor.call 'downvote', @, ->
-            else
-                Router.go "/register"
+            # if Meteor.user()
+            Meteor.call 'downvote', @, ->
+            # else
+            #     Router.go "/register"
     Template.voting_small.events
         'click .upvote': (e,t)->
             # $(e.currentTarget).closest('.button').transition('pulse',200)
@@ -196,19 +196,19 @@ if Meteor.isClient
             
     Template.vote.events
         'click .upvote': (e,t)->
-            $(e.currentTarget).closest('.button').transition('pulse',200)
-            if Meteor.user()
-                Meteor.call 'upvote', @_id, ->
-                Meteor.call 'calc_post_votes', @_id, ->
-            else
-                Router.go "/register"
-        # 'click .downvote': (e,t)->
-        #     # $(e.currentTarget).closest('.button').transition('pulse',200)
-        #     if Meteor.user()
-        #         Meteor.call 'downvote', @_id, ->
-        #         Meteor.call 'calc_post_votes', @_id, ->
-        #     else
-        #         Router.go "/register"
+            # $(e.currentTarget).closest('.button').transition('pulse',200)
+            # if Meteor.user()
+            Meteor.call 'upvote', @_id, ->
+            #     Meteor.call 'calc_post_votes', @_id, ->
+            # else
+            #     Router.go "/register"
+        'click .downvote': (e,t)->
+            # $(e.currentTarget).closest('.button').transition('pulse',200)
+            # if Meteor.user()
+            Meteor.call 'downvote', @_id, ->
+            # Meteor.call 'calc_post_votes', @_id, ->
+            # else
+            #     Router.go "/register"
 
 if Meteor.isServer
     Meteor.methods 

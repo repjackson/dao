@@ -16,14 +16,13 @@ template(name='post_card')
         .twelve.wide.column
             .content
                 a.ui.header(href="/post/#{_id}/view") #{title}
-                .description.f12
+                .description.f12.smallscroll
                     if body
                         |!{body}
                     else if description
                         |!{description}
                     else if tone
-                        .smallscroll
-                            +tone
+                        +tone
                 .ui.label domain: #{domain}
                     // if tone
                     //     +tone

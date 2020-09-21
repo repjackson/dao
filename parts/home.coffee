@@ -201,8 +201,8 @@ if Meteor.isClient
             if e.which is 13
                 selected_tags.push search
                 # if Meteor.user()
-                Meteor.call 'call_wiki', search, ->
-                Meteor.call 'search_reddit', selected_tags.array(), ->
+                # Meteor.call 'call_wiki', search, ->
+                # Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8

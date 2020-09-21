@@ -106,41 +106,49 @@ Meteor.methods
         # console.log 'doc_id', doc_id
         # console.log '1', 1
         post = Docs.findOne doc_id
-        vote_doc = 
-            Docs.findOne 
-                model:'vote'
-                parent_id:doc_id
-                _author_id:Meteor.userId()
-        unless vote_doc
-            new_id = 
-                Docs.insert
-                    model:'vote'
-                    parent_id:doc_id
-                    post_id:doc_id
-                    post_author_username:post._author_username
-                    post_author_id:post._author_id
-                    post_title:post.title
-                    post_tags:post.tags
-            vote_doc = Docs.findOne new_id   
-        Docs.update vote_doc._id, 
-            $inc:points:1
-        # console.log 'vote doc', vote_doc
-        Meteor.users.update Meteor.userId(),
-            $inc:points:-1
-        unless post._author_id is Meteor.userId()
-            Meteor.users.update post._author_id,
-                $inc:points:1
-        # vote_doc = Docs.findOne vote_doc._id
-        # if vote_doc.points > 0
         Docs.update doc_id,
-            $addToSet:
-                upvoter_ids:Meteor.userId()  
-                upvoter_usernames:Meteor.user().username  
-        # parent = Docs.findOne doc_id
-        # console.log 'parent', parent
-        Meteor.call 'calc_post_votes', doc_id, ->
+            $inc:points:1
+    downvote: (doc_id)->
+        # console.log 'doc_id', doc_id
+        # console.log '1', 1
+        post = Docs.findOne doc_id
+        Docs.update doc_id,
+            $inc:points:-1
+        # vote_doc = 
+        #     Docs.findOne 
+        #         model:'vote'
+        #         parent_id:doc_id
+        #         _author_id:Meteor.userId()
+        # unless vote_doc
+        #     new_id = 
+        #         Docs.insert
+        #             model:'vote'
+        #             parent_id:doc_id
+        #             post_id:doc_id
+        #             post_author_username:post._author_username
+        #             post_author_id:post._author_id
+        #             post_title:post.title
+        #             post_tags:post.tags
+        #     vote_doc = Docs.findOne new_id   
+        # Docs.update vote_doc._id, 
+        #     $inc:points:1
+        # # console.log 'vote doc', vote_doc
+        # Meteor.users.update Meteor.userId(),
+        #     $inc:points:-1
+        # unless post._author_id is Meteor.userId()
+        #     Meteor.users.update post._author_id,
+        #         $inc:points:1
+        # # vote_doc = Docs.findOne vote_doc._id
+        # # if vote_doc.points > 0
+        # Docs.update doc_id,
+        #     $addToSet:
+        #         upvoter_ids:Meteor.userId()  
+        #         upvoter_usernames:Meteor.user().username  
+        # # parent = Docs.findOne doc_id
+        # # console.log 'parent', parent
+        # Meteor.call 'calc_post_votes', doc_id, ->
         
-        # console.log 'upvoting usernames', parent
+        # # console.log 'upvoting usernames', parent
                 
-        # Meteor.call 'calc_user_stats', Meteor.userId(), ->
+        # # Meteor.call 'calc_user_stats', Meteor.userId(), ->
             
