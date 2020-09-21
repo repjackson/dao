@@ -23,16 +23,10 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe('tags',
             # Session.get('query')
             selected_tags.array()
-            # selected_authors.array()
-            # selected_upvoters.array()
-            # selected_sources.array()
             )
         @autorun -> Meteor.subscribe('docs',
             selected_tags.array()
             # Session.get('query')
-            # selected_authors.array()
-            # selected_upvoters.array()
-            # selected_sources.array()
             )
 
         
@@ -66,6 +60,7 @@ if Meteor.isClient
     Template.unselect_tag.helpers
         term: ->
             Docs.findOne 
+                model:'wikipedia'
                 title:@valueOf()
     Template.unselect_tag.events
        'click .unselect_tag': -> 
@@ -102,7 +97,7 @@ if Meteor.isClient
             match.tags = $all:selected_tags.array()
             Docs.find match,
                 sort:
-                    tags:1
+                    points:-1
                     _timestamp:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:5
@@ -158,8 +153,8 @@ if Meteor.isClient
                 console.log search
                 selected_tags.push search
                 # if Meteor.user()
-                # Meteor.call 'call_wiki', search, ->
-                # Meteor.call 'search_reddit', selected_tags.array(), ->
+                Meteor.call 'call_wiki', search, ->
+                Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('query','')
                 search = $('.search_title').val('')
             if e.which is 8

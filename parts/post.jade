@@ -30,8 +30,6 @@ template(name='post_card')
                 +vote
                 // a(href="/post/#{_id}/view")
                 //     i.right.chevron.circular.link.big.icon
-                // .ui.label #{points}p
-                // .ui.label #{imported_points}ip
                 if is_admin
                     +print_this
                 +array_edit key='tags' direct=true
@@ -46,10 +44,9 @@ template(name='post_card')
                         i.pencil.icon
                 a.ui.icon.button(href="/post/#{_id}/view")
                     i.chevron.right.icon
-                // +comments_view_small   
-                +call_watson mode='url' key='url'
-                if watson
-                    +call_tone mode='url' key='url'
+                // +call_watson mode='url' key='url'
+                // if watson
+                //     +call_tone mode='url' key='url'
             
         // .ui.divider
     
@@ -73,17 +70,14 @@ template(name='one_post_view')
             .description.f12
                 // +tone
                 |!{description}
+                if tone 
+                    +tone
             .description
-                // .ui.label #{points}p
-                // .ui.label #{imported_points}ip
-            
-                // +vote
+                +vote
                 +array_edit key='tags' direct=true
 
-                // each tags
-                //     .ui.compact.large.button.add_tag #{this}
-                // +comments_view_small  
-    // .ui.divider
+                each tags
+                    .ui.compact.large.button.add_tag #{this}
 
                  
 template(name='post_section_button')                 
@@ -133,16 +127,15 @@ template(name='post_view')
                     if youtube_id
                         +youtube_view key='youtube_id' direct=true
                     .f12
-                        // |{{nl2br body}}
                         if tone
                             +tone
                         if key_value_is 'model' 'reddit'
-                            |!{body}
+                            |{{nl2br body}}
+                            // |!{body}
                         else
                             |!{description}
                     if is_admin
                         +viewing
-                    // +comments
                 .six.wide.column.scrolling
                     if watson.metadata.image
                         img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
@@ -150,30 +143,24 @@ template(name='post_view')
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon
                     .ui.inline.small.header #{when}
-                    // .ui.label #{points}p
-                    // .ui.label #{imported_points}ip
+                    .ui.label #{points}p
                     +call_watson key='url' mode='url'
                     if watson
                         +call_tone mode='url' key='url'
                     
-                    // +vote
-                    // .ui.large.link.list
-                    //     each votes
-                    //         .item
-                    //             a(href="/user/#{_author_username}") #{_author_username}
-                    //             |#{points} #{when}
-                    //             if can_edit
-                    //                 +array_edit key='tags' label='tags' direct=true
-                    //             else
-                    //                 +array_view key='tags' label='tags' direct=true
-                    //         .ui.divider
+                    +vote
                     .ui.label #{views} views
                     |#{tags.length} tags
                     +array_edit key='tags' direct=true
                     
                     each tags 
-                        .ui.compact.button.add_tag #{this}
+                        +post_tag
                     if is_admin
                         +print_this
                         
                         
+template(name='post_tag')
+    .ui.compact.button.add_tag 
+        if tag_term
+            img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
+        |#{this}

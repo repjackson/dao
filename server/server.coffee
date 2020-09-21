@@ -71,7 +71,7 @@ Meteor.publish 'docs', (
     console.log match
     Docs.find match,
         limit:5
-        sort:_timestamp:1
+        sort:points:-1
                     
                     
 Meteor.publish 'tags', (
