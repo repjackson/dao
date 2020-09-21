@@ -1,63 +1,48 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.small.menu.topnav(class=currentUser.invert_class)
-        // if currentUser
-        // a.icon.header.item.toggle_sidebar
-        //     i.bars.large.icon
-        if connected
-            // if is_admin
-                // a.icon.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
-                // .item
-                //     .ui.green.header not connected
-            a.icon.item(href="/")
-                if session_is 'loading'
-                    i.large.yin.yang.loading.icon
-                else
-                    i.large.yin.yang.icon
-        else
-            .item
-                +status    
-        .right.menu
-            a.icon.item.post(title='add')
-                i.large.plus.icon
-            if currentUser
-                // a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
-                a.icon.item.toggle_nightmode(href="#")
-                    i.lightbulb.large.grey.icon
-                
-                if is_dev 
-                    a.icon.item.toggle_dev
-                        i.large.code.icon
-                if is_admin
-                    a.icon.item.toggle_admin
-                        i.large.shield.icon(title='admin mode on')
-                a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'profile'}}")
-                    //- i.large.user.large.icon
-                    |{{money_format currentUser.points}}c
-                    |&nbsp;
-                    // if currentUser.profile_image_id
-                    //     img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                    // else 
-                    //     i.large.user.large.icon
-                    strong.mobile.hidden #{currentUser.username}
-            // else
-            //     // a.icon.item(href="/register" title='register')
-            //     //     i.large.user.plus.icon
-            //     //     // |register
-            //     a.item(href="/login" title='login')
-            //         i.large.grey.sign.in.alternate.icon
-            //         // |login
-            // a.icon.large.item.toggle_rightbar.select_term
-            //     i.bars.large.icon
-            
-            
-template(name='add')
-    .ui.basic.center.aligned.segment
-        i.huge.plus.icon
-        a.ui.basic.huge.button.debit
-            i.gift.large.icon
-            // +i name='gift' cl='ui avatar image'
-            |gift
-        a.ui.basic.huge.button.post(title='post')
-            // +i name='blog' cl='ui avatar image'
-            i.newspaper.large.icon
-            |post
+    // .ui.fluid.attached.borderless.small.menu.topnav(class=currentUser.invert_class)
+    // if currentUser
+    // a.icon.header.item.toggle_sidebar
+    //     i.bars.large.icon
+    if connected
+        // if is_admin
+            // a.icon.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
+            // .item
+            //     .ui.green.header not connected
+        a.ui.icon.circular.button(href="/")
+            if session_is 'loading'
+                i.large.yin.yang.loading.icon
+            else
+                i.large.yin.yang.icon
+    else
+        +status    
+    a.ui.icon.circular.button.post(title='add')
+        i.large.plus.icon
+    if currentUser
+        // a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')
+        a.icon.item.toggle_nightmode(href="#")
+            i.lightbulb.large.grey.icon
+        if is_dev 
+            a.icon.item.toggle_dev
+                i.large.code.icon
+        if is_admin
+            a.icon.item.toggle_admin
+                i.large.shield.icon(title='admin mode on')
+        a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'profile'}}")
+            //- i.large.user.large.icon
+            |{{money_format currentUser.points}}c
+            |&nbsp;
+            // if currentUser.profile_image_id
+            //     img.ui.avatar.compact.image(src="{{c.url currentUser.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            // else 
+            //     i.large.user.large.icon
+            strong.mobile.hidden #{currentUser.username}
+    // else
+    //     // a.icon.item(href="/register" title='register')
+    //     //     i.large.user.plus.icon
+    //     //     // |register
+    //     a.item(href="/login" title='login')
+    //         i.large.grey.sign.in.alternate.icon
+    //         // |login
+    // a.icon.large.item.toggle_rightbar.select_term
+    //     i.bars.large.icon
+    
