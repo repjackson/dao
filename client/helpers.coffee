@@ -171,9 +171,8 @@ Template.registerHelper 'to_percent', (number)->
 #         if @downvoter_ids and Meteor.userId() in @downvoter_ids then '' else 'outline'
 #     else ''
 
-Template.registerHelper 'current_month', () -> moment(Date.now()).format("MMMM")
-Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
-
+Template.registerHelper 'current_doc', ()->
+    Docs.findOne Router.current().params.doc_id
 
 Template.registerHelper 'is_image', ()->
     if @domain in ['i.redd.it','i.imgur.com','gyfycat.com','v.redd.it']

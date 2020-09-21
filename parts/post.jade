@@ -160,7 +160,7 @@ template(name='post_view')
                         
                         
 template(name='post_tag')
-    .ui.compact.button.add_tag 
+    a.ui.image.link.big.label.add_tag 
         if tag_term
             img.ui.avatar.image(src=tag_term.watson.metadata.image)    
         |#{this}

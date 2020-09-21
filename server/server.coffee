@@ -1,4 +1,5 @@
 # tsqp-gebk-xhpz-eobp-agle
+Meteor.publish 'doc', (doc_id)->    Docs.find doc_id
 
 Docs.allow
     insert: (user_id, doc) ->
@@ -68,7 +69,7 @@ Meteor.publish 'docs', (
     #     sort_key = 'tags'
     # else
     #     sort_key = '_timestamp'
-    console.log match
+    # console.log match
     Docs.find match,
         limit:5
         sort:points:-1
@@ -97,11 +98,11 @@ Meteor.publish 'tags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 10 }
+        { $limit: 15 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
-    console.log 'cloud: ', tag_cloud
-    console.log 'tag match', match
+    # console.log 'cloud: ', tag_cloud
+    # console.log 'tag match', match
     tag_cloud.forEach (tag, i) ->
         self.added 'tag_results', Random.id(),
             name: tag.name

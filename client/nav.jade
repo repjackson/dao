@@ -3,7 +3,6 @@ template(name='nav')
         // if currentUser
         // a.icon.header.item.toggle_sidebar
         //     i.bars.large.icon
-        +status    
         if connected
             // if is_admin
                 // a.icon.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
@@ -14,6 +13,9 @@ template(name='nav')
                     i.large.yin.yang.loading.icon
                 else
                     i.large.yin.yang.icon
+        else
+            .item
+                +status    
         .right.menu
             a.icon.item.post(title='add')
                 i.large.plus.icon

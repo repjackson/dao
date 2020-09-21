@@ -72,12 +72,6 @@
 
 
 
-# Meteor.publish 'doc', (doc_id)->
-#     found_doc = Docs.findOne doc_id
-#     if found_doc
-#         Docs.find doc_id
-#     else
-#         Meteor.users.find doc_id
 
 
 
