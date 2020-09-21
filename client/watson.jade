@@ -284,11 +284,11 @@ template(name='tone')
                     //- .content
                     // - .header(title="#{sentence_id}") {{lowered text}}
                     // - |weight:#{weight}
-                    // each tones
-                    //     .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
-                            // span.ui.small.text
-                            //     |#{tone_id} &nbsp;
-                            // | {{ to_percent score }}% 
+                    each tones
+                        // .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
+                        .ui.text
+                            |#{tone_id} &nbsp;
+                            | {{ to_percent score }}% 
     // unless tone                
     //- #call_tone.ui.icon.button
     //-     i.refresh.icon

@@ -114,7 +114,6 @@ template(name='post_view')
         .ui.stackable.padded.grid
             .row 
                 .ten.wide.column.scrolling
-                
                     if title 
                         .ui.header #{title}
                     if url 
@@ -138,17 +137,17 @@ template(name='post_view')
                         +viewing
                 .six.wide.column.scrolling
                     if watson.metadata.image
-                        img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+                        img.ui.rounded.image(src=watson.metadata.image class=currentUser.invert_class)    
                     if can_edit
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon
-                    .ui.inline.small.header #{when}
-                    .ui.label #{points}p
+                    +vote
+                    .ui.inline.small.grey.header #{when}
+                    // .ui.label #{points}p
                     +call_watson key='url' mode='url'
                     if watson
                         +call_tone mode='url' key='url'
                     
-                    +vote
                     .ui.label #{views} views
                     |#{tags.length} tags
                     +array_edit key='tags' direct=true
