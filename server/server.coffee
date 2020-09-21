@@ -98,7 +98,10 @@ Meteor.publish 'tags', (
     
     if query.length > 1
         match.title = {$regex:"#{query}", $options: 'i'}
-    if selected_tags.length > 0 then match.tags = $all: selected_tags
+    if selected_tags.length > 0 
+        match.tags = $all: selected_tags
+    else
+        match.tags = $in:['dao']
     # if selected_authors.length > 0 then match._author_username = $all: selected_authors
     # if Meteor.user()
     #     match.downvoter_ids = $nin:[Meteor.userId()]

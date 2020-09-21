@@ -800,11 +800,11 @@ template(name='array_edit')
         input.new_element(type='text' placeholder='+' autocomplete="off")
         //- +clear_value                
     if field_value
-        each field_value
-            .ui.large.label
-                if can_edit
-                    i.delete.icon.remove_element
-                |#{this}
+        if can_edit
+            each field_value
+                .ui.large.label
+                        i.delete.icon.remove_element
+                    |#{this}
                 
 template(name='array_view')
     if field_value

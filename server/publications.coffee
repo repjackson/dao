@@ -112,10 +112,11 @@ Meteor.publish 'tag_results', (
         # #     # match.tags = {$regex:"#{query}", $options: 'i'}
         # #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
         # #
-        terms = Terms.find({
+        terms = Docs.find({
             # title: {$regex:"#{query}"}
             title: {$regex:"#{query}", $options: 'i'}
             app:'dao'
+            model:'wikipedia'
         },
             sort:
                 count: -1
@@ -151,49 +152,49 @@ Meteor.publish 'tag_results', (
         if selected_tags.length > 0
             # match.tags = $all: debit.tags
             match.tags = $all: selected_tags
-            # else
-            #     # unless selected_domains.length > 0
-            #     #     unless selected_subreddits.length > 0
-            #     #         unless selected_subreddits.length > 0
-            #     #             unless selected_emotions.length > 0
-            #     match.tags = $all: ['dao']
-            # console.log 'match for tags', match
-            # if selected_subreddits.length > 0
-            #     match.subreddit = $all: selected_subreddits
-            # if selected_domains.length > 0
-            #     match.domain = $all: selected_domains
-            # if selected_emotions.length > 0
-            #     match.max_emotion_name = $all: selected_emotions
-            console.log 'match for tags', match
-    
-    
-            agg_doc_count = Docs.find(match).count()
-            tag_cloud = Docs.aggregate [
-                { $match: match }
-                { $project: "tags": 1 }
-                { $unwind: "$tags" }
-                { $group: _id: "$tags", count: $sum: 1 }
-                { $match: _id: $nin: selected_tags }
-                { $match: count: $lt: agg_doc_count }
-                # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
-                { $sort: count: -1, _id: 1 }
-                { $limit: 10 }
-                { $project: _id: 0, name: '$_id', count: 1 }
-            ], {
-                allowDiskUse: true
-            }
-    
-            tag_cloud.forEach (tag, i) =>
-                # console.log 'queried tag ', tag
-                # console.log 'key', key
-                self.added 'tags', Random.id(),
-                    title: tag.name
-                    count: tag.count
-                    # category:key
-                    # index: i
-            # console.log doc_tag_cloud.count()
+        else
+            match.tags = $all: ['dao']
+        #     # unless selected_domains.length > 0
+        #     #     unless selected_subreddits.length > 0
+        #     #         unless selected_subreddits.length > 0
+        #     #             unless selected_emotions.length > 0
+        # console.log 'match for tags', match
+        # if selected_subreddits.length > 0
+        #     match.subreddit = $all: selected_subreddits
+        # if selected_domains.length > 0
+        #     match.domain = $all: selected_domains
+        # if selected_emotions.length > 0
+        #     match.max_emotion_name = $all: selected_emotions
+        console.log 'match for tags', match
 
-        self.ready()
+
+        agg_doc_count = Docs.find(match).count()
+        tag_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "tags": 1 }
+            { $unwind: "$tags" }
+            { $group: _id: "$tags", count: $sum: 1 }
+            { $match: _id: $nin: selected_tags }
+            { $match: count: $lt: agg_doc_count }
+            # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+        ], {
+            allowDiskUse: true
+        }
+
+        tag_cloud.forEach (tag, i) =>
+            # console.log 'queried tag ', tag
+            # console.log 'key', key
+            self.added 'tags', Random.id(),
+                title: tag.name
+                count: tag.count
+                # category:key
+                # index: i
+        # console.log doc_tag_cloud.count()
+
+    self.ready()
 
 Meteor.publish 'doc_results', (
     selected_tags

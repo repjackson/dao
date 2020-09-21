@@ -36,11 +36,11 @@ template(name='post_card')
                 if is_admin
                     +print_this
                 +array_edit key='tags' direct=true
-                // each tags
-                //     .ui.label
-                //         i.minus.link.grey.icon.minus_tag(title='pay a point to lessen tag')
-                //         a.add_tag #{this}
-                //         i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
+                each tags
+                    a.ui.label.add_tag
+                        // i.minus.link.grey.icon.minus_tag(title='pay a point to lessen tag')
+                        | #{this}
+                        // i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
                 |#{when}
                 if can_edit 
                     a.ui.circular.icon.button(href="/post/#{_id}/edit")
@@ -172,8 +172,8 @@ template(name='post_view')
                     |#{tags.length} tags
                     +array_edit key='tags' direct=true
                     
-                    // each tags 
-                    //     .ui.compact.button.add_tag #{this}
+                    each tags 
+                        .ui.compact.button.add_tag #{this}
                     if is_admin
                         +print_this
                         
