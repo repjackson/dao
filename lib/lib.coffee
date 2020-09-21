@@ -2,15 +2,15 @@
 
 @Tags = new Meteor.Collection 'tags'
 @Tag_results = new Meteor.Collection 'tag_results'
-@Terms = new Meteor.Collection 'terms'
-@author_results = new Meteor.Collection 'author_results'
-@overlap = new Meteor.Collection 'overlap'
+# @Terms = new Meteor.Collection 'terms'
+# @author_results = new Meteor.Collection 'author_results'
+# @overlap = new Meteor.Collection 'overlap'
 # @source_results = new Meteor.Collection 'source_results'
-@upvoter_results = new Meteor.Collection 'upvoter_results'
+# @upvoter_results = new Meteor.Collection 'upvoter_results'
 # @buyer_results = new Meteor.Collection 'buyer_results'
 # @Model_results = new Meteor.Collection 'model_results'
 # @status_results = new Meteor.Collection 'status_results'
-@User_tags = new Meteor.Collection 'user_tags'
+# @User_tags = new Meteor.Collection 'user_tags'
 
 
 if Meteor.isClient

@@ -1,7 +1,7 @@
 if Meteor.isClient
     @selected_tags = new ReactiveArray []
-    @selected_authors = new ReactiveArray []
-    @selected_upvoters = new ReactiveArray []
+    # @selected_authors = new ReactiveArray []
+    # @selected_upvoters = new ReactiveArray []
     # @selected_sources = new ReactiveArray []
     
     Template.body.events
@@ -23,15 +23,15 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe('tags',
             Session.get('query')
             selected_tags.array()
-            selected_authors.array()
-            selected_upvoters.array()
+            # selected_authors.array()
+            # selected_upvoters.array()
             # selected_sources.array()
             )
         @autorun -> Meteor.subscribe('docs',
             Session.get('query')
             selected_tags.array()
-            selected_authors.array()
-            selected_upvoters.array()
+            # selected_authors.array()
+            # selected_upvoters.array()
             # selected_sources.array()
             )
 
@@ -103,7 +103,7 @@ if Meteor.isClient
             match.tags = $all:selected_tags.array()
             Docs.find match,
                 sort:
-                    points:-1
+                    tags:1
                     _timestamp:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:5
@@ -126,24 +126,24 @@ if Meteor.isClient
                 })
             else 
                 Tag_results.find()
-        selected_authors: -> selected_authors.array()
-        author_results: ->
-            doc_count = Docs.find().count()
-            if 0 < doc_count < 3 
-                author_results.find({ 
-                    count:$lt:doc_count 
-                })
-            else 
-                author_results.find()
-        selected_upvoters: -> selected_upvoters.array()
-        upvoter_results: ->
-            doc_count = Docs.find().count()
-            if 0 < doc_count < 3 
-                upvoter_results.find({ 
-                    count:$lt:doc_count 
-                })
-            else 
-                upvoter_results.find()
+        # selected_authors: -> selected_authors.array()
+        # author_results: ->
+        #     doc_count = Docs.find().count()
+        #     if 0 < doc_count < 3 
+        #         author_results.find({ 
+        #             count:$lt:doc_count 
+        #         })
+        #     else 
+        #         author_results.find()
+        # selected_upvoters: -> selected_upvoters.array()
+        # upvoter_results: ->
+        #     doc_count = Docs.find().count()
+        #     if 0 < doc_count < 3 
+        #         upvoter_results.find({ 
+        #             count:$lt:doc_count 
+        #         })
+        #     else 
+        #         upvoter_results.find()
         # selected_sources: -> selected_sources.array()
         # source_results: ->
         #     doc_count = Docs.find().count()
@@ -178,15 +178,15 @@ if Meteor.isClient
     
         'click #clear_tags': -> selected_tags.clear()
     
-        'click .select_author': -> 
-            selected_authors.push @name
-        'click .unselect_author': -> selected_authors.remove @valueOf()
-        'click #clear_authors': -> selected_authors.clear()
+        # 'click .select_author': -> 
+        #     selected_authors.push @name
+        # 'click .unselect_author': -> selected_authors.remove @valueOf()
+        # 'click #clear_authors': -> selected_authors.clear()
     
-        'click .select_upvoter': -> 
-            selected_upvoters.push @name
-        'click .unselect_upvoter': -> selected_upvoters.remove @valueOf()
-        'click #clear_upvoters': -> selected_upvoters.clear()
+        # 'click .select_upvoter': -> 
+        #     selected_upvoters.push @name
+        # 'click .unselect_upvoter': -> selected_upvoters.remove @valueOf()
+        # 'click #clear_upvoters': -> selected_upvoters.clear()
     
     
         # 'click .select_source': -> 
@@ -195,9 +195,6 @@ if Meteor.isClient
         # 'click #clear_sources': -> selected_sources.clear()
     
     
-        'click .view_debit': ->
-            Router.go "/debit/#{@_id}/view"
-
         'keydown .search_title': (e,t)->
             search = $('.search_title').val().toLowerCase().trim()
             # Session.set('query',search)

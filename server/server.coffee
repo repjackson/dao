@@ -54,8 +54,8 @@ Meteor.publish 'doc_by_title', (title)->
 Meteor.publish 'docs', (
     query=''
     selected_tags
-    selected_authors
-    selected_upvoters
+    # selected_authors
+    # selected_upvoters
     # selected_sources
     )->
     match = {}
@@ -68,26 +68,26 @@ Meteor.publish 'docs', (
         match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0
         match.tags = $all:selected_tags
-        sort_key = 'points'
+        sort_key = 'tags'
     else
         sort_key = '_timestamp'
-    if selected_authors.length > 0
-        match._author_username = $all:selected_authors
-    if selected_upvoters.length > 0
-        match.upvoter_usernames = $all:selected_upvoters
+    # if selected_authors.length > 0
+    #     match._author_username = $all:selected_authors
+    # if selected_upvoters.length > 0
+    #     match.upvoter_usernames = $all:selected_upvoters
     # if selected_sources.length > 0
     #     match.source = $all:selected_sources
     console.log match
     Docs.find match,
         limit:5
-        sort:"#{sort_key}":-1
+        sort:tags:1
                     
                     
 Meteor.publish 'tags', (
     query=''
     selected_tags
-    selected_authors
-    selected_upvoters
+    # selected_authors
+    # selected_upvoters
     # selected_sources
     limit=20
     )->
@@ -99,11 +99,11 @@ Meteor.publish 'tags', (
     if query.length > 1
         match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0 then match.tags = $all: selected_tags
-    if selected_authors.length > 0 then match._author_username = $all: selected_authors
+    # if selected_authors.length > 0 then match._author_username = $all: selected_authors
     # if Meteor.user()
     #     match.downvoter_ids = $nin:[Meteor.userId()]
-    if selected_upvoters.length > 0
-        match.upvoter_usernames = $all:selected_upvoters
+    # if selected_upvoters.length > 0
+    #     match.upvoter_usernames = $all:selected_upvoters
     # if selected_sources.length > 0
     #     match.source = $all:selected_sources
 
@@ -114,7 +114,7 @@ Meteor.publish 'tags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 7 }
+        { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'filter: ', filter

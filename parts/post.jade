@@ -17,7 +17,13 @@ template(name='post_card')
             .content
                 a.ui.header(href="/post/#{_id}/view") #{title}
                 .description.f12
-                    |!{description}
+                    if body
+                        |!{body}
+                    else if description
+                        |!{description}
+                    else if tone
+                        .smallscroll
+                            +tone
                 .ui.label domain: #{domain}
                     // if tone
                     //     +tone
