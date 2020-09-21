@@ -1,9 +1,9 @@
 if Meteor.isClient
     Template.reddit_view.onCreated ->
-        @autorun -> Meteor.subscribe 'reddit_tips', Router.current().params.doc_id
-        @autorun -> Meteor.subscribe 'reddit_votes', Router.current().params.doc_id
+        # @autorun -> Meteor.subscribe 'reddit_tips', Router.current().params.doc_id
+        # @autorun -> Meteor.subscribe 'reddit_votes', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun -> Meteor.subscribe 'me'
+        # @autorun -> Meteor.subscribe 'me'
         
         Session.setDefault 'view_reddit_section', 'content'
     Template.reddit_edit.onRendered ->

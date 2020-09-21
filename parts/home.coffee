@@ -21,14 +21,14 @@ if Meteor.isClient
     Template.home.onCreated ->
         @autorun -> Meteor.subscribe('me')
         @autorun -> Meteor.subscribe('tags',
-            Session.get('query')
+            # Session.get('query')
             selected_tags.array()
             # selected_authors.array()
             # selected_upvoters.array()
             # selected_sources.array()
             )
         @autorun -> Meteor.subscribe('docs',
-            Session.get('query')
+            # Session.get('query')
             selected_tags.array()
             # selected_authors.array()
             # selected_upvoters.array()
