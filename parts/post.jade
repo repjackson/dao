@@ -28,14 +28,14 @@ template(name='post_card')
                     else if description
                         |!{description}
                 if domain
-                    .ui.label domain: #{domain}
+                    .ui.label(title='domain') #{domain}
                     // if tone
                     //     +tone
                     // |!{body}
                 if rd.ups
                     .ui.label #{rd.ups} ups
                 +autotag
-                // +vote
+                +vote
                 // a(href="/post/#{_id}/view")
                 //     i.right.chevron.circular.link.big.icon
                 if is_admin

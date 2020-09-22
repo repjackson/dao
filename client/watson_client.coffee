@@ -85,7 +85,7 @@ Template.call_watson.events
 
 Template.autotag.events
     'click .autotag': ->
-        console.log @
+        # console.log @
         if @rd and @rd.selftext_html
             dom = document.createElement('textarea')
             # dom.innerHTML = doc.body
