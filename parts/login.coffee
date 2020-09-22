@@ -299,7 +299,7 @@ if Meteor.isServer
     Meteor.methods
         set_user_password: (user, password)->
             result = Accounts.setPassword(user._id, password)
-            console.log result
+            # console.log result
             result
 
         # verify_email: (email)->

@@ -3,9 +3,9 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
   
     Template.post_edit.onRendered ->
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 2000
+        # Meteor.setTimeout ->
+        #     $('.ui.accordion').accordion()
+        # , 2000
 
     Template.post_view.onRendered ->
         # Meteor.call 'log_view', Router.current().params.doc_id

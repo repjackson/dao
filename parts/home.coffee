@@ -93,14 +93,14 @@ if Meteor.isClient
             match = {model:$in:['post','wikipedia','reddit']}
             
             # match = {model:'post'}
-            # if selected_tags.array().length>0
-            match.tags = $all:selected_tags.array()
+            if selected_tags.array().length>0
+                match.tags = $all:selected_tags.array()
             Docs.find match,
                 sort:
                     points:-1
                     _timestamp:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
-                limit:5
+                limit:10
             
         term: ->
             # console.log @
@@ -108,8 +108,7 @@ if Meteor.isClient
                 model:$in:['wikipedia']
                 title:@name
         
-        one_result: ->
-            Docs.find().count() < 2
+        one_result: -> Docs.find().count() < 2
         
         selected_tags: -> selected_tags.array()
         tag_results: ->
@@ -157,6 +156,6 @@ if Meteor.isClient
                 Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('query','')
                 search = $('.search_title').val('')
-            if e.which is 8
-                if search.length is 0
-                    selected_tags.pop()
+            # if e.which is 8
+            #     if search.length is 0
+            #         selected_tags.pop()

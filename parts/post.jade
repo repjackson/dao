@@ -1,32 +1,33 @@
 template(name='post_card')
     .ui.stackable.grid
         .four.wide.column
-            a.ui.fluid.image(href="/post/#{_id}/view")
+            a.ui.fluid.rounded.image(href="/post/#{_id}/view")
                 if watson.metadata.image
                     img(src=watson.metadata.image class=currentUser.invert_class)    
                 if is_youtube
                     .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
                 if is_image
-                    img.ui.image(src=url class=currentUser.invert_class)    
+                    img(src=url class=currentUser.invert_class)    
             if youtube_id
                 +youtube_view key='youtube_id' direct=true
             if image_id
                 a.image(href="/post/#{_id}/view")
-                    img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+                    img.ui.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
             if thumbnail
                 a.image(href="/post/#{_id}/view")
-                    img.ui.image(src=thumbnail class=currentUser.invert_class)
+                    img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
         .twelve.wide.column
             .content
                 a.ui.header(href="/post/#{_id}/view") #{title}
                 .description.f12.smallscroll
-                    if body
-                        |!{body}
+                    if tone
+                        +tone
+                    else if body
+                        |{{nl2br body}}
                     else if description
                         |!{description}
-                    else if tone
-                        +tone
-                .ui.label domain: #{domain}
+                if domain
+                    .ui.label domain: #{domain}
                     // if tone
                     //     +tone
                     // |!{body}
@@ -70,11 +71,13 @@ template(name='one_post_view')
                 |#{title}
             .meta
                 |#{when}
-            .description.f12
-                // +tone
-                |!{description}
-                if tone 
+            .description.f11
+                if tone
                     +tone
+                else if body
+                    |{{nl2br body}}
+                else if description
+                    |!{description}
             .description
                 +vote
                 +array_edit key='tags' direct=true
@@ -134,7 +137,7 @@ template(name='post_view')
                         .f12
                             if tone
                                 +tone
-                            if key_value_is 'model' 'reddit'
+                            else if key_value_is 'model' 'reddit'
                                 |{{nl2br body}}
                                 // |!{body}
                             else

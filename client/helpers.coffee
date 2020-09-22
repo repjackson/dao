@@ -181,7 +181,7 @@ Template.registerHelper 'is_image', ()->
         false
 
 Template.registerHelper 'is_youtube', ()->
-    if @domain in ['youtube.com','youtu.be']
+    if @domain in ['youtube.com','youtu.be','m.youtube.com']
         true
     else 
         false
