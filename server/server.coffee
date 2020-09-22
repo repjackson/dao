@@ -76,7 +76,7 @@ Meteor.publish 'docs', (
         limit:10
         sort:
             points:-1
-            "rd.ups":-1
+            ups:-1
                     
                     
 Meteor.publish 'tags', (

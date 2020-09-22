@@ -9,7 +9,7 @@ Template.registerHelper 'youtube_parse', (url) ->
         null
         
 Template.registerHelper 'post_header_class', (metric) ->
-    console.log @
+    # console.log @
     if @max_emotion_name
         if @max_emotion_name is 'joy' then 'green invert'
         else if @max_emotion_name is 'anger' then 'red invert'
@@ -42,11 +42,9 @@ Template.registerHelper 'connected', () -> Meteor.status().connected
     
     
 Template.registerHelper 'tone_size', () ->
-    # console.log 'this weight', @weight
+    console.log 'this weight', @weight
     # console.log typeof parseFloat(@relevance)
     # console.log typeof (@relevance*100).toFixed()
-    # whole = parseInt(@["#{metric}"]*10)
-    # console.log 'whole', whole
     if @weight
         if @weight is -5 then 'f6'
         else if @weight is -4 then 'f7'

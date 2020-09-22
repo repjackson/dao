@@ -281,7 +281,7 @@ template(name='text_view')
 
 template(name='array_edit')
     // div
-    i.large.tags.icon
+    i.grey.tag.icon
     // if icon
     //     - i.grey.icon(class=icon)
     //     +icon name=icon cl='ui avatar image'
@@ -292,8 +292,9 @@ template(name='array_edit')
     //         |#{label}
     //     else if key
     //         |#{key}
-    .ui.input
-        input.new_element(type='text' placeholder='+' autocomplete="off")
+    .ui.icon.input
+        i.plus.icon
+        input.new_element(type='text' placeholder='tag' autocomplete="off")
         //- +clear_value                
     if field_value
         if can_edit

@@ -117,6 +117,15 @@ if Meteor.isClient
             selected_tags.remove @valueOf()
             Meteor.call 'search_reddit', selected_tags.array(), ->
 
+    Template.tone.events
+        # 'click .upvote_sentence': ->
+        'click .tone_item': ->
+            # console.log @
+            doc_id = Docs.findOne()._id
+            if @weight is 3
+                Meteor.call 'reset_sentence', doc_id, @, ->
+            else
+                Meteor.call 'upvote_sentence', doc_id, @, ->
                 
     Template.home.helpers
         selected_tags_plural: -> selected_tags.array().length > 1
@@ -148,6 +157,7 @@ if Meteor.isClient
             Docs.find match,
                 sort:
                     points:-1
+                    ups:-1
                     _timestamp:-1
                     # "#{Session.get('sort_key')}": Session.get('sort_direction')
                 limit:10
