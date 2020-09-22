@@ -48,19 +48,19 @@ template(name='home')
     div
     .spacer
     .scrolling
-        if two_posts
-            .ui.stackable.two.cards
-                each docs
-                    +one_post_view
-        else if one_post
-            .ui.stackable.cards
-                each docs
-                    +one_post_view
-        else
-            // .ui.stackable.cards
-            each docs
-                +post_card
-                .ui.divider
+        // if two_posts
+        //     .ui.stackable.two.cards
+        //         each docs
+        //             +one_post_view
+        // else if one_post
+        //     .ui.stackable.cards
+        //         each docs
+        //             +one_post_view
+        // else
+        //     // .ui.stackable.cards
+        each docs
+            +post_card
+            .ui.divider
 
 
 template(name='unselect_tag')
