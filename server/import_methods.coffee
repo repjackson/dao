@@ -4,7 +4,7 @@ Meteor.methods
         console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=10&include_facets=true",(err,response)=>
+        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=5&include_facets=true",(err,response)=>
             # console.log response.data
             if err then console.log err
             else if response.data.data.dist > 1
@@ -56,8 +56,8 @@ Meteor.methods
                         unless existing_doc
                             # console.log 'importing url', data.url
                             new_reddit_post_id = Docs.insert reddit_post
-                            Meteor.users.update Meteor.userId(),
-                                $inc:points:1
+                            # Meteor.users.update Meteor.userId(),
+                            #     $inc:points:1
                             # console.log 'calling watson on ', reddit_post.title
                             Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
                                 # console.log 'get post res', res
@@ -170,9 +170,9 @@ Meteor.methods
             else
                 console.log response.data[1]
                 for term,i in response.data[1]
-                    console.log 'term', term
-                    console.log 'i', i
-                    console.log 'url', response.data[3][i]
+                    # console.log 'term', term
+                    # console.log 'i', i
+                    # console.log 'url', response.data[3][i]
                     url = response.data[3][i]
     
                 #     # console.log response
@@ -186,14 +186,16 @@ Meteor.methods
                         # console.log 'found wiki doc for term', term
                         # console.log 'found wiki doc for term', term, found_doc
                         Docs.update found_doc._id,
-                            $pull:
-                                tags:'wikipedia'
+                            # $pull:
+                            #     tags:'wikipedia'
+                            $set:
+                                title:found_doc.title.toLowerCase()
                         # console.log 'found wiki doc', found_doc
                         # Meteor.call 'call_watson', found_doc._id, 'url','url', ->
                     else
                         new_wiki_id = Docs.insert
-                            title: term
-                            tags:[term,query]
+                            title:term.toLowerCase()
+                            tags:[term.toLowerCase(),query.toLowerCase()]
                             source: 'wikipedia'
                             model:'wikipedia'
                             # ups: 1000000

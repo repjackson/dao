@@ -83,6 +83,22 @@ Template.call_watson.events
         Meteor.call 'call_watson', Router.current().params.doc_id, parent.key, @mode, ->
         # Meteor.call 'call_watson', doc._id, @key, @mode, ->
 
+Template.autotag.events
+    'click .autotag': ->
+        console.log @
+        if @rd and @rd.selftext_html
+            dom = document.createElement('textarea')
+            # dom.innerHTML = doc.body
+            dom.innerHTML = @rd.selftext_html
+            console.log 'innner html', dom.value
+            # return dom.value
+            Docs.update @_id,
+                $set:
+                    parsed_selftext_html:dom.value
+        
+        doc = Template.parentData()
+        Meteor.call 'call_watson', @_id, 'url', 'url', ->
+
 
 Template.call_tone.events
     'click .call': ->
@@ -97,12 +113,6 @@ Template.call_tone.events
         # Meteor.call 'call_watson', doc._id, @key, @mode, ->
 
 
-
-
-Template.personality.events
-    'click #call_personality': ->
-        # console.log @
-        Meteor.call 'call_personality', @_id, ->
 
 
 Template.call_visual.events

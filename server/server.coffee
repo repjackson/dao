@@ -58,6 +58,7 @@ Meteor.publish 'docs', (
     )->
     match = {}
     match.model = $in:['post','wikipedia','reddit']
+    # match.model = $in:['post','wikipedia']
     
     # match.model = 'post'
     # if Meteor.user()
@@ -88,6 +89,7 @@ Meteor.publish 'tags', (
     self = @
     match = {}
     match.model = $in:['post','wikipedia','reddit']
+    # match.model = $in:['post','wikipedia']
     # match.model = 'post'
     
     # if query.length > 1

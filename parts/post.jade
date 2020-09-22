@@ -20,7 +20,7 @@ template(name='post_card')
         .twelve.wide.column
             .content
                 a.ui.header(href="/post/#{_id}/view" class=post_header_class) #{title}
-                .description.f12.smallscroll
+                .description.smallscroll
                     if tone
                         +tone
                     else if body
@@ -34,15 +34,18 @@ template(name='post_card')
                     // |!{body}
                 if rd.ups
                     .ui.label #{rd.ups} ups
-            
-                +vote
+                +autotag
+                // +vote
                 // a(href="/post/#{_id}/view")
                 //     i.right.chevron.circular.link.big.icon
                 if is_admin
                     +print_this
                 +array_edit key='tags' direct=true
                 each tags
-                    a.ui.label.add_tag
+                    a.ui.large.image.label.add_tag
+                        if tag_term
+                            img.ui.invert.image(src=tag_term.watson.metadata.image)    
+                    
                         // i.minus.link.grey.icon.minus_tag(title='pay a point to lessen tag')
                         | #{this}
                         // i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
@@ -59,7 +62,7 @@ template(name='post_card')
         // .ui.divider
     
 template(name='one_post_view')
-    .ui.fluid.card.view_post
+    .ui.fluid.inverted.card.view_post
         if watson.metadata.image
             img.ui.image(src=watson.metadata.image class='invert')    
         img.ui.image(src=url class='invert')    
@@ -146,7 +149,7 @@ template(name='post_view')
                                 // |!{body}
                             else
                                 |!{description}
-                        +watson_view
+                        // +watson_view
                         // if is_admin
                         //     +viewing
                 .six.wide.column.scrolling

@@ -42,10 +42,6 @@ if Meteor.isClient
         # console.log @
         @autorun => Meteor.subscribe('doc_by_title', @data)
     Template.post_tag.helpers
-        tag_term: ->
-            Docs.findOne 
-                model:'wikipedia'
-                title:@valueOf()
     Template.post_tag.events
         'click .add_tag': ->
             selected_tags.push @valueOf()

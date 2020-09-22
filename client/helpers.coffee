@@ -65,6 +65,10 @@ Template.registerHelper 'is_dao', () -> @username is 'dao'
 Template.registerHelper 'current_month', () -> moment(Date.now()).format("MMMM")
 Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
 
+Template.registerHelper 'tag_term', () ->
+    Docs.findOne 
+        model:'wikipedia'
+        title:@valueOf()
 
 
 # Template.registerHelper 'field_value', () ->

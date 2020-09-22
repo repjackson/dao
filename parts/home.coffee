@@ -156,7 +156,7 @@ if Meteor.isClient
             # console.log @
             Docs.find 
                 model:$in:['wikipedia']
-                title:@name
+                lower_title:@name
         
         one_result: -> Docs.find().count() < 2
         
@@ -176,7 +176,7 @@ if Meteor.isClient
             # if Meteor.user()
             Meteor.call 'call_wiki', @name, ->
                 # Meteor.call 'calc_term', @title, ->
-                Meteor.call 'omega', @title, ->
+                # Meteor.call 'omega', @title, ->
                 
             Meteor.call 'search_reddit', selected_tags.array(), ->
     Template.home.events

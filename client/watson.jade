@@ -58,6 +58,12 @@ template(name='call_watson')
         // |autotag
     if page_doc.watson 
         i.checkmark.icon
+template(name='autotag')
+    button.ui.large.icon.circular.button.autotag
+        i.dna.icon
+        // |autotag
+        if watson 
+            i.checkmark.icon
 template(name='call_tone')
     button.ui.icon.large.circular.button.call
         i.smile.icon
@@ -185,87 +191,6 @@ template(name='categories')
                 |{{ to_percent score }}%
 
 
-template(name='semantic_roles')
-    .ui.accordion
-        .title
-            .ui.header #{watson.semantic_roles.length} semantic roles
-                i.dropdown.icon
-        .content
-            +jsonView(json=watson.semantic_roles)
-            //- .ui.list
-            //-     each watson.semantic_roles
-            //-         .item
-            //-             strong #{label}
-            //-             |{{ to_percent score }}%
-template(name='relations')
-    .title
-        .ui.inline.header #{watson.relations.length} relations
-        i.dropdown.icon
-    .content    
-        +jsonView(json=watson.relations)
-        //- .ui.list
-        //-     each watson.relations
-        //-         .item
-        //-             strong #{label}
-        //-             |{{ to_percent score }}%
-template(name='personality')
-    if personality
-        h3
-            | #{customer.first_name} personality 
-        each personality.personality
-            h4.ui.small.grey.header
-                |#{name} {{ to_percent percentile }}%
-                .ui.list
-                    //- .item raw score {{ to_percent raw_score }}%
-                    //- .item significant #{significant}
-            .ui.list
-                each children
-                    .item #{name} {{ to_percent percentile }}%
-                    .ui.list
-                        //- .item raw score {{ to_percent raw_score }}%
-                        //- .item significant #{significant}
-        .ui.small.grey.header needs
-        .ui.list
-            each personality.needs
-                .item #{name} {{ to_percent percentile }}%
-                .ui.list
-                    //- .item raw score {{ to_percent raw_score }}%
-                    //- .item significant #{significant}
-        .ui.small.grey.header values
-        .ui.list
-            each personality.values
-                .item #{name} {{ to_percent percentile }}%
-                //- .ui.list
-                //-     .item raw score {{ to_percent raw_score }}%
-                //-     .item significant #{significant}
-        if personality.behavior
-            .title 
-                | behavior
-                i.dropdown.icon
-            .content
-                .ui.list
-                    each personality.behavior
-                        .item #{name} {{ to_percent percentage }}%
-    else
-        // p Not enough words to analyze author personality
-    #call_personality.ui.icon.button(title='analyze personality')
-        i.refresh.icon
-
-
-template(name='consumption_preferences')
-    if personality
-        h3.ui.small.grey.header
-            |#{customer.first_name} preferences
-        each personality.consumption_preferences
-            h3.ui.small.grey.header #{name}
-            .ui.list
-                each consumption_preferences
-                    if score
-                        .item #{name}
-                    else
-                        .disabled.item #{name}
-            // +jsonView(json=personality.consumption_preferences)
-//- 
 //- 
 template(name='tone')
     // h3 tone
@@ -284,11 +209,11 @@ template(name='tone')
                     //- .content
                     // - .header(title="#{sentence_id}") {{lowered text}}
                     // - |weight:#{weight}
-                    each tones
-                        .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
-                            span.ui.text
-                                |#{tone_id} &nbsp;
-                            | {{ to_percent score }}% 
+                    // each tones
+                    //     .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
+                    //         span.ui.text
+                    //             |#{tone_id} &nbsp;
+                    //         | {{ to_percent score }}% 
     // unless tone                
     //- #call_tone.ui.icon.button
     //-     i.refresh.icon
