@@ -94,6 +94,28 @@ Docs.before.insert (userId, doc)->
 
 
 Meteor.methods
+    upvote_sentence: (doc_id, sentence)->
+        console.log sentence
+        Docs.update(
+            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
+            { $inc: { "tone.result.sentences_tone.$.weight": 1 } }
+        )
+
+    reset_sentence: (doc_id, sentence)->
+        console.log sentence
+        Docs.update(
+            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
+            { $set: { "tone.result.sentences_tone.$.weight": -2 } }
+        )
+
+
+    downvote_sentence: (doc_id, sentence)->
+        console.log sentence
+        Docs.update(
+            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
+            { $inc: { "tone.result.sentences_tone.$.weight": -1 } }
+        )
+
     upvote: (doc_id)->
         # console.log 'doc_id', doc_id
         # console.log '1', 1

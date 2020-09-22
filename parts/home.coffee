@@ -1,4 +1,54 @@
 if Meteor.isClient
+    Template.nav.onCreated ->
+        @autorun => Meteor.subscribe 'me'
+    
+    Template.nav.events
+    #     'click .logout': ->
+    #         Session.set 'logging_out', true
+    #         Meteor.logout ->
+    #             Session.set 'logging_out', false
+    #             Router.go '/login'
+        
+        'click .toggle_nightmode': ->
+            if Meteor.user().invert_class is 'invert'
+                Meteor.users.update Meteor.userId(),
+                    $set:invert_class:''
+            else
+                Meteor.users.update Meteor.userId(),
+                    $set:invert_class:'invert'
+    
+    
+    
+        'click .toggle_admin': ->
+            if 'admin' in Meteor.user().roles
+                Meteor.users.update Meteor.userId(),
+                    $pull:'roles':'admin'
+            else
+                Meteor.users.update Meteor.userId(),
+                    $addToSet:'roles':'admin'
+        'click .toggle_dev': ->
+            if 'dev' in Meteor.user().roles
+                Meteor.users.update Meteor.userId(),
+                    $pull:'roles':'dev'
+            else
+                Meteor.users.update Meteor.userId(),
+                    $addToSet:'roles':'dev'
+    
+        'click .home': ->
+            Router.go '/'
+            
+    Template.nav.events
+        'click .post': ->
+            new_post_id =
+                Docs.insert
+                    model:'post'
+                    source:'self'
+                    # buyer_id:Meteor.userId()
+                    # buyer_username:Meteor.user().username
+            Router.go "/post/#{new_post_id}/edit"
+    
+
+if Meteor.isClient
     @selected_tags = new ReactiveArray []
     # @selected_authors = new ReactiveArray []
     # @selected_upvoters = new ReactiveArray []

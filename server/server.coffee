@@ -74,7 +74,9 @@ Meteor.publish 'docs', (
     # console.log match
     Docs.find match,
         limit:10
-        sort:points:-1
+        sort:
+            points:-1
+            "rd.ups":-1
                     
                     
 Meteor.publish 'tags', (

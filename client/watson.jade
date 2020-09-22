@@ -53,15 +53,15 @@ template(name='doc_emotion')
     .spacer
 
 template(name='call_watson')
-    button.ui.button.autotag
-        i.chess.icon
-        |autotag
+    button.ui.large.icon.circular.button.autotag
+        i.dna.icon
+        // |autotag
     if page_doc.watson 
         i.checkmark.icon
 template(name='call_tone')
-    button.ui.button.call
-        i.chess.icon
-        |call tone
+    button.ui.icon.large.circular.button.call
+        i.smile.icon
+        // |call tone
     if page_doc.tone 
         i.checkmark.icon
 //- 
@@ -285,8 +285,7 @@ template(name='tone')
                     // - .header(title="#{sentence_id}") {{lowered text}}
                     // - |weight:#{weight}
                     each tones
-                        // .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
-                        .ui.basic.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
+                        .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
                             span.ui.text
                                 |#{tone_id} &nbsp;
                             | {{ to_percent score }}% 

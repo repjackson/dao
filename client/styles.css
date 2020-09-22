@@ -497,12 +497,12 @@ a.title, #title {
 
 .label {
   margin:3px !important;
-  /*border-radius: 10px !important; */
+  border-radius: 7px !important; 
 }
 
 input {
     margin: 5px !important;
-    /*border-radius: 10px !important; */
+    border-radius: 7px !important; 
 }
 
 ::-webkit-scrollbar {
