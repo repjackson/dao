@@ -53,13 +53,13 @@ template(name='doc_emotion')
     .spacer
 
 template(name='call_watson')
-    .ui.button.autotag
+    button.ui.button.autotag
         i.chess.icon
         |autotag
     if page_doc.watson 
         i.checkmark.icon
 template(name='call_tone')
-    .ui.button.call
+    button.ui.button.call
         i.chess.icon
         |call tone
     if page_doc.tone 

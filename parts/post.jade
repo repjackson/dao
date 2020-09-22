@@ -13,6 +13,9 @@ template(name='post_card')
             if image_id
                 a.image(href="/post/#{_id}/view")
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+            if thumbnail
+                a.image(href="/post/#{_id}/view")
+                    img.ui.image(src=thumbnail class=currentUser.invert_class)
         .twelve.wide.column
             .content
                 a.ui.header(href="/post/#{_id}/view") #{title}
@@ -113,28 +116,31 @@ template(name='post_view')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .ten.wide.column.scrolling
+                .ten.wide.column
+                    // a.ui.circular.icon.button(href='/')
+                    //     i.big.yin.yang.icon
                     if title 
                         .ui.header #{title}
-                    if url 
-                        a(href=url target='_window') #{url}
-                        img.ui.image(src=url class=currentUser.invert_class)    
-                        
-                    if image_id
-                        a(href="{{c.url image_id }}" target='_window')
-                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
-                    if youtube_id
-                        +youtube_view key='youtube_id' direct=true
-                    .f12
-                        if tone
-                            +tone
-                        if key_value_is 'model' 'reddit'
-                            |{{nl2br body}}
-                            // |!{body}
-                        else
-                            |!{description}
-                    if is_admin
-                        +viewing
+                    .scrolling
+                        if url 
+                            a(href=url target='_window') #{url}
+                            img.ui.image(src=url class=currentUser.invert_class)    
+                            
+                        if image_id
+                            a(href="{{c.url image_id }}" target='_window')
+                                img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                        if youtube_id
+                            +youtube_view key='youtube_id' direct=true
+                        .f12
+                            if tone
+                                +tone
+                            if key_value_is 'model' 'reddit'
+                                |{{nl2br body}}
+                                // |!{body}
+                            else
+                                |!{description}
+                        // if is_admin
+                        //     +viewing
                 .six.wide.column.scrolling
                     if watson.metadata.image
                         img.ui.rounded.image(src=watson.metadata.image class=currentUser.invert_class)    

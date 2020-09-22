@@ -175,7 +175,7 @@ Template.registerHelper 'current_doc', ()->
     Docs.findOne Router.current().params.doc_id
 
 Template.registerHelper 'is_image', ()->
-    if @domain in ['i.redd.it','i.imgur.com','gyfycat.com','v.redd.it']
+    if @domain in ['i.redd.it','i.imgur.com','imgur.com','gyfycat.com','v.redd.it','giphy.com']
         true
     else 
         false
