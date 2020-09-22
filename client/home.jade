@@ -31,15 +31,15 @@ template(name='home')
 template(name='unselect_tag')
     a.unselect_tag.ui.black.big.image.label.select_termn
         if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
+            img.ui.avatar.compact.image(src=term.watson.metadata.image class='invert')    
         | #{this}
 
 template(name='tag_selector')
     a.ui.big.image.label.select_tag.select_term(href='#')
-        // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-        // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
+        // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+        // img.ui.avatar.compact.image(src=term.rd.thumbnail class='invert')
         if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
+            img.ui.avatar.compact.image(src=term.watson.metadata.image class='invert')    
         | #{name}
 
 

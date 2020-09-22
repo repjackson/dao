@@ -8,14 +8,13 @@ template(name='nav')
             // a.icon.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
             // .item
             //     .ui.green.header not connected
-        a.ui.icon.circular.button(href="/")
-            if session_is 'loading'
-                i.large.yin.yang.loading.icon
-            else
-                i.large.yin.yang.icon
+        if session_is 'loading'
+            i.large.yin.yang.loading.big.grey.icon
+        else
+            i.large.yin.yang.big.grey.icon
     else
         +status    
-    a.ui.icon.circular.button.post(title='add')
+    a.ui.icon.circular.basic.button.post(title='add')
         i.large.plus.icon
     if currentUser
         // a.icon.item(href="/add" class="{{isActiveRoute 'add'}}" title='add')

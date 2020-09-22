@@ -3,19 +3,19 @@ template(name='post_card')
         .four.wide.column
             a.ui.fluid.rounded.image(href="/post/#{_id}/view")
                 if watson.metadata.image
-                    img(src=watson.metadata.image class=currentUser.invert_class)    
+                    img(src=watson.metadata.image class='invert')    
                 if is_youtube
-                    .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
+                    .ui.embed(data-source="youtube" data-id=youtube_parse class='invert')
                 if is_image
-                    img(src=url class=currentUser.invert_class)    
+                    img(src=url class='invert')    
             if youtube_id
                 +youtube_view key='youtube_id' direct=true
             if image_id
                 a.image(href="/post/#{_id}/view")
-                    img.ui.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+                    img.ui.rounded.image(src="{{c.url image_id }}" class='invert')
             if thumbnail
                 a.image(href="/post/#{_id}/view")
-                    img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
+                    img.ui.rounded.image(src=thumbnail class='invert')
         .twelve.wide.column
             .content
                 a.ui.header(href="/post/#{_id}/view") #{title}
@@ -57,14 +57,14 @@ template(name='post_card')
 template(name='one_post_view')
     .ui.fluid.card.view_post
         if watson.metadata.image
-            img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
-        img.ui.image(src=url class=currentUser.invert_class)    
+            img.ui.image(src=watson.metadata.image class='invert')    
+        img.ui.image(src=url class='invert')    
 
         if youtube_id
             +youtube_view key='youtube_id' direct=true
         else if image_id
             a.image(href="/post/#{_id}/view")
-                img.ui.image(src="{{c.url image_id width=800 crop='fill'}}" class=currentUser.invert_class) 
+                img.ui.image(src="{{c.url image_id width=800 crop='fill'}}" class='invert') 
         .content
             a.inline.header(href="/post/#{_id}/view")
                 i.right.chevron.circular.icon
@@ -99,7 +99,7 @@ template(name='post_edit')
         .ui.stackable.padded.grid
             .row 
                 .eight.wide.column
-                    a.ui.icon.circular.large.button(href="/post/#{_id}/view" title='save' class=currentUser.invert_class)
+                    a.ui.icon.circular.large.button(href="/post/#{_id}/view" title='save' class='invert')
                         i.checkmark.big.icon
                     .ui.inline.large.header 
                         small edit post
@@ -127,11 +127,11 @@ template(name='post_view')
                     .scrolling
                         if url 
                             a(href=url target='_window') #{url}
-                            img.ui.image(src=url class=currentUser.invert_class)    
+                            img.ui.image(src=url class='invert')    
                             
                         if image_id
                             a(href="{{c.url image_id }}" target='_window')
-                                img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                                img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class='invert')
                         if youtube_id
                             +youtube_view key='youtube_id' direct=true
                         .f12
@@ -146,7 +146,7 @@ template(name='post_view')
                         //     +viewing
                 .six.wide.column.scrolling
                     if watson.metadata.image
-                        img.ui.rounded.image(src=watson.metadata.image class=currentUser.invert_class)    
+                        img.ui.rounded.image(src=watson.metadata.image class='invert')    
                     if can_edit
                         a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit")
                             i.large.pencil.icon
@@ -168,7 +168,7 @@ template(name='post_view')
                         
                         
 template(name='post_tag')
-    a.ui.image.link.big.label.add_tag 
+    a.ui.image.link.large.label.add_tag 
         if tag_term
             img.ui.avatar.image(src=tag_term.watson.metadata.image)    
         |#{this}
