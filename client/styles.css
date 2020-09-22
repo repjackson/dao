@@ -11,12 +11,12 @@ body {
     /*background: rgba(200,200,200,1) !important;*/
     /* filter: invert(1) !important; */
     /* overscroll-behavior: none; */
-    transition: all 1s ease !important;
+    transition: all 2s ease !important;
     /* background: #0e0e44 !important; */
 }
 
 .tone_item {
-    transition: all 1s ease !important;
+    transition: all 2s ease !important;
 }
 
 
@@ -146,7 +146,7 @@ html.ios body {
 
 
 .segment:not(.pushable) {
-  transition: height 1s linear;
+  transition: height 2s linear;
   /*border-radius: 10px !important;*/
 }
 
@@ -243,7 +243,7 @@ html.ios body {
     /* z-index: 2000 !important; */
 }
 .global_container{
-    transition: transform 1s !important;
+    transition: transform 2s !important;
      /*margin-top: 3.5em !important; */
     /* box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
 }
@@ -590,7 +590,7 @@ body {
 
 
 .button, .selector, .card, .dark_mode, .ui.header, .ui.label, .item, p, img{
-    animation: fadein 1s !important;
+    animation: fadein 2s !important;
     /*-webkit-transition: opacity .2s ease-in !important;*/
     /* -webkit-transition: opacity .2s ease-out; */
     /* animation: fadeout .25s; */
@@ -612,7 +612,7 @@ body {
 }
 
 .ui.header{
-    transition: all 1s ease !important;
+    transition: all 2s ease !important;
     /* text-transform: capitalize !important; */
     /* font-family: 'Raleway', sans-serif !important; */
     /* font-family: 'Montserrat', sans-serif !important; */
@@ -627,7 +627,7 @@ body {
 }
 
 .result_column {
-  /* animation: fadein 1s; */
+  /* animation: fadein 2s; */
 }
 
 @media screen and (max-width: 1100px) {

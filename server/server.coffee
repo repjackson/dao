@@ -66,17 +66,19 @@ Meteor.publish 'docs', (
     #     match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0
         match.tags = $all:selected_tags
+        # console.log match
+        Docs.find match,
+            limit:7
+            sort:
+                points:-1
+                ups:-1
     else
-        match.tags = $in:['life']
-    #     sort_key = 'tags'
-    # else
-    #     sort_key = '_timestamp'
-    # console.log match
-    Docs.find match,
-        limit:10
-        sort:
-            points:-1
-            ups:-1
+        # match.tags = $in:['life']
+        # console.log match
+        Docs.find match,
+            limit:7
+            sort:
+                _timestamp:-1
                     
                     
 Meteor.publish 'tags', (

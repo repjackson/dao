@@ -42,7 +42,7 @@ Template.registerHelper 'connected', () -> Meteor.status().connected
     
     
 Template.registerHelper 'tone_size', () ->
-    console.log 'this weight', @weight
+    # console.log 'this weight', @weight
     # console.log typeof parseFloat(@relevance)
     # console.log typeof (@relevance*100).toFixed()
     if @weight

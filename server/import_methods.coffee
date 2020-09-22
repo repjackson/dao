@@ -144,39 +144,58 @@ Meteor.methods
                     # $addToSet:
                     #     tags: $each: [rd.subreddit.toLowerCase()]
                 # console.log Docs.findOne(doc_id)
+ 
+    #   'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
+    #   'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=';
+
+ 
+    # call_wiki: (query)->
+    #     console.log 'calling wiki', query
+    #     # term = query.split(' ').join('_')
+    #     # term = query[0]
+    #     term = query
+    #     # HTTP.get "https://en.wikipedia.org/wiki/#{term}",(err,response)=>
+    #     HTTP.get "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=#{term}",(err,response)=>
+    #         console.log response.data
+    #         # if err
     call_wiki: (query)->
         console.log 'calling wiki', query
         # term = query.split(' ').join('_')
         # term = query[0]
         term = query
-        HTTP.get "https://en.wikipedia.org/wiki/#{term}",(err,response)=>
-            # console.log response.data
+        # HTTP.get "https://en.wikipedia.org/wiki/#{term}",(err,response)=>
+        HTTP.get "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=#{term}",(err,response)=>
             if err
                 console.log 'error finding wiki article for ', query
-                # console.log err
             else
-
-                # console.log response
-                # console.log 'response'
-
-                found_doc =
-                    Docs.findOne
-                        url: "https://en.wikipedia.org/wiki/#{term}"
-                        model:'wikipedia'
-                if found_doc
-                    # console.log 'found wiki doc for term', term
-                    # console.log 'found wiki doc for term', term, found_doc
-                    Docs.update found_doc._id,
-                        $pull:
-                            tags:'wikipedia'
-                    # console.log 'found wiki doc', found_doc
-                    # Meteor.call 'call_watson', found_doc._id, 'url','url', ->
-                else
-                    new_wiki_id = Docs.insert
-                        title: query
-                        tags:[query]
-                        source: 'wikipedia'
-                        model:'wikipedia'
-                        # ups: 1000000
-                        url:"https://en.wikipedia.org/wiki/#{term}"
-                    Meteor.call 'call_watson', new_wiki_id, 'url','url', ->
+                console.log response.data[1]
+                for term,i in response.data[1]
+                    console.log 'term', term
+                    console.log 'i', i
+                    console.log 'url', response.data[3][i]
+                    url = response.data[3][i]
+    
+                #     # console.log response
+                #     # console.log 'response'
+    
+                    found_doc =
+                        Docs.findOne
+                            url: url
+                            model:'wikipedia'
+                    if found_doc
+                        # console.log 'found wiki doc for term', term
+                        # console.log 'found wiki doc for term', term, found_doc
+                        Docs.update found_doc._id,
+                            $pull:
+                                tags:'wikipedia'
+                        # console.log 'found wiki doc', found_doc
+                        # Meteor.call 'call_watson', found_doc._id, 'url','url', ->
+                    else
+                        new_wiki_id = Docs.insert
+                            title: term
+                            tags:[term,query]
+                            source: 'wikipedia'
+                            model:'wikipedia'
+                            # ups: 1000000
+                            url:url
+                        Meteor.call 'call_watson', new_wiki_id, 'url','url', ->

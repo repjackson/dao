@@ -26,18 +26,11 @@ if Meteor.isClient
             else
                 Meteor.users.update Meteor.userId(),
                     $addToSet:'roles':'admin'
-        'click .toggle_dev': ->
-            if 'dev' in Meteor.user().roles
-                Meteor.users.update Meteor.userId(),
-                    $pull:'roles':'dev'
-            else
-                Meteor.users.update Meteor.userId(),
-                    $addToSet:'roles':'dev'
     
         'click .home': ->
             Router.go '/'
-            
-    Template.nav.events
+        'click .reconnect': -> Meteor.reconnect()
+
         'click .post': ->
             new_post_id =
                 Docs.insert
@@ -50,9 +43,6 @@ if Meteor.isClient
 
 if Meteor.isClient
     @selected_tags = new ReactiveArray []
-    # @selected_authors = new ReactiveArray []
-    # @selected_upvoters = new ReactiveArray []
-    # @selected_sources = new ReactiveArray []
     
     Template.body.events
         # 'click a:not(.select_term)': ->
@@ -184,8 +174,11 @@ if Meteor.isClient
         'click .select_tag': -> 
             selected_tags.push @name
             # if Meteor.user()
-            # Meteor.call 'call_wiki', @name, ->
-            # Meteor.call 'search_reddit', selected_tags.array(), ->
+            Meteor.call 'call_wiki', @name, ->
+                # Meteor.call 'calc_term', @title, ->
+                Meteor.call 'omega', @title, ->
+                
+            Meteor.call 'search_reddit', selected_tags.array(), ->
     Template.home.events
         # 'click .delete': -> 
         #     console.log @

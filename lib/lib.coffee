@@ -2,7 +2,7 @@
 
 @Tags = new Meteor.Collection 'tags'
 @Tag_results = new Meteor.Collection 'tag_results'
-# @Terms = new Meteor.Collection 'terms'
+@Terms = new Meteor.Collection 'terms'
 
 
 if Meteor.isClient

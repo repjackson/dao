@@ -67,7 +67,7 @@ Meteor.methods
             if err
                 console.log err
             else
-                console.dir response
+                # console.dir response
                 Docs.update { _id: doc_id},
                     $set:
                         tone: response
@@ -121,24 +121,24 @@ Meteor.methods
         # console.log key
         # console.log mode
         doc = Docs.findOne doc_id
-        # console.log 'calling watson on', doc.title
+        console.log 'calling watson on', doc.title
         # if doc.skip_watson is false
         #     console.log 'skipping flagged doc', doc.title
         # else
         # console.log 'analyzing', doc.title, 'tags', doc.tags
         parameters =
             concepts:
-                limit:20
+                limit:10
             features:
                 entities:
                     emotion: false
                     sentiment: false
                     mentions: false
-                    limit: 20
+                    limit: 10
                 keywords:
                     emotion: false
                     sentiment: false
-                    limit: 20
+                    limit: 10
                 concepts: {}
                 categories:
                     explanation:false
