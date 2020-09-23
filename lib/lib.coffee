@@ -3,6 +3,11 @@
 @Tags = new Meteor.Collection 'tags'
 @Tag_results = new Meteor.Collection 'tag_results'
 @Terms = new Meteor.Collection 'terms'
+@ph_videos = new Meteor.Collection 'ph_videos'
+@ph_tags = new Meteor.Collection 'ph_tags'
+@Dtag_results = new Meteor.Collection 'dtag_results'
+@Category_results = new Meteor.Collection 'category_results'
+@Pornstar_results = new Meteor.Collection 'pornstar_results'
 
 
 if Meteor.isClient

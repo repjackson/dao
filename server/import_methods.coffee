@@ -1,4 +1,121 @@
 Meteor.methods
+    search_ph: (query)->
+        console.log 'searching for', query
+        HTTP.get "http://www.pornhub.com/webmasters/search?search=#{query}&thumbsize=medium",(err,response)=>
+            # console.log response.data
+            if err then console.log err
+            else if response.data.videos.length > 1
+                # console.log 'found data'
+                # console.log 'data length', response.data.data.children.length
+                _.each(response.data.videos, (item)=>
+                    console.log item
+                    # data = item.data
+                    # len = 200
+                    # added_tags = [query]
+                    # added_tags = _.flatten(added_tags)
+                    # console.log 'added_tags', added_tags
+                    # video =
+                    #     reddit_id: data.id
+                    #     url: data.url
+                    #     domain: data.domain
+                    #     comment_count: data.num_comments
+                    #     permalink: data.permalink
+                    #     title: data.title
+                    #     # root: query
+                    #     selftext: false
+                    #     # thumbnail: false
+                    #     tags: query
+                    #     model:'reddit'
+                    existing_vid = ph_videos.findOne url:item.url
+                    # if existing_doc
+                        # if Meteor.isDevelopment
+                            # console.log 'skipping existing url', data.url
+                            # console.log 'adding', query, 'to tags'
+                        # console.log 'type of tags', typeof(existing_doc.tags)
+                        # if typeof(existing_doc.tags) is 'string'
+                        #     # console.log 'unsetting tags because string', existing_doc.tags
+                        #     Doc.update
+                        #         $unset: tags: 1
+                        # ph_videos.update existing_doc._id,
+                        #     $addToSet: tags: $each: query
+
+                            # console.log 'existing doc', existing_doc.title
+                    unless existing_vid
+                        # console.log 'importing url', data.url
+                        new_video_id = ph_videos.insert item
+                        vid = ph_videos.findOne new_video_id
+                        console.log 'tagging new vid ', vid.title
+                        Meteor.call 'tagify_vid', new_video_id, (err,res)->
+                            # console.log 'get post res', res
+                # else
+                #     console.log 'NO found data'
+            )
+
+    # _.each(response.data.data.children, (item)->
+    #     # data = item.data
+    #     # len = 200
+    #     console.log item.data
+    # )
+
+Meteor.methods
+    tagify_vid: (video_id)->
+        if video_id 
+            vid = ph_videos.findOne video_id
+            dtags = []
+            category_list = []
+            pornstar_list = []
+            tag_list = []
+            for tag in vid.tags
+                dtags.push tag.tag_name
+                tag_list.push tag.tag_name
+            for person in vid.pornstars 
+                dtags.push person.pornstar_name
+                pornstar_list.push person.pornstar_name
+            for category in vid.categories 
+                dtags.push category.category
+                category_list.push category.category
+            # console.log 'dtags', dtags
+            ph_videos.update vid._id,
+                $set: 
+                    dtags:dtags
+                    category_list:category_list
+                    pornstar_list:pornstar_list
+                    tag_list:tag_list
+            # console.log 'result doc', ph_videos.findOne vid._id
+                
+    tagify_vids: (video_id)->
+        cur = ph_videos.find({
+            tag_list: $exists: false
+        },{limit:1000})
+        for vid in cur.fetch()
+            # vid = ph_videos.findOne id
+            # console.log 'about to tagify', vid
+            dtags = []
+            category_list = []
+            pornstar_list = []
+            tag_list = []
+            for tag in vid.tags
+                dtags.push tag.tag_name
+                tag_list.push tag.tag_name
+            for person in vid.pornstars 
+                dtags.push person.pornstar_name
+                pornstar_list.push person.pornstar_name
+            for category in vid.categories 
+                dtags.push category.category
+                category_list.push category.category
+            console.log 'dtags', dtags
+            ph_videos.update vid._id,
+                $set: 
+                    dtags:dtags
+                    category_list:category_list
+                    pornstar_list:pornstar_list
+                    tag_list:tag_list
+            # console.log 'result doc', ph_videos.findOne vid._id
+    
+
+
+
+
     search_reddit: (query)->
         console.log 'searching reddit for', query
         console.log 'type of query', typeof(query)
