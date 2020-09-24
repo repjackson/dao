@@ -1,126 +1,137 @@
-// template(name='reddit_view')
-//     with current_doc
-//         .ui.stackable.padded.grid
-//             .row 
-//                 .ten.wide.column
-//                     if image_id
-//                         a(href="{{c.url image_id }}" target='_window')
-//                             img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
-//                     // if youtube_id
-//                     //     +youtube_view key='youtube_id' direct=true
-//                     .f12
-//                         |!{body}
-//                     if is_admin
-//                         +viewing
-//                     +comments
-//                 .six.wide.column
-//                     if can_edit
-//                         a.ui.circular.icon.button.edit_reddit(href="/reddit/#{_id}/edit")
-//                             i.large.pencil.icon
-//                     .ui.inline.small.header #{when}
-//                     .ui.label #{points}p
-//                     .ui.label #{imported_points}ip
+template(name='reddit_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .ten.wide.column
+                    if image_id
+                        a(href="{{c.url image_id }}" target='_window')
+                            img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
+                    // if youtube_id
+                    //     +youtube_view key='youtube_id' direct=true
+                    .f12
+                        |!{body}
+                    if is_admin
+                        +viewing
+                    +comments
+                .six.wide.column
+                    if can_edit
+                        a.ui.circular.icon.button.edit_reddit(href="/m/reddit/#{_id}/edit")
+                            i.large.pencil.icon
+                    .ui.inline.small.header #{when}
+                    .ui.label #{points}p
+                    .ui.label #{imported_points}ip
                     
-//                     +vote
-//                     .ui.large.link.list
-//                         each votes
-//                             a.item(href="/user/#{_author_username}") #{_author_username} #{points} #{when}
-//                     .ui.label #{views} views
-//                     |#{tags.length} tags
-//                     each tags 
-//                         .ui.compact.button.add_tag #{this}
-//                     if is_admin
-//                         +print_this
+                    +vote
+                    .ui.large.link.list
+                        each votes
+                            a.item(href="/user/#{_author_username}") #{_author_username} #{points} #{when}
+                    .ui.label #{views} views
+                    |#{tags.length} tags
+                    each tags 
+                        .ui.compact.button.add_tag #{this}
+                    if is_admin
+                        +print_this
 
 
 
 
-// template(name='reddit_card')
-//     .ui.card
-//         a.image(href="/reddit/#{_id}/view")
-//             if is_youtube
-//                 .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
-//             if is_image
-//                 img.ui.image(src=url class=currentUser.invert_class)    
-//         if youtube_id
-//             +youtube_view key='youtube_id' direct=true
-//         if image_id
-//             a.image(href="/reddit/#{_id}/view")
-//                 img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
-//         .content
-//             a.ui.header(href="/reddit/#{_id}/view") #{title}
-//             .description.f12
-//                 |!{description}
-//             +vote
-//             // a(href="/reddit/#{_id}/view")
-//             //     i.right.chevron.circular.link.big.icon
-//             .ui.label #{points}p
-//             .ui.label #{imported_points}ip
-//             if is_admin
-//                 +print_this
-//             each tags
-//                 .ui.label #{this}
-//             .meta
-//                 |#{when}
-//                 if can_edit 
-//                     a.ui.circular.icon.button(href="/reddit/#{_id}/edit")
-//                         i.pencil.icon
-//             a.ui.icon.button(href="/reddit/#{_id}/view")
-//                 i.chevron.right.icon
-//         .description
-//             +comments_view_small   
+template(name='reddit_card')
+    .ui.item
+        a.image(href="/m/reddit/#{_id}/view")
+            if is_youtube
+                .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
+            if is_image
+                img.ui.image(src=url class=currentUser.invert_class)    
+        if youtube_id
+            +youtube_view key='youtube_id' direct=true
+        if image_id
+            a.image(href="/m/reddit/#{_id}/view")
+                img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+        .content
+            a.ui.header(href="/m/reddit/#{_id}/view") #{title}
+            .description.f12
+                |!{description}
+            +vote
+            // a(href="/m/reddit/#{_id}/view")
+            //     i.right.chevron.circular.link.big.icon
+            .ui.label #{points}p
+            .ui.label #{imported_points}ip
+            .ui.label(title='domain')
+                i.globe.icon
+                |#{domain}
+            a.ui.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
+                i.reddit.icon
+                |#{subreddit}
+            a.ui.label(href="https://www.reddit.com/user/#{rd.author}" target='_window' title='author')
+                i.pencil.icon
+                |#{rd.author}
+            if is_admin
+                +print_this
+            +autotag
+                
+            each tags
+                .ui.label #{this}
+            .meta
+                |#{when}
+                if can_edit 
+                    a.ui.circular.icon.button(href="/m/reddit/#{_id}/edit")
+                        i.pencil.icon
+            a.ui.icon.button(href="/m/reddit/#{_id}/view")
+                i.chevron.right.icon
+        .description
+            +comments_view_small   
         
-//     // .ui.divider
+    // .ui.divider
     
-// template(name='one_reddit_view')
-//     .ui.fluid.card.view_reddit
-//         if youtube_id
-//             +youtube_view key='youtube_id' direct=true
-//         else if image_id
-//             a.image(href="/reddit/#{_id}/view")
-//                 img.ui.image(src="{{c.url image_id width=800 crop='fill'}}" class=currentUser.invert_class) 
-//         .content
-//             a.inline.header(href="/reddit/#{_id}/view")
-//                 i.right.chevron.circular.icon
-//                 |#{title}
-//             .meta
-//                 |#{when}
-//             .description.f12
-//                 // +tone
-//                 |!{description}
-//             .description
-//                 .ui.label #{points}p
-//                 .ui.label #{imported_points}ip
+template(name='one_reddit_view')
+    .ui.fluid.card.view_reddit
+        if youtube_id
+            +youtube_view key='youtube_id' direct=true
+        else if image_id
+            a.image(href="/m/reddit/#{_id}/view")
+                img.ui.image(src="{{c.url image_id width=800 crop='fill'}}" class=currentUser.invert_class) 
+        .content
+            a.inline.header(href="/m/reddit/#{_id}/view")
+                i.right.chevron.circular.icon
+                |#{title}
+            .meta
+                |#{when}
+            .description.f12
+                // +tone
+                |!{description}
+            .description
+                .ui.label #{points}p
+                .ui.label #{imported_points}ip
             
-//                 +vote
-//                 each tags
-//                     .ui.compact.large.button.add_tag #{this}
-//                 +comments_view_small  
-//     // .ui.divider
+                +vote
+                each tags
+                    .ui.compact.large.button.add_tag #{this}
+                +comments_view_small  
+    // .ui.divider
 
                  
-// template(name='reddit_section_button')                 
-//     .ui.circular.compact.button 
-//         if icon 
-//             i.icon(class=icon)
-//         |#{label}
+template(name='reddit_section_button')                 
+    .ui.circular.compact.button 
+        if icon 
+            i.icon(class=icon)
+        |#{label}
 
 
 
-// template(name='reddit_edit')
-//     with current_doc
-//         .ui.stackable.padded.grid
-//             .row 
-//                 .sixteen.wide.column
-//                     a.ui.icon.circular.large.button(href="/reddit/#{_id}/view" title='save' class=currentUser.invert_class)
-//                         i.checkmark.big.icon
-//                     .ui.inline.large.header 
-//                         small edit reddit
-//                         // |#{title}
-//                     +image_edit key='image_id' label='image' direct=true
-//                     |points are -1p each
-//                     +smart_tagger
-//                     +html_edit key='description' label='description' direct=true
-//                     +youtube_edit key='youtube_id' label='youtube id' direct=true
-//                     i.remove.link.circular.big.icon.delete_reddit(title='delete reddit')
+template(name='reddit_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .sixteen.wide.column
+                    a.ui.icon.circular.large.button(href="/m/reddit/#{_id}/view" title='save' class=currentUser.invert_class)
+                        i.checkmark.big.icon
+                    .ui.inline.large.header 
+                        small edit reddit
+                        // |#{title}
+                    +image_edit key='image_id' label='image' direct=true
+                    |points are -1p each
+                    +smart_tagger
+                    +html_edit key='description' label='description' direct=true
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    i.remove.link.circular.big.icon.delete_reddit(title='delete reddit')
                     

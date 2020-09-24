@@ -1,8 +1,8 @@
 template(name='user_edit_layout')
     +nav
     .ui.bottom.attached.pushable.segment
-        +left_sidebar
-        +right_sidebar
+        +leftbar
+        +rightbar
         #main_area.global_container.pusher(class=currentUser.invert_class)
             with current_user          
                 .ui.stackable.padded.grid

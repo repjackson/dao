@@ -1,6 +1,6 @@
 template(name='nav')
     .ui.fluid.attached.borderless.invert.menu.topnav
-        a.icon.header.item.toggle_sidebar
+        a.icon.header.item.toggle_leftbar
             i.bars.large.icon
         if connected
             if is_admin
@@ -15,7 +15,10 @@ template(name='nav')
                 i.reddit.icon
             .icon.item
                 i.video.icon
-                // |nsfw
+            a.icon.item(href="/rentals")
+                i.clock.icon
+            a.icon.item(href="/shop")
+                i.store.icon
         else
             .item
                 i.yin.yang.loading.big.grey.icon
@@ -58,6 +61,55 @@ template(name='nav')
             a.icon.large.item.toggle_rightbar.select_term
                 i.bars.large.icon
 
+template(name='footer')
+    .ui.fluid.basic.attached.segment.footer
+        .ui.container.stackable.grid
+            .eight.wide.column
+                .ui.header #{connect_status.connected}
+                .ui.header #{connect_status.status}
+                with currentUser
+                    if is_dev
+                        +textarea_edit key='notes' direct=true
+                if is_dev    
+                    //with current_user
+                    //    +role_switcher
+                    input.old_key(type='text' placeholder='old key')
+                    input.new_key(type='text' placeholder='new key')
+                    .ui.button.submit_rename submit
+            .eight.wide.column
+                unless currentUser
+                    a.ui.big.basic.button(href='/login')
+                        i.sign.in.icon
+                        |login
+                if is_eric
+                    with currentUser
+                        +role_switcher
+                        //+tribe_switcher
+                else if is_dev
+                    with currentUser
+                        +role_switcher
+        if is_user
+            .row
+                .ui.center.aligned.inverted.header
+                    i.copyright.outline.icon
+                    |dao
+template(name='role_switcher')
+    .ui.segment
+        .ui.grey.inline.center.aligned.small.header 
+            //- +i name='anonymous-mask'
+            i.shield.icon(title='role switcher')
+            |#{username} role switcher
+        if is_eric
+            //- +user_array_element_toggle key='roles' value='dev' user=currentUser
+            +multi_doc_edit key='roles' label='roles' ref_model='role' direct=true
+        if current_user
+            with current_user
+                +multi_doc_edit key='roles' label='roles' ref_model='role' direct=true
+        //- +user_array_element_toggle key='roles' value='dev' user=currentUser
+        //- +user_array_element_toggle key='roles' value='user' user=currentUser
+        //- +user_array_element_toggle key='roles' value='staff' user=currentUser
+        //- +user_array_element_toggle key='roles' value='resident' user=currentUser
+        //- +user_array_element_toggle key='roles' value='owner' user=currentUser
 
 
 
@@ -83,7 +135,7 @@ template(name='recent_alert')
             
             
             
-template(name='right_sidebar')
+template(name='rightbar')
     .ui.right.sidebar.vertical.borderless.invert.menu
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'homestar_logo' height=200 width=200 gravity='face' crop='fill'}}")
@@ -132,8 +184,8 @@ template(name='right_sidebar')
 
 
 
-template(name='left_sidebar')
-    .ui.left.sidebar.vertical.borderless.menu
+template(name='leftbar')
+    .ui.left.sidebar.vertical.borderless.invert.menu
         // a.item.toggle_leftbar(href="/" class="{{isActiveRoute '/'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'homestar_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |One

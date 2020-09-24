@@ -1,0 +1,156 @@
+template(name='rentals')
+    .ui.header 
+        i.clock.icon
+        |rentals
+    unless is_author
+        +view_rental
+    //- .ui.green.button.rent Rent
+    .ui.celled.grid
+        .four.column.row
+            each upcoming_days
+                .column
+                    +upcoming_day data=this
+    .ui.celled.grid
+        .seven.column.row
+            .header.column sun
+            .header.column mon
+            .header.column tues
+            .header.column wed
+            .header.column thurs
+            .header.column fri
+            .header.column sat
+        .seven.column.row
+            each month_day
+                +month_day_template
+    each reservations
+        .ui.header #{date} #{notes}
+
+template(name='month_day_template')
+    .column
+        .ui.basic.label #{this}
+        if reservation_exists
+            .ui.icon.disabled.button
+                i.ban.icon(title='unavailable')
+        else
+            .ui.icon.button.new_reservation
+                i.checkmark.icon(title='available')
+                    
+template(name='upcoming_day')
+    a.ui.small.grey.header(href="/reservation_slot/#{reservation_slot._id}") #{print_this.data.long_form}
+    if reservation_slot
+        //- .ui.header res slot exists
+        +reservation_slot_template
+    else
+        if is_product_author
+            .ui.button.new_slot
+                |New Slot
+        
+template(name='reservation_slot_template')
+    if is_grandparent_author
+        with slot
+            .ui.header $#{price}
+            unless reservation
+                +boolean_edit key='prepaid' direct=true
+                +number_edit key='price' direct=true
+                +remove_button
+            //- +rental
+    else
+        .ui.divider
+        .ui.header $#{slot.price}
+        //- +boolean_edit key='rented' direct=true
+        if reservation
+            with reservation
+                +reservation_template
+        else
+            //- with slot
+            .ui.green.button.rent_item Rent Item
+            
+template(name='reservation_template')        
+    .ui.header Reservation
+    +author_info
+    .ui.small.header #{_author_username}
+    if is_author
+        +text_edit key='notes' direct=true
+        +remove_button
+    
+            
+template(name='view_rental')            
+    .ui.segment
+        .ui.header from {{long_date start_datetime}} to {{long_date end_datetime}}
+        +boolean_view key='confirmed' label='confirmed' direct=true
+        .ui.header #{rental_hours} hours at $#{../hourly_rate}/hour totaling $#{hourly_rental_price}
+        if rental_days
+            .ui.header #{rental_days} days at $#{daily_rental_price}/day
+
+            
+template(name='rental')
+    .ui.segment
+        //- if is_admin
+        //-     +boolean_edit key='completed' label='completed' direct=true
+            
+        unless confirmed
+            +date_edit key='reservation_day' direct=true
+            //- +datetime_edit key='start_time'
+            //- +datetime_edit key='end_time'
+            //- +range_edit
+            //- .ui.button.calculate_diff diff
+            .ui.icon.button.delete_rental
+                i.remove.icon
+                
+        +author_info
+        //- .ui.header from {{long_date start_datetime}} to {{long_date end_datetime}}
+        +boolean_edit key='confirmed' label='confirmed' direct=true
+        .ui.header {{long_date reservation_day}}
+        +date_view key='reservation_day' direct=true    
+        //- .ui.header #{rental_hours} hours at $#{../hourly_rate}/hour totaling $#{hourly_rental_price}
+        //- if rental_days
+            .ui.header #{rental_days} days at $#{daily_rental_price}/day
+        //- .ui.header #{rental_days} days at $#{daily_rental_price}/day
+
+// template(name='rentals')
+//     .ui.inline.header 
+//         +icon name='clock'
+//         |rentals
+//     .ui.icon.button.add_rental
+//         i.plus.icon
+//     each user_rentals
+//         a.ui.item(href="/m/rental/#{_id}/view")
+//             .content
+//                 .ui.header #{title}
+                
+                
+template(name='rental_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .sixteen.wide.column
+                    a.ui.icon.circular.large.button(href="/m/rental/#{_id}/view" title='save' class=currentUser.invert_class)
+                        i.checkmark.big.icon
+                    .ui.inline.large.header 
+                        small edit rental
+                        // |#{title}
+                    +text_edit key='title' label='title' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    +smart_tagger
+                    +html_edit key='description' label='description' direct=true
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    
+                    i.remove.link.circular.big.icon.delete_rental(title='delete rental')
+                                    
+template(name='rental_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .sixteen.wide.column
+                    if can_edit 
+                        a.ui.icon.circular.large.button(href="/m/rental/#{_id}/edit" title='edit' class=currentUser.invert_class)
+                            i.pencil.icon
+                    .ui.inline.large.header 
+                        small view rental
+                        // |#{title}
+                    +text_view key='title' label='title' direct=true
+                    +image_view key='image_id' label='image' direct=true
+                    +array_view key='tags' direct=true
+                    +html_view key='description' label='description' direct=true
+                    +youtube_view key='youtube_id' label='youtube id' direct=true
+                                    

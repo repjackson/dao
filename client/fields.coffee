@@ -18,6 +18,77 @@ Template.youtube_edit.events
             $set:"#{@key}":val
 
 
+Template.number_edit.events
+    'blur .edit_number': (e,t)->
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+        val = parseInt t.$('.edit_number').val()
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":val
+        else if user
+            Meteor.users.update parent._id,
+                $set:"#{@key}":val
+Template.time_edit.events
+    'blur .edit_time': (e,t)->
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+        val = t.$('.edit_time').val()
+
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":val
+        else if user
+            Meteor.users.update parent._id,
+                $set:"#{@key}":val
+
+
+Template.datetime_edit.events
+    'blur .edit_datetime': (e,t)->
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+        val = t.$('.edit_datetime').val()
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":val
+        else if user
+            Meteor.users.update parent._id,
+                $set:"#{@key}":val
+
+
+
+
+
+Template.date_edit.events
+    'blur .edit_date': (e,t)->
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+        val = t.$('.edit_date').val()
+
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":val
+        else if user
+            Meteor.users.update parent._id,
+                $set:"#{@key}":val
+
+
 
 
 Template.html_edit.onRendered ->
@@ -80,6 +151,30 @@ Template.html_edit.events
 
 # Template.html_edit.helpers
         
+Template.boolean_edit.helpers
+    boolean_toggle_class: ->
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+        if parent["#{@key}"] then 'active' else 'basic'
+
+
+Template.boolean_edit.events
+    'click .toggle_boolean': (e,t)->
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":!parent["#{@key}"]
+        else if user
+            Meteor.users.update parent._id,
+                $set:"#{@key}":!parent["#{@key}"]
 
 
 

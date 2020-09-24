@@ -1,9 +1,10 @@
 template(name='home')
     // iframe(frameborder="0" width="400" height="200" src="https://drive.google.com/file/d/1_encX_RKyZhOU26r7_cNTtl0rLvEQSai/preview")
-    i.large.yin.yang.icon(class=home_button_class)
+    // i.large.yin.yang.icon(class=home_button_class)
     if selected_tags
-        // a#clear_tags.ui.black.icon.compact.large.button.select_term
-        //     i.remove.icon
+        if many_tags
+            a#clear_tags.ui.black.icon.compact.circular.button.select_term
+                i.remove.icon
         each selected_tags
             +unselect_tag
     .ui.left.icon.input 
@@ -64,22 +65,24 @@ template(name='home')
     
     .spacer
     .scrolling
-        // if two_posts
-        //     .ui.stackable.two.cards
-        //         each docs
-        //             +one_post_view
-        // else if one_post
-        //     .ui.stackable.cards
-        //         each docs
-        //             +one_post_view
-        // else
-        //     // .ui.stackable.cards
-        each docs
-            if key_value_is 'model' 'porn'
-                +vid_card
-            else
-                +post_card
-            .ui.divider
+        if two_posts
+            .ui.stackable.two.cards
+                each docs
+                    +one_post_view
+        else if one_post
+            .ui.stackable.cards
+                each docs
+                    +one_post_view
+        else
+            each docs
+                if key_value_is 'model' 'porn'
+                    +vid_card
+                else if key_value_is 'model' 'reddit'
+                    +reddit_card
+                else
+                    +post_card
+                .ui.divider
+            // .ui.stackable.cards
 
 
 template(name='unselect_tag')

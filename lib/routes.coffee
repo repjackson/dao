@@ -14,6 +14,9 @@ Router.onBeforeAction(force_loggedin, {
     # only: ['admin']
     except: [
         'home'
+        'profile'
+        'shop'
+        'chat'
         'post_view'
         'post_edit'
         'register'
@@ -73,6 +76,8 @@ Router.route '/reddit/:doc_id/edit', (->
     @layout 'layout'
     @render 'reddit_edit'
     ), name:'reddit_edit'
+
+
 
 
 Router.route '/verification_confirmation', -> @render 'verification_confirmation'

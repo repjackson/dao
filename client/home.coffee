@@ -110,7 +110,7 @@ Template.tone.events
             Meteor.call 'upvote_sentence', doc_id, @, ->
             
 Template.home.helpers
-    selected_tags_plural: -> selected_tags.array().length > 1
+    many_tags: -> selected_tags.array().length > 1
     one_post: ->
         match = {model:$in:['post','wikipedia','reddit','porn']}
         

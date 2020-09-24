@@ -1,3 +1,138 @@
+template(name='number_edit')
+    div
+    .ui.tiny.inline.header
+        if icon
+            +i name=icon
+            //- i.grey.icon(class=icon)
+        if title
+            |#{title}
+        else if label
+            |#{label}
+        else
+            |#{key}
+    .ui.fluid.input
+        //- +clear_value                
+        input.edit_number(type='number' value=field_value placeholder=placeholder autocomplete="off")
+            
+            
+template(name='number_view')
+    if field_value
+        div
+        .ui.tiny.inline.header
+            if icon
+                +i name=icon
+                //- i.grey.icon(class=icon)
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else if key
+                |#{key}
+            else
+                |#{this}
+        strong &nbsp; #{field_value}
+
+
+
+template(name='time_edit')
+    .ui.fluid.input
+        .ui.tiny.inline.header
+            if icon
+                i.grey.icon(class=icon)            
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            //- else
+            //-     |#{key}
+        //- +clear_value                
+        input.edit_time(type='time' value=field_value placeholder=placeholder autocomplete="off")
+                
+                
+template(name='time_view')
+    if field_value
+        .ui.inline.header
+            if icon
+                i.grey.icon(class=icon)
+                //- +i name=icon
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else if key
+                |#{key}
+            else
+                |#{this}
+        strong &nbsp; #{field_value}
+
+template(name='datetime_edit')
+    .ui.form
+        .field
+            label 
+                if icon
+                    //- i.grey.icon(class=icon)
+                    +i name=icon
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else
+                    |#{key}
+            //- +clear_value                
+            input.edit_datetime(type='datetime-local' value=field_value placeholder=placeholder autocomplete="off")
+
+template(name='datetime_view')
+    if icon
+        i.icon(class=icon)
+    if title
+        |#{title}
+    else if label
+        |#{label}        
+    else if key
+        |#{key}
+    else
+        |#{this}
+    strong &nbsp; #{field_value}
+
+
+
+template(name='date_edit')
+    .ui.fluid.input
+        .ui.tiny.inline.header
+            if icon
+                i.grey.icon(class=icon)            
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            //- else if key
+            //-     |#{key}
+            //- else
+            //-     |#{this}
+        //- +clear_value                
+        input.edit_date(type='date' value=field_value placeholder=placeholder autocomplete="off")
+
+
+template(name='date_view')
+    if field_value
+        div
+        .ui.tiny.inline.header
+            if icon
+                +i name=icon
+                //- i.grey.icon(class=icon)
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else if key
+                |#{key}
+            else
+                |#{this}
+        strong &nbsp; #{field_value}
+
+
+
+
 template(name='youtube_edit')
     .ui.labeled.fluid.icon.input
         .ui.label 
@@ -123,6 +258,10 @@ template(name='i')
     // else 
     //     img.ui.mini.inline.image(src="https://img.icons8.com/#{gs.icon_theme}/48/000000/#{name}.png" class=cl title=title)
     // img(src="https://img.icons8.com/plasticine/48/000000/#{name}.png" class=cl title=title)
+template(name='ismall')
+    img(src="https://img.icons8.com/pastel-glyph/24/000000/#{name}.png" class=classes title=title)
+    //- img(src="https://img.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
+    
 template(name='ioffice')
     img(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl title=title)
 template(name='icolor')
@@ -320,13 +459,13 @@ template(name='array_edit')
     // if icon
     //     - i.grey.icon(class=icon)
     //     +icon name=icon cl='ui avatar image'
-    // .ui.inline.header
-    //     if title
-    //         |#{title}
-    //     else if label
-    //         |#{label}
-    //     else if key
-    //         |#{key}
+    .ui.inline.header
+        if title
+            |#{title}
+        else if label
+            |#{label}
+        else if key
+            |#{key}
     .ui.icon.input
         i.plus.icon
         input.new_element(type='text' placeholder='tag' autocomplete="off")

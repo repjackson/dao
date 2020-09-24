@@ -157,8 +157,6 @@ Template.registerHelper 'nl2br', (text)->
     new Spacebars.SafeString(nl2br)
 
 
-Template.registerHelper 'author', ->
-    Meteor.users.findOne(@_author_id)
 
 
 Template.registerHelper 'dev', -> Meteor.isDevelopment

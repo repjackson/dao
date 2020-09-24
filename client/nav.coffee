@@ -11,6 +11,7 @@ Template.nav.onRendered ->
             .sidebar({
                 context: $('.bottom.segment')
                 transition:'overlay'
+                dimmer:false
                 exclusive:true
                 duration:200
                 scrollLock:true
@@ -23,13 +24,14 @@ Template.nav.onRendered ->
                 context: $('.bottom.segment')
                 transition:'overlay'
                 exclusive:true
+                dimmer:false
                 duration:200
                 scrollLock:true
             })
             .sidebar('attach events', '.toggle_rightbar')
     , 1000
 
-Template.right_sidebar.events
+Template.rightbar.events
     'click .logout': ->
         Session.set 'logging_out', true
         Meteor.logout ->
@@ -45,6 +47,10 @@ Template.right_sidebar.events
                 $set:invert_class:'invert'
             
 
+Template.footer.helpers
+    connect_status: -> 
+        # console.log Meteor.status()
+        Meteor.status()
 Template.nav.helpers
     alert_toggle_class: ->
         if Session.get('viewing_alerts') then 'active' else ''
@@ -173,7 +179,7 @@ Template.topbar.events
 
         
         
-Template.left_sidebar.events
+Template.leftbar.events
     # 'click .toggle_leftbar': ->
     #     $('.ui.sidebar')
     #         .sidebar('setting', 'transition', 'push')
