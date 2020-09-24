@@ -3,7 +3,7 @@ template(name='model_edit_layout')
     with current_doc
         .ui.stackable.padded.grid            
             .centered.row
-                .four.wide.column
+                .sixteen.wide.column
                     small editing model
                     .ui.inline.header
                         i.icon(class=icon)
@@ -15,7 +15,7 @@ template(name='model_edit_layout')
                     a.ui.big.icon.green.circular.button(href="/m/#{slug}")
                         i.big.checkmark.icon
                     i#delete_model.trash.red.circular.link.icon
-                    .ui.divider
+                    // .ui.divider
                     +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
                     +boolean_edit key='show_facets' label='show facets' direct=true
                     a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActiveRoute 'model_edit_dashboard'}}")
@@ -30,7 +30,6 @@ template(name='model_edit_layout')
                     a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActiveRoute 'model_edit_permissions'}}")
                         i.shield.icon
                         |permissions
-                .twelve.wide.column
                     +yield
                     
                     
@@ -38,7 +37,7 @@ template(name='model_edit_layout')
 template(name='model_edit_dashboard')
     .ui.form
         +text_edit key='title' label='title' direct=true
-        +slug_edit key='slug' label='slug' direct=true
+        +text_edit key='slug' label='slug' direct=true
         +icon_edit key='icon' label='icon' direct=true
         +textarea_edit key='description' label='description' direct=true
         +array_edit key='tags' label='tags' direct=true
@@ -106,7 +105,7 @@ template(name='field_edit')
         if viewing_content
             .content
                 +text_edit key='title' label='label' direct=true
-                +slug_edit key='key' label='key' direct=true
+                +text_edit key='key' label='key' direct=true
                 +number_edit key='rank' label='rank' direct=true      
                 +icon_edit key='icon' label='icon' direct=true       
                 //- +textarea_edit key='description' label='description' direct=true

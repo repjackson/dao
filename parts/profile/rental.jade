@@ -43,7 +43,7 @@ template(name='upcoming_day')
     else
         if is_product_author
             .ui.button.new_slot
-                |New Slot
+                |new slot
         
 template(name='reservation_slot_template')
     if is_grandparent_author
@@ -66,7 +66,7 @@ template(name='reservation_slot_template')
             .ui.green.button.rent_item Rent Item
             
 template(name='reservation_template')        
-    .ui.header Reservation
+    .ui.header reservation
     +author_info
     .ui.small.header #{_author_username}
     if is_author

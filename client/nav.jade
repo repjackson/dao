@@ -1,28 +1,34 @@
 template(name='nav')
     .ui.fluid.attached.borderless.invert.menu.topnav
-        a.icon.header.item.toggle_leftbar
-            i.bars.large.icon
-        if connected
-            if is_admin
+        if currentUser
+            a.icon.header.item.toggle_leftbar
+                i.bars.large.icon
+            if connected
+                a.icon.item(href='/')
+                    i.big.link.yin.yang.grey.icon
                 a.icon.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
+                    i.database.icon
+                if is_admin
+                    // .item
+                    //     .ui.green.header not connected
+                // .icon.item
+                //     i.wikipedia.icon
+                // .icon.item
+                //     i.reddit.icon
+                // .icon.item
+                //     i.video.icon
+                // a.icon.item(href="/rentals")
+                //     i.clock.icon
+                a.icon.item(href="/shop")
+                    i.store.icon
+                a.icon.item(href="/users")
+                    i.users.icon
+                a.icon.item(href="/one")
+                    i.circle.icon
+            else
                 .item
-                    .ui.green.header not connected
-            a.icon.item(href='/')
-                i.big.link.yin.yang.grey.icon
-            // .icon.item
-            //     i.wikipedia.icon
-            // .icon.item
-            //     i.reddit.icon
-            // .icon.item
-            //     i.video.icon
-            a.icon.item(href="/rentals")
-                i.clock.icon
-            a.icon.item(href="/shop")
-                i.store.icon
-        else
-            .item
-                i.yin.yang.loading.big.grey.icon
-                +status    
+                    i.yin.yang.loading.big.grey.icon
+                    +status    
         .right.menu
             a.icon.item.post(title='add')
                 i.large.plus.icon
@@ -51,15 +57,15 @@ template(name='nav')
                     else 
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
+                a.icon.large.item.toggle_rightbar.select_term
+                    i.bars.large.icon
             else
-                // a.icon.item(href="/register" title='register')
-                //     i.large.user.plus.icon
-                //     // |register
+                a.icon.item(href="/register" title='register')
+                    i.large.user.plus.icon
+                    // |register
                 a.item(href="/login" title='login')
                     i.large.grey.sign.in.alternate.icon
                     // |login
-            a.icon.large.item.toggle_rightbar.select_term
-                i.bars.large.icon
 
 template(name='footer')
     .ui.fluid.basic.attached.segment.footer

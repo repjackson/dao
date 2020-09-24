@@ -4,9 +4,9 @@ template(name='login')
             .eight.wide.column
                 .ui.center.aligned.basic.segment
                     // a.ui.icon.button(href='/')
-                    .ui.big.inline.header 
+                    .ui.big.inline.grey.header 
                         i.yin.yang.big.icon
-                    .ui.big.inline.header 
+                    .ui.big.inline.grey.header 
                         i.sign.in.alternate.icon
                         // |login
                 div
@@ -24,13 +24,13 @@ template(name='login')
                     i.lock.icon
                     input.password(type='password')
                 //- if username
-                if logging_in
-                    .spacer
-                    .ui.fluid.big.button.enter(title="login #{username}" class=enter_class)
-                        |login
-                        strong #{username}
-                        |&nbsp;
-                        i.sign.in.alternate.icon
+                // if logging_in
+                .spacer
+                .ui.fluid.big.button.enter(title="login #{username}" class=enter_class)
+                    |login
+                    strong #{username}
+                    |&nbsp;
+                    i.sign.in.alternate.icon
                 .ui.center.aligned.basic.segment    
                     a.ui.circular.button(href='/forgot_password')
                         i.refresh.icon

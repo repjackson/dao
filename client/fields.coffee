@@ -17,6 +17,21 @@ Template.youtube_edit.events
         Docs.update parent._id,
             $set:"#{@key}":val
 
+Template.clear_value.events
+    'click .clear_value': ->
+        if confirm "Clear #{@title} field?"
+            if @direct
+                parent = Template.parentData()
+            else
+                parent = Template.parentData(5)
+            doc = Docs.findOne parent._id
+            user = Meteor.users.findOne parent._id
+            if doc
+                Docs.update parent._id,
+                    $unset:"#{@key}":1
+            else if user
+                Meteor.users.update parent._id,
+                    $unset:"#{@key}":1
 
 Template.number_edit.events
     'blur .edit_number': (e,t)->

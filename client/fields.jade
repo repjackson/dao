@@ -33,6 +33,31 @@ template(name='number_view')
         strong &nbsp; #{field_value}
 
 
+template(name='icon_edit')
+    div
+    if icon
+        //- i.grey.icon(class=icon)
+        +icon name=icon cl='ui avatar image'
+    .ui.inline.header
+        if title
+            |#{title}
+        else if key
+            |#{key}
+        else
+            |#{this}    
+    if field_value
+        i.large.icon(class=field_value)
+    .ui.right.icon.input
+        input.icon_val(type='text' value=field_value placeholder='fa class' autocomplete="off")
+    a(href="https://fomantic-ui.com/elements/icon.html" target='_window')
+        i.external.icon
+        |icons
+
+template(name='clear_value')
+    if field_value
+        i.remove.link.large.icon.clear_value
+
+
 
 template(name='time_edit')
     .ui.fluid.input
@@ -471,11 +496,11 @@ template(name='array_edit')
         input.new_element(type='text' placeholder='tag' autocomplete="off")
         //- +clear_value                
     if field_value
-        if can_edit
-            each field_value
-                .ui.large.label
-                        i.delete.icon.remove_element
-                    |#{this}
+        // if can_edit
+        each field_value
+            .ui.large.label
+                i.delete.icon.remove_element
+                |#{this}
                 
 template(name='array_view')
     if field_value

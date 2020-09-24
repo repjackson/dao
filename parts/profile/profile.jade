@@ -79,10 +79,12 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='rentals' label='rentals' icon='clock'
                 +session_edit_value_button key='view_user_section' value='leads' label='leads' icon='phone'
                 +session_edit_value_button key='view_user_section' value='groups' label='groups' icon='groups'
+                +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
 
                 +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
+                +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
                 if session_key_value_is 'view_user_section' 'rentals'
-                    +rentals
+                    +user_rentals
                 if session_key_value_is 'view_user_section' 'karma'
                     // +user_kin
                     .ui.header karma out
@@ -102,10 +104,8 @@ template(name='profile')
                         |cash out at $100
                     // +user_kout
                     // +user_karma
-                +session_edit_value_button key='view_user_section' value='cloud_comparison' label='cloud comparison' icon='exchange'
                 if session_key_value_is 'view_user_section' 'cloud_comparison'
                     +cloud_comparison
-                +session_edit_value_button key='view_user_section' value='authored_overlap' label='authored overlap' icon='change'
                 if session_key_value_is 'view_user_section' 'authored_overlap'
                     .ui.inline.header
                         i.edit.icon

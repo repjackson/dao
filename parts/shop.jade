@@ -3,7 +3,7 @@ template(name='shop')
         .three.wide.column
             .ui.header 
                 +i name='shop'
-                |Shop
+                |shop
             .ui.icon.circular.button.add_item
                 i.plus.icon
             +cloud filter='shop'
@@ -19,19 +19,21 @@ template(name='shop')
                                 |!{description}
                             unless rentable
                                 +add_to_tab
-                            a.ui.basic.icon.button(href="/shop/#{_id}/view")
-                                +i name='chevron right' classes='ui mini image'
+                            a.ui.icon.button(href="/shop/#{_id}/view")
+                                // +i name='chevron right' classes='ui mini image'
+                                i.chevron.right.icon
                             if can_edit
-                                a.ui.basic.button(href="/shop/#{_id}/edit")
-                                    +i name='pencil' classes='ui mini image'
+                                a.ui.icon.circular.button(href="/shop/#{_id}/edit")
+                                    i.pencil.icon
+                                    // +i name='pencil' classes='ui mini image'
 
 template(name='add_to_tab')
     .ui.segment
         .add_to_tab.ui.green.button
             i.cart.plus.icon
-            |Add to Tab
+            |tab
         if current_tab_additions
-            div Current Tab Additions
+            div current tab additions
             .ui.list
                 each current_tab_additions
                     .item
@@ -46,19 +48,19 @@ template(name='shop_card')
             img.ui.centered.rounded.image(src="{{c.url picture width=300 height=200 crop='fit'}}")
         .content
             a.ui.grey.small.header(href="/shop/#{_id}/view") #{title}
-            //- div
-            //- +i name='food' classes='ui mini inline image'
-            //- each ingredients
-            //-     .ui.basic.label #{this}
-            //- div
-            //- +i name='marker' classes='ui mini inline image'
-            //- each location_tags
-            //-     .ui.basic.label #{this}
-            //- .ui.basic.animated.fade.button.add_to_cart(title="#{karma_price} karma, click to add to cart")
-            //-     .visible.content
-            //-         .ui.header #{karma_price}k
-            //-     .hidden.content
-            //-         i.cart.plus.green.large.icon
+            div
+            +i name='food' classes='ui mini inline image'
+            each ingredients
+                .ui.basic.label #{this}
+            div
+            +i name='marker' classes='ui mini inline image'
+            each location_tags
+                .ui.basic.label #{this}
+            .ui.basic.animated.fade.button.add_to_cart(title="#{karma_price} karma, click to add to cart")
+                .visible.content
+                    .ui.header #{karma_price}k
+                .hidden.content
+                    i.cart.plus.green.large.icon
             if rentable
                 .ui.small.inline.header
                     i.clock.grey.small.icon
@@ -106,28 +108,28 @@ template(name='shop_card')
                     |0
             div
             +fav_button
-            //- .ui.basic.animated.fade.button.add_to_cart(title="click to add to cart")
-            //-     .visible.content
-            //-         .ui.header 
-            //-             if dollar_price
-            //-                 |$#{dollar_price}
-            //-             else
-            //-                 |free
+            .ui.basic.animated.fade.button.add_to_cart(title="click to add to cart")
+                .visible.content
+                    .ui.header 
+                        if dollar_price
+                            |$#{dollar_price}
+                        else
+                            |free
                 .hidden.content
                     i.cart.plus.green.large.icon
-            //- +number_viez
-            //- a.ui.basic.small.icon.button(href="/shop/#{_id}/view")
-            //-     +i name='chevron right' classes='ui mini image'
-            //- if can_edit
-            //-     a.ui.basic.small.icon.button(href="/shop/#{_id}/edit")
-            //-         +i name='pencil' classes='ui mini image'
-                //- +edit_button
-        //- .four.wide.column
-        //-     with author
-        //-         img.ui.avatar.image(src="{{c.url image_id width=200 height=200 crop='fit'}}")    
-        //-         .ui.inline.header #{first_name} #{last_name}
-        //-         .ui.header #{sales_amount} sales
-        //-         .ui.header #{purchase_amount} purchases
+            //+number_viez
+            //a.ui.basic.small.icon.button(href="/shop/#{_id}/view")
+            //    +i name='chevron right' classes='ui mini image'
+            //if can_edit
+            //    a.ui.basic.small.icon.button(href="/shop/#{_id}/edit")
+            //        +i name='pencil' classes='ui mini image'
+                //+edit_button
+        //.four.wide.column
+        //    with author
+        //        img.ui.avatar.image(src="{{c.url image_id width=200 height=200 crop='fit'}}")    
+        //        .ui.inline.header #{first_name} #{last_name}
+        //        .ui.header #{sales_amount} sales
+        //        .ui.header #{purchase_amount} purchases
             
             
 template(name='fav_button')
