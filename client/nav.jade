@@ -115,13 +115,21 @@ template(name='role_switcher')
 
 
 template(name='chatpop')
-    .chatpop.invert
-        .ui.invert.header chat
-        .ui.large.list
-            each last_messages
-                .item #{body}
-        .ui.fluid.input 
-            input.add_chat(type='text' placeholder='chat...')
+    if viewing_chat
+        .chatpop.invert
+            .ui.invert.pointer.grey.header.close_chat 
+                i.chat.icon
+                |chat
+            .ui.large.list.smallscroll
+                each last_messages
+                    .item #{body}
+                        small #{when}
+            .ui.fluid.icon.transparent.input 
+                i.plus.icon
+                input.add_chat(type='text' placeholder='chat...')
+    else 
+        .ui.large.circular.icon.invert.button.open_chat
+            i.chat.outline.large.icon
 
 template(name='topbar')
     .ui.fluid.large.attached.segment

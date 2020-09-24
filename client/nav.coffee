@@ -33,12 +33,17 @@ Template.nav.onRendered ->
             .sidebar('attach events', '.toggle_rightbar')
     , 1000
 
-Template.chatpop.helpers
-    last_messages: ->
-        Docs.find 
-            model:'global_chat'
 Template.chatpop.events
-    'keyup .add_chat': (e,t)->
+    'click .open_chat': -> Session.set('viewing_chat',true)
+    'click .close_chat': -> Session.set('viewing_chat',false)
+Template.chatpop.helpers
+    viewing_chat: -> Session.get('viewing_chat')
+    last_messages: ->
+        Docs.find {
+            model:'global_chat'
+        }, sort:_timestamp:-1
+Template.chatpop.events
+    'keyup .add_chat': _.throttle((e,t)->
         if e.which is 13
             comment = t.$('.add_chat').val()
             Docs.insert
@@ -47,7 +52,7 @@ Template.chatpop.events
                 body:comment
     
             t.$('.add_chat').val('')
-
+    , 2000)
 Template.rightbar.events
     'click .logout': ->
         Session.set 'logging_out', true

@@ -24,9 +24,20 @@ body {
   display: block;
   position: fixed;
   min-width:200px;
+  background: lightgrey !important;
   bottom: 0;
+  padding:5px;
   right: 15px;
   border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+.open_chat {
+  display: block;
+  position: fixed;
+  /*min-width:200px;*/
+  bottom: 0;
+  right: 15px;
+  /*border: 3px solid #f1f1f1;*/
   z-index: 9;
 }
 
@@ -347,7 +358,7 @@ a.goto_article {
     /* font-size: 130% !important; */
     /*zoom: 110% !important;*/
     /* padding-top: 5em !important; */
-    transform: scale(1.5) !important;
+    /*transform: scale(1.) !important;*/
     z-index: 1000 !important;
     /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
     /*text-shadow: 0 0 3px grey !important;*/
