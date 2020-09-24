@@ -23,6 +23,7 @@ template(name='profile')
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
                 if is_current_user
+                    +boolean_edit key='edit_mode' label='edit mode' direct=true
                     +boolean_edit key='online' label='online' direct=true
                     +text_edit key='current_status' label='status' icon='clock' direct=true
                 else 

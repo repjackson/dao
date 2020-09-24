@@ -52,8 +52,8 @@ if Meteor.isClient
         , 1000
 
     Template.shop.onCreated ->
-        # @autorun -> Meteor.subscribe 'shop'
-        @autorun -> Meteor.subscribe 'docs', selected_tags.array(), 'shop'
+        @autorun -> Meteor.subscribe 'model_docs', 'shop'
+        # @autorun -> Meteor.subscribe 'docs', selected_tags.array(), 'shop'
     Template.shop.helpers
         products: ->
             Docs.find
@@ -63,14 +63,14 @@ if Meteor.isClient
         'click .add_item': ->
             new_id = Docs.insert
                 model:'shop'
-            Router.go "/shop/#{new_id}/edit"
+            Router.go "/m/shop/#{new_id}/edit"
 
 
     Template.shop_edit.events
         'click .delete_shop_item': ->
             if confirm 'delete shop item?'
                 Docs.remove @_id
-                Router.go "/m/shop"
+                Router.go "/shop"
 
 
     Template.product_location.onCreated ->

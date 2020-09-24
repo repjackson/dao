@@ -1,3 +1,5 @@
+Template.chatpop.onCreated ->
+    @autorun => Meteor.subscribe 'model_docs', 'global_chat'
 Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'me'
     # @autorun => Meteor.subscribe 'all_users'
@@ -30,6 +32,21 @@ Template.nav.onRendered ->
             })
             .sidebar('attach events', '.toggle_rightbar')
     , 1000
+
+Template.chatpop.helpers
+    last_messages: ->
+        Docs.find 
+            model:'global_chat'
+Template.chatpop.events
+    'keyup .add_chat': (e,t)->
+        if e.which is 13
+            comment = t.$('.add_chat').val()
+            Docs.insert
+                # parent_id: parent._id
+                model:'global_chat'
+                body:comment
+    
+            t.$('.add_chat').val('')
 
 Template.rightbar.events
     'click .logout': ->

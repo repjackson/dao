@@ -10,7 +10,7 @@ body {
     /*margin-top: 5em;*/
     /*background: rgba(200,200,200,1) !important;*/
     /* filter: invert(1) !important; */
-    /* overscroll-behavior: none; */
+     overscroll-behavior: none; 
     transition: all 1s ease !important;
     /* background: #0e0e44 !important; */
 }
@@ -20,6 +20,15 @@ body {
 }
 
 
+.chatpop {
+  display: block;
+  position: fixed;
+  min-width:200px;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
 
 .adventure-vidm {
     display: -webkit-box;

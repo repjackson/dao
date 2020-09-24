@@ -9,12 +9,12 @@ template(name='nav')
                     .ui.green.header not connected
             a.icon.item(href='/')
                 i.big.link.yin.yang.grey.icon
-            .icon.item
-                i.wikipedia.icon
-            .icon.item
-                i.reddit.icon
-            .icon.item
-                i.video.icon
+            // .icon.item
+            //     i.wikipedia.icon
+            // .icon.item
+            //     i.reddit.icon
+            // .icon.item
+            //     i.video.icon
             a.icon.item(href="/rentals")
                 i.clock.icon
             a.icon.item(href="/shop")
@@ -112,6 +112,16 @@ template(name='role_switcher')
         //- +user_array_element_toggle key='roles' value='owner' user=currentUser
 
 
+
+
+template(name='chatpop')
+    .chatpop.invert
+        .ui.invert.header chat
+        .ui.large.list
+            each last_messages
+                .item #{body}
+        .ui.fluid.input 
+            input.add_chat(type='text' placeholder='chat...')
 
 template(name='topbar')
     .ui.fluid.large.attached.segment
