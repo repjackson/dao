@@ -1,0 +1,526 @@
+template(name='icon')    
+    i.icon(class=name)
+    // img.ui.image(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl)
+    // img.ui.image(src="https://img.icons8.com/plasticine/48/000000/#{name}.png" class=cl)
+    // img.ui.image(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl)
+    // img.ui.image(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl)
+    //- img.ui.image(src="https://img.icons8.com/fluent/48/000000/#{name}.png" class=cl)
+    // img.ui.image(src="https://img.icons8.com/cotton/48/000000/#{name}.png" class=cl)
+    //- img.ui.image(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl)
+
+template(name='user_button')
+    a.ui.button(href="/user/#{username}")
+        img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+        |#{name}
+
+
+// template(name='viewed')
+//     .ui.header viewed by
+//     each viewed_by
+
+
+template(name='smart_tagger')
+    .ui.inline.header
+        i.tag.icon
+        |tags
+    .ui.input
+        input.new_tag(type='text' placeholder='+' autocomplete="off")
+        //- +clear_value                
+    each terms 
+        a.ui.large.circular.basic.button.select_term(href='#')
+            if image
+                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+            |#{title}
+    each tags
+        .ui.large.basic.circular.label
+            i.delete.icon.remove_element
+            |#{this}
+    if suggestions.count
+        div
+        .ui.small.inline.header suggestions
+    each suggestions
+        a.ui.large.circular.basic.button.select_term(href='#')
+            // if image
+            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+            |#{title}
+
+
+
+template(name='print_this')
+    .ui.icon.basic.button.print_this
+        i.orange.code.icon
+
+
+template(name='viewing')
+    if currentUser
+        unless viewed_by
+            .ui.icon.button.mark_read(title='mark read')
+                i.eye.icon
+        else 
+            //- if is_dev
+            .ui.icon.button.mark_unread(title='mark unread')
+                i.eye.slash.icon
+    else 
+        i.eye.icon
+    .ui.grey.inline.header 
+        |viewers
+    each read_ids
+        +user_info
+
+
+
+
+template(name='vote')
+    a.ui.circular.icon.button.upvote(title='upvote')
+        i.thumbs.up.outline.big.icon
+    if points
+        strong #{points}
+    a.ui.circular.icon.button.downvote(title='downvote')
+        i.thumbs.down.outline.big.icon
+
+
+template(name='session_boolean_toggle')
+    .ui.compact.large.circular.button.toggle_session_key(class=calculated_class)
+        // +icolor name=icon cl='ui avatar image'
+        i.icon(class=icon)
+        |#{label}
+        //- if icon_view 
+        //- else 
+            if label
+                |#{label}
+            else 
+                |#{value}
+                
+                
+template(name='session_edit_value_button')
+    .ui.circular.button.set_session_value(class=calculated_class)
+        if icon
+            // i.icon(class=icon)
+            +i name=icon cl='ui avatar image'
+        if label
+            |#{label}
+        else 
+            |#{value}
+
+
+
+template(name='session_toggle_button')
+    .ui.compact.icon.button.toggle(class=session_toggle_button_class title=title)
+        i.large.icon(class=icon)
+        |#{label}
+
+
+
+
+template(name='comments')
+    // .ui.top.attached.tabular.menu.top_rounded.comments_menu
+    //     a.item.active(data-tab='first')
+    .ui.header(data-tooltip='comments cost 1p each which goes to post op')
+        i.chat.outline.icon
+        | #{doc_comments.count} comments
+        // a.item(data-tab='second') second
+        // a.icon.item(data-tab='info') 
+        //     i.large.info.icon
+    // .ui.bottom.attached.tab.segment.bottom_rounded.active(data-tab='first')
+    .ui.fluid.icon.large.input
+        i.plus.icon
+        input.add_comment(model='text' placeholder='comment (-1p)...')
+    if currentUser
+        .ui.comments
+            each doc_comments
+                .comment
+                    // a.avatar(href="/user/#{_author.username}") 
+                    //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                    .content
+                        // a.author(href="/user/#{_author.username}") 
+                        //     |#{_author.username}
+                        .metadata
+                            span.date #{when}
+                        .text
+                            | !{body}
+                        span.meta
+                            if can_edit
+                                +remove_icon
+                            // else
+                            // +voting_small
+                            // i.donate.link.icon
+                            // i.gift.link.icon
+        // |First
+    // .ui.bottom.attached.tab.segment(data-tab='second')
+    //     |second
+    // .ui.bottom.attached.tab.segment.bottom_rounded(data-tab='info')
+    //     .ui.small.header comments cost 1p each which goes to post op
+    //     // .ui.small.header subcomments cost 1p per level which goes to each parent op
+    //     .ui.small.header each upvote costs 1p which goes to author
+
+
+
+
+
+
+template(name='month_selector')
+    +key_value_edit key='month' value='jan'
+    +key_value_edit key='month' value='feb'
+    +key_value_edit key='month' value='mar'
+    +key_value_edit key='month' value='april'
+    +key_value_edit key='month' value='may'
+    +key_value_edit key='month' value='jun'
+    +key_value_edit key='month' value='jul'
+    +key_value_edit key='month' value='aug'
+    +key_value_edit key='month' value='sep'
+    +key_value_edit key='month' value='oct'
+    +key_value_edit key='month' value='nov'
+    +key_value_edit key='month' value='dec'
+
+
+
+template(name='follow')
+    .ui.segment
+        .ui.header
+            i.user.plus.icon
+            |follow
+        +user_list_toggle key='follower_ids' icon='rss' add_label='Follow' remove_label='Unfollow' color='black'
+
+
+template(name='toggle_edit')
+    .ui.basic.button.toggle_edit
+        i.pencil.icon
+
+template(name='user_list_info')
+    a.ui.basic.button.item(href="/user/#{user.username}/view")
+        img.ui.avatar.image(src=user.profile.profilePic title=name)
+        |#{user.username}
+        +user_status user
+
+
+
+template(name='user_status')
+    if online 
+        // .ui.label(class='{{labelClass}}') 
+        .ui.empty.label(title='online')
+        // img.ui.avatar.image(src="https://img.icons8.com/connection-user_status-on/color/48" title='Online' width="48" height="48")
+        // |Online
+    else if idle
+        .ui.empty.yellow.label(title='idle')
+        // .ui.label(class='{{labelClass}}') Idle
+    // else 
+    //     |Offline
+
+// template(name='user_card')
+//     with user
+//         .ui.small.horizontal.card
+//             .image
+//                 img.ui.rounded.mini.image(src="{{c.url profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
+//             .content    
+//                 a.header(href="/user/#{username}") #{username} 
+//                 //- .meta @#{username}
+//                 strong $#{credit}
+//                 small credit
+//                 //- +emails_edit    
+//         //- +user_status user
+
+
+
+template(name='user_email')
+    .ui.small.inline.header #{email_address}
+    if email_verified
+        .ui.basic.label 
+            i.checkmark.icon
+            |verified
+    else
+        .ui.label 
+            i.ban.icon
+            |unverified
+        
+
+template(name='big_user_card')
+    with user
+        //- .ui.card
+        //- .ui.card(class=student_status_class)
+        .ui.card
+            .image
+                img.ui.rounded.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+            .content
+                a.header(href="/user/#{username}")
+                     |#{username} 
+                    //- .meta @#{username}
+                    //- +array_view key='tags' label='Tags' direct=true
+
+
+template(name='user_info')
+    a.ui.compact.basic.circular.button(href="/user/#{user.username}/")
+        if user.profile_image_id
+            img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
+        //- .visible.content
+        |#{user.username}
+        // |@#{user.username}
+        // +user_status user
+
+template(name='user_info_small')
+    a(href="/user/#{user.username}/")
+        if user.profile_image_id
+            img.ui.avatar.image.invert(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
+        else
+            i.circular.user.outline.icon(title=user.name)
+
+template(name='user_info_tiny')
+    a(href="/user/#{user.username}/")
+        // if user.profile_image_id
+        //     img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
+        // else
+        //     i.circular.user.outline.icon(title=user.name)
+        .ui.basic.tiny.label #{user.username}
+
+template(name='user_avatar')
+    if user.profile_image_id
+        img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
+    else
+        i.circular.user.outline.icon(title=user.name)
+
+
+template(name='username_info')
+    .ui.small.compact.basic.button.goto_profile
+        if is_student
+            img.ui.tiny.image(src="{{c.url user.profile_image_id width=100 height=100}}")
+        |#{user.name}
+        //- |@#{user.username}
+        +user_status user
+
+
+template(name='role_editor')
+    each roles
+        .ui.basic.button #{this}
+
+template(name='author_info')
+    with author
+        a.ui.compact.basic.button(href="/user/#{username}")
+            if profile_image_id
+                img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
+            |by #{username}
+
+template(name='creation_info')
+    .ui.small.inline.header #{when}
+
+
+template(name='user_list_toggle')
+    if currentUser
+        if in_list
+            .ui.icon.compact.circular.button.toggle(class=user_list_toggle_class title=label)
+                i.large.icon(class=remove_icon)
+                // |#{label}
+        else
+            .ui.icon.compact.circular.button.toggle(class=user_list_toggle_class title=label)
+                i.large.icon(class=add_icon)
+        each list_users
+            +user_info
+
+
+template(name='doc_array_togggle')
+    if currentUser
+        .ui.button.toggle(class=doc_array_toggle_class title=label)
+            if in_list
+                if remove_icon
+                    i.large.icon(class=remove_icon)
+                |#{remove_label}
+            else
+                if add_icon
+                    i.large.icon(class=add_icon)
+                |#{add_label}
+            |#{label}
+        //- each list_users
+        //-     +user_info
+
+
+template(name='bookmark_button')
+    if currentUser
+        .ui.icon.compact.button.toggle(class=bookmark_button_class title=label)
+            if bookmarked
+                |bookmarked
+                //- i.large.icon(class=remove_icon)
+            else
+                |bookmark
+                //- i.large.icon(class=add_icon)
+        //- each list_users
+        //-     +user_info
+
+
+// template(name='vote')
+//     // i.thumbs.up.big.link.circular.icon.upvote(class=upvote_class title='upvote')
+//     // +vote_button amount=5
+//     // +vote_button amount=10
+//     // +vote_button amount=25
+//     with user_vote
+//         if is_dev
+//             +number_edit key='points' label='edit points' direct=true
+//         if points
+//             strong #{points}
+//         // if anon_points
+//         //     strong #{anon_points} anon pts
+//     +vote_button amount=1
+//     // i.thumbs.down.big.link.circular.icon.downvote(class=downvote_class title='downvote')
+//     // each upvoter_ids
+//     //     +user_info_small
+//     // each downvoter_ids
+//     //     +user_info_small
+
+template(name='vote_button')
+    i.big.sort.up.link.circular.icon.add_amount.zoom
+    // .ui.circular.large.compact.button.add_amount
+    //     |+#{amount}
+
+
+    
+template(name='voting')
+    i.thumbs.up.big.link.circular.icon.upvote(class=upvote_class title='upvote')
+    each upvoter_ids
+        +user_info_small
+    i.thumbs.down.big.link.circular.icon.downvote(class=downvote_class title='downvote')
+    each downvoter_ids
+        +user_info_small
+    if is_dev
+        +number_edit key='points' label='edit points' direct=true
+    if points
+        strong #{points} pts
+    if anon_points
+        strong #{anon_points} anon pts
+    
+
+template(name='voting_small')
+    if points
+        strong #{points}
+    i.thumbs.up.link.icon.upvote(class=upvote_class)
+    // |#{upvoter_ids.length}
+    each upvoter_ids
+        +user_info_tiny
+    i.thumbs.down.link.icon.downvote(class=downvote_class)
+    each downvoter_ids
+        +user_info_tiny
+
+template(name='voting_tiny')
+    i.thumbs.up.icon(class=upvote_class)
+    // |#{upvoter_ids.length}
+    each upvoter_ids
+        +user_avatar
+
+
+template(name='voting_full')
+    unless is_author
+        i.thumbs.up.large.big.circular.link.icon.upvote(class=upvote_class title='upvote')
+        i.thumbs.down.large.big.circular.link.icon.downvote(class=downvote_class title='downvote')
+    if points
+        |&nbsp;
+        span(title='points') #{points} pts
+        //- .ui.large.basic.label(title='anon points') #{anon_points} anon pts
+    if upvoter_ids
+        div
+        .ui.small.grey.inline.header(title='upvoters')
+            i.thumbs.up.outline.green.icon
+            //- |upvoters
+        each upvoter_ids
+            +user_info
+    if downvoter_ids
+        div
+        .ui.small.grey.inline.header(title='downvoters')
+            i.thumbs.down.outline.icon
+            //- |downvoters
+        each downvoter_ids
+            +user_info
+
+
+
+template(name='remove_button')
+    .ui.icon.button.remove_doc(title='delete')
+        i.remove.icon
+        // |delete
+
+template(name='remove_icon')
+    i.remove.link.icon.remove_doc(title='delete')
+
+
+//- template(name='edit_button')
+//-     a.ui.basic.button.icon.edit(title='Edit' href="/m/#{model}/#{_id}/edit")
+//-         i.blue.pencil.icon
+//-         |Edit
+
+
+template(name='toggle_button')
+    .ui.icon.toggle.basic.button(title=label)
+        i.icon(class=icon)
+    each selected
+        |#{username}
+
+
+template(name='view_user_button')
+    .view_user.view(title="view #{username}")
+        i.play.icon
+        |View
+
+
+
+            
+template(name='email_validation_check')
+    //- if email_verified
+    //-     .ui.large.basic.button
+    //-         i.checkmark.icon
+    //-         |email validated
+    unless email_verified
+        .ui.basic.fluid.button.send_verification
+            //- i.user.shield.icon
+            |resend verification email
+        if times
+            .ui.label
+                |#{times}
+            //- else
+                //- |#{times}x sent
+        if is_staff
+            .ui.button.toggle_email_verified
+                |mark email verified
+        
+        
+
+template(name='user_array_list')
+    .ui.list
+        each users
+            .item
+                +user_info
+
+            
+template(name='user_array_element_toggle')
+    .ui.compact.button.toggle_element(class=user_array_element_toggle_class)
+        |#{value}
+
+template(name='user_string_toggle')
+    .ui.button.toggle_element(class=user_string_element_toggle_class)
+        |#{value}
+
+
+
+template(name='key_value_edit')
+    a.ui.compact.large.circular.button.set_key_value.select_term(class=set_key_value_class title=value href='#')
+        if icon
+            // +icon name=icon cl='ui avatar image'
+            i.icon(class=icon)
+        unless icon_only
+            if label
+                |#{label}
+            else 
+                |#{value}
+        
+template(name='user_key_value_edit')
+    .ui.compact.button.set_key_value(class=set_key_value_class)
+        if icon 
+            i.icon(class=icon)
+        if label
+            |#{label}
+        else 
+            |#{value}
+
+
+template(name='session_key_value')
+    .ui.button.set_session_value(class=button_class) 
+        if icon 
+            i.icon(class=icon)
+        if label
+            |#{label}
+        else 
+            |#{value}

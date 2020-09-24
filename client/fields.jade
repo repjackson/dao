@@ -23,6 +23,41 @@ template(name='youtube_view')
 
 
 
+template(name='phone_edit')
+    .ui.inline.header 
+        i.phone.icon
+        if title
+            |#{title}
+        else if label
+            |#{label}
+        else if key
+            |#{key}
+        else
+            |#{this}
+    .ui.fluid.input
+        //- +clear_value                
+        input.edit_phone(type='tel' value=field_value placeholder=placeholder autocomplete="off")
+
+template(name='phone_view')
+    if field_value
+        unless header
+            div
+            //- if icon
+            //-     +i name=icon cl='ui avatar image'          
+            .ui.inline.grey.header
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else if key
+                    |#{key}
+                else
+                    |#{this}
+        strong &nbsp; #{field_value}
+
+
+
+
 
 template(name='html_view')
     if field_value

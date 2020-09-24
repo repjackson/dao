@@ -7,38 +7,38 @@ template(name='user_edit_layout')
             with current_user          
                 .ui.stackable.padded.grid
                     .row
-                        .four.wide.column
+                        .sixteen.wide.column
                             .ui.center.aligned.large.inline.header(style="color:#{current_user.theme_color};")
                                 i.big.cog.icon(style="color:#{current_user.theme_color};")
                                 | #{current_user.name}
                             .ui.small.inline.header @#{current_user.username}
-                            img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
+                            // img.ui.centered.medium.rounded.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
                                 
-                            a.ui.big.green.circular.button(href="/user/#{current_user.username}/") 
+                            a.ui.big.green.circular.compact.button(href="/user/#{current_user.username}/") 
                                 i.checkmark.big.icon
                                 strong save
-                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
+                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
                                 i.cog.large.icon 
                                 |account
-                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
+                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
                                 i.info.large.icon 
                                 |info
-                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
+                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
                                 i.bell.large.icon 
                                 |alerts
-                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/reviews" class="{{isActiveRoute 'user_edit_reviews'}}") 
+                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/reviews" class="{{isActiveRoute 'user_edit_reviews'}}") 
                                 i.edit.large.icon 
                                 |reviews
-                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
+                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
                                 i.lock.privacy.large.icon 
                                 | privacy
-                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
+                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
                                 i.certificate.large.icon
                                 |badges
-                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/company" class="{{isActiveRoute 'company_info'}}" title='membership') 
+                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/company" class="{{isActiveRoute 'company_info'}}" title='membership') 
                                 i.building.large.icon
                                 | company
-                        .twelve.wide.column
+                        .sixteen.wide.column
                             +yield
 
      

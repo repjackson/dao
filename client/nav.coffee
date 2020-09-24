@@ -5,8 +5,8 @@ Template.nav.onCreated ->
 
 Template.nav.onRendered ->
     Meteor.setTimeout ->
-        $('.menu .item')
-            .popup()
+        # $('.menu .item')
+        #     .popup()
         $('.ui.left.sidebar')
             .sidebar({
                 context: $('.bottom.segment')
@@ -202,22 +202,6 @@ Template.left_sidebar.events
         Meteor.call 'set_facets', 'photo', ->
             Session.set 'loading', false
             
-    'click .set_shift': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'shift', ->
-            Session.set 'loading', false
-    'click .set_request': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'request', ->
-            Session.set 'loading', false
-    'click .set_model': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'model', ->
-            Session.set 'loading', false
-    'click .set_event': ->
-        Session.set 'loading', true
-        Meteor.call 'set_facets', 'event', ->
-            Session.set 'loading', false
     'click .set_expense': ->
         Session.set 'loading', true
         Meteor.call 'set_facets', 'expense', ->

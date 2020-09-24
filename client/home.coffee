@@ -26,8 +26,7 @@ Template.nav.events
             Meteor.users.update Meteor.userId(),
                 $addToSet:'roles':'admin'
 
-    'click .home': ->
-        Router.go '/'
+    'click .home': -> Router.go '/'
     'click .reconnect': -> Meteor.reconnect()
 
     'click .post': ->
@@ -137,8 +136,8 @@ Template.home.helpers
         # match = {model:$in:['post','wikipedia','reddit']}
         
         # match = {model:'post'}
-        if selected_tags.array().length>0
-            match.tags = $all:selected_tags.array()
+        # if selected_tags.array().length>0
+        match.tags = $all:selected_tags.array()
         # cur = Docs.find match
         Docs.find match,
             sort:

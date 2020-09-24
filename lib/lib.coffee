@@ -3,11 +3,11 @@
 @Tags = new Meteor.Collection 'tags'
 @Tag_results = new Meteor.Collection 'tag_results'
 @Terms = new Meteor.Collection 'terms'
-@ph_videos = new Meteor.Collection 'ph_videos'
-@ph_tags = new Meteor.Collection 'ph_tags'
-@Dtag_results = new Meteor.Collection 'dtag_results'
-@Category_results = new Meteor.Collection 'category_results'
-@Pornstar_results = new Meteor.Collection 'pornstar_results'
+# @ph_videos = new Meteor.Collection 'ph_videos'
+# @ph_tags = new Meteor.Collection 'ph_tags'
+# @Dtag_results = new Meteor.Collection 'dtag_results'
+# @Category_results = new Meteor.Collection 'category_results'
+# @Pornstar_results = new Meteor.Collection 'pornstar_results'
 
 
 if Meteor.isClient
@@ -60,30 +60,6 @@ Meteor.users.helpers
             @nickname
         else 
             @username
-
-ph_videos.before.insert (userId, doc)->
-    timestamp = Date.now()
-    doc._timestamp = timestamp
-    doc._timestamp_long = moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
-    date = moment(timestamp).format('Do')
-    weekdaynum = moment(timestamp).isoWeekday()
-    weekday = moment().isoWeekday(weekdaynum).format('dddd')
-
-    hour = moment(timestamp).format('h')
-    minute = moment(timestamp).format('m')
-    ap = moment(timestamp).format('a')
-    month = moment(timestamp).format('MMMM')
-    year = moment(timestamp).format('YYYY')
-
-    # date_array = [ap, "hour #{hour}", "min #{minute}", weekday, month, date, year]
-    date_array = [ap, weekday, month, date, year]
-    if _
-        date_array = _.map(date_array, (el)-> el.toString().toLowerCase())
-        # date_array = _.each(date_array, (el)-> console.log(typeof el))
-        # console.log date_array
-        doc._timestamp_tags = date_array
-
-    return
 
 Docs.before.insert (userId, doc)->
     if Meteor.user()

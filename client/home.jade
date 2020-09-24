@@ -11,6 +11,56 @@ template(name='home')
     each tag_results
         +tag_selector
     div
+    +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
+    if session_is 'view_authors'
+        // div
+        // .ui.inline.header
+        //     i.large.user.outline.icon
+        //     |author
+        if selected_authors
+            a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
+                i.remove.icon
+            each selected_authors
+                a.unselect_author.ui.black.compact.large.circular.button.select_termn
+                    strong #{this}
+            
+        each author_results
+            a.ui.large.compact.circular.button.select_author.select_term(href='#')
+                strong #{name}
+    // div
+    +session_boolean_toggle key='view_upvoters' label='upvoters' icon='thumbs up outline'
+    if session_is 'view_upvoters'
+        // .ui.inline.header
+        //     i.large.thumbs.up.outline.icon
+        //     |upvoters
+        if selected_upvoters
+            a#clear_upvoters.ui.black.icon.compact.large.circular.button.select_term
+                i.remove.icon
+            each selected_upvoters
+                a.unselect_upvoter.ui.black.compact.large.circular.button.select_termn
+                    strong #{this}
+            
+        each upvoter_results
+            a.ui.large.compact.circular.button.select_upvoter.select_term(href='#')
+                strong #{name}
+    // .spacer
+    // div
+    // +session_boolean_toggle key='view_sources' label='sources' icon='database'
+    // if session_is 'view_sources'
+    //     // .ui.inline.header
+    //     //     i.large.thumbs.up.outline.icon
+    //     //     |sources
+    //     if selected_sources
+    //         a#clear_sources.ui.black.icon.compact.large.circular.button.select_term
+    //             i.remove.icon
+    //         each selected_sources
+    //             a.unselect_source.ui.black.compact.large.circular.button.select_termn
+    //                 strong #{this}
+            
+    //     each source_results
+    //         a.ui.large.compact.circular.button.select_source.select_term(href='#')
+    //             strong #{name}
+    
     .spacer
     .scrolling
         // if two_posts
@@ -60,89 +110,3 @@ template(name='sort_button')
 
 
 
-template(name='ibig')    
-    //- img.ui.image(src="https://img.icons8.com/dusk/256/000000/#{name}.png" class=cl)
-    //- img.ui.image(src="https://img.icons8.com/cotton/256/000000/#{name}.png" class=cl)
-    //- img.ui.image(src="https://img.icons8.com/office/256/000000/#{name}.png" class=cl)
-    //- img.ui.image(src="https://img.icons8.com/plasticine/256/000000/#{name}.png" class=cl)
-    //- img.ui.image(src="https://img.icons8.com/color/256/000000/#{name}.png" class=cl)
-    //- img.ui.image(src="https://img.icons8.com/ios/256/000000/#{name}.png" class=cl)
-template(name='icon')    
-    i.icon(class=name)
-    // img.ui.image(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl)
-    // img.ui.image(src="https://img.icons8.com/plasticine/48/000000/#{name}.png" class=cl)
-    // img.ui.image(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl)
-    // img.ui.image(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl)
-    //- img.ui.image(src="https://img.icons8.com/fluent/48/000000/#{name}.png" class=cl)
-    // img.ui.image(src="https://img.icons8.com/cotton/48/000000/#{name}.png" class=cl)
-    //- img.ui.image(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl)
-
-template(name='user_button')
-    a.ui.button(href="/user/#{username}")
-        img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
-        |#{name}
-
-
-// template(name='viewed')
-//     .ui.header viewed by
-//     each viewed_by
-
-
-template(name='smart_tagger')
-    .ui.inline.header
-        i.tag.icon
-        |tags
-    .ui.input
-        input.new_tag(type='text' placeholder='+' autocomplete="off")
-        //- +clear_value                
-    each terms 
-        a.ui.large.circular.basic.button.select_term(href='#')
-            if image
-                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class='invert')
-            |#{title}
-    each tags
-        .ui.large.basic.circular.label
-            i.delete.icon.remove_element
-            |#{this}
-    if suggestions.count
-        div
-        .ui.small.inline.header suggestions
-    each suggestions
-        a.ui.large.circular.basic.button.select_term(href='#')
-            // if image
-            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class='invert')
-            |#{title}
-
-
-
-template(name='print_this')
-    .ui.icon.basic.button.print_this
-        i.orange.code.icon
-
-
-template(name='viewing')
-    if currentUser
-        unless viewed_by
-            .ui.icon.button.mark_read(title='mark read')
-                i.eye.icon
-        else 
-            //- if is_dev
-            .ui.icon.button.mark_unread(title='mark unread')
-                i.eye.slash.icon
-    else 
-        i.eye.icon
-    .ui.grey.inline.header 
-        |viewers
-    each read_ids
-        +user_info
-
-
-
-
-template(name='vote')
-    a.ui.circular.icon.button.upvote(title='upvote')
-        i.thumbs.up.outline.big.icon
-    if points
-        strong #{points}
-    a.ui.circular.icon.button.downvote(title='downvote')
-        i.thumbs.down.outline.big.icon

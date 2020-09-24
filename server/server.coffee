@@ -32,11 +32,10 @@ Meteor.users.allow
         #     true
     update: (user_id, doc, fields, modifier) ->
         user = Meteor.users.findOne user_id
-        if user_id and 'dev' in user.roles
+        if user_id and doc._id is user_id
             true
-        else
-            if user_id and doc._id == user_id
-                true
+        else if user_id and 'dev' in user.roles
+            true
     remove: (user_id, doc, fields, modifier) ->
         user = Meteor.users.findOne user_id
         if user_id and 'dev' in user.roles
@@ -58,8 +57,8 @@ Meteor.publish 'docs', (
     )->
     match = {}
     # match.model = $in:['porn']
-    match.model = $in:['post','wikipedia','reddit','porn']
-    # match.model = $in:['post','wikipedia','reddit']
+    # match.model = $in:['post','wikipedia','reddit','porn']
+    match.model = $in:['post','wikipedia','reddit']
     
     # match.model = 'post'
     # if Meteor.user()
@@ -70,7 +69,7 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:10
+            limit:5
             sort:
                 points:-1
                 views:-1
@@ -90,8 +89,8 @@ Meteor.publish 'tags', (
     )->
     self = @
     match = {}
-    match.model = $in:['post','wikipedia','reddit','porn']
-    # match.model = $in:['post','wikipedia','reddit']
+    # match.model = $in:['post','wikipedia','reddit','porn']
+    match.model = $in:['post','wikipedia','reddit']
     # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia']
     # match.model = 'post'

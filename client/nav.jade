@@ -1,5 +1,5 @@
 template(name='nav')
-    .ui.fluid.attached.borderless.small.menu.topnav(class=currentUser.invert_class)
+    .ui.fluid.attached.borderless.invert.menu.topnav
         a.icon.header.item.toggle_sidebar
             i.bars.large.icon
         if connected
@@ -7,13 +7,13 @@ template(name='nav')
                 a.icon.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
                 .item
                     .ui.green.header not connected
-            .item
-                i.big.link.yin.yang.grey.icon.home
-            .item
+            a.icon.item(href='/')
+                i.big.link.yin.yang.grey.icon
+            .icon.item
                 i.wikipedia.icon
-            .item
+            .icon.item
                 i.reddit.icon
-            .item
+            .icon.item
                 i.video.icon
                 // |nsfw
         else
