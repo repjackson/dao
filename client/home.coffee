@@ -133,19 +133,21 @@ Template.home.helpers
 
     docs: ->
         # match = {model:$in:['porn']}
-        # match = {model:$in:['post','wikipedia','reddit','porn']}
-        match = {model:$in:['post','wikipedia','reddit']}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
+        # match = {model:$in:['post','wikipedia','reddit']}
         
         # match = {model:'post'}
         if selected_tags.array().length>0
             match.tags = $all:selected_tags.array()
-        cur = Docs.find match
-            # sort:
-            #     points:-1
-            #     ups:-1
-            #     _timestamp:-1
-            #     # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            # limit:1
+        # cur = Docs.find match
+        Docs.find match,
+            sort:
+                # points:-1
+                ups:-1
+                views:-1
+                _timestamp:-1
+                # "#{Session.get('sort_key')}": Session.get('sort_direction')
+            limit:7
         # if cur.count() is 1
         Docs.find match
         

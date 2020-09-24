@@ -1,0 +1,10 @@
+template(name='user_badges')
+    .ui.center.aligned.header 
+        +icon name='prize'
+        |user badges
+    .ui.small.centered.five.stackable.cards
+        each user_badges
+            a.ui.card(href="/badge/#{_id}/view")
+                +icolorlg name=icon cl='ui fluid image'
+                .content
+                    .ui.header #{location}: #{title}

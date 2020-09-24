@@ -1,0 +1,169 @@
+template(name='user_edit_layout')
+    +nav
+    .ui.bottom.attached.pushable.segment
+        +left_sidebar
+        +right_sidebar
+        #main_area.global_container.pusher(class=currentUser.invert_class)
+            with current_user          
+                .ui.stackable.padded.grid
+                    .row
+                        .four.wide.column
+                            .ui.center.aligned.large.inline.header(style="color:#{current_user.theme_color};")
+                                i.big.cog.icon(style="color:#{current_user.theme_color};")
+                                | #{current_user.name}
+                            .ui.small.inline.header @#{current_user.username}
+                            img.ui.centered.medium.rounded.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
+                                
+                            a.ui.big.green.circular.button(href="/user/#{current_user.username}/") 
+                                i.checkmark.big.icon
+                                strong save
+                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
+                                i.cog.large.icon 
+                                |account
+                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
+                                i.info.large.icon 
+                                |info
+                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
+                                i.bell.large.icon 
+                                |alerts
+                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/reviews" class="{{isActiveRoute 'user_edit_reviews'}}") 
+                                i.edit.large.icon 
+                                |reviews
+                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
+                                i.lock.privacy.large.icon 
+                                | privacy
+                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
+                                i.certificate.large.icon
+                                |badges
+                            a.ui.basic.circular.button(href="/user/#{current_user.username}/edit/company" class="{{isActiveRoute 'company_info'}}" title='membership') 
+                                i.building.large.icon
+                                | company
+                        .twelve.wide.column
+                            +yield
+
+     
+template(name='phone_editor')
+    .ui.small.header    
+        i.phone.icon
+        |phone
+    .ui.icon.fluid.input(title='Add Phone')
+        i.plus.icon
+        input#phone.form-control(type='phone', name='phone', value='{{newNumber}}')
+    //- if current_user.profile.phone
+    //-     if current_user.profile.phone_verified
+    //-         .ui.label verified
+    //-     else
+    //-         p
+    //-             .ui.label not verified
+    //-             a.resend_verification(href='#')
+    //-                 |resend code
+    //-             .ui.small.icon.button.remove_phone(title='remove phone')
+    //-                 i.remove.icon
+    //- else
+    //-     .ui.fluid.button.update_phone add phone
+
+
+
+template(name='password_edit')
+    .ui.small.header
+        //- +i name='password'
+        i.lock.icon
+        |change password
+    //- .ui.fluid.input
+    //-     input#password(type='password', placeholder='old password')
+    .ui.fluid.icon.input
+        input#new_password(type='password', placeholder='new password')
+    if is_dev
+        .ui.fluid.button.send_enrollment_email
+            |send enrollment email
+    if is_admin
+        .ui.fluid.button.reset_password
+            |reset password
+    .ui.fluid.large.button.set_password
+        i.lock.icon
+        //- +i name='password' cl='ui mini inline image'
+        | set password
+            
+            
+            
+template(name='emails_edit')
+    //- .ui.small.header 
+    //-     i.envelope.icon
+    //-     | email(s)
+    //- #test_email.ui.large.button test email
+    .ui.divided.list
+        each current_user.emails
+            .item 
+                // unless verified
+                //     .right.floated.content
+                //         .ui.button Verify
+                .content
+                    if verified
+                        .ui.large.green.label(title='verified')
+                            | #{address}
+                            i.checkmark.icon
+                    else
+                        .ui.large.orange.label(title='unverified')
+                            i.question.icon
+                            | #{address}
+                        .send_verification_email.ui.button 
+                            |verify
+                            i.caret.right.icon
+                    .ui.small.icon.basic.button.remove_email
+                        i.remove.icon
+    .ui.action.large.fluid.action.input
+        input#new_email(type='email' placeholder='add new address' autocomplete="off")
+        #add_email.ui.submit.compact.button 
+            i.plus.icon
+            |submit
+
+
+
+template(name='user_edit_friends')
+    .ui.header
+        i.users.icon
+        | friends
+    
+    
+    
+    
+
+template(name='user_edit_account')
+    .ui.header 
+        i.cog.icon
+        |account
+    .ui.two.column.stackable.grid
+        .column
+            +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true
+            +image_edit key='banner_image_id' icon='picture' title='banner image' direct=true
+            +password_edit
+        .column
+            +text_edit key='first_name' label='first name' direct=true
+            +text_edit key='last_name' label='last name' direct=true
+            .ui.header 
+                i.envelope.outline.icon
+                |emails
+            +emails_edit
+            if is_dev
+                .ui.segment
+                    i.code.icon
+                    +username_edit
+                    +boolean_edit key='disabled' label='disabled' direct=true
+                    +multi_user_edit key='user_representatives' label='user representatives' direct=true
+                    div
+                    with current_user
+                        .ui.button.remove_user 
+                            i.remove.icon
+                            |delete user
+            .spacer
+            +phone_edit key='phone' label='phone' icon='phone' direct=true
+
+            //- +phone_editor
+    
+template(name='username_edit')
+    .ui.small.header 
+        i.refresh.icon
+        |change username [#{current_user.username}]
+    .ui.icon.fluid.input
+        input.new_username(type='text' placeholder='new username...')
+        i.play.link.icon.change_username

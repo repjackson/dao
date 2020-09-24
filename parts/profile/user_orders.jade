@@ -1,0 +1,44 @@
+template(name='user_orders')
+    .ui.inline.header
+        +icolor name='orders'
+        |user orders
+    if is_current_user
+        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/orders")
+            i.pencil.icon
+    div
+    +array_view key='allergens' label='allergens'
+    +array_view key='orders_likes' label='orders likes'
+    +array_view key='orders_dislikes' label='orders dislikes'
+    each orders
+        +order_view
+
+
+
+
+
+
+template(name='order_view')
+    .ui.segment
+        a.ui.header(href="/m/order/#{_id}/view") #{when}
+        if charge 
+            .ui.header charge
+        if is_dev
+            |#{charge.result.id}
+        .ui.header $#{charge.result.amount}
+        if can_edit 
+            unless submitted
+                +date_edit key='date' label='date' direct=true
+                +text_edit key='notes' label='notes' direct=true
+                +key_value_edit key='tiffen_type' value='meat' direct=true
+                +key_value_edit key='tiffen_type' value='veggie' direct=true
+                .ui.green.button.submit_order
+                    |submit order
+            else
+                +date_view key='date' label='date' direct=true
+                +text_view key='notes' label='notes' direct=true
+                .ui.large.label
+                    |tiffen type: #{tiffen_type}
+                +boolean_edit key='delivery' label='add delivery' direct=true                    
+        if is_dev
+            +remove_button
+            +print_this

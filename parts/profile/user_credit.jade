@@ -1,0 +1,174 @@
+template(name='user_credit')  
+    .ui.header.recalc_user_credit
+        i.dollar.green.large.icon
+        |fiat credit
+    .ui.header total topup amount #{current_user.total_topup_amount}
+    .ui.header total topup count #{current_user.topup_count}
+    .ui.padded.stackable.two.column.grid
+        .column
+            .scrolling
+                each received_dollar_debits
+                    .ui.segment
+                        if recipient.profile_image_id
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        .ui.header $#{dollar_amount}
+                        |to
+                        a(href="/user/#{recipient.username}")
+                            |#{recipient.username}
+                        .content
+                            a(href="/m/dollar_debit/#{_id}/view")
+                                |#{when} 
+                            .description
+                                |#{description}
+                                each tags
+                                    .ui.mini.basic.label #{this}
+                            if is_admin
+                                +remove_button
+        .column
+            .scrolling
+                each sent_dollar_debits
+                    .ui.segment
+                        if recipient.profile_image_id
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        strong $#{dollar_amount}
+                        |to
+                        a(href="/user/#{recipient.username}")
+                            |#{recipient.username}
+                        .content
+                            a(href="/m/dollar_debit/#{_id}/view")
+                                |#{when} 
+                            .description
+                                |#{description}
+                                each tags
+                                    .ui.mini.basic.label #{this}
+                            if is_admin
+                                +remove_button
+                                
+    .ui.stackable.grid      
+        //- .centered.row
+        //-     .sixteen.wide.column
+        //-         .ui.center.aligned.header user credit
+        .three.column.row
+            .column
+                .ui.segment
+                    .ui.header 
+                        +icolor name='refund-2--v1'
+                        |topups
+                    .ui.bulleted.list.medscroll
+                        each user_topups
+                            .item 
+                                .content
+                                    .header $#{amount}
+                                    .description
+                                        |#{transaction_type}
+                                        |#{when}
+                                    if is_dev
+                                        +print_this
+            .column
+                .ui.segment
+                    .ui.header
+                        +icolor name='change'
+                        |your balance
+                    .ui.small.inline.header current credit
+                    .ui.green.inline.header #{current_user.credit}c
+                    // +session_boolean_toggle key='adding_credit' label='add credit' icon='plus'
+                    // if session_is 'adding_credit' true
+                    .ui.small.header add amount
+                    //- .ui.input
+                    //-     input.add_amount(type='number')
+                    //- .ui.horizontal.divider or
+                    .ui.circular.compact.basic.large.button.add_five_credits
+                        |$5
+                    .ui.circular.compact.basic.large.button.add_ten_credits
+                        |$10
+                    .ui.circular.compact.basic.large.button.add_twenty_credits
+                        |$20
+                    .ui.circular.compact.basic.large.button.add_fifty_credits
+                        |$50
+                    .ui.circular.compact.basic.large.button.add_hundred_credits
+                        |$100
+                
+
+            .column
+                .ui.segment
+                    .ui.header
+                        +icolor name='deposit'
+                        |sent credit
+                    .ui.disabled.button.send_credit
+                        |send credit
+                    .ui.header
+                        |sent credits
+                    .ui.list
+                        each sent_credits
+                            a.item(href="/transaction/#{_id}/view")
+            .column
+                .ui.segment
+                    .ui.header
+                        +icolor name='withdrawal'
+                        |received credits
+                    .ui.button.request_credit
+                        | credit
+                    .ui.selection.animated.list
+                        each received_credits
+                            a.item(href="/transaction/#{_id}/view")
+        .three.column.row
+            .column
+                .ui.segment
+                    .ui.header 
+                        strong $#{udd.total_credit_amount}
+                        small total weekly income
+                    .ui.header
+                        strong #{udd.credit_count}
+                        small sales
+            .column
+                .ui.segment
+                    .ui.header
+                        strong $#{udd.total_debit_amount}
+                        small total weekly expenses
+                    .ui.header
+                        strong #{udd.debit_count}
+                        small debits
+            .column
+                .ui.segment
+                    .ui.header
+                        |growth from last week
+        .two.column.row
+            .column
+                .ui.segment
+                    .ui.header 
+                        i.chevron.down.icon
+                        |weekly debits
+                    .ui.feed.mediumscroll
+                        each user_debits
+                            .event 
+                                .label
+                                    if is_credit
+                                        i.chevron.up.icon
+                                    if is_debit
+                                        i.chevron.down.icon
+                                    else if icon
+                                        i.icon(class=icon)
+                                .content
+                                    .summary
+                                        a.user(href="/user/#{target_user.username}")
+                                            |#{target_user.name}
+                                        |#{text}
+                                        .date #{when}
+                                    .meta
+                                        +voting_small
+                                        //- a.like
+                                        //-     i.like.icon 
+                                        //-     |4 likes
+                                        a.remove
+                                            i.grey.undo.icon
+                                        //- if is_dev
+                                        //-     +remove_button
+                        //- +range_edit                
+            if is_admin
+                .column
+                    .ui.segment
+                        .ui.header
+                            i.shield.icon
+                            |admin 
+                        +number_edit key='credit' label='edit credit' direct=true
+                                

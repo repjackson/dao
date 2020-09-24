@@ -1,6 +1,6 @@
 Router.configure
     layoutTemplate: 'layout'
-    notFoundTemplate: 'home'
+    notFoundTemplate: 'not_found'
     loadingTemplate: 'splash'
     trackPageView: false
 
@@ -76,12 +76,11 @@ Router.route '/reddit/:doc_id/edit', (->
 
 
 Router.route '/verification_confirmation', -> @render 'verification_confirmation'
-Router.route '*', -> @render 'home'
+Router.route '*', -> @render 'not_found'
 
 # Router.route '/user/:username/m/:type', -> @render 'profile_layout', 'user_section'
 
 Router.route '/forgot_password', -> @render 'forgot_password'
-Router.route '/user/:username', -> @render 'profile'
 
 
 Router.route '/reset_password/:token', (->

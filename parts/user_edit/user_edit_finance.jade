@@ -1,0 +1,155 @@
+template(name='user_edit_finance')  
+    .ui.stackable.grid      
+        //- .centered.row
+        //-     .sixteen.wide.column
+        //-         .ui.center.aligned.header user credit
+        .three.column.row
+            .column
+                .ui.segment
+                    .ui.header
+                        +icolor name='deposit'
+                        |sent credit
+                    .ui.button.send_credit
+                        |send credit
+                    .ui.header
+                        |sent credits
+                    .ui.list
+                        each sent_credits
+                            a.item(href="/transaction/#{_id}/view")
+            .column
+                .ui.segment
+                    .ui.header
+                        +icolor name='withdrawal'
+                    .ui.button.request_credit
+                        | credit
+                    .ui.header
+                        |received credits
+                    .ui.selection.animated.list
+                        each received_credits
+                            a.item(href="/transaction/#{_id}/view")
+            .column
+                .ui.segment
+                    .ui.header
+                        +icolor name='change'
+                        |your balance
+                    .ui.small.inline.header current credit
+                    .ui.green.inline.header #{current_user.credit}c
+                    .ui.button.top_up
+                        |add credit
+                    +session_boolean_toggle key='adding_credit' label='add credit' icon='plus'
+                    if session_is 'adding_credit' true
+                        |add amount
+                        .ui.input
+                            input.add_amount(type='number')
+                        .ui.horizontal.divider or
+                        .ui.button.add_five_credits
+                            |5
+                        .ui.button.add_ten_credit
+                            |10
+                        .ui.button.add_twenty_credit
+                            |20
+                        .ui.button.add_fifty_credit
+                            |50
+                        .ui.button.add_hundred_credit
+                            |100
+                
+        .three.column.row
+            .column
+                .ui.segment
+                .ui.segment
+                    .ui.header 
+                        strong $#{udd.total_credit_amount}
+                        small total weekly income
+                    .ui.header
+                        strong #{udd.credit_count}
+                        small sales
+            .column
+                .ui.segment
+                    .ui.header
+                        strong $#{udd.total_debit_amount}
+                        small total weekly expenses
+                    .ui.header
+                        strong #{udd.debit_count}
+                        small debits
+            .column
+                .ui.segment
+                    .ui.header
+                        |growth from last week
+        .two.column.row
+            .column
+                .ui.segment
+                    .ui.header 
+                        |weekly credits
+                    //- .ui.bulleted.list
+                    //-     each user_credits
+                    //-         .item 
+                    //-             |#{amount}
+                    //-             if icon
+                    //-                 +i name=icon
+                    //-             strong #{text}
+                    //-             small #{when}
+                    .ui.feed.mediumscroll
+                        each user_credits
+                            .event 
+                                .label
+                                    if is_credit
+                                        i.grey.chevron.up.icon
+                                    if is_debit
+                                        i.grey.chevron.down.icon
+                                    else if icon
+                                        i.grey.icon(class=icon)
+                                .content
+                                    .summary
+                                        a.user(href="/user/#{target_user.username}")
+                                            |#{target_user.name}
+                                        |#{text}
+                                        .date #{when}
+                                    .meta
+                                        +voting_small
+                                        //- a.like
+                                        //-     i.like.icon 
+                                        //-     |4 likes
+                                        a.remove
+                                            i.grey.undo.icon
+                                        //- if is_dev
+                                        //-     +remove_button
+            .column
+                .ui.segment
+                    .ui.header 
+                        i.chevron.down.icon
+                        |weekly debits
+                    .ui.feed.mediumscroll
+                        each user_debits
+                            .event 
+                                .label
+                                    if is_credit
+                                        i.chevron.up.icon
+                                    if is_debit
+                                        i.chevron.down.icon
+                                    else if icon
+                                        i.icon(class=icon)
+                                .content
+                                    .summary
+                                        a.user(href="/user/#{target_user.username}")
+                                            |#{target_user.name}
+                                        |#{text}
+                                        .date #{when}
+                                    .meta
+                                        +voting_small
+                                        //- a.like
+                                        //-     i.like.icon 
+                                        //-     |4 likes
+                                        a.remove
+                                            i.grey.undo.icon
+                                        //- if is_dev
+                                        //-     +remove_button
+                        //- +range_edit                
+            .column
+                
+            .column
+                if is_admin
+                    .ui.segment
+                        .ui.header
+                            i.shield.icon
+                            |admin 
+                        +number_edit key='credit' label='edit credit' direct=true

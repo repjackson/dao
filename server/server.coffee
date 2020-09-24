@@ -58,8 +58,8 @@ Meteor.publish 'docs', (
     )->
     match = {}
     # match.model = $in:['porn']
-    # match.model = $in:['post','wikipedia','reddit','porn']
-    match.model = $in:['post','wikipedia','reddit']
+    match.model = $in:['post','wikipedia','reddit','porn']
+    # match.model = $in:['post','wikipedia','reddit']
     
     # match.model = 'post'
     # if Meteor.user()
@@ -90,8 +90,8 @@ Meteor.publish 'tags', (
     )->
     self = @
     match = {}
-    # match.model = $in:['post','wikipedia','reddit','porn']
-    match.model = $in:['post','wikipedia','reddit']
+    match.model = $in:['post','wikipedia','reddit','porn']
+    # match.model = $in:['post','wikipedia','reddit']
     # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia']
     # match.model = 'post'

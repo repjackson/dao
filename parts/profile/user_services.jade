@@ -1,0 +1,22 @@
+template(name='user_services')  
+    .ui.center.aligned.header 
+        i.hand.holding.heart.icon
+        |user services
+    .scrolling
+        each services
+            .ui.segment
+                a.ui.header(href="/service/#{_id}/view") 
+                    |#{title}
+                div
+                    |$#{usd_price}
+                    |#{point_price}pts
+                div
+                | !{description}
+                div
+                if is_admin
+                    +remove_button
+                    +print_this
+                
+                //- div
+                +author_info
+                +creation_info
