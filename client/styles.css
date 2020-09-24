@@ -332,15 +332,17 @@ a.goto_article {
 }
 /*  */
 .pointer:hover {
-    transition: all .25s ease !important; 
+    transition: all .25s linear !important; 
     cursor: pointer !important;
     /* color: black !important; */
     /* font-size: 130% !important; */
-    /*zoom: 120% !important;*/
+    /*zoom: 110% !important;*/
     /* padding-top: 5em !important; */
+    transform: scale(1.5) !important;
+    z-index: 1000 !important;
     /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
     /*text-shadow: 0 0 3px grey !important;*/
-    filter: drop-shadow(1px 1px 2px lightgrey);    
+    filter: drop-shadow(5px 5px 3px grey);    
 }
 
 .zoom:hover {

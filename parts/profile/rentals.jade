@@ -1,0 +1,46 @@
+template(name='rentals')
+    .ui.inline.header 
+        +icon name='clock'
+        |rentals
+    .ui.icon.button.add_rental
+        i.plus.icon
+    each user_rentals
+        a.ui.item(href="/m/rental/#{_id}/view")
+            .content
+                .ui.header #{title}
+                
+                
+template(name='rental_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .sixteen.wide.column
+                    a.ui.icon.circular.large.button(href="/m/rental/#{_id}/view" title='save' class=currentUser.invert_class)
+                        i.checkmark.big.icon
+                    .ui.inline.large.header 
+                        small edit rental
+                        // |#{title}
+                    +text_edit key='title' label='title' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    +smart_tagger
+                    +html_edit key='description' label='description' direct=true
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    i.remove.link.circular.big.icon.delete_rental(title='delete rental')
+                                    
+template(name='rental_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .sixteen.wide.column
+                    if can_edit 
+                        a.ui.icon.circular.large.button(href="/m/rental/#{_id}/edit" title='edit' class=currentUser.invert_class)
+                            i.pencil.icon
+                    .ui.inline.large.header 
+                        small view rental
+                        // |#{title}
+                    +text_view key='title' label='title' direct=true
+                    +image_view key='image_id' label='image' direct=true
+                    +array_view key='tags' direct=true
+                    +html_view key='description' label='description' direct=true
+                    +youtube_view key='youtube_id' label='youtube id' direct=true
+                                    

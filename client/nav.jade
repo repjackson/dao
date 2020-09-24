@@ -21,8 +21,23 @@ template(name='nav')
                 i.yin.yang.loading.big.grey.icon
                 +status    
         .right.menu
-            a.item.post(title='add')
+            a.icon.item.post(title='add')
                 i.large.plus.icon
+            if unread_count
+                a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                    i.large.bell.icon
+                    if unread_count
+                        |#{unread_count}
+            else
+                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                    i.large.outline.bell.icon
+            a.icon.item(href="/chat" title='chat') 
+                i.chat.outline.large.icon
+            // a.icon.item(href="/user/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
+            if is_dev 
+                .icon.item
+                    i.large.code.icon
+                
             if currentUser
                 a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'profile'}}")
                     //- i.large.user.large.icon
@@ -69,7 +84,7 @@ template(name='recent_alert')
             
             
 template(name='right_sidebar')
-    .ui.right.sidebar.vertical.borderless.menu
+    .ui.right.sidebar.vertical.borderless.invert.menu
         // a.item.toggle_rightbar(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
         //     img.ui.avatar.compact.image(src="{{c.url 'homestar_logo' height=200 width=200 gravity='face' crop='fill'}}")
         //     |#{currentUser.name}

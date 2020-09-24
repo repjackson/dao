@@ -17,7 +17,7 @@ if Meteor.isClient
         # Meteor.call 'calc_user_stats', user._id, ->
         Meteor.setTimeout ->
             if user
-                Meteor.call 'recalc_one_stats', user._id, ->
+                Meteor.call 'recalc_dao_stats', user._id, ->
         , 2000
 
 
@@ -36,7 +36,7 @@ if Meteor.isClient
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             # Meteor.call 'calc_user_stats', user._id, ->
-            Meteor.call 'recalc_one_stats', user._id, ->
+            Meteor.call 'recalc_dao_stats', user._id, ->
             Meteor.call 'calc_user_tags', user._id, ->
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
@@ -314,7 +314,7 @@ if Meteor.isServer
 
 
 
-        recalc_one_stats: (user_id)->
+        recalc_dao_stats: (user_id)->
             user = Meteor.users.findOne user_id
             unless user
                 user = Meteor.users.findOne username

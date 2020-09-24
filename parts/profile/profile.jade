@@ -7,7 +7,7 @@ template(name='profile')
                         img.ui.centered.tiny.inline.spaced.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}")
                 span.mobile.hidden
                     a(href="/user/#{username}/")
-                        img.ui.centered.fluid.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+                        img.ui.small.inline.circular.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
                 a.ui.header.refresh_user_stats(href="/user/#{username}") 
                     if spirit_animal
                         span(title="spirit animal #{spirit_animal}")
@@ -75,9 +75,13 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='services' label='services' icon='wrench'
                 +session_edit_value_button key='view_user_section' value='projects' label='projects' icon='tasks'
                 +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
+                +session_edit_value_button key='view_user_section' value='rentals' label='rentals' icon='clock'
                 +session_edit_value_button key='view_user_section' value='leads' label='leads' icon='phone'
+                +session_edit_value_button key='view_user_section' value='groups' label='groups' icon='groups'
 
                 +session_edit_value_button key='view_user_section' value='karma' label='karma' icon='dashboard'
+                if session_key_value_is 'view_user_section' 'rentals'
+                    +rentals
                 if session_key_value_is 'view_user_section' 'karma'
                     // +user_kin
                     .ui.header karma out
@@ -216,6 +220,8 @@ template(name='user_dashboard')
                 each service_area_codes 
                     .ui.header #{this}
 
+
+
 template(name='user_friend_button')
     if is_friend
         .ui.blue.large.button.unfriend(title='unfriend')
@@ -223,7 +229,6 @@ template(name='user_friend_button')
     else
         .ui.button.friend(title='friend')
             i.user.plus.large.icon
-
 
 
 

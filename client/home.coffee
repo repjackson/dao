@@ -42,11 +42,11 @@ Template.nav.events
 @selected_tags = new ReactiveArray []
 
 Template.body.events
-    # 'click a:not(.select_term)': ->
-    #     $('.global_container')
-    #     .transition('fade out', 200)
-    #     .transition('fade in', 200)
-    #     # unless Meteor.user().invert_class is 'invert'
+    'click a:not(.select_term)': ->
+        $('.global_container')
+        .transition('fade out', 200)
+        .transition('fade in', 200)
+        # unless Meteor.user().invert_class is 'invert'
 
 Router.route '/', (->
     @layout 'layout'
@@ -57,7 +57,7 @@ Router.route '/', (->
 
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe('me')
-    @autorun -> Meteor.subscribe('tags',
+    @autorun -> Meteor.subscribe('dtags',
         # Session.get('query')
         selected_tags.array()
         )
@@ -83,7 +83,7 @@ Template.tag_selector.events
             # Meteor.call 'omega', @title, ->
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.call 'search_ph', selected_tags.array(), ->
+        # Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
@@ -97,7 +97,7 @@ Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.call 'search_ph', selected_tags.array(), ->
+        # Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.tone.events
     # 'click .upvote_sentence': ->
@@ -149,7 +149,12 @@ Template.home.helpers
             limit:7
         # if cur.count() is 1
         Docs.find match
-        
+    home_button_class: ->
+        if Template.instance().subscriptionsReady()
+            ''
+        else
+            'disabled loading'
+
         
     term: ->
         # console.log @
@@ -199,7 +204,7 @@ Template.home.events
             console.log search
             selected_tags.push search
             # if Meteor.user()
-            Meteor.call 'search_ph', selected_tags.array(), ->
+            # Meteor.call 'search_ph', selected_tags.array(), ->
             Meteor.call 'call_wiki', search, ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
             Session.set('query','')
