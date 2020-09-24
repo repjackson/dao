@@ -9,9 +9,17 @@ template(name='nav')
             // .item
             //     .ui.green.header not connected
         i.big.circular.link.yin.yang.grey.icon.home
+        .ui.circular.icon.button
+            i.wikipedia.icon
+        .ui.circular.icon.button
+            i.reddit.icon
+        .ui.circular.small.icon.button
+            i.video.icon
+            // |nsfw
     else
         i.yin.yang.loading.big.grey.icon
         +status    
+        
     a.ui.icon.circular.basic.button.post(title='add')
         i.large.plus.icon
     // a.large.item(href="/user/#{currentUser.username}" class="{{isActiveRoute 'profile'}}")
@@ -59,7 +67,10 @@ template(name='home')
         // else
         //     // .ui.stackable.cards
         each docs
-            +post_card
+            if key_value_is 'model' 'porn'
+                +vid_card
+            else
+                +post_card
             .ui.divider
 
 

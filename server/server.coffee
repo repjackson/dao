@@ -57,7 +57,8 @@ Meteor.publish 'docs', (
     # query=''
     )->
     match = {}
-    match.model = $in:['post','wikipedia','reddit']
+    # match.model = $in:['porn']
+    match.model = $in:['post','wikipedia','reddit','porn']
     # match.model = $in:['post','wikipedia']
     
     # match.model = 'post'
@@ -69,15 +70,16 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:7
+            limit:10
             sort:
                 points:-1
+                views:-1
                 ups:-1
     else
-        # match.tags = $in:['life']
+        # match.tags = $in:['love']
         # console.log match
         Docs.find match,
-            limit:7
+            limit:5
             sort:
                 _timestamp:-1
                     
@@ -88,7 +90,8 @@ Meteor.publish 'tags', (
     )->
     self = @
     match = {}
-    match.model = $in:['post','wikipedia','reddit']
+    match.model = $in:['post','wikipedia','reddit','porn']
+    # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia']
     # match.model = 'post'
     
@@ -97,7 +100,7 @@ Meteor.publish 'tags', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['life']
+        match.tags = $in:['love']
 
     tag_cloud = Docs.aggregate [
         { $match: match }
@@ -106,7 +109,7 @@ Meteor.publish 'tags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 7 }
+        { $limit: 5 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', tag_cloud
@@ -120,49 +123,3 @@ Meteor.publish 'tags', (
     self.ready()
                     
                     
-                    
-Meteor.methods
-    set_user_password: (user, password)->
-        result = Accounts.setPassword(user._id, password)
-        # console.log result
-        result
-
-    # verify_email: (email)->
-    #     (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
-
-
-    create_user: (options)->
-        console.log 'creating user', options
-        Accounts.createUser options
-
-    can_submit: ->
-        username = Session.get 'username'
-        email = Session.get 'email'
-        password = Session.get 'password'
-        password2 = Session.get 'password2'
-        if username and email
-            if password.length > 0 and password is password2
-                true
-            else
-                false
-
-
-    find_username: (username)->
-        res = Accounts.findUserByUsername(username)
-        if res
-            # console.log res
-            unless res.disabled
-                return res
-
-    new_demo_user: ->
-        current_user_count = Meteor.users.find().count()
-
-        options = {
-            username:"user#{current_user_count}"
-            password:"user#{current_user_count}"
-            }
-
-        create = Accounts.createUser options
-        new_user = Meteor.users.findOne create
-        return new_user
-                

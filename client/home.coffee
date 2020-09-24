@@ -75,7 +75,17 @@ Template.tag_selector.helpers
     term: ->
         Docs.findOne 
             title:@name
+Template.tag_selector.events
+    'click .select_tag': -> 
+        selected_tags.push @name
+        # if Meteor.user()
+        Meteor.call 'call_wiki', @name, ->
+            # Meteor.call 'calc_term', @title, ->
+            # Meteor.call 'omega', @title, ->
             
+        Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'search_ph', selected_tags.array(), ->
+
 Template.unselect_tag.onCreated ->
     # console.log @
     @autorun => Meteor.subscribe('doc_by_title', @data)
@@ -87,7 +97,8 @@ Template.unselect_tag.helpers
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
-        # Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.tone.events
     # 'click .upvote_sentence': ->
@@ -102,7 +113,7 @@ Template.tone.events
 Template.home.helpers
     selected_tags_plural: -> selected_tags.array().length > 1
     one_post: ->
-        match = {model:$in:['post','wikipedia','reddit']}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
         
         # match = {model:'post'}
         if selected_tags.array().length>0
@@ -111,7 +122,7 @@ Template.home.helpers
         Docs.find(match).count() is 1
 
     two_posts: -> 
-        match = {model:$in:['post','wikipedia','reddit']}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
         
         # match = {model:'post'}
         if selected_tags.array().length>0
@@ -121,7 +132,8 @@ Template.home.helpers
 
 
     docs: ->
-        match = {model:$in:['post','wikipedia','reddit']}
+        # match = {model:$in:['porn']}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
         
         # match = {model:'post'}
         if selected_tags.array().length>0
@@ -132,7 +144,7 @@ Template.home.helpers
                 ups:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:10
+            limit:1
         
     term: ->
         # console.log @
@@ -142,7 +154,7 @@ Template.home.helpers
     
     selected_tags: -> selected_tags.array()
     tag_results: ->
-        doc_count = Docs.find({model:$in:['post','wikipedia','reddit']}).count()
+        doc_count = Docs.find({model:$in:['post','wikipedia','reddit','porn']}).count()
         if 0 < doc_count < 3 
             Tag_results.find({ 
                 count:$lt:doc_count 
@@ -150,15 +162,12 @@ Template.home.helpers
         else 
             Tag_results.find()
 
-Template.tag_selector.events
-    'click .select_tag': -> 
-        selected_tags.push @name
-        # if Meteor.user()
-        Meteor.call 'call_wiki', @name, ->
-            # Meteor.call 'calc_term', @title, ->
-            # Meteor.call 'omega', @title, ->
             
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+Template.vid_card.events
+    'click .fork': -> 
+        console.log @
+        Meteor.call 'tagify_vid', @_id, ->
+
 Template.home.events
     # 'click .delete': -> 
     #     console.log @
@@ -185,7 +194,7 @@ Template.home.events
             console.log search
             selected_tags.push search
             # if Meteor.user()
-            Meteor.call 'search_ph', search, ->
+            Meteor.call 'search_ph', selected_tags.array(), ->
             Meteor.call 'call_wiki', search, ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
             Session.set('query','')

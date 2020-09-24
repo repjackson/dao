@@ -344,12 +344,13 @@ a.goto_article {
 }
 
 .zoom:hover {
-    transition: all .2s ease !important; 
+    transition: all .1s ease !important; 
     transform: scale(1.05) !important;
 }
 .superzoom:hover {
-    transition: all .5s ease !important; 
-    transform: scale(3) !important;
+    /*transition: all .1s ease !important; */
+    transform: scale(2) !important;
+    z-index:1000 !important;
 }
 .pointer:active {
   box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
