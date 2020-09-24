@@ -58,8 +58,8 @@ Meteor.publish 'docs', (
     )->
     match = {}
     # match.model = $in:['porn']
-    match.model = $in:['post','wikipedia','reddit','porn']
-    # match.model = $in:['post','wikipedia']
+    # match.model = $in:['post','wikipedia','reddit','porn']
+    match.model = $in:['post','wikipedia','reddit']
     
     # match.model = 'post'
     # if Meteor.user()
@@ -90,7 +90,8 @@ Meteor.publish 'tags', (
     )->
     self = @
     match = {}
-    match.model = $in:['post','wikipedia','reddit','porn']
+    # match.model = $in:['post','wikipedia','reddit','porn']
+    match.model = $in:['post','wikipedia','reddit']
     # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia']
     # match.model = 'post'
@@ -109,7 +110,7 @@ Meteor.publish 'tags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 5 }
+        { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', tag_cloud
