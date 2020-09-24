@@ -31,11 +31,12 @@ Meteor.users.allow
         # if user_id and doc._id == user_id
         #     true
     update: (user_id, doc, fields, modifier) ->
-        user = Meteor.users.findOne user_id
-        if user_id and doc._id is user_id
-            true
-        else if user_id and 'dev' in user.roles
-            true
+        user_id
+        # user = Meteor.users.findOne user_id
+        # if user_id and doc._id is user_id
+        #     true
+        # else if user_id and 'dev' in user.roles
+        #     true
     remove: (user_id, doc, fields, modifier) ->
         user = Meteor.users.findOne user_id
         if user_id and 'dev' in user.roles

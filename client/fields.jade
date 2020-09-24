@@ -279,7 +279,7 @@ template(name='textarea_edit')
 
         
 template(name='text_edit')
-    div
+    // div
     if icon
         //- i.grey.icon(class=icon)
         +icon name=icon cl='ui avatar image'
@@ -291,7 +291,7 @@ template(name='text_edit')
         else if key
             |#{key}
             //- +clear_value
-    .ui.icon.large.fluid.input
+    .ui.icon.input
         input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
         
 

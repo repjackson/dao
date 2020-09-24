@@ -1,22 +1,14 @@
 if Meteor.isClient
     Router.route '/user/:username', (->
-        @layout 'profile_layout'
-        @render 'user_dashboard'
-        ), name:'profile_layout'
-    Router.route '/user/:username/about', (->
-        @layout 'profile_layout'
-        @render 'user_about'
-        ), name:'user_about'
-    Router.route '/user/:username/contact', (->
-        @layout 'profile_layout'
-        @render 'user_contact'
-        ), name:'user_contact'
+        @layout 'layout'
+        @render 'profile'
+        ), name:'profile'
 
 
-    Template.profile_layout.onCreated ->
+    Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
     
-    Template.profile_layout.onRendered ->
+    Template.profile.onRendered ->
         Meteor.setTimeout ->
             $('.profile_nav_item')
                 .popup()
@@ -29,11 +21,13 @@ if Meteor.isClient
         , 2000
 
 
-    Template.profile_layout.helpers
+    Template.profile.helpers
         route_slug: -> "user_#{@slug}"
         user: -> Meteor.users.findOne username:Router.current().params.username
+        is_current_user: ->
+            Meteor.user().username is Router.current().params.username
 
-    Template.profile_layout.events
+    Template.profile.events
         'click a.select_term': ->
             $('.profile_yield')
                 .transition('fade out', 200)
@@ -44,8 +38,6 @@ if Meteor.isClient
             # Meteor.call 'calc_user_stats', user._id, ->
             Meteor.call 'recalc_one_stats', user._id, ->
             Meteor.call 'calc_user_tags', user._id, ->
-    
-    Template.profile_layout.events
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             if Meteor.userId() is user._id
