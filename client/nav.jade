@@ -33,18 +33,18 @@ template(name='nav')
             if connected
                 a.icon.item.post(title='add')
                     i.large.plus.icon
-            if currentUser
-                if connected
-                    if unread_count
-                        a.item.alerts.select_term(href="#" class=alert_toggle_class)
-                            i.large.bell.icon
-                            if unread_count
-                                |#{unread_count}
-                    else
-                        a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                            i.large.outline.bell.icon
-            a.icon.item(href="/chat" title='chat') 
-                i.chat.outline.large.icon
+            // if currentUser
+                // if connected
+                //     if unread_count
+                //         a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                //             i.large.bell.icon
+                //             if unread_count
+                //                 |#{unread_count}
+                //     else
+                //         a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                //             i.large.outline.bell.icon
+            // a.icon.item(href="/chat" title='chat') 
+            //     i.chat.outline.large.icon
             // a.icon.item(href="/u/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
             if is_dev 
                 .icon.item
@@ -134,8 +134,7 @@ template(name='chatpop')
                 i.plus.icon
                 input.add_chat(type='text' placeholder='chat...')
     else 
-        .ui.large.circular.icon.invert.button.open_chat
-            i.chat.outline.large.icon
+        i.chat.outline.big.circular.icon.open_chat
 
 template(name='topbar')
     .ui.fluid.large.attached.segment

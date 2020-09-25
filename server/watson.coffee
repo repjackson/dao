@@ -282,8 +282,8 @@ Meteor.methods
                 # console.log final_doc
 
                 if mode is 'url'
-                    if doc.model is 'wikipedia'
-                        Meteor.call 'call_tone', doc_id, 'body', 'text', ->
+                    # if doc.model is 'wikipedia'
+                    Meteor.call 'call_tone', doc_id, 'body', 'text', ->
                 
                 # Meteor.call 'log_doc_terms', doc_id, ->
                 # Meteor.call 'clear_blocklist_doc', doc_id, ->

@@ -49,20 +49,21 @@ template(name='layout')
     // if currentUser
     // .ui.bottom.attached.pushable.segment
     // .invert
-    +nav
+    // +nav
     // #main_area.scrolling.global_container
 
-    .ui.bottom.attached.pushable.segment
-        +leftbar
-        +rightbar
+    // .ui.bottom.attached.pushable.segment
+    //     +leftbar
+    //     +rightbar
                 
-        // #main_area.global_container.pusher.invert
-        #main_area.global_container.pusher(class=currentUser.invert_class)
-            +yield
+    //     // #main_area.global_container.pusher.invert
+    //     #main_area.global_container.pusher(class=currentUser.invert_class)
+    .invert
+        +yield
             // .scrolling
         // if currentUser
         //     +bottom_nav
-    +chatpop
+    // +chatpop
     // +footer
 
 
