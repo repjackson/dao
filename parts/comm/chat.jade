@@ -66,7 +66,7 @@ template(name='chat_list_item')
                 //- .ui.horizontal.list
                 //-     each participants
                 //-         .item(title=username)
-                //-             // a(href="/user/profile/#{_id}")
+                //-             // a(href="/u/profile/#{_id}")
                 //-             img.ui.avatar.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
                 //-             |#{username}
                 //-             +user_status
@@ -93,7 +93,7 @@ template(name='private_chat_item')
                 //- .ui.horizontal.list
                 //-     each participants
                 //-         .item(title=username)
-                //-             // a(href="/user/profile/#{_id}")
+                //-             // a(href="/u/profile/#{_id}")
                 //-             img.ui.avatar.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
                 //-             |#{username}
                 //-             +user_status
@@ -116,10 +116,10 @@ template(name='chat_message')
     // .ui.segment.message_segment(class=message_segment_class)
         // .ui.comments
     .comment
-        a.avatar(href="/user/#{author.username}")
+        a.avatar(href="/u/#{author.username}")
             img.ui.avatar.image(src="{{c.url author.profile_image_id width=400 height=400 gravity='face' crop='fill'}}")
         .content
-            a.author(href="/user/#{author.username}") 
+            a.author(href="/u/#{author.username}") 
                 |#{author.username}
                 +user_status author
             .metadata
@@ -173,7 +173,7 @@ template(name='view_chat')
                             img.ui.avatar.image(src="{{c.url profile_image_id width=400 height=400 gravity='face' crop='fill'}}")
                             .content
                                 .header
-                                    a(href="/user/#{username}") #{username}
+                                    a(href="/u/#{username}") #{username}
                                     if subscribed
                                         i.bell.outline.icon(title='subscribed')
                                     else

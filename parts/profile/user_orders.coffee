@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Router.route '/user/:username/orders', (->
+    Router.route '/u/:username/orders', (->
         @layout 'profile_layout'
         @render 'user_orders'
         ), name:'user_orders'

@@ -13,7 +13,7 @@ template(name='user_credit')
                             img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         .ui.header $#{dollar_amount}
                         |to
-                        a(href="/user/#{recipient.username}")
+                        a(href="/u/#{recipient.username}")
                             |#{recipient.username}
                         .content
                             a(href="/m/dollar_debit/#{_id}/view")
@@ -32,7 +32,7 @@ template(name='user_credit')
                             img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         strong $#{dollar_amount}
                         |to
-                        a(href="/user/#{recipient.username}")
+                        a(href="/u/#{recipient.username}")
                             |#{recipient.username}
                         .content
                             a(href="/m/dollar_debit/#{_id}/view")
@@ -150,7 +150,7 @@ template(name='user_credit')
                                         i.icon(class=icon)
                                 .content
                                     .summary
-                                        a.user(href="/user/#{target_user.username}")
+                                        a.user(href="/u/#{target_user.username}")
                                             |#{target_user.name}
                                         |#{text}
                                         .date #{when}

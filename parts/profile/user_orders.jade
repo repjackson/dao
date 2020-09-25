@@ -3,7 +3,7 @@ template(name='user_orders')
         +icolor name='orders'
         |user orders
     if is_current_user
-        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/orders")
+        a.ui.circular.basic.icon.button(href="/u/#{current_user.username}/edit/orders")
             i.pencil.icon
     div
     +array_view key='allergens' label='allergens'

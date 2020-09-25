@@ -15,7 +15,7 @@ template(name='user_friends')
 
 
 template(name='user_segment')
-    a.item(href="/user/#{username}")
+    a.item(href="/u/#{username}")
         img.ui.avatar.image(src="{{c.url image_id gravity='face' crop='fit'}}")
         .content
             .header
@@ -30,7 +30,7 @@ template(name='user_segment')
     //-         if image_id
     //-             img(src="{{c.url image_id gravity='face' crop='crop'}}")
     //-     .content
-    //-         a.ui.header(href="/user/#{username}")
+    //-         a.ui.header(href="/u/#{username}")
     //-             |#{first_name} #{last_name}
     //-             //- |#{username}
     //-         //- .ui.header Tags

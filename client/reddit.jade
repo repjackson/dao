@@ -24,7 +24,7 @@ template(name='reddit_view')
                     +vote
                     .ui.large.link.list
                         each votes
-                            a.item(href="/user/#{_author_username}") #{_author_username} #{points} #{when}
+                            a.item(href="/u/#{_author_username}") #{_author_username} #{points} #{when}
                     .ui.label #{views} views
                     |#{tags.length} tags
                     each tags 
@@ -62,7 +62,7 @@ template(name='reddit_card')
             a.ui.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
                 i.reddit.icon
                 |#{subreddit}
-            a.ui.label(href="https://www.reddit.com/user/#{rd.author}" target='_window' title='author')
+            a.ui.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
                 i.pencil.icon
                 |#{rd.author}
             if is_admin

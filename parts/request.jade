@@ -95,7 +95,7 @@ template(name='request_view')
                         img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
                     .ui.header 
                         small posted by
-                    a.ui.header(href="/user/#{_author.username}") 
+                    a.ui.header(href="/u/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.name}
                     .ui.header #{when}
@@ -105,7 +105,7 @@ template(name='request_view')
                 .eight.wide.column
                     .f13
                         |!{description}
-                    // a.ui.header(href="/user/#{target.username}")
+                    // a.ui.header(href="/u/#{target.username}")
                     //     img.ui.avatar.image(src="{{c.url target.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //     |#{target.username}
                     if youtube_id
@@ -125,7 +125,7 @@ template(name='request_view')
                             |claim
                     if claimer
                         .ui.header claimed by
-                        a.ui.header(href="/user/#{claimer.name}")
+                        a.ui.header(href="/u/#{claimer.name}")
                             img.ui.avatar.image(src="{{c.url claimer.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{claimer.name}
                         unless complete

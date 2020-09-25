@@ -1,16 +1,16 @@
 if Meteor.isClient
-    Router.route '/user/:username/edit/membership', (->
+    Router.route '/u/:username/edit/membership', (->
         @layout 'user_edit_layout'
-        @render 'user_edit_membership'
-        ), name:'user_edit_membership'
+        @render 'membership'
+        ), name:'membership'
 
 
-    Template.user_edit_membership.onCreated ->
-        @autorun => Meteor.subscribe 'user_edit_membership', Router.current().params.username
+    Template.membership.onCreated ->
+        @autorun => Meteor.subscribe 'membership', Router.current().params.username
         # @autorun => Meteor.subscribe 'model_docs', 'picture'
         @autorun => Meteor.subscribe 'model_docs', 'transaction'
 
-    Template.user_edit_membership.events
+    Template.membership.events
         'keyup .new_picture': (e,t)->
             if e.which is 13
                 val = $('.new_picture').val()
@@ -23,8 +23,8 @@ if Meteor.isClient
 
 
 
-    Template.user_edit_membership.helpers
-        user_edit_membership: ->
+    Template.membership.helpers
+        membership: ->
             target_user = Meteor.users.findOne(username:Router.current().params.username)
             Docs.find
                 model:'picture'
@@ -41,7 +41,7 @@ if Meteor.isClient
                     _timestamp:-1
                     
                     
-    Template.user_edit_membership.onCreated ->
+    Template.membership.onCreated ->
         if Meteor.isDevelopment
             pub_key = Meteor.settings.public.stripe_test_publishable
         else if Meteor.isProduction
@@ -77,9 +77,9 @@ if Meteor.isClient
                         )
         )
 
-    Template.user_edit_membership.onRendered ->
+    Template.membership.onRendered ->
 
-    Template.user_edit_membership.events
+    Template.membership.events
         'click .pay_membership': ->
             console.log Template.instance()
             # if confirm 'add 5 credits?'
@@ -121,6 +121,6 @@ if Meteor.isClient
             )
 
 if Meteor.isServer
-    Meteor.publish 'user_edit_membership', (username)->
+    Meteor.publish 'membership', (username)->
         Docs.find
             model:'picture'

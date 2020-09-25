@@ -86,7 +86,7 @@ globalHotkeys.add
             Router.go '/dev'
 globalHotkeys.add
 	combo: "g p"
-	callback: -> Router.go "/user/#{Meteor.user().username}"
+	callback: -> Router.go "/u/#{Meteor.user().username}"
 
 
 
@@ -115,7 +115,7 @@ globalHotkeys.add
         Router.go "/m/#{model_slug}/"
 globalHotkeys.add
 	combo: "g p"
-	callback: -> Router.go "/user/#{Meteor.user().username}"
+	callback: -> Router.go "/u/#{Meteor.user().username}"
 globalHotkeys.add
 	combo: "g i"
 	callback: -> Router.go "/inbox"

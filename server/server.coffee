@@ -1,6 +1,4 @@
 # tsqp-gebk-xhpz-eobp-agle
-Meteor.publish 'doc', (doc_id)->    Docs.find doc_id
-
 Docs.allow
     insert: (user_id, doc) ->
         true

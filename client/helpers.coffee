@@ -8,6 +8,14 @@ Template.registerHelper 'youtube_parse', (url) ->
         # console.log 'error, not vid'
         null
         
+        
+Template.registerHelper 'editing_mode', () ->
+    # Meteor.user().edit_mode and 
+    if Meteor.user().edit_mode
+        if Router.current().params.username is Meteor.user().username
+            true
+        
+        
 Template.registerHelper 'post_header_class', (metric) ->
     # console.log @
     if @max_emotion_name

@@ -45,8 +45,8 @@ Template.login.events
                 # if Meteor.user().roles and 'admin' in Meteor.user().roles
                 #     Router.go "/admin"
                 # else
-                Router.go "/user/#{Meteor.user().username}"
-                # Router.go "/user/#{username}"
+                Router.go "/u/#{Meteor.user().username}"
+                # Router.go "/u/#{username}"
 
     'keyup .password, keyup .username': (e,t)->
         if e.which is 13
@@ -66,11 +66,11 @@ Template.login.events
                             message: err.reason
                         })
                     else
-                        # Router.go "/user/#{username}"
+                        # Router.go "/u/#{username}"
                         # if Meteor.user().roles and 'admin' in Meteor.user().roles
                         #     Router.go "/admin"
                         # else
-                        Router.go "/user/#{Meteor.user().username}"
+                        Router.go "/u/#{Meteor.user().username}"
 
 
 Template.login.helpers
@@ -253,7 +253,7 @@ Template.register.events
                         # last_name: Session.get('last_name')
                         app:'dao'
                         username:username
-                Router.go "/user/#{username}"
+                Router.go "/u/#{username}"
                 # Meteor.loginWithPassword username, password, (err,res)=>
                 #     if err
                 #         alert err.reason

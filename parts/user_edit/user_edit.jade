@@ -1,47 +1,3 @@
-template(name='user_edit_layout')
-    +nav
-    .ui.bottom.attached.pushable.segment
-        +leftbar
-        +rightbar
-        #main_area.global_container.pusher(class=currentUser.invert_class)
-            with current_user          
-                .ui.stackable.padded.grid
-                    .row
-                        .sixteen.wide.column
-                            .ui.center.aligned.large.inline.header(style="color:#{current_user.theme_color};")
-                                i.big.cog.icon(style="color:#{current_user.theme_color};")
-                                | #{current_user.name}
-                            .ui.small.inline.header @#{current_user.username}
-                            // img.ui.centered.medium.rounded.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
-                                
-                            a.ui.big.green.circular.compact.button(href="/user/#{current_user.username}/") 
-                                i.checkmark.big.icon
-                                strong save
-                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/account" class="{{isActiveRoute 'user_edit_account'}}" title='account') 
-                                i.cog.large.icon 
-                                |account
-                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/info" class="{{isActiveRoute 'user_edit_info'}}" title='info') 
-                                i.info.large.icon 
-                                |info
-                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/alerts" class="{{isActiveRoute 'user_edit_alerts'}}") 
-                                i.bell.large.icon 
-                                |alerts
-                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/reviews" class="{{isActiveRoute 'user_edit_reviews'}}") 
-                                i.edit.large.icon 
-                                |reviews
-                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/privacy" class="{{isActiveRoute 'user_edit_privacy'}}") 
-                                i.lock.privacy.large.icon 
-                                | privacy
-                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/badges" class="{{isActiveRoute 'user_edit_badges'}}" title='badges') 
-                                i.certificate.large.icon
-                                |badges
-                            a.ui.basic.circular.compact.button(href="/user/#{current_user.username}/edit/company" class="{{isActiveRoute 'company_info'}}" title='membership') 
-                                i.building.large.icon
-                                | company
-                        .sixteen.wide.column
-                            +yield
-
-     
 template(name='phone_editor')
     .ui.small.header    
         i.phone.icon
@@ -128,18 +84,15 @@ template(name='user_edit_friends')
     
     
 
-template(name='user_edit_account')
+template(name='account')
     .ui.header 
         i.cog.icon
         |account
     .ui.two.column.stackable.grid
         .column
-            +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true
-            +image_edit key='banner_image_id' icon='picture' title='banner image' direct=true
+            // +image_edit key='banner_image_id' icon='picture' title='banner image' direct=true
             +password_edit
         .column
-            +text_edit key='first_name' label='first name' direct=true
-            +text_edit key='last_name' label='last name' direct=true
             .ui.header 
                 i.envelope.outline.icon
                 |emails

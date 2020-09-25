@@ -9,7 +9,7 @@ template(name='icon')
     //- img.ui.image(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl)
 
 template(name='user_button')
-    a.ui.button(href="/user/#{username}")
+    a.ui.button(href="/u/#{username}")
         img.ui.avatar.compact.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
         |#{name}
 
@@ -129,10 +129,10 @@ template(name='comments')
         .ui.comments
             each doc_comments
                 .comment
-                    // a.avatar(href="/user/#{_author.username}") 
+                    // a.avatar(href="/u/#{_author.username}") 
                     //     img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
                     .content
-                        // a.author(href="/user/#{_author.username}") 
+                        // a.author(href="/u/#{_author.username}") 
                         //     |#{_author.username}
                         .metadata
                             span.date #{when}
@@ -187,7 +187,7 @@ template(name='toggle_edit')
         i.pencil.icon
 
 template(name='user_list_info')
-    a.ui.basic.button.item(href="/user/#{user.username}/view")
+    a.ui.basic.button.item(href="/u/#{user.username}/view")
         img.ui.avatar.image(src=user.profile.profilePic title=name)
         |#{user.username}
         +user_status user
@@ -212,7 +212,7 @@ template(name='user_status')
 //             .image
 //                 img.ui.rounded.mini.image(src="{{c.url profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
 //             .content    
-//                 a.header(href="/user/#{username}") #{username} 
+//                 a.header(href="/u/#{username}") #{username} 
 //                 //- .meta @#{username}
 //                 strong $#{credit}
 //                 small credit
@@ -241,14 +241,14 @@ template(name='big_user_card')
             .image
                 img.ui.rounded.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
             .content
-                a.header(href="/user/#{username}")
+                a.header(href="/u/#{username}")
                      |#{username} 
                     //- .meta @#{username}
                     //- +array_view key='tags' label='Tags' direct=true
 
 
 template(name='user_info')
-    a.ui.compact.basic.circular.button(href="/user/#{user.username}/")
+    a.ui.compact.basic.circular.button(href="/u/#{user.username}/")
         if user.profile_image_id
             img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}")
         //- .visible.content
@@ -257,14 +257,14 @@ template(name='user_info')
         // +user_status user
 
 template(name='user_info_small')
-    a(href="/user/#{user.username}/")
+    a(href="/u/#{user.username}/")
         if user.profile_image_id
             img.ui.avatar.image.invert(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
         else
             i.circular.user.outline.icon(title=user.name)
 
 template(name='user_info_tiny')
-    a(href="/user/#{user.username}/")
+    a(href="/u/#{user.username}/")
         // if user.profile_image_id
         //     img.ui.avatar.image(src="{{c.url user.profile_image_id width=300 height=300 gravity='face' crop='fill'}}" title=name)
         // else
@@ -293,7 +293,7 @@ template(name='role_editor')
 
 template(name='author_info')
     with author
-        a.ui.compact.basic.button(href="/user/#{username}")
+        a.ui.compact.basic.button(href="/u/#{username}")
             if profile_image_id
                 img.ui.avatar.image(src="{{c.url profile_image_id width=100 height=100 gravity='face' crop='fill'}}")
             |by #{username}

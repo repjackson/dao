@@ -367,27 +367,25 @@ template(name='image_view')
 
 
 template(name='image_edit')
-    .ui.form
-        if icon
-            i.icon(class=icon)
-        .ui.inline.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
-            else
-                |#{this}            
-        .field
-            if field_value
-                //- label Image
-                a(href="{{c.url field_value }}" target='_window')
-                    img.ui.large.centered.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                a#remove_photo.ui.right.corner.link.label
-                    i.remove.link.icon
-            else
-                input(type='file' name='upload_image' accept='image/*' )
+    if icon
+        i.icon(class=icon)
+    .ui.inline.header
+        if title
+            |#{title}
+        else if label
+            |#{label}
+        else if key
+            |#{key}
+        else
+            |#{this}            
+    if field_value
+        //- label Image
+        a(href="{{c.url field_value }}" target='_window')
+            img.ui.small.inline.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        a#remove_photo.ui.icon.button(title='remove image')
+            i.remove.large.icon
+    else
+        input(type='file' name='upload_image' accept='image/*' )
 
 template(name='image_link_edit')
     .ui.fluid.input
@@ -634,7 +632,7 @@ template(name='boolean_edit')
 
 
 template(name='boolean_view')
-    div(title=title)
+    span(title=title)
         .ui.inline.grey.small.header
             if icon
                 //- i.grey.icon(class=icon)
@@ -794,7 +792,7 @@ template(name='single_user_view')
             |#{label}
         with field_value
             with user_from_id this
-                a.ui.item(href="/user/#{username}") 
+                a.ui.item(href="/u/#{username}") 
                     .content
                         .header
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -820,7 +818,7 @@ template(name='multi_user_edit')
     .ui.input
         input#multi_user_select_input(type='text' placeholder="lookup #{role_filter}.." autocomplete='off')
     each selections
-        a.ui.large.label(href="/user/#{username}")
+        a.ui.large.label(href="/u/#{username}")
             |#{username}
     if user_results
         .ui.top.attached.segment
@@ -896,7 +894,7 @@ template(name='multi_user_view')
         //- #{key} #{label}
     each field_value
         with user_from_id this
-            a.ui.item(href="/user/#{username}") 
+            a.ui.item(href="/u/#{username}") 
                 .content
                     .header
                         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")

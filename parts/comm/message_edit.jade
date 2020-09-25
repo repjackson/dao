@@ -15,7 +15,7 @@ template(name='message_edit')
                         .ui.header recipient
                         with recipient
                             i.large.remove.link.icon.remove_recipient
-                            a.pointer(href="/user/#{name}")
+                            a.pointer(href="/u/#{name}")
                                 img.ui.tiny.inline.image(src="{{c.url profile_image_id height=400 width=400 gravity='face' crop='fill'}}")
                                 .ui.inline.header #{name}
                                 .ui.small.grey.inline.header #{points}

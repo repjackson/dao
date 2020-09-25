@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Router.route '/user/:username/messages', (->
+    Router.route '/u/:username/messages', (->
         @layout 'profile_layout'
         @render 'user_messages'
         ), name:'user_messages'

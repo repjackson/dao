@@ -96,28 +96,24 @@ if Meteor.isClient
             # model = 'event'
             # console.log "selected_#{model}_tags"
             selected_user_tags.array()
-        all_levels: ->
-            user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
-            if 0 < user_count < 3 then Levels.find { count: $lt: user_count } else Levels.find()
-        selected_user_tags: ->
-            # model = 'event'
-            # console.log "selected_#{model}_tags"
-            selected_user_tags.array()
+        # all_levels: ->
+        #     user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
+        #     if 0 < user_count < 3 then Levels.find { count: $lt: user_count } else Levels.find()
 
-        all_levels: ->
-            user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
-            if 0 < user_count < 3 then User_levels.find { count: $lt: user_count } else User_levels.find()
-        selected_user_levels: ->
-            # model = 'event'
-            # console.log "selected_#{model}_levels"
-            selected_user_levels.array()
-        all_levels: ->
-            user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
-            if 0 < user_count < 3 then Level_results.find { count: $lt: user_count } else Level_results.find()
-        selected_user_levels: ->
-            # model = 'event'
-            # console.log "selected_#{model}_levels"
-            selected_user_levels.array()
+        # all_levels: ->
+        #     user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
+        #     if 0 < user_count < 3 then User_levels.find { count: $lt: user_count } else User_levels.find()
+        # selected_user_levels: ->
+        #     # model = 'event'
+        #     # console.log "selected_#{model}_levels"
+        #     selected_user_levels.array()
+        # all_levels: ->
+        #     user_count = Meteor.users.find(_id:$ne:Meteor.userId()).count()
+        #     if 0 < user_count < 3 then Level_results.find { count: $lt: user_count } else Level_results.find()
+        # selected_user_levels: ->
+        #     # model = 'event'
+        #     # console.log "selected_#{model}_levels"
+        #     selected_user_levels.array()
 
 
     Template.user_cloud.events

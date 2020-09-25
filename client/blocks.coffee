@@ -284,7 +284,7 @@ if Meteor.isClient
 #     Template.username_info.events
 #         'click .goto_profile': ->
 #             user = Meteor.users.findOne username:@valueOf()
-#             Router.go "/user/#{user.username}/"
+#             Router.go "/u/#{user.username}/"
 #     Template.username_info.helpers
 #         user: -> Meteor.users.findOne username:@valueOf()
 #
@@ -481,7 +481,7 @@ if Meteor.isClient
 #
 #     Template.view_user_button.events
 #         'click .view_user': ->
-#             Router.go "/user/#{username}"
+#             Router.go "/u/#{username}"
 #
 #
 #     Template.user_array_element_toggle.helpers

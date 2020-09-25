@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Router.route '/user/:username/edit/privacy', (->
+    Router.route '/u/:username/edit/privacy', (->
         @layout 'user_edit_layout'
         @render 'user_edit_privacy'
         ), name:'user_edit_privacy'

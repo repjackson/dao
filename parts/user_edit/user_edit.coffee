@@ -1,64 +1,15 @@
 if Meteor.isClient
-    Router.route '/user/:username/edit/', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_account'
-        ), name:'user_edit_home'
-    Router.route '/user/:username/edit/info', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_info'
-        ), name:'user_edit_info'
-    Router.route '/user/:username/edit/badges', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_badges'
-        ), name:'user_edit_badges'
-    Router.route '/user/:username/edit/payment', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_payment'
-        ), name:'user_edit_payment'
-    Router.route '/user/:username/edit/account', (->
-        @layout 'user_edit_layout'
-        @render 'user_edit_account'
-        ), name:'user_edit_account'
-    Router.route '/user/:username/edit/company', (->
-        @layout 'user_edit_layout'
-        @render 'company_info'
-        ), name:'company_info'
-
-    Template.user_edit_layout.onCreated ->
-        @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
-        # @autorun -> Meteor.subscribe 'user_from_id', Router.current().params.user_id
-
-    Template.user_edit_layout.onRendered ->
-        # Meteor.setTimeout ->
-        #     $('.button').popup()
-        # , 2000
-
     Template.registerHelper 'current_user', () -> Meteor.users.findOne username:Router.current().params.username
 
     # Template.phone_editor.helpers
     #     'newNumber': ->
     #         Phoneformat.formatLocal 'US', Meteor.user().profile.phone
 
-    Template.user_edit_layout.events
+    Template.account.events
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id
                 Router.go "/users"
-
-        "change input[name='profile_image']": (e) ->
-            files = e.currentTarget.files
-            Cloudinary.upload files[0],
-                # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
-                # model:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
-                (err,res) -> #optional callback, you can catch with the Cloudinary collection as well
-                    # console.dir res
-                    if err
-                        console.error 'Error uploading', err
-                    else
-                        user = Meteor.users.findOne username:Router.current().params.username
-                        Meteor.users.update user._id,
-                            $set: "image_id": res.public_id
-                    return
 
 
     Template.username_edit.events
@@ -71,7 +22,7 @@ if Meteor.isClient
                         if err
                             alert err
                         else
-                            Router.go("/user/#{new_username}")
+                            Router.go("/u/#{new_username}")
 
 
 

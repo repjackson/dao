@@ -222,11 +222,6 @@ if Meteor.isClient
                     daily_rental_price:daily_rental_price
 
 if Meteor.isServer
-    Meteor.publish 'rentals', (product_id)->
-        Docs.find
-            model:'rental'
-            product_id:product_id
-
     Meteor.publish 'reservation_by_day', (product_id, month_day)->
         # console.log month_day
         # console.log product_id

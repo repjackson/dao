@@ -24,7 +24,7 @@ template(name='project_view')
                     +vote
                     .ui.large.link.list
                         each votes
-                            a.item(href="/user/#{_author_username}") #{_author_username} #{points} #{when}
+                            a.item(href="/u/#{_author_username}") #{_author_username} #{points} #{when}
                     .ui.label #{views} views
                     |#{tags.length} tags
                     each tags 

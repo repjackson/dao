@@ -12,7 +12,7 @@ template(name='badges')
                 //     |members
                 // each members 
                 //     if profile_image_id
-                //         a(href="/user/#{username}")
+                //         a(href="/u/#{username}")
                 //             img.ui.tiny.pointer.inline.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
             .twelve.wide.column
                 // .ui.segment
@@ -60,7 +60,7 @@ template(name='badge_view')
                 .eight.wide.column
                     .ui.header 
                         small author
-                    a.ui.header(href="/user/#{_author.username}") 
+                    a.ui.header(href="/u/#{_author.username}") 
                         img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{_author.username}
                             
@@ -77,7 +77,7 @@ template(name='badge_view')
                     .ui.header 
                         |badgers
                     each badgers
-                        a.ui.basic.button(href="/user/#{username}") 
+                        a.ui.basic.button(href="/u/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
         
@@ -85,7 +85,7 @@ template(name='badge_view')
                     //     +honey_badger
                     //     |honey badgers
                     // each honey_badgers
-                    //     a.ui.basic.button(href="/user/#{username}") 
+                    //     a.ui.basic.button(href="/u/#{username}") 
                     //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //         |#{name}
                     // //- .ui.fluid.green.button.submit
@@ -120,7 +120,7 @@ template(name='badge_edit')
                         +icolor name='badger'
                         |badgers
                     each badgers
-                        a.ui.compact.button(href="/user/#{username}") 
+                        a.ui.compact.button(href="/u/#{username}") 
                             img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
                         i.remove.link.icon.remove_badger
@@ -135,7 +135,7 @@ template(name='badge_edit')
                     //     +honey_badger
                     //     |honey badgers
                     // each honey_badgers
-                    //     a.ui.compact.button(href="/user/#{username}") 
+                    //     a.ui.compact.button(href="/u/#{username}") 
                     //         img.ui.avatar.image(src="{{c.url profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
                     //         |#{name}
                     //     i.remove.link.icon.remove_honey_badger

@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Router.route '/user/:username', (->
+    Router.route '/u/:username', (->
         @layout 'layout'
         @render 'profile'
         ), name:'profile'
@@ -15,10 +15,10 @@ if Meteor.isClient
         , 1000
         user = Meteor.users.findOne(username:Router.current().params.username)
         # Meteor.call 'calc_user_stats', user._id, ->
-        Meteor.setTimeout ->
-            if user
-                Meteor.call 'recalc_dao_stats', user._id, ->
-        , 2000
+        # Meteor.setTimeout ->
+        #     if user
+        #         Meteor.call 'recalc_dao_stats', user._id, ->
+        # , 2000
 
 
     Template.profile.helpers
@@ -36,8 +36,8 @@ if Meteor.isClient
         'click .refresh_user_stats': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             # Meteor.call 'calc_user_stats', user._id, ->
-            Meteor.call 'recalc_dao_stats', user._id, ->
-            Meteor.call 'calc_user_tags', user._id, ->
+            # Meteor.call 'recalc_dao_stats', user._id, ->
+            # Meteor.call 'calc_user_tags', user._id, ->
         'click .send': ->
             user = Meteor.users.findOne(username:Router.current().params.username)
             if Meteor.userId() is user._id
@@ -74,7 +74,7 @@ if Meteor.isClient
                         model:'request'
                         recipient_id: user._id
                         amount:1
-            Router.go "/request/#{new_id}/edit"
+            Router.go "/m/request/#{new_id}/edit"
     
         # 'click .recalc_user_cloud': ->
         #     Meteor.call 'recalc_user_cloud', Router.current().params.username, ->
@@ -314,106 +314,106 @@ if Meteor.isServer
 
 
 
-        recalc_dao_stats: (user_id)->
-            user = Meteor.users.findOne user_id
-            unless user
-                user = Meteor.users.findOne username
-            user_id = user._id
-            # console.log classroom
-            # student_stats_doc = Docs.findOne
-            #     model:'student_stats'
-            #     user_id: user_id
-            #
-            # unless student_stats_doc
-            #     new_stats_doc_id = Docs.insert
-            #         model:'student_stats'
-            #         user_id: user_id
-            #     student_stats_doc = Docs.findOne new_stats_doc_id
+        # recalc_dao_stats: (user_id)->
+        #     user = Meteor.users.findOne user_id
+        #     unless user
+        #         user = Meteor.users.findOne username
+        #     user_id = user._id
+        #     # console.log classroom
+        #     # student_stats_doc = Docs.findOne
+        #     #     model:'student_stats'
+        #     #     user_id: user_id
+        #     #
+        #     # unless student_stats_doc
+        #     #     new_stats_doc_id = Docs.insert
+        #     #         model:'student_stats'
+        #     #         user_id: user_id
+        #     #     student_stats_doc = Docs.findOne new_stats_doc_id
 
-            debits = Docs.find({
-                model:'debit'
-                amount:$exists:true
-                _author_id:user_id})
-            debit_count = debits.count()
-            total_debit_amount = 0
-            for debit in debits.fetch()
-                total_debit_amount += debit.amount
+        #     debits = Docs.find({
+        #         model:'debit'
+        #         amount:$exists:true
+        #         _author_id:user_id})
+        #     debit_count = debits.count()
+        #     total_debit_amount = 0
+        #     for debit in debits.fetch()
+        #         total_debit_amount += debit.amount
 
-            console.log 'total debit amount', total_debit_amount
+        #     console.log 'total debit amount', total_debit_amount
 
-            fulfilled_requests = Docs.find({
-                model:'request'
-                point_bounty:$exists:true
-                claimed_user_id:user_id
-                complete:true
-            })
-            fulfilled_count = fulfilled_requests.count()
-            total_fulfilled_amount = 0
-            for fulfilled in fulfilled_requests.fetch()
-                total_fulfilled_amount += fulfilled.point_bounty
+        #     fulfilled_requests = Docs.find({
+        #         model:'request'
+        #         point_bounty:$exists:true
+        #         claimed_user_id:user_id
+        #         complete:true
+        #     })
+        #     fulfilled_count = fulfilled_requests.count()
+        #     total_fulfilled_amount = 0
+        #     for fulfilled in fulfilled_requests.fetch()
+        #         total_fulfilled_amount += fulfilled.point_bounty
             
             
-            requested = Docs.find({
-                model:'request'
-                point_bounty:$exists:true
-                _author_id:user_id
-                published:true
-            })
-            authored_count = requested.count()
-            total_request_amount = 0
-            for request in requested.fetch()
-                total_request_amount += request.point_bounty
+        #     requested = Docs.find({
+        #         model:'request'
+        #         point_bounty:$exists:true
+        #         _author_id:user_id
+        #         published:true
+        #     })
+        #     authored_count = requested.count()
+        #     total_request_amount = 0
+        #     for request in requested.fetch()
+        #         total_request_amount += request.point_bounty
             
             
-            credits = Docs.find({
-                model:'debit'
-                amount:$exists:true
-                recipient_id:user_id})
-            credit_count = credits.count()
-            total_credit_amount = 0
-            for credit in credits.fetch()
-                total_credit_amount += credit.amount
+        #     credits = Docs.find({
+        #         model:'debit'
+        #         amount:$exists:true
+        #         recipient_id:user_id})
+        #     credit_count = credits.count()
+        #     total_credit_amount = 0
+        #     for credit in credits.fetch()
+        #         total_credit_amount += credit.amount
 
-            console.log 'total credit amount', total_credit_amount
-            calculated_user_balance = total_credit_amount-total_debit_amount
+        #     console.log 'total credit amount', total_credit_amount
+        #     calculated_user_balance = total_credit_amount-total_debit_amount
 
-            # average_credit_per_student = total_credit_amount/student_count
-            # average_debit_per_student = total_debit_amount/student_count
-            flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
-            flow_volumne =+ total_fulfilled_amount
-            flow_volumne =+ total_request_amount
+        #     # average_credit_per_student = total_credit_amount/student_count
+        #     # average_debit_per_student = total_debit_amount/student_count
+        #     flow_volume = Math.abs(total_credit_amount)+Math.abs(total_debit_amount)
+        #     flow_volumne =+ total_fulfilled_amount
+        #     flow_volumne =+ total_request_amount
             
             
-            points = total_credit_amount-total_debit_amount+total_fulfilled_amount-total_request_amount
-            # points =+ total_fulfilled_amount
-            # points =- total_request_amount
+        #     points = total_credit_amount-total_debit_amount+total_fulfilled_amount-total_request_amount
+        #     # points =+ total_fulfilled_amount
+        #     # points =- total_request_amount
             
-            if total_debit_amount is 0 then total_debit_amount++
-            if total_credit_amount is 0 then total_credit_amount++
-            # debit_credit_ratio = total_debit_amount/total_credit_amount
-            unless total_debit_amount is 1
-                unless total_credit_amount is 1
-                    one_ratio = total_debit_amount/total_credit_amount
-                else
-                    one_ratio = 0
-            else
-                one_ratio = 0
+        #     if total_debit_amount is 0 then total_debit_amount++
+        #     if total_credit_amount is 0 then total_credit_amount++
+        #     # debit_credit_ratio = total_debit_amount/total_credit_amount
+        #     unless total_debit_amount is 1
+        #         unless total_credit_amount is 1
+        #             one_ratio = total_debit_amount/total_credit_amount
+        #         else
+        #             one_ratio = 0
+        #     else
+        #         one_ratio = 0
                     
-            # dc_ratio_inverted = 1/debit_credit_ratio
+        #     # dc_ratio_inverted = 1/debit_credit_ratio
 
-            # credit_debit_ratio = total_credit_amount/total_debit_amount
-            # cd_ratio_inverted = 1/credit_debit_ratio
+        #     # credit_debit_ratio = total_credit_amount/total_debit_amount
+        #     # cd_ratio_inverted = 1/credit_debit_ratio
 
-            # one_score = total_bandwith*dc_ratio_inverted
+        #     # one_score = total_bandwith*dc_ratio_inverted
 
-            Meteor.users.update user_id,
-                $set:
-                    credit_count: credit_count
-                    debit_count: debit_count
-                    total_credit_amount: total_credit_amount
-                    total_debit_amount: total_debit_amount
-                    flow_volume: flow_volume
-                    points:points
-                    one_ratio: one_ratio
-                    total_fulfilled_amount:total_fulfilled_amount
-                    fulfilled_count:fulfilled_count
+        #     Meteor.users.update user_id,
+        #         $set:
+        #             credit_count: credit_count
+        #             debit_count: debit_count
+        #             total_credit_amount: total_credit_amount
+        #             total_debit_amount: total_debit_amount
+        #             flow_volume: flow_volume
+        #             points:points
+        #             one_ratio: one_ratio
+        #             total_fulfilled_amount:total_fulfilled_amount
+        #             fulfilled_count:fulfilled_count

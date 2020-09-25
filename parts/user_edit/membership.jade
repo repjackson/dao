@@ -1,14 +1,15 @@
-template(name='user_edit_membership')
+template(name='membership')
     .ui.padded.stackable.grid 
         .row 
             .sixteen.wide.column
                 .ui.header
                     i.id.badge.outline.icon
-                    | riverside membership
+                    | dao membership
         .row 
             .sixteen.wide.column
-                .ui.big.green.button.pay_membership
-                    |pay $250 for membership
+                if editing_mode
+                    .ui.big.green.button.pay_membership
+                        |pay $250 for membership
                 each transactions
                     .ui.segment
                         a.ui.header(href="/transaction/#{_id}/view") #{when}

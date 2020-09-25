@@ -38,10 +38,10 @@ template(name='user_cloud')
 
 template(name='member_item')
     .item
-        a.zoom.pointer.mobile.hidden(href="/user/#{username}")
+        a.zoom.pointer.mobile.hidden(href="/u/#{username}")
             img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
 
-            a.ui.inline.header.pointer(href="/user/#{username}" style="color:#{theme_color};")
+            a.ui.inline.header.pointer(href="/u/#{username}" style="color:#{theme_color};")
                 |#{name}
                 //- |#{username}
             .ui.inline.small.header(style="color:#{current_user.theme_color};") #{points}pts
@@ -55,10 +55,10 @@ template(name='member_item')
             //     i.blue.chat.pointer.message.big.disabled.icon
 template(name='user_item')
     .item
-        a.zoom.pointer.mobile.hidden(href="/user/#{username}")
+        a.zoom.pointer.mobile.hidden(href="/u/#{username}")
             img.ui.avatar.image(src="{{c.url profile_image_id height=500 width=500 gravity='face' crop='fill'}}") 
 
-            a.ui.inline.header.pointer(href="/user/#{username}" style="color:#{theme_color};")
+            a.ui.inline.header.pointer(href="/u/#{username}" style="color:#{theme_color};")
                 |#{name}
                 //- |#{username}
             .ui.inline.small.header(style="color:#{current_user.theme_color};") #{points}pts
@@ -76,7 +76,7 @@ template(name='user_item')
 template(name='member_card')
     .card.rounded.calc_points
         img.ui.image.mobile.only(class=currentUser.invert_class src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
-        a.zoom.pointer.mobile.hidden(href="/user/#{username}")
+        a.zoom.pointer.mobile.hidden(href="/u/#{username}")
             unless avatar_image_id
                 img.ui.image(class=currentUser.invert_class src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
             if avatar_image_id
@@ -87,7 +87,7 @@ template(name='member_card')
                         img(class=currentUser.invert_class src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
 
         .content
-            a.ui.inline.header.pointer(href="/user/#{username}" style="color:#{theme_color};")
+            a.ui.inline.header.pointer(href="/u/#{username}" style="color:#{theme_color};")
                 if spirit_animal
                     +icolor name=spirit_animal cl='ui avatar image'
                 |#{name}
@@ -124,10 +124,10 @@ template(name='member_card')
                     
 template(name='user_card')
     .card.rounded.pointer.calc_points(class=theme_color)
-        a(href="/user/#{username}")
+        a(href="/u/#{username}")
             img.ui.image(src="{{c.url profile_image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/user/#{username}" class=theme_color) 
+            a.ui.header(href="/u/#{username}" class=theme_color) 
                 |#{name}
                 //- |#{username}
                 if spirit_animal
