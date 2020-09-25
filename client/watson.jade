@@ -203,20 +203,19 @@ template(name='tone')
                 
                 //- span #{sentence_id}
                 span.tone_item(title="#{sentence_id}" class=tone_size) 
-                    i.chevron.up.link.grey.large.icon.upvote_sentence
-                    i.chevron.down.link.grey.large.icon.downvote_sentence
                     |{{lowered text}}
                     // .content
                     // .header(title="#{sentence_id}") {{lowered text}}
-                    |weight:#{weight}
+                    // |weight:#{weight}
+                    i.chevron.up.link.grey.large.icon.upvote_sentence
+                    i.chevron.down.link.grey.large.icon.downvote_sentence
                     each tones
                         // .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
                         .ui.basic.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
                             span.ui.text
                                 |#{tone_id} &nbsp;
                             | {{ to_percent score }}% 
-                    .ui.tiny.transparent.icon.input
-                        i.tag.grey.icon
+                    .ui.mini.transparent.icon.input
                         input.tag_sentence(type='text' placeholder='tag')
                     each tags 
                         .ui.label #{this}

@@ -55,22 +55,40 @@
 #             # Router.go '/'
     
     
-#     Template.reddit_view.events
-#         'click .add_tag': ->
-#             # Meteor.call 'tip', @_id, ->
+    Template.reddit_view.events
+        'click .add_tag': ->
+            # Meteor.call 'tip', @_id, ->
                 
-#             # Meteor.call 'calc_reddit_stats', @_id, ->
-#             # Meteor.call 'calc_user_stats', Meteor.userId(), ->
-#             # $('body').toast({
-#             #     class: 'success'
-#             #     position: 'bottom right'
-#             #     message: "#{@title} tipped"
-#             # })
-#             selected_tags.push @valueOf()
-#             Meteor.call 'call_wiki', @valueOf(), ->
-#             Meteor.call 'search_reddit', selected_tags.array(), ->
+            # Meteor.call 'calc_reddit_stats', @_id, ->
+            # Meteor.call 'calc_user_stats', Meteor.userId(), ->
+            # $('body').toast({
+            #     class: 'success'
+            #     position: 'bottom right'
+            #     message: "#{@title} tipped"
+            # })
+            selected_tags.push @valueOf()
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
 
-#             Router.go '/'
+            # Router.go '/'
+    
+    
+    Template.reddit_card.events
+        'click .add_tag': ->
+            # Meteor.call 'tip', @_id, ->
+                
+            # Meteor.call 'calc_reddit_stats', @_id, ->
+            # Meteor.call 'calc_user_stats', Meteor.userId(), ->
+            # $('body').toast({
+            #     class: 'success'
+            #     position: 'bottom right'
+            #     message: "#{@title} tipped"
+            # })
+            selected_tags.push @valueOf()
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+
+            # Router.go '/'
     
     
 

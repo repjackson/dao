@@ -56,9 +56,9 @@ template(name='layout')
         +leftbar
         +rightbar
                 
-        #main_area.global_container.pusher.invert
+        // #main_area.global_container.pusher.invert
+        #main_area.global_container.pusher(class=currentUser.invert_class)
             +yield
-        // #main_area.global_container.pusher(class=currentUser.invert_class)
             // .scrolling
         // if currentUser
         //     +bottom_nav

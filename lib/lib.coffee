@@ -132,7 +132,7 @@ Meteor.methods
 
 
     upvote_sentence: (doc_id, sentence)->
-        console.log sentence
+        # console.log sentence
         if sentence.weight
             Docs.update(
                 { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
@@ -144,14 +144,14 @@ Meteor.methods
                 { $set: { "tone.result.sentences_tone.$.weight": 1 } }
             )
     tag_sentence: (doc_id, sentence, tag)->
-        console.log sentence
+        # console.log sentence
         Docs.update(
             { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
             { $addToSet: { "tone.result.sentences_tone.$.tags": tag } }
         )
 
     reset_sentence: (doc_id, sentence)->
-        console.log sentence
+        # console.log sentence
         Docs.update(
             { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
             { $set: { "tone.result.sentences_tone.$.weight": -2 } }
@@ -159,7 +159,7 @@ Meteor.methods
 
 
     downvote_sentence: (doc_id, sentence)->
-        console.log sentence
+        # console.log sentence
         Docs.update(
             { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
             { $inc: { "tone.result.sentences_tone.$.weight": -1 } }
