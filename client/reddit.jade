@@ -58,7 +58,7 @@ template(name='reddit_card')
     .ui.stackable.grid
         .twelve.wide.column.scrolling2
             a.ui.header(href="/m/reddit/#{_id}/view") #{title}
-            .ui.small.header(href=url target='_window') #{url}
+            a.ui.small.header(href=url target='_window') #{url}
             if tone
                 +tone
             else if body
@@ -127,7 +127,7 @@ template(name='reddit_card')
                 a.ui.icon.button(href="/m/reddit/#{_id}/view")
                     i.chevron.right.icon
             .description
-                +comments_view_small   
+                // +comments_view_small   
                 // if url
                 |fallback
                 if rd.secure_media.reddit_video.fallback_url
@@ -159,7 +159,7 @@ template(name='one_reddit_view')
                 +vote
                 each tags
                     .ui.compact.large.button.add_tag #{this}
-                +comments_view_small  
+                // +comments_view_small  
     // .ui.divider
 
                  
