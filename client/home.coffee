@@ -38,12 +38,12 @@ Template.tag_selector.events
     'click .select_tag': -> 
         selected_tags.push @name
         # if Meteor.user()
-        Meteor.call 'call_wiki', @name, ->
+        # Meteor.call 'call_wiki', @name, ->
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
             
-        Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.call 'search_ph', selected_tags.array(), ->
+        # Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
@@ -56,8 +56,8 @@ Template.unselect_tag.helpers
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
-        Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.call 'search_ph', selected_tags.array(), ->
+        # Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'search_ph', selected_tags.array(), ->
 
             
 Template.home.helpers
@@ -84,9 +84,9 @@ Template.home.helpers
 
 
     docs: ->
-        # match = {model:$in:['porn']}
+        match = {model:$in:['porn']}
         # match = {model:$in:['post','wikipedia','reddit','porn']}
-        match = {model:$in:['post','wikipedia','reddit']}
+        # match = {model:$in:['post','wikipedia','reddit']}
         
         # match = {model:'post'}
         if selected_tags.array().length>0
@@ -158,9 +158,9 @@ Template.home.events
             console.log search
             selected_tags.push search
             # if Meteor.user()
-            # Meteor.call 'search_ph', selected_tags.array(), ->
-            Meteor.call 'call_wiki', search, ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+            Meteor.call 'search_ph', selected_tags.array(), ->
+            # Meteor.call 'call_wiki', search, ->
+            # Meteor.call 'search_reddit', selected_tags.array(), ->
             Session.set('query','')
             search = $('.search_title').val('')
         # if e.which is 8
