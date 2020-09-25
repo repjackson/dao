@@ -115,13 +115,13 @@ template(name='register')
                     .ui.big.inline.header 
                         i.yin.yang.icon
                         // +i name='add-user-male'
-                        i.user.plus.icon
+                        i.user.plus.grey.icon
                         // |register
                 //- if message
                 //-     h4.ui.center.aligned.header #{message}
                 .ui.small.inline.header 
                     i.user.outline.icon
-                    // |username
+                    |username
                 .ui.fluid.icon.input(class=login_class)
                     //- if email_valid
                     // if username_valid
@@ -139,7 +139,7 @@ template(name='register')
                 .ui.small.inline.header 
                     i.lock.grey.icon
                     // +icon name='password'
-                    // | password
+                    | password
                 .ui.fluid.input(class=login_class)
                     input.password(type='password')
                 //- .ui.fluid.labeled.input(class=login_class)
@@ -149,7 +149,7 @@ template(name='register')
                 //-     input.password2(type='password')
                 if can_register
                     //- if registering
-                    .ui.fluid.big.button.register(class=enter_class)
+                    .ui.fluid.big.circular.button.register(class=enter_class)
                         i.user.plus.icon
                         |register
                 else
@@ -165,8 +165,9 @@ template(name='register')
                     // .ui.small.header by registering you agree to our 
                     //     a(href='/p/privacy' target="_window") privacy policy
                     // unless username
-                    a.ui.sign.in.button(href='/login') 
+                    a.ui.circular.button(href='/login') 
                         // i.chevron.right.icon
+                        small or
                         +i name='login-rounded-right' cl='ui avatar image'
                         |login
                     

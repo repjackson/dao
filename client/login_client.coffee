@@ -240,7 +240,18 @@ Template.register.events
             }
         Meteor.call 'create_user', options, (err,res)=>
             if err
-                alert err
+                if err.error is 403
+                    Meteor.loginWithPassword username, password, (err,res)=>
+                        if err
+                            alert err
+                            # Session.set 'message', "#{username} not found"
+                            # Session.set 'enter_mode', 'register'
+                            # Session.set 'username', "#{username}"
+                        else
+                            Router.go "/u/#{username}"
+                            # Router.go '/'
+                else 
+                    alert err
             else
                 console.log res
                 # unless username
@@ -253,25 +264,17 @@ Template.register.events
                         # last_name: Session.get('last_name')
                         app:'dao'
                         username:username
-                Router.go "/u/#{username}"
-                # Meteor.loginWithPassword username, password, (err,res)=>
-                #     if err
-                #         alert err.reason
-                #         # if err.error is 403
-                #         #     Session.set 'message', "#{username} not found"
-                #         #     Session.set 'enter_mode', 'register'
-                #         #     Session.set 'username', "#{username}"
-                #     else
-                #         Router.go '/'
+                Meteor.loginWithPassword username, password, (err,res)=>
+                    if err
+                        alert err.reason
+                        # if err.error is 403
+                        #     Session.set 'message', "#{username} not found"
+                        #     Session.set 'enter_mode', 'register'
+                        #     Session.set 'username', "#{username}"
+                    else
+                        # Router.go '/'
+                        Router.go "/u/#{username}"
             # else
-            #     Meteor.loginWithPassword username, password, (err,res)=>
-            #         if err
-            #             if err.error is 403
-            #                 Session.set 'message', "#{username} not found"
-            #                 Session.set 'enter_mode', 'register'
-            #                 Session.set 'username', "#{username}"
-            #         else
-            #             Router.go '/'
 
 
 Template.register.helpers

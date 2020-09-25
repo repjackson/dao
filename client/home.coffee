@@ -83,7 +83,7 @@ Template.tag_selector.events
             # Meteor.call 'omega', @title, ->
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.call 'search_ph', selected_tags.array(), ->
+        # Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
@@ -97,7 +97,7 @@ Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.call 'search_ph', selected_tags.array(), ->
+        # Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.tone.events
     # 'click .upvote_sentence': ->
@@ -205,7 +205,7 @@ Template.home.events
             console.log search
             selected_tags.push search
             # if Meteor.user()
-            Meteor.call 'search_ph', selected_tags.array(), ->
+            # Meteor.call 'search_ph', selected_tags.array(), ->
             Meteor.call 'call_wiki', search, ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
             Session.set('query','')
