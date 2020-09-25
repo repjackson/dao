@@ -70,9 +70,9 @@ Meteor.publish 'docs', (
         Docs.find match,
             limit:5
             sort:
+                ups:-1
                 points:-1
                 views:-1
-                ups:-1
     else
         # match.tags = $in:['love']
         # console.log match
@@ -99,7 +99,7 @@ Meteor.publish 'dtags', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['love']
+        match.tags = $in:['universe']
 
     tag_cloud = Docs.aggregate [
         { $match: match }

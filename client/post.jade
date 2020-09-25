@@ -42,12 +42,12 @@ template(name='post_card')
                 if rd.ups
                     .ui.label #{rd.ups} ups
                 +autotag
-                +vote
+                // +vote
                 // a(href="/post/#{_id}/view")
                 //     i.right.chevron.circular.link.big.icon
                 if is_admin
                     +print_this
-                +array_edit key='tags' direct=true
+                // +array_edit key='tags' direct=true
                 each tags
                     a.ui.large.image.label.add_tag
                         if tag_term
