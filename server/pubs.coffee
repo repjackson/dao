@@ -10,11 +10,12 @@ Meteor.publish 'user_model_docs', (model,username)->
         model:model
         _author_id:user._id
 
-Meteor.publish 'recipient_from_gift_id', (gift_id)->
+
+Meteor.publish 'recipient_from_debit_id', (debit_id)->
     # console.log 'pulling doc'
-    gift = Docs.findOne gift_id
+    debit = Docs.findOne debit_id
     Meteor.users.find
-        _id:gift.target_id
+        _id:debit.recipient_id
 
 Meteor.publish 'author_from_doc_id', (doc_id)->
     # console.log 'pulling doc'

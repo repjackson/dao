@@ -44,6 +44,13 @@ Docs.helpers
                 upvoter = Meteor.users.findOne upvoter_id
                 upvoters.push upvoter
             upvoters
+    downvoters: ->
+        if @downvoter_ids
+            downvoters = []
+            for downvoter_id in @downvoter_ids
+                downvoter = Meteor.users.findOne downvoter_id
+                downvoters.push downvoter
+            downvoters
 
 Meteor.users.helpers
     email_address: -> if @emails and @emails[0] then @emails[0].address

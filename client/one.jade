@@ -1,27 +1,27 @@
 template(name='one')
-    .ui.center.aligned.basic.segment
-        .ui.basic.big.compact.circular.button.debit
+    .ui.center.aligned.segment
+        .ui.big.compact.circular.button.debit
             i.gift.red.icon
             |send points
-        .ui.basic.big.compact.circular.button.request
+        .ui.big.compact.circular.button.request
             i.concierge.bell.teal.icon
             |+ request
-        .ui.basic.big.compact.circular.button.offer
+        .ui.big.compact.circular.button.offer
             i.hand.holding.heart.olive.icon
             |+ offer
-        .ui.basic.big.compact.circular.button.add_message
+        .ui.big.compact.circular.button.add_message
             i.chat.blue.icon
             |+ message
-        .ui.basic.big.compact.circular.button.add_event
+        .ui.big.compact.circular.button.add_event
             i.calendar.purple.icon
             |+ event
-        .ui.basic.big.compact.circular.button.add_expense
+        .ui.big.compact.circular.button.add_expense
             i.dollar.purple.icon
             |+ expense
-        .ui.basic.big.compact.circular.button.add_bug
+        .ui.big.compact.circular.button.add_bug
             i.bug.red.icon
             |+ bug
-        a.ui.basic.big.circular.button(href='/register')
+        a.ui.big.circular.button(href='/register')
             i.user.plus.green.icon
             |member
 
@@ -100,7 +100,7 @@ template(name='one')
             //                     // .description 
             //                     //     |#{description}
             //                     // each tags 
-            //                     //     .ui.tiny.basic.label #{this}
+            //                     //     .ui.tiny.label #{this}
             // .four.wide.column
             //     .ui.center.aligned.header
             //         // i.clock.icon
@@ -172,7 +172,7 @@ template(name='one')
                     //             .description 
                     //                 |#{description}
                     //             each tags 
-                    //                 .ui.tiny.basic.label #{this}
+                    //                 .ui.tiny.label #{this}
                     
                     
                     
@@ -211,7 +211,7 @@ template(name='one_request_card')
             |!{description}
             .meta #{when}
             // each tags 
-            //     .ui.tiny.basic.label #{this}
+            //     .ui.tiny.label #{this}
             if doc_comments.count
                 .meta
                     each doc_comments 
@@ -242,7 +242,7 @@ template(name='one_offer_card')
             if dollar_price
                 |$#{dollar_price}
             // each tags 
-            //     .ui.tiny.basic.label #{this}
+            //     .ui.tiny.label #{this}
             +comments_view_small
             
             
@@ -323,7 +323,7 @@ template(name='debit_card')
                 |#{description}
             .spacer
             each tags 
-                .ui.small.basic.label #{this}
+                .ui.small.label #{this}
             if upvoter_ids
                 +voting_tiny
             +comments_view_small
@@ -353,4 +353,4 @@ template(name='one_shift_card')
             .description 
                 |#{description}
             each tags 
-                .ui.tiny.basic.label #{this}
+                .ui.tiny.label #{this}

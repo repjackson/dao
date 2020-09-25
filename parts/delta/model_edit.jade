@@ -18,16 +18,16 @@ template(name='model_edit_layout')
                     // .ui.divider
                     +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
                     +boolean_edit key='show_facets' label='show facets' direct=true
-                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActiveRoute 'model_edit_dashboard'}}")
+                    a.ui.large.button(href="/model/edit/#{current_doc._id}/" class="{{isActiveRoute 'model_edit_dashboard'}}")
                         i.dashboard.icon
                         |dashboard
-                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActiveRoute 'model_edit_fields'}}")
+                    a.ui.large.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActiveRoute 'model_edit_fields'}}")
                         i.list.icon
                         |fields
-                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActiveRoute 'model_edit_modules'}}")
+                    a.ui.large.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActiveRoute 'model_edit_modules'}}")
                         i.cubes.icon
                         |modules
-                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActiveRoute 'model_edit_permissions'}}")
+                    a.ui.large.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActiveRoute 'model_edit_permissions'}}")
                         i.shield.icon
                         |permissions
                     +yield
@@ -93,7 +93,7 @@ template(name='field_edit')
             if sortable
                 i.sort.amount.down.icon
             each view_roles
-                .ui.basic.small.label #{this}
+                .ui.small.label #{this}
             //- .ui.icon.compact.button
             //-     i.up.caret.icon
             //- .ui.icon.compact.button

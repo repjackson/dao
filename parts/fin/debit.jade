@@ -1,0 +1,106 @@
+template(name='debit_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .five.wide.column
+                    .ui.fluid.button.cancel_debit
+                        i.large.remove.red.icon
+                        |cancel
+                    // .ui.segment
+                    //     .ui.inline.grey.header sender
+                    //     .ui.inline.header
+                    //         img.ui.small.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class='invert')
+                    //         |#{_author.username}
+                    if is_admin
+                        +single_user_edit key='sender_id' key2='sender_username' label='select sender' icon='user outline' direct=true
+                    
+                    +single_user_edit key='recipient_id' key2='recipient_username' label='recipient' icon='user' direct=true
+                    div 
+                    +boolean_edit key='has_datetime' label='datetime' direct=true
+                    if has_datetime
+                        +datetime_edit key='datetime' label='datetime' direct=true   
+                        // +time_edit key='time' label='time' direct=true   
+                    +boolean_edit key='has_location' label='location' direct=true
+                    if has_location
+                        +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                    // +multi_user_edit key='related_user_ids' key2='related_usernames' label='related users' direct=true
+                    // +single_tribe_edit key='tribe_id' ref_model='tribe' label='tribe' direct=true
+                .six.wide.column
+                    +textarea_edit key='title' label='title' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    div
+                    +smart_tagger
+                .five.wide.center.aligned.column
+                    .ui.small.grey.header 100pts = 1 credit
+                    .ui.big.inline.header #{price}p
+                    .ui.inline.grey.header ({{money_format price}}c)
+                    .ui.big.input
+                        input.point_price(type='number' value=price min='1')
+                    div
+                    +key_value_edit key='price' value=1
+                    +key_value_edit key='price' value=5
+                    +key_value_edit key='price' value=10
+                    +key_value_edit key='price' value=25
+                    +key_value_edit key='price' value=50
+                    +key_value_edit key='price' value=100
+                    +key_value_edit key='price' value=250
+                    +key_value_edit key='price' value=500
+                    +key_value_edit key='price' value=1000
+                    +key_value_edit key='price' value=2000
+                    +key_value_edit key='price' value=5000
+                    .spacer
+                    .ui.center.aligned.basic.egment
+                        if can_submit
+                            .ui.green.massive.circular.circular.icon.button.submit
+                                i.big.send.icon
+                                // |send
+                        else 
+                            .ui.green.massive.circular.disabled.circular.icon.button
+                                i.send.big.icon
+                                // |send
+template(name='debit_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.row 
+                .five.wide.column
+                    a(href="/u/#{_author.username}") 
+                        img.ui.circular.centered.pointer.zoom.image.mobile.hidden(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                        img.ui.circular.small.inline.pointer.zoom.image.mobile.only(src="{{c.url _author.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                        .ui.large.center.inline.aligned.header.pointer.zoom
+                            |#{_author.username}
+                .five.wide.column
+                    .ui.huge.center.aligned.inline.header
+                        |#{price}p
+                    if is_dev
+                        +remove_button
+                    .f14
+                        |#{description}
+                    .spacer
+                    +image_view key='image_id' label='image' direct=true
+                    div 
+                    if tags
+                        i.tags.icon
+                        each tags 
+                            .ui.large.circular.label #{this}
+                    +voting_full
+                    .ui.small.header
+                        i.clock.icon
+                        | #{when}
+                    // if tribe_id
+                    //     a.ui.button(href="/tribe/#{tribe_id}/view")
+                    //         |#{tribe_title}
+                    .spacer
+                    .spacer
+                    // +multi_user_view key='related_user_ids' key2='related_usernames' label='related users' direct=true
+    
+                    +comments
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .five.wide.column
+                    a(href="/u/#{recipient.username}")
+                        img.ui.circular.centered.pointer.zoom.image.mobile.hidden(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                        img.ui.circular.small.inline.pointer.zoom.image.mobile.only(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+
+                        // img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.profile_image_id height=500 width=500 gravity='face' crop='fill'}}" class='invert')
+                        .ui.large.center.aligned.inline.header.pointer.zoom
+                            |#{recipient.username}

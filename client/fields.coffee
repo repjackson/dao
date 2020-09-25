@@ -339,3 +339,229 @@ Template.textarea_view.onRendered ->
     , 1000
 
 
+
+Template.single_user_edit.onCreated ->
+    @user_results = new ReactiveVar
+Template.single_user_edit.helpers
+    user_results: ->Template.instance().user_results.get()
+Template.single_user_edit.events
+    'click .clear_results': (e,t)->
+        t.user_results.set null
+
+    'keyup #single_user_select_input': (e,t)->
+        search_value = $(e.currentTarget).closest('#single_user_select_input').val().trim()
+        if search_value.length > 1
+            Meteor.call 'lookup_user', search_value, @role_filter, (err,res)=>
+                if err then console.error err
+                else
+                    t.user_results.set res
+
+    'click .select_user': (e,t) ->
+        page_doc = Docs.findOne Router.current().params.doc_id
+        field = Template.currentData()
+
+        # console.log @
+        # console.log Template.currentData()
+        # console.log Template.parentData()
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
+
+
+        val = t.$('.edit_text').val()
+        if field.direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+
+        doc = Docs.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{field.key}":@_id
+        else
+            Meteor.users.update parent._id,
+                $set:"#{field.key}":@_id
+            
+        t.user_results.set null
+        $('#single_user_select_input').val ''
+        # Docs.update page_doc._id,
+        #     $set: assignment_timestamp:Date.now()
+
+    'click .pull_user': ->
+        # console.log Template.parentData(1)
+        # console.log Template.parentData(2)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
+        # console.log Template.parentData(5)
+        # console.log Template.parentData(6)
+        # console.log Template.parentData(7)
+        if confirm "remove #{@username}?"
+            parent = Template.parentData(1)
+            field = Template.currentData()
+            Docs.update parent._id,
+                $unset:"#{field.key}":1
+
+        #     page_doc = Docs.findOne Router.current().params.doc_id
+            # Meteor.call 'unassign_user', page_doc._id, @
+
+
+
+
+
+
+Template.multi_user_edit.onCreated ->
+    @user_results = new ReactiveVar
+Template.multi_user_edit.helpers
+    user_results: -> 
+        Template.instance().user_results.get()
+Template.multi_user_edit.events
+    'click .clear_results': (e,t)->
+        t.user_results.set null
+    'keyup #multi_user_select_input': (e,t)->
+        search_value = $(e.currentTarget).closest('#multi_user_select_input').val().trim()
+        if e.which is 8
+            t.user_results.set null
+        else if search_value and search_value.length > 1
+            Meteor.call 'lookup_user', search_value, @role_filter, (err,res)=>
+                if err then console.error err
+                else
+                    # console.log res 
+                    t.user_results.set res
+    'click .select_user': (e,t) ->
+        page_doc = Docs.findOne Router.current().params.doc_id
+        val = t.$('.edit_text').val()
+        field = Template.currentData()
+
+        if field.direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
+
+        doc = Docs.findOne parent._id
+        user = Meteor.users.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $addToSet:"#{field.key}":@_id
+        else if user
+            Meteor.users.update parent._id,
+                $addToSet:"#{field.key}":@_id
+
+
+        t.user_results.set null
+        $('#multi_user_select_input').val ''
+        # Docs.update page_doc._id,
+        #     $set: assignment_timestamp:Date.now()
+
+    'click .pull_user': ->
+        if confirm "remove #{@username}?"
+            page_doc = Docs.findOne Router.current().params.doc_id
+            parent = Template.parentData(5)
+            doc = Docs.findOne parent._id
+            user = Meteor.users.findOne parent._id
+            if doc
+                Docs.update parent._id,
+                    $pull:"#{@key}":@_id
+            else if user
+                Meteor.users.update parent._id,
+                    $pull:"#{@key}":@_id
+            # Meteor.call 'unassign_user', page_doc._id, @
+
+
+Template.multi_doc_input.onCreated ->
+    # @autorun => Meteor.subscribe 'model_docs', 'guest'
+    @doc_results = new ReactiveVar
+Template.multi_doc_input.helpers
+    doc_results: -> Template.instance().doc_results.get()
+Template.multi_doc_input.events
+    'click .clear_results': (e,t)->
+        t.doc_results.set null
+    'keyup #multi_doc_select_input': (e,t)->
+        search_value = $(e.currentTarget).closest('#multi_doc_select_input').val().trim()
+        if search_value.length is 0
+            t.doc_results.set null
+        else if search_value
+            Meteor.call 'lookup_doc', search_value, 'guest', (err,res)=>
+                if err then console.error err
+                else
+                    # console.log res
+                    t.doc_results.set res
+    'click .select_doc': (e,t) ->
+        # session_document = Docs.findOne Session.get('session_document')
+        # if @direct
+        #     parent = Template.parentData(1)
+        # else
+        #     parent = Template.parentData(5)
+        parent = Docs.findOne _id: Router.current().params.doc_id
+        Docs.update parent._id,
+            $addToSet:guest_ids:@_id
+        t.doc_results.set null
+        $('#multi_user_select_input').val ''
+
+    'click .pull_user': ->
+        if confirm "Remove #{@username}?"
+            page_doc = Docs.findOne Router.current().params.doc_id
+            parent = Template.parentData(5)
+            doc = Docs.findOne parent._id
+            user = Meteor.users.findOne parent._id
+            if doc
+                Docs.update parent._id,
+                    $pull:"#{@key}":@_id
+            else if user
+                Meteor.users.update parent._id,
+                    $pull:"#{@key}":@_id
+            # Meteor.call 'unassign_user', page_doc._id, @
+
+
+
+
+
+Template.range_edit.onRendered ->
+    # item = Template.currentData()
+    $('#rangestart').calendar({
+        type: 'datetime'
+        today: true
+        # type:'time'
+        inline: true
+        endCalendar: $('#rangeend')
+        formatter: {
+            date: (date, settings)->
+                if !date then return ''
+                mst_date = moment(date)
+                mst_date.format("YYYY-MM-DD[T]hh:mm")
+        }
+    });
+    $('#rangeend').calendar({
+        type: 'datetime'
+        today: true
+        # type:'time'
+        inline: true
+        startCalendar: $('#rangestart')
+        formatter: {
+            date: (date, settings)->
+                if !date then return ''
+                mst_date = moment(date)
+                mst_date.format("YYYY-MM-DD[T]hh:mm")
+
+        }
+    })
+
+Template.range_edit.events
+    'click .get_start': ->
+        doc_id = Router.current().params.doc_id
+        result = $('.ui.calendar').calendar('get startDate')[1]
+        formatted = moment(result).format("YYYY-MM-DD[T]HH:mm")
+        # moment_ob = moment(result)
+        Docs.update doc_id,
+            $set:start_datetime:formatted
+
+
+    'click .get_end': ->
+        doc_id = Router.current().params.doc_id
+        result = $('.ui.calendar').calendar('get endDate')[0]
+        console.log result
+        formatted = moment(result).format("YYYY-MM-DD[T]HH:mm")
+        console.log moment(@end_datetime).diff(moment(@start_datetime),'minutes',true)
+        console.log moment(@end_datetime).diff(moment(@start_datetime),'hours',true)
+        Docs.update doc_id,
+            $set:end_datetime:formatted

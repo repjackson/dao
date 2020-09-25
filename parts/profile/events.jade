@@ -1,0 +1,58 @@
+template(name='user_events')  
+    .ui.header 
+        +icon name='calendar'
+        |user events
+    each user_events
+        .ui.segment
+            .ui.small.header #{date} #{start_time}
+            div
+            +user_list_toggle key='read_by_ids' label='mark read' icon='eye'
+            if can_edit
+                +remove_button
+            //- div
+            +author_info
+            +creation_info
+    .ui.segment
+        .ui.header.pointer.toggle_maybe
+            i.question.orange.icon
+            |maybe
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/view") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info
+    .ui.segment
+        .ui.header.pointer
+            i.checkmark.icon
+            |went
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/view") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info
+    .ui.segment
+        .ui.header.pointer
+            i.green.checkmark.icon
+            |going
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/view") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info
+    .ui.segment
+        .ui.header.pointer
+            i.chess.king.icon
+            |hosted
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/view") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info

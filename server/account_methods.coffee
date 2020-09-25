@@ -1,4 +1,48 @@
 Meteor.methods
+    set_user_password: (user, password)->
+        result = Accounts.setPassword(user._id, password)
+        console.log result
+        result
+
+    # verify_email: (email)->
+    #     (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+
+
+    create_user: (options)->
+        console.log 'creating user', options
+        Accounts.createUser options
+
+    can_submit: ->
+        username = Session.get 'username'
+        email = Session.get 'email'
+        password = Session.get 'password'
+        password2 = Session.get 'password2'
+        if username and email
+            if password.length > 0 and password is password2
+                true
+            else
+                false
+
+
+    find_username: (username)->
+        res = Accounts.findUserByUsername(username)
+        if res
+            # console.log res
+            unless res.disabled
+                return res
+
+    new_demo_user: ->
+        current_user_count = Meteor.users.find().count()
+
+        options = {
+            username:"user#{current_user_count}"
+            password:"user#{current_user_count}"
+            }
+
+        create = Accounts.createUser options
+        new_user = Meteor.users.findOne create
+        return new_user
+
     log_view: (doc_id)->
         Docs.update doc_id,
             $inc:views:1

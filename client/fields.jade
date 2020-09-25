@@ -1,5 +1,5 @@
 template(name='number_edit')
-    div
+    // div
     .ui.tiny.inline.header
         if icon
             +i name=icon
@@ -10,14 +10,14 @@ template(name='number_edit')
             |#{label}
         else
             |#{key}
-    .ui.fluid.input
+    .ui.input
         //- +clear_value                
         input.edit_number(type='number' value=field_value placeholder=placeholder autocomplete="off")
             
             
 template(name='number_view')
     if field_value
-        div
+        // div
         .ui.tiny.inline.header
             if icon
                 +i name=icon

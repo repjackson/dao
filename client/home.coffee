@@ -41,12 +41,12 @@ Template.nav.events
 
 @selected_tags = new ReactiveArray []
 
-Template.body.events
-    'click a:not(.select_term)': ->
-        $('.global_container')
-        .transition('fade out', 200)
-        .transition('fade in', 200)
-        # unless Meteor.user().invert_class is 'invert'
+# Template.body.events
+#     'click a:not(.select_term)': ->
+#         $('.global_container')
+#         .transition('fade out', 200)
+#         .transition('fade in', 200)
+#         # unless Meteor.user().invert_class is 'invert'
 
 Router.route '/', (->
     @layout 'layout'
@@ -83,7 +83,7 @@ Template.tag_selector.events
             # Meteor.call 'omega', @title, ->
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.call 'search_ph', selected_tags.array(), ->
+        Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
@@ -97,7 +97,7 @@ Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.call 'search_ph', selected_tags.array(), ->
+        Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.tone.events
     # 'click .upvote_sentence': ->
@@ -132,8 +132,8 @@ Template.home.helpers
 
     docs: ->
         # match = {model:$in:['porn']}
-        match = {model:$in:['post','wikipedia','reddit','porn']}
-        # match = {model:$in:['post','wikipedia','reddit']}
+        # match = {model:$in:['post','wikipedia','reddit','porn']}
+        match = {model:$in:['post','wikipedia','reddit']}
         
         # match = {model:'post'}
         # if selected_tags.array().length>0
@@ -146,7 +146,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:7
+            limit:3
         # if cur.count() is 1
         Docs.find match
     home_button_class: ->
@@ -164,7 +164,8 @@ Template.home.helpers
     
     selected_tags: -> selected_tags.array()
     tag_results: ->
-        doc_count = Docs.find({model:$in:['post','wikipedia','reddit','porn']}).count()
+        # doc_count = Docs.find({model:$in:['post','wikipedia','reddit','porn']}).count()
+        doc_count = Docs.find({model:$in:['porn']}).count()
         if 0 < doc_count < 3 
             Tag_results.find({ 
                 count:$lt:doc_count 
@@ -204,7 +205,7 @@ Template.home.events
             console.log search
             selected_tags.push search
             # if Meteor.user()
-            # Meteor.call 'search_ph', selected_tags.array(), ->
+            Meteor.call 'search_ph', selected_tags.array(), ->
             Meteor.call 'call_wiki', search, ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
             Session.set('query','')

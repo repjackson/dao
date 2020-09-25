@@ -65,24 +65,24 @@ template(name='home')
     
     .spacer
     .scrolling
-        if two_posts
-            .ui.stackable.two.cards
-                each docs
-                    +one_post_view
-        else if one_post
-            .ui.stackable.cards
-                each docs
-                    +one_post_view
-        else
-            each docs
-                if key_value_is 'model' 'porn'
-                    +vid_card
-                else if key_value_is 'model' 'reddit'
-                    +reddit_card
-                else
-                    +post_card
-                .ui.divider
-            // .ui.stackable.cards
+        // if two_posts
+        //     .ui.stackable.two.cards
+        //         each docs
+        //             +one_post_view
+        // else if one_post
+        //     .ui.stackable.cards
+        //         each docs
+        //             +one_post_view
+        // else
+        each docs
+            if key_value_is 'model' 'porn'
+                +vid_card
+            else if key_value_is 'model' 'reddit'
+                +reddit_card
+            else
+                +post_card
+            .ui.divider
+        // .ui.stackable.cards
 
 
 template(name='unselect_tag')

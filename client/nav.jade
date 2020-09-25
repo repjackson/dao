@@ -30,16 +30,19 @@ template(name='nav')
                     i.yin.yang.loading.big.grey.icon
                     +status    
         .right.menu
-            a.icon.item.post(title='add')
-                i.large.plus.icon
-            if unread_count
-                a.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    i.large.bell.icon
+            if connected
+                a.icon.item.post(title='add')
+                    i.large.plus.icon
+            if currentUser
+                if connected
                     if unread_count
-                        |#{unread_count}
-            else
-                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                    i.large.outline.bell.icon
+                        a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                            i.large.bell.icon
+                            if unread_count
+                                |#{unread_count}
+                    else
+                        a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                            i.large.outline.bell.icon
             a.icon.item(href="/chat" title='chat') 
                 i.chat.outline.large.icon
             // a.icon.item(href="/u/#{currentUser.username}/messages" class="{{isActivePath 'user_messages'}}" title="#{user.username} messages")
@@ -57,8 +60,8 @@ template(name='nav')
                     else 
                         i.large.user.large.icon
                     strong.mobile.hidden #{currentUser.username}
-                a.icon.large.item.toggle_rightbar.select_term
-                    i.bars.large.icon
+                // a.icon.large.item.toggle_rightbar.select_term
+                //     i.bars.large.icon
             else
                 a.icon.item(href="/register" title='register')
                     i.large.user.plus.icon
@@ -171,11 +174,11 @@ template(name='rightbar')
         a.item.toggle_rightbar(href="/u/#{currentUser.username}/about" class="{{isActiveRoute 'user_about'}}")
             | about
             i.large.info.icon
-        a.item.toggle_rightbar(href="/u/#{currentUser.username}/credits" class="{{isActiveRoute 'user_credits'}}")
+        a.item.toggle_rightbar(href="/u/#{currentUser.username}/kin" class="{{isActiveRoute 'kin'}}")
             | #{currentUser.total_credit_amount}p received
             i.large.chevron.down.icon
-        a.item.toggle_rightbar(href="/u/#{currentUser.username}/debits" class="{{isActiveRoute 'user_sent'}}")
-            | #{currentUser.total_debit_amount}p sent
+        a.item.toggle_rightbar(href="/u/#{currentUser.username}/kout" class="{{isActiveRoute 'user_sent'}}")
+            | #{currentUser.total_debit_amount}k out
             i.large.chevron.up.icon
         a.item.toggle_rightbar(href="/u/#{currentUser.username}/events" class="{{isActiveRoute 'user_events'}}")
             | events

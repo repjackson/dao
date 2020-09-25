@@ -14,6 +14,29 @@ Template.registerHelper 'editing_mode', () ->
     if Meteor.user().edit_mode
         if Router.current().params.username is Meteor.user().username
             true
+
+Template.registerHelper 'current_tribe', () ->
+    if Meteor.user()
+        Docs.findOne 
+            _id:Meteor.user().current_tribe_id
+    
+Template.registerHelper 'enabled_features', () ->
+    # console.log @
+    Docs.find
+        model:'feature'
+        _id:@enabled_feature_ids
+    
+    
+Template.registerHelper 'user_from_id', (user_id) ->
+    # console.log @
+    Meteor.users.findOne _id:user_id
+
+        
+Template.registerHelper 'i_have_points', () ->
+    if Meteor.user().username is 'dev'
+        true
+    else
+        Meteor.user().points > 0
         
         
 Template.registerHelper 'post_header_class', (metric) ->
@@ -117,12 +140,21 @@ Template.registerHelper 'can_edit', () ->
 Template.registerHelper 'lowered_title', ()-> @title.toLowerCase()
 
 
+Template.registerHelper 'recipient', () ->
+    Meteor.users.findOne @recipient_id
+Template.registerHelper 'target', () ->
+    Meteor.users.findOne @target_user_id
+Template.registerHelper 'to', () ->
+    Meteor.users.findOne @to_user_id
+
+
+
+
 Template.registerHelper 'field_value', () ->
     # console.log @
     parent = Template.parentData()
     parent5 = Template.parentData(5)
     parent6 = Template.parentData(6)
-
 
     if @direct
         parent = Template.parentData()

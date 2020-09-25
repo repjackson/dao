@@ -52,67 +52,14 @@ if Meteor.isClient
             debit = Docs.findOne Router.current().params.doc_id
             debit.amount and debit.recipient_id
     Template.debit_edit.events
-        'click .add_recipient': ->
-            Docs.update Router.current().params.doc_id,
-                $set:
-                    recipient_id:@_id
-        'click .remove_recipient': ->
-            Docs.update Router.current().params.doc_id,
-                $unset:
-                    recipient_id:1
-        'keyup .new_tag': _.throttle((e,t)->
-            query = $('.new_tag').val()
-            if query.length > 0
-                Session.set('searching', true)
-            else
-                Session.set('searching', false)
-            Session.set('current_query', query)
-            
-            if e.which is 13
-                element_val = t.$('.new_tag').val().toLowerCase().trim()
-                Docs.update Router.current().params.doc_id,
-                    $addToSet:tags:element_val
-                selected_tags.push element_val
-                Meteor.call 'log_term', element_val, ->
-                Session.set('searching', false)
-                Session.set('current_query', '')
-                Session.set('dummy', !Session.get('dummy'))
-                t.$('.new_tag').val('')
-        , 1000)
-
-        'click .remove_element': (e,t)->
-            element = @valueOf()
-            field = Template.currentData()
-            selected_tags.remove element
-            Docs.update Router.current().params.doc_id,
-                $pull:tags:element
-            t.$('.new_tag').focus()
-            t.$('.new_tag').val(element)
-            Session.set('dummy', !Session.get('dummy'))
-    
-    
-        'click .select_term': (e,t)->
-            # selected_tags.push @title
-            Docs.update Router.current().params.doc_id,
-                $addToSet:tags:@title
-            selected_tags.push @title
-            $('.new_tag').val('')
-            Session.set('current_query', '')
-            Session.set('searching', false)
-            Session.set('dummy', !Session.get('dummy'))
-
-    
-        'blur .edit_description': (e,t)->
-            textarea_val = t.$('.edit_textarea').val()
-            Docs.update Router.current().params.doc_id,
-                $set:description:textarea_val
-    
-    
-        'blur .edit_text': (e,t)->
-            val = t.$('.edit_text').val()
-            Docs.update Router.current().params.doc_id,
-                $set:"#{@key}":val
-    
+        # 'click .add_recipient': ->
+        #     Docs.update Router.current().params.doc_id,
+        #         $set:
+        #             recipient_id:@_id
+        # 'click .remove_recipient': ->
+        #     Docs.update Router.current().params.doc_id,
+        #         $unset:
+        #             recipient_id:1
     
         'blur .point_amount': (e,t)->
             # console.log @
@@ -158,12 +105,17 @@ if Meteor.isClient
                             position: 'top-end',
                             timer: 1000
                         )
-                        Router.go "/debit/#{@_id}/view"
+                        Router.go "/m/debit/#{@_id}/view"
             )
+if Meteor.isClient
+    Template.debit_view.onCreated ->
+        @autorun => Meteor.subscribe 'recipient_from_debit_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'all_users'
+        
+    Template.debit_view.onRendered ->
 
-
-    Template.debit_edit.helpers
-    Template.debit_edit.events
 
 if Meteor.isServer
     Meteor.methods
