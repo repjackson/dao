@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/u/:username/services', (->
-        @layout 'profile_layout'
-        @render 'user_services'
-        ), name:'user_services'
-
     Template.user_services.onCreated ->
         @autorun -> Meteor.subscribe 'user_services', Router.current().params.username
         # @autorun => Meteor.subscribe 'user_services', Router.current().params.username

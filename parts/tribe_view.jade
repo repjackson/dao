@@ -1,0 +1,270 @@
+template(name='tribe_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.row
+                .twelve.wide.column
+                    .ui.inline.header(title='tribe')
+                        i.grey.fire.icon
+                        |#{title}
+                    // +image_view key='banner_id' height='200' crop='crop' direct=true
+                    +session_edit_value_button key='view_tribe_section' value='images' label='images' icon='picture'
+                    +session_edit_value_button key='view_tribe_section' value='posts' label='posts' icon='blog'
+                    // +session_edit_value_button key='view_tribe_section' value='latest' label='latest' icon='rss'
+                    // +session_edit_value_button key='view_tribe_section' value='offers' label='offers' icon='shop'
+                    // +session_edit_value_button key='view_tribe_section' value='requests' label='requests' icon='bell'
+                    +session_edit_value_button key='view_tribe_section' value='info' label='info' icon='info'
+                    +session_edit_value_button key='view_tribe_section' value='karma' label='karma' icon='money'
+                    // +session_edit_value_button key='view_tribe_section' value='alerts' label='alerts' icon='rss'
+                    +session_edit_value_button key='view_tribe_section' value='events' label='events' icon='calendar'
+                    +session_edit_value_button key='view_tribe_section' value='people' label='people' icon='groups'
+                    +session_edit_value_button key='view_tribe_section' value='badges' label='badges' icon='certificate'
+                    +session_edit_value_button key='view_tribe_section' value='comments' label='comments' icon='chat'
+                    if session_key_value_is 'view_tribe_section' 'latest'
+                        .ui.header stats
+                        +viewing
+                    if session_key_value_is 'view_tribe_section' 'images'
+                        +tribe_images
+                    if session_key_value_is 'view_tribe_section' 'alerts'
+                        +tribe_alerts
+                    if session_key_value_is 'view_tribe_section' 'people'
+                        +tribe_people
+                    if session_key_value_is 'view_tribe_section' 'posts'
+                        .ui.feed.scrolling
+                            each latest_updates
+                                .event
+                                    .label 
+                                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                    .content
+                                        .summary
+                                            a.user(href="/user/#{_author_username}") #{_author_username}
+                                            a(href="/m/#{model}/#{_id}/view") #{title} #{price}
+                                            |!{description}
+                                            each tags 
+                                                .ui.large.basic.label #{this}
+                                        if image_id
+                                            .extra.images
+                                                a.superzoom(href="/m/#{model}/#{_id}/view")
+                                                    img.ui.medium.rounded.inline.superzoom.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                        .meta
+                                            a.date(href="/m/post/#{_id}/view")
+                                                i.clock.icon 
+                                                |#{when}
+                                            +voting_small
+                                        if key_value_is 'model' 'debit'
+                                            i.large.gift.icon
+                                            |#{seller.username}
+                                        else if key_value_is 'model' 'post'
+                                            i.large.newspaper.icon
+                                        else
+                                            .ui.label #{model}
+                        .ui.icon.circular.button.add_tribe_post
+                            i.plus.icon
+                        .ui.link.large.selection.list
+                            each tribe_posts
+                                a.item(href="/post/#{_id}/view") #{title}
+                    if session_key_value_is 'view_tribe_section' 'latest'
+                        each latest_offers
+                            a(href="/m/offer/#{_id}/view")
+                                img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    if session_key_value_is 'view_tribe_section' 'info'
+                        .ui.inline.header 
+                            // i.info.icon
+                            +i name='info' cl='ui avatar image'
+                            |info
+                        .ui.header
+                            +i name='marker' cl='ui avatar image'
+                            // i.marker.icon 
+                            |#{location}
+                        +textarea_view key='description' label='description' direct=true
+                        +array_view key='tags' label='tags' direct=true
+                        +array_view key='location_tags' label='location tags' direct=true
+                    if session_key_value_is 'view_tribe_section' 'requests'
+                        .title
+                            .ui.inline.header 
+                                // i.concierge.bell.icon
+                                +i name='service' cl='ui avatar image'
+                                |requests
+                            i.dropdown.icon
+                        .content
+                            each latest_requests
+                                a(href="/m/request/#{_id}/view")
+                                    img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        .ui.fitted.divider
+                    if session_key_value_is 'view_tribe_section' 'pictures'
+                        .title
+                            .ui.inline.header 
+                                +i name='picture' cl='ui avatar image'
+                                // i.picture.icon
+                                |pictures
+                            each latest_photos
+                                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            i.dropdown.icon
+                        .content
+                            each latest_photos
+                                img.ui.small.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        .ui.fitted.divider
+                    if session_key_value_is 'view_tribe_section' 'comments'
+                        +i name='chat' cl='ui avatar image'
+                        // i.chat.icon
+                        |comments
+                        .content
+                            +comments
+                    if session_key_value_is 'view_tribe_section' 'karma'
+                        .ui.inline.header 
+                            +i name='coins' cl='ui avatar image'
+                            // i.coins.icon
+                            |karma
+                        +tribe_finance
+                    if session_key_value_is 'view_tribe_section' 'events'
+                        +tribe_events
+                    if session_key_value_is 'view_tribe_section' 'badges'
+                        +tribe_badges
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    // if can_edit
+                    a(href="/m/tribe" title='tribes')
+                        i.circular.large.fire.link.icon
+                    if can_edit
+                        a.edit_tribe(href="/m/tribe/#{_id}/edit")
+                            i.big.pencil.circular.link.icon
+                    +image_view key='image_id' label='image' direct=true
+                    .ui.segment
+                        .ui.header about
+                        +vote
+                        if private
+                            i.lock.icon(title='private')
+                        .ui.list 
+                            .item #{followers} followers
+                            .item #{phone} 
+                            .item #{location}
+                    .ui.circular.button.add_tribe_gift
+                        // i.large.gift.icon
+                        +i name='gift' cl='ui avatar image'
+                        |gift
+                    .ui.circular.button.add_tribe_post
+                        // i.newspaper.large.icon
+                        +i name='add-rule' cl='ui avatar image'
+                        |post
+                    .ui.circular.button
+                        // i.picture.icon
+                        +i name='add-image' cl='ui avatar image'
+                        |image
+                    .ui.circular.button.request
+                        // i.concierge.bell.icon
+                        +i name='add-reminder' cl='ui avatar image'
+                        |request
+                    .ui.circular.button.offer
+                        // i.concierge.bell.icon
+                        +i name='product' cl='ui avatar image'
+                        |offer
+
+
+
+template(name='tribe_images')
+    .ui.inline.header 
+        // i.certificate.icon
+        +i name='picture'
+        |#{images.count} images
+    // each images
+    //     img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+    .content.scrolling
+        if user_id_in 'admin_ids'
+            i.large.plus.circular.link.icon.add_badge
+        .ui.centered.stackable.cards
+            each images
+                .ui.card
+                    a(href="/m/post/#{_id}/view") 
+                        img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    .content
+                        .header #{title}
+                        +vote
+template(name='tribe_badges')
+    .title
+        .ui.inline.header 
+            // i.certificate.icon
+            +i name='certificate'
+            |#{badges.count} badges
+        each badges
+            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        i.dropdown.icon
+    .content
+        if user_id_in 'admin_ids'
+            i.large.plus.circular.link.icon.add_badge
+        .ui.cards
+            each badges
+                a.ui.card(href="/m/badge/#{_id}/view") 
+                    img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    .content
+                        .header #{title}
+template(name='tribe_events')
+    .title
+        .ui.inline.header 
+            // i.calendar.icon
+            +i name='calendar'
+            |#{events.count} events
+        each badges
+            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        i.dropdown.icon
+    .content
+        if user_id_in 'admin_ids'
+            i.large.plus.circular.link.icon.add_badge
+        .ui.cards
+            each badges
+                a.ui.card(href="/m/badge/#{_id}/view") 
+                    img.ui.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                    .content
+                        .header #{title}
+template(name='tribe_finance')
+    .ui.icon.button.calc_tribe_finance
+        i.refresh.icon
+    .ui.header #{total_child_docs} total tribe docs
+    .ui.header inner exchange volume
+    .ui.list 
+        .item #{inner_transaction_count} inner transaction count
+        .item #{inner_transaction_amount} inner transaction amount
+    .ui.header imports
+    |karma from nonmembers
+    // each imports
+    // .ui.header exports
+    // |karma to nonmembers
+
+
+template(name='tribe_alerts')
+    .ui.header(data-tooltip="choose how you'll see posts from this page in your news feed")
+        i.rss.icon
+        |alerts
+    +key_value_edit key='alert_setting' value=null label='none'
+    +key_value_edit key='alert_setting' value=null label='priority'
+    +key_value_edit key='alert_setting' value=null label='default'
+    .ui.list
+        .item
+            .content
+                .header(data-tooltip='see new posts from this page at the top of your news feed')
+                |priority
+        .item
+            .content
+                .header(data-tooltip='see posts in their usual order from this page')
+                    |default
+        .item
+            .content(data-tooltip='never see posts from this page in your feed')
+                .header off
+    .ui.header(data-tooltip='choose what types of posts you want to be notified about')
+        |notifications
+    .ui.selection.list
+        a.item
+            .content
+                .header(data-tooltip='all notifications from this page, up to 5 per day')
+                    |standard
+        a.item
+            .content
+                .header(data-tooltip='notifications about suggested posts from this page')
+                    |highlights
+        a.item
+            .content
+                .header(data-tooltip='ever receive notifications about posts from this page')
+                    |off
+
+
+template(name='tribe_people')
+    +multi_user_view key='admin_ids' label='admins' icon='shield' direct=true
+    +multi_user_view key='member_ids' label='members' icon='groups' direct=true

@@ -1,0 +1,73 @@
+template(name='tribe_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row
+                .four.wide.column
+                    a.ui.green.big.icon.button(href="/m/tribe/#{_id}/view" title='save')
+                        i.checkmark.big.icon
+                    .ui.inline.header 
+                        i.fire.icon
+                        small edit 
+                        |#{title}
+                        small tribe
+                    i.link.big.remove.icon.delete_item(title='delete tribe')
+                .twelve.wide.column
+                    // +image_view kay='banner_id' direct=true height='200px'
+                    +session_edit_value_button key='tribe_edit_section' value='info' label='info' icon='info'
+                    if session_key_value_is 'tribe_edit_section' 'info'
+                        +text_edit key='title' icon='header' direct=true
+                        +boolean_edit key='published' direct=true        
+                        +textarea_edit key='description' label='description' direct=true
+                        +icon_edit key='icon' label='icon' direct=true
+                        div 
+                        +array_edit key='tags' label='tags' direct=true
+                    +session_edit_value_button key='tribe_edit_section' value='contact' label='contact' icon='phone'
+                    if session_key_value_is 'tribe_edit_section' 'contact'
+                        +text_edit key='phone' icon='phone' direct=true
+                        div 
+                        +text_edit key='location' label='location' icon='marker' direct=true
+                        +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                        div 
+                        +text_edit key='email' label='email' icon='envelope' direct=true
+                        +boolean_edit key='has_hours' direct=true        
+                        if has_hours
+                            .ui.list
+                                .item sun
+                                .item mon
+                                .item tue
+                                .item wed
+                                .item thu
+                                .item fri
+                                .item sat
+                    +session_edit_value_button key='tribe_edit_section' value='image' label='image' icon='image'
+                    if session_key_value_is 'tribe_edit_section' 'image'
+                        +image_edit key='image_id' label='profile' direct=true
+                        +image_edit key='banner_id' label='banner' direct=true
+                    +session_edit_value_button key='tribe_edit_section' value='users' label='users' icon='groups'
+                    if session_key_value_is 'tribe_edit_section' 'users'
+                        +multi_user_edit key='admin_ids' icon='chess king' direct=true        
+                        +multi_user_edit key='member_ids' label='members' direct=true
+                    +session_edit_value_button key='tribe_edit_section' value='privacy' label='privacy' icon='lock'
+                    if session_key_value_is 'tribe_edit_section' 'privacy'
+                        +boolean_edit key='private' label='private' direct=true
+                        unless private
+                            +boolean_edit key='publicy_visible' label='publicy visible' direct=true
+                    +session_edit_value_button key='tribe_edit_section' value='features' label='features' icon='module'
+                    if session_key_value_is 'tribe_edit_section' 'features'
+                        +multi_doc_edit key='feature_ids' ref_model='feaure' label='features' direct=true
+                        +tribe_features
+                .four.wide.column
+                
+                
+                
+template(name='tribe_features')
+    div
+    .ui.inline.header
+        +i name='module'
+        | features
+        
+    +multi_doc_view key='feature_ids' ref_model='feature' label='enabled features' direct=true
+    +session_toggle_button key='edit_mode' label='edit mode' icon='pencil'
+    if session_is 'edit_mode'
+        +multi_doc_edit key='feature_ids' ref_model='model' label='enabled features' direct=true
+    div

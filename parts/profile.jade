@@ -73,15 +73,6 @@ template(name='profile')
                     if currentUser
                         // div
                         +user_friend_button 
-                // if is_current_user
-                //     a.ui.button(href="/u/#{username}/edit/membership" class="{{isActiveRoute 'user_finance'}}")
-                //         i.money.large.icon
-                // unless is_current_user
-                .ui.circular.button.tip(title='send tip')
-                    i.large.dollar.green.icon
-                    span tip
-                // .spacer
-                // .spacer
                 if is_dev
                     +print_this
                 +session_edit_value_button key='view_user_section' value='dashboard' label='dashboard' icon='dashboard'
@@ -99,7 +90,8 @@ template(name='profile')
                 +session_edit_value_button key='view_user_section' value='services' label='services' icon='wrench'
                 +session_edit_value_button key='view_user_section' value='projects' label='projects' icon='tasks'
                 +session_edit_value_button key='view_user_section' value='chat' label='chat' icon='chat'
-                // +session_edit_value_button key='view_user_section' value='rentals' label='rentals' icon='clock'
+                +session_edit_value_button key='view_user_section' value='rentals' label='rentals' icon='clock'
+                +session_edit_value_button key='view_user_section' value='tribes' label='tribes' icon='campfire'
                 +session_edit_value_button key='view_user_section' value='leads' label='leads' icon='phone'
                 +session_edit_value_button key='view_user_section' value='privacy' label='privacy' icon='privacy'
                 if session_key_value_is 'view_user_section' 'privacy'

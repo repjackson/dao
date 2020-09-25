@@ -14,6 +14,14 @@ Template.registerHelper 'editing_mode', () ->
     if Meteor.user().edit_mode
         if Router.current().params.username is Meteor.user().username
             true
+Template.registerHelper 'user_id_in', (key)->
+    if Meteor.user()
+        if Meteor.userId() in @["#{key}"]
+            true
+        else
+            false
+    else
+        false
 
 Template.registerHelper 'current_tribe', () ->
     if Meteor.user()

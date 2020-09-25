@@ -1,0 +1,76 @@
+template(name='user_tribes')
+    .ui.inline.header
+        +icolor name='campfire'
+        |user tribes
+    if is_current_user
+        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/tribes")
+            i.pencil.icon
+    .ui.header leader of
+    each user_leader_tribes
+        .ui.segment
+            a.ui.header(href="/m/tribe/#{_id}/view") #{title}
+            if is_current_user
+                +enter_tribe
+    .ui.header member of
+    each user_member_tribes
+        .ui.segment
+            a.ui.header(href="/m/tribe/#{_id}/view") #{title}
+            if is_current_user
+                +enter_tribe
+            
+            
+            
+template(name='enter_tribe')
+    .ui.button.enter
+        |enter tribe
+        
+        
+template(name='join')
+    if is_member
+        .ui.button.leave
+            |leave
+    else
+        unless private
+            .ui.button.join
+                |join
+        else
+            .ui.disabled.button
+                i.lock.icon
+                |private
+        
+
+
+
+template(name='tribe_card')
+    a.ui.link.card(href="/m/tribe/#{_id}/view")
+        .image
+            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
+        .content
+            a.ui.header(href="/m/tribe/#{_id}/view")
+                if private 
+                    i.lock.icon
+                |#{title}
+            .description
+                i.marker.icon
+                |#{location} 
+                i.info.icon
+                |!{description}
+                // .ui.list
+                //     .item #{member_ids.length} members
+                //     .item #{post_count} posts
+                //     .item #{post_count} offers
+                //     .item #{post_count} requests
+                // +vote
+                // +viewing
+                // +join
+            
+template(name='tribe_card_small')
+    a.ui.card(href="/m/tribe/#{_id}/view")
+        img.ui.raw.image(src="{{c.url image_id width=400 height=400 crop='fill'}}" class=currentUser.invert_class)    
+        .content
+            a.header(href="/m/tribe/#{_id}/view")
+                // if private 
+                //     i.lock.icon
+                |#{title}
+        
+        

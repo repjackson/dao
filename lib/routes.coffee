@@ -13,10 +13,10 @@ force_loggedin =  ()->
 Router.onBeforeAction(force_loggedin, {
     # only: ['admin']
     except: [
-        # 'home'
+        'home'
         # 'profile'
         # 'shop'
-        # 'chat'
+        'chat'
         # 'post_view'
         # 'post_edit'
         'register'

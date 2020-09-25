@@ -1,10 +1,4 @@
 if Meteor.isClient
-    Router.route '/u/:username/dashboard', (->
-        @layout 'profile_layout'
-        @render 'user_dashboard'
-        ), name:'user_dashboard'
-        
-        
     Template.user_dashboard.onCreated ->
         @autorun -> Meteor.subscribe 'user_credits', Router.current().params.username
         @autorun -> Meteor.subscribe 'user_debits', Router.current().params.username
