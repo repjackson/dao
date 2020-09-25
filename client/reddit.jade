@@ -8,19 +8,29 @@ template(name='reddit_view')
                             img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
                     // if youtube_id
                     //     +youtube_view key='youtube_id' direct=true
-                    .f12
-                        |!{body}
-                    if is_admin
-                        +viewing
+                    .description.f11.scrolling
+                        if tone
+                            +tone
+                        else if body
+                            |{{nl2br body}}
+                        else if description
+                            |!{description}
+                            // |!{body}
+                    // if is_admin
+                    +viewing
                     +comments
                 .six.wide.column
+                    if domain
+                        .ui.label(title='domain') #{domain}
                     if can_edit
                         a.ui.circular.icon.button.edit_reddit(href="/m/reddit/#{_id}/edit")
                             i.large.pencil.icon
                     .ui.inline.small.header #{when}
                     .ui.label #{points}p
                     .ui.label #{imported_points}ip
-                    
+                    +call_watson
+                    +autotag
+                    +call_tone
                     +vote
                     .ui.large.link.list
                         each votes
@@ -36,52 +46,73 @@ template(name='reddit_view')
 
 
 template(name='reddit_card')
-    .ui.item
-        a.image(href="/m/reddit/#{_id}/view")
-            if is_youtube
-                .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
-            if is_image
-                img.ui.image(src=url class=currentUser.invert_class)    
-        if youtube_id
-            +youtube_view key='youtube_id' direct=true
-        if image_id
+    .ui.stackable.grid
+        .four.wide.column
+            a.ui.fluid.rounded.image.pointer(href="/post/#{_id}/view")
+                if watson.metadata.image
+                    img(src=watson.metadata.image class='invert')    
+                else if is_youtube
+                    .ui.embed(data-source="youtube" data-id=youtube_parse class='invert')
+                else if is_image
+                    if url
+                        img(src=url class='invert')    
+            if youtube_id
+                +youtube_view key='youtube_id' direct=true
+            if image_id
+                a.image(href="/post/#{_id}/view")
+                    img.ui.rounded.image(src="{{c.url image_id }}" class='invert')
+            if thumbnail
+                a.image(href="/post/#{_id}/view")
+                    img.ui.rounded.image(src=thumbnail class='invert')
+        .twelve.wide.column
             a.image(href="/m/reddit/#{_id}/view")
-                img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
-        .content
-            a.ui.header(href="/m/reddit/#{_id}/view") #{title}
-            .description.f12
-                |!{description}
-            +vote
-            // a(href="/m/reddit/#{_id}/view")
-            //     i.right.chevron.circular.link.big.icon
-            .ui.label #{points}p
-            .ui.label #{imported_points}ip
-            .ui.label(title='domain')
-                i.globe.icon
-                |#{domain}
-            a.ui.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
-                i.reddit.icon
-                |#{subreddit}
-            a.ui.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
-                i.pencil.icon
-                |#{rd.author}
-            if is_admin
-                +print_this
-            +autotag
-                
-            each tags
-                .ui.label #{this}
-            .meta
-                |#{when}
-                if can_edit 
-                    a.ui.circular.icon.button(href="/m/reddit/#{_id}/edit")
-                        i.pencil.icon
-            a.ui.icon.button(href="/m/reddit/#{_id}/view")
-                i.chevron.right.icon
-        .description
-            +comments_view_small   
-        
-    // .ui.divider
+                if is_youtube
+                    .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
+                if is_image
+                    img.ui.image(src=url class=currentUser.invert_class)    
+            if youtube_id
+                +youtube_view key='youtube_id' direct=true
+            if image_id
+                a.image(href="/m/reddit/#{_id}/view")
+                    img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+            .content
+                a.ui.header(href="/m/reddit/#{_id}/view") #{title}
+                .description.f12
+                    |!{description}
+                +vote
+                +call_tone
+                +call_watson
+                +autotag
+                // a(href="/m/reddit/#{_id}/view")
+                //     i.right.chevron.circular.link.big.icon
+                .ui.label #{points}p
+                .ui.label #{imported_points}ip
+                .ui.label(title='domain')
+                    i.globe.icon
+                    |#{domain}
+                a.ui.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
+                    i.reddit.icon
+                    |#{subreddit}
+                a.ui.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
+                    i.pencil.icon
+                    |#{rd.author}
+                if is_admin
+                    +print_this
+                +autotag
+                    
+                each tags
+                    .ui.label #{this}
+                .meta
+                    |#{when}
+                    if can_edit 
+                        a.ui.circular.icon.button(href="/m/reddit/#{_id}/edit")
+                            i.pencil.icon
+                a.ui.icon.button(href="/m/reddit/#{_id}/view")
+                    i.chevron.right.icon
+            .description
+                +comments_view_small   
+            
+        // .ui.divider
     
 template(name='one_reddit_view')
     .ui.fluid.card.view_reddit

@@ -1,43 +1,3 @@
-Template.nav.onCreated ->
-    @autorun => Meteor.subscribe 'me'
-
-Template.nav.events
-#     'click .logout': ->
-#         Session.set 'logging_out', true
-#         Meteor.logout ->
-#             Session.set 'logging_out', false
-#             Router.go '/login'
-    
-    'click .toggle_nightmode': ->
-        if Meteor.user().invert_class is 'invert'
-            Meteor.users.update Meteor.userId(),
-                $set:invert_class:''
-        else
-            Meteor.users.update Meteor.userId(),
-                $set:invert_class:'invert'
-
-
-
-    'click .toggle_admin': ->
-        if 'admin' in Meteor.user().roles
-            Meteor.users.update Meteor.userId(),
-                $pull:'roles':'admin'
-        else
-            Meteor.users.update Meteor.userId(),
-                $addToSet:'roles':'admin'
-
-    'click .home': -> Router.go '/'
-    'click .reconnect': -> Meteor.reconnect()
-
-    'click .post': ->
-        new_post_id =
-            Docs.insert
-                model:'post'
-                source:'self'
-                # buyer_id:Meteor.userId()
-                # buyer_username:Meteor.user().username
-        Router.go "/post/#{new_post_id}/edit"
-
 
 @selected_tags = new ReactiveArray []
 
@@ -112,7 +72,8 @@ Template.tone.events
 Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     one_post: ->
-        match = {model:$in:['post','wikipedia','reddit','porn']}
+        match = {model:$in:['post','wikipedia','reddit']}
+        # match = {model:$in:['post','wikipedia','reddit','porn']}
         
         # match = {model:'post'}
         if selected_tags.array().length>0
@@ -121,7 +82,8 @@ Template.home.helpers
         Docs.find(match).count() is 1
 
     two_posts: -> 
-        match = {model:$in:['post','wikipedia','reddit','porn']}
+        match = {model:$in:['post','wikipedia','reddit']}
+        # match = {model:$in:['post','wikipedia','reddit','porn']}
         
         # match = {model:'post'}
         if selected_tags.array().length>0
@@ -136,8 +98,8 @@ Template.home.helpers
         match = {model:$in:['post','wikipedia','reddit']}
         
         # match = {model:'post'}
-        # if selected_tags.array().length>0
-        match.tags = $all:selected_tags.array()
+        if selected_tags.array().length>0
+            match.tags = $all:selected_tags.array()
         # cur = Docs.find match
         Docs.find match,
             sort:
@@ -146,9 +108,9 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:3
+            limit:5
         # if cur.count() is 1
-        Docs.find match
+        # Docs.find match
     home_button_class: ->
         if Template.instance().subscriptionsReady()
             ''

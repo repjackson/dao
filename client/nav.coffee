@@ -5,6 +5,50 @@ Template.nav.onCreated ->
     @autorun => Meteor.subscribe 'all_users'
     @autorun => Meteor.subscribe 'my_unread_messages'
 
+
+Template.nav.onCreated ->
+    @autorun => Meteor.subscribe 'me'
+
+Template.nav.events
+#     'click .logout': ->
+#         Session.set 'logging_out', true
+#         Meteor.logout ->
+#             Session.set 'logging_out', false
+#             Router.go '/login'
+    
+    'click .toggle_nightmode': ->
+        if Meteor.user().invert_class is 'invert'
+            Meteor.users.update Meteor.userId(),
+                $set:invert_class:''
+        else
+            Meteor.users.update Meteor.userId(),
+                $set:invert_class:'invert'
+
+
+
+    'click .toggle_admin': ->
+        if 'admin' in Meteor.user().roles
+            Meteor.users.update Meteor.userId(),
+                $pull:'roles':'admin'
+        else
+            Meteor.users.update Meteor.userId(),
+                $addToSet:'roles':'admin'
+
+    'click .home': -> Router.go '/'
+    'click .reconnect': -> Meteor.reconnect()
+
+    'click .post': ->
+        new_post_id =
+            Docs.insert
+                model:'post'
+                source:'self'
+                # buyer_id:Meteor.userId()
+                # buyer_username:Meteor.user().username
+        Router.go "/post/#{new_post_id}/edit"
+
+
+
+
 Template.nav.onRendered ->
     Meteor.setTimeout ->
         # $('.menu .item')

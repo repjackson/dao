@@ -17,7 +17,10 @@ Router.onBeforeAction(force_loggedin, {
         # 'profile'
         # 'shop'
         'chat'
-        # 'post_view'
+        'model_doc_view'
+        'reddit_view'
+        'doc_view'
+        'post_view'
         # 'post_edit'
         'register'
         'login'
@@ -55,29 +58,6 @@ Router.route('verify-email', {
                 Router.go "/verification_confirmation/"
         )
 })
-
-
-Router.route '/post/:doc_id/view', (->
-    @layout 'layout'
-    @render 'post_view'
-    ), name:'post_view'
-
-Router.route '/post/:doc_id/edit', (->
-    @layout 'layout'
-    @render 'post_edit'
-    ), name:'post_edit'
-
-Router.route '/reddit/:doc_id/view', (->
-    @layout 'layout'
-    @render 'reddit_view'
-    ), name:'reddit_view'
-
-Router.route '/reddit/:doc_id/edit', (->
-    @layout 'layout'
-    @render 'reddit_edit'
-    ), name:'reddit_edit'
-
-
 
 
 Router.route '/verification_confirmation', -> @render 'verification_confirmation'

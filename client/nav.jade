@@ -1,11 +1,11 @@
 template(name='nav')
     .ui.fluid.attached.borderless.invert.menu.topnav
+        a.icon.item(href='/')
+            i.big.link.yin.yang.grey.icon
         if currentUser
             a.icon.header.item.toggle_leftbar
                 i.bars.large.icon
             if connected
-                a.icon.item(href='/')
-                    i.big.link.yin.yang.grey.icon
                 a.icon.item.set_root(href="/m/model" class="{{isActivePath '/m/model'}}")
                     i.database.icon
                 if is_admin
@@ -64,8 +64,8 @@ template(name='nav')
                 //     i.bars.large.icon
             else
                 a.item(href="/login" title='login')
-                    i.large.sign.in.grey.icon
-                    |enter
+                    i.large.sign.in.icon
+                    // |enter
 
 template(name='footer')
     .ui.fluid.basic.attached.segment.footer
