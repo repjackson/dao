@@ -44,7 +44,7 @@ Template.nav.events
                 source:'self'
                 # buyer_id:Meteor.userId()
                 # buyer_username:Meteor.user().username
-        Router.go "/post/#{new_post_id}/edit"
+        Router.go "/m/post/#{new_post_id}/edit"
 
 
 

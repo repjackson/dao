@@ -99,7 +99,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:5
+            limit:1
         # if cur.count() is 1
         # Docs.find match
     home_button_class: ->

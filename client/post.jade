@@ -138,7 +138,7 @@ template(name='post_view')
                     //     i.big.yin.yang.icon
                     if title 
                         .ui.header(class=post_header_class) #{title}
-                    .scrolling
+                    .scrollin
                         if url 
                             a(href=url target='_window') #{url}
                             img.ui.image(src=url class='invert')    
@@ -159,7 +159,7 @@ template(name='post_view')
                         // +watson_view
                         // if is_admin
                         //     +viewing
-                .six.wide.column.scrolling
+                .six.wide.column.scrollin
                     if watson.metadata.image
                         img.ui.rounded.image(src=watson.metadata.image class='invert')    
                     if can_edit
