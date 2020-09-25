@@ -59,15 +59,6 @@ Template.unselect_tag.events
         Meteor.call 'search_reddit', selected_tags.array(), ->
         # Meteor.call 'search_ph', selected_tags.array(), ->
 
-Template.tone.events
-    # 'click .upvote_sentence': ->
-    'click .tone_item': ->
-        # console.log @
-        doc_id = Docs.findOne()._id
-        if @weight is 3
-            Meteor.call 'reset_sentence', doc_id, @, ->
-        else
-            Meteor.call 'upvote_sentence', doc_id, @, ->
             
 Template.home.helpers
     many_tags: -> selected_tags.array().length > 1

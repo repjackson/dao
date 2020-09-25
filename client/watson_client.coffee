@@ -60,6 +60,29 @@ Template.keywords.onRendered ->
         $('.ui.accordion').accordion()
     , 2000
 
+Template.tone.events
+    'keyup .tag_sentence': (e,t)->
+        # console.log 
+        if e.which is 13
+            # $(e.currentTarget).closest('.button')
+            tag = $(e.currentTarget).closest('.tag_sentence').val().toLowerCase().trim()
+            Meteor.call 'tag_sentence', Template.currentData()._id, @, tag, =>
+                $(e.currentTarget).closest('.tag_sentence').val('')
+            # console.log tag
+    'click .upvote_sentence': ->
+        Meteor.call 'upvote_sentence', Template.currentData()._id, @, ->
+    'click .downvote_sentence': ->
+        console.log @
+        console.log Template.currentData()
+        console.log Template.parentData()
+        Meteor.call 'downvote_sentence', Template.currentData()._id, @, ->
+    # 'click .tone_item': ->
+    #     # console.log @
+    #     doc_id = Docs.findOne()._id
+    #     if @weight is 3
+    #         Meteor.call 'reset_sentence', Template.currentData()._id, @, ->
+    #     else
+    #         Meteor.call 'upvote_sentence', Template.currentData()._id, @, ->
 
 Template.call_watson.events
     'click .autotag': ->
@@ -73,7 +96,7 @@ Template.call_watson.events
             dom = document.createElement('textarea')
             # dom.innerHTML = doc.body
             dom.innerHTML = @rd.selftext_html
-            console.log 'innner html', dom.value
+            # console.log 'innner html', dom.value
             # return dom.value
             Docs.update @_id,
                 $set:

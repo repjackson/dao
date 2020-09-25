@@ -202,18 +202,24 @@ template(name='tone')
             .item
                 
                 //- span #{sentence_id}
-                span.pointer.tone_item(title="#{sentence_id}" class=tone_size) 
-                    //- i.chevron.up.link.grey.large.icon.upvote_sentence
-                    //- i.chevron.down.link.grey.large.icon.downvote_sentence
+                span.tone_item(title="#{sentence_id}" class=tone_size) 
+                    i.chevron.up.link.grey.large.icon.upvote_sentence
+                    i.chevron.down.link.grey.large.icon.downvote_sentence
                     |{{lowered text}}
-                    //- .content
-                    // - .header(title="#{sentence_id}") {{lowered text}}
-                    // - |weight:#{weight}
-                    // each tones
-                    //     .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
-                    //         span.ui.text
-                    //             |#{tone_id} &nbsp;
-                    //         | {{ to_percent score }}% 
+                    // .content
+                    // .header(title="#{sentence_id}") {{lowered text}}
+                    |weight:#{weight}
+                    each tones
+                        // .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'score'}} #{tone_label_class}") 
+                        .ui.basic.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
+                            span.ui.text
+                                |#{tone_id} &nbsp;
+                            | {{ to_percent score }}% 
+                    .ui.tiny.transparent.icon.input
+                        i.tag.grey.icon
+                        input.tag_sentence(type='text' placeholder='tag')
+                    each tags 
+                        .ui.label #{this}
     // unless tone                
     //- #call_tone.ui.icon.button
     //-     i.refresh.icon

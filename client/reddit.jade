@@ -3,6 +3,7 @@ template(name='reddit_view')
         .ui.stackable.padded.grid
             .row 
                 .ten.wide.column
+                    .ui.header #{title}
                     if image_id
                         a(href="{{c.url image_id }}" target='_window')
                             img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=currentUser.invert_class)
@@ -25,7 +26,7 @@ template(name='reddit_view')
                     if can_edit
                         a.ui.circular.icon.button.edit_reddit(href="/m/reddit/#{_id}/edit")
                             i.large.pencil.icon
-                    .ui.inline.small.header #{when}
+                    | imported #{when}
                     .ui.label #{points}p
                     .ui.label #{imported_points}ip
                     +call_watson
@@ -38,7 +39,7 @@ template(name='reddit_view')
                     .ui.label #{views} views
                     |#{tags.length} tags
                     each tags 
-                        .ui.compact.button.add_tag #{this}
+                        .ui.compact.circular.button.add_tag #{this}
                     if is_admin
                         +print_this
 
@@ -48,7 +49,7 @@ template(name='reddit_view')
 template(name='reddit_card')
     .ui.stackable.grid
         .four.wide.column
-            a.ui.fluid.rounded.image.pointer(href="/post/#{_id}/view")
+            a.ui.fluid.rounded.image.pointer(href="/m/reddit/#{_id}/view")
                 if watson.metadata.image
                     img(src=watson.metadata.image class='invert')    
                 else if is_youtube
@@ -59,10 +60,10 @@ template(name='reddit_card')
             if youtube_id
                 +youtube_view key='youtube_id' direct=true
             if image_id
-                a.image(href="/post/#{_id}/view")
+                a.image(href="/m/reddit/#{_id}/view")
                     img.ui.rounded.image(src="{{c.url image_id }}" class='invert')
             if thumbnail
-                a.image(href="/post/#{_id}/view")
+                a.image(href="/m/reddit/#{_id}/view")
                     img.ui.rounded.image(src=thumbnail class='invert')
         .twelve.wide.column
             a.image(href="/m/reddit/#{_id}/view")

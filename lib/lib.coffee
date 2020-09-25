@@ -133,9 +133,21 @@ Meteor.methods
 
     upvote_sentence: (doc_id, sentence)->
         console.log sentence
+        if sentence.weight
+            Docs.update(
+                { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
+                { $inc: { "tone.result.sentences_tone.$.weight": 1 } }
+            )
+        else
+            Docs.update(
+                { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
+                { $set: { "tone.result.sentences_tone.$.weight": 1 } }
+            )
+    tag_sentence: (doc_id, sentence, tag)->
+        console.log sentence
         Docs.update(
             { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
-            { $inc: { "tone.result.sentences_tone.$.weight": 1 } }
+            { $addToSet: { "tone.result.sentences_tone.$.tags": tag } }
         )
 
     reset_sentence: (doc_id, sentence)->
