@@ -4,10 +4,9 @@ template(name='vid_card')
             each thumbs
                 img.ui.invert.small.superzoom.rounded.inline.image.mobile.hidden(src=src)    
                 img.ui.invert.tiny.superzoom.rounded.inline.image.mobile.only(src=src)    
-            a(href="/m/vid/#{_id}/view")
-                // img.ui.invert.image.rounded.pointer(src=thumb)
-                iframe.invert(src="https://www.pornhub.com/embed/#{video_id}" frameborder="0" width="100%" height='500' scrolling="no")
-                // img.ui.invert.image.rounded.pointer(src=default_thumb)
+            // img.ui.invert.image.rounded.pointer(src=thumb)
+            iframe.invert(src="https://www.pornhub.com/embed/#{video_id}" frameborder="0" width="100%" height='800' scrolling="no")
+            // img.ui.invert.image.rounded.pointer(src=default_thumb)
             //- a.ui.small.header(href=url target='_window') #{title}
             a.ui.grey.center.aligned.header(href="/m/vid/#{_id}/view" class=emotion_color_class) !{lowered_title}
             .spacer

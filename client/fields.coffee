@@ -2,6 +2,10 @@ Template.youtube_edit.onRendered ->
     Meteor.setTimeout ->
         $('.ui.embed').embed();
     , 1000
+Template.reddit_card.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.embed').embed();
+    , 1500
 
 Template.youtube_view.onRendered ->
     Meteor.setTimeout ->

@@ -55,9 +55,9 @@ Meteor.publish 'docs', (
     # query=''
     )->
     match = {}
-    match.model = $in:['porn']
+    # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia','reddit','porn']
-    # match.model = $in:['post','wikipedia','reddit']
+    match.model = $in:['post','wikipedia','reddit']
     
     # match.model = 'post'
     # if Meteor.user()
@@ -70,11 +70,11 @@ Meteor.publish 'docs', (
         Docs.find match,
             limit:5
             sort:
-                ups:-1
                 points:-1
+                ups:-1
                 views:-1
     else
-        # match.tags = $in:['love']
+        match.tags = $in:['ai']
         # console.log match
         Docs.find match,
             limit:5
@@ -89,8 +89,8 @@ Meteor.publish 'dtags', (
     self = @
     match = {}
     # match.model = $in:['post','wikipedia','reddit','porn']
-    # match.model = $in:['post','wikipedia','reddit']
-    match.model = $in:['porn']
+    match.model = $in:['post','wikipedia','reddit']
+    # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia']
     # match.model = 'post'
     
@@ -98,8 +98,8 @@ Meteor.publish 'dtags', (
     #     match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
-    else
-        match.tags = $in:['universe']
+    # else
+    #     match.tags = $in:['universe']
 
     tag_cloud = Docs.aggregate [
         { $match: match }
@@ -108,7 +108,7 @@ Meteor.publish 'dtags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 20 }
+        { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', tag_cloud

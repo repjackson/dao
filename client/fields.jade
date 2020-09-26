@@ -493,12 +493,12 @@ template(name='array_edit')
         i.plus.icon
         input.new_element(type='text' placeholder='tag' autocomplete="off")
         //- +clear_value                
-    if field_value
-        // if can_edit
-        each field_value
-            .ui.large.label
-                i.delete.icon.remove_element
-                |#{this}
+    // if field_value
+    //     // if can_edit
+    //     each field_value
+    //         .ui.large.label
+    //             i.delete.icon.remove_element
+    //             |#{this}
                 
 template(name='array_view')
     if field_value

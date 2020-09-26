@@ -1,7 +1,8 @@
 template(name='post_card')
     .ui.stackable.grid
         .four.wide.column
-            a.ui.fluid.rounded.image.pointer(href="/post/#{_id}/view")
+            // a.ui.fluid.rounded.image.pointer(href="/post/#{_id}/view")
+            .ui.fluid.rounded.image
                 if watson.metadata.image
                     img(src=watson.metadata.image class='invert')    
                 else if is_youtube

@@ -72,21 +72,12 @@ Template.home.helpers
 
         Docs.find(match).count() is 1
 
-    two_posts: -> 
-        match = {model:$in:['post','wikipedia','reddit']}
-        # match = {model:$in:['post','wikipedia','reddit','porn']}
-        
-        # match = {model:'post'}
-        if selected_tags.array().length>0
-            match.tags = $in:selected_tags.array()
-        Docs.find(match).count() is 2
-    three_posts: -> Docs.find().count() is 3
 
 
     docs: ->
-        match = {model:$in:['porn']}
+        # match = {model:$in:['porn']}
         # match = {model:$in:['post','wikipedia','reddit','porn']}
-        # match = {model:$in:['post','wikipedia','reddit']}
+        match = {model:$in:['post','wikipedia','reddit']}
         
         # match = {model:'post'}
         if selected_tags.array().length>0
