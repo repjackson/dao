@@ -75,14 +75,17 @@ template(name='home')
         //         each docs
         //             +one_post_view
         // else
+        // .ui.cards
+    .ui.two.column.stackable.grid.scrolling
         each docs
-            if key_value_is 'model' 'porn'
-                +vid_card
-            else if key_value_is 'model' 'reddit'
-                +reddit_card
-            else
-                +post_card
-            .ui.divider
+            .column
+                // if key_value_is 'model' 'porn'
+                //     +vid_card
+                if key_value_is 'model' 'reddit'
+                    +reddit_card
+                else
+                    +post_card
+                // .ui.divider
         // .ui.stackable.cards
 
 

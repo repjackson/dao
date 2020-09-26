@@ -68,18 +68,20 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:3
+            limit:10
             sort:
-                _timestamp:-1
-                # points:-1
-                # ups:-1
+                points:-1
+                ups:-1
+                # _timestamp:-1
                 # views:-1
     else
-        # match.tags = $in:['ai']
+        match.tags = $in:['ai']
         # console.log match
         Docs.find match,
-            limit:5
+            limit:10
             sort:
+                points:-1
+                ups:-1
                 _timestamp:-1
                     
                     

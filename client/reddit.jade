@@ -65,10 +65,11 @@ template(name='reddit_card')
                 a(href="https://www.reddit.com#{permalink}") 
                     #{title}
                 |from 
-                a(href="http://www.reddit.com/r/Economics") 
-                    |r/Economics
-            // if tone
-            //     +tone
+                a(href="http://www.reddit.com/r/#{subreddit}") 
+                    |r/#{subreddit}
+            if tone
+                .medscroll
+                    +tone
             // else if body
             //     |{{nl2br body}}
             // else if description
@@ -90,20 +91,15 @@ template(name='reddit_card')
             img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
             .content
                 +vote
-                // +call_tone
-                // +call_watson
                 +autotag
-                // a(href="/m/reddit/#{_id}/view")
-                //     i.right.chevron.circular.link.big.icon
-                .ui.label #{points}p
-                // .ui.label #{imported_points}ip
-                .ui.label(title='domain')
+                .ui.big.label #{points}p
+                .ui.big.label(title='domain')
                     i.globe.icon
                     |#{domain}
-                a.ui.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
+                a.ui.big.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
                     i.reddit.icon
                     |#{subreddit}
-                a.ui.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
+                a.ui.big.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
                     i.pencil.icon
                     |#{rd.author}
                 // if is_admin
@@ -113,10 +109,9 @@ template(name='reddit_card')
                 // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
                 <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
                 each tags
-                    a.ui.large.label.add_tag 
+                    a.ui.large.image.basic.label.add_tag 
                         if tag_term
-                            img.ui.invert.image(src=tag_term.watson.metadata.image)    
-
+                            img.ui.image(src=tag_term.watson.metadata.image)    
                         |#{this}
                 .meta
                     |#{when}

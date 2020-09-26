@@ -579,9 +579,9 @@ input {
 	padding: .2em;
 	/*padding-left: 1em;*/
 }
-.scrolling2{
-    /*max-height: 90vh !important;*/
-    /*min-height: 50vh !important;*/
+.scrolling{
+    max-height: 90vh !important;
+    min-height: 50vh !important;
      padding: 5px !important;
     border-radius: 10px !important;
     border-width: 1px !important;

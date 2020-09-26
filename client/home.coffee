@@ -42,8 +42,8 @@ Template.tag_selector.events
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
             
-        # Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.call 'search_ph', selected_tags.array(), ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
+        # Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
@@ -85,12 +85,12 @@ Template.home.helpers
         # cur = Docs.find match
         Docs.find match,
             sort:
-                # points:-1
+                points:-1
                 ups:-1
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:1
+            limit:3
         # if cur.count() is 1
         # Docs.find match
     home_button_class: ->
