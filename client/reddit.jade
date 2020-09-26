@@ -90,24 +90,23 @@ template(name='reddit_card')
             //     .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
             img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
             .content
-                +vote
+                // +vote
                 +autotag
-                .ui.big.label #{points}p
-                .ui.big.label(title='domain')
+                // .ui.label #{points}p
+                .ui.label(title='domain')
                     i.globe.icon
                     |#{domain}
-                a.ui.big.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
+                a.ui.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
                     i.reddit.icon
                     |#{subreddit}
-                a.ui.big.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
-                    i.pencil.icon
-                    |#{rd.author}
+                // a.ui.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
+                //     i.pencil.icon
+                //     |#{rd.author}
                 // if is_admin
                 //     +print_this
-                // +autotag
                 // <blockquote class="reddit-card"><a href="https://www.reddit.com/r/Economics/comments/izi08v/the_covid19_lockdown_is_squeezing_real_estate/">The COVID-19 lockdown is squeezing real estate from all sides and threatens to burst the housing and mortgage bubble</a> from <a href="http://www.reddit.com/r/Economics">r/Economics</a></blockquote>
                 // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
-                <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
+                // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
                 each tags
                     a.ui.large.image.basic.label.add_tag 
                         if tag_term
@@ -115,17 +114,6 @@ template(name='reddit_card')
                         |#{this}
                 .meta
                     |#{when}
-                //     if can_edit 
-                //         a.ui.circular.icon.button(href="/m/reddit/#{_id}/edit")
-                //             i.pencil.icon
-                // a.ui.icon.button(href="/m/reddit/#{_id}/view")
-                //     i.chevron.right.icon
-            // .description
-                // +comments_view_small   
-                // if url
-
-
-        // .ui.divider
     
 
                  
