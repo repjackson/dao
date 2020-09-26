@@ -34,7 +34,7 @@ Template.home.onCreated ->
     
 Template.tag_selector.onCreated ->
     # console.log @
-    # @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    @autorun => Meteor.subscribe('doc_by_title', @data.name)
 Template.tag_selector.helpers
     term: ->
         Docs.findOne 
@@ -43,16 +43,16 @@ Template.tag_selector.events
     'click .select_tag': -> 
         selected_tags.push @name
         # if Meteor.user()
-        # Meteor.call 'call_wiki', @name, ->
-            # Meteor.call 'calc_term', @title, ->
-            # Meteor.call 'omega', @title, ->
+        Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'calc_term', @title, ->
+            Meteor.call 'omega', @title, ->
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
         # Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
-    # @autorun => Meteor.subscribe('doc_by_title', @data)
+    @autorun => Meteor.subscribe('doc_by_title', @data)
 Template.unselect_tag.helpers
     term: ->
         Docs.findOne 
@@ -95,7 +95,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:4
+            limit:3
         # if cur.count() is 1
         # Docs.find match
     home_button_class: ->
@@ -127,21 +127,21 @@ Template.vid_card.events
     'click .fork': -> 
         console.log @
         Meteor.call 'tagify_vid', @_id, ->
-Template.reddit_card.events
-    'click .autotag': ->
-        # console.log @
-        # if @rd and @rd.selftext_html
-        #     dom = document.createElement('textarea')
-        #     # dom.innerHTML = doc.body
-        #     dom.innerHTML = @rd.selftext_html
-        #     # console.log 'innner html', dom.value
-        #     # return dom.value
-        #     Docs.update @_id,
-        #         $set:
-        #             parsed_selftext_html:dom.value
+# Template.reddit_card.events
+#     'click .autotag': ->
+#         # console.log @
+#         # if @rd and @rd.selftext_html
+#         #     dom = document.createElement('textarea')
+#         #     # dom.innerHTML = doc.body
+#         #     dom.innerHTML = @rd.selftext_html
+#         #     # console.log 'innner html', dom.value
+#         #     # return dom.value
+#         #     Docs.update @_id,
+#         #         $set:
+#         #             parsed_selftext_html:dom.value
         
-        # doc = Template.parentData()
-        Meteor.call 'call_watson', @_id, 'url', 'url', ->
+#         # doc = Template.parentData()
+#         Meteor.call 'call_watson', @_id, 'url', 'url', ->
 
 Template.home.events
     # 'click .delete': -> 
