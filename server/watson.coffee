@@ -140,8 +140,8 @@ Meteor.methods
                     sentiment: false
                     limit: 10
                 concepts: {}
-                categories:
-                    explanation:false
+                # categories:
+                #     explanation:false
                 emotion: {}
                 metadata: {}
                 # relations: {}

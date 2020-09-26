@@ -5,11 +5,11 @@ body {
     /* font-family: 'Lato', sans-serif !important; */
      /*font-size: 110% !important; */
     /* line-height: 200% !important; */
-     background: rgba(0,0,0,.1) !important; 
+     /*background: rgba(0,0,0,.05) !important; */
     /*scroll-behavior: smooth;*/
     /*margin-top: 5em;*/
     /*background: rgba(200,200,200,1) !important;*/
-     filter: invert(1) !important; 
+     /*filter: invert(1) !important; */
      overscroll-behavior: none; 
     transition: all 1s ease !important;
     /* background: #0e0e44 !important; */
@@ -396,7 +396,7 @@ a.title, #title {
 }
 
 .invert{
-  filter: invert(1) !important; 
+  /*filter: invert(1) !important; */
 }
 .left.floated{
     margin:3px !important;
@@ -524,16 +524,16 @@ a.title, #title {
 
 .label {
   margin:3px !important;
-  border-radius: 7px !important; 
+  border-radius: 10px !important; 
 }
 
 input {
     margin: 5px !important;
-    border-radius: 7px !important; 
+    border-radius: 10px !important; 
 }
 
 ::-webkit-scrollbar {
-  width: 3px !important;
+  width: 0px !important;
   /*border-radius: 10px !important;*/
 }
 .wrap_input {
