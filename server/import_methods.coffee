@@ -247,8 +247,8 @@ Meteor.methods
                         ups: rd.ups
                         # downs: rd.downs
                         over_18: rd.over_18
-                    # $addToSet:
-                    #     tags: $each: [rd.subreddit.toLowerCase()]
+                    $addToSet:
+                        tags: $each: [rd.subreddit.toLowerCase()]
                 # console.log Docs.findOne(doc_id)
  
     #   'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
@@ -306,4 +306,4 @@ Meteor.methods
                             model:'wikipedia'
                             # ups: 1000000
                             url:url
-                        Meteor.call 'call_watson', new_wiki_id, 'url','url', ->
+                        # Meteor.call 'call_watson', new_wiki_id, 'url','url', ->

@@ -38,7 +38,7 @@ Template.home.onCreated ->
     
 Template.tag_selector.onCreated ->
     # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    # @autorun => Meteor.subscribe('doc_by_title', @data.name)
 Template.tag_selector.helpers
     term: ->
         Docs.findOne 
@@ -56,7 +56,7 @@ Template.tag_selector.events
 
 Template.unselect_tag.onCreated ->
     # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data)
+    # @autorun => Meteor.subscribe('doc_by_title', @data)
 Template.unselect_tag.helpers
     term: ->
         Docs.findOne 
@@ -89,12 +89,12 @@ Template.home.helpers
         match = {model:$in:['post','wikipedia','reddit']}
         
         # match = {model:'post'}
-        if selected_tags.array().length>0
-            match.tags = $all:selected_tags.array()
+        # if selected_tags.array().length>0
+        match.tags = $all:selected_tags.array()
         # cur = Docs.find match
         Docs.find match,
             sort:
-                points:-1
+                # points:-1
                 ups:-1
                 views:-1
                 _timestamp:-1
