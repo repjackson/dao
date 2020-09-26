@@ -30,7 +30,6 @@ constellation:console
 constellation:subscriptions
 constellation:session
 babrahams:temple
-accounts-password@1.6.2
 dburles:collection-helpers
 ecmascript@0.14.3
 modules@0.15.0
