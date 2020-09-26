@@ -59,35 +59,35 @@ template(name='reddit_card')
     .ui.stackable.grid
         .sixteen.wide.column
             // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
-            .ui.header #{title}
-            a.ui.small.header(href=url target='_window') #{url}
+            // .ui.header #{title}
+            // a.ui.small.header(href=url target='_window') #{url}
             blockquote(class="reddit-card")
                 a(href="https://www.reddit.com#{permalink}") 
                     #{title}
                 |from 
                 a(href="http://www.reddit.com/r/Economics") 
                     |r/Economics
-            if tone
-                +tone
-            else if body
-                |{{nl2br body}}
-            else if description
-                |!{description}
+            // if tone
+            //     +tone
+            // else if body
+            //     |{{nl2br body}}
+            // else if description
+            //     |!{description}
         
                 // .description.f11
-            |fallback
-            if rd.secure_media.reddit_video.fallback_url
-                iframe(width='100%' height='800' src=rd.secure_media.reddit_video.fallback_url referrerpolicy="no-referrer")
-            else
-                iframe(width='100%' height='500' src=url frameborder='0' referrerpolicy="no-referrer")
-            iframe(width='100%' height='500' src="https://www.reddit.com#{permalink}" frameborder='0' referrerpolicy="no-referrer")
+            // |fallback
+            // if rd.secure_media.reddit_video.fallback_url
+            //     iframe(width='100%' height='800' src=rd.secure_media.reddit_video.fallback_url referrerpolicy="no-referrer")
+            // else
+            //     iframe(width='100%' height='500' src=url frameborder='0' referrerpolicy="no-referrer")
+            // iframe(width='100%' height='500' src="https://www.reddit.com#{permalink}" frameborder='0' referrerpolicy="no-referrer")
             // a.ui.fluid.rounded.image.pointer(href="/m/reddit/#{_id}/view")
             //     if watson.metadata.image
-            img(src=watson.metadata.image class=currentUser.invert_class)    
-            img(src=url class=currentUser.invert_class)    
-            if is_youtube
-                .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
-            img.ui.rounded.invert.image(src=thumbnail class=currentUser.invert_class)
+            // img(src=watson.metadata.image class=currentUser.invert_class)    
+            // img(src=url class=currentUser.invert_class)    
+            // if is_youtube
+            //     .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
+            img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
             .content
                 +vote
                 // +call_tone
@@ -113,7 +113,11 @@ template(name='reddit_card')
                 // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
                 <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
                 each tags
-                    a.ui.label.add_tag #{this}
+                    a.ui.large.label.add_tag 
+                        if tag_term
+                            img.ui.invert.image(src=tag_term.watson.metadata.image)    
+
+                        |#{this}
                 .meta
                     |#{when}
                 //     if can_edit 

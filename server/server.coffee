@@ -68,13 +68,14 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:5
+            limit:3
             sort:
-                points:-1
-                ups:-1
-                views:-1
+                _timestamp:-1
+                # points:-1
+                # ups:-1
+                # views:-1
     else
-        match.tags = $in:['ai']
+        # match.tags = $in:['ai']
         # console.log match
         Docs.find match,
             limit:5
@@ -98,8 +99,8 @@ Meteor.publish 'dtags', (
     #     match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
-    # else
-    #     match.tags = $in:['universe']
+    else
+        match.tags = $in:['ai']
 
     tag_cloud = Docs.aggregate [
         { $match: match }
