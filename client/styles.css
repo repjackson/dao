@@ -10,7 +10,7 @@ body {
     /*margin-top: 5em;*/
     /*background: rgba(200,200,200,1) !important;*/
      /*filter: invert(1) !important; */
-     overscroll-behavior: none; 
+     /*overscroll-behavior: none; */
     transition: all 1s ease !important;
     /* background: #0e0e44 !important; */
 }

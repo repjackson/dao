@@ -17,9 +17,9 @@ head
     link(rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png")
     link(rel="manifest" href="/site.webmanifest")
 
-    link(href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet")
-    script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
-    script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
+    // link(href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet")
+    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
+    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
     // link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css")
     // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js")
     // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/htmlmixed/htmlmixed.js")
@@ -30,7 +30,7 @@ head
 
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.css")
     script(src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js")
-    script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
+    // script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
     script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")    
 
     
@@ -75,3 +75,11 @@ template(name='layout')
 template(name='not_found')
     .ui.basic.center.aligned.padded.segment
         .ui.center.aligned.header page not found
+
+template(name='vote')
+    a.ui.circular.icon.button.upvote(title='upvote')
+        i.thumbs.up.outline.big.icon
+    if points
+        strong #{points}
+    a.ui.circular.icon.button.downvote(title='downvote')
+        i.thumbs.down.outline.big.icon

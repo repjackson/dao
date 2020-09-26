@@ -3,37 +3,37 @@
 @Tags = new Meteor.Collection 'tags'
 @Tag_results = new Meteor.Collection 'tag_results'
 @Terms = new Meteor.Collection 'terms'
-@User_tags = new Meteor.Collection 'user_tags'
+# @User_tags = new Meteor.Collection 'user_tags'
 # @ph_tags = new Meteor.Collection 'ph_tags'
 # @Dtag_results = new Meteor.Collection 'dtag_results'
 # @Category_results = new Meteor.Collection 'category_results'
 # @Pornstar_results = new Meteor.Collection 'pornstar_results'
 
 
-if Meteor.isClient
-    # console.log $
-    $.cloudinary.config
-        cloud_name:"facet"
+# if Meteor.isClient
+#     # console.log $
+#     $.cloudinary.config
+#         cloud_name:"facet"
 
-if Meteor.isServer
-    # console.log Meteor.settings.private.cloudinary_key
-    # console.log Meteor.settings.private.cloudinary_secret
-    Cloudinary.config
-        cloud_name: 'facet'
-        api_key: Meteor.settings.private.cloudinary_key
-        api_secret: Meteor.settings.private.cloudinary_secret
+# if Meteor.isServer
+#     # console.log Meteor.settings.private.cloudinary_key
+#     # console.log Meteor.settings.private.cloudinary_secret
+#     Cloudinary.config
+#         cloud_name: 'facet'
+#         api_key: Meteor.settings.private.cloudinary_key
+#         api_secret: Meteor.settings.private.cloudinary_secret
 
 Docs.helpers
     _author: -> Meteor.users.findOne @_author_id
-    recipient: -> Meteor.users.findOne @recipient_id
-    seller: -> Meteor.users.findOne @seller_id
-    buyer: -> Meteor.users.findOne @buyer_id
+    # recipient: -> Meteor.users.findOne @recipient_id
+    # seller: -> Meteor.users.findOne @seller_id
+    # buyer: -> Meteor.users.findOne @buyer_id
     when: -> moment(@_timestamp).fromNow()
-    is_visible: -> @published in [0,1]
-    is_published: -> @published is 1
-    is_anonymous: -> @published is 0
-    is_private: -> @published is -1
-    is_read: -> @read_ids and Meteor.userId() in @read_ids
+    # is_visible: -> @published in [0,1]
+    # is_published: -> @published is 1
+    # is_anonymous: -> @published is 0
+    # is_private: -> @published is -1
+    # is_read: -> @read_ids and Meteor.userId() in @read_ids
     seven_tags: ->
         if @tags
             @tags[..7]
@@ -52,21 +52,21 @@ Docs.helpers
                 downvoters.push downvoter
             downvoters
 
-Meteor.users.helpers
-    email_address: -> if @emails and @emails[0] then @emails[0].address
-    email_verified: -> if @emails and @emails[0] then @emails[0].verified
-    five_tags: ->
-        if @tags
-            @tags[..5]
-    three_tags: ->
-        if @tags
-            @tags[..3]
-    has_points: -> @points > 0
-    name: ->
-        if @nickname
-            @nickname
-        else 
-            @username
+# Meteor.users.helpers
+#     email_address: -> if @emails and @emails[0] then @emails[0].address
+#     email_verified: -> if @emails and @emails[0] then @emails[0].verified
+#     five_tags: ->
+#         if @tags
+#             @tags[..5]
+#     three_tags: ->
+#         if @tags
+#             @tags[..3]
+#     has_points: -> @points > 0
+#     name: ->
+#         if @nickname
+#             @nickname
+#         else 
+#             @username
 
 Docs.before.insert (userId, doc)->
     if Meteor.user()

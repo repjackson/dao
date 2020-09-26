@@ -109,17 +109,17 @@ Template.tone.events
 Template.autotag.events
     'click .autotag': ->
         # console.log @
-        if @rd and @rd.selftext_html
-            dom = document.createElement('textarea')
-            # dom.innerHTML = doc.body
-            dom.innerHTML = @rd.selftext_html
-            console.log 'innner html', dom.value
-            # return dom.value
-            Docs.update @_id,
-                $set:
-                    parsed_selftext_html:dom.value
+        # if @rd and @rd.selftext_html
+        #     dom = document.createElement('textarea')
+        #     # dom.innerHTML = doc.body
+        #     dom.innerHTML = @rd.selftext_html
+        #     # console.log 'innner html', dom.value
+        #     # return dom.value
+        #     Docs.update @_id,
+        #         $set:
+        #             parsed_selftext_html:dom.value
         
-        doc = Template.parentData()
+        # doc = Template.parentData()
         Meteor.call 'call_watson', @_id, 'url', 'url', ->
 
 

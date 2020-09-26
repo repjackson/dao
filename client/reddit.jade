@@ -63,7 +63,7 @@ template(name='reddit_card')
             // a.ui.small.header(href=url target='_window') #{url}
             blockquote(class="reddit-card")
                 a(href="https://www.reddit.com#{permalink}") 
-                    #{title}
+                    |#{title}
                 |from 
                 a(href="http://www.reddit.com/r/#{subreddit}") 
                     |r/#{subreddit}
@@ -88,7 +88,7 @@ template(name='reddit_card')
             // img(src=url class=currentUser.invert_class)    
             // if is_youtube
             //     .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
-            img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
+            // img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
             .content
                 // +vote
                 +autotag
@@ -109,6 +109,7 @@ template(name='reddit_card')
                 // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
                 each tags
                     a.ui.large.image.basic.label.add_tag 
+                        // i.remove.grey.icon
                         if tag_term
                             img.ui.image(src=tag_term.watson.metadata.image)    
                         |#{this}
