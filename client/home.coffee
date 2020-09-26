@@ -13,10 +13,19 @@ Router.route '/', (->
     @render 'home'
     ), name:'home'
 
-
+Template.reddit_card.events
+    'keyup .tag_post': (e,t)->
+        # console.log 
+        if e.which is 13
+            # $(e.currentTarget).closest('.button')
+            tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
+            Docs.update @_id,
+                $addToSet: tags: tag
+            $(e.currentTarget).closest('.tag_post').val('')
+            # console.log tag
 
 Template.home.onCreated ->
-    @autorun -> Meteor.subscribe('me')
+    # @autorun -> Meteor.subscribe('me')
     @autorun -> Meteor.subscribe('dtags',
         # Session.get('query')
         selected_tags.array()
@@ -90,7 +99,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:3
+            limit:4
         # if cur.count() is 1
         # Docs.find match
     home_button_class: ->
@@ -122,6 +131,21 @@ Template.vid_card.events
     'click .fork': -> 
         console.log @
         Meteor.call 'tagify_vid', @_id, ->
+Template.reddit_card.events
+    'click .autotag': ->
+        # console.log @
+        # if @rd and @rd.selftext_html
+        #     dom = document.createElement('textarea')
+        #     # dom.innerHTML = doc.body
+        #     dom.innerHTML = @rd.selftext_html
+        #     # console.log 'innner html', dom.value
+        #     # return dom.value
+        #     Docs.update @_id,
+        #         $set:
+        #             parsed_selftext_html:dom.value
+        
+        # doc = Template.parentData()
+        Meteor.call 'call_watson', @_id, 'url', 'url', ->
 
 Template.home.events
     # 'click .delete': -> 

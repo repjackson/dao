@@ -37,20 +37,20 @@ Docs.helpers
     seven_tags: ->
         if @tags
             @tags[..7]
-    upvoters: ->
-        if @upvoter_ids
-            upvoters = []
-            for upvoter_id in @upvoter_ids
-                upvoter = Meteor.users.findOne upvoter_id
-                upvoters.push upvoter
-            upvoters
-    downvoters: ->
-        if @downvoter_ids
-            downvoters = []
-            for downvoter_id in @downvoter_ids
-                downvoter = Meteor.users.findOne downvoter_id
-                downvoters.push downvoter
-            downvoters
+    # upvoters: ->
+    #     if @upvoter_ids
+    #         upvoters = []
+    #         for upvoter_id in @upvoter_ids
+    #             upvoter = Meteor.users.findOne upvoter_id
+    #             upvoters.push upvoter
+    #         upvoters
+    # downvoters: ->
+    #     if @downvoter_ids
+    #         downvoters = []
+    #         for downvoter_id in @downvoter_ids
+    #             downvoter = Meteor.users.findOne downvoter_id
+    #             downvoters.push downvoter
+    #         downvoters
 
 # Meteor.users.helpers
 #     email_address: -> if @emails and @emails[0] then @emails[0].address
@@ -104,67 +104,6 @@ Docs.before.insert (userId, doc)->
 
 
 Meteor.methods
-    add_facet_filter: (delta_id, key, filter)->
-        # if key is '_keys'
-        #     new_facet_ob = {
-        #         key:filter
-        #         filters:[]
-        #         res:[]
-        #     }
-        #     Docs.update { _id:delta_id },
-        #         $addToSet: facets: new_facet_ob
-        console.log delta_id
-        console.log key
-        console.log filter
-        Docs.update { _id:delta_id, "facets.key":key},
-            $addToSet: "facets.$.filters": filter
-
-        Meteor.call 'fum', delta_id, (err,res)->
-
-
-    remove_facet_filter: (delta_id, key, filter)->
-        # if key is '_keys'
-        #     Docs.update { _id:delta_id },
-        #         $pull:facets: {key:filter}
-        Docs.update { _id:delta_id, "facets.key":key},
-            $pull: "facets.$.filters": filter
-        Meteor.call 'fum', delta_id, (err,res)->
-
-
-    upvote_sentence: (doc_id, sentence)->
-        # console.log sentence
-        if sentence.weight
-            Docs.update(
-                { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
-                { $inc: { "tone.result.sentences_tone.$.weight": 1 } }
-            )
-        else
-            Docs.update(
-                { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
-                { $set: { "tone.result.sentences_tone.$.weight": 1 } }
-            )
-    tag_sentence: (doc_id, sentence, tag)->
-        # console.log sentence
-        Docs.update(
-            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
-            { $addToSet: { "tone.result.sentences_tone.$.tags": tag } }
-        )
-
-    reset_sentence: (doc_id, sentence)->
-        # console.log sentence
-        Docs.update(
-            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
-            { $set: { "tone.result.sentences_tone.$.weight": -2 } }
-        )
-
-
-    downvote_sentence: (doc_id, sentence)->
-        # console.log sentence
-        Docs.update(
-            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
-            { $inc: { "tone.result.sentences_tone.$.weight": -1 } }
-        )
-
     upvote: (doc_id,amount)->
         # console.log 'doc_id', doc_id
         # console.log '1', 1

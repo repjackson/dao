@@ -15,14 +15,8 @@ template(name='post_card')
             if image_id
                 a.image(href="/post/#{_id}/view")
                     img.ui.rounded.image(src="{{c.url image_id }}" class='invert')
-            if thumbnail
-                a.image(href="/post/#{_id}/view")
-                    img.ui.rounded.image(src=thumbnail class='invert')
             a.ui.header.pointer(href="/post/#{_id}/view" class=post_header_class)
-                if key_value_is 'model' 'wikipedia'
-                    i.wikipedia.grey.icon
-                else if key_value_is 'model' 'reddit'
-                    i.reddit.grey.icon
+                i.wikipedia.grey.icon
                 if is_youtube
                     i.video.grey.icon
                 |#{title}
@@ -38,14 +32,12 @@ template(name='post_card')
                 // if tone
                 //     +tone
                 // |!{body}
-            if rd.ups
-                .ui.label #{rd.ups} ups
-            +autotag
+            // +autotag
             // +vote
             // a(href="/post/#{_id}/view")
             //     i.right.chevron.circular.link.big.icon
-            if is_admin
-                +print_this
+            // if is_admin
+            //     +print_this
             // +array_edit key='tags' direct=true
             each tags
                 a.ui.large.image.label.add_tag
@@ -56,16 +48,6 @@ template(name='post_card')
                     | #{this}
                     // i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
             |#{when}
-            if can_edit 
-                a.ui.circular.icon.button(href="/post/#{_id}/edit")
-                    i.pencil.icon
-            a.ui.icon.button(href="/post/#{_id}/view")
-                i.chevron.right.icon
-            // +call_watson mode='url' key='url'
-            // if watson
-            //     +call_tone mode='url' key='url'
-        
-        // .ui.divider
     
 template(name='one_post_view')
     .ui.fluid.card.view_post
