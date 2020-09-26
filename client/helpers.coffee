@@ -9,44 +9,6 @@ Template.registerHelper 'youtube_parse', (url) ->
         null
         
         
-Template.registerHelper 'editing_mode', () ->
-    # Meteor.user().edit_mode and 
-    if Meteor.user().edit_mode
-        if Router.current().params.username is Meteor.user().username
-            true
-Template.registerHelper 'user_id_in', (key)->
-    if Meteor.user()
-        if Meteor.userId() in @["#{key}"]
-            true
-        else
-            false
-    else
-        false
-
-Template.registerHelper 'current_tribe', () ->
-    if Meteor.user()
-        Docs.findOne 
-            _id:Meteor.user().current_tribe_id
-    
-Template.registerHelper 'enabled_features', () ->
-    # console.log @
-    Docs.find
-        model:'feature'
-        _id:@enabled_feature_ids
-    
-    
-Template.registerHelper 'user_from_id', (user_id) ->
-    # console.log @
-    Meteor.users.findOne _id:user_id
-
-        
-Template.registerHelper 'i_have_points', () ->
-    if Meteor.user().username is 'dev'
-        true
-    else
-        Meteor.user().points > 0
-        
-        
 Template.registerHelper 'post_header_class', (metric) ->
     # console.log @
     if @max_emotion_name
@@ -119,21 +81,6 @@ Template.registerHelper 'tag_term', () ->
 
 Template.registerHelper 'is_logging_out', () -> Session.get('logging_out')
 
-
-Template.registerHelper 'is_admin', () ->
-    # Meteor.users.findOne username:Router.current().params.username
-    if Meteor.user() and Meteor.user().roles
-        if 'admin' in Meteor.user().roles then true else false
-
-Template.registerHelper 'is_dev', () ->
-    # Meteor.users.findOne username:Router.current().params.username
-    if Meteor.user() and Meteor.user().roles
-        if 'dev' in Meteor.user().roles then true else false
-
-
-Template.registerHelper 'is_author', () ->
-    # if @_author_id and Meteor.userId()
-    @_author_id is Meteor.userId()
 
 
 Template.registerHelper 'can_edit', () ->

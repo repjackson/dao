@@ -8,10 +8,6 @@
 #         .transition('fade in', 200)
 #         # unless Meteor.user().invert_class is 'invert'
 
-Router.route '/', (->
-    @layout 'layout'
-    @render 'home'
-    ), name:'home'
 
 Template.reddit_card.events
     'keyup .tag_post': (e,t)->
@@ -171,13 +167,14 @@ Template.home.events
         # Session.set('query',search)
         if e.which is 13
             console.log search
-            selected_tags.push search
-            # if Meteor.user()
-            # Meteor.call 'search_ph', selected_tags.array(), ->
-            Meteor.call 'call_wiki', search, ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
-            Session.set('query','')
-            search = $('.search_title').val('')
+            if search.length>0
+                selected_tags.push search
+                # if Meteor.user()
+                # Meteor.call 'search_ph', selected_tags.array(), ->
+                Meteor.call 'call_wiki', search, ->
+                Meteor.call 'search_reddit', selected_tags.array(), ->
+                Session.set('query','')
+                search = $('.search_title').val('')
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
