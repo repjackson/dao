@@ -2,9 +2,9 @@ template(name='home')
     // iframe(frameborder="0" width="400" height="200" src="https://drive.google.com/file/d/1_encX_RKyZhOU26r7_cNTtl0rLvEQSai/preview")
     // i.large.yin.yang.icon(class=home_button_class)
     if selected_tags
-        if many_tags
-            a#clear_tags.ui.black.icon.compact.circular.button.select_term
-                i.remove.icon
+        // if many_tags
+        //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
+        //         i.remove.icon
         each selected_tags
             +unselect_tag
     .ui.left.icon.input 
@@ -76,27 +76,27 @@ template(name='home')
         //             +one_post_view
         // else
         // .ui.cards
-    .ui.three.column.stackable.grid
+    .ui.one.column.stackable.grid
         each docs
-            .column.scrolling
-                // if key_value_is 'model' 'porn'
-                //     +vid_card
-                if key_value_is 'model' 'reddit'
-                    +reddit_card
-                else
-                    +post_card
+            .column
+                +reddit_card
+                // // if key_value_is 'model' 'porn'
+                // //     +vid_card
+                // if key_value_is 'model' 'reddit'
+                // else
+                //     +post_card
                 // .ui.divider
         // .ui.stackable.cards
 
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.large.image.label.select_termn
+    a.unselect_tag.ui.black.big.image.label.select_termn
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         | #{this}
 
 template(name='tag_selector')
-    a.ui.large.image.label.select_tag.select_term(href='#')
+    a.ui.big.image.label.select_tag.select_term(href='#')
         // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
         if term

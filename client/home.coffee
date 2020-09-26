@@ -44,8 +44,8 @@ Template.tag_selector.events
         selected_tags.push @name
         # if Meteor.user()
         Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'calc_term', @title, ->
-            Meteor.call 'omega', @title, ->
+            # Meteor.call 'calc_term', @title, ->
+            # Meteor.call 'omega', @title, ->
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
         # Meteor.call 'search_ph', selected_tags.array(), ->
@@ -82,11 +82,11 @@ Template.home.helpers
     docs: ->
         # match = {model:$in:['porn']}
         # match = {model:$in:['post','wikipedia','reddit','porn']}
-        match = {model:$in:['post','wikipedia','reddit']}
+        match = {model:$in:['post','reddit']}
         
         # match = {model:'post'}
-        # if selected_tags.array().length>0
-        match.tags = $all:selected_tags.array()
+        if selected_tags.array().length>0
+            match.tags = $all:selected_tags.array()
         # cur = Docs.find match
         Docs.find match,
             sort:
@@ -95,7 +95,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:3
+            limit:1
         # if cur.count() is 1
         # Docs.find match
     home_button_class: ->
@@ -113,14 +113,14 @@ Template.home.helpers
     
     selected_tags: -> selected_tags.array()
     tag_results: ->
-        # doc_count = Docs.find({model:$in:['post','wikipedia','reddit','porn']}).count()
-        doc_count = Docs.find({model:$in:['porn']}).count()
-        if 0 < doc_count < 3 
-            Tag_results.find({ 
-                count:$lt:doc_count 
-            })
-        else 
-            Tag_results.find()
+        # # doc_count = Docs.find({model:$in:['post','wikipedia','reddit','porn']}).count()
+        # doc_count = Docs.find({model:$in:['porn']}).count()
+        # if 0 < doc_count < 3 
+        #     Tag_results.find({ 
+        #         count:$lt:doc_count 
+        #     })
+        # else 
+        Tag_results.find()
 
             
 Template.vid_card.events

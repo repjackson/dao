@@ -247,8 +247,8 @@ Meteor.methods
                         ups: rd.ups
                         # downs: rd.downs
                         over_18: rd.over_18
-                    $addToSet:
-                        tags: $each: [rd.subreddit.toLowerCase()]
+                    # $addToSet:
+                    #     tags: $each: [rd.subreddit.toLowerCase()]
                 # console.log Docs.findOne(doc_id)
  
     #   'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
@@ -291,12 +291,12 @@ Meteor.methods
                     if found_doc
                         # console.log 'found wiki doc for term', term
                         # console.log 'found wiki doc for term', term, found_doc
-                        Docs.update found_doc._id,
-                            # $pull:
-                            #     tags:'wikipedia'
-                            $set:
-                                title:found_doc.title.toLowerCase()
-                        # console.log 'found wiki doc', found_doc
+                        # Docs.update found_doc._id,
+                        #     # $pull:
+                        #     #     tags:'wikipedia'
+                        #     $set:
+                        #         title:found_doc.title.toLowerCase()
+                        console.log 'found wiki doc', found_doc
                         # Meteor.call 'call_watson', found_doc._id, 'url','url', ->
                     else
                         new_wiki_id = Docs.insert

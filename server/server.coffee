@@ -57,7 +57,7 @@ Meteor.publish 'docs', (
     match = {}
     # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia','reddit','porn']
-    match.model = $in:['post','wikipedia','reddit']
+    match.model = $in:['post','reddit']
     
     # match.model = 'post'
     # if Meteor.user()
@@ -75,14 +75,14 @@ Meteor.publish 'docs', (
                 # _timestamp:-1
                 # views:-1
     else
-        match.tags = $in:['life']
+        match.tags = $in:['dao']
         # console.log match
         Docs.find match,
             limit:5
             sort:
+                _timestamp:-1
                 # points:-1
                 ups:-1
-                _timestamp:-1
                     
                     
 Meteor.publish 'dtags', (
@@ -111,7 +111,7 @@ Meteor.publish 'dtags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 20 }
+        { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', tag_cloud

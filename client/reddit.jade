@@ -1,6 +1,6 @@
 template(name='reddit_card')
     .ui.stackable.grid
-        .sixteen.wide.column
+        .eight.wide.column.scrolling
             // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
             // .ui.header #{title}
             // a.ui.small.header(href=url target='_window') #{url}
@@ -10,9 +10,9 @@ template(name='reddit_card')
                 |from 
                 a(href="http://www.reddit.com/r/#{subreddit}") 
                     |r/#{subreddit}
-            if tone
-                .medscroll
-                    +tone
+            // if tone
+            //     .medscroll
+            //         +tone
             // else if body
             //     |{{nl2br body}}
             // else if description
@@ -32,6 +32,7 @@ template(name='reddit_card')
             // if is_youtube
             //     .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
             // img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
+        .eight.wide.column
             .content
                 // +vote
                 // button.ui.large.icon.circular.button.autotag
@@ -40,7 +41,7 @@ template(name='reddit_card')
                 //     if watson 
                 //         i.checkmark.icon
                 // .ui.label #{points}p
-                .ui.mini.transparent.icon.input
+                .ui.transparent.icon.input
                     input.tag_post(type='text' placeholder='tag')
 
                 .ui.label(title='domain')
@@ -56,12 +57,13 @@ template(name='reddit_card')
                 //     +print_this
                 // <blockquote class="reddit-card"><a href="https://www.reddit.com/r/Economics/comments/izi08v/the_covid19_lockdown_is_squeezing_real_estate/">The COVID-19 lockdown is squeezing real estate from all sides and threatens to burst the housing and mortgage bubble</a> from <a href="http://www.reddit.com/r/Economics">r/Economics</a></blockquote>
                 // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
-                // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
-                each tags
-                    a.ui.large.image.basic.label.add_tag 
-                        // i.remove.grey.icon
-                        if tag_term
-                            img.ui.image(src=tag_term.watson.metadata.image)    
-                        |#{this}
-                .meta
-                    |#{when}
+            each tags
+                a.ui.large.image.basic.label.add_tag 
+                    // i.remove.grey.icon
+                    if tag_term
+                        img.ui.image(src=tag_term.watson.metadata.image)    
+                    |#{this}
+            .meta
+                |#{when}
+
+            script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
