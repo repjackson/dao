@@ -17,21 +17,12 @@ head
     link(rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png")
     link(rel="manifest" href="/site.webmanifest")
 
-    // link(href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet")
-    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
-    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
-    // link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.css")
-    // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/lib/codemirror.min.js")
-    // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/htmlmixed/htmlmixed.js")
-    // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/xml/xml.js")
-    // script(src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/css/css.js")
-
     script(src='https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js')
 
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.css")
     script(src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js")
     // script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
-    // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")    
+    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8" async)    
 
     
     script.
@@ -42,31 +33,10 @@ head
 
 body
     +home
-//     .adventure-vidm(class=currentUser.invert_class data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
-//         video(autoplay='', loop='', style='background-image:url("https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg")', muted='', playsinline='', data-wf-ignore='true', data-object-fit='cover')
-//             source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4', data-wf-ignore='true')
-//             source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-wf-ignore='true')
-
-template(name='layout')
-    // if currentUser
-    // .ui.bottom.attached.pushable.segment
-    // .invert
-    // +nav
-    // #main_area.scrolling.global_container
-
-    // .ui.bottom.attached.pushable.segment
-    //     +leftbar
-    //     +rightbar
-                
-    //     // #main_area.global_container.pusher.invert
-    //     #main_area.global_container.pusher(class=currentUser.invert_class)
-    .invert
-        +yield
-            // .scrolling
-        // if currentUser
-        //     +bottom_nav
-    // +chatpop
-    // +footer
+    // .adventure-vidm(class=currentUser.invert_class data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
+    //     video(autoplay='', loop='', style='background-image:url("https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg")', muted='', playsinline='', data-wf-ignore='true', data-object-fit='cover')
+    //         source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4', data-wf-ignore='true')
+    //         source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-wf-ignore='true')
 
 
 

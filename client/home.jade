@@ -66,8 +66,28 @@ template(name='home')
         //         a.ui.large.compact.circular.button.select_source.select_term(href='#')
         //             strong #{name}
     // .twelve.wide.column
-    each docs
-        +reddit_card
+    // if one_post
+    if session_is 'toggle'
+        each docs
+            +reddit_card
+            // blockquote(class="reddit-card")
+            //     a(href="https://www.reddit.com#{permalink}") 
+            //         |#{title}
+            //     |from 
+            //     a(href="http://www.reddit.com/r/#{subreddit}") 
+            //         |r/#{subreddit}
+            // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
+
+    // .ui.header static
+    // with reddit_card
+    //     blockquote(class="reddit-card")
+    //         a(href="https://www.reddit.com#{permalink}") 
+    //             |#{title}
+    //         |from 
+    //         a(href="http://www.reddit.com/r/#{subreddit}") 
+    //             |r/#{subreddit}
+        // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
+
         // // if key_value_is 'model' 'porn'
         // //     +vid_card
         // if key_value_is 'model' 'reddit'
@@ -75,6 +95,20 @@ template(name='home')
         //     +post_card
         // .ui.divider
 // .ui.stackable.cards
+template(name='reddit_card')
+    // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
+    // .ui.header #{title}
+    // a.ui.small.header(href=url target='_window') #{url}
+    
+    with this
+        blockquote(class="reddit-card")
+            a(href="https://www.reddit.com#{permalink}") 
+                |#{title}
+            |from 
+            a(href="http://www.reddit.com/r/#{subreddit}") 
+                |r/#{subreddit}
+        // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8" async)    
+            
 
 
 template(name='unselect_tag')
