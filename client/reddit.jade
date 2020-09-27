@@ -1,70 +1,70 @@
 template(name='reddit_card')
     .ui.stackable.grid
-        .ten.wide.column
-            // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
-            // .ui.header #{title}
-            // a.ui.small.header(href=url target='_window') #{url}
-            blockquote(class="reddit-card")
-                a(href="https://www.reddit.com#{permalink}") 
-                    |#{title}
-                |from 
-                a(href="http://www.reddit.com/r/#{subreddit}") 
-                    |r/#{subreddit}
-            // if tone
-            //     .medscroll
-            //         +tone
-            // else if body
-            //     |{{nl2br body}}
-            // else if description
-            //     |!{description}
-        
-                // .description.f11
-            // |fallback
-            // if rd.secure_media.reddit_video.fallback_url
-            //     iframe(width='100%' height='800' src=rd.secure_media.reddit_video.fallback_url referrerpolicy="no-referrer")
-            // else
-            //     iframe(width='100%' height='500' src=url frameborder='0' referrerpolicy="no-referrer")
-            // iframe(width='100%' height='500' src="https://www.reddit.com#{permalink}" frameborder='0' referrerpolicy="no-referrer")
-            // a.ui.fluid.rounded.image.pointer(href="/m/reddit/#{_id}/view")
-            //     if watson.metadata.image
-            // img(src=watson.metadata.image class=currentUser.invert_class)    
-            // img(src=url class=currentUser.invert_class)    
-            // if is_youtube
-            //     .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
-            // img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
-        .six.wide.column
-            .content
-                // +vote
-                // button.ui.large.icon.circular.button.autotag
-                //     i.dna.icon
-                //     // |autotag
-                //     if watson 
-                //         i.checkmark.icon
-                // .ui.label #{points}p
-                .ui.icon.input
-                    i.plus.icon
-                    input.tag_post(type='text' placeholder='tag')
-
-                .ui.label(title='domain')
-                    i.globe.icon
-                    |#{domain}
-                // a.ui.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
-                //     i.reddit.icon
-                //     |#{subreddit}
-                // a.ui.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
-                //     i.pencil.icon
-                //     |#{rd.author}
-                // if is_admin
-                //     +print_this
-                // <blockquote class="reddit-card"><a href="https://www.reddit.com/r/Economics/comments/izi08v/the_covid19_lockdown_is_squeezing_real_estate/">The COVID-19 lockdown is squeezing real estate from all sides and threatens to burst the housing and mortgage bubble</a> from <a href="http://www.reddit.com/r/Economics">r/Economics</a></blockquote>
-                // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
-            each tags
-                a.ui.big.image.basic.label.add_tag 
-                    // i.remove.grey.icon
-                    if tag_term
-                        img.ui.image(src=tag_term.watson.metadata.image)    
-                    |#{this}
-            .meta
-                |#{when}
-
-            script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+        .centered.row
+            .ten.wide.center.aligned.column
+                // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
+                // .ui.header #{title}
+                // a.ui.small.header(href=url target='_window') #{url}
+                blockquote(class="reddit-card")
+                    a(href="https://www.reddit.com#{permalink}") 
+                        |#{title}
+                    |from 
+                    a(href="http://www.reddit.com/r/#{subreddit}") 
+                        |r/#{subreddit}
+                script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+                // if tone
+                //     .medscroll
+                //         +tone
+                // else if body
+                //     |{{nl2br body}}
+                // else if description
+                //     |!{description}
+            
+                    // .description.f11
+                // |fallback
+                // if rd.secure_media.reddit_video.fallback_url
+                //     iframe(width='100%' height='800' src=rd.secure_media.reddit_video.fallback_url referrerpolicy="no-referrer")
+                // else
+                //     iframe(width='100%' height='500' src=url frameborder='0' referrerpolicy="no-referrer")
+                // iframe(width='100%' height='500' src="https://www.reddit.com#{permalink}" frameborder='0' referrerpolicy="no-referrer")
+                // a.ui.fluid.rounded.image.pointer(href="/m/reddit/#{_id}/view")
+                //     if watson.metadata.image
+                // img(src=watson.metadata.image class=currentUser.invert_class)    
+                // img(src=url class=currentUser.invert_class)    
+                // if is_youtube
+                //     .ui.embed(data-source="youtube" data-id=youtube_parse class=currentUser.invert_class)
+                // img.ui.rounded.image(src=thumbnail class=currentUser.invert_class)
+            // .six.wide.column
+                // .content
+                    // +vote
+                    // button.ui.large.icon.circular.button.autotag
+                    //     i.dna.icon
+                    //     // |autotag
+                    //     if watson 
+                    //         i.checkmark.icon
+                    // .ui.label #{points}p
+                    // .ui.icon.input
+                    //     i.plus.icon
+                    //     input.tag_post(type='text' placeholder='tag')
+    
+                    // .ui.label(title='domain')
+                    //     i.globe.icon
+                    //     |#{domain}
+                    // a.ui.label(href="https://www.reddit.com/r/#{subreddit}" target='_window' title='subreddit')
+                    //     i.reddit.icon
+                    //     |#{subreddit}
+                    // a.ui.label(href="https://www.reddit.com/u/#{rd.author}" target='_window' title='author')
+                    //     i.pencil.icon
+                    //     |#{rd.author}
+                    // if is_admin
+                    //     +print_this
+                    // <blockquote class="reddit-card"><a href="https://www.reddit.com/r/Economics/comments/izi08v/the_covid19_lockdown_is_squeezing_real_estate/">The COVID-19 lockdown is squeezing real estate from all sides and threatens to burst the housing and mortgage bubble</a> from <a href="http://www.reddit.com/r/Economics">r/Economics</a></blockquote>
+                    // <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>    
+                // each tags
+                //     a.ui.big.image.basic.label.add_tag 
+                //         // i.remove.grey.icon
+                //         if tag_term
+                //             img.ui.image(src=tag_term.watson.metadata.image)    
+                //         |#{this}
+                // .meta
+                //     |#{when}
