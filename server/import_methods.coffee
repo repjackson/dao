@@ -50,17 +50,17 @@ Meteor.methods
                             #     # console.log 'unsetting tags because string', existing_doc.tags
                             #     Doc.update
                             #         $unset: tags: 1
+                            # console.log 'existing ', reddit_post.title
                             Docs.update existing_doc._id,
                                 $addToSet: tags: $each: query
 
-                            Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
+                            # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
                         unless existing_doc
                             # console.log 'importing url', data.url
                             new_reddit_post_id = Docs.insert reddit_post
                             # Meteor.users.update Meteor.userId(),
                             #     $inc:points:1
-                            # console.log 'calling watson on ', reddit_post.title
-                            Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
+                            # Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
                             # console.log 'get post res', res
                     else
                         console.log 'NO found data'
@@ -169,7 +169,7 @@ Meteor.methods
             if err
                 console.log 'error finding wiki article for ', query
             else
-                console.log response.data[1]
+                # console.log response.data[1]
                 for term,i in response.data[1]
                     # console.log 'term', term
                     # console.log 'i', i
@@ -191,7 +191,7 @@ Meteor.methods
                         #     #     tags:'wikipedia'
                         #     $set:
                         #         title:found_doc.title.toLowerCase()
-                        console.log 'found wiki doc', found_doc
+                        # console.log 'found wiki doc', found_doc
                         # Meteor.call 'call_watson', found_doc._id, 'url','url', ->
                     else
                         new_wiki_id = Docs.insert

@@ -36,7 +36,7 @@ Template.home.onCreated ->
     
 Template.tag_selector.onCreated ->
     # console.log @
-    # @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    @autorun => Meteor.subscribe('doc_by_title', @data.name)
 Template.tag_selector.helpers
     term: ->
         Docs.findOne 
@@ -50,31 +50,25 @@ Template.tag_selector.events
             # Meteor.call 'omega', @title, ->
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.call 'search_ph', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
-    # @autorun => Meteor.subscribe('doc_by_title', @data)
+    @autorun => Meteor.subscribe('doc_by_title', @data)
 Template.unselect_tag.helpers
-    # term: ->
-    #     Docs.findOne 
-    #         model:'wikipedia'
-    #         title:@valueOf()
+    term: ->
+        Docs.findOne 
+            model:'wikipedia'
+            title:@valueOf()
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.call 'search_ph', selected_tags.array(), ->
 
             
 Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     one_post: ->
-        # match = {model:$in:['post','wikipedia','reddit']}
         match = {model:$in:['reddit']}
-        # match = {model:$in:['post','wikipedia','reddit','porn']}
-        
-        # match = {model:'post'}
         if selected_tags.array().length>0
             match.tags = $in:selected_tags.array()
 
@@ -83,10 +77,7 @@ Template.home.helpers
 
 
     docs: ->
-        # match = {model:$in:['porn']}
-        # match = {model:$in:['post','wikipedia','reddit','porn']}
         match = {model:$in:['reddit']}
-        
         # match = {model:'post'}
         # if selected_tags.array().length>0
         match.tags = $all:selected_tags.array()
