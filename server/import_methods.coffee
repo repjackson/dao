@@ -4,7 +4,7 @@ Meteor.methods
         console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=20&include_facets=false",(err,response)=>
+        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=100&include_facets=false",(err,response)=>
             # console.log response.data
             if err then console.log err
             else if response.data.data.dist > 1
@@ -22,7 +22,7 @@ Meteor.methods
                         added_tags = query
                         # added_tags = [query]
                         # added_tags.push data.domain.toLowerCase()
-                        added_tags.push data.subreddit.toLowerCase()
+                        # added_tags.push data.subreddit.toLowerCase()
                         # added_tags.push data.author.toLowerCase()
                         # added_tags = _.flatten(added_tags)
                         # console.log 'added_tags', added_tags
@@ -51,13 +51,13 @@ Meteor.methods
                             #     # console.log 'unsetting tags because string', existing_doc.tags
                             #     Doc.update
                             #         $unset: tags: 1
-                            # console.log 'existing ', reddit_post.title
+                            console.log 'existing ', reddit_post.title
                             Docs.update existing_doc._id,
                                 $addToSet: tags: $each: query
 
                             # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
                         unless existing_doc
-                            # console.log 'importing url', data.url
+                            console.log 'importing url', data.url
                             new_reddit_post_id = Docs.insert reddit_post
                             # Meteor.users.update Meteor.userId(),
                             #     $inc:points:1
@@ -74,81 +74,81 @@ Meteor.methods
         # )
 
 
-    get_reddit_post: (doc_id, reddit_id, root)->
-        # console.log 'getting reddit post', doc_id, reddit_id
-        HTTP.get "http://reddit.com/by_id/t3_#{reddit_id}.json", (err,res)->
-            if err then console.error err
-            else
-                rd = res.data.data.children[0].data
-                # console.log rd
-                result =
-                    Docs.update doc_id,
-                        $set:
-                            rd: rd
-                # console.log result
-                # if rd.is_video
-                #     # console.log 'pulling video comments watson'
-                #     Meteor.call 'call_watson', doc_id, 'url', 'video', ->
-                # else if rd.is_image
-                #     # console.log 'pulling image comments watson'
-                #     Meteor.call 'call_watson', doc_id, 'url', 'image', ->
-                # else
-                #     Meteor.call 'call_watson', doc_id, 'url', 'url', ->
-                #     Meteor.call 'call_watson', doc_id, 'url', 'image', ->
-                #     # Meteor.call 'call_visual', doc_id, ->
-                if rd.selftext
-                    unless rd.is_video
-                        # if Meteor.isDevelopment
-                        #     console.log "self text", rd.selftext
-                        Docs.update doc_id, {
-                            $set:
-                                body: rd.selftext
-                        }, ->
-                        #     Meteor.call 'pull_site', doc_id, url
-                            # console.log 'hi'
-                if rd.selftext_html
-                    unless rd.is_video
-                        Docs.update doc_id, {
-                            $set:
-                                html: rd.selftext_html
-                        }, ->
-                            # Meteor.call 'pull_site', doc_id, url
-                            # console.log 'hi'
-                if rd.url
-                    unless rd.is_video
-                        url = rd.url
-                        # if Meteor.isDevelopment
-                        #     console.log "found url", url
-                        Docs.update doc_id, {
-                            $set:
-                                reddit_url: url
-                                url: url
-                        }, ->
-                            # Meteor.call 'call_watson', doc_id, 'url', 'url', ->
-                # update_ob = {}
-                if rd.preview
-                    if rd.preview.images[0].source.url
-                        thumbnail = rd.preview.images[0].source.url
-                else
-                    thumbnail = rd.thumbnail
-                Docs.update doc_id,
-                    $set:
-                        rd: rd
-                        url: rd.url
-                        # reddit_image:rd.preview.images[0].source.url
-                        thumbnail: thumbnail
-                        subreddit: rd.subreddit
-                        rd_author: rd.author
-                        is_video: rd.is_video
-                        ups: rd.ups
-                        # downs: rd.downs
-                        over_18: rd.over_18
-                    # $addToSet:
-                    #     tags: $each: [rd.subreddit.toLowerCase()]
-                # console.log Docs.findOne(doc_id)
+    # get_reddit_post: (doc_id, reddit_id, root)->
+    #     # console.log 'getting reddit post', doc_id, reddit_id
+    #     HTTP.get "http://reddit.com/by_id/t3_#{reddit_id}.json", (err,res)->
+    #         if err then console.error err
+    #         else
+    #             rd = res.data.data.children[0].data
+    #             # console.log rd
+    #             result =
+    #                 Docs.update doc_id,
+    #                     $set:
+    #                         rd: rd
+    #             # console.log result
+    #             # if rd.is_video
+    #             #     # console.log 'pulling video comments watson'
+    #             #     Meteor.call 'call_watson', doc_id, 'url', 'video', ->
+    #             # else if rd.is_image
+    #             #     # console.log 'pulling image comments watson'
+    #             #     Meteor.call 'call_watson', doc_id, 'url', 'image', ->
+    #             # else
+    #             #     Meteor.call 'call_watson', doc_id, 'url', 'url', ->
+    #             #     Meteor.call 'call_watson', doc_id, 'url', 'image', ->
+    #             #     # Meteor.call 'call_visual', doc_id, ->
+    #             if rd.selftext
+    #                 unless rd.is_video
+    #                     # if Meteor.isDevelopment
+    #                     #     console.log "self text", rd.selftext
+    #                     Docs.update doc_id, {
+    #                         $set:
+    #                             body: rd.selftext
+    #                     }, ->
+    #                     #     Meteor.call 'pull_site', doc_id, url
+    #                         # console.log 'hi'
+    #             if rd.selftext_html
+    #                 unless rd.is_video
+    #                     Docs.update doc_id, {
+    #                         $set:
+    #                             html: rd.selftext_html
+    #                     }, ->
+    #                         # Meteor.call 'pull_site', doc_id, url
+    #                         # console.log 'hi'
+    #             if rd.url
+    #                 unless rd.is_video
+    #                     url = rd.url
+    #                     # if Meteor.isDevelopment
+    #                     #     console.log "found url", url
+    #                     Docs.update doc_id, {
+    #                         $set:
+    #                             reddit_url: url
+    #                             url: url
+    #                     }, ->
+    #                         # Meteor.call 'call_watson', doc_id, 'url', 'url', ->
+    #             # update_ob = {}
+    #             if rd.preview
+    #                 if rd.preview.images[0].source.url
+    #                     thumbnail = rd.preview.images[0].source.url
+    #             else
+    #                 thumbnail = rd.thumbnail
+    #             Docs.update doc_id,
+    #                 $set:
+    #                     rd: rd
+    #                     url: rd.url
+    #                     # reddit_image:rd.preview.images[0].source.url
+    #                     thumbnail: thumbnail
+    #                     subreddit: rd.subreddit
+    #                     rd_author: rd.author
+    #                     is_video: rd.is_video
+    #                     ups: rd.ups
+    #                     # downs: rd.downs
+    #                     over_18: rd.over_18
+    #                 # $addToSet:
+    #                 #     tags: $each: [rd.subreddit.toLowerCase()]
+    #             # console.log Docs.findOne(doc_id)
  
-    #   'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
-    #   'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=';
+    # #   'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=';
+    # #   'https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=';
 
  
     # call_wiki: (query)->

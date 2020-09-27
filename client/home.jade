@@ -51,7 +51,7 @@ template(name='reddit_card')
                         |r/#{subreddit}
                 script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
                 each tags 
-                    .ui.large.label #{this}
+                    .ui.circular.compact.button.add_tag #{this}
 
 
 template(name='unselect_tag')

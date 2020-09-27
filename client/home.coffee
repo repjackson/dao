@@ -50,6 +50,15 @@ Template.tag_selector.events
             # Meteor.call 'omega', @title, ->
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
+Template.reddit_card.events
+    'click .add_tag': -> 
+        selected_tags.push @valueOf()
+        # if Meteor.user()
+        # Meteor.call 'call_wiki', @valueOf, ->
+            # Meteor.call 'calc_term', @title, ->
+            # Meteor.call 'omega', @title, ->
+            
+        Meteor.call 'search_reddit', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
@@ -93,24 +102,6 @@ Template.home.helpers
         # if cur.count() is 1
         # Docs.find match
 
-    post_result: ->
-        match = {model:$in:['reddit']}
-        
-        # match = {model:'post'}
-        # if selected_tags.array().length>0
-        match.tags = $all:selected_tags.array()
-        # cur = Docs.find match
-        Docs.findOne match,
-            sort:
-                # points:-1
-                ups:-1
-                views:-1
-                _timestamp:-1
-                # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:1
-
-        
-        
     home_button_class: ->
         if Template.instance().subscriptionsReady()
             ''
@@ -139,17 +130,6 @@ Template.home.events
     # 'click .delete': -> 
     #     console.log @
     #     Docs.remove @_id
-    'click .post': ->
-        new_post_id =
-            Docs.insert
-                model:'post'
-                source:'self'
-                # buyer_id:Meteor.userId()
-                # buyer_username:Meteor.user().username
-                
-        Router.go "/post/#{new_post_id}/edit"
-
-    
 
     'click #clear_tags': -> selected_tags.clear()
 
