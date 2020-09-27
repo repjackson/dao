@@ -19,9 +19,10 @@ Meteor.methods
                         #     console.log 'is STRING'
                         #     added_tags = [query]
                         # else
-                        #     added_tags = query
+                        added_tags = query
                         # added_tags = [query]
                         # added_tags.push data.domain.toLowerCase()
+                        added_tags.push data.subreddit.toLowerCase()
                         # added_tags.push data.author.toLowerCase()
                         # added_tags = _.flatten(added_tags)
                         # console.log 'added_tags', added_tags
@@ -29,16 +30,16 @@ Meteor.methods
                             reddit_id: data.id
                             url: data.url
                             domain: data.domain
-                            comment_count: data.num_comments
+                            # comment_count: data.num_comments
                             permalink: data.permalink
                             ups: data.ups
                             title: data.title
                             # root: query
-                            selftext: false
+                            # selftext: false
                             # thumbnail: false
                             tags: query
                             model:'reddit'
-                            source:'reddit'
+                            # source:'reddit'
                         # console.log 'reddit post', reddit_post
                         existing_doc = Docs.findOne url:data.url
                         if existing_doc
