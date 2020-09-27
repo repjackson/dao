@@ -33,28 +33,28 @@ template(name='home')
     //         |from 
     //         a(href="http://www.reddit.com/r/#{subreddit}") 
     //             |r/#{subreddit}
-    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
+    // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
 
 
 template(name='reddit_card')
-    // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
-    // .ui.header #{title}
-    // a.ui.small.header(href=url target='_window') #{url}
-    
-    with this
-        .ui.header #{subreddit}
-        blockquote(class="reddit-card")
-            a(href="https://www.reddit.com#{permalink}") 
-                |#{title}
-            |from 
-            a(href="http://www.reddit.com/r/#{subreddit}") 
-                |r/#{subreddit}
-        // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8" async)    
+    .ui.stackable.grid
+        .centered.row
+            .ten.wide.center.aligned.column
+                // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
+                // .ui.header #{title}
+                // a.ui.small.header(href=url target='_window') #{url}
+                blockquote(class="reddit-card")
+                    a(href="https://www.reddit.com#{permalink}") 
+                        |#{title}
+                    |from 
+                    a(href="http://www.reddit.com/r/#{subreddit}") 
+                        |r/#{subreddit}
+                script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
             
 
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.big.image.label.select_termn
+    a.unselect_tag.ui.black.big.image.label.select_term(href='#')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         | #{this}
@@ -66,19 +66,4 @@ template(name='tag_selector')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         | #{name}
-
-
-            
-template(name='sort_button')
-    .ui.button.toggle_sort(class=sort_button_class)
-        if icon 
-            i.icon(class=icon)
-        |#{label}
-        if is_selected
-            if sorting_up
-                i.chevron.up.icon
-            else
-                i.chevron.down.icon
-
-
 

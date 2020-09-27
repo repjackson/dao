@@ -53,15 +53,15 @@ Meteor.methods
                             Docs.update existing_doc._id,
                                 $addToSet: tags: $each: query
 
-                            # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
+                            Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
                         unless existing_doc
                             # console.log 'importing url', data.url
                             new_reddit_post_id = Docs.insert reddit_post
                             # Meteor.users.update Meteor.userId(),
                             #     $inc:points:1
                             # console.log 'calling watson on ', reddit_post.title
-                            # Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
-                                # console.log 'get post res', res
+                            Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
+                            # console.log 'get post res', res
                     else
                         console.log 'NO found data'
                 )
