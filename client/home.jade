@@ -1,6 +1,6 @@
 template(name='home')
     .ui.stackable.grid
-        .five.wide.column
+        .sixteen.wide.center.aligned.column
             // iframe(frameborder="0" width="400" height="200" src="https://drive.google.com/file/d/1_encX_RKyZhOU26r7_cNTtl0rLvEQSai/preview")
             // i.large.yin.yang.icon(class=home_button_class)
             if selected_tags
@@ -65,7 +65,7 @@ template(name='home')
                 //     each source_results
                 //         a.ui.large.compact.circular.button.select_source.select_term(href='#')
                 //             strong #{name}
-        .eleven.wide.column
+            // .twelve.wide.column
             each docs
                 +reddit_card
                 // // if key_value_is 'model' 'porn'
