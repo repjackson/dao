@@ -22,19 +22,21 @@ Template.reddit_card.events
 
 Template.home.onCreated ->
     # @autorun -> Meteor.subscribe('me')
-    @autorun -> Meteor.subscribe('dtags',
+    @autorun => Meteor.subscribe('dtags',
         # Session.get('query')
         selected_tags.array()
+        Session.get('toggle')
         )
-    @autorun -> Meteor.subscribe('docs',
+    @autorun => Meteor.subscribe('docs',
         selected_tags.array()
+        Session.get('toggle')
         # Session.get('query')
         )
 
     
 Template.tag_selector.onCreated ->
     # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    # @autorun => Meteor.subscribe('doc_by_title', @data.name)
 Template.tag_selector.helpers
     term: ->
         Docs.findOne 
@@ -43,7 +45,7 @@ Template.tag_selector.events
     'click .select_tag': -> 
         selected_tags.push @name
         # if Meteor.user()
-        Meteor.call 'call_wiki', @name, ->
+        # Meteor.call 'call_wiki', @name, ->
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
             
@@ -52,12 +54,12 @@ Template.tag_selector.events
 
 Template.unselect_tag.onCreated ->
     # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data)
+    # @autorun => Meteor.subscribe('doc_by_title', @data)
 Template.unselect_tag.helpers
-    term: ->
-        Docs.findOne 
-            model:'wikipedia'
-            title:@valueOf()
+    # term: ->
+    #     Docs.findOne 
+    #         model:'wikipedia'
+    #         title:@valueOf()
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
@@ -68,7 +70,8 @@ Template.unselect_tag.events
 Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     one_post: ->
-        match = {model:$in:['post','wikipedia','reddit']}
+        # match = {model:$in:['post','wikipedia','reddit']}
+        match = {model:$in:['reddit']}
         # match = {model:$in:['post','wikipedia','reddit','porn']}
         
         # match = {model:'post'}
@@ -82,11 +85,11 @@ Template.home.helpers
     docs: ->
         # match = {model:$in:['porn']}
         # match = {model:$in:['post','wikipedia','reddit','porn']}
-        match = {model:$in:['post','reddit']}
+        match = {model:$in:['reddit']}
         
         # match = {model:'post'}
-        if selected_tags.array().length>0
-            match.tags = $all:selected_tags.array()
+        # if selected_tags.array().length>0
+        match.tags = $all:selected_tags.array()
         # cur = Docs.find match
         Docs.find match,
             sort:
@@ -98,6 +101,25 @@ Template.home.helpers
             limit:1
         # if cur.count() is 1
         # Docs.find match
+
+    post_result: ->
+        match = {model:$in:['reddit']}
+        
+        # match = {model:'post'}
+        # if selected_tags.array().length>0
+        match.tags = $all:selected_tags.array()
+        # cur = Docs.find match
+        Docs.findOne match,
+            sort:
+                # points:-1
+                ups:-1
+                views:-1
+                _timestamp:-1
+                # "#{Session.get('sort_key')}": Session.get('sort_direction')
+            limit:1
+
+        
+        
     home_button_class: ->
         if Template.instance().subscriptionsReady()
             ''
@@ -122,27 +144,6 @@ Template.home.helpers
         # else 
         Tag_results.find()
 
-            
-Template.vid_card.events
-    'click .fork': -> 
-        console.log @
-        Meteor.call 'tagify_vid', @_id, ->
-# Template.reddit_card.events
-#     'click .autotag': ->
-#         # console.log @
-#         # if @rd and @rd.selftext_html
-#         #     dom = document.createElement('textarea')
-#         #     # dom.innerHTML = doc.body
-#         #     dom.innerHTML = @rd.selftext_html
-#         #     # console.log 'innner html', dom.value
-#         #     # return dom.value
-#         #     Docs.update @_id,
-#         #         $set:
-#         #             parsed_selftext_html:dom.value
-        
-#         # doc = Template.parentData()
-#         Meteor.call 'call_watson', @_id, 'url', 'url', ->
-
 Template.home.events
     # 'click .delete': -> 
     #     console.log @
@@ -162,6 +163,8 @@ Template.home.events
     'click #clear_tags': -> selected_tags.clear()
 
 
+    'click .search_title': (e,t)->
+        Session.set('toggle',!Session.get('toggle'))
     'keydown .search_title': (e,t)->
         search = $('.search_title').val().toLowerCase().trim()
         # Session.set('query',search)

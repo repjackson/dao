@@ -57,7 +57,7 @@ Meteor.publish 'docs', (
     match = {}
     # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia','reddit','porn']
-    match.model = $in:['post','reddit']
+    match.model = $in:['reddit']
     
     # match.model = 'post'
     # if Meteor.user()
@@ -68,7 +68,7 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:5
+            limit:1
             sort:
                 # points:-1
                 ups:-1
@@ -78,7 +78,7 @@ Meteor.publish 'docs', (
         match.tags = $in:['dao']
         # console.log match
         Docs.find match,
-            limit:5
+            limit:1
             sort:
                 _timestamp:-1
                 # points:-1
@@ -92,7 +92,7 @@ Meteor.publish 'dtags', (
     self = @
     match = {}
     # match.model = $in:['post','wikipedia','reddit','porn']
-    match.model = $in:['post','wikipedia','reddit']
+    match.model = $in:['reddit']
     # match.model = $in:['porn']
     # match.model = $in:['post','wikipedia']
     # match.model = 'post'
