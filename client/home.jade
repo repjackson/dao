@@ -67,9 +67,8 @@ template(name='home')
         //             strong #{name}
     // .twelve.wide.column
     // if one_post
-    if session_is 'toggle'
-        each docs
-            +reddit_card
+    each docs
+        +reddit_card
             // blockquote(class="reddit-card")
             //     a(href="https://www.reddit.com#{permalink}") 
             //         |#{title}
@@ -101,6 +100,7 @@ template(name='reddit_card')
     // a.ui.small.header(href=url target='_window') #{url}
     
     with this
+        .ui.header #{subreddit}
         blockquote(class="reddit-card")
             a(href="https://www.reddit.com#{permalink}") 
                 |#{title}
