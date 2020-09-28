@@ -4,7 +4,7 @@ Meteor.methods
         console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=100&include_facets=false",(err,response)=>
+        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=0&limit=100&include_facets=false",(err,response)=>
             # console.log response.data
             if err then console.log err
             else if response.data.data.dist > 1
@@ -26,6 +26,7 @@ Meteor.methods
                         # added_tags.push data.author.toLowerCase()
                         # added_tags = _.flatten(added_tags)
                         # console.log 'added_tags', added_tags
+                        # console.log 'ups?', data.ups
                         reddit_post =
                             reddit_id: data.id
                             url: data.url
@@ -192,7 +193,7 @@ Meteor.methods
                         #     #     tags:'wikipedia'
                         #     $set:
                         #         title:found_doc.title.toLowerCase()
-                        console.log 'found wiki doc', found_doc
+                        # console.log 'found wiki doc', found_doc.title
                         unless found_doc.watson
                             Meteor.call 'call_watson', found_doc._id, 'url','url', ->
                     else
@@ -201,6 +202,6 @@ Meteor.methods
                             tags:[term.toLowerCase(),query.toLowerCase()]
                             source: 'wikipedia'
                             model:'wikipedia'
-                            # ups: 1000000
+                            ups: 1
                             url:url
                         Meteor.call 'call_watson', new_wiki_id, 'url','url', ->

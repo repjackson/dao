@@ -50,6 +50,9 @@ Template.tag_selector.events
             # Meteor.call 'omega', @title, ->
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
+Template.reddit_card.helpers
+    key_value_is: ->
+        Template.currentData()["#{@key}"] is @value
 Template.reddit_card.events
     'click .add_tag': -> 
         selected_tags.push @valueOf()
@@ -140,7 +143,7 @@ Template.home.events
         search = $('.search_title').val().toLowerCase().trim()
         # Session.set('query',search)
         if e.which is 13
-            console.log search
+            # console.log search
             if search.length>0
                 selected_tags.push search
                 # if Meteor.user()

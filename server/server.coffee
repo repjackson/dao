@@ -35,8 +35,8 @@ Meteor.publish 'docs', (
     # query=''
     )->
     match = {}
-    # match.model = $in:['reddit']
-    match.model = 'wikipedia'
+    match.model = $in:['reddit']
+    # match.model = 'wikipedia'
     
     # match.model = 'post'
     # if Meteor.user()
@@ -72,8 +72,8 @@ Meteor.publish 'dtags', (
     match = {}
     # match.model = $in:['post','wikipedia','reddit','porn']
     # match.model = $in:['reddit']
-    # match.model = $in:['post','wikipedia']
-    match.model = 'wikipedia'
+    match.model = $in:['reddit','wikipedia']
+    # match.model = 'wikipedia'
     
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}
@@ -89,7 +89,7 @@ Meteor.publish 'dtags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 5 }
+        { $limit: 7 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', tag_cloud
