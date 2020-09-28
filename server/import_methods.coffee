@@ -51,13 +51,13 @@ Meteor.methods
                             #     # console.log 'unsetting tags because string', existing_doc.tags
                             #     Doc.update
                             #         $unset: tags: 1
-                            console.log 'existing ', reddit_post.title
+                            # console.log 'existing ', reddit_post.title
                             Docs.update existing_doc._id,
                                 $addToSet: tags: $each: query
 
                             # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
                         unless existing_doc
-                            console.log 'importing url', data.url
+                            # console.log 'importing url', data.url
                             new_reddit_post_id = Docs.insert reddit_post
                             # Meteor.users.update Meteor.userId(),
                             #     $inc:points:1

@@ -35,9 +35,8 @@ Meteor.publish 'docs', (
     # query=''
     )->
     match = {}
-    # match.model = $in:['porn']
-    # match.model = $in:['post','wikipedia','reddit','porn']
-    match.model = $in:['reddit']
+    # match.model = $in:['reddit']
+    match.model = 'wikipedia'
     
     # match.model = 'post'
     # if Meteor.user()
@@ -72,10 +71,9 @@ Meteor.publish 'dtags', (
     self = @
     match = {}
     # match.model = $in:['post','wikipedia','reddit','porn']
-    match.model = $in:['reddit']
-    # match.model = $in:['porn']
+    # match.model = $in:['reddit']
     # match.model = $in:['post','wikipedia']
-    # match.model = 'post'
+    match.model = 'wikipedia'
     
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}

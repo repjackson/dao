@@ -278,8 +278,8 @@ Meteor.methods
                 Docs.update { _id: doc_id },
                     $addToSet:
                         tags:$each:lowered_keywords
-                # final_doc = Docs.findOne doc_id
-                # console.log final_doc
+                final_doc = Docs.findOne doc_id
+                console.log 'FINAL DOC tags',final_doc.tags
 
                 # if mode is 'url'
                 #     # if doc.model is 'wikipedia'

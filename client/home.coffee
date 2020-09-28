@@ -45,7 +45,7 @@ Template.tag_selector.events
     'click .select_tag': -> 
         selected_tags.push @name
         # if Meteor.user()
-        # Meteor.call 'call_wiki', @name, ->
+        Meteor.call 'call_wiki', @name, ->
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
             
