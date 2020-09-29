@@ -59,7 +59,8 @@ template(name='reddit_card')
                 script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
                 each tags 
                     .ui.circular.compact.button.add_tag #{this}
-
+                .ui.button.tagger
+                    i.tag.icon
 
 template(name='unselect_tag')
     a.unselect_tag.ui.black.big.image.label.select_term(href='#')

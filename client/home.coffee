@@ -10,6 +10,8 @@
 
 
 Template.reddit_card.events
+    'click .tagger': (e,t)->
+        Meteor.call 'call_watson', @_id, 'url', 'url', ->
     'keyup .tag_post': (e,t)->
         # console.log 
         if e.which is 13

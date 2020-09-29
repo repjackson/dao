@@ -1,4 +1,7 @@
+body
+    background black
 .label {
     transition: all 1s ease !important;
-    margin: 5px;
+    margin-bottom: 5px !important;
+    border-radius: 5px !important;
 }
