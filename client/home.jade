@@ -44,7 +44,6 @@ template(name='reddit_card')
                 //     .ui.header 
                 //         i.wikipedia.icon
                 //         |#{title}
-                //     iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
 
                 // else
                 // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
@@ -59,8 +58,11 @@ template(name='reddit_card')
                 script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
                 each tags 
                     .ui.circular.compact.button.add_tag #{this}
-                .ui.button.tagger
+                iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+                .ui.icon.circular.button.tagger
                     i.tag.icon
+                if watson
+                    +watson_view
 
 template(name='unselect_tag')
     a.unselect_tag.ui.black.big.image.label.select_term(href='#')
