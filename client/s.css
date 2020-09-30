@@ -1,14 +1,24 @@
 body{
     background-color: lightgrey !important;
+    transition: all 1s linear;
+    
 }
 .label {
     transition: all 1s ease !important;
-    margin-bottom: 5px !important;
-    border-radius: 5px !important;
+    margin-bottom: 2px !important;
+    margin-top: 2px !important;
+    border-radius: 10px !important;
 }
 
+input {
+    border-radius: 10px !important;
+}
+
+.input {
+    margin-bottom: 5px !important;
+}
 .button {
     transition: all 1s ease !important;
     margin-bottom: 5px !important;
-    border-radius: 5px !important;
+    border-radius: 10px !important;
 }
