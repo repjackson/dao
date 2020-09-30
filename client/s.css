@@ -5,3 +5,9 @@ body
     margin-bottom: 5px !important;
     border-radius: 5px !important;
 }
+
+.button {
+    transition: all 1s ease !important;
+    margin-bottom: 5px !important;
+    border-radius: 5px !important;
+}
