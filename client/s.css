@@ -15,7 +15,8 @@ input {
 }
 
 .input {
-    margin-bottom: 5px !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
 }
 .button {
     transition: all 1s ease !important;

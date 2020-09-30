@@ -41,11 +41,11 @@ template(name='reddit_card')
                     a(href="http://www.reddit.com/r/#{subreddit}") 
                         |r/#{subreddit}
                 script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
-                .ui.transparent.input
-                    i.tag.icon
-                    input.tag_post(type='text')
                 each tags 
                     .ui.circular.compact.button.add_tag #{this}
+                .ui.transparent.input
+                    i.plus.grey.icon
+                    input.tag_post(type='text')
                 // unless is_image
                 //     iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
                 .ui.icon.circular.button.tagger
