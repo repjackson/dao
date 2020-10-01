@@ -40,6 +40,9 @@ input {
     /*padding-left: 1em;*/
 }
 
+.medscroll::-webkit-scrollbar-thumb {
+    width:3px !important;
+}
 
 .medscroll{
     /* padding: 5px !important;
