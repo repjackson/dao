@@ -115,8 +115,8 @@ Template.home.helpers
     docs: ->
         match = {model:$in:['reddit']}
         # match = {model:'post'}
-        # if selected_tags.array().length>0
-        match.tags = $all:selected_tags.array()
+        if selected_tags.array().length>0
+            match.tags = $all:selected_tags.array()
         # cur = Docs.find match
         Docs.find match,
             sort:
@@ -125,7 +125,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:1
+            limit:10
         # if cur.count() is 1
         # Docs.find match
 

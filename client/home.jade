@@ -8,8 +8,9 @@ template(name='home')
                 input.search_title(type='text' autofocus='')
             each tag_results
                 +tag_selector
-            div
-            each docs
+    .ui.stackable.grid.scrolling
+        each docs
+            .four.wide.column
                 +reddit_card
                     // blockquote(class="reddit-card")
                     //     a(href="https://www.reddit.com#{permalink}") 
@@ -34,12 +35,13 @@ template(name='reddit_card')
                 // a.ui.header(href="/m/reddit/#{_id}/view") #{title}
                 // .ui.header #{title}
                 // a.ui.small.header(href=url target='_window') #{url}
-                blockquote(class="reddit-card")
-                    a(href="https://www.reddit.com#{permalink}") 
-                        |#{title}
-                    |from 
-                    a(href="http://www.reddit.com/r/#{subreddit}") 
-                        |r/#{subreddit}
+                .medscroll
+                    blockquote(class="reddit-card")
+                        a(href="https://www.reddit.com#{permalink}") 
+                            |#{title}
+                        |from 
+                        a(href="http://www.reddit.com/r/#{subreddit}") 
+                            |r/#{subreddit}
                 script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
                 each tags 
                     .ui.circular.compact.button.add_tag #{this}
