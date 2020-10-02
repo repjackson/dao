@@ -1,13 +1,20 @@
 body{
-    background-color: lightgrey !important;
+    /*background-color: lightgrey !important;*/
     transition: all 1s linear;
     
+}
+.five.wide.column {
+    padding: 0px !important;
 }
 .label {
     transition: all 1s ease !important;
     margin-bottom: 2px !important;
     margin-top: 2px !important;
     border-radius: 10px !important;
+}
+::-webkit-scrollbar {
+  width: 0px !important;
+  /*border-radius: 10px !important;*/
 }
 
 input {

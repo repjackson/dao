@@ -144,14 +144,13 @@ Template.home.helpers
     
     selected_tags: -> selected_tags.array()
     tag_results: ->
-        # # doc_count = Docs.find({model:$in:['post','wikipedia','reddit','porn']}).count()
-        # doc_count = Docs.find({model:$in:['porn']}).count()
-        # if 0 < doc_count < 3 
-        #     Tag_results.find({ 
-        #         count:$lt:doc_count 
-        #     })
-        # else 
-        Tag_results.find()
+        doc_count = Docs.find({model:'reddit'}).count()
+        if 0 < doc_count < 3 
+            Tag_results.find({ 
+                count:$lt:doc_count 
+            })
+        else 
+            Tag_results.find()
 
 Template.home.events
     # 'click .delete': -> 
