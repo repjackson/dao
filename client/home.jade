@@ -9,16 +9,21 @@ template(name='home')
             each tag_results
                 +tag_selector
     .ui.stackable.centered.grid
-        each docs
-            .four.wide.column
-                +reddit_card
-                    // blockquote(class="reddit-card")
-                    //     a(href="https://www.reddit.com#{permalink}") 
-                    //         |#{title}
-                    //     |from 
-                    //     a(href="http://www.reddit.com/r/#{subreddit}") 
-                    //         |r/#{subreddit}
-                    // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
+        if one_post
+            each docs
+                .twelve.wide.column
+                    +reddit_card
+        else
+            each docs
+                .four.wide.column
+                    +reddit_card
+                        // blockquote(class="reddit-card")
+                        //     a(href="https://www.reddit.com#{permalink}") 
+                        //         |#{title}
+                        //     |from 
+                        //     a(href="http://www.reddit.com/r/#{subreddit}") 
+                        //         |r/#{subreddit}
+                        // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
         
 
 

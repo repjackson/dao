@@ -1,12 +1,12 @@
 
 @selected_tags = new ReactiveArray []
 
-# Template.body.events
-#     'click a:not(.select_term)': ->
-#         $('.global_container')
-#         .transition('fade out', 200)
-#         .transition('fade in', 200)
-#         # unless Meteor.user().invert_class is 'invert'
+Template.body.events
+    'click a:not(.select_term)': ->
+        $('.global_container')
+        .transition('fade out', 200)
+        .transition('fade in', 200)
+        # unless Meteor.user().invert_class is 'invert'
 
 Template.registerHelper 'calculated_size', (metric) ->
     # console.log 'metric', metric
@@ -32,17 +32,17 @@ Template.registerHelper 'to_percent', (number)->
 
 
 Template.reddit_card.events
-    'click .tagger': (e,t)->
-        Meteor.call 'call_watson', @_id, 'url', 'url', ->
-    'keyup .tag_post': (e,t)->
-        # console.log 
-        if e.which is 13
-            # $(e.currentTarget).closest('.button')
-            tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
-            Docs.update @_id,
-                $addToSet: tags: tag
-            $(e.currentTarget).closest('.tag_post').val('')
-            # console.log tag
+    # 'click .tagger': (e,t)->
+    #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
+    # 'keyup .tag_post': (e,t)->
+    #     # console.log 
+    #     if e.which is 13
+    #         # $(e.currentTarget).closest('.button')
+    #         tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
+    #         Docs.update @_id,
+    #             $addToSet: tags: tag
+    #         $(e.currentTarget).closest('.tag_post').val('')
+    #         # console.log tag
 
 Template.home.onCreated ->
     # @autorun -> Meteor.subscribe('me')
@@ -75,17 +75,16 @@ Template.tag_selector.events
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
 Template.reddit_card.helpers
-    key_value_is: ->
-        Template.currentData()["#{@key}"] is @value
-Template.reddit_card.events
-    'click .add_tag': -> 
-        selected_tags.push @valueOf()
-        # if Meteor.user()
-        # Meteor.call 'call_wiki', @valueOf, ->
-            # Meteor.call 'calc_term', @title, ->
-            # Meteor.call 'omega', @title, ->
+    key_value_is: -> Template.currentData()["#{@key}"] is @value
+# Template.reddit_card.events
+#     'click .add_tag': -> 
+#         selected_tags.push @valueOf()
+#         # if Meteor.user()
+#         # Meteor.call 'call_wiki', @valueOf, ->
+#             # Meteor.call 'calc_term', @title, ->
+#             # Meteor.call 'omega', @title, ->
             
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+#         Meteor.call 'search_reddit', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
