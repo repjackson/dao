@@ -1,9 +1,15 @@
 body{
-    /*background-color: lightgrey !important;*/
+    background-color: lightgrey !important;
     transition: all 1s linear;
+     /*filter: invert(1) !important; */
+}
+.invert {
+     filter: invert(1) !important; 
     
 }
-.five.wide.column {
+
+    
+.five.wide.column, .four.wide.column {
     padding: 0px !important;
 }
 .label {
@@ -48,7 +54,7 @@ input {
 }
 
 .medscroll::-webkit-scrollbar-thumb {
-    width:3px !important;
+    width:0px !important;
 }
 
 .medscroll{
@@ -57,7 +63,7 @@ input {
     border-width: 1px !important;
     border-color: grey !important;
     border-style: solid !important; */
-    max-height: 500px !important;
+    max-height: 700px !important;
     overflow-y:scroll;
 	overflow-x:hidden;
 	/* padding-top: .2em; */

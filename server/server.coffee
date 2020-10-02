@@ -47,17 +47,17 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:3
+            limit:4
             sort:
                 # points:-1
                 ups:-1
                 # _timestamp:-1
                 # views:-1
     else
-        match.tags = $in:['life']
+        match.tags = $in:['dao']
         # console.log match
         Docs.find match,
-            limit:3
+            limit:4
             sort:
                 _timestamp:-1
                 # points:-1
@@ -80,7 +80,11 @@ Meteor.publish 'dtags', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['life']
+        match.tags = $in:['dao']
+
+    count = Docs.find(match).count()
+    console.log count
+
 
     tag_cloud = Docs.aggregate [
         { $match: match }
@@ -89,7 +93,8 @@ Meteor.publish 'dtags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $limit: 7 }
+        { $match: count: $lt: count }
+        { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', tag_cloud
