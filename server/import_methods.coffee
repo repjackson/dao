@@ -1,10 +1,10 @@
 Meteor.methods
     search_reddit: (query)->
-        console.log 'searching reddit for', query
-        console.log 'type of query', typeof(query)
+        # console.log 'searching reddit for', query
+        # console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=0&limit=100&include_facets=false",(err,response)=>
+        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=100&include_facets=false",(err,response)=>
             # console.log response.data
             if err then console.log err
             else if response.data.data.dist > 1
@@ -75,7 +75,7 @@ Meteor.methods
         # )
 
     call_wiki: (query)->
-        console.log 'calling wiki', query
+        # console.log 'calling wiki', query
         # term = query.split(' ').join('_')
         # term = query[0]
         term = query

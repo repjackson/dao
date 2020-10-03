@@ -1,7 +1,8 @@
-body{
-    background-color: lightgrey !important;
-    transition: all 1s linear;
-     /*filter: invert(1) !important; */
+body {
+    background-color: rgba(0,0,0,.05) !important;
+    transition: all .2s linear;
+    /*filter: invert(1) !important; */
+    transition: all .2s ease !important;
 }
 .invert {
      filter: invert(1) !important; 
@@ -13,7 +14,7 @@ body{
     padding: 0px !important;
 }
 .label {
-    transition: all 1s ease !important;
+    transition: all .2s ease !important;
     margin-bottom: 2px !important;
     margin-top: 2px !important;
     border-radius: 10px !important;
@@ -32,7 +33,7 @@ input {
     margin-bottom: 2px !important;
 }
 .button {
-    transition: all 1s ease !important;
+    transition: all .2s ease !important;
     margin-bottom: 5px !important;
     border-radius: 10px !important;
 }
@@ -69,4 +70,27 @@ input {
 	/* padding-top: .2em; */
 	padding: .2em;
 	/*padding-left: 1em;*/
+}
+
+
+.pointer:hover {
+    cursor: pointer !important;
+    /* color: black !important; */
+    /* font-size: 130% !important; */
+    /*zoom: 110% !important;*/
+    /* padding-top: 5em !important; */
+    /*transform: scale(1.) !important;*/
+    z-index: 1000 !important;
+    /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
+    /*text-shadow: 0 0 3px grey !important;*/
+    filter: drop-shadow(0px 0px 5px grey);    
+    transition: all .25s ease !important; 
+}
+.zoom:hover {
+    z-index: 1000 !important;
+    transform: scale(1.05) !important;
+}
+.pointer:active {
+  box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
 }

@@ -49,7 +49,7 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:4
+            limit:3
             sort:
                 # points:-1
                 ups:-1
@@ -59,7 +59,7 @@ Meteor.publish 'docs', (
         match.tags = $in:['dao']
         # console.log match
         Docs.find match,
-            limit:4
+            limit:3
             sort:
                 _timestamp:-1
                 # points:-1
@@ -97,7 +97,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: count }
-        { $limit: 5 }
+        { $limit: 6 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', tag_cloud

@@ -73,9 +73,9 @@ Template.tag_selector.events
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.setTimeout( ->
-            Session.set('toggle',!Session.get('toggle'))
-        , 7000)
+        # Meteor.setTimeout( ->
+        #     Session.set('toggle',!Session.get('toggle'))
+        # , 7000)
             
 Template.reddit_card.helpers
     key_value_is: -> Template.currentData()["#{@key}"] is @value
@@ -101,9 +101,9 @@ Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.setTimeout( ->
-            Session.set('toggle',!Session.get('toggle'))
-        , 7000)
+        # Meteor.setTimeout( ->
+        #     Session.set('toggle',!Session.get('toggle'))
+        # , 7000)
 
             
 Template.home.helpers

@@ -1,9 +1,9 @@
 template(name='home')
     .ui.stackable.grid
-        .sixteen.wide.center.aligned.column
+        .sixteen.wide.column
             each selected_tags
                 +unselect_tag
-            .ui.left.icon.large.transparent.input 
+            .ui.left.icon.pointer.zoom.input 
                 i.search.icon
                 input.search_title(type='text' autofocus='')
             each tag_results
@@ -15,7 +15,7 @@ template(name='home')
                     +reddit_card
         else
             each docs
-                .four.wide.column
+                .five.wide.column
                     +reddit_card
                         // blockquote(class="reddit-card")
                         //     a(href="https://www.reddit.com#{permalink}") 
@@ -28,7 +28,7 @@ template(name='home')
 
 
 template(name='reddit_card')
-    .medscroll
+    .medscroll.pointer
         blockquote(class="reddit-card")
             a(href="https://www.reddit.com#{permalink}") 
                 |#{title}
@@ -50,13 +50,13 @@ template(name='reddit_card')
     //     +watson_view
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.big.image.label.select_term(href='#')
+    a.unselect_tag.ui.black.big.image.label.pointer.zoom.select_term(href='#')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         | #{this}
 
 template(name='tag_selector')
-    a.ui.big.image.basic.label.select_tag.select_term(href='#')
+    a.ui.big.image.basic.label.pointer.zoom.select_tag.select_term(href='#')
         // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
         if term
