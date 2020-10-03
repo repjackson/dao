@@ -67,12 +67,14 @@ Template.tag_selector.helpers
             title:@name
 Template.tag_selector.events
     'click .select_tag': -> 
-        selected_tags.push @name
+        # selected_tags.push @name
         # if Meteor.user()
-        Meteor.call 'call_wiki', @name, ->
+        # Meteor.call 'call_wiki', @name, ->
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+        # Meteor.call 'search_reddit', selected_tags.array(), ->
+        # Meteor.call 'search_stack', selected_tags.array(), ->
+        Meteor.call 'search_stack', @name, ->
         # Meteor.setTimeout( ->
         #     Session.set('toggle',!Session.get('toggle'))
         # , 7000)
@@ -177,6 +179,8 @@ Template.home.events
                 # if Meteor.user()
                 # Meteor.call 'search_ph', selected_tags.array(), ->
                 Meteor.call 'call_wiki', search, ->
+                # Meteor.call 'search_stack', search, ->
+
                 Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('query','')
                 search = $('.search_title').val('')

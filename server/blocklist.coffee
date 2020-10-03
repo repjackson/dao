@@ -212,6 +212,23 @@
 
 
 Meteor.methods
+    flatten: =>
+        match = {
+            model:'reddit'
+            flattened:$ne:true
+        }
+        todo = Docs.find(match,{limit:100})
+        # console.log 'unflattened', Docs.find(match).count()
+        for doc in todo.fetch()
+            console.log 'before',doc.tags
+            new_tags = _.flatten(doc.tags)
+            console.log 'after',new_tags
+            Docs.update doc._id,
+                $set:
+                    flattened:true
+                    tags:new_tags
+
+    
     clear_blocklist: =>
         # console.log @blocklist
         for black_tag in @blocklist

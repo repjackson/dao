@@ -1,6 +1,26 @@
 Meteor.methods
+    # search_stack: (query)->
+    #     console.log 'searching stack for', typeof(query),query
+    #     # HTTP.get "https://api.stackexchange.com/docs/comments#order=desc&min=10&sort=votes&filter=default&site=askubuntu",(err,res)=>
+    #     # HTTP.get "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=meteor&site=stackoverflow",{gzip: true},(err,res)=>
+    #     # HTTP.get "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=meteor&site=stackoverflow",{headers:{'Content-Type': 'application/json'}},(err,res)=>
+    #     # HTTP.get "https://api.stackexchange.com/2.2/search?order=desc&sort=activity&intitle=meteor&site=stackoverflow",{headers:{"Accept-Encoding": "gzip"}},(err,res)=>
+    #     # HTTP.get "https://api.stackexchange.com/docs/sites#filter=default",(err,res)=>
+    #     # HTTP.get "https://api.stackexchange.com/2.2/sites",{headers:{"Accept-Encoding": "gzip"}},(err,res)->
+    #     HTTP.get "https://api.stackexchange.com/2.2/sites",{headers:{'Accept-Encoding': 'gzip'}},(err,res)->
+    #         # console.log JSON.parse(res.content)
+    #         # console.log typeof(res)
+    #         console.log 'res',res
+    #         # stringify = JSON.stringify(res);
+    #         # obj = JSON.parse(res.content);
+    #         # console.log 'obj', obj
+    #         # console.log 
+    #         # console.log res
+    #         # console.log res.content
+    #         # if err then console.log err
+    #         # else if response.data.data.dist > 1
     search_reddit: (query)->
-        # console.log 'searching reddit for', query
+        console.log 'searching reddit for', query
         # console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
@@ -24,8 +44,9 @@ Meteor.methods
                         # added_tags.push data.domain.toLowerCase()
                         added_tags.push data.subreddit.toLowerCase()
                         # added_tags.push data.author.toLowerCase()
-                        # added_tags = _.flatten(added_tags)
-                        # console.log 'added_tags', added_tags
+                        # console.log 'added_tags1', added_tags
+                        added_tags = _.flatten(added_tags)
+                        # console.log 'added_tags2', added_tags
                         # console.log 'ups?', data.ups
                         reddit_post =
                             reddit_id: data.id
@@ -54,7 +75,7 @@ Meteor.methods
                             #         $unset: tags: 1
                             # console.log 'existing ', reddit_post.title
                             Docs.update existing_doc._id,
-                                $addToSet: tags: $each: query
+                                $addToSet: tags: $each: added_tags
 
                             # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
                         unless existing_doc
