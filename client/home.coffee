@@ -34,11 +34,16 @@ Template.registerHelper 'to_percent', (number)->
     (number*100).toFixed()
 
 
+Template.registerHelper 'key_value_is', (key,value)->
+    @["#{key}"] is value
+
 Template.registerHelper 'is_image', ()->
     @domain in ['i.imgur.com','i.reddit.com','i.redd.it']
 
 Template.registerHelper 'is_video', ()->
     @domain in ['youtube.com','youtu.be','vimeo.com']
+Template.registerHelper 'is_twitter', ()->
+    @domain in ['twitter.com','mobile.twitter.com','vimeo.com']
 
 
 Template.reddit_card.events

@@ -85,7 +85,7 @@ Meteor.publish 'docs', (
         match.model = $all: selected_models
     
     if view_mode is 'grid'
-        limit = 10
+        limit = 8
     else if view_mode is 'list'
         limit = 10
     else if view_mode is 'single'

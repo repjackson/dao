@@ -21,6 +21,14 @@ template(name='home')
                     i.th.icon
                 .ui.circular.compact.icon.button.set_single
                     i.square.icon
+                .ui.circular.compact.icon.disabled.button.set_single
+                    i.twitter.icon
+                .ui.circular.compact.icon.disabled.button.set_single
+                    i.youtube.icon
+                .ui.circular.compact.icon.disabled.button.set_single
+                    i.reddit.icon
+                .ui.circular.compact.icon.disabled.button.set_single
+                    i.wikipedia.icon
                 // .ui.circular.compact.icon.disabled.button.set_map
                 //     i.map.icon
                 // .ui.circular.compact.icon.button.set_porn
@@ -126,6 +134,16 @@ template(name='home')
                                 else
                                     img.ui.image(src=url)
                                 .content
+                                    if is_twitter
+                                        blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
+                                            p(lang='en' dir='ltr')
+                                                |#{title}
+                                                // | No, Joe. The "establishment" are the 60 billionaires who are funding your campaign and the corporate-funded super PACs that are spending millions on negative ads attacking me. 
+                                                a(href='https://t.co/XDB8OwJB1L') https://t.co/XDB8OwJB1L
+                                            | — Bernie Sanders (@BernieSanders) 
+                                            a(href=url) March 4, 2020
+                                        script(async='' src='https://platform.twitter.com/widgets.js' charset='utf-8')
+
                                     // .ui.header #{title}
                                     // |!{rd.selftext}
                                     blockquote(class="reddit-card")
@@ -206,13 +224,13 @@ template(name='reddit_card')
     //     +watson_view
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.large.image.label.select_term(href='#')
+    a.unselect_tag.ui.black.big.image.label.select_term(href='#')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.large.image.basic.label.select_tag.select_term(href='#')
+    a.ui.big.image.basic.label.select_tag.select_term(href='#')
         // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
         if term
