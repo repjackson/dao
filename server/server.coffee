@@ -31,6 +31,29 @@ Meteor.publish 'doc_by_title', (title)->
         model:'wikipedia'
 
 
+Meteor.publish 'doc_count', (
+    selected_tags
+    selected_domains
+    selected_authors
+    view_mode
+    )->
+    match = {}
+    match.model = $in:['reddit']
+    # match.model = 'wikipedia'
+    if selected_tags.length > 0 
+        match.tags = $all: selected_tags
+    else
+        match.tags = $in:['dao']
+
+    if selected_domains.length > 0 
+        match.domain = $all: selected_domains
+    if selected_authors.length > 0 
+        match.author = $all: selected_authors
+    Counts.publish this, 'result_counter', Docs.find(match)
+    return undefined    # otherwise coffeescript returns a Counts.publish
+                      # handle when Meteor expects a Mongo.Cursor object.
+
+
 Meteor.publish 'docs', (
     selected_tags
     toggle
@@ -52,7 +75,7 @@ Meteor.publish 'docs', (
     else if view_mode is 'list'
         limit = 10
     else if view_mode is 'single'
-        limit = 1
+        limit = 3
     else
         limit = 5
     

@@ -47,7 +47,12 @@ Template.reddit_card.events
     #         # console.log tag
 
 Template.home.onCreated ->
-    # @autorun -> Meteor.subscribe('me')
+    @autorun -> Meteor.subscribe('doc_count',
+        selected_tags.array()
+        selected_domains.array()
+        selected_authors.array()
+        Session.get('view_mode')
+        )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('toggle')
@@ -147,14 +152,23 @@ Template.home.helpers
 
         Docs.find(match).count() is 1
 
-
-
+    doc_count: -> Counts.get('result_counter') 
     docs: ->
         match = {model:$in:['reddit']}
         # match = {model:'post'}
         if selected_tags.array().length>0
             match.tags = $all:selected_tags.array()
         # cur = Docs.find match
+        if Session.equals('view_mode','grid')
+            limit = 10
+        else if Session.equals('view_mode','list')
+            limit = 10
+        else if Session.equals('view_mode','single')
+            limit = 1
+        else
+            limit = 1
+
+     
         Docs.find match,
             sort:
                 # points:-1
@@ -162,7 +176,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            # limit:1
+            limit:limit
         # if cur.count() is 1
         # Docs.find match
 

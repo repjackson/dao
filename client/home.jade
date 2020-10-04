@@ -14,18 +14,22 @@ template(name='home')
                     +tag_selector
         .row
             .four.wide.right.aligned.column
+                .ui.header #{doc_count} docs
                 .ui.circular.compact.icon.button.set_list
                     i.list.icon
                 .ui.circular.compact.icon.button.set_grid
                     i.th.icon
                 .ui.circular.compact.icon.button.set_single
                     i.square.icon
+                .ui.circular.compact.icon.disabled.button.set_map
+                    i.map.icon
                 // .ui.circular.compact.button
                 //     |1
                 // .ui.circular.compact.button
                 //     |5
                 // .ui.circular.compact.button
                 //     |10
+                div
                 .ui.inline.header
                     i.globe.icon
                     |domains
@@ -59,16 +63,36 @@ template(name='home')
                 .spacer
                 // +session_boolean_toggle key='view_sources' label='sources' icon='database'
                 // if session_is 'view_sources'
-            .twelve.wide.column
+            .twelve.wide.column.scrolling
                 if session_key_value 'view_mode' 'list'
                     each docs
-                        .ui.header #{title}
+                        img.ui.inline.small.image(src=url)
+                        .ui.inline.header #{title}
+                        .ui.horizontal.list
+                            .item #{domain}
+                            .item 
+                                i.thumbs.up.icon
+                                |#{ups}
+                            .item 
+                                i.reddit.icon
+                                |#{subreddit}
+                            a.item(href=url target='_window') #{url}
+                        .spacer
                 else if session_key_value 'view_mode' 'grid'
                     .ui.stackable.centered.cards
                         each docs
                             .ui.card
+                                img.ui.image(src=url)
                                 .content
                                     .ui.header #{title}
+                                    .ui.label #{domain}
+                                    .ui.label 
+                                        i.thumbs.up.outline.icon
+                                        |#{ups}
+                                    .ui.label 
+                                        i.reddit.icon
+                                        |#{subreddit}
+                                    a.item(href=url target='_window') #{url}
                 else
                     if one_post
                         each docs
@@ -89,14 +113,14 @@ template(name='home')
 
 
 template(name='reddit_card')
-    .ui.header #{title}
-    .medscroll
-        blockquote(class="reddit-card")
-            a(href="https://www.reddit.com#{permalink}") 
-                |#{title}
-            |from 
-            a(href="http://www.reddit.com/r/#{subreddit}") 
-                |r/#{subreddit}
+    // .ui.header #{title}
+    // .medscroll
+    blockquote(class="reddit-card")
+        a(href="https://www.reddit.com#{permalink}") 
+            |#{title}
+        |from 
+        a(href="http://www.reddit.com/r/#{subreddit}") 
+            |r/#{subreddit}
     script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
     a.ui.fluid.basic.button(href=url target='_window' title=url)
         i.external.icon
