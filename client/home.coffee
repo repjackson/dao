@@ -1,12 +1,14 @@
 
 @selected_tags = new ReactiveArray []
+@selected_authors = new ReactiveArray []
+@selected_domains = new ReactiveArray []
 
 Template.body.events
-    'click a:not(.select_term)': ->
-        $('.global_container')
-        .transition('fade out', 200)
-        .transition('fade in', 200)
-        # unless Meteor.user().invert_class is 'invert'
+    # 'click a:not(.select_term)': ->
+    #     $('.global_container')
+    #     .transition('fade out', 200)
+    #     .transition('fade in', 200)
+    #     # unless Meteor.user().invert_class is 'invert'
 
 Template.registerHelper 'calculated_size', (metric) ->
     # console.log 'metric', metric
@@ -47,14 +49,17 @@ Template.reddit_card.events
 Template.home.onCreated ->
     # @autorun -> Meteor.subscribe('me')
     @autorun => Meteor.subscribe('dtags',
-        # Session.get('query')
         selected_tags.array()
+        Session.get('query')
         Session.get('toggle')
+        selected_domains.array()
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
         Session.get('toggle')
-        # Session.get('query')
+        Session.get('query')
+        selected_authors.array()
+        selected_domains.array()
         )
 
     
@@ -108,7 +113,29 @@ Template.unselect_tag.events
         # , 7000)
 
             
+            
 Template.home.helpers
+    selected_authors: -> selected_authors.array()
+    author_results: ->
+        doc_count = Docs.find().count()
+        if 0 < doc_count < 3 
+            author_results.find({ 
+                count:$lt:doc_count 
+            })
+        else 
+            author_results.find()
+            
+    selected_domains: -> selected_domains.array()
+    domain_results: ->
+        doc_count = Docs.find().count()
+        if 0 < doc_count < 3 
+            domain_results.find({ 
+                count:$lt:doc_count 
+            })
+        else 
+            domain_results.find()
+            
+            
     many_tags: -> selected_tags.array().length > 1
     one_post: ->
         match = {model:$in:['reddit']}
@@ -165,6 +192,17 @@ Template.home.events
     #     Docs.remove @_id
 
     'click #clear_tags': -> selected_tags.clear()
+
+    'click .select_author': -> selected_authors.push @name
+    'click .unselect_author': -> selected_authors.remove @valueOf()
+    'click #clear_authors': -> selected_authors.clear()
+
+    'click .select_domain': -> selected_domains.push @name
+    'click .unselect_domain': -> selected_domains.remove @valueOf()
+    'click #clear_domains': -> selected_domains.clear()
+
+
+
 
 
     'click .search_title': (e,t)->

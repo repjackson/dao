@@ -2,6 +2,11 @@
 
 @Tags = new Meteor.Collection 'tags'
 @Tag_results = new Meteor.Collection 'tag_results'
+@source_results = new Meteor.Collection 'source_results'
+@domain_results = new Meteor.Collection 'domain_results'
+@author_results = new Meteor.Collection 'author_results'
+
+
 
 Docs.before.insert (userId, doc)->
     # if Meteor.user()
