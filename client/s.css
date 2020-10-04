@@ -1,10 +1,14 @@
 body {
-    background-color: rgba(0,0,0,.05) !important;
+    background-color: rgba(0,0,0,.85) !important;
     transition: all .2s linear;
-    /*filter: invert(1) !important; */
+    filter: invert(1) !important; 
     transition: all .2s ease !important;
 }
 .invert {
+     filter: invert(1) !important; 
+    
+}
+img {
      filter: invert(1) !important; 
     
 }

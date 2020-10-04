@@ -16,19 +16,21 @@ template(name='home')
                 //     .four.wide.right.aligned.column
                 .ui.inline.small.header #{doc_count} results
                 .ui.circular.compact.icon.button.set_list
-                    i.list.icon
+                    i.large.list.icon
                 .ui.circular.compact.icon.button.set_grid
-                    i.th.icon
+                    i.large.th.icon
                 .ui.circular.compact.icon.button.set_single
-                    i.square.icon
-                .ui.circular.compact.icon.disabled.button.set_single
-                    i.twitter.icon
-                .ui.circular.compact.icon.disabled.button.set_single
-                    i.youtube.icon
-                .ui.circular.compact.icon.disabled.button.set_single
-                    i.reddit.icon
-                .ui.circular.compact.icon.disabled.button.set_single
-                    i.wikipedia.icon
+                    i.large.square.icon
+                .ui.circular.compact.icon.large.button.set_single
+                    i.large.twitter.icon
+                .ui.circular.compact.icon.large.button.set_single
+                    i.large.youtube.icon
+                .ui.circular.compact.icon.large.button.set_single
+                    i.large.picture.icon
+                .ui.circular.compact.icon.large.button.set_single
+                    i.large.reddit.icon
+                .ui.circular.compact.icon.large.button.set_single
+                    i.large.wikipedia.icon
                 // .ui.circular.compact.icon.disabled.button.set_map
                 //     i.map.icon
                 // .ui.circular.compact.icon.button.set_porn
@@ -144,7 +146,7 @@ template(name='home')
                                             a(href=url) March 4, 2020
                                         script(async='' src='https://platform.twitter.com/widgets.js' charset='utf-8')
 
-                                    // .ui.header #{title}
+                                    .ui.header #{title}
                                     // |!{rd.selftext}
                                     blockquote(class="reddit-card")
                                         a(href="https://www.reddit.com#{permalink}") 
@@ -200,13 +202,14 @@ template(name='call_watson')
 template(name='reddit_card')
     // .ui.header #{title}
     // .medscroll
-    blockquote(class="reddit-card")
-        a(href="https://www.reddit.com#{permalink}") 
-            |#{title}
-        |from 
-        a(href="http://www.reddit.com/r/#{subreddit}") 
-            |r/#{subreddit}
-    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+    .invert
+        blockquote(class="reddit-card")
+            a(href="https://www.reddit.com#{permalink}") 
+                |#{title}
+            |from 
+            a(href="http://www.reddit.com/r/#{subreddit}") 
+                |r/#{subreddit}
+        script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
     a.ui.fluid.basic.circular.button(href=url target='_window' title=url)
         i.external.icon
         |#{domain}
