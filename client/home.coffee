@@ -34,19 +34,33 @@ Template.registerHelper 'to_percent', (number)->
     (number*100).toFixed()
 
 
+Template.registerHelper 'is_image', ()->
+    @domain in ['i.imgur.com','i.reddit.com','i.redd.it']
+
+Template.registerHelper 'is_video', ()->
+    @domain in ['youtube.com','youtu.be','vimeo.com']
+
 
 Template.reddit_card.events
-    # 'click .tagger': (e,t)->
-    #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
-    # 'keyup .tag_post': (e,t)->
-    #     # console.log 
-    #     if e.which is 13
-    #         # $(e.currentTarget).closest('.button')
-    #         tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
-    #         Docs.update @_id,
-    #             $addToSet: tags: tag
-    #         $(e.currentTarget).closest('.tag_post').val('')
-    #         # console.log tag
+    'click .tagger': (e,t)->
+        Meteor.call 'call_watson', @_id, 'url', 'url', ->
+    'keyup .tag_post': (e,t)->
+        # console.log 
+        if e.which is 13
+            # $(e.currentTarget).closest('.button')
+            tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
+            Docs.update @_id,
+                $addToSet: tags: tag
+            $(e.currentTarget).closest('.tag_post').val('')
+            # console.log tag
+    'click .add_tag': -> 
+        selected_tags.push @valueOf()
+        # if Meteor.user()
+        # Meteor.call 'call_wiki', @valueOf, ->
+            # Meteor.call 'calc_term', @title, ->
+            # Meteor.call 'omega', @title, ->
+            
+        Meteor.call 'search_reddit', selected_tags.array(), ->
 
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
@@ -88,6 +102,7 @@ Template.tag_selector.helpers
             title:@name
 Template.tag_selector.events
     'click .select_tag': -> 
+        # results.update
         selected_tags.push @name
         # if Meteor.user()
         Meteor.call 'call_wiki', @name, ->
@@ -99,18 +114,22 @@ Template.tag_selector.events
         # Meteor.setTimeout( ->
         #     Session.set('toggle',!Session.get('toggle'))
         # , 7000)
+       
+Template.pull_reddit.events
+    'click .pull': -> 
+        Meteor.call 'get_reddit_post', @_id, @reddit_id, ->
+        # Meteor.call 'search_stack', selected_tags.array(), ->
+       
+       
+Template.call_watson.events
+    'click .pull': -> 
+        Meteor.call 'call_watson', @_id, 'url','url', ->
+        # Meteor.call 'search_stack', selected_tags.array(), ->
+       
+       
             
 Template.reddit_card.helpers
     key_value_is: -> Template.currentData()["#{@key}"] is @value
-# Template.reddit_card.events
-#     'click .add_tag': -> 
-#         selected_tags.push @valueOf()
-#         # if Meteor.user()
-#         # Meteor.call 'call_wiki', @valueOf, ->
-#             # Meteor.call 'calc_term', @title, ->
-#             # Meteor.call 'omega', @title, ->
-            
-#         Meteor.call 'search_reddit', selected_tags.array(), ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
@@ -124,9 +143,9 @@ Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.setTimeout( ->
-        #     Session.set('toggle',!Session.get('toggle'))
-        # , 7000)
+        Meteor.setTimeout( ->
+            Session.set('toggle',!Session.get('toggle'))
+        , 7000)
 
             
             

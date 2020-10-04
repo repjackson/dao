@@ -32,6 +32,11 @@ input {
     margin-top: 2px !important;
     margin-bottom: 2px !important;
 }
+.rounded.image {
+    transition: all .2s ease !important;
+    margin: 5px !important;
+    border-radius: 10px !important;
+}
 .button {
     transition: all .2s ease !important;
     margin-bottom: 5px !important;
