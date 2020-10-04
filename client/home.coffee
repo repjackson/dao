@@ -67,14 +67,14 @@ Template.tag_selector.helpers
             title:@name
 Template.tag_selector.events
     'click .select_tag': -> 
-        # selected_tags.push @name
+        selected_tags.push @name
         # if Meteor.user()
-        # Meteor.call 'call_wiki', @name, ->
+        Meteor.call 'call_wiki', @name, ->
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
-        # Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
         # Meteor.call 'search_stack', selected_tags.array(), ->
-        Meteor.call 'search_stack', @name, ->
+        # Meteor.call 'search_stack', @name, ->
         # Meteor.setTimeout( ->
         #     Session.set('toggle',!Session.get('toggle'))
         # , 7000)
@@ -190,3 +190,26 @@ Template.home.events
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
+
+Template.registerHelper 'session_is', (key)-> Session.get(key)
+
+
+Template.session_boolean_toggle.events
+    'click .toggle_session_key': ->
+        console.log @key
+        Session.set(@key, !Session.get(@key))
+
+Template.session_boolean_toggle.helpers
+    calculated_class: ->
+        res = ''
+        # console.log @
+        if @classes
+            res += @classes
+        if Session.get(@key)
+            res += ' black'
+        else
+            res += ' basic'
+
+        # console.log res
+        res
+

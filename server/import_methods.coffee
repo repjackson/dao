@@ -42,7 +42,7 @@ Meteor.methods
                         added_tags = [query]
                         # added_tags = [query]
                         # added_tags.push data.domain.toLowerCase()
-                        added_tags.push data.subreddit.toLowerCase()
+                        # added_tags.push data.subreddit.toLowerCase()
                         # added_tags.push data.author.toLowerCase()
                         # console.log 'added_tags1', added_tags
                         added_tags = _.flatten(added_tags)
