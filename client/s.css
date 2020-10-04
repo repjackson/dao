@@ -35,7 +35,7 @@ input {
 .button {
     transition: all .2s ease !important;
     margin-bottom: 5px !important;
-    border-radius: 10px !important;
+    /*border-radius: 10px !important;*/
 }
 
 .scrolling{
@@ -86,7 +86,7 @@ input {
     filter: drop-shadow(0px 0px 5px grey);    
     transition: all .25s ease !important; 
 }
-.zoom:hover {
+.button:hover {
     z-index: 1000 !important;
     transform: scale(1.05) !important;
 }

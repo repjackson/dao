@@ -54,6 +54,7 @@ Template.home.onCreated ->
         Session.get('query')
         selected_domains.array()
         selected_authors.array()
+        Session.get('view_mode')
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
@@ -61,6 +62,7 @@ Template.home.onCreated ->
         Session.get('query')
         selected_domains.array()
         selected_authors.array()
+        Session.get('view_mode')
         )
 
     
@@ -160,7 +162,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:1
+            # limit:1
         # if cur.count() is 1
         # Docs.find match
 
@@ -191,7 +193,10 @@ Template.home.events
     # 'click .delete': -> 
     #     console.log @
     #     Docs.remove @_id
-
+    'click .set_grid': -> Session.set('view_mode','grid')
+    'click .set_list': -> Session.set('view_mode','list')
+    'click .set_single': -> Session.set('view_mode','single')
+    
     'click #clear_tags': -> selected_tags.clear()
 
     'click .select_author': -> selected_authors.push @name
@@ -231,6 +236,7 @@ Template.home.events
         #         selected_tags.pop()
 
 Template.registerHelper 'session_is', (key)-> Session.get(key)
+Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)
 
 
 Template.session_boolean_toggle.events

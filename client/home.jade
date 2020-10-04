@@ -2,6 +2,9 @@ template(name='home')
     .ui.stackable.grid
         .row
             .sixteen.wide.column
+                if selected_tags
+                    a#clear_tags.ui.black.icon.compact.large.button.select_term
+                        i.remove.icon
                 each selected_tags
                     +unselect_tag
                 .ui.left.icon.input 
@@ -11,6 +14,18 @@ template(name='home')
                     +tag_selector
         .row
             .four.wide.right.aligned.column
+                .ui.circular.compact.icon.button.set_list
+                    i.list.icon
+                .ui.circular.compact.icon.button.set_grid
+                    i.th.icon
+                .ui.circular.compact.icon.button.set_single
+                    i.square.icon
+                // .ui.circular.compact.button
+                //     |1
+                // .ui.circular.compact.button
+                //     |5
+                // .ui.circular.compact.button
+                //     |10
                 .ui.inline.header
                     i.globe.icon
                     |domains
@@ -23,18 +38,7 @@ template(name='home')
                 each domain_results
                     a.ui.compact.circular.button.select_domain.select_term(href='#')
                         strong #{name}
-                // .ui.circular.compact.icon.button
-                //     i.list.icon
-                // .ui.circular.compact.icon.button
-                //     i.th.icon
-                // .ui.circular.compact.icon.button
-                //     i.square.icon
-                // .ui.circular.compact.button
-                //     |1
-                // .ui.circular.compact.button
-                //     |5
-                // .ui.circular.compact.button
-                //     |10
+                        small #{count}
                 // .ui.stackable.centered.grid
                 // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
                 // if session_is 'view_authors'
@@ -51,29 +55,41 @@ template(name='home')
                 each author_results
                     a.ui.compact.circular.button.select_author.select_term(href='#')
                         strong #{name}
+                        small #{count}
                 .spacer
                 // +session_boolean_toggle key='view_sources' label='sources' icon='database'
                 // if session_is 'view_sources'
             .twelve.wide.column
-                if one_post
+                if session_key_value 'view_mode' 'list'
                     each docs
-                        .sixteen.wide.column
-                            +reddit_card
+                        .ui.header #{title}
+                else if session_key_value 'view_mode' 'grid'
+                    .ui.stackable.centered.cards
+                        each docs
+                            .ui.card
+                                .content
+                                    .ui.header #{title}
                 else
-                    each docs
-                        .sixteen.wide.column
-                            +reddit_card
-                                // blockquote(class="reddit-card")
-                                //     a(href="https://www.reddit.com#{permalink}") 
-                                //         |#{title}
-                                //     |from 
-                                //     a(href="http://www.reddit.com/r/#{subreddit}") 
-                                //         |r/#{subreddit}
-                                // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
+                    if one_post
+                        each docs
+                            .sixteen.wide.column
+                                +reddit_card
+                    else
+                        each docs
+                            .sixteen.wide.column
+                                +reddit_card
+                                    // blockquote(class="reddit-card")
+                                    //     a(href="https://www.reddit.com#{permalink}") 
+                                    //         |#{title}
+                                    //     |from 
+                                    //     a(href="http://www.reddit.com/r/#{subreddit}") 
+                                    //         |r/#{subreddit}
+                                    // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
                     
 
 
 template(name='reddit_card')
+    .ui.header #{title}
     .medscroll
         blockquote(class="reddit-card")
             a(href="https://www.reddit.com#{permalink}") 
@@ -111,6 +127,7 @@ template(name='tag_selector')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
         | #{name}
+        small #{count}
 
 
 

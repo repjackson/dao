@@ -37,6 +37,7 @@ Meteor.publish 'docs', (
     query=''
     selected_domains
     selected_authors
+    view_mode
     )->
     match = {}
     match.model = $in:['reddit']
@@ -45,6 +46,16 @@ Meteor.publish 'docs', (
         match.domain = $all: selected_domains
     if selected_authors.length > 0 
         match.author = $all: selected_authors
+    
+    if view_mode is 'grid'
+        limit = 10
+    else if view_mode is 'list'
+        limit = 10
+    else if view_mode is 'single'
+        limit = 1
+    else
+        limit = 5
+    
     
     # match.model = 'post'
     # if Meteor.user()
@@ -55,7 +66,7 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:3
+            limit:limit
             sort:
                 # points:-1
                 ups:-1
@@ -65,7 +76,7 @@ Meteor.publish 'docs', (
         match.tags = $in:['dao']
         # console.log match
         Docs.find match,
-            limit:3
+            limit:limit
             sort:
                 _timestamp:-1
                 # points:-1
@@ -78,6 +89,7 @@ Meteor.publish 'dtags', (
     query=''
     selected_domains
     selected_authors
+    view_mode
     )->
     self = @
     match = {}
@@ -96,6 +108,13 @@ Meteor.publish 'dtags', (
         match.domain = $all: selected_domains
     if selected_authors.length > 0 
         match.author = $all: selected_authors
+
+    if view_mode is 'grid'
+        limit = 10
+    else if view_mode is 'list'
+        limit = 10
+    else if view_mode is 'single'
+        limit = 1
 
     count = Docs.find(match).count()
     console.log count
