@@ -2,12 +2,12 @@ template(name='home')
     .ui.stackable.grid
         .row
             .sixteen.wide.column
-                if selected_tags
-                    a#clear_tags.ui.black.icon.compact.large.button.select_term
-                        i.remove.icon
+                // if selected_tags
+                //     a#clear_tags.ui.black.icon.compact.large.button.select_term
+                //         i.remove.icon
                 each selected_tags
                     +unselect_tag
-                .ui.left.icon.input 
+                .ui.left.icon.small.input 
                     i.search.icon
                     input.search_title(type='text' autofocus='')
                 each tag_results
@@ -32,9 +32,9 @@ template(name='home')
                 // .ui.circular.compact.button
                 //     |10
                 // div
-                .ui.inline.header
-                    i.globe.icon
-                    |domains
+                // .ui.inline.header
+                i.globe.large.grey.icon
+                // |domains
                 if selected_domains
                     a#clear_domains.ui.black.icon.compact.large.circular.button.select_term
                         i.remove.icon
@@ -42,29 +42,29 @@ template(name='home')
                         a.unselect_domain.ui.black.compact.large.circular.button.select_termn
                             strong #{this}
                 each domain_results
-                    a.ui.compact.circular.button.select_domain.select_term(href='#')
+                    a.ui.compact.circular.basic.button.select_domain.select_term(href='#')
                         strong #{name}
                         small #{count}
                 // .ui.stackable.centered.grid
                 // div
-                .ui.inline.header
-                    i.reddit.icon
-                    |subreddits
-                if selected_subreddits
-                    a#clear_subreddits.ui.black.icon.compact.large.circular.button.select_term
-                        i.remove.icon
-                    each selected_subreddits
-                        a.unselect_subreddit.ui.black.compact.large.circular.button.select_termn
-                            strong #{this}
-                each subreddit_results
-                    a.ui.compact.circular.button.select_subreddit.select_term(href='#')
-                        strong #{name}
-                        small #{count}
-                // .ui.stackable.centered.grid
-                // div
-                .ui.inline.header
-                    i.reddit.icon
-                    |models
+                // .ui.inline.header
+                //     i.reddit.icon
+                //     |subreddits
+                // if selected_subreddits
+                //     a#clear_subreddits.ui.black.icon.compact.large.circular.button.select_term
+                //         i.remove.icon
+                //     each selected_subreddits
+                //         a.unselect_subreddit.ui.black.compact.large.circular.button.select_termn
+                //             strong #{this}
+                // each subreddit_results
+                //     a.ui.compact.circular.button.select_subreddit.select_term(href='#')
+                //         strong #{name}
+                //         small #{count}
+                // // .ui.stackable.centered.grid
+                // // div
+                // .ui.inline.header
+                i.database.large.grey.icon
+                // |modelss
                 if selected_models
                     a#clear_models.ui.black.icon.compact.large.circular.button.select_term
                         i.remove.icon
@@ -72,7 +72,7 @@ template(name='home')
                         a.unselect_model.ui.black.compact.large.circular.button.select_termn
                             strong #{this}
                 each model_results
-                    a.ui.compact.circular.button.select_model.select_term(href='#')
+                    a.ui.compact.circular.basic.button.select_model.select_term(href='#')
                         strong #{name}
                         small #{count}
                 // .ui.stackable.centered.grid
@@ -108,11 +108,11 @@ template(name='home')
                                     .ui.label
                                         i.thumbs.up.outline.grey.icon
                                         |#{ups}
-                                    .ui.label
-                                        i.reddit.icon
-                                        |#{subreddit}
+                                    // .ui.label
+                                    //     i.reddit.icon
+                                    //     |#{subreddit}
                                     a.ui.label(href=url target='_window') #{url}
-                                    +pull_reddit
+                                    // +pull_reddit
                                     +call_watson
                                     each tags 
                                         .ui.label #{this}
@@ -126,19 +126,30 @@ template(name='home')
                                 else
                                     img.ui.image(src=url)
                                 .content
-                                    .ui.header #{title}
+                                    // .ui.header #{title}
+                                    // |!{rd.selftext}
+                                    blockquote(class="reddit-card")
+                                        a(href="https://www.reddit.com#{permalink}") 
+                                            |#{title}
+                                        |from 
+                                        a(href="http://www.reddit.com/r/#{subreddit}") 
+                                            |r/#{subreddit}
+                                    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
                                     a.ui.label.set_domain #{domain}
-                                    .ui.label 
+    
+                                    .ui.basic.label 
                                         i.thumbs.up.outline.icon
                                         |#{ups}
-                                    .ui.label 
-                                        i.reddit.icon
-                                        |#{subreddit}
-                                    a.item(href=url target='_window') #{url}
-                                    +pull_reddit
+                                    // .ui.label 
+                                    //     i.reddit.icon
+                                    //     |#{subreddit}
+                                    .ui.large.circular.icon.basic.button(href=url target='_window' title=url)
+                                        // |#{url}
+                                        i.external.icon
+                                    // +pull_reddit
                                     +call_watson
                                     each tags 
-                                        .ui.label #{this}
+                                        .ui.small.basic.label.add_tag #{this}
                     // else if session_key_value 'view_mode' 'porn'
                     //     .ui.stackable.centered.cards
                     //         each docs
@@ -161,11 +172,11 @@ template(name='home')
                                     // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
                     
 template(name='pull_reddit')
-    .ui.circular.icon.button.pull
+    .ui.circular.icon.basic.button.pull
         i.reddit.icon
         
 template(name='call_watson')
-    .ui.circular.icon.button.pull
+    .ui.circular.icon.basic.button.pull
         i.dna.icon
 
 template(name='reddit_card')
@@ -178,7 +189,7 @@ template(name='reddit_card')
         a(href="http://www.reddit.com/r/#{subreddit}") 
             |r/#{subreddit}
     script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
-    a.ui.fluid.basic.button(href=url target='_window' title=url)
+    a.ui.fluid.basic.circular.button(href=url target='_window' title=url)
         i.external.icon
         |#{domain}
     |#{tags.length}
@@ -191,8 +202,8 @@ template(name='reddit_card')
     //     iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     .ui.icon.circular.button.tagger
         i.dna.icon
-    if watson
-        +watson_view
+    // if watson
+    //     +watson_view
 
 template(name='unselect_tag')
     a.unselect_tag.ui.black.large.image.label.select_term(href='#')

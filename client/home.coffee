@@ -1,8 +1,8 @@
 
 @selected_tags = new ReactiveArray []
-@selected_authors = new ReactiveArray []
+# @selected_authors = new ReactiveArray []
 @selected_domains = new ReactiveArray []
-@selected_subreddits = new ReactiveArray []
+# @selected_subreddits = new ReactiveArray []
 @selected_models = new ReactiveArray []
 
 Template.body.events
@@ -66,8 +66,8 @@ Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         selected_domains.array()
-        selected_authors.array()
-        selected_subreddits.array()
+        # selected_authors.array()
+        # selected_subreddits.array()
         selected_models.array()
         Session.get('view_mode')
         )
@@ -76,8 +76,8 @@ Template.home.onCreated ->
         Session.get('toggle')
         Session.get('query')
         selected_domains.array()
-        selected_authors.array()
-        selected_subreddits.array()
+        # selected_authors.array()
+        # selected_subreddits.array()
         selected_models.array()
         Session.get('view_mode')
         )
@@ -86,8 +86,8 @@ Template.home.onCreated ->
         Session.get('toggle')
         Session.get('query')
         selected_domains.array()
-        selected_authors.array()
-        selected_subreddits.array()
+        # selected_authors.array()
+        # selected_subreddits.array()
         selected_models.array()
         Session.get('view_mode')
         )
