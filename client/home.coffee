@@ -50,16 +50,17 @@ Template.home.onCreated ->
     # @autorun -> Meteor.subscribe('me')
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
-        Session.get('query')
         Session.get('toggle')
+        Session.get('query')
         selected_domains.array()
+        selected_authors.array()
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
         Session.get('toggle')
         Session.get('query')
-        selected_authors.array()
         selected_domains.array()
+        selected_authors.array()
         )
 
     
@@ -159,7 +160,7 @@ Template.home.helpers
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:10
+            limit:1
         # if cur.count() is 1
         # Docs.find match
 

@@ -11,27 +11,8 @@ template(name='home')
                     +tag_selector
         .row
             .four.wide.right.aligned.column
-                // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
-                // if session_is 'view_authors'
-                div
                 .ui.inline.header
-                    i.large.user.outline.icon
-                    |author
-                if selected_authors
-                    a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
-                        i.remove.icon
-                    each selected_authors
-                        a.unselect_author.ui.black.compact.large.circular.button.select_termn
-                            strong #{this}
-                    
-                each author_results
-                    a.ui.large.compact.circular.button.select_author.select_term(href='#')
-                        strong #{name}
-                div
-                // +session_boolean_toggle key='view_sources' label='sources' icon='database'
-                // if session_is 'view_sources'
-                .ui.inline.header
-                    i.large.thumbs.up.outline.icon
+                    i.globe.icon
                     |domains
                 if selected_domains
                     a#clear_domains.ui.black.icon.compact.large.circular.button.select_term
@@ -39,27 +20,56 @@ template(name='home')
                     each selected_domains
                         a.unselect_domain.ui.black.compact.large.circular.button.select_termn
                             strong #{this}
-                    
                 each domain_results
-                    a.ui.large.compact.circular.button.select_domain.select_term(href='#')
+                    a.ui.compact.circular.button.select_domain.select_term(href='#')
                         strong #{name}
+                // .ui.circular.compact.icon.button
+                //     i.list.icon
+                // .ui.circular.compact.icon.button
+                //     i.th.icon
+                // .ui.circular.compact.icon.button
+                //     i.square.icon
+                // .ui.circular.compact.button
+                //     |1
+                // .ui.circular.compact.button
+                //     |5
+                // .ui.circular.compact.button
+                //     |10
+                // .ui.stackable.centered.grid
+                // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
+                // if session_is 'view_authors'
+                .spacer
+                .ui.inline.header
+                    i.user.outline.icon
+                    |author
+                if selected_authors
+                    a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
+                        i.remove.icon
+                    each selected_authors
+                        a.unselect_author.ui.black.compact.large.circular.button.select_termn
+                            strong #{this}
+                each author_results
+                    a.ui.compact.circular.button.select_author.select_term(href='#')
+                        strong #{name}
+                .spacer
+                // +session_boolean_toggle key='view_sources' label='sources' icon='database'
+                // if session_is 'view_sources'
             .twelve.wide.column
-                .ui.stackable.centered.grid
-                    if one_post
-                        each docs
-                            .twelve.wide.column
-                                +reddit_card
-                    else
-                        each docs
-                            .five.wide.column
-                                +reddit_card
-                                    // blockquote(class="reddit-card")
-                                    //     a(href="https://www.reddit.com#{permalink}") 
-                                    //         |#{title}
-                                    //     |from 
-                                    //     a(href="http://www.reddit.com/r/#{subreddit}") 
-                                    //         |r/#{subreddit}
-                                    // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
+                if one_post
+                    each docs
+                        .sixteen.wide.column
+                            +reddit_card
+                else
+                    each docs
+                        .sixteen.wide.column
+                            +reddit_card
+                                // blockquote(class="reddit-card")
+                                //     a(href="https://www.reddit.com#{permalink}") 
+                                //         |#{title}
+                                //     |from 
+                                //     a(href="http://www.reddit.com/r/#{subreddit}") 
+                                //         |r/#{subreddit}
+                                // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
                     
 
 

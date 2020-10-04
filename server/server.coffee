@@ -34,11 +34,17 @@ Meteor.publish 'doc_by_title', (title)->
 Meteor.publish 'docs', (
     selected_tags
     toggle
-    # query=''
+    query=''
+    selected_domains
+    selected_authors
     )->
     match = {}
     match.model = $in:['reddit']
     # match.model = 'wikipedia'
+    if selected_domains.length > 0 
+        match.domain = $all: selected_domains
+    if selected_authors.length > 0 
+        match.author = $all: selected_authors
     
     # match.model = 'post'
     # if Meteor.user()
@@ -68,9 +74,10 @@ Meteor.publish 'docs', (
                     
 Meteor.publish 'dtags', (
     selected_tags
-    query=''
     toggle
+    query=''
     selected_domains
+    selected_authors
     )->
     self = @
     match = {}
@@ -87,6 +94,8 @@ Meteor.publish 'dtags', (
         match.tags = $in:['dao']
     if selected_domains.length > 0 
         match.domain = $all: selected_domains
+    if selected_authors.length > 0 
+        match.author = $all: selected_authors
 
     count = Docs.find(match).count()
     console.log count
@@ -114,7 +123,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', tag_cloud
@@ -134,7 +143,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_domains }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', domain_cloud
@@ -143,6 +152,25 @@ Meteor.publish 'dtags', (
             self.added 'domain_results', Random.id(),
                 name: domain.name
                 count: domain.count
+                index: i
+       
+        author_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "author": 1 }
+            # { $unwind: "$author" }
+            { $group: _id: "$author", count: $sum: 1 }
+            { $match: _id: $nin: selected_authors }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: count }
+            { $limit: 10 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # console.log 'cloud: ', author_cloud
+        # console.log 'author match', match
+        author_cloud.forEach (author, i) ->
+            self.added 'author_results', Random.id(),
+                name: author.name
+                count: author.count
                 index: i
        
     self.ready()

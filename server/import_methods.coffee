@@ -77,13 +77,13 @@ Meteor.methods
                             Docs.update existing_doc._id,
                                 $addToSet: tags: $each: added_tags
 
-                            # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
+                            Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
                         unless existing_doc
                             # console.log 'importing url', data.url
                             new_reddit_post_id = Docs.insert reddit_post
                             # Meteor.users.update Meteor.userId(),
                             #     $inc:points:1
-                            # Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
+                            Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
                             # console.log 'get post res', res
                     else
                         console.log 'NO found data'
@@ -94,6 +94,83 @@ Meteor.methods
         #     # len = 200
         #     console.log item.data
         # )
+
+    get_reddit_post: (doc_id, reddit_id, root)->
+        # console.log 'getting reddit post', doc_id, reddit_id
+        HTTP.get "http://reddit.com/by_id/t3_#{reddit_id}.json", (err,res)->
+            if err then console.error err
+            else
+                rd = res.data.data.children[0].data
+                # console.log rd
+                result =
+                    Docs.update doc_id,
+                        $set:
+                            rd: rd
+                # console.log result
+                # if rd.is_video
+                #     # console.log 'pulling video comments watson'
+                #     Meteor.call 'call_watson', doc_id, 'url', 'video', ->
+                # else if rd.is_image
+                #     # console.log 'pulling image comments watson'
+                #     Meteor.call 'call_watson', doc_id, 'url', 'image', ->
+                # else
+                #     Meteor.call 'call_watson', doc_id, 'url', 'url', ->
+                #     Meteor.call 'call_watson', doc_id, 'url', 'image', ->
+                #     # Meteor.call 'call_visual', doc_id, ->
+                if rd.selftext
+                    unless rd.is_video
+                        # if Meteor.isDevelopment
+                        #     console.log "self text", rd.selftext
+                        Docs.update doc_id, {
+                            $set:
+                                body: rd.selftext
+                        }, ->
+                        #     Meteor.call 'pull_site', doc_id, url
+                            # console.log 'hi'
+                if rd.selftext_html
+                    unless rd.is_video
+                        Docs.update doc_id, {
+                            $set:
+                                html: rd.selftext_html
+                        }, ->
+                            # Meteor.call 'pull_site', doc_id, url
+                            # console.log 'hi'
+                if rd.url
+                    unless rd.is_video
+                        url = rd.url
+                        # if Meteor.isDevelopment
+                        #     console.log "found url", url
+                        Docs.update doc_id, {
+                            $set:
+                                reddit_url: url
+                                url: url
+                        }, ->
+                            # Meteor.call 'call_watson', doc_id, 'url', 'url', ->
+                # update_ob = {}
+                if rd.preview
+                    if rd.preview.images[0].source.url
+                        thumbnail = rd.preview.images[0].source.url
+                else
+                    thumbnail = rd.thumbnail
+                Docs.update doc_id,
+                    $set:
+                        rd: rd
+                        url: rd.url
+                        # reddit_image:rd.preview.images[0].source.url
+                        thumbnail: thumbnail
+                        subreddit: rd.subreddit
+                        author: rd.author
+                        domain: rd.domain
+                        is_video: rd.is_video
+                        ups: rd.ups
+                        # downs: rd.downs
+                        over_18: rd.over_18
+                    # $addToSet:
+                    #     tags: $each: [rd.subreddit.toLowerCase()]
+                # console.log Docs.findOne(doc_id)
+
+
+
 
     call_wiki: (query)->
         # console.log 'calling wiki', query
