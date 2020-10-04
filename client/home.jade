@@ -12,9 +12,9 @@ template(name='home')
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
-        .row
-            .four.wide.right.aligned.column
-                .ui.header #{doc_count} docs
+                // .row
+                //     .four.wide.right.aligned.column
+                .ui.inline.header #{doc_count} results
                 .ui.circular.compact.icon.button.set_list
                     i.list.icon
                 .ui.circular.compact.icon.button.set_grid
@@ -31,7 +31,7 @@ template(name='home')
                 //     |5
                 // .ui.circular.compact.button
                 //     |10
-                div
+                // div
                 .ui.inline.header
                     i.globe.icon
                     |domains
@@ -46,7 +46,7 @@ template(name='home')
                         strong #{name}
                         small #{count}
                 // .ui.stackable.centered.grid
-                div
+                // div
                 .ui.inline.header
                     i.reddit.icon
                     |subreddits
@@ -61,7 +61,7 @@ template(name='home')
                         strong #{name}
                         small #{count}
                 // .ui.stackable.centered.grid
-                div
+                // div
                 .ui.inline.header
                     i.reddit.icon
                     |models
@@ -78,7 +78,7 @@ template(name='home')
                 // .ui.stackable.centered.grid
                 // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
                 // if session_is 'view_authors'
-                .spacer
+                // .spacer
                 .ui.inline.header
                     i.user.outline.icon
                     |author
@@ -95,7 +95,7 @@ template(name='home')
                 .spacer
                 // +session_boolean_toggle key='view_sources' label='sources' icon='database'
                 // if session_is 'view_sources'
-            .twelve.wide.column.scrolling
+            .sixteen.wide.column.scrolling
                 if session_key_value 'view_mode' 'list'
                     each docs
                         img.ui.inline.small.image(src=url)
@@ -114,7 +114,10 @@ template(name='home')
                     .ui.stackable.centered.cards
                         each docs
                             .ui.card
-                                img.ui.image(src=url)
+                                if watson.metadata.image
+                                    img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+                                else
+                                    img.ui.image(src=url)
                                 .content
                                     .ui.header #{title}
                                     .ui.label #{domain}

@@ -81,7 +81,7 @@ Template.home.onCreated ->
     
 Template.tag_selector.onCreated ->
     # console.log @
-    # @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    @autorun => Meteor.subscribe('doc_by_title', @data.name)
 Template.tag_selector.helpers
     term: ->
         Docs.findOne 

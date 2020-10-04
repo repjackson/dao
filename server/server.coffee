@@ -183,7 +183,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', tag_cloud
@@ -203,7 +203,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_domains }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 5 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', domain_cloud
@@ -223,7 +223,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_subreddits }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 5 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', subreddit_cloud
@@ -244,7 +244,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_models }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 5 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', model_cloud
@@ -265,7 +265,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_authors }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 5 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', author_cloud

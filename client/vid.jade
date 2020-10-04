@@ -2,8 +2,8 @@ template(name='vid_card')
     .ui.stackable.grid
         .sixteen.wide.center.aligned.column
             each thumbs
-                img.ui.small.superzoom.rounded.inline.image.mobile.hidden(src=src)    
-                img.ui.tiny.superzoom.rounded.inline.image.mobile.only(src=src)    
+                img.ui.small.zoom.rounded.inline.image.mobile.hidden(src=src)    
+                // img.ui.tiny.zoom.rounded.inline.image.mobile.only(src=src)    
             a(href="/m/vid/#{_id}/view")
                 // img.ui.image.rounded.pointer(src=thumb)
                 iframe(src="https://www.pornhub.com/embed/#{video_id}" frameborder="0" width="100%" height='500' scrolling="no")
