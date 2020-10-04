@@ -5,6 +5,7 @@
 @source_results = new Meteor.Collection 'source_results'
 @domain_results = new Meteor.Collection 'domain_results'
 @author_results = new Meteor.Collection 'author_results'
+@results = new Meteor.Collection 'results'
 
 
 

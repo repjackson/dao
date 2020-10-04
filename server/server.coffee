@@ -191,10 +191,11 @@ Meteor.publish 'dtags', (
         # console.log 'cloud: ', domain_cloud
         # console.log 'domain match', match
         domain_cloud.forEach (domain, i) ->
-            self.added 'domain_results', Random.id(),
+            # self.added 'domain_results', Random.id(),
+            self.added 'results', Random.id(),
                 name: domain.name
                 count: domain.count
-                index: i
+                model:'domain'
        
         author_cloud = Docs.aggregate [
             { $match: match }
@@ -210,10 +211,11 @@ Meteor.publish 'dtags', (
         # console.log 'cloud: ', author_cloud
         # console.log 'author match', match
         author_cloud.forEach (author, i) ->
-            self.added 'author_results', Random.id(),
+            # self.added 'author_results', Random.id(),
+            self.added 'results', Random.id(),
                 name: author.name
                 count: author.count
-                index: i
+                model:'author'
        
     self.ready()
                     
