@@ -23,6 +23,8 @@ template(name='home')
                     i.square.icon
                 .ui.circular.compact.icon.disabled.button.set_map
                     i.map.icon
+                .ui.circular.compact.icon.button.set_porn
+                    i.exclamation.icon
                 // .ui.circular.compact.button
                 //     |1
                 // .ui.circular.compact.button
@@ -41,6 +43,36 @@ template(name='home')
                             strong #{this}
                 each domain_results
                     a.ui.compact.circular.button.select_domain.select_term(href='#')
+                        strong #{name}
+                        small #{count}
+                // .ui.stackable.centered.grid
+                div
+                .ui.inline.header
+                    i.reddit.icon
+                    |subreddits
+                if selected_subreddits
+                    a#clear_subreddits.ui.black.icon.compact.large.circular.button.select_term
+                        i.remove.icon
+                    each selected_subreddits
+                        a.unselect_subreddit.ui.black.compact.large.circular.button.select_termn
+                            strong #{this}
+                each subreddit_results
+                    a.ui.compact.circular.button.select_subreddit.select_term(href='#')
+                        strong #{name}
+                        small #{count}
+                // .ui.stackable.centered.grid
+                div
+                .ui.inline.header
+                    i.reddit.icon
+                    |models
+                if selected_models
+                    a#clear_models.ui.black.icon.compact.large.circular.button.select_term
+                        i.remove.icon
+                    each selected_models
+                        a.unselect_model.ui.black.compact.large.circular.button.select_termn
+                            strong #{this}
+                each model_results
+                    a.ui.compact.circular.button.select_model.select_term(href='#')
                         strong #{name}
                         small #{count}
                 // .ui.stackable.centered.grid
@@ -93,6 +125,10 @@ template(name='home')
                                         i.reddit.icon
                                         |#{subreddit}
                                     a.item(href=url target='_window') #{url}
+                else if session_key_value 'view_mode' 'porn'
+                    .ui.stackable.centered.cards
+                        each docs
+                            +vid_card
                 else
                     if one_post
                         each docs

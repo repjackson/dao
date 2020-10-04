@@ -1,0 +1,65 @@
+template(name='vid_card')
+    .ui.stackable.grid
+        .sixteen.wide.center.aligned.column
+            each thumbs
+                img.ui.small.superzoom.rounded.inline.image.mobile.hidden(src=src)    
+                img.ui.tiny.superzoom.rounded.inline.image.mobile.only(src=src)    
+            a(href="/m/vid/#{_id}/view")
+                // img.ui.image.rounded.pointer(src=thumb)
+                iframe(src="https://www.pornhub.com/embed/#{video_id}" frameborder="0" width="100%" height='500' scrolling="no")
+                // img.ui.image.rounded.pointer(src=default_thumb)
+            //- a.ui.small.header(href=url target='_window') #{title}
+            a.ui.grey.center.aligned.header(href="/m/vid/#{_id}/view" class=emotion_color_class) !{lowered_title}
+            .spacer
+                
+            // +vote
+            // +array_edit key='tags' direct=true
+            each tags
+                a.ui.large.image.label.add_tag
+                    if tag_term
+                        img.ui.image(src=tag_term.watson.metadata.image)    
+                
+                    // i.minus.link.grey.icon.minus_tag(title='pay a point to lessen tag')
+                    | #{this}
+                    // i.plus.link.grey.icon.plus_tag(title='pay a point to promote tag')
+            |#{when}
+            if can_edit 
+                a.ui.circular.icon.button(href="/post/#{_id}/edit")
+                    i.pencil.icon
+            if dev
+                +print_this
+                i.remove.big.icon
+                i.fork.big.icon
+            .ui.label #{views}
+            // .ui.basic.label #{rating} rating
+            // .ui.basic.label #{ratings} ratings
+            // .ui.basic.label #{views} views
+            // if dev 
+            //     i.code.link.icon.print_me
+template(name='vid_view')
+    with current_doc
+        .ui.stackable.padded.grid 
+            .middle.aligned.row
+                .sixteen.wide.column 
+                    a.ui.circular.icon.large.button(href="/")
+                        i.left.chevron.big.icon
+                    .ui.center.aligned.large.inline.header #{title}
+            .row
+                .sixteen.wide.column 
+                    // a.ui.small.center.aligned.grey.header(href=url target='_window')
+                    //     |#{url}
+                    iframe(src="https://www.pornhub.com/embed/#{video_id}" frameborder="0" width="100%" height='500' scrolling="no")
+                    // iframe(src="https://www.pornhub.com/embed/#{video_id}" frameborder="0" width="608" height="468" scrolling="no")
+            .row
+                .sixteen.wide.column 
+                    .ui.circular.button.print_me
+                        |print me
+                    // .ui.header #{tags.length} tags
+                    //- i.dropdown.icon
+                    //- .active.content
+                    each dtags
+                        .ui.circular.compact.button.select_doc_tag
+                            |#{this}
+                    div
+                    each thumbs
+                        img.ui.small.inline.image(src=src)

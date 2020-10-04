@@ -2,6 +2,8 @@
 @selected_tags = new ReactiveArray []
 @selected_authors = new ReactiveArray []
 @selected_domains = new ReactiveArray []
+@selected_subreddits = new ReactiveArray []
+@selected_models = new ReactiveArray []
 
 Template.body.events
     # 'click a:not(.select_term)': ->
@@ -51,6 +53,8 @@ Template.home.onCreated ->
         selected_tags.array()
         selected_domains.array()
         selected_authors.array()
+        selected_subreddits.array()
+        selected_models.array()
         Session.get('view_mode')
         )
     @autorun => Meteor.subscribe('dtags',
@@ -59,6 +63,8 @@ Template.home.onCreated ->
         Session.get('query')
         selected_domains.array()
         selected_authors.array()
+        selected_subreddits.array()
+        selected_models.array()
         Session.get('view_mode')
         )
     @autorun => Meteor.subscribe('docs',
@@ -67,13 +73,15 @@ Template.home.onCreated ->
         Session.get('query')
         selected_domains.array()
         selected_authors.array()
+        selected_subreddits.array()
+        selected_models.array()
         Session.get('view_mode')
         )
 
     
 Template.tag_selector.onCreated ->
     # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    # @autorun => Meteor.subscribe('doc_by_title', @data.name)
 Template.tag_selector.helpers
     term: ->
         Docs.findOne 
@@ -125,28 +133,61 @@ Template.unselect_tag.events
 Template.home.helpers
     selected_authors: -> selected_authors.array()
     author_results: ->
-        doc_count = Docs.find().count()
+        match = {}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
+        doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
-            author_results.find({ 
+            results.find({ 
+                model:'author'
                 count:$lt:doc_count 
             })
         else 
-            author_results.find()
+            results.find(model:'author')
+            
+    selected_subreddits: -> selected_subreddits.array()
+    subreddit_results: ->
+        match = {}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
+        doc_count = Docs.find(match).count()
+        if 0 < doc_count < 3 
+            results.find({ 
+                model:'subreddit'
+                count:$lt:doc_count 
+            })
+        else 
+            results.find(model:'subreddit')
             
     selected_domains: -> selected_domains.array()
     domain_results: ->
-        doc_count = Docs.find().count()
+        match = {}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
+        doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
-            domain_results.find({ 
+            results.find({ 
+                model:'domain'
                 count:$lt:doc_count 
             })
         else 
-            domain_results.find()
+            results.find(model:'domain')
+            
+            
+    selected_models: -> selected_models.array()
+    model_results: ->
+        match = {}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
+        doc_count = Docs.find(match).count()
+        if 0 < doc_count < 3 
+            results.find({ 
+                model:'model'
+                count:$lt:doc_count 
+            })
+        else 
+            results.find(model:'model')
             
             
     many_tags: -> selected_tags.array().length > 1
     one_post: ->
-        match = {model:$in:['reddit']}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
         if selected_tags.array().length>0
             match.tags = $in:selected_tags.array()
 
@@ -154,7 +195,7 @@ Template.home.helpers
 
     doc_count: -> Counts.get('result_counter') 
     docs: ->
-        match = {model:$in:['reddit']}
+        match = {model:$in:['post','wikipedia','reddit','porn']}
         # match = {model:'post'}
         if selected_tags.array().length>0
             match.tags = $all:selected_tags.array()
@@ -195,13 +236,15 @@ Template.home.helpers
     
     selected_tags: -> selected_tags.array()
     tag_results: ->
-        doc_count = Docs.find({model:'reddit'}).count()
+        match = {model:$in:['post','wikipedia','reddit','porn']}
+        doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
-            Tag_results.find({ 
+            results.find({ 
                 count:$lt:doc_count 
+                model:'tag'
             })
         else 
-            Tag_results.find()
+            results.find(model:'tag')
 
 Template.home.events
     # 'click .delete': -> 
@@ -210,6 +253,7 @@ Template.home.events
     'click .set_grid': -> Session.set('view_mode','grid')
     'click .set_list': -> Session.set('view_mode','list')
     'click .set_single': -> Session.set('view_mode','single')
+    'click .set_porn': -> Session.set('view_mode','porn')
     
     'click #clear_tags': -> selected_tags.clear()
 
@@ -220,6 +264,16 @@ Template.home.events
     'click .select_domain': -> selected_domains.push @name
     'click .unselect_domain': -> selected_domains.remove @valueOf()
     'click #clear_domains': -> selected_domains.clear()
+
+    'click .select_subreddit': -> selected_subreddits.push @name
+    'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
+    'click #clear_subreddits': -> selected_subreddits.clear()
+
+
+
+    'click .select_model': -> selected_models.push @name
+    'click .unselect_model': -> selected_models.remove @valueOf()
+    'click #clear_models': -> selected_models.clear()
 
 
 
