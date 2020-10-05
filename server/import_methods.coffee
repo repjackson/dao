@@ -200,7 +200,7 @@ Meteor.methods
             if err
                 console.log 'error finding wiki article for ', query
             else
-                # console.log response.data[1]
+                console.log response.data[1]
                 for term,i in response.data[1]
                     # console.log 'term', term
                     # console.log 'i', i

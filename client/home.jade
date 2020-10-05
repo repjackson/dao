@@ -1,11 +1,11 @@
 template(name='home')
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         .row
             .sixteen.wide.column
-                if selected_tags
-                    if many_tags
-                        a#clear_tags.ui.black.icon.compact.large.button.select_term
-                            i.remove.icon
+                // if selected_tags
+                //     if many_tags
+                //         a#clear_tags.ui.black.icon.compact.large.button.select_term
+                //             i.remove.icon
                 each selected_tags
                     +unselect_tag
                 .ui.left.icon.large.input 
@@ -16,22 +16,22 @@ template(name='home')
                 // .row
                 //     .four.wide.right.aligned.column
                 .ui.inline.small.header(title='results') #{doc_count}
-                .ui.circular.compact.icon.large.button.set_list
-                    i.large.list.icon
-                .ui.circular.compact.icon.large.button.set_grid
-                    i.large.th.icon
+                // .ui.circular.compact.icon.large.button.set_list
+                //     i.large.list.icon
+                // .ui.circular.compact.icon.large.button.set_grid
+                //     i.large.th.icon
                 // .ui.circular.compact.icon.large.button.set_single
                 //     i.large.square.icon
-                .ui.circular.compact.icon.large.disabled.button.set_twitter
-                    i.large.twitter.icon
-                .ui.circular.compact.icon.large.disabled.button.toggle_youtube
-                    i.large.youtube.icon
-                .ui.circular.compact.icon.large.disabled.button.toggle_images(class=images_disabled.button_class)
-                    i.large.picture.icon
-                .ui.circular.compact.icon.large.disabled.button.toggle_single
-                    i.large.reddit.icon
-                .ui.circular.compact.icon.large.disabled.button.toggle_single
-                    i.wikipedia.icon
+                // .ui.circular.compact.icon.large.disabled.button.set_twitter
+                //     i.large.twitter.icon
+                // .ui.circular.compact.icon.large.disabled.button.toggle_youtube
+                //     i.large.youtube.icon
+                // .ui.circular.compact.icon.large.disabled.button.toggle_images(class=images_disabled.button_class)
+                //     i.large.picture.icon
+                // .ui.circular.compact.icon.large.disabled.button.toggle_single
+                //     i.large.reddit.icon
+                // .ui.circular.compact.icon.large.disabled.button.toggle_single
+                //     i.wikipedia.icon
                 // .ui.circular.compact.icon.disabled.button.set_map
                 //     i.map.icon
                 // .ui.circular.compact.icon.button.set_porn
@@ -84,17 +84,18 @@ template(name='home')
                 //             .spacer
                 // else if session_key_value 'view_mode' 'grid'
                 if one_post
-                    .ui.one.cards
+                    .ui.stackable.centered.one.column.grid
                         each docs
                             +post_card
                 else if two_posts
-                    .ui.two.cards
+                    .ui.stackable.centered.two.column.grid
                         each docs
                             +post_card
                 else
-                    .ui.stackable.centered.cards
+                    .ui.stackable.centered.four.column.grid
                         each docs
-                            +post_card
+                            .column
+                                +post_card
                     // else if session_key_value 'view_mode' 'porn'
                 // else if key_value_is 'model' 'porn'
                 //     .ui.stackable.centered.cards
@@ -119,7 +120,7 @@ template(name='home')
          
          
 template(name='post_card')         
-    .ui.card
+    .ui.fluid.card
         if watson.metadata.image
             img.ui.image.invert(src=watson.metadata.image)    
         // else

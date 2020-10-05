@@ -136,78 +136,78 @@ Meteor.publish 'dtags', (
     # if selected_models.length > 0 
     #     match.model = $all: selected_models
 
-    if view_mode is 'grid'
-        limit = 10
-    else if view_mode is 'list'
-        limit = 10
-    else if view_mode is 'single'
-        limit = 1
+    # if view_mode is 'grid'
+    #     limit = 10
+    # else if view_mode is 'list'
+    #     limit = 10
+    # else if view_mode is 'single'
+    #     limit = 1
 
     count = Docs.find(match).count()
-    console.log count
+    # console.log count
 
-    if query.length > 1
-        console.log 'searching query', query
-        # match.tags = {$regex:"#{query}", $options: 'i'}
-        # match.tags_string = {$regex:"#{query}", $options: 'i'}
+    # if query.length > 1
+    #     console.log 'searching query', query
+    #     # match.tags = {$regex:"#{query}", $options: 'i'}
+    #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
     
-        terms = Docs.find({
-            # title: {$regex:"#{query}"}
-            model:'wikipedia'            
-            title: {$regex:"#{query}", $options: 'i'}
-        },
-            # sort:
-            #     count: -1
-            limit: 5
-        )
-        terms.forEach (term, i) ->
-            self.added 'results', Random.id(),
-                name: term.title
-                # count: term.count
-                model:'tag'
+    #     terms = Docs.find({
+    #         # title: {$regex:"#{query}"}
+    #         model:'wikipedia'            
+    #         title: {$regex:"#{query}", $options: 'i'}
+    #     },
+    #         # sort:
+    #         #     count: -1
+    #         limit: 5
+    #     )
+    #     terms.forEach (term, i) ->
+    #         self.added 'results', Random.id(),
+    #             name: term.title
+    #             # count: term.count
+    #             model:'tag'
 
         
-    else
-        tag_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "tags": 1 }
-            { $unwind: "$tags" }
-            { $group: _id: "$tags", count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: count }
-            { $limit: 20 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # console.log 'cloud: ', tag_cloud
-        # console.log 'tag match', match
-        tag_cloud.forEach (tag, i) ->
-            self.added 'results', Random.id(),
-                name: tag.name
-                count: tag.count
-                model:'tag'
-        
-        
-        # domain_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: "domain": 1 }
-        #     # { $unwind: "$domain" }
-        #     { $group: _id: "$domain", count: $sum: 1 }
-        #     { $match: _id: $nin: selected_domains }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $match: count: $lt: count }
-        #     { $limit: 5 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # # console.log 'cloud: ', domain_cloud
-        # # console.log 'domain match', match
-        # domain_cloud.forEach (domain, i) ->
-        #     # self.added 'domain_results', Random.id(),
-        #     self.added 'results', Random.id(),
-        #         name: domain.name
-        #         count: domain.count
-                # model:'domain'
-       
+    # else
+    tag_cloud = Docs.aggregate [
+        { $match: match }
+        { $project: "tags": 1 }
+        { $unwind: "$tags" }
+        { $group: _id: "$tags", count: $sum: 1 }
+        { $match: _id: $nin: selected_tags }
+        { $sort: count: -1, _id: 1 }
+        { $match: count: $lt: count }
+        { $limit: 10 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # console.log 'cloud: ', tag_cloud
+    # console.log 'tag match', match
+    tag_cloud.forEach (tag, i) ->
+        self.added 'results', Random.id(),
+            name: tag.name
+            count: tag.count
+            model:'tag'
+    
+    
+    # domain_cloud = Docs.aggregate [
+    #     { $match: match }
+    #     { $project: "domain": 1 }
+    #     # { $unwind: "$domain" }
+    #     { $group: _id: "$domain", count: $sum: 1 }
+    #     { $match: _id: $nin: selected_domains }
+    #     { $sort: count: -1, _id: 1 }
+    #     { $match: count: $lt: count }
+    #     { $limit: 5 }
+    #     { $project: _id: 0, name: '$_id', count: 1 }
+    #     ]
+    # # console.log 'cloud: ', domain_cloud
+    # # console.log 'domain match', match
+    # domain_cloud.forEach (domain, i) ->
+    #     # self.added 'domain_results', Random.id(),
+    #     self.added 'results', Random.id(),
+    #         name: domain.name
+    #         count: domain.count
+            # model:'domain'
+   
     self.ready()
                     
                     

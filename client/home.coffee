@@ -120,9 +120,9 @@ Template.tag_selector.events
         Meteor.call 'search_reddit', selected_tags.array(), ->
         # Meteor.call 'search_stack', selected_tags.array(), ->
         # Meteor.call 'search_stack', @name, ->
-        # Meteor.setTimeout( ->
-        #     Session.set('toggle',!Session.get('toggle'))
-        # , 7000)
+        Meteor.setTimeout( ->
+            Session.set('toggle',!Session.get('toggle'))
+        , 7000)
        
 Template.pull_reddit.events
     'click .pull': -> 
@@ -150,9 +150,9 @@ Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
         # Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.setTimeout( ->
-        #     Session.set('toggle',!Session.get('toggle'))
-        # , 7000)
+        Meteor.setTimeout( ->
+            Session.set('toggle',!Session.get('toggle'))
+        , 7000)
 
             
             
@@ -161,18 +161,18 @@ Template.post_card.helpers
     two_posts: -> Counts.get('result_counter') is 2
 
 Template.home.helpers
-    selected_domains: -> selected_domains.array()
-    domain_results: ->
-        match = {model:'wikipedia'}
-        # match = {model:$in:['post','wikipedia','reddit','page']}
-        doc_count = Docs.find(match).count()
-        if 0 < doc_count < 3 
-            results.find({ 
-                model:'domain'
-                count:$lt:doc_count 
-            })
-        else 
-            results.find(model:'domain')
+    # selected_domains: -> selected_domains.array()
+    # domain_results: ->
+    #     match = {model:'wikipedia'}
+    #     # match = {model:$in:['post','wikipedia','reddit','page']}
+    #     doc_count = Docs.find(match).count()
+    #     if 0 < doc_count < 3 
+    #         results.find({ 
+    #             model:'domain'
+    #             count:$lt:doc_count 
+    #         })
+    #     else 
+    #         results.find(model:'domain')
             
             
     # selected_models: -> selected_models.array()
@@ -203,9 +203,9 @@ Template.home.helpers
         else if Session.equals('view_mode','list')
             limit = 10
         else if Session.equals('view_mode','single')
-            limit = 1
+            limit = 10
         else
-            limit = 1
+            limit = 10
 
      
         Docs.find match,
@@ -318,7 +318,7 @@ Template.home.events
                             search = $('.search_title').val('')
                             Meteor.setTimeout( ->
                                 Session.set('toggle',!Session.get('toggle'))
-                            , 7000)
+                            , 1000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
