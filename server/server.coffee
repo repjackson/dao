@@ -65,64 +65,35 @@ Meteor.publish 'docs', (
     selected_tags
     toggle
     query=''
-    # selected_domains
-    # selected_models
     view_mode
     )->
     match = {}
-    # match.model = $in:['reddit','wikipedia','post','page']
-    # match.model = $in:['reddit','wikipedia']
     match.model = 'wikipedia'
-    # if selected_domains.length > 0 
-    #     match.domain = $all: selected_domains
-    # if selected_models.length > 0 
-    #     match.model = $all: selected_models
-    
-    if view_mode is 'grid'
-        limit = 8
-    else if view_mode is 'list'
-        limit = 10
-    else if view_mode is 'single'
-        limit = 3
-    else
-        limit = 5
-    
     
     if selected_tags.length > 0
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:limit
-            sort:
-                # points:-1
-                ups:-1
-                # _timestamp:-1
-                # views:-1
-    else
-        match.tags = $in:['dao']
-        # console.log match
-        Docs.find match,
-            limit:limit
+            limit:10
             sort:
                 _timestamp:-1
-                # points:-1
-                ups:-1
+    else
+        match.tags = $in:['life']
+        # console.log match
+        Docs.find match,
+            limit:10
+            sort:
+                _timestamp:-1
                     
                     
 Meteor.publish 'dtags', (
     selected_tags
     toggle
     query=''
-    # selected_domains
-    # selected_models
     view_mode
     )->
     self = @
     match = {}
-    # match.model = $in:['post','wikipedia','reddit','page']
-    # match.model = $in:['wikipedia','reddit']
-    # match.model = $in:['reddit']
-    # match.model = $in:['reddit','wikipedia']
     match.model = 'wikipedia'
     
     # if query.length > 1
@@ -130,18 +101,7 @@ Meteor.publish 'dtags', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['dao']
-    # if selected_domains.length > 0 
-    #     match.domain = $all: selected_domains
-    # if selected_models.length > 0 
-    #     match.model = $all: selected_models
-
-    # if view_mode is 'grid'
-    #     limit = 10
-    # else if view_mode is 'list'
-    #     limit = 10
-    # else if view_mode is 'single'
-    #     limit = 1
+        match.tags = $in:['life']
 
     count = Docs.find(match).count()
     # console.log count
@@ -188,26 +148,51 @@ Meteor.publish 'dtags', (
             model:'tag'
     
     
-    # domain_cloud = Docs.aggregate [
-    #     { $match: match }
-    #     { $project: "domain": 1 }
-    #     # { $unwind: "$domain" }
-    #     { $group: _id: "$domain", count: $sum: 1 }
-    #     { $match: _id: $nin: selected_domains }
-    #     { $sort: count: -1, _id: 1 }
-    #     { $match: count: $lt: count }
-    #     { $limit: 5 }
-    #     { $project: _id: 0, name: '$_id', count: 1 }
-    #     ]
-    # # console.log 'cloud: ', domain_cloud
-    # # console.log 'domain match', match
-    # domain_cloud.forEach (domain, i) ->
-    #     # self.added 'domain_results', Random.id(),
-    #     self.added 'results', Random.id(),
-    #         name: domain.name
-    #         count: domain.count
-            # model:'domain'
-   
     self.ready()
                     
                     
+Meteor.methods
+    call_wiki: (query)->
+        # console.log 'calling wiki', query
+        # term = query.split(' ').join('_')
+        # term = query[0]
+        term = query
+        # HTTP.get "https://en.wikipedia.org/wiki/#{term}",(err,response)=>
+        HTTP.get "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=#{term}",(err,response)=>
+            if err
+                console.log 'error finding wiki article for ', query
+            else
+                console.log response.data[1]
+                for term,i in response.data[1]
+                    # console.log 'term', term
+                    # console.log 'i', i
+                    # console.log 'url', response.data[3][i]
+                    url = response.data[3][i]
+    
+                #     # console.log response
+                #     # console.log 'response'
+    
+                    found_doc =
+                        Docs.findOne
+                            url: url
+                            model:'wikipedia'
+                    if found_doc
+                        # console.log 'found wiki doc for term', term
+                        # console.log 'found wiki doc for term', term, found_doc
+                        # Docs.update found_doc._id,
+                        #     # $pull:
+                        #     #     tags:'wikipedia'
+                        #     $set:
+                        #         title:found_doc.title.toLowerCase()
+                        # console.log 'found wiki doc', found_doc.title
+                        unless found_doc.watson
+                            Meteor.call 'call_watson', found_doc._id, 'url','url', ->
+                    else
+                        new_wiki_id = Docs.insert
+                            title:term.toLowerCase()
+                            tags:[term.toLowerCase()]
+                            source: 'wikipedia'
+                            model:'wikipedia'
+                            # ups: 1
+                            url:url
+                        Meteor.call 'call_watson', new_wiki_id, 'url','url', ->

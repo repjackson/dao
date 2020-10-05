@@ -8,6 +8,28 @@ natural_language_understanding = new NaturalLanguageUnderstandingV1(
         apikey: Meteor.settings.private.language.apikey
     })
     url: Meteor.settings.private.language.url)
+# lang
+# mkdgRJwYEJnuJUhCv0Ny7REL4scA27el5mdPKrnGMEMg
+
+
+# kevin lang
+# bsbqj-_iQaA-ZwGUBK7NbGqZTaLvPHJgZW2OEXoN5C6P
+# https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/5556901d-0bb1-4283-a2e3-d4cd8c42d15c
+
+
+# tone
+# QEDjdS8Btn2Qq1IFKWu1wirCfdCziCEJhaWt_Tn5MY87
+# https://api.us-south.tone-analyzer.watson.cloud.ibm.com/instances/6755dca9-6933-4529-81df-a985e6447170
+
+# wDsUCpvjNiwBjDs5C1GvHwb970BDHBOcah_KXs-boFgG
+# https://api.us-south.tone-analyzer.watson.cloud.ibm.com/instances/6755dca9-6933-4529-81df-a985e6447170
+
+# tone
+# pIDLJyNdM8r4AB0lLmMNdGZtPSWUD3wXQfmXFBWxJ_l
+# https://api.us-south.tone-analyzer.watson.cloud.ibm.com/instances/37f08ca3-6c5b-439e-8270-78d96b54d635
+# nlu
+# WfilOI8O3M5n3cbU8byEczW_hctUm4viZDVaBSV-Gju3
+# https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/b5195ac7-a729-46ea-b099-deb37d1dc65b
 
 Meteor.methods
     call_watson: (doc_id, key, mode) ->
@@ -139,18 +161,6 @@ Meteor.methods
 
 
                 adding_tags = []
-                # if response.categories
-                #     for category in response.categories
-                #         # console.log category.label.split('/')[1..]
-                #         # console.log category.label.split('/')
-                #         for category in category.label.split('/')
-                #             if category.length > 0
-                #                 # adding_tags.push category
-                #                 Docs.update doc_id,
-                #                     $addToSet: categories: category
-                # Docs.update { _id: doc_id },
-                #     $addToSet:
-                #         tags:$each:adding_tags
                 if response.entities and response.entities.length > 0
                     for entity in response.entities
                         # console.log entity.type, entity.text

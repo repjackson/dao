@@ -7,10 +7,8 @@ head
     meta(name="msapplication-TileColor" content="#da532c")
     meta(name="theme-color" content="black")
     link(href="https://fonts.googleapis.com/css?family=Ubuntu:300,400&display=swap" rel="stylesheet")
-    // link(href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet")
     //- script(src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js")
-    //- script(src="https://semantic-ui.com/javascript/library/tablesort.js")
-
 
     link(rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png")
     link(rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png")
@@ -21,8 +19,6 @@ head
 
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.css")
     script(src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js")
-    // script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
-    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8" async)    
 
     
     script.
@@ -34,25 +30,100 @@ head
 body
     +status
     +home
-    // .adventure-vidm(class=currentUser.invert_class data-poster-url='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg', data-video-urls='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4,https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-autoplay='true', data-loop='true', data-wf-ignore='true')
-    //     video(autoplay='', loop='', style='background-image:url("https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-poster-00001.jpg")', muted='', playsinline='', data-wf-ignore='true', data-object-fit='cover')
-    //         source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.mp4', data-wf-ignore='true')
-    //         source(src='https://uploads-ssl.webflow.com/5d4a237a79c912a1ef797ef2/5d64a7daca4f1a1c19bc8fae_galaxy bg loop-transcode.webm', data-wf-ignore='true')
-
-
-
-
     
-    
-template(name='not_found')
-    .ui.basic.center.aligned.padded.segment
-        .ui.center.aligned.header page not found
 
-template(name='vote')
-    a.ui.circular.icon.button.upvote(title='upvote')
-        i.thumbs.up.outline.big.icon
-    if points
-        strong #{points}
-    a.ui.circular.icon.button.downvote(title='downvote')
-        i.thumbs.down.outline.big.icon
+template(name='home')
+    .ui.stackable.padded.grid
+        .row
+            .sixteen.wide.column
+                // if selected_tags
+                //     if many_tags
+                //         a#clear_tags.ui.black.icon.compact.large.button.select_term
+                //             i.remove.icon
+                each selected_tags
+                    +unselect_tag
+                .ui.left.icon.large.input 
+                    i.search.icon
+                    input.search_title(type='text' autofocus='')
+                each tag_results
+                    +tag_selector
+                // .row
+                //     .four.wide.right.aligned.column
+                .ui.inline.small.header(title='results') #{doc_count}
+            .sixteen.wide.column.scrolling
+                if one_post
+                    .ui.stackable.centered.one.column.grid
+                        each docs
+                            +post_card
+                else if two_posts
+                    .ui.stackable.centered.two.column.grid
+                        each docs
+                            +post_card
+                else
+                    .ui.stackable.centered.four.column.grid
+                        each docs
+                            .column
+                                +post_card
+         
+         
+template(name='post_card')         
+    // .ui.fluid.
+    if watson.metadata.image
+        img.ui.image.invert(src=watson.metadata.image)    
+    // else
+    //     img.ui.image(src=url)
+    .content
+        a.ui.header(href=url target='_window') #{title}
+        if one_post
+            .medscroll
+                iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        else if two_posts
+            .medscroll
+                iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        if one_post
+            each tags 
+                a.ui.basic.large.label.add_tag #{this}
+        else if two_posts
+            each tags 
+                a.ui.basic.large.label.add_tag #{this}
+        else
+            each seven_tags 
+                a.ui.basic.large.label.add_tag #{this}
+     
+                    
+template(name='pull_reddit')
+    .ui.circular.icon.basic.button.pull
+        i.reddit.icon
+        
+template(name='call_watson')
+    .ui.circular.icon.basic.button.pull
+        i.dna.icon
 
+
+template(name='unselect_tag')
+    a.unselect_tag.ui.black.big.image.label.select_term(href='#')
+        if term
+            img.ui.avatar.compact.image(src=term.watson.metadata.image)    
+        strong #{this}
+
+template(name='tag_selector')
+    a.ui.big.image.basic.label.select_tag.select_term(href='#' title="#{count} results")
+        if term
+            img.ui.avatar.compact.image(src=term.watson.metadata.image)    
+        strong #{name}
+        // small #{count}
+
+
+
+template(name='session_boolean_toggle')
+    .ui.compact.large.circular.button.toggle_session_key(class=calculated_class)
+        // +icolor name=icon cl='ui avatar image'
+        i.icon(class=icon)
+        |#{label}
+        //- if icon_view 
+        //- else 
+            if label
+                |#{label}
+            else 
+                |#{value}
+                
