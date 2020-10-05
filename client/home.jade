@@ -8,29 +8,29 @@ template(name='home')
                             i.remove.icon
                 each selected_tags
                     +unselect_tag
-                .ui.left.icon.input 
+                .ui.left.icon.large.input 
                     i.search.icon
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
                 // .row
                 //     .four.wide.right.aligned.column
-                .ui.inline.small.header #{doc_count} results
+                .ui.inline.small.header(title='results') #{doc_count}
                 .ui.circular.compact.icon.large.button.set_list
                     i.large.list.icon
                 .ui.circular.compact.icon.large.button.set_grid
                     i.large.th.icon
-                .ui.circular.compact.icon.large.button.set_single
-                    i.large.square.icon
-                .ui.circular.compact.icon.large.button.set_twitter
+                // .ui.circular.compact.icon.large.button.set_single
+                //     i.large.square.icon
+                .ui.circular.compact.icon.large.disabled.button.set_twitter
                     i.large.twitter.icon
-                .ui.circular.compact.icon.large.button.toggle_youtube
+                .ui.circular.compact.icon.large.disabled.button.toggle_youtube
                     i.large.youtube.icon
-                .ui.circular.compact.icon.large.button.toggle_images(class=images_button_class)
+                .ui.circular.compact.icon.large.disabled.button.toggle_images(class=images_disabled.button_class)
                     i.large.picture.icon
-                .ui.circular.compact.icon.large.button.toggle_single
+                .ui.circular.compact.icon.large.disabled.button.toggle_single
                     i.large.reddit.icon
-                .ui.circular.compact.icon.large.button.toggle_single
+                .ui.circular.compact.icon.large.disabled.button.toggle_single
                     i.wikipedia.icon
                 // .ui.circular.compact.icon.disabled.button.set_map
                 //     i.map.icon
@@ -44,155 +44,71 @@ template(name='home')
                 //     |10
                 // div
                 // .ui.inline.header
-                i.globe.large.grey.icon
-                // |domains
-                if selected_domains
-                    a#clear_domains.ui.black.icon.compact.large.circular.button.select_term
-                        i.remove.icon
-                    each selected_domains
-                        a.unselect_domain.ui.black.compact.large.circular.button.select_termn
-                            strong #{this}
-                each domain_results
-                    a.ui.compact.circular.basic.button.select_domain.select_term(href='#')
-                        strong #{name}
-                        small #{count}
+                // i.globe.large.grey.icon
+                // // |domains
+                // if selected_domains
+                //     a#clear_domains.ui.black.icon.compact.large.circular.button.select_term
+                //         i.remove.icon
+                //     each selected_domains
+                //         a.unselect_domain.ui.black.compact.large.circular.button.select_termn
+                //             strong #{this}
+                // each domain_results
+                //     a.ui.compact.circular.basic.button.select_domain.select_term(href='#')
+                //         strong #{name}
+                //         small #{count}
                 // .ui.stackable.centered.grid
                 // div
-                // .ui.inline.header
-                //     i.reddit.icon
-                //     |subreddits
-                // if selected_subreddits
-                //     a#clear_subreddits.ui.black.icon.compact.large.circular.button.select_term
-                //         i.remove.icon
-                //     each selected_subreddits
-                //         a.unselect_subreddit.ui.black.compact.large.circular.button.select_termn
-                //             strong #{this}
-                // each subreddit_results
-                //     a.ui.compact.circular.button.select_subreddit.select_term(href='#')
-                //         strong #{name}
-                //         small #{count}
-                // // .ui.stackable.centered.grid
-                // // div
-                // .ui.inline.header
-                i.database.large.grey.icon
-                // |modelss
-                if selected_models
-                    a#clear_models.ui.black.icon.compact.large.circular.button.select_term
-                        i.remove.icon
-                    each selected_models
-                        a.unselect_model.ui.black.compact.large.circular.button.select_termn
-                            strong #{this}
-                each model_results
-                    a.ui.compact.circular.basic.button.select_model.select_term(href='#')
-                        strong #{name}
-                        small #{count}
-                // .ui.stackable.centered.grid
-                // +session_boolean_toggle key='view_authors' label='authors' icon='user outline'
-                // if session_is 'view_authors'
-                // .spacer
-                // .ui.inline.header
-                //     i.user.outline.icon
-                //     |author
-                // if selected_authors
-                //     a#clear_authors.ui.black.icon.compact.large.circular.button.select_term
-                //         i.remove.icon
-                //     each selected_authors
-                //         a.unselect_author.ui.black.compact.large.circular.button.select_termn
-                //             strong #{this}
-                // each author_results
-                //     a.ui.compact.circular.button.select_author.select_term(href='#')
-                //         strong #{name}
-                //         small #{count}
-                // .spacer
-                // +session_boolean_toggle key='view_sources' label='sources' icon='database'
-                // if session_is 'view_sources'
-            .sixteen.wide.column
-                if session_key_value 'view_mode' 'list'
-                    .ui.items
+            .sixteen.wide.column.scrolling
+                // if session_key_value 'view_mode' 'list'
+                //     .ui.items
+                //         each docs
+                //             .item
+                //                 if watson.metadata.image
+                //                     img.ui.small.inline.image.invert(src=watson.metadata.image)    
+                //                 else if is_image
+                //                     img.ui.inline.small.rounded.image(src=url)
+                //                 .content
+                //                     .ui.header #{title}
+                //                     .ui.label #{domain}
+                //                     .ui.label
+                //                         i.thumbs.up.outline.grey.icon
+                //                         |#{ups}
+                //                     // .ui.label
+                //                     //     i.reddit.icon
+                //                     //     |#{subreddit}
+                //                     a.ui.label(href=url target='_window') #{url}
+                //                     // +pull_reddit
+                //                     +call_watson
+                //                     each tags 
+                //                         a.ui.large.label.add_tag #{this}
+                //             .spacer
+                // else if session_key_value 'view_mode' 'grid'
+                if one_post
+                    .ui.one.cards
                         each docs
-                            .item
-                                if watson.metadata.image
-                                    img.ui.small.inline.image.invert(src=watson.metadata.image class=currentUser.invert_class)    
-                                else if is_image
-                                    img.ui.inline.small.rounded.image(src=url)
-                                .content
-                                    .ui.header #{title}
-                                    .ui.label #{domain}
-                                    .ui.label
-                                        i.thumbs.up.outline.grey.icon
-                                        |#{ups}
-                                    // .ui.label
-                                    //     i.reddit.icon
-                                    //     |#{subreddit}
-                                    a.ui.label(href=url target='_window') #{url}
-                                    // +pull_reddit
-                                    +call_watson
-                                    each tags 
-                                        .ui.label #{this}
-                            .spacer
-                else if session_key_value 'view_mode' 'grid'
-                    .ui.stackable.centered.three.cards
+                            +post_card
+                else if two_posts
+                    .ui.two.cards
                         each docs
-                            .ui.card
-                                if watson.metadata.image
-                                    img.ui.image.invert(src=watson.metadata.image class=currentUser.invert_class)    
-                                else
-                                    img.ui.image(src=url)
-                                .content
-                                    if is_youtube
-                                        iframe.invert(width='100%' height='315' src='https://www.youtube.com/embed/RNjlfo_8u4s' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
-                                        .ui.embed(data-source="youtube" data-id=field_value)
-
-                                    if is_twitter
-                                        blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
-                                            p(lang='en' dir='ltr')
-                                                |#{title}
-                                                // | No, Joe. The "establishment" are the 60 billionaires who are funding your campaign and the corporate-funded super PACs that are spending millions on negative ads attacking me. 
-                                                a(href='https://t.co/XDB8OwJB1L') https://t.co/XDB8OwJB1L
-                                            | — Bernie Sanders (@BernieSanders) 
-                                            a(href=url) March 4, 2020
-                                        script(async='' src='https://platform.twitter.com/widgets.js' charset='utf-8')
-
-                                    .ui.header #{title}
-                                    | #{url}
-                                    // |!{rd.selftext}
-                                    // blockquote(class="reddit-card")
-                                    //     a(href="https://www.reddit.com#{permalink}") 
-                                    //         |#{title}
-                                    //     |from 
-                                    //     a(href="http://www.reddit.com/r/#{subreddit}") 
-                                    //         |r/#{subreddit}
-                                    // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
-                                    a.ui.label.set_domain #{domain}
-                                    // unless is_image
-                                    //     iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-                                    .ui.basic.label 
-                                        i.thumbs.up.outline.icon
-                                        |#{ups}
-                                    // .ui.label 
-                                    //     i.reddit.icon
-                                    //     |#{subreddit}
-                                    .ui.large.circular.icon.basic.button(href=url target='_window' title=url)
-                                        // |#{url}
-                                        i.external.icon
-                                    // +pull_reddit
-                                    +call_watson
-                                    each tags 
-                                        a.ui.small.basic.label.add_tag #{this}
-                    // else if session_key_value 'view_mode' 'porn'
-                else if key_value_is 'model' 'porn'
+                            +post_card
+                else
                     .ui.stackable.centered.cards
                         each docs
-                            +vid_card
-                else
-                    if one_post
-                        each docs
-                            .sixteen.wide.column
-                                +reddit_card
-                    else
-                        each docs
-                            .sixteen.wide.column
-                                +reddit_card
+                            +post_card
+                    // else if session_key_value 'view_mode' 'porn'
+                // else if key_value_is 'model' 'porn'
+                //     .ui.stackable.centered.cards
+                //         each docs
+                //             +vid_card
+                // else
+                //     if one_post
+                //         each docs
+                //             .sixteen.wide.column
+                //                 +reddit_card
+                //     else
+                //         each docs
+                //             .sixteen.wide.column
+                //                 +reddit_card
                                     // blockquote(class="reddit-card")
                                     //     a(href="https://www.reddit.com#{permalink}") 
                                     //         |#{title}
@@ -200,6 +116,62 @@ template(name='home')
                                     //     a(href="http://www.reddit.com/r/#{subreddit}") 
                                     //         |r/#{subreddit}
                                     // script(async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")            
+         
+         
+template(name='post_card')         
+    .ui.card
+        if watson.metadata.image
+            img.ui.image.invert(src=watson.metadata.image)    
+        else
+            img.ui.image(src=url)
+        .content
+            // if is_youtube
+            //     iframe.invert(width='100%' height='315' src='https://www.youtube.com/embed/RNjlfo_8u4s' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+            //     .ui.embed(data-source="youtube" data-id=field_value)
+    
+            // if is_twitter
+            //     blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
+            //         p(lang='en' dir='ltr')
+            //             |#{title}
+            //             // | No, Joe. The "establishment" are the 60 billionaires who are funding your campaign and the corporate-funded super PACs that are spending millions on negative ads attacking me. 
+            //             a(href='https://t.co/XDB8OwJB1L') https://t.co/XDB8OwJB1L
+            //         | — Bernie Sanders (@BernieSanders) 
+            //         a(href=url) March 4, 2020
+            //     script(async='' src='https://platform.twitter.com/widgets.js' charset='utf-8')
+    
+            .ui.header #{title}
+            a(href=url target='_window') #{url}
+            // |!{rd.selftext}
+            // blockquote(class="reddit-card")
+            //     a(href="https://www.reddit.com#{permalink}") 
+            //         |#{title}
+            //     |from 
+            //     a(href="http://www.reddit.com/r/#{subreddit}") 
+            //         |r/#{subreddit}
+            // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+            // a.ui.label.set_domain #{domain}
+            if one_post
+                .medscroll
+                    iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+            else if two_post
+                .medscroll
+                    iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+            // .ui.basic.label 
+            //     i.thumbs.up.outline.icon
+            //     |#{ups}
+            // .ui.label 
+            //     i.reddit.icon
+            //     |#{subreddit}
+            .ui.large.circular.icon.basic.button(href=url target='_window' title=url)
+                // |#{url}
+                i.external.icon
+            // +pull_reddit
+            +call_watson
+            if one_post
+                each tags 
+                    a.ui.basic.large.label.add_tag #{this}
+
+         
                     
 template(name='pull_reddit')
     .ui.circular.icon.basic.button.pull
@@ -240,17 +212,17 @@ template(name='reddit_card')
 template(name='unselect_tag')
     a.unselect_tag.ui.black.big.image.label.select_term(href='#')
         if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
+            img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.big.image.basic.label.select_tag.select_term(href='#')
-        // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-        // img.ui.avatar.compact.image(src=term.rd.thumbnail class=currentUser.invert_class)
+    a.ui.big.image.basic.label.select_tag.select_term(href='#' title="#{count} results")
+        // img.ui.avatar.compact.image(src="{{c.url term.image_id height=200 width=200 gravity='face' crop='fill'}}")
+        // img.ui.avatar.compact.image(src=term.rd.thumbnail)
         if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image class=currentUser.invert_class)    
+            img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         strong #{name}
-        small #{count}
+        // small #{count}
 
 
 

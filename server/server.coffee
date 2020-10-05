@@ -41,21 +41,21 @@ Meteor.publish 'doc_count', (
     )->
     match = {}
     # match.model = $in:['reddit','wikipedia','post','page']
-    match.model = $in:['reddit','wikipedia']
+    match.model = $in:['wikipedia']
     # match.model = 'wikipedia'
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
         match.tags = $in:['dao']
 
-    if selected_domains.length > 0 
-        match.domain = $all: selected_domains
+    # if selected_domains.length > 0 
+    #     match.domain = $all: selected_domains
     # if selected_authors.length > 0 
     #     match.author = $all: selected_authors
     # if selected_subreddits.length > 0 
     #     match.subreddit = $all: selected_subreddits
-    if selected_models.length > 0 
-        match.model = $all: selected_models
+    # if selected_models.length > 0 
+    #     match.model = $all: selected_models
     Counts.publish this, 'result_counter', Docs.find(match)
     return undefined    # otherwise coffeescript returns a Counts.publish
                       # handle when Meteor expects a Mongo.Cursor object.
@@ -65,18 +65,18 @@ Meteor.publish 'docs', (
     selected_tags
     toggle
     query=''
-    selected_domains
-    selected_models
+    # selected_domains
+    # selected_models
     view_mode
     )->
     match = {}
     # match.model = $in:['reddit','wikipedia','post','page']
     # match.model = $in:['reddit','wikipedia']
     match.model = 'wikipedia'
-    if selected_domains.length > 0 
-        match.domain = $all: selected_domains
-    if selected_models.length > 0 
-        match.model = $all: selected_models
+    # if selected_domains.length > 0 
+    #     match.domain = $all: selected_domains
+    # if selected_models.length > 0 
+    #     match.model = $all: selected_models
     
     if view_mode is 'grid'
         limit = 8
@@ -113,8 +113,8 @@ Meteor.publish 'dtags', (
     selected_tags
     toggle
     query=''
-    selected_domains
-    selected_models
+    # selected_domains
+    # selected_models
     view_mode
     )->
     self = @
@@ -131,10 +131,10 @@ Meteor.publish 'dtags', (
         match.tags = $all: selected_tags
     else
         match.tags = $in:['dao']
-    if selected_domains.length > 0 
-        match.domain = $all: selected_domains
-    if selected_models.length > 0 
-        match.model = $all: selected_models
+    # if selected_domains.length > 0 
+    #     match.domain = $all: selected_domains
+    # if selected_models.length > 0 
+    #     match.model = $all: selected_models
 
     if view_mode is 'grid'
         limit = 10
@@ -176,7 +176,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 20 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', tag_cloud
@@ -188,87 +188,25 @@ Meteor.publish 'dtags', (
                 model:'tag'
         
         
-        domain_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "domain": 1 }
-            # { $unwind: "$domain" }
-            { $group: _id: "$domain", count: $sum: 1 }
-            { $match: _id: $nin: selected_domains }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: count }
-            { $limit: 5 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # console.log 'cloud: ', domain_cloud
-        # console.log 'domain match', match
-        domain_cloud.forEach (domain, i) ->
-            # self.added 'domain_results', Random.id(),
-            self.added 'results', Random.id(),
-                name: domain.name
-                count: domain.count
-                model:'domain'
-       
-        # subreddit_cloud = Docs.aggregate [
+        # domain_cloud = Docs.aggregate [
         #     { $match: match }
-        #     { $project: "subreddit": 1 }
-        #     # { $unwind: "$subreddit" }
-        #     { $group: _id: "$subreddit", count: $sum: 1 }
-        #     { $match: _id: $nin: selected_subreddits }
+        #     { $project: "domain": 1 }
+        #     # { $unwind: "$domain" }
+        #     { $group: _id: "$domain", count: $sum: 1 }
+        #     { $match: _id: $nin: selected_domains }
         #     { $sort: count: -1, _id: 1 }
         #     { $match: count: $lt: count }
         #     { $limit: 5 }
         #     { $project: _id: 0, name: '$_id', count: 1 }
         #     ]
-        # # console.log 'cloud: ', subreddit_cloud
-        # # console.log 'subreddit match', match
-        # subreddit_cloud.forEach (subreddit, i) ->
-        #     # self.added 'subreddit_results', Random.id(),
+        # # console.log 'cloud: ', domain_cloud
+        # # console.log 'domain match', match
+        # domain_cloud.forEach (domain, i) ->
+        #     # self.added 'domain_results', Random.id(),
         #     self.added 'results', Random.id(),
-        #         name: subreddit.name
-        #         count: subreddit.count
-        #         model:'subreddit'
-       
-       
-        # model_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: "model": 1 }
-        #     # { $unwind: "$model" }
-        #     { $group: _id: "$model", count: $sum: 1 }
-        #     { $match: _id: $nin: selected_models }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $match: count: $lt: count }
-        #     { $limit: 5 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # # console.log 'cloud: ', model_cloud
-        # # console.log 'model match', match
-        # model_cloud.forEach (model, i) ->
-        #     # self.added 'model_results', Random.id(),
-        #     self.added 'results', Random.id(),
-        #         name: model.name
-        #         count: model.count
-        #         model:'model'
-       
-       
-        # author_cloud = Docs.aggregate [
-        #     { $match: match }
-        #     { $project: "author": 1 }
-        #     # { $unwind: "$author" }
-        #     { $group: _id: "$author", count: $sum: 1 }
-        #     { $match: _id: $nin: selected_authors }
-        #     { $sort: count: -1, _id: 1 }
-        #     { $match: count: $lt: count }
-        #     { $limit: 5 }
-        #     { $project: _id: 0, name: '$_id', count: 1 }
-        #     ]
-        # # console.log 'cloud: ', author_cloud
-        # # console.log 'author match', match
-        # author_cloud.forEach (author, i) ->
-        #     # self.added 'author_results', Random.id(),
-        #     self.added 'results', Random.id(),
-        #         name: author.name
-        #         count: author.count
-        #         model:'author'
+        #         name: domain.name
+        #         count: domain.count
+                # model:'domain'
        
     self.ready()
                     

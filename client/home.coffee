@@ -77,24 +77,24 @@ Template.home.events
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
-        selected_domains.array()
-        selected_models.array()
+        # selected_domains.array()
+        # selected_models.array()
         Session.get('view_mode')
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('toggle')
         Session.get('query')
-        selected_domains.array()
-        selected_models.array()
+        # selected_domains.array()
+        # selected_models.array()
         Session.get('view_mode')
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
         Session.get('toggle')
         Session.get('query')
-        selected_domains.array()
-        selected_models.array()
+        # selected_domains.array()
+        # selected_models.array()
         Session.get('view_mode')
         )
 
@@ -182,8 +182,8 @@ Template.home.helpers
             
     selected_domains: -> selected_domains.array()
     domain_results: ->
-        match = {}
-        match = {model:$in:['post','wikipedia','reddit','page']}
+        match = {model:'wikipedia'}
+        # match = {model:$in:['post','wikipedia','reddit','page']}
         doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
             results.find({ 
@@ -209,14 +209,9 @@ Template.home.helpers
             
             
     many_tags: -> selected_tags.array().length > 1
-    one_post: ->
-        match = {model:$in:['post','wikipedia','reddit']}
-        if selected_tags.array().length>0
-            match.tags = $in:selected_tags.array()
-
-        Docs.find(match).count() is 1
-
-    doc_count: -> Counts.get('result_counter') 
+    one_post: -> Counts.get('result_counter') is 1
+    two_posts: -> Counts.get('result_counter') is 2
+    doc_count: -> Counts.get('result_counter')
     docs: ->
         # match = {model:$in:['post','wikipedia','reddit','page']}
         # match = {model:$in:['post','wikipedia','reddit']}
@@ -313,11 +308,12 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
-    'keyup .search_title': _.throttle((e,t)->
+    # 'keyup .search_title': _.throttle((e,t)->
+    'keyup .search_title': (e,t)->
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
-        if search.length > 2
-            Session.set('query',search)
+        # if search.length > 2
+        #     Session.set('query',search)
         if e.which is 13
             # console.log search
             if search.length>0
@@ -331,23 +327,23 @@ Template.home.events
                                 selected_tags.push tag
                                 
                     else
-                        selected_tags.push search
-                        
-                        # if Meteor.user()
-                        # Meteor.call 'search_ph', selected_tags.array(), ->
-                        Meteor.call 'call_wiki', search, ->
-                        # Meteor.call 'search_stack', search, ->
-        
-                        Meteor.call 'search_reddit', selected_tags.array(), ->
-                        Session.set('query','')
-                        search = $('.search_title').val('')
-                        Meteor.setTimeout( ->
-                            Session.set('toggle',!Session.get('toggle'))
-                        , 7000)
+                        unless search in selected_tags.array()
+                            selected_tags.push search
+                            
+                            # Meteor.call 'search_ph', selected_tags.array(), ->
+                            Meteor.call 'call_wiki', search, ->
+                            # Meteor.call 'search_stack', search, ->
+            
+                            Meteor.call 'search_reddit', selected_tags.array(), ->
+                            Session.set('query','')
+                            search = $('.search_title').val('')
+                            Meteor.setTimeout( ->
+                                Session.set('toggle',!Session.get('toggle'))
+                            , 7000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
-    , 1000)
+    # , 1000)
 
 Template.registerHelper 'session_is', (key)-> Session.get(key)
 Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)
