@@ -26,7 +26,7 @@ template(name='home')
                     i.large.twitter.icon
                 .ui.circular.compact.icon.large.button.toggle_youtube
                     i.large.youtube.icon
-                .ui.circular.compact.icon.large.button.toggle_single
+                .ui.circular.compact.icon.large.button.toggle_images(class=images_button_class)
                     i.large.picture.icon
                 .ui.circular.compact.icon.large.button.toggle_single
                     i.large.reddit.icon
@@ -106,13 +106,13 @@ template(name='home')
                 // .spacer
                 // +session_boolean_toggle key='view_sources' label='sources' icon='database'
                 // if session_is 'view_sources'
-            .sixteen.wide.column.scrolling
+            .sixteen.wide.column
                 if session_key_value 'view_mode' 'list'
                     .ui.items
                         each docs
                             .item
                                 if watson.metadata.image
-                                    img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+                                    img.ui.small.inline.image.invert(src=watson.metadata.image class=currentUser.invert_class)    
                                 else if is_image
                                     img.ui.inline.small.rounded.image(src=url)
                                 .content
@@ -131,11 +131,11 @@ template(name='home')
                                         .ui.label #{this}
                             .spacer
                 else if session_key_value 'view_mode' 'grid'
-                    .ui.stackable.centered.cards
+                    .ui.stackable.centered.three.cards
                         each docs
-                            .ui.card
+                            .ui.invert.grey.card
                                 if watson.metadata.image
-                                    img.ui.image(src=watson.metadata.image class=currentUser.invert_class)    
+                                    img.ui.image.invert(src=watson.metadata.image class=currentUser.invert_class)    
                                 else
                                     img.ui.image(src=url)
                                 .content

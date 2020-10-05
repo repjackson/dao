@@ -76,8 +76,6 @@ Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         selected_domains.array()
-        # selected_authors.array()
-        # selected_subreddits.array()
         selected_models.array()
         Session.get('view_mode')
         )
@@ -86,8 +84,6 @@ Template.home.onCreated ->
         Session.get('toggle')
         Session.get('query')
         selected_domains.array()
-        # selected_authors.array()
-        # selected_subreddits.array()
         selected_models.array()
         Session.get('view_mode')
         )
@@ -96,8 +92,6 @@ Template.home.onCreated ->
         Session.get('toggle')
         Session.get('query')
         selected_domains.array()
-        # selected_authors.array()
-        # selected_subreddits.array()
         selected_models.array()
         Session.get('view_mode')
         )
@@ -275,6 +269,12 @@ Template.home.helpers
         else 
             results.find(model:'tag')
 
+    images_button_class: ->
+        if Session.equals('view_mode', 'images')
+            'active'
+        else 
+            'basic'
+
 Template.home.events
     # 'click .delete': -> 
     #     console.log @
@@ -283,23 +283,22 @@ Template.home.events
     'click .set_list': -> Session.set('view_mode','list')
     'click .set_single': -> Session.set('view_mode','single')
     'click .set_page': -> Session.set('view_mode','page')
-    'click .set_porn': -> Session.set('view_mode','porn')
+    'click .toggle_images': -> 
+        if Session.equals('view_mode','images')
+            Session.set('view_mode','grid')
+        else
+            Session.set('view_mode','images')
+            
+        
+    # 'click .set_porn': -> Session.set('view_mode','porn')
+    
+    
     
     'click #clear_tags': -> selected_tags.clear()
-
-    # 'click .select_author': -> selected_authors.push @name
-    # 'click .unselect_author': -> selected_authors.remove @valueOf()
-    # 'click #clear_authors': -> selected_authors.clear()
 
     'click .select_domain': -> selected_domains.push @name
     'click .unselect_domain': -> selected_domains.remove @valueOf()
     'click #clear_domains': -> selected_domains.clear()
-
-    # 'click .select_subreddit': -> selected_subreddits.push @name
-    # 'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
-    # 'click #clear_subreddits': -> selected_subreddits.clear()
-
-
 
     'click .select_model': -> selected_models.push @name
     'click .unselect_model': -> selected_models.remove @valueOf()
