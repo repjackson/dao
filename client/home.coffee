@@ -63,10 +63,12 @@ Template.reddit_card.events
                 $addToSet: tags: tag
             $(e.currentTarget).closest('.tag_post').val('')
             # console.log tag
+
+Template.home.events
     'click .add_tag': -> 
         selected_tags.push @valueOf()
         # if Meteor.user()
-        # Meteor.call 'call_wiki', @valueOf, ->
+        Meteor.call 'call_wiki', @valueOf, ->
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
             
@@ -108,7 +110,7 @@ Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
         selected_tags.push @name
-        # if Meteor.user()
+        Session.set('query','')
         Meteor.call 'call_wiki', @name, ->
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
@@ -152,18 +154,18 @@ Template.unselect_tag.events
             
             
 Template.home.helpers
-    selected_authors: -> selected_authors.array()
-    author_results: ->
-        match = {}
-        match = {model:$in:['post','wikipedia','reddit','page']}
-        doc_count = Docs.find(match).count()
-        if 0 < doc_count < 3 
-            results.find({ 
-                model:'author'
-                count:$lt:doc_count 
-            })
-        else 
-            results.find(model:'author')
+    # selected_authors: -> selected_authors.array()
+    # author_results: ->
+    #     match = {}
+    #     match = {model:$in:['post','wikipedia','reddit','page']}
+    #     doc_count = Docs.find(match).count()
+    #     if 0 < doc_count < 3 
+    #         results.find({ 
+    #             model:'author'
+    #             count:$lt:doc_count 
+    #         })
+    #     else 
+    #         results.find(model:'author')
             
     # selected_subreddits: -> selected_subreddits.array()
     # subreddit_results: ->
@@ -192,18 +194,18 @@ Template.home.helpers
             results.find(model:'domain')
             
             
-    selected_models: -> selected_models.array()
-    model_results: ->
-        match = {}
-        match = {model:$in:['post','wikipedia','reddit','page']}
-        doc_count = Docs.find(match).count()
-        if 0 < doc_count < 3 
-            results.find({ 
-                model:'model'
-                count:$lt:doc_count 
-            })
-        else 
-            results.find(model:'model')
+    # selected_models: -> selected_models.array()
+    # model_results: ->
+    #     match = {}
+    #     match = {model:$in:['post','wikipedia','reddit','page']}
+    #     doc_count = Docs.find(match).count()
+    #     if 0 < doc_count < 3 
+    #         results.find({ 
+    #             model:'model'
+    #             count:$lt:doc_count 
+    #         })
+    #     else 
+    #         results.find(model:'model')
             
             
     many_tags: -> selected_tags.array().length > 1
@@ -216,9 +218,9 @@ Template.home.helpers
 
     doc_count: -> Counts.get('result_counter') 
     docs: ->
-        match = {model:$in:['post','wikipedia','reddit','page']}
+        # match = {model:$in:['post','wikipedia','reddit','page']}
         # match = {model:$in:['post','wikipedia','reddit']}
-        # match = {model:'post'}
+        match = {model:'wikipedia'}
         if selected_tags.array().length>0
             match.tags = $all:selected_tags.array()
         # cur = Docs.find match
@@ -259,7 +261,8 @@ Template.home.helpers
     selected_tags: -> selected_tags.array()
     tag_results: ->
         # match = {model:$in:['post','wikipedia','reddit','page']}
-        match = {model:$in:['post','wikipedia','reddit']}
+        # match = {model:$in:['post','wikipedia','reddit']}
+        match = {model:'wikipedia'}
         doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
             results.find({ 
@@ -300,9 +303,9 @@ Template.home.events
     'click .unselect_domain': -> selected_domains.remove @valueOf()
     'click #clear_domains': -> selected_domains.clear()
 
-    'click .select_model': -> selected_models.push @name
-    'click .unselect_model': -> selected_models.remove @valueOf()
-    'click #clear_models': -> selected_models.clear()
+    # 'click .select_model': -> selected_models.push @name
+    # 'click .unselect_model': -> selected_models.remove @valueOf()
+    # 'click #clear_models': -> selected_models.clear()
 
 
 
@@ -310,9 +313,11 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
-    'keydown .search_title': (e,t)->
+    'keyup .search_title': _.throttle((e,t)->
         search = $('.search_title').val().toLowerCase().trim()
-        # Session.set('query',search)
+        # _.throttle( =>
+        if search.length > 2
+            Session.set('query',search)
         if e.which is 13
             # console.log search
             if search.length>0
@@ -342,6 +347,7 @@ Template.home.events
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
+    , 1000)
 
 Template.registerHelper 'session_is', (key)-> Session.get(key)
 Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)

@@ -66,21 +66,15 @@ Meteor.publish 'docs', (
     toggle
     query=''
     selected_domains
-    # selected_authors
-    # selected_subreddits
     selected_models
     view_mode
     )->
     match = {}
-    match.model = $in:['reddit','wikipedia','post','page']
+    # match.model = $in:['reddit','wikipedia','post','page']
     # match.model = $in:['reddit','wikipedia']
-    # match.model = 'wikipedia'
+    match.model = 'wikipedia'
     if selected_domains.length > 0 
         match.domain = $all: selected_domains
-    # if selected_authors.length > 0 
-    #     match.author = $all: selected_authors
-    # if selected_subreddits.length > 0 
-    #     match.subreddit = $all: selected_subreddits
     if selected_models.length > 0 
         match.model = $all: selected_models
     
@@ -94,11 +88,6 @@ Meteor.publish 'docs', (
         limit = 5
     
     
-    # match.model = 'post'
-    # if Meteor.user()
-    #     match.downvoter_ids = $nin:[Meteor.userId()]
-    # if query.length > 1
-    #     match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0
         match.tags = $all:selected_tags
         # console.log match
@@ -125,18 +114,16 @@ Meteor.publish 'dtags', (
     toggle
     query=''
     selected_domains
-    # selected_authors
-    # selected_subreddits
     selected_models
     view_mode
     )->
     self = @
     match = {}
-    match.model = $in:['post','wikipedia','reddit','page']
+    # match.model = $in:['post','wikipedia','reddit','page']
     # match.model = $in:['wikipedia','reddit']
     # match.model = $in:['reddit']
     # match.model = $in:['reddit','wikipedia']
-    # match.model = 'wikipedia'
+    match.model = 'wikipedia'
     
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}
@@ -146,10 +133,6 @@ Meteor.publish 'dtags', (
         match.tags = $in:['dao']
     if selected_domains.length > 0 
         match.domain = $all: selected_domains
-    # if selected_subreddits.length > 0 
-    #     match.subreddit = $all: selected_subreddits
-    # if selected_authors.length > 0 
-    #     match.author = $all: selected_authors
     if selected_models.length > 0 
         match.model = $all: selected_models
 
@@ -165,9 +148,9 @@ Meteor.publish 'dtags', (
 
     if query.length > 1
         console.log 'searching query', query
-        # #     # match.tags = {$regex:"#{query}", $options: 'i'}
-        # #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
-        # #
+        # match.tags = {$regex:"#{query}", $options: 'i'}
+        # match.tags_string = {$regex:"#{query}", $options: 'i'}
+    
         terms = Docs.find({
             # title: {$regex:"#{query}"}
             model:'wikipedia'            
@@ -177,6 +160,13 @@ Meteor.publish 'dtags', (
             #     count: -1
             limit: 5
         )
+        terms.forEach (term, i) ->
+            self.added 'results', Random.id(),
+                name: term.title
+                # count: term.count
+                model:'tag'
+
+        
     else
         tag_cloud = Docs.aggregate [
             { $match: match }
@@ -186,7 +176,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 5 }
+            { $limit: 7 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', tag_cloud
@@ -239,25 +229,25 @@ Meteor.publish 'dtags', (
         #         model:'subreddit'
        
        
-        model_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "model": 1 }
-            # { $unwind: "$model" }
-            { $group: _id: "$model", count: $sum: 1 }
-            { $match: _id: $nin: selected_models }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: count }
-            { $limit: 5 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # console.log 'cloud: ', model_cloud
-        # console.log 'model match', match
-        model_cloud.forEach (model, i) ->
-            # self.added 'model_results', Random.id(),
-            self.added 'results', Random.id(),
-                name: model.name
-                count: model.count
-                model:'model'
+        # model_cloud = Docs.aggregate [
+        #     { $match: match }
+        #     { $project: "model": 1 }
+        #     # { $unwind: "$model" }
+        #     { $group: _id: "$model", count: $sum: 1 }
+        #     { $match: _id: $nin: selected_models }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $match: count: $lt: count }
+        #     { $limit: 5 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # # console.log 'cloud: ', model_cloud
+        # # console.log 'model match', match
+        # model_cloud.forEach (model, i) ->
+        #     # self.added 'model_results', Random.id(),
+        #     self.added 'results', Random.id(),
+        #         name: model.name
+        #         count: model.count
+        #         model:'model'
        
        
         # author_cloud = Docs.aggregate [
