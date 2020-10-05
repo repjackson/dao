@@ -33,6 +33,10 @@ Template.registerHelper 'to_percent', (number)->
     # console.log number
     (number*100).toFixed()
 
+Template.reddit_card.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.embed').embed();
+    , 1000
 
 Template.registerHelper 'key_value_is', (key,value)->
     @["#{key}"] is value
@@ -40,7 +44,7 @@ Template.registerHelper 'key_value_is', (key,value)->
 Template.registerHelper 'is_image', ()->
     @domain in ['i.imgur.com','i.reddit.com','i.redd.it']
 
-Template.registerHelper 'is_video', ()->
+Template.registerHelper 'is_youtube', ()->
     @domain in ['youtube.com','youtu.be','vimeo.com']
 Template.registerHelper 'is_twitter', ()->
     @domain in ['twitter.com','mobile.twitter.com','vimeo.com']

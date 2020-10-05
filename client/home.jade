@@ -21,15 +21,15 @@ template(name='home')
                     i.large.th.icon
                 .ui.circular.compact.icon.button.set_single
                     i.large.square.icon
-                .ui.circular.compact.icon.large.button.set_single
+                .ui.circular.compact.icon.large.button.set_twitter
                     i.large.twitter.icon
-                .ui.circular.compact.icon.large.button.set_single
+                .ui.circular.compact.icon.large.button.toggle_youtube
                     i.large.youtube.icon
-                .ui.circular.compact.icon.large.button.set_single
+                .ui.circular.compact.icon.large.button.toggle_single
                     i.large.picture.icon
-                .ui.circular.compact.icon.large.button.set_single
+                .ui.circular.compact.icon.large.button.toggle_single
                     i.large.reddit.icon
-                .ui.circular.compact.icon.large.button.set_single
+                .ui.circular.compact.icon.large.button.toggle_single
                     i.large.wikipedia.icon
                 // .ui.circular.compact.icon.disabled.button.set_map
                 //     i.map.icon
@@ -136,6 +136,10 @@ template(name='home')
                                 else
                                     img.ui.image(src=url)
                                 .content
+                                    if is_youtube
+                                        iframe.invert(width='100%' height='315' src='https://www.youtube.com/embed/RNjlfo_8u4s' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+                                        .ui.embed(data-source="youtube" data-id=field_value)
+
                                     if is_twitter
                                         blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
                                             p(lang='en' dir='ltr')
