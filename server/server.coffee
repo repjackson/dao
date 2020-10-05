@@ -33,11 +33,11 @@ Meteor.publish 'doc_by_title', (title)->
 
 Meteor.publish 'doc_count', (
     selected_tags
-    selected_domains
+    # selected_domains
     # selected_authors
     # selected_subreddits
-    selected_models
-    view_mode
+    # selected_models
+    # view_mode
     )->
     match = {}
     # match.model = $in:['reddit','wikipedia','post','page']

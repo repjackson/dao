@@ -33,10 +33,10 @@ Template.registerHelper 'to_percent', (number)->
     # console.log number
     (number*100).toFixed()
 
-Template.reddit_card.onRendered ->
-    Meteor.setTimeout ->
-        $('.ui.embed').embed();
-    , 1000
+# Template.reddit_card.onRendered ->
+#     Meteor.setTimeout ->
+#         $('.ui.embed').embed();
+#     , 1000
 
 Template.registerHelper 'key_value_is', (key,value)->
     Template.currentData()["#{key}"] is value
@@ -45,24 +45,28 @@ Template.registerHelper 'key_value_is', (key,value)->
 Template.registerHelper 'is_image', ()->
     @domain in ['i.imgur.com','i.reddit.com','i.redd.it']
 
+Template.registerHelper 'one_post', ()-> Counts.get('result_counter') is 1
+Template.registerHelper 'two_posts', ()-> Counts.get('result_counter') is 2
+Template.registerHelper 'seven_tags', ()-> @tags[..7]
+    
 Template.registerHelper 'is_youtube', ()->
     @domain in ['youtube.com','youtu.be','vimeo.com']
 Template.registerHelper 'is_twitter', ()->
     @domain in ['twitter.com','mobile.twitter.com','vimeo.com']
 
 
-Template.reddit_card.events
-    'click .tagger': (e,t)->
-        Meteor.call 'call_watson', @_id, 'url', 'url', ->
-    'keyup .tag_post': (e,t)->
-        # console.log 
-        if e.which is 13
-            # $(e.currentTarget).closest('.button')
-            tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
-            Docs.update @_id,
-                $addToSet: tags: tag
-            $(e.currentTarget).closest('.tag_post').val('')
-            # console.log tag
+# Template.reddit_card.events
+#     'click .tagger': (e,t)->
+#         Meteor.call 'call_watson', @_id, 'url', 'url', ->
+#     'keyup .tag_post': (e,t)->
+#         # console.log 
+#         if e.which is 13
+#             # $(e.currentTarget).closest('.button')
+#             tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
+#             Docs.update @_id,
+#                 $addToSet: tags: tag
+#             $(e.currentTarget).closest('.tag_post').val('')
+#             # console.log tag
 
 Template.home.events
     'click .add_tag': -> 
@@ -74,27 +78,26 @@ Template.home.events
             
         Meteor.call 'search_reddit', selected_tags.array(), ->
 
+Template.post_card.onCreated ->
+    @autorun -> Meteor.subscribe('doc_count',
+        selected_tags.array()
+        Session.get('view_mode')
+        )
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
-        # selected_domains.array()
-        # selected_models.array()
         Session.get('view_mode')
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('toggle')
         Session.get('query')
-        # selected_domains.array()
-        # selected_models.array()
         Session.get('view_mode')
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
         Session.get('toggle')
         Session.get('query')
-        # selected_domains.array()
-        # selected_models.array()
         Session.get('view_mode')
         )
 
@@ -153,33 +156,11 @@ Template.unselect_tag.events
 
             
             
+Template.post_card.helpers
+    one_post: -> Counts.get('result_counter') is 1
+    two_posts: -> Counts.get('result_counter') is 2
+
 Template.home.helpers
-    # selected_authors: -> selected_authors.array()
-    # author_results: ->
-    #     match = {}
-    #     match = {model:$in:['post','wikipedia','reddit','page']}
-    #     doc_count = Docs.find(match).count()
-    #     if 0 < doc_count < 3 
-    #         results.find({ 
-    #             model:'author'
-    #             count:$lt:doc_count 
-    #         })
-    #     else 
-    #         results.find(model:'author')
-            
-    # selected_subreddits: -> selected_subreddits.array()
-    # subreddit_results: ->
-    #     match = {}
-    #     match = {model:$in:['post','wikipedia','reddit','page']}
-    #     doc_count = Docs.find(match).count()
-    #     if 0 < doc_count < 3 
-    #         results.find({ 
-    #             model:'subreddit'
-    #             count:$lt:doc_count 
-    #         })
-    #     else 
-    #         results.find(model:'subreddit')
-            
     selected_domains: -> selected_domains.array()
     domain_results: ->
         match = {model:'wikipedia'}
@@ -209,8 +190,6 @@ Template.home.helpers
             
             
     many_tags: -> selected_tags.array().length > 1
-    one_post: -> Counts.get('result_counter') is 1
-    two_posts: -> Counts.get('result_counter') is 2
     doc_count: -> Counts.get('result_counter')
     docs: ->
         # match = {model:$in:['post','wikipedia','reddit','page']}

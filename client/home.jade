@@ -122,8 +122,8 @@ template(name='post_card')
     .ui.card
         if watson.metadata.image
             img.ui.image.invert(src=watson.metadata.image)    
-        else
-            img.ui.image(src=url)
+        // else
+        //     img.ui.image(src=url)
         .content
             // if is_youtube
             //     iframe.invert(width='100%' height='315' src='https://www.youtube.com/embed/RNjlfo_8u4s' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
@@ -153,7 +153,7 @@ template(name='post_card')
             if one_post
                 .medscroll
                     iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-            else if two_post
+            else if two_posts
                 .medscroll
                     iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
             // .ui.basic.label 
@@ -162,15 +162,20 @@ template(name='post_card')
             // .ui.label 
             //     i.reddit.icon
             //     |#{subreddit}
-            .ui.large.circular.icon.basic.button(href=url target='_window' title=url)
-                // |#{url}
-                i.external.icon
+            // .ui.large.circular.icon.basic.button(href=url target='_window' title=url)
+            //     // |#{url}
+            //     i.external.icon
             // +pull_reddit
-            +call_watson
+            // +call_watson
             if one_post
                 each tags 
                     a.ui.basic.large.label.add_tag #{this}
-
+            else if two_posts
+                each tags 
+                    a.ui.basic.large.label.add_tag #{this}
+            else
+                each seven_tags 
+                    a.ui.basic.large.label.add_tag #{this}
          
                     
 template(name='pull_reddit')
@@ -181,33 +186,33 @@ template(name='call_watson')
     .ui.circular.icon.basic.button.pull
         i.dna.icon
 
-template(name='reddit_card')
-    .ui.header #{title}
-    | #{url}
-    // .medscroll
-    .invert
-        blockquote(class="reddit-card")
-            a(href="https://www.reddit.com#{permalink}") 
-                |#{title}
-            |from 
-            a(href="http://www.reddit.com/r/#{subreddit}") 
-                |r/#{subreddit}
-        script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
-    a.ui.fluid.basic.circular.button(href=url target='_window' title=url)
-        i.external.icon
-        |#{domain}
-    |#{tags.length}
-    each tags 
-        .ui.circular.compact.button.add_tag #{this}
-    .ui.transparent.input
-        i.plus.grey.icon
-        input.tag_post(type='text')
-    unless is_image
-        iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-    .ui.icon.circular.button.tagger
-        i.dna.icon
-    // if watson
-    //     +watson_view
+// template(name='reddit_card')
+//     .ui.header #{title}
+//     | #{url}
+//     // .medscroll
+//     .invert
+//         blockquote(class="reddit-card")
+//             a(href="https://www.reddit.com#{permalink}") 
+//                 |#{title}
+//             |from 
+//             a(href="http://www.reddit.com/r/#{subreddit}") 
+//                 |r/#{subreddit}
+//         script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+//     a.ui.fluid.basic.circular.button(href=url target='_window' title=url)
+//         i.external.icon
+//         |#{domain}
+//     |#{tags.length}
+//     each tags 
+//         .ui.circular.compact.button.add_tag #{this}
+//     .ui.transparent.input
+//         i.plus.grey.icon
+//         input.tag_post(type='text')
+//     unless is_image
+//         iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+//     .ui.icon.circular.button.tagger
+//         i.dna.icon
+//     // if watson
+//     //     +watson_view
 
 template(name='unselect_tag')
     a.unselect_tag.ui.black.big.image.label.select_term(href='#')
