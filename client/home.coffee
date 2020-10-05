@@ -2,7 +2,7 @@
 
 Template.registerHelper 'one_post', ()-> Counts.get('result_counter') is 1
 Template.registerHelper 'two_posts', ()-> Counts.get('result_counter') is 2
-Template.registerHelper 'seven_tags', ()-> @tags[..10]
+Template.registerHelper 'seven_tags', ()-> @tags[..7]
     
 
 Template.post_card.events

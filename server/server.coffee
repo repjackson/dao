@@ -133,7 +133,7 @@ Meteor.publish 'dtags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        # { $match: count: $lt: count }
+        { $match: count: $lt: count }
         { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
@@ -156,7 +156,7 @@ Meteor.methods
         # term = query[0]
         term = query
         # HTTP.get "https://en.wikipedia.org/wiki/#{term}",(err,response)=>
-        HTTP.get "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=#{term}",(err,response)=>
+        HTTP.get "https://en.wikipedia.org/w/api.php?action=opensearch&generator=searchformat=json&search=#{term}",(err,response)=>
             if err
                 console.log 'error finding wiki article for ', query
             else

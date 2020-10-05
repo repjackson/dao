@@ -1,8 +1,8 @@
 body {
     background-color: rgba(0,0,0,.85) !important;
-    transition: all .2s linear;
+    /*transition: all 1s linear;*/
     filter: invert(1) !important; 
-    transition: all .2s ease !important;
+    transition: all 1s ease !important;
 }
 .invert {
      filter: invert(1) !important; 
@@ -18,10 +18,10 @@ img {
     padding: 0px !important;
 }
 .label {
-    transition: all .2s ease !important;
+    transition: all 1s ease !important;
     margin-bottom: 2px !important;
     margin-top: 2px !important;
-    border-radius: 10px !important;
+    border-radius: 7px !important;
 }
 ::-webkit-scrollbar {
   width: 0px !important;
@@ -29,7 +29,7 @@ img {
 }
 
 input {
-    border-radius: 10px !important;
+    border-radius: 7px !important;
 }
 
 .input {
@@ -37,12 +37,12 @@ input {
     margin-bottom: 2px !important;
 }
 .rounded.image {
-    transition: all .2s ease !important;
+    transition: all 1s ease !important;
     margin: 5px !important;
-    border-radius: 10px !important;
+    border-radius: 7px !important;
 }
 .button {
-    transition: all .2s ease !important;
+    transition: all 1s ease !important;
     margin-bottom: 5px !important;
     /*border-radius: 10px !important;*/
 }
