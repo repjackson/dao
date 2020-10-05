@@ -111,7 +111,7 @@ Meteor.methods
 
 
     get_reddit_post: (doc_id, reddit_id, root)->
-        console.log 'getting reddit post', doc_id, reddit_id
+        # console.log 'getting reddit post', doc_id, reddit_id
         doc = Docs.findOne doc_id
         if doc.reddit_id
             HTTP.get "http://reddit.com/by_id/t3_#{reddit_id}.json", (err,res)->

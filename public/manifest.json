@@ -6,6 +6,14 @@
  "theme_color": "black",
  "start_url": "/",
  "display": "fullscreen",
+  "permissions": {
+   "audio-capture" : {
+     "description" : "Audio capture"
+   },
+   "speech-recognition" : {
+     "description" : "Speech recognition"
+   }
+ },
  "icons": [
   {
    "src": "\/android-icon-36x36.png",

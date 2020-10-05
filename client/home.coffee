@@ -39,7 +39,8 @@ Template.reddit_card.onRendered ->
     , 1000
 
 Template.registerHelper 'key_value_is', (key,value)->
-    @["#{key}"] is value
+    Template.currentData()["#{key}"] is value
+    # @["#{key}"] is value
 
 Template.registerHelper 'is_image', ()->
     @domain in ['i.imgur.com','i.reddit.com','i.redd.it']
@@ -137,8 +138,6 @@ Template.call_watson.events
        
        
             
-Template.reddit_card.helpers
-    key_value_is: -> Template.currentData()["#{@key}"] is @value
 
 Template.unselect_tag.onCreated ->
     # console.log @
@@ -151,10 +150,10 @@ Template.unselect_tag.helpers
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
-        Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.setTimeout( ->
-            Session.set('toggle',!Session.get('toggle'))
-        , 7000)
+        # Meteor.call 'search_reddit', selected_tags.array(), ->
+        # Meteor.setTimeout( ->
+        #     Session.set('toggle',!Session.get('toggle'))
+        # , 7000)
 
             
             
@@ -162,7 +161,7 @@ Template.home.helpers
     selected_authors: -> selected_authors.array()
     author_results: ->
         match = {}
-        match = {model:$in:['post','wikipedia','reddit','porn']}
+        match = {model:$in:['post','wikipedia','reddit','page']}
         doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
             results.find({ 
@@ -172,23 +171,23 @@ Template.home.helpers
         else 
             results.find(model:'author')
             
-    selected_subreddits: -> selected_subreddits.array()
-    subreddit_results: ->
-        match = {}
-        match = {model:$in:['post','wikipedia','reddit','porn']}
-        doc_count = Docs.find(match).count()
-        if 0 < doc_count < 3 
-            results.find({ 
-                model:'subreddit'
-                count:$lt:doc_count 
-            })
-        else 
-            results.find(model:'subreddit')
+    # selected_subreddits: -> selected_subreddits.array()
+    # subreddit_results: ->
+    #     match = {}
+    #     match = {model:$in:['post','wikipedia','reddit','page']}
+    #     doc_count = Docs.find(match).count()
+    #     if 0 < doc_count < 3 
+    #         results.find({ 
+    #             model:'subreddit'
+    #             count:$lt:doc_count 
+    #         })
+    #     else 
+    #         results.find(model:'subreddit')
             
     selected_domains: -> selected_domains.array()
     domain_results: ->
         match = {}
-        match = {model:$in:['post','wikipedia','reddit','porn']}
+        match = {model:$in:['post','wikipedia','reddit','page']}
         doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
             results.find({ 
@@ -202,7 +201,7 @@ Template.home.helpers
     selected_models: -> selected_models.array()
     model_results: ->
         match = {}
-        match = {model:$in:['post','wikipedia','reddit','porn']}
+        match = {model:$in:['post','wikipedia','reddit','page']}
         doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
             results.find({ 
@@ -215,7 +214,7 @@ Template.home.helpers
             
     many_tags: -> selected_tags.array().length > 1
     one_post: ->
-        match = {model:$in:['post','wikipedia','reddit','porn']}
+        match = {model:$in:['post','wikipedia','reddit']}
         if selected_tags.array().length>0
             match.tags = $in:selected_tags.array()
 
@@ -223,7 +222,8 @@ Template.home.helpers
 
     doc_count: -> Counts.get('result_counter') 
     docs: ->
-        match = {model:$in:['post','wikipedia','reddit','porn']}
+        match = {model:$in:['post','wikipedia','reddit','page']}
+        # match = {model:$in:['post','wikipedia','reddit']}
         # match = {model:'post'}
         if selected_tags.array().length>0
             match.tags = $all:selected_tags.array()
@@ -264,7 +264,8 @@ Template.home.helpers
     
     selected_tags: -> selected_tags.array()
     tag_results: ->
-        match = {model:$in:['post','wikipedia','reddit','porn']}
+        # match = {model:$in:['post','wikipedia','reddit','page']}
+        match = {model:$in:['post','wikipedia','reddit']}
         doc_count = Docs.find(match).count()
         if 0 < doc_count < 3 
             results.find({ 
@@ -281,21 +282,22 @@ Template.home.events
     'click .set_grid': -> Session.set('view_mode','grid')
     'click .set_list': -> Session.set('view_mode','list')
     'click .set_single': -> Session.set('view_mode','single')
+    'click .set_page': -> Session.set('view_mode','page')
     'click .set_porn': -> Session.set('view_mode','porn')
     
     'click #clear_tags': -> selected_tags.clear()
 
-    'click .select_author': -> selected_authors.push @name
-    'click .unselect_author': -> selected_authors.remove @valueOf()
-    'click #clear_authors': -> selected_authors.clear()
+    # 'click .select_author': -> selected_authors.push @name
+    # 'click .unselect_author': -> selected_authors.remove @valueOf()
+    # 'click #clear_authors': -> selected_authors.clear()
 
     'click .select_domain': -> selected_domains.push @name
     'click .unselect_domain': -> selected_domains.remove @valueOf()
     'click #clear_domains': -> selected_domains.clear()
 
-    'click .select_subreddit': -> selected_subreddits.push @name
-    'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
-    'click #clear_subreddits': -> selected_subreddits.clear()
+    # 'click .select_subreddit': -> selected_subreddits.push @name
+    # 'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
+    # 'click #clear_subreddits': -> selected_subreddits.clear()
 
 
 
@@ -315,18 +317,29 @@ Template.home.events
         if e.which is 13
             # console.log search
             if search.length>0
-                selected_tags.push search
-                # if Meteor.user()
-                # Meteor.call 'search_ph', selected_tags.array(), ->
-                Meteor.call 'call_wiki', search, ->
-                # Meteor.call 'search_stack', search, ->
-
-                Meteor.call 'search_reddit', selected_tags.array(), ->
-                Session.set('query','')
-                search = $('.search_title').val('')
-                Meteor.setTimeout( ->
-                    Session.set('toggle',!Session.get('toggle'))
-                , 7000)
+                Meteor.call 'check_url', search, (err,res)->
+                    console.log res
+                    if res
+                        alert 'url'
+                        Meteor.call 'lookup_url', search, (err,res)=>
+                            console.log res
+                            for tag in res.tags
+                                selected_tags.push tag
+                                
+                    else
+                        selected_tags.push search
+                        
+                        # if Meteor.user()
+                        # Meteor.call 'search_ph', selected_tags.array(), ->
+                        Meteor.call 'call_wiki', search, ->
+                        # Meteor.call 'search_stack', search, ->
+        
+                        Meteor.call 'search_reddit', selected_tags.array(), ->
+                        Session.set('query','')
+                        search = $('.search_title').val('')
+                        Meteor.setTimeout( ->
+                            Session.set('toggle',!Session.get('toggle'))
+                        , 7000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()

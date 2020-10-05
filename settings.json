@@ -5,6 +5,7 @@
 		"stripe_client_id": "ca_6xrceWlIdjoZ0ebtxSUDBMG1yazAn5et"
     },
 	"private": {
+		"wolfram": "UULLYY-QR2ALYJ9JU",
 		"opencage": "f234c66b8ec44a448f8cb6a883335718",
 		"stripe_test_secret": "sk_test_6mQaKRMSWBoLX8HeBtNMvI6300QuPWkxYe",
 		"stripe_live_secret": "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",

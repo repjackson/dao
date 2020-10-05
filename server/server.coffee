@@ -40,7 +40,7 @@ Meteor.publish 'doc_count', (
     view_mode
     )->
     match = {}
-    # match.model = $in:['reddit','wikipedia','post','porn']
+    # match.model = $in:['reddit','wikipedia','post','page']
     match.model = $in:['reddit','wikipedia']
     # match.model = 'wikipedia'
     if selected_tags.length > 0 
@@ -72,8 +72,8 @@ Meteor.publish 'docs', (
     view_mode
     )->
     match = {}
-    # match.model = $in:['reddit','wikipedia','post','porn']
-    match.model = $in:['reddit','wikipedia']
+    match.model = $in:['reddit','wikipedia','post','page']
+    # match.model = $in:['reddit','wikipedia']
     # match.model = 'wikipedia'
     if selected_domains.length > 0 
         match.domain = $all: selected_domains
@@ -132,8 +132,8 @@ Meteor.publish 'dtags', (
     )->
     self = @
     match = {}
-    # match.model = $in:['post','wikipedia','reddit','porn']
-    match.model = $in:['wikipedia','reddit']
+    match.model = $in:['post','wikipedia','reddit','page']
+    # match.model = $in:['wikipedia','reddit']
     # match.model = $in:['reddit']
     # match.model = $in:['reddit','wikipedia']
     # match.model = 'wikipedia'
@@ -186,7 +186,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 5 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', tag_cloud
@@ -206,7 +206,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_domains }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit: 5 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', domain_cloud
