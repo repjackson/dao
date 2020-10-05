@@ -65,7 +65,6 @@ Meteor.publish 'docs', (
     selected_tags
     toggle
     query=''
-    view_mode
     )->
     match = {}
     match.model = 'wikipedia'
@@ -90,7 +89,6 @@ Meteor.publish 'dtags', (
     selected_tags
     toggle
     query=''
-    view_mode
     )->
     self = @
     match = {}
@@ -135,7 +133,7 @@ Meteor.publish 'dtags', (
         { $group: _id: "$tags", count: $sum: 1 }
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
-        { $match: count: $lt: count }
+        # { $match: count: $lt: count }
         { $limit: 10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
@@ -153,7 +151,7 @@ Meteor.publish 'dtags', (
                     
 Meteor.methods
     call_wiki: (query)->
-        # console.log 'calling wiki', query
+        console.log 'calling wiki', query
         # term = query.split(' ').join('_')
         # term = query[0]
         term = query

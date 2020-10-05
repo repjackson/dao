@@ -114,16 +114,3 @@ template(name='tag_selector')
         // small #{count}
 
 
-
-template(name='session_boolean_toggle')
-    .ui.compact.large.circular.button.toggle_session_key(class=calculated_class)
-        // +icolor name=icon cl='ui avatar image'
-        i.icon(class=icon)
-        |#{label}
-        //- if icon_view 
-        //- else 
-            if label
-                |#{label}
-            else 
-                |#{value}
-                
