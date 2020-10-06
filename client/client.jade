@@ -50,46 +50,23 @@ template(name='home')
                 // .row
                 //     .four.wide.right.aligned.column
                 .ui.inline.small.header(title='results') #{doc_count}
-            .sixteen.wide.column.scrolling
-                if one_post
-                    .ui.stackable.centered.one.column.grid
-                        each docs
-                            +post_card
-                else if two_posts
-                    .ui.stackable.centered.two.column.grid
-                        each docs
-                            +post_card
-                else
-                    .ui.stackable.centered.five.column.grid
-                        each docs
-                            .column
-                                +post_card
+            .sixteen.wide.column
+                each docs
+                    +post_card
          
          
 template(name='post_card')         
     // .ui.fluid.
     if watson.metadata.image
-        img.ui.rounded.image.invert(src=watson.metadata.image)    
+        img.ui.rounded.inline.medium.image.invert(src=watson.metadata.image)    
     // else
     //     img.ui.image(src=url)
-    .content
-        a.ui.header(href=url target='_window') #{title}
-        if one_post
-            .medscroll
-                iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        else if two_posts
-            .medscroll
-                iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        if one_post
-            each tags 
-                a.ui.big.label.add_tag #{this}
-        else if two_posts
-            each tags 
-                a.ui.large.label.add_tag #{this}
-        else
-            // each tags
-            each seven_tags 
-                a.ui.large.label.add_tag #{this}
+    a.ui.header(href=url target='_window') #{title}
+    .medscroll
+        iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    each tags 
+        a.ui.large.label.add_tag #{this}
      
                     
 template(name='pull_reddit')

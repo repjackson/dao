@@ -92,7 +92,7 @@ Meteor.publish 'dtags', (
     )->
     self = @
     match = {}
-    match.model = 'wikipedia'
+    match.model = $in:['wikipedia','reddit']
     
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}
