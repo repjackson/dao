@@ -58,26 +58,20 @@ Template.post_card.events
         Meteor.call 'search_reddit', selected_tags.array(), ->
 
 
-Template.post_card.onCreated ->
-    @autorun -> Meteor.subscribe('doc_count',
-        selected_tags.array()
-        Session.get('image_mode')
-        Session.get('video_mode')
-        
-        )
         
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('image_mode')
         Session.get('video_mode')
+        Session.get('wiki_mode')
         
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('image_mode')
         Session.get('video_mode')
-        
+        Session.get('wiki_mode')
         Session.get('toggle')
         Session.get('query')
         )
@@ -85,6 +79,7 @@ Template.home.onCreated ->
         selected_tags.array()
         Session.get('image_mode')
         Session.get('video_mode')
+        Session.get('wiki_mode')
         Session.get('toggle')
         Session.get('query')
         )
@@ -168,6 +163,7 @@ Template.home.helpers
 
     images_button_class: -> if Session.get('image_mode') then 'active' else 'basic'
     video_button_class: -> if Session.get('video_mode') then 'active' else 'basic'
+    wiki_button_class: -> if Session.get('wiki_mode') then 'active' else 'basic'
     term: ->
         # console.log @
         Docs.find 
@@ -193,6 +189,7 @@ Template.home.events
     #     Docs.remove @_id
     'click .toggle_images': -> Session.set('image_mode',!Session.get('image_mode'))
     'click .toggle_video': -> Session.set('video_mode',!Session.get('video_mode'))
+    'click .toggle_wiki': -> Session.set('wiki_mode',!Session.get('wiki_mode'))
     'click #clear_tags': -> selected_tags.clear()
 
     'click .search_title': (e,t)->

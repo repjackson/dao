@@ -59,8 +59,8 @@ template(name='home')
                     i.large.picture.icon
                 .ui.circular.compact.icon.large.button.toggle_reddit
                     i.large.reddit.icon
-                .ui.circular.compact.icon.large.button.toggle_wiki
-                    i.wikipedia.icon
+                .ui.circular.compact.icon.large.button.toggle_wiki(class=wiki_button_class)
+                    i.large.wikipedia.icon
 
             .sixteen.wide.column
                 each docs
@@ -130,13 +130,14 @@ template(name='tag_selector')
 template(name='reddit_card')
     .ui.header #{title}
     | #{url}
+    div
     if is_image
         img(src=url)
     else if is_youtube
         div
         // .ui.embed
         // iframe(id="ytplayer" type="text/html" width="720" height="405" src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allowfullscreen)
-        iframe.invert(width="560" height="315" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        iframe.invert(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         // iframe(width="560" height="315" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
     // .medscroll
     // .invert

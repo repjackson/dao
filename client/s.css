@@ -97,7 +97,7 @@ input {
 }
 .button:hover {
     z-index: 1000 !important;
-    transform: scale(1.05) !important;
+    transform: scale(1.1) !important;
 }
 .pointer:active {
   box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);

@@ -39,6 +39,7 @@ Meteor.publish 'doc_count', (
     selected_tags
     image_mode
     video_mode
+    wiki_mode
     )->
     match = {}
     match.model = $in:['reddit','wikipedia','post','page']
@@ -48,6 +49,15 @@ Meteor.publish 'doc_count', (
         match.tags = $all: selected_tags
     else
         match.tags = $in:['dao']
+    if image_mode
+        match.model = 'reddit'
+        match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+    else if video_mode
+        match.model = 'reddit'
+        match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+    else if video_mode
+        match.model = 'wikipedia'
+        # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
 
     Counts.publish this, 'result_counter', Docs.find(match)
     return undefined    # otherwise coffeescript returns a Counts.publish
@@ -58,6 +68,7 @@ Meteor.publish 'docs', (
     selected_tags
     image_mode
     video_mode
+    wiki_mode
     toggle
     query=''
     )->
@@ -67,9 +78,12 @@ Meteor.publish 'docs', (
     if image_mode
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    if video_mode
+    else if video_mode
         match.model = 'reddit'
         match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+    else if wiki_mode
+        match.model = 'wikipedia'
+        # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
 
     if selected_tags.length > 0
         match.tags = $all:selected_tags
@@ -111,9 +125,12 @@ Meteor.publish 'dtags', (
     if image_mode
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    if video_mode
+    else if video_mode
         match.model = 'reddit'
         match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+    else if wiki_mode
+        match.model = 'wikipedia'
+        # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
 
     # if query.length > 1
     #     console.log 'searching query', query
