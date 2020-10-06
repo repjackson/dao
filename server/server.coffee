@@ -26,10 +26,14 @@ Docs.allow
 
 Meteor.publish 'doc_by_title', (title)->
     # console.log title
-    Docs.find
+    Docs.find({
         title:title
         model:'wikipedia'
-
+    },
+        fields:
+            title:1
+            "watson.metadata":1
+    )
 
 Meteor.publish 'doc_count', (
     selected_tags
@@ -74,15 +78,16 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
-            limit:10
+            limit:5
             sort:
                 _timestamp:-1
     else
         match.tags = $in:['life']
         # console.log match
         Docs.find match,
-            limit:10
+            limit:5
             sort:
+                ups:-1
                 _timestamp:-1
                     
                     

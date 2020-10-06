@@ -50,6 +50,17 @@ template(name='home')
                 // .row
                 //     .four.wide.right.aligned.column
                 .ui.inline.small.header(title='results') #{doc_count}
+                .ui.circular.compact.icon.large.button.set_twitter
+                    i.large.twitter.icon
+                .ui.circular.compact.icon.large.button.toggle_youtube
+                    i.large.youtube.icon
+                .ui.circular.compact.icon.large.button.toggle_images(class=images_button_class)
+                    i.large.picture.icon
+                .ui.circular.compact.icon.large.button.toggle_single
+                    i.large.reddit.icon
+                .ui.circular.compact.icon.large.button.toggle_single
+                    i.wikipedia.icon
+
             .sixteen.wide.column
                 each docs
                     +post_card
@@ -66,6 +77,21 @@ template(name='post_card')
         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         // .invert.rounded
         // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+   
+    if key_value 'model' 'reddit'
+        .ui.header #{subreddit} subreddit
+        .ui.header #{author} author
+        .ui.header #{ups} ups
+        |#{body}
+        |#{selftext}
+        // blockquote(class="reddit-card")
+        //     a(href="https://www.reddit.com#{permalink}") 
+        //         |#{title}
+        //     |from 
+        //     a(href="http://www.reddit.com/r/#{subreddit}") 
+        //         |r/#{subreddit}
+        // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+
     each tags 
         a.ui.large.label.add_tag #{this}
     .ui.large.circular.icon.button.vote_up
