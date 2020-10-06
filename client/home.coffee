@@ -24,6 +24,14 @@ Template.registerHelper 'is_twitter', ()->
     @domain in ['twitter.com','mobile.twitter.com','vimeo.com']
 
 
+Template.reddit_card.onRendered ->
+    # console.log @data
+    unless @data.watson
+        # console.log 'call'
+        Meteor.call 'call_watson', @data._id, 'url','url',->
+    # else 
+    #     console.log 'dont'
+    
 Template.reddit_card.events
     'click .tagger': (e,t)->
         Meteor.call 'call_watson', @_id, 'url', 'url', ->
@@ -65,12 +73,14 @@ Template.home.onCreated ->
         Session.get('image_mode')
         Session.get('video_mode')
         Session.get('wiki_mode')
+        Session.get('twitter_mode')
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('image_mode')
         Session.get('video_mode')
         Session.get('wiki_mode')
+        Session.get('twitter_mode')
         Session.get('toggle')
         Session.get('query')
         )
@@ -79,6 +89,7 @@ Template.home.onCreated ->
         Session.get('image_mode')
         Session.get('video_mode')
         Session.get('wiki_mode')
+        Session.get('twitter_mode')
         Session.get('toggle')
         Session.get('query')
         )
@@ -95,7 +106,7 @@ Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
         selected_tags.push @name
-        # Session.set('query','')
+        Session.set('query','')
         Meteor.call 'call_wiki', @name, ->
             # Meteor.call 'calc_term', @title, ->
             # Meteor.call 'omega', @title, ->
@@ -121,9 +132,9 @@ Template.unselect_tag.helpers
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
-        Meteor.setTimeout( ->
-            Session.set('toggle',!Session.get('toggle'))
-        , 7000)
+        # Meteor.setTimeout( ->
+        #     Session.set('toggle',!Session.get('toggle'))
+        # , 7000)
 
         Meteor.call 'search_reddit', selected_tags.array(), ->
     
@@ -160,9 +171,10 @@ Template.home.helpers
         else
             'disabled loading'
 
-    images_button_class: -> if Session.get('image_mode') then 'active' else 'basic'
-    video_button_class: -> if Session.get('video_mode') then 'active' else 'basic'
-    wiki_button_class: -> if Session.get('wiki_mode') then 'active' else 'basic'
+    images_button_class: -> if Session.get('twitter_mode') then 'blue circular' else 'grey'
+    images_button_class: -> if Session.get('image_mode') then 'blue circular' else 'grey'
+    video_button_class: -> if Session.get('video_mode') then 'blue circular' else 'grey'
+    wiki_button_class: -> if Session.get('wiki_mode') then 'blue circular' else 'grey'
     term: ->
         # console.log @
         Docs.find 

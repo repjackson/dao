@@ -37,10 +37,10 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.column
-                if selected_tags
-                    if many_tags
-                        a#clear_tags.ui.black.icon.compact.large.circular.button.select_term
-                            i.remove.icon
+                // if selected_tags
+                //     if many_tags
+                //         a#clear_tags.ui.black.icon.compact.large.circular.button.select_term
+                //             i.remove.icon
                 each selected_tags
                     +unselect_tag
                 .ui.left.icon.large.input 
@@ -51,18 +51,14 @@ template(name='home')
                 // .row
                 //     .four.wide.right.aligned.column
                 .ui.inline.small.header(title='results') #{doc_count}
-                .ui.circular.compact.icon.large.button.set_twitter
-                    i.large.twitter.icon
-                .ui.circular.compact.icon.large.button.toggle_video(class=video_button_class)
-                    i.large.youtube.icon
-                .ui.circular.compact.icon.large.button.toggle_images(class=images_button_class)
-                    i.large.picture.icon
-                .ui.circular.compact.icon.large.button.toggle_reddit
-                    i.large.reddit.icon
-                .ui.circular.compact.icon.large.button.toggle_wiki(class=wiki_button_class)
-                    i.large.wikipedia.icon
-
+                // .ui.circular.compact.icon.large.button.set_twitter
+                i.big.twitter.link.link.zoomer.icon.toggle_twitter(class=twitter_button_class)
+                i.big.youtube.link.zoomer.icon.toggle_video(class=video_button_class)
+                i.big.picture.link.zoomer.icon.toggle_images(class=images_button_class)
+                i.big.reddit.link.zoomer.icon.toggle_reddit
+                i.big.wikipedia.link.zoomer.icon.toggle_wiki(class=wiki_button_class)
             .sixteen.wide.column
+                .spacer
                 each docs
                     if key_value 'model' 'reddit'
                         +reddit_card
@@ -114,13 +110,13 @@ template(name='call_watson')
 
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.big.image.label.select_term(href='#')
+    a.unselect_tag.ui.black.big.image.label.zoomer.select_term(href='#')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.big.image.label.select_tag.select_term(href='#' title="#{count} results")
+    a.ui.big.image.label.zoomer.select_tag.select_term(href='#' title="#{count} results")
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         | #{name}
@@ -132,7 +128,7 @@ template(name='reddit_card')
     | #{url}
     div
     if is_image
-        img(src=url)
+        img.ui.fluid.image(src=url)
     else if is_youtube
         div
         // .ui.embed

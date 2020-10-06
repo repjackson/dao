@@ -1,8 +1,8 @@
 body {
     background-color: rgba(0,0,0,.85) !important;
-    /*transition: all .5s linear;*/
+    /*transition: all .25s linear;*/
     filter: invert(1) !important; 
-    transition: all .5s ease !important;
+    transition: all .25s ease !important;
 }
 .invert {
      filter: invert(1) !important; 
@@ -18,10 +18,10 @@ img {
     padding: 0px !important;
 }
 .label {
-    transition: all .5s ease !important;
+    transition: all .25s ease !important;
     margin-bottom: 2px !important;
     margin-top: 2px !important;
-    border-radius: 7px !important;
+    border-radius: 10px !important;
 }
 ::-webkit-scrollbar {
   width: 0px !important;
@@ -29,7 +29,7 @@ img {
 }
 
 input {
-    border-radius: 7px !important;
+    border-radius: 10px !important;
 }
 
 .input {
@@ -37,12 +37,12 @@ input {
     margin-bottom: 2px !important;
 }
 .rounded.image {
-    transition: all .5s ease !important;
+    transition: all .25s ease !important;
     margin: 5px !important;
-    border-radius: 7px !important;
+    border-radius: 10px !important;
 }
 .button {
-    transition: all .5s ease !important;
+    transition: all .25s ease !important;
     margin-bottom: 5px !important;
     /*border-radius: 10px !important;*/
 }
@@ -86,7 +86,7 @@ input {
     cursor: pointer !important;
     /* color: black !important; */
     /* font-size: 130% !important; */
-    /*zoom: 110% !important;*/
+    /*zoomer: 110% !important;*/
     /* padding-top: 5em !important; */
     /*transform: scale(1.) !important;*/
     z-index: 1000 !important;
@@ -96,6 +96,15 @@ input {
     transition: all .25s ease !important; 
 }
 .button:hover {
+    z-index: 1000 !important;
+    transform: scale(1.1) !important;
+}
+.zoomer:hover {
+    transition: all 1s ease !important; 
+    z-index: 1000 !important;
+    transform: scale(1.1) !important;
+}
+.label:hover {
     z-index: 1000 !important;
     transform: scale(1.1) !important;
 }
