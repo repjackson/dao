@@ -3,7 +3,7 @@
 Template.registerHelper 'one_post', ()-> Counts.get('result_counter') is 1
 Template.registerHelper 'two_posts', ()-> Counts.get('result_counter') is 2
 Template.registerHelper 'seven_tags', ()-> @tags[..7]
-    
+Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 
 Template.post_card.events
     'click .add_tag': -> 
@@ -85,9 +85,9 @@ Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
-        # match = {model:$in:['post','wikipedia','reddit','page']}
+        match = {model:$in:['post','wikipedia','reddit','page']}
         # match = {model:$in:['post','wikipedia','reddit']}
-        match = {model:'wikipedia'}
+        # match = {model:'wikipedia'}
         if selected_tags.array().length>0
             match.tags = $all:selected_tags.array()
      

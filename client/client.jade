@@ -57,17 +57,22 @@ template(name='home')
          
 template(name='post_card')         
     // .ui.fluid.
-    if watson.metadata.image
-        img.ui.rounded.inline.medium.image.invert(src=watson.metadata.image)    
+    // if watson.metadata.image
+    //     img.ui.rounded.inline.medium.image.invert(src=watson.metadata.image)    
     // else
     //     img.ui.image(src=url)
     a.ui.header(href=url target='_window') #{title}
-    .medscroll
-        iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    if key_value 'model' 'wikipedia'
+        iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        // .invert.rounded
         // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     each tags 
         a.ui.large.label.add_tag #{this}
-     
+    .ui.large.circular.icon.button.vote_up
+        i.thumbs.up.outline.icon
+    |#{points}
+    .ui.large.circular.icon.button.vote_down
+        i.thumbs.down.outline.icon
                     
 template(name='pull_reddit')
     .ui.circular.icon.basic.button.pull

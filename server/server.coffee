@@ -40,8 +40,8 @@ Meteor.publish 'doc_count', (
     # view_mode
     )->
     match = {}
-    # match.model = $in:['reddit','wikipedia','post','page']
-    match.model = $in:['wikipedia']
+    match.model = $in:['reddit','wikipedia','post','page']
+    # match.model = $in:['wikipedia']
     # match.model = 'wikipedia'
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
@@ -67,7 +67,8 @@ Meteor.publish 'docs', (
     query=''
     )->
     match = {}
-    match.model = 'wikipedia'
+    # match.model = 'wikipedia'
+    match.model = $in:['wikipedia','reddit']
     
     if selected_tags.length > 0
         match.tags = $all:selected_tags
