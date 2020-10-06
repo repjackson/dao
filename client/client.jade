@@ -36,10 +36,10 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.column
-                // if selected_tags
-                //     if many_tags
-                //         a#clear_tags.ui.black.icon.compact.large.button.select_term
-                //             i.remove.icon
+                if selected_tags
+                    if many_tags
+                        a#clear_tags.ui.black.icon.compact.large.button.select_term
+                            i.remove.icon
                 each selected_tags
                     +unselect_tag
                 .ui.left.icon.large.input 
