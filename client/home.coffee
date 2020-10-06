@@ -5,6 +5,40 @@ Template.registerHelper 'two_posts', ()-> Counts.get('result_counter') is 2
 Template.registerHelper 'seven_tags', ()-> @tags[..7]
 Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 
+
+
+Template.registerHelper 'is_image', ()->
+    @domain in ['i.imgur.com','i.reddit.com','i.redd.it']
+
+Template.registerHelper 'is_youtube', ()->
+    @domain in ['youtube.com','youtu.be','vimeo.com']
+Template.registerHelper 'is_twitter', ()->
+    @domain in ['twitter.com','mobile.twitter.com','vimeo.com']
+
+
+Template.reddit_card.events
+    'click .tagger': (e,t)->
+        Meteor.call 'call_watson', @_id, 'url', 'url', ->
+    'keyup .tag_post': (e,t)->
+        # console.log 
+        if e.which is 13
+            # $(e.currentTarget).closest('.button')
+            tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
+            Docs.update @_id,
+                $addToSet: tags: tag
+            $(e.currentTarget).closest('.tag_post').val('')
+            # console.log tag
+    'click .add_tag': -> 
+        # console.log @valueOf()
+        selected_tags.push @valueOf()
+        # # if Meteor.user()
+        Meteor.call 'call_wiki', @valueOf(), ->
+        #     # Meteor.call 'calc_term', @title, ->
+        #     # Meteor.call 'omega', @title, ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
+
+
+
 Template.post_card.events
     'click .add_tag': -> 
         # console.log @valueOf()
@@ -13,7 +47,8 @@ Template.post_card.events
         Meteor.call 'call_wiki', @valueOf(), ->
         #     # Meteor.call 'calc_term', @title, ->
         #     # Meteor.call 'omega', @title, ->
-            
+        Meteor.call 'search_reddit', selected_tags.array(), ->
+
 
 Template.post_card.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
@@ -53,6 +88,7 @@ Template.tag_selector.events
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 7000)
+        Meteor.call 'search_reddit', selected_tags.array(), ->
        
        
 Template.call_watson.events
@@ -75,7 +111,8 @@ Template.unselect_tag.events
             Session.set('toggle',!Session.get('toggle'))
         , 7000)
 
-            
+        Meteor.call 'search_reddit', selected_tags.array(), ->
+    
             
 Template.post_card.helpers
     one_post: -> Counts.get('result_counter') is 1
@@ -173,3 +210,12 @@ Template.home.events
 # Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)
 
 
+Template.pull_reddit.events
+    'click .pull': -> 
+        Meteor.call 'get_reddit_post', @_id, @reddit_id, ->
+        # Meteor.call 'search_stack', selected_tags.array(), ->
+Template.call_watson.events
+    'click .pull': -> 
+        Meteor.call 'call_watson', @_id, 'url','url', ->
+        # Meteor.call 'search_stack', selected_tags.array(), ->
+       
