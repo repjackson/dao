@@ -20,7 +20,8 @@ head
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.css")
     script(src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js")
 
-    
+    // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+
     script.
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -38,7 +39,7 @@ template(name='home')
             .sixteen.wide.column
                 if selected_tags
                     if many_tags
-                        a#clear_tags.ui.black.icon.compact.large.button.select_term
+                        a#clear_tags.ui.black.icon.compact.large.circular.button.select_term
                             i.remove.icon
                 each selected_tags
                     +unselect_tag
@@ -56,9 +57,9 @@ template(name='home')
                     i.large.youtube.icon
                 .ui.circular.compact.icon.large.button.toggle_images(class=images_button_class)
                     i.large.picture.icon
-                .ui.circular.compact.icon.large.button.toggle_single
+                .ui.circular.compact.icon.large.button.toggle_reddit
                     i.large.reddit.icon
-                .ui.circular.compact.icon.large.button.toggle_single
+                .ui.circular.compact.icon.large.button.toggle_wiki
                     i.wikipedia.icon
 
             .sixteen.wide.column
@@ -77,8 +78,8 @@ template(name='post_card')
     //     img.ui.image(src=url)
     a.ui.header(href=url target='_window') #{title}
     if key_value 'model' 'wikipedia'
-        iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        // .invert.rounded
+        .invert.rounded
+            iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
    
     if key_value 'model' 'reddit'
@@ -129,15 +130,16 @@ template(name='tag_selector')
 template(name='reddit_card')
     .ui.header #{title}
     | #{url}
+    if is_image
+        img(src=url)
     // .medscroll
-    .invert
-        blockquote(class="reddit-card")
-            a(href="https://www.reddit.com#{permalink}") 
-                |#{title}
-            |from 
-            a(href="http://www.reddit.com/r/#{subreddit}") 
-                |r/#{subreddit}
-        script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+    // .invert
+    // blockquote(class="reddit-card")
+    //     a(href="https://www.reddit.com#{permalink}") 
+    //         |#{title}
+    //     |from 
+    //     a(href="http://www.reddit.com/r/#{subreddit}") 
+    //         |r/#{subreddit}
     a.ui.fluid.basic.circular.button(href=url target='_window' title=url)
         i.external.icon
         |#{domain}

@@ -67,13 +67,17 @@ Meteor.publish 'doc_count', (
 
 Meteor.publish 'docs', (
     selected_tags
+    image_mode
     toggle
     query=''
     )->
     match = {}
     # match.model = 'wikipedia'
     match.model = $in:['wikipedia','reddit']
-    
+    if image_mode
+        match.model = 'reddit'
+        match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+
     if selected_tags.length > 0
         match.tags = $all:selected_tags
         # console.log match
@@ -93,6 +97,7 @@ Meteor.publish 'docs', (
                     
 Meteor.publish 'dtags', (
     selected_tags
+    image_mode
     toggle
     query=''
     )->
@@ -109,6 +114,9 @@ Meteor.publish 'dtags', (
 
     count = Docs.find(match).count()
     # console.log count
+    if image_mode
+        match.model = 'reddit'
+        match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
 
     # if query.length > 1
     #     console.log 'searching query', query
@@ -140,7 +148,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: count }
-        { $limit: 20 }
+        { $limit: 42 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', tag_cloud

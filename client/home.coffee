@@ -8,7 +8,7 @@ Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 
 
 Template.registerHelper 'is_image', ()->
-    @domain in ['i.imgur.com','i.reddit.com','i.redd.it']
+    @domain in ['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
 
 Template.registerHelper 'is_youtube', ()->
     @domain in ['youtube.com','youtu.be','vimeo.com']
@@ -53,18 +53,23 @@ Template.post_card.events
 Template.post_card.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
+        Session.get('image_mode')
         )
+        
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
+        Session.get('image_mode')
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
+        Session.get('image_mode')
         Session.get('toggle')
         Session.get('query')
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
+        Session.get('image_mode')
         Session.get('toggle')
         Session.get('query')
         )
@@ -114,6 +119,7 @@ Template.unselect_tag.events
         Meteor.call 'search_reddit', selected_tags.array(), ->
     
             
+            
 Template.post_card.helpers
     one_post: -> Counts.get('result_counter') is 1
     two_posts: -> Counts.get('result_counter') is 2
@@ -145,7 +151,8 @@ Template.home.helpers
         else
             'disabled loading'
 
-        
+    images_button_class: ->
+        if Session.get('image_mode') then 'active' else 'basic'
     term: ->
         # console.log @
         Docs.find 
@@ -169,7 +176,8 @@ Template.home.events
     # 'click .delete': -> 
     #     console.log @
     #     Docs.remove @_id
-    
+    'click .toggle_images': ->
+        Session.set('image_mode',!Session.get('image_mode'))
     'click #clear_tags': -> selected_tags.clear()
 
     'click .search_title': (e,t)->
