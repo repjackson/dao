@@ -65,7 +65,6 @@ Template.home.onCreated ->
         Session.get('image_mode')
         Session.get('video_mode')
         Session.get('wiki_mode')
-        
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()

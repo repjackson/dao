@@ -78,10 +78,10 @@ Meteor.publish 'docs', (
     if image_mode
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    else if video_mode
+    if video_mode
         match.model = 'reddit'
         match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    else if wiki_mode
+    if wiki_mode
         match.model = 'wikipedia'
         # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
 
@@ -106,6 +106,7 @@ Meteor.publish 'dtags', (
     selected_tags
     image_mode
     video_mode
+    wiki_mode
     toggle
     query=''
     )->
@@ -125,10 +126,10 @@ Meteor.publish 'dtags', (
     if image_mode
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    else if video_mode
+    if video_mode
         match.model = 'reddit'
         match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    else if wiki_mode
+    if wiki_mode
         match.model = 'wikipedia'
         # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
 
