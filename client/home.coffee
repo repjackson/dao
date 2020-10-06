@@ -5,6 +5,14 @@ Template.registerHelper 'two_posts', ()-> Counts.get('result_counter') is 2
 Template.registerHelper 'seven_tags', ()-> @tags[..7]
 Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 
+Template.registerHelper 'youtube_parse', ()->
+    console.log @url
+    regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    match = @url.match(regExp);
+    if match and match[2].length is 11
+        return match[2];
+    else
+        console.log 'no'
 
 
 Template.registerHelper 'is_image', ()->
@@ -54,22 +62,29 @@ Template.post_card.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('image_mode')
+        Session.get('video_mode')
+        
         )
         
 Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('image_mode')
+        Session.get('video_mode')
+        
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('image_mode')
+        Session.get('video_mode')
+        
         Session.get('toggle')
         Session.get('query')
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
         Session.get('image_mode')
+        Session.get('video_mode')
         Session.get('toggle')
         Session.get('query')
         )
@@ -151,8 +166,8 @@ Template.home.helpers
         else
             'disabled loading'
 
-    images_button_class: ->
-        if Session.get('image_mode') then 'active' else 'basic'
+    images_button_class: -> if Session.get('image_mode') then 'active' else 'basic'
+    video_button_class: -> if Session.get('video_mode') then 'active' else 'basic'
     term: ->
         # console.log @
         Docs.find 
@@ -176,8 +191,8 @@ Template.home.events
     # 'click .delete': -> 
     #     console.log @
     #     Docs.remove @_id
-    'click .toggle_images': ->
-        Session.set('image_mode',!Session.get('image_mode'))
+    'click .toggle_images': -> Session.set('image_mode',!Session.get('image_mode'))
+    'click .toggle_video': -> Session.set('video_mode',!Session.get('video_mode'))
     'click #clear_tags': -> selected_tags.clear()
 
     'click .search_title': (e,t)->
@@ -227,3 +242,13 @@ Template.call_watson.events
         Meteor.call 'call_watson', @_id, 'url','url', ->
         # Meteor.call 'search_stack', selected_tags.array(), ->
        
+
+# Template.reddit_card.onRendered ->
+#     Meteor.setTimeout( =>
+#         console.log @
+#         $('.ui.embed').embed({
+#             source: 'youtube',
+#             url: @data.url
+#             # placeholder: '/images/bear-waving.jpg'
+#         });
+#     , 1000)

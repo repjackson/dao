@@ -37,11 +37,8 @@ Meteor.publish 'doc_by_title', (title)->
 
 Meteor.publish 'doc_count', (
     selected_tags
-    # selected_domains
-    # selected_authors
-    # selected_subreddits
-    # selected_models
-    # view_mode
+    image_mode
+    video_mode
     )->
     match = {}
     match.model = $in:['reddit','wikipedia','post','page']
@@ -52,14 +49,6 @@ Meteor.publish 'doc_count', (
     else
         match.tags = $in:['dao']
 
-    # if selected_domains.length > 0 
-    #     match.domain = $all: selected_domains
-    # if selected_authors.length > 0 
-    #     match.author = $all: selected_authors
-    # if selected_subreddits.length > 0 
-    #     match.subreddit = $all: selected_subreddits
-    # if selected_models.length > 0 
-    #     match.model = $all: selected_models
     Counts.publish this, 'result_counter', Docs.find(match)
     return undefined    # otherwise coffeescript returns a Counts.publish
                       # handle when Meteor expects a Mongo.Cursor object.
@@ -68,6 +57,7 @@ Meteor.publish 'doc_count', (
 Meteor.publish 'docs', (
     selected_tags
     image_mode
+    video_mode
     toggle
     query=''
     )->
@@ -77,6 +67,9 @@ Meteor.publish 'docs', (
     if image_mode
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+    if video_mode
+        match.model = 'reddit'
+        match.domain = $in:['youtube.com','youtu.be','vimeo.com']
 
     if selected_tags.length > 0
         match.tags = $all:selected_tags
@@ -98,6 +91,7 @@ Meteor.publish 'docs', (
 Meteor.publish 'dtags', (
     selected_tags
     image_mode
+    video_mode
     toggle
     query=''
     )->
@@ -117,6 +111,9 @@ Meteor.publish 'dtags', (
     if image_mode
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+    if video_mode
+        match.model = 'reddit'
+        match.domain = $in:['youtube.com','youtu.be','vimeo.com']
 
     # if query.length > 1
     #     console.log 'searching query', query

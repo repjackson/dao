@@ -1,8 +1,8 @@
 body {
     background-color: rgba(0,0,0,.85) !important;
-    /*transition: all 1s linear;*/
+    /*transition: all .5s linear;*/
     filter: invert(1) !important; 
-    transition: all 1s ease !important;
+    transition: all .5s ease !important;
 }
 .invert {
      filter: invert(1) !important; 
@@ -18,7 +18,7 @@ img {
     padding: 0px !important;
 }
 .label {
-    transition: all 1s ease !important;
+    transition: all .5s ease !important;
     margin-bottom: 2px !important;
     margin-top: 2px !important;
     border-radius: 7px !important;
@@ -37,12 +37,12 @@ input {
     margin-bottom: 2px !important;
 }
 .rounded.image {
-    transition: all 1s ease !important;
+    transition: all .5s ease !important;
     margin: 5px !important;
     border-radius: 7px !important;
 }
 .button {
-    transition: all 1s ease !important;
+    transition: all .5s ease !important;
     margin-bottom: 5px !important;
     /*border-radius: 10px !important;*/
 }
