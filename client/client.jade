@@ -37,10 +37,10 @@ template(name='home')
     .ui.stackable.grid
         .row
             .sixteen.wide.column
-                // if selected_tags
-                //     if many_tags
-                //         a#clear_tags.ui.black.icon.compact.large.circular.button.select_term
-                //             i.remove.icon
+                if selected_tags
+                    if many_tags
+                        a#clear_tags.ui.black.icon.compact.large.circular.button.select_term
+                            i.remove.icon
                 each selected_tags
                     +unselect_tag
                 .ui.left.icon.large.input 
@@ -58,6 +58,7 @@ template(name='home')
                 +view_mode key='reddit' icon='reddit'
                 +view_mode key='wikipedia' icon='wikipedia'
                 +view_mode key='porm' icon='mercury'
+                +view_mode key='porm' icon='stack exchange'
             .sixteen.wide.column
                 .spacer
                 each docs

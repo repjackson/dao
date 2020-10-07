@@ -40,25 +40,32 @@ Meteor.publish 'doc_count', (
     view_mode
     )->
     match = {}
-    match.model = $in:['reddit','wikipedia']
     # match.model = $in:['wikipedia']
     # match.model = 'wikipedia'
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
         match.tags = $in:['dao']
+        
+    # switch view_mode
+    #     when 
     if view_mode is 'image'
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    if view_mode is 'video'
+    else if view_mode is 'video'
         match.model = 'reddit'
         match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    if view_mode is 'wikipedia'
+    else if view_mode is 'wikipedia'
         match.model = 'wikipedia'
         # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    if view_mode is 'twitter'
+    else if view_mode is 'twitter'
         match.model = 'reddit'
         match.domain = $in:['twitter.com','mobile.twitter.com']
+    else if view_mode is 'porn'
+        match.model = 'porn'
+        # match.domain = $in:['twitter.com','mobile.twitter.com']
+    else
+        match.model = $in:['reddit','wikipedia']
 
     Counts.publish this, 'result_counter', Docs.find(match)
     return undefined    # otherwise coffeescript returns a Counts.publish
@@ -84,20 +91,23 @@ Meteor.publish 'docs', (
     match = {}
     console.log 'skip', skip
     # match.model = 'wikipedia'
-    match.model = $in:['wikipedia','reddit']
-    if view_mode is 'image'
-        match.model = 'reddit'
-        match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    if view_mode is 'video'
-        match.model = 'reddit'
-        match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    if view_mode is 'wikipedia'
-        match.model = 'wikipedia'
-        # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    if view_mode is 'twitter'
-        match.model = 'reddit'
-        match.domain = $in:['twitter.com','mobile.twitter.com']
-
+    switch view_mode 
+        when 'image'
+            match.model = 'reddit'
+            match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+        when 'video'
+            match.model = 'reddit'
+            match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+        when 'wikipedia'
+            match.model = 'wikipedia'
+            # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+        when 'twitter'
+            match.model = 'reddit'
+            match.domain = $in:['twitter.com','mobile.twitter.com']
+        when 'porn'
+            match.model = 'porn'
+        else 
+            match.model = $in:['wikipedia','reddit']
     if selected_tags.length > 0
         match.tags = $all:selected_tags
         # console.log match
@@ -138,20 +148,22 @@ Meteor.publish 'dtags', (
 
     count = Docs.find(match).count()
     # console.log count
-    if view_mode is 'image'
-        match.model = 'reddit'
-        match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    if view_mode is 'video'
-        match.model = 'reddit'
-        match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    if view_mode is 'wikipedia'
-        match.model = 'wikipedia'
-        # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    if view_mode is 'twitter'
-        match.model = 'reddit'
-        match.domain = $in:['twitter.com','mobile.twitter.com']
-
-    if query.length > 1
+    switch view_mode 
+        when 'image'
+            match.model = 'reddit'
+            match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+        when 'video'
+            match.model = 'reddit'
+            match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+        when 'wikipedia'
+            match.model = 'wikipedia'
+            # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+        when 'twitter'
+            match.model = 'reddit'
+            match.domain = $in:['twitter.com','mobile.twitter.com']
+        when 'porn'
+            match.model = 'porn'
+    if query.length > 4
         console.log 'searching query', query
         # match.tags = {$regex:"#{query}", $options: 'i'}
         # match.tags_string = {$regex:"#{query}", $options: 'i'}
@@ -181,7 +193,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit:9 }
+            { $limit:13 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', tag_cloud

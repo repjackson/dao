@@ -104,6 +104,8 @@ Template.tag_selector.helpers
 Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
+        
         selected_tags.push @name
         Session.set('query','')
         Meteor.call 'call_wiki', @name, ->
@@ -213,7 +215,9 @@ Template.home.events
             Session.set('skip',prev)
             # Session.get('skip')
 
-    'click #clear_tags': -> selected_tags.clear()
+    'click #clear_tags': -> 
+        selected_tags.clear()
+
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
@@ -221,32 +225,35 @@ Template.home.events
     'keyup .search_title': (e,t)->
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
+
         if search.length > 4
             Session.set('query',search)
         if e.which is 13
+            # window.speechSynthesis.cancel()
+            window.speechSynthesis.speak new SpeechSynthesisUtterance search
             # console.log search
             if search.length>0
-                # Meteor.call 'check_url', search, (err,res)->
-                #     console.log res
-                #     if res
-                #         alert 'url'
-                #         Meteor.call 'lookup_url', search, (err,res)=>
-                #             console.log res
-                #             for tag in res.tags
-                #                 selected_tags.push tag
+                Meteor.call 'check_url', search, (err,res)->
+                    console.log res
+                    if res
+                        alert 'url'
+                        Meteor.call 'lookup_url', search, (err,res)=>
+                            console.log res
+                            for tag in res.tags
+                                selected_tags.push tag
                                 
-                #     else
-                unless search in selected_tags.array()
-                    selected_tags.push search
-                    Meteor.call 'call_wiki', search, ->
-                    # Session.set('query','')
-                    search = $('.search_title').val('')
-                    Meteor.setTimeout( ->
-                        Session.set('toggle',!Session.get('toggle'))
-                    , 7000)
-                    # Meteor.setTimeout( ->
-                    #     Session.set('toggle',!Session.get('toggle'))
-                    # , 1000)
+                    else
+                        unless search in selected_tags.array()
+                            selected_tags.push search
+                            Meteor.call 'call_wiki', search, ->
+                            # Session.set('query','')
+                            search = $('.search_title').val('')
+                            Meteor.setTimeout( ->
+                                Session.set('toggle',!Session.get('toggle'))
+                            , 7000)
+                            # Meteor.setTimeout( ->
+                            #     Session.set('toggle',!Session.get('toggle'))
+                            # , 1000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
