@@ -1,5 +1,5 @@
 NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
-# ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3')
+ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3')
 # VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3')
 # PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3')
 # TextToSpeechV1 = require('ibm-watson/text-to-speech/v1')
@@ -22,12 +22,12 @@ natural_language_understanding = new NaturalLanguageUnderstandingV1(
 # });
 
 
-# tone_analyzer = new ToneAnalyzerV3(
-#     version: '2017-09-21'
-#     authenticator: new IamAuthenticator({
-#         apikey: Meteor.settings.private.tone.apikey
-#     })
-#     url: Meteor.settings.private.tone.url)
+tone_analyzer = new ToneAnalyzerV3(
+    version: '2017-09-21'
+    authenticator: new IamAuthenticator({
+        apikey: Meteor.settings.private.tone.apikey
+    })
+    url: Meteor.settings.private.tone.url)
 
 
 # visual_recognition = new VisualRecognitionV3({
@@ -59,11 +59,9 @@ natural_language_understanding = new NaturalLanguageUnderstandingV1(
 # https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/b5195ac7-a729-46ea-b099-deb37d1dc65b
 
 Meteor.methods
-    call_tone: (doc_id, key, mode)->
+    call_tone: (doc_id)->
         self = @
         doc = Docs.findOne doc_id
-        # console.log key
-        # console.log mode
         # if doc.html or doc.body
         #     # stringed = JSON.stringify(doc.html, null, 2)
         # if mode is 'html'

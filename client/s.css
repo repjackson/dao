@@ -1,8 +1,7 @@
 body {
     background-color: rgba(0,0,0,.85) !important;
     filter: invert(1) !important; 
-    /*transition: all .2s linear !important;*/
-    transition: all .1s linear !important;
+    transition: all .25s linear !important;
 }
 .invert {
      filter: invert(1) !important; 
@@ -104,12 +103,12 @@ input {
 }
 .button:hover {
     z-index: 1000 !important;
-    /*transform: scale(1.1) !important;*/
+    /*transform: scale(1.2) !important;*/
 }
 .zoomer:hover {
-    transition: all .1 linear !important; 
+    /*transition: all .5s linear !important; */
     z-index: 1000 !important;
-    transform: scale(1.1) !important;
+    transform: scale(1.2) !important;
 }
 .superzoom:hover {
     transition: all .5 linear !important; 
@@ -117,8 +116,9 @@ input {
     transform: scale(1.5) !important;
 }
 .label:hover {
+    /*transition: all .5s linear !important; */
     z-index: 1000 !important;
-    transform: scale(1.1) !important;
+    transform: scale(1.2) !important;
 }
 .pointer:active {
   box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);
@@ -130,4 +130,146 @@ input {
 }
 .spacer {
     min-height: 5px !important;
+}
+.f20 {
+  font-size: 200% !important;
+  /* line-height: 200% !important; */
+  /* margin-bottom: 10px !important;  */
+}
+.f19 {
+  font-size: 190% !important;
+  /* line-height: 190% !important; */
+  /* margin-bottom: 10px !important;  */
+}
+.f18 {
+  font-size: 180% !important;
+  /* line-height: 180% !important; */
+  /* margin-bottom: 10px !important;  */
+}
+.f17 {
+  font-size: 170% !important;
+  /* line-height: 170% !important; */
+  /* margin-bottom: 10px !important;  */
+}
+.f16 {
+  font-size: 160% !important;
+  /* line-height: 160% !important; */
+  /* margin-bottom: 10px !important;  */
+}
+.f15 {
+  font-size: 150% !important;
+  /* line-height: 150% !important; */
+  /* margin-bottom: 10px !important;  */
+}
+.f14 {
+  font-size: 140% !important;
+  line-height: 110% !important;
+  /* margin-bottom: 10px !important;  */
+}
+.f13 {
+  font-size: 130% !important;
+  line-height: 120% !important;
+  /* margin-bottom: 10px !important;  */
+}
+.f12 {
+  font-size: 120% !important;
+  line-height: 120% !important;
+  /* margin-bottom: 10px !important;  */
+}
+.f11 {
+  font-size: 110% !important;
+  line-height: 120% !important;
+  /* margin-bottom: 10px !important;  */
+}
+.f10 {
+    font-size: 100% !important;
+    line-height: 100% !important;
+    /* margin-bottom: 10px !important;  */
+}
+.f9 {
+  font-size: 90% !important;
+  line-height: 90% !important;
+  /* margin-bottom: 5px !important;  */
+}
+.f8 {
+  font-size: 80% !important;
+  line-height: 80% !important; }
+.f7 {
+  font-size: 70% !important;
+  line-height: 70% !important; }
+.f6 {
+  font-size: 60% !important;
+  line-height: 60% !important; }
+.f5 {
+  font-size: 50% !important;
+  line-height: 50% !important; }
+.f4 {
+  font-size: 40% !important;
+  line-height: 40% !important; }
+.f3 {
+  font-size: 30% !important;
+  line-height: 30% !important; }
+.f2 {
+  font-size: 20% !important;
+  line-height: 20% !important; }
+.f1 {
+  font-size: 10% !important;
+  line-height: 10% !important; }
+.f0 { display:none; }
+
+
+@keyframes fadein {
+  from { opacity: 0}
+  to   { opacity: 1}
+}
+
+/* Mobile */
+@media only screen and (max-width: 765px) {
+  .mobile.hidden,
+  .tablet.only,
+  .computer.only,
+  .large.monitor.only,
+  .widescreen.monitor.only {
+    display: none !important;
+  }
+}
+/* Tablet / iPad Portrait */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .mobile.only,
+  .tablet.hidden,
+  .computer.only,
+  .large.monitor.only,
+  .widescreen.monitor.only {
+    display: none !important;
+  }
+}
+/* Computer / Desktop / iPad Landscape */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .mobile.only,
+  .tablet.only,
+  .computer.hidden,
+  .large.monitor.only,
+  .widescreen.monitor.only {
+    display: none !important;
+  }
+}
+/* Large Monitor */
+@media only screen and (min-width: 1200px) and (max-width: 1919px) {
+  .mobile.only,
+  .tablet.only,
+  .computer.only,
+  .large.monitor.hidden,
+  .widescreen.monitor.only {
+    display: none !important;
+  }
+}
+/* Widescreen Monitor */
+@media only screen and (min-width: 1920px) {
+  .mobile.only,
+  .tablet.only,
+  .computer.only,
+  .large.monitor.only,
+  .widescreen.monitor.hidden {
+    display: none !important;
+  }
 }

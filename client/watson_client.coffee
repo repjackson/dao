@@ -103,7 +103,7 @@ Template.tone.events
 #                     parsed_selftext_html:dom.value
         
 #         doc = Template.parentData()
-#         Meteor.call 'call_watson', Router.current().params.doc_id, parent.key, @mode, ->
+#         Meteor.call 'call_watson', Template.parentData()._id, parent.key, @mode, ->
 #         # Meteor.call 'call_watson', doc._id, @key, @mode, ->
 
 Template.autotag.events
@@ -125,14 +125,14 @@ Template.autotag.events
 
 Template.call_tone.events
     'click .call': ->
-        console.log @
+        # console.log @
         # console.log Template.currentData()
         # console.log Template.parentData()
         # console.log Template.parentData(1)
         # console.log Template.parentData(2)
         # console.log Template.parentData(3)
-        doc = Template.parentData()
-        Meteor.call 'call_tone', Router.current().params.doc_id, parent.key, @mode, ->
+        # doc = Template.parentData()
+        Meteor.call 'call_tone', @_id, ->
         # Meteor.call 'call_watson', doc._id, @key, @mode, ->
 
 
@@ -141,14 +141,14 @@ Template.call_tone.events
 Template.call_visual.events
     'click #call_visual': ->
         console.log @
-        Meteor.call 'call_visual_link', Router.current().params._id, @valueOf(),->
+        Meteor.call 'call_visual_link', @_id, @valueOf(),->
 
 Template.tone.events
     'click #call_tone': ->
-        console.log Router.current().params._id
+        console.log @_id
         console.log parent.key
         console.log @mode
-        # Meteor.call 'call_tone', Router.current().params._id, parent.key, @mode, ->
+        # Meteor.call 'call_tone', @_id, parent.key, @mode, ->
 
 
 
