@@ -1,4 +1,8 @@
 NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
+# ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3')
+# VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3')
+# PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3')
+# TextToSpeechV1 = require('ibm-watson/text-to-speech/v1')
 
 { IamAuthenticator } = require('ibm-watson/auth')
 
@@ -10,6 +14,29 @@ natural_language_understanding = new NaturalLanguageUnderstandingV1(
     url: Meteor.settings.private.language.url)
 # lang
 # mkdgRJwYEJnuJUhCv0Ny7REL4scA27el5mdPKrnGMEMg
+# textToSpeech = new TextToSpeechV1({
+#   authenticator: new IamAuthenticator({
+#     apikey: Meteor.settings.private.tts.apikey,
+#   }),
+#   url: Meteor.settings.private.tts.url,
+# });
+
+
+# tone_analyzer = new ToneAnalyzerV3(
+#     version: '2017-09-21'
+#     authenticator: new IamAuthenticator({
+#         apikey: Meteor.settings.private.tone.apikey
+#     })
+#     url: Meteor.settings.private.tone.url)
+
+
+# visual_recognition = new VisualRecognitionV3({
+#   version: '2018-03-19',
+#   authenticator: new IamAuthenticator({
+#     apikey: Meteor.settings.private.visual.apikey,
+#   }),
+#   url: Meteor.settings.private.visual.url,
+# });
 
 
 # kevin lang
@@ -32,6 +59,73 @@ natural_language_understanding = new NaturalLanguageUnderstandingV1(
 # https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/b5195ac7-a729-46ea-b099-deb37d1dc65b
 
 Meteor.methods
+    call_tone: (doc_id, key, mode)->
+        self = @
+        doc = Docs.findOne doc_id
+        # console.log key
+        # console.log mode
+        # if doc.html or doc.body
+        #     # stringed = JSON.stringify(doc.html, null, 2)
+        # if mode is 'html'
+        #     params =
+        #         toneInput:doc.description
+        #         content_type:'text/html'
+        # if mode is 'text'
+        params =
+            toneInput: { 'text': doc.analyzed_text }
+            contentType: 'application/json'
+        # console.log 'params', params
+        tone_analyzer.tone params, Meteor.bindEnvironment((err, response)->
+            if err
+                console.log err
+            else
+                # console.dir response
+                Docs.update { _id: doc_id},
+                    $set:
+                        tone: response
+                # console.log(JSON.stringify(response, null, 2))
+            )
+        # else return
+
+    call_visual: (doc_id, field)->
+        self = @
+        doc = Docs.findOne doc_id
+        # link = doc["#{field}"]
+        # visual_recognition.classify(classify_params)
+        #   .then(response => {
+        #     const classifiedImages = response.result;
+        #     console.log(JSON.stringify(classifiedImages, null, 2));
+        #   })
+        #   .catch(err => {
+        #     console.log('error:', err);
+        #   });
+        if doc.watson
+            if doc.watson.metadata.image
+                params =
+                    url:doc.watson.metadata.image
+        else
+            params =
+                url:doc.thumbnail
+                # url:doc.url
+            # images_file: images_file
+            # classifier_ids: classifier_ids
+        visual_recognition.classify params, Meteor.bindEnvironment((err, response)->
+            if err
+                console.log err
+            else
+                visual_tags = []
+                for tag in response.result.images[0].classifiers[0].classes
+                    visual_tags.push tag.class.toLowerCase()
+                # console.log(JSON.stringify(response, null, 2))
+                # console.log visual_tags
+                Docs.update { _id: doc_id},
+                    $set:
+                        visual_classes: response.result.images[0].classifiers[0].classes
+                        visual_tags:visual_tags
+                    $addToSet:
+                        tags:$each:visual_tags
+        )
+
     call_watson: (doc_id, key, mode) ->
         # console.log 'calling watson'
         self = @
@@ -58,8 +152,8 @@ Meteor.methods
                     sentiment: true
                     limit: 10
                 concepts: {}
-                # categories:
-                #     explanation:false
+                categories:
+                    explanation:false
                 emotion: {}
                 metadata: {}
                 # relations: {}
@@ -161,6 +255,19 @@ Meteor.methods
 
 
                 adding_tags = []
+                if response.categories
+                    for category in response.categories
+                        # console.log category.label.split('/')[1..]
+                        # console.log category.label.split('/')
+                        for category in category.label.split('/')
+                            if category.length > 0
+                                # adding_tags.push category
+                                Docs.update doc_id,
+                                    $addToSet: categories: category
+                Docs.update { _id: doc_id },
+                    $addToSet:
+                        tags:$each:adding_tags
+                
                 if response.entities and response.entities.length > 0
                     for entity in response.entities
                         # console.log entity.type, entity.text
@@ -193,7 +300,6 @@ Meteor.methods
                 Meteor.call 'clear_blocklist_doc', doc_id, ->
                 
                 # Meteor.call 'log_doc_terms', doc_id, ->
-                # Meteor.call 'clear_blocklist_doc', doc_id, ->
                 # if Meteor.isDevelopment
                 #     console.log 'all tags', final_doc.tags
                     # console.log 'final doc tag', final_doc.title, final_doc.tags.length, 'length'

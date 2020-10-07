@@ -6,8 +6,7 @@ Template.registerHelper 'seven_tags', ()-> @tags[..7]
 Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 
 
-log = (input)->
-    console.log input
+log = (input)-> console.log input
 
 
 Template.registerHelper 'youtube_parse', ()->
@@ -35,7 +34,7 @@ Template.reddit.onRendered ->
         # console.log 'call'
         Meteor.call 'call_watson', @data._id, 'url','url',->
     unless @data.points
-        console.log 'no points'
+        # console.log 'no points'
         Docs.update @data._id,
             $set:points:0
     # else 
@@ -120,13 +119,16 @@ Template.tag_selector.events
         
         selected_tags.push @name
         Session.set('query','')
-        Meteor.call 'call_wiki', @name, ->
-            # Meteor.call 'calc_term', @title, ->
-            # Meteor.call 'omega', @title, ->
+        Session.set('skip',0)
+
+        if Session.equals('view_mode','porn')
+            Meteor.call 'search_ph', @name, ->
+        else
+            Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 7000)
-        Meteor.call 'search_reddit', selected_tags.array(), ->
        
        
 Template.call_watson.events
@@ -147,11 +149,17 @@ Template.unselect_tag.helpers
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
+        Session.set('skip',0)
+
         # Meteor.setTimeout( ->
         #     Session.set('toggle',!Session.get('toggle'))
         # , 7000)
+        # if Session.equals('view_mode','porn')
+        #     Meteor.call 'search_ph', selected_tags.array(), ->
+        # else
+        #     Meteor.call 'call_wiki', search, ->
+        #     Meteor.call 'search_reddit', selected_tags.array(), ->
 
-        Meteor.call 'search_reddit', selected_tags.array(), ->
     
             
             
@@ -163,8 +171,8 @@ Template.home.helpers
         match = {model:$in:['post','wikipedia','reddit','porn','page']}
         # match = {model:$in:['post','wikipedia','reddit']}
         # match = {model:'wikipedia'}
-        if selected_tags.array().length>0
-            match.tags = $all:selected_tags.array()
+        # if selected_tags.array().length>0
+        match.tags = $all:selected_tags.array()
      
         Docs.find match,
             sort:
@@ -243,30 +251,32 @@ Template.home.events
         if e.which is 13
             # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
-            # console.log search
-            # if search.length>0
-            #     Meteor.call 'check_url', search, (err,res)->
-            #         console.log res
-            #         # if res
-                    #     alert 'url'
-                    #     Meteor.call 'lookup_url', search, (err,res)=>
-                    #         console.log res
-                    #         for tag in res.tags
-                    #             selected_tags.push tag
+            console.log search
+            if search.length>0
+                Meteor.call 'check_url', search, (err,res)->
+                    console.log res
+                    if res
+                        alert 'url'
+                        Meteor.call 'lookup_url', search, (err,res)=>
+                            console.log res
+                            for tag in res.tags
+                                selected_tags.push tag
                                 
-                    # else
-            unless search in selected_tags.array()
-                selected_tags.push search
-                Meteor.call 'call_wiki', search, ->
-                Session.set('skip',0)
-                # Session.set('query','')
-                search = $('.search_title').val('')
-                Meteor.setTimeout( ->
-                    Session.set('toggle',!Session.get('toggle'))
-                , 7000)
-                # Meteor.setTimeout( ->
-                #     Session.set('toggle',!Session.get('toggle'))
-                # , 1000)
+                    else
+                        unless search in selected_tags.array()
+                            selected_tags.push search
+                            if Session.equals('view_mode','porn')
+                                Meteor.call 'search_ph', search, ->
+                            else
+                                Meteor.call 'call_wiki', search, ->
+                                Meteor.call 'search_reddit', selected_tags.array(), ->
+                                
+                            Session.set('skip',0)
+                            # Session.set('query','')
+                            search = $('.search_title').val('')
+                            Meteor.setTimeout( ->
+                                Session.set('toggle',!Session.get('toggle'))
+                            , 7000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
@@ -276,7 +286,7 @@ Template.home.events
 # Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)
 
 Template.view_mode.helpers
-    toggle_mode_class: -> if Session.equals('view_mode',@key) then "#{@icon} blue circular" else "#{@icon} grey"
+    toggle_mode_class: -> if Session.equals('view_mode',@key) then "#{@icon} huge orange" else "#{@icon} big grey"
 
 Template.view_mode.events
     'click .toggle_mode': -> 

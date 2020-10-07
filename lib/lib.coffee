@@ -3,15 +3,38 @@
 @results = new Meteor.Collection 'results'
 
 
-# Meteor.methods
-#     check_url: (str)->
-#         pattern = new RegExp('^(https?:\\/\\/)?'+ # protocol
-#         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ # domain name
-#         '((\\d{1,3}\\.){3}\\d{1,3}))'+ # OR ip (v4) address
-#         '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ # port and path
-#         '(\\?[;&a-z\\d%_.~+=-]*)?'+ # query string
-#         '(\\#[-a-z\\d_]*)?$','i') # fragment locator
-#         return !!pattern.test(str)
+Meteor.methods
+    check_url: (str)->
+        pattern = new RegExp('^(https?:\\/\\/)?'+ # protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ # domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+ # OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ # port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ # query string
+        '(\\#[-a-z\\d_]*)?$','i') # fragment locator
+        return !!pattern.test(str)
+
+          
+    upvote_sentence: (doc_id, sentence)->
+        console.log sentence
+        Docs.update(
+            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
+            { $inc: { "tone.result.sentences_tone.$.weight": 1 } }
+        )
+
+    reset_sentence: (doc_id, sentence)->
+        console.log sentence
+        Docs.update(
+            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
+            { $set: { "tone.result.sentences_tone.$.weight": -2 } }
+        )
+
+
+    downvote_sentence: (doc_id, sentence)->
+        console.log sentence
+        Docs.update(
+            { _id:doc_id, "tone.result.sentences_tone.sentence_id": sentence.sentence_id },
+            { $inc: { "tone.result.sentences_tone.$.weight": -1 } }
+        )
 
             
 

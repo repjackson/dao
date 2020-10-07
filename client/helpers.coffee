@@ -23,3 +23,12 @@ Template.registerHelper 'to_percent', (number)->
     # console.log number
     (number*100).toFixed()
 
+
+
+Template.registerHelper 'post_header_class', (metric) ->
+    # console.log @
+    if @max_emotion_name
+        if @max_emotion_name is 'joy' then 'green invert'
+        else if @max_emotion_name is 'anger' then 'red invert'
+        else if @max_emotion_name is 'sadness' then 'blue invert'
+        else if @max_emotion_name is 'disgust' then 'orange invert'
