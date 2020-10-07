@@ -68,9 +68,10 @@ Meteor.publish 'doc_count', (
 Meteor.methods
     zero: ->
         cur = Docs.find({
-            points:$exists:false
+            model:'reddit'
+            points:$ne:0
         }, limit:10)
-
+        # Docs.update
         console.log cur.count()
 
 Meteor.publish 'docs', (

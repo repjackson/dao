@@ -33,8 +33,8 @@ Template.reddit.onRendered ->
         console.log 'no points'
         Docs.update @data._id,
             $set:points:0
-    else 
-        console.log 'points'
+    # else 
+    #     console.log 'points'
     
 Template.home.events
     'click .tagger': (e,t)->
@@ -170,10 +170,6 @@ Template.home.helpers
         else
             'disabled loading'
 
-    twitter_button_class: -> if Session.equals('view_mode','twitter') then 'blue circular' else 'grey'
-    images_button_class: -> if Session.equals('view_mode','image') then 'blue circular' else 'grey'
-    video_button_class: -> if Session.equals('view_mode','video') then 'blue circular' else 'grey'
-    wiki_button_class: -> if Session.equals('view_mode','wikipedia') then 'blue circular' else 'grey'
     term: ->
         # console.log @
         Docs.find 
@@ -209,10 +205,14 @@ Template.home.events
         next = current_skip+1
         Session.set('skip',next)
         # Session.get('skip')
-    'click .toggle_twitter': -> Session.set('view_mode', 'twitter')
-    'click .toggle_images': -> Session.set('view_mode', 'image')
-    'click .toggle_video': -> Session.set('view_mode','video')
-    'click .toggle_wiki': -> Session.set('view_mode','wikipedia')
+    'click .back': -> 
+        current_skip = Session.get('skip')
+        console.log current_skip
+        unless current_skip is 0
+            prev = current_skip-1
+            Session.set('skip',prev)
+            # Session.get('skip')
+
     'click #clear_tags': -> selected_tags.clear()
 
     'click .search_title': (e,t)->
@@ -254,6 +254,13 @@ Template.home.events
 
 # Template.registerHelper 'session_is', (key)-> Session.get(key)
 # Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)
+
+Template.view_mode.helpers
+    toggle_mode_class: -> if Session.equals('view_mode',@key) then "#{@icon} blue circular" else "#{@icon} grey"
+
+Template.view_mode.events
+    'click .toggle_mode': -> Session.set('view_mode', @key)
+
 
 
 Template.pull_reddit.events

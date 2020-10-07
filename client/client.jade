@@ -57,11 +57,7 @@ template(name='home')
                 +view_mode key='image' icon='picture'
                 +view_mode key='reddit' icon='reddit'
                 +view_mode key='wikipedia' icon='wikipedia'
-                i.big.twitter.link.link.zoomer.icon.toggle_twitter(class=twitter_button_class)
-                i.big.youtube.link.zoomer.icon.toggle_video(class=video_button_class)
-                i.big.picture.link.zoomer.icon.toggle_images(class=images_button_class)
-                i.big.reddit.link.zoomer.icon.toggle_reddit
-                i.big.wikipedia.link.zoomer.icon.toggle_wiki(class=wiki_button_class)
+                +view_mode key='porm' icon='mercury'
             .sixteen.wide.column
                 .spacer
                 each docs
@@ -70,21 +66,25 @@ template(name='home')
                     else
                         +post
                     .ui.divider
-                    .ui.large.circular.icon.button.vote_up
-                        i.thumbs.up.outline.icon
+                    .ui.big.circular.circular.icon.button.vote_up
+                        i.thumbs.up.outline.large.icon
                     |#{points}
-                    .ui.large.circular.icon.button.vote_down
-                        i.thumbs.down.outline.icon
-                    .ui.large.circular.icon.button.forward
-                        i.chevron.right.icon
-                    .ui.large.circular.icon.button.past
-                        i.chevron.left.icon
+                    .ui.big.circular.circular.icon.button.vote_down
+                        i.thumbs.down.outline.large.icon
+                    .ui.big.circular.circular.icon.button.past
+                        i.chevron.left.large.icon
+                    .ui.big.circular.circular.icon.button.forward
+                        i.chevron.right.large.icon
                     each tags 
                         a.ui.large.label.add_tag #{this}
                 |#{tags.length}
                 .ui.transparent.input
                     i.plus.grey.icon
                     input.tag_post(type='text')
+
+
+template(name='view_mode')
+    i.big.link.zoomer.icon.toggle_mode(class=toggle_mode_class)
 
 template(name='post')         
     // .ui.fluid.
