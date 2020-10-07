@@ -28,6 +28,41 @@ Template.registerHelper 'is_twitter', ()->
     @domain in ['twitter.com','mobile.twitter.com','vimeo.com']
 
 
+
+
+
+
+        
+Template.home.onCreated ->
+    Session.setDefault('skip',0)
+    @autorun -> Meteor.subscribe('doc_count',
+        selected_tags.array()
+        Session.get('view_mode')
+        Session.get('skip')
+        )
+    @autorun => Meteor.subscribe('dtags',
+        selected_tags.array()
+        Session.get('view_mode')
+        Session.get('skip')
+        Session.get('toggle')
+        Session.get('query')
+        )
+    @autorun => Meteor.subscribe('docs',
+        selected_tags.array()
+        Session.get('view_mode')
+        Session.get('toggle')
+        Session.get('query')
+        Session.get('skip')
+        )
+
+
+
+
+
+
+
+
+
 Template.reddit.onRendered ->
     # console.log @data
     unless @data.watson
@@ -81,34 +116,25 @@ Template.home.events
 #             Meteor.call 'search_reddit', selected_tags.array(), ->
 
 
-        
-Template.home.onCreated ->
-    Session.setDefault('skip',0)
-    @autorun -> Meteor.subscribe('doc_count',
-        selected_tags.array()
-        Session.get('view_mode')
-        Session.get('skip')
-        )
-    @autorun => Meteor.subscribe('dtags',
-        selected_tags.array()
-        Session.get('view_mode')
-        Session.get('skip')
-        Session.get('toggle')
-        Session.get('query')
-        )
-    @autorun => Meteor.subscribe('docs',
-        selected_tags.array()
-        Session.get('view_mode')
-        Session.get('toggle')
-        Session.get('query')
-        Session.get('skip')
-        )
 
     
 Template.tag_selector.onCreated ->
     # console.log @
     @autorun => Meteor.subscribe('doc_by_title', @data.name)
 Template.tag_selector.helpers
+    selector_header_class: ()->
+        # console.log @
+        term = 
+            Docs.findOne 
+                title:@name
+        if term
+            if term.max_emotion_name
+                switch term.max_emotion_name
+                    when 'joy' then 'pink'
+                    when 'anger' then 'green'
+                    when 'sadness' then 'orange'
+                    when 'disgust' then 'pink'
+                    when 'fear' then 'white'
     term: ->
         Docs.findOne 
             title:@name
@@ -131,6 +157,33 @@ Template.tag_selector.events
         , 7000)
        
        
+Template.session_edit_value_button.events
+    'click .set_session_value': ->
+        # console.log @key
+        # console.log @value
+        if Session.equals(@key,@value)
+            Session.set(@key, null)
+        else
+            Session.set(@key, @value)
+
+Template.session_edit_value_button.helpers
+    calculated_class: ->
+        res = ''
+        # console.log @
+        if @classes
+            res += @classes
+        if Session.get(@key)
+            if Session.equals(@key,@value)
+                res += ' active large compact'
+            else
+                # res += ' compact displaynone'
+                res += ' compact'
+            # console.log res
+            res
+
+       
+       
+       
 Template.call_watson.events
     'click .pull': -> 
         Meteor.call 'call_watson', @_id, 'url','url', ->
@@ -151,14 +204,14 @@ Template.unselect_tag.events
         selected_tags.remove @valueOf()
         Session.set('skip',0)
 
-        # Meteor.setTimeout( ->
-        #     Session.set('toggle',!Session.get('toggle'))
-        # , 7000)
-        # if Session.equals('view_mode','porn')
-        #     Meteor.call 'search_ph', selected_tags.array(), ->
-        # else
-        #     Meteor.call 'call_wiki', search, ->
-        #     Meteor.call 'search_reddit', selected_tags.array(), ->
+        if Session.equals('view_mode','porn')
+            Meteor.call 'search_ph', selected_tags.array(), ->
+        else
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.setTimeout( ->
+            Session.set('toggle',!Session.get('toggle'))
+        , 7000)
 
     
             
@@ -196,7 +249,7 @@ Template.home.helpers
         # console.log @
         Docs.find 
             model:'wikipedia'
-            title:@name
+            title:@valueOf()
     
     selected_tags: -> selected_tags.array()
     tag_results: ->
@@ -241,6 +294,8 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
+        window.speechSynthesis.speak new SpeechSynthesisUtterance 'fuck you bitch'
+
     # 'keyup .search_title': _.throttle((e,t)->
     'keyup .search_title': (e,t)->
         search = $('.search_title').val().toLowerCase().trim()

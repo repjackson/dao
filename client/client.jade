@@ -61,12 +61,28 @@ template(name='home')
             .sixteen.wide.column
                 .spacer
                 each docs
-                    if key_value 'model' 'reddit'
-                        +reddit
-                    else if key_value 'model' 'porn'
-                        +vid_card
-                    else
-                        +post
+                    a.ui.header(href=url target='_window' class=post_header_class) #{title}
+                    +session_edit_value_button key='view_section' value='content' label='content' icon='shield'
+                    if watson
+                        +session_edit_value_button key='view_section' value='nlu' label='nlu' icon='brain'
+                    if tone
+                        +session_edit_value_button key='view_section' value='tone' label='tone' icon='emotion'
+                    +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
+                    if session_key_value_is 'view_section' 'content'
+                        if key_value 'model' 'reddit'
+                            +reddit
+                        else if key_value 'model' 'porn'
+                            +vid_card
+                        else
+                            +post
+                    if session_key_value_is 'view_section' 'nlu'
+                        +call_tone    
+                        +watson_view
+                    if session_key_value_is 'view_section' 'tone'
+                        +tone
+                    if session_key_value_is 'view_section' 'comments'
+                        // +tone
+                        .ui.header comments
                     .ui.divider
                     .ui.big.circular.circular.icon.button.vote_up
                         i.thumbs.up.outline.large.icon
@@ -97,16 +113,27 @@ template(name='post')
     //     img.ui.rounded.inline.medium.image.invert(src=watson.metadata.image)    
     // else
     //     img.ui.image(src=url)
-    a.ui.header(href=url target='_window' class=post_header_class) #{title}
     .invert.rounded
         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-    if tone
-        +tone
-    // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-    if watson 
-        +call_tone
-        .medscroll.mobile.hidden
-            +watson_view
+    // if tone
+    //     +tone
+    // // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    // if watson 
+    //     +call_tone
+    //     .medscroll.mobile.hidden
+    //         +watson_view
+
+template(name='session_edit_value_button')
+    // .ui.circular.compact.button.set_session_value(class=calculated_class)
+    a.ui.image.big.link.label.set_session_value(class=calculated_class)
+        if icon
+            // i.icon(class=icon)
+            +i name=icon cl='ui avatar image'
+        if label
+            |#{label}
+        else 
+            |#{value}
+
 
     
                     
@@ -126,7 +153,7 @@ template(name='unselect_tag')
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.large.image.label.zoomer.pointer.select_tag.select_term(href='#' title="#{count} results")
+    a.ui.large.image.label.zoomer.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         | #{name}
@@ -134,8 +161,6 @@ template(name='tag_selector')
 
 
 template(name='reddit')
-    .ui.header(class=post_header_class) #{title}
-    div
     if is_image
         img.ui.fluid.image(src=url)
     else if is_youtube

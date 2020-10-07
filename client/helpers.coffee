@@ -53,3 +53,8 @@ Template.registerHelper 'post_header_class', (metric) ->
         else if @max_emotion_name is 'anger' then 'red invert'
         else if @max_emotion_name is 'sadness' then 'blue invert'
         else if @max_emotion_name is 'disgust' then 'orange invert'
+
+Template.registerHelper 'session_key_value_is', (key, value) ->
+    # console.log 'key', key
+    # console.log 'value', value
+    Session.equals key,value

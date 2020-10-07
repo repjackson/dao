@@ -33,6 +33,7 @@ Meteor.publish 'doc_by_title', (title)->
         fields:
             title:1
             "watson.metadata":1
+            max_emotion_name:1
     )
 
 Meteor.publish 'doc_count', (
