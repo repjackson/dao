@@ -37,76 +37,90 @@ Meteor.publish 'doc_by_title', (title)->
 
 Meteor.publish 'doc_count', (
     selected_tags
-    image_mode
-    video_mode
-    wiki_mode
+    view_mode
     )->
     match = {}
-    match.model = $in:['reddit','wikipedia','post','page']
+    match.model = $in:['reddit','wikipedia']
     # match.model = $in:['wikipedia']
     # match.model = 'wikipedia'
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
         match.tags = $in:['dao']
-    if image_mode
+    if view_mode is 'image'
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    else if video_mode
+    if view_mode is 'video'
         match.model = 'reddit'
         match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    else if video_mode
+    if view_mode is 'wikipedia'
         match.model = 'wikipedia'
         # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+    if view_mode is 'twitter'
+        match.model = 'reddit'
+        match.domain = $in:['twitter.com','mobile.twitter.com']
 
     Counts.publish this, 'result_counter', Docs.find(match)
     return undefined    # otherwise coffeescript returns a Counts.publish
                       # handle when Meteor expects a Mongo.Cursor object.
 
 
+Meteor.methods
+    zero: ->
+        cur = Docs.find({
+            points:$exists:false
+        }, limit:10)
+
+        console.log cur.count()
+
 Meteor.publish 'docs', (
     selected_tags
-    image_mode
-    video_mode
-    wiki_mode
+    view_mode
     toggle
     query=''
+    skip
     )->
     match = {}
+    console.log 'skip', skip
     # match.model = 'wikipedia'
     match.model = $in:['wikipedia','reddit']
-    if image_mode
+    if view_mode is 'image'
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    if video_mode
+    if view_mode is 'video'
         match.model = 'reddit'
         match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    if wiki_mode
+    if view_mode is 'wikipedia'
         match.model = 'wikipedia'
         # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+    if view_mode is 'twitter'
+        match.model = 'reddit'
+        match.domain = $in:['twitter.com','mobile.twitter.com']
 
     if selected_tags.length > 0
         match.tags = $all:selected_tags
         # console.log match
         Docs.find match,
             limit:5
+            skip:skip
             sort:
+                points: -1
                 _timestamp:-1
     else
         match.tags = $in:['life']
         # console.log match
         Docs.find match,
             limit:5
+            skip:skip
             sort:
+                points: -1
                 ups:-1
                 _timestamp:-1
                     
                     
 Meteor.publish 'dtags', (
     selected_tags
-    image_mode
-    video_mode
-    wiki_mode
+    view_mode
     toggle
     query=''
     )->
@@ -123,15 +137,18 @@ Meteor.publish 'dtags', (
 
     count = Docs.find(match).count()
     # console.log count
-    if image_mode
+    if view_mode is 'image'
         match.model = 'reddit'
         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-    if video_mode
+    if view_mode is 'video'
         match.model = 'reddit'
         match.domain = $in:['youtube.com','youtu.be','vimeo.com']
-    if wiki_mode
+    if view_mode is 'wikipedia'
         match.model = 'wikipedia'
         # match.domain = $in:['youtube.com','youtu.be','vimeo.com']
+    if view_mode is 'twitter'
+        match.model = 'reddit'
+        match.domain = $in:['twitter.com','mobile.twitter.com']
 
     if query.length > 1
         console.log 'searching query', query
@@ -163,7 +180,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: count }
-            { $limit: 7 }
+            { $limit:9 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # console.log 'cloud: ', tag_cloud

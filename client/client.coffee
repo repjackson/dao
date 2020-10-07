@@ -24,15 +24,19 @@ Template.registerHelper 'is_twitter', ()->
     @domain in ['twitter.com','mobile.twitter.com','vimeo.com']
 
 
-Template.reddit_card.onRendered ->
+Template.reddit.onRendered ->
     # console.log @data
     unless @data.watson
         # console.log 'call'
         Meteor.call 'call_watson', @data._id, 'url','url',->
-    # else 
-    #     console.log 'dont'
+    unless @data.points
+        console.log 'no points'
+        Docs.update @data._id,
+            $set:points:0
+    else 
+        console.log 'points'
     
-Template.reddit_card.events
+Template.home.events
     'click .tagger': (e,t)->
         Meteor.call 'call_watson', @_id, 'url', 'url', ->
     'keyup .tag_post': (e,t)->
@@ -55,7 +59,7 @@ Template.reddit_card.events
 
 
 
-Template.post_card.events
+Template.post.events
     'click .add_tag': -> 
         # console.log @valueOf()
         selected_tags.push @valueOf()
@@ -68,30 +72,25 @@ Template.post_card.events
 
         
 Template.home.onCreated ->
+    Session.setDefault('skip',0)
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
-        Session.get('image_mode')
-        Session.get('video_mode')
-        Session.get('wiki_mode')
-        Session.get('twitter_mode')
+        Session.get('view_mode')
+        Session.get('skip')
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
-        Session.get('image_mode')
-        Session.get('video_mode')
-        Session.get('wiki_mode')
-        Session.get('twitter_mode')
+        Session.get('view_mode')
+        Session.get('skip')
         Session.get('toggle')
         Session.get('query')
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
-        Session.get('image_mode')
-        Session.get('video_mode')
-        Session.get('wiki_mode')
-        Session.get('twitter_mode')
+        Session.get('view_mode')
         Session.get('toggle')
         Session.get('query')
+        Session.get('skip')
         )
 
     
@@ -124,11 +123,13 @@ Template.call_watson.events
 Template.unselect_tag.onCreated ->
     # console.log @
     @autorun => Meteor.subscribe('doc_by_title', @data)
+    
 Template.unselect_tag.helpers
     term: ->
         Docs.findOne 
             model:'wikipedia'
             title:@valueOf()
+            
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
@@ -140,9 +141,6 @@ Template.unselect_tag.events
     
             
             
-Template.post_card.helpers
-    one_post: -> Counts.get('result_counter') is 1
-    two_posts: -> Counts.get('result_counter') is 2
 
 Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
@@ -156,12 +154,13 @@ Template.home.helpers
      
         Docs.find match,
             sort:
-                # points:-1
+                points:-1
                 ups:-1
                 views:-1
                 _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
             limit:1
+            skip:Session.get('skip')
         # if cur.count() is 1
         # Docs.find match
 
@@ -171,10 +170,10 @@ Template.home.helpers
         else
             'disabled loading'
 
-    images_button_class: -> if Session.get('twitter_mode') then 'blue circular' else 'grey'
-    images_button_class: -> if Session.get('image_mode') then 'blue circular' else 'grey'
-    video_button_class: -> if Session.get('video_mode') then 'blue circular' else 'grey'
-    wiki_button_class: -> if Session.get('wiki_mode') then 'blue circular' else 'grey'
+    twitter_button_class: -> if Session.equals('view_mode','twitter') then 'blue circular' else 'grey'
+    images_button_class: -> if Session.equals('view_mode','image') then 'blue circular' else 'grey'
+    video_button_class: -> if Session.equals('view_mode','video') then 'blue circular' else 'grey'
+    wiki_button_class: -> if Session.equals('view_mode','wikipedia') then 'blue circular' else 'grey'
     term: ->
         # console.log @
         Docs.find 
@@ -198,9 +197,22 @@ Template.home.events
     # 'click .delete': -> 
     #     console.log @
     #     Docs.remove @_id
-    'click .toggle_images': -> Session.set('image_mode',!Session.get('image_mode'))
-    'click .toggle_video': -> Session.set('video_mode',!Session.get('video_mode'))
-    'click .toggle_wiki': -> Session.set('wiki_mode',!Session.get('wiki_mode'))
+    'click .vote_up': -> 
+        Docs.update @_id,
+            $inc: points: 1
+    'click .vote_down': -> 
+        Docs.update @_id,
+            $inc: points: -1
+    'click .forward': -> 
+        current_skip = Session.get('skip')
+        console.log current_skip
+        next = current_skip+1
+        Session.set('skip',next)
+        # Session.get('skip')
+    'click .toggle_twitter': -> Session.set('view_mode', 'twitter')
+    'click .toggle_images': -> Session.set('view_mode', 'image')
+    'click .toggle_video': -> Session.set('view_mode','video')
+    'click .toggle_wiki': -> Session.set('view_mode','wikipedia')
     'click #clear_tags': -> selected_tags.clear()
 
     'click .search_title': (e,t)->
@@ -209,8 +221,8 @@ Template.home.events
     'keyup .search_title': (e,t)->
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
-        # if search.length > 2
-        #     Session.set('query',search)
+        if search.length > 4
+            Session.set('query',search)
         if e.which is 13
             # console.log search
             if search.length>0
@@ -229,6 +241,9 @@ Template.home.events
                     Meteor.call 'call_wiki', search, ->
                     # Session.set('query','')
                     search = $('.search_title').val('')
+                    Meteor.setTimeout( ->
+                        Session.set('toggle',!Session.get('toggle'))
+                    , 7000)
                     # Meteor.setTimeout( ->
                     #     Session.set('toggle',!Session.get('toggle'))
                     # , 1000)
@@ -251,7 +266,7 @@ Template.call_watson.events
         # Meteor.call 'search_stack', selected_tags.array(), ->
        
 
-# Template.reddit_card.onRendered ->
+# Template.reddit.onRendered ->
 #     Meteor.setTimeout( =>
 #         console.log @
 #         $('.ui.embed').embed({

@@ -1,8 +1,8 @@
 body {
     background-color: rgba(0,0,0,.85) !important;
-    /*transition: all .25s linear;*/
     filter: invert(1) !important; 
-    transition: all .25s ease !important;
+    /*transition: all .2s linear !important;*/
+    transition: all .1s linear !important;
 }
 .invert {
      filter: invert(1) !important; 
@@ -18,14 +18,14 @@ img {
     padding: 0px !important;
 }
 .label {
-    transition: all .25s ease !important;
+    transition: all .1s linear !important;
     margin-bottom: 2px !important;
     margin-top: 2px !important;
     border-radius: 10px !important;
 }
 ::-webkit-scrollbar {
   width: 0px !important;
-  /*border-radius: 10px !important;*/
+  border-radius: 10px !important;
 }
 
 input {
@@ -37,14 +37,14 @@ input {
     margin-bottom: 2px !important;
 }
 .rounded.image {
-    transition: all .25s ease !important;
+    transition: all .2s linear !important;
     margin: 5px !important;
     border-radius: 10px !important;
 }
 .button {
-    transition: all .25s ease !important;
+    transition: all .2s linear !important;
     margin-bottom: 5px !important;
-    /*border-radius: 10px !important;*/
+    border-radius: 10px !important;
 }
 
 .scrolling{
@@ -93,14 +93,14 @@ input {
     /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
     /*text-shadow: 0 0 3px grey !important;*/
     filter: drop-shadow(0px 0px 5px grey);    
-    transition: all .25s ease !important; 
+    transition: all .2s linear !important; 
 }
 .button:hover {
     z-index: 1000 !important;
     transform: scale(1.1) !important;
 }
 .zoomer:hover {
-    transition: all 1s ease !important; 
+    transition: all s linear !important; 
     z-index: 1000 !important;
     transform: scale(1.1) !important;
 }

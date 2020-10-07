@@ -34,7 +34,7 @@ body
     
 
 template(name='home')
-    .ui.stackable.padded.grid
+    .ui.stackable.grid
         .row
             .sixteen.wide.column
                 // if selected_tags
@@ -52,6 +52,11 @@ template(name='home')
                 //     .four.wide.right.aligned.column
                 .ui.inline.small.header(title='results') #{doc_count}
                 // .ui.circular.compact.icon.large.button.set_twitter
+                +view_mode key='twitter' icon='twitter'
+                +view_mode key='video' icon='youtube'
+                +view_mode key='image' icon='picture'
+                +view_mode key='reddit' icon='reddit'
+                +view_mode key='wikipedia' icon='wikipedia'
                 i.big.twitter.link.link.zoomer.icon.toggle_twitter(class=twitter_button_class)
                 i.big.youtube.link.zoomer.icon.toggle_video(class=video_button_class)
                 i.big.picture.link.zoomer.icon.toggle_images(class=images_button_class)
@@ -61,44 +66,36 @@ template(name='home')
                 .spacer
                 each docs
                     if key_value 'model' 'reddit'
-                        +reddit_card
+                        +reddit
                     else
-                        +post_card
-         
-         
-template(name='post_card')         
+                        +post
+                    .ui.divider
+                    .ui.large.circular.icon.button.vote_up
+                        i.thumbs.up.outline.icon
+                    |#{points}
+                    .ui.large.circular.icon.button.vote_down
+                        i.thumbs.down.outline.icon
+                    .ui.large.circular.icon.button.forward
+                        i.chevron.right.icon
+                    .ui.large.circular.icon.button.past
+                        i.chevron.left.icon
+                    each tags 
+                        a.ui.large.label.add_tag #{this}
+                |#{tags.length}
+                .ui.transparent.input
+                    i.plus.grey.icon
+                    input.tag_post(type='text')
+
+template(name='post')         
     // .ui.fluid.
     // if watson.metadata.image
     //     img.ui.rounded.inline.medium.image.invert(src=watson.metadata.image)    
     // else
     //     img.ui.image(src=url)
     a.ui.header(href=url target='_window') #{title}
-    if key_value 'model' 'wikipedia'
-        .invert.rounded
-            iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-   
-    if key_value 'model' 'reddit'
-        .ui.header #{subreddit} subreddit
-        .ui.header #{author} author
-        .ui.header #{ups} ups
-        |#{body}
-        |#{selftext}
-        // blockquote(class="reddit-card")
-        //     a(href="https://www.reddit.com#{permalink}") 
-        //         |#{title}
-        //     |from 
-        //     a(href="http://www.reddit.com/r/#{subreddit}") 
-        //         |r/#{subreddit}
-        // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
-
-    each tags 
-        a.ui.large.label.add_tag #{this}
-    .ui.large.circular.icon.button.vote_up
-        i.thumbs.up.outline.icon
-    |#{points}
-    .ui.large.circular.icon.button.vote_down
-        i.thumbs.down.outline.icon
+    .invert.rounded
+        iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
                     
 template(name='pull_reddit')
     .ui.circular.icon.basic.button.pull
@@ -123,7 +120,7 @@ template(name='tag_selector')
         // small #{count}
 
 
-template(name='reddit_card')
+template(name='reddit')
     .ui.header #{title}
     | #{url}
     div
@@ -143,18 +140,26 @@ template(name='reddit_card')
     //     |from 
     //     a(href="http://www.reddit.com/r/#{subreddit}") 
     //         |r/#{subreddit}
+    .ui.header #{subreddit} subreddit
+    .ui.header #{author} author
+    .ui.header #{ups} ups
+    |#{body}
+    |#{selftext}
+    // blockquote(class="reddit-card")
+    //     a(href="https://www.reddit.com#{permalink}") 
+    //         |#{title}
+    //     |from 
+    //     a(href="http://www.reddit.com/r/#{subreddit}") 
+    //         |r/#{subreddit}
+    // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+   
+   
     a.ui.fluid.basic.circular.button(href=url target='_window' title=url)
         i.external.icon
         |#{domain}
-    |#{tags.length}
-    each tags 
-        .ui.circular.compact.button.add_tag #{this}
-    .ui.transparent.input
-        i.plus.grey.icon
-        input.tag_post(type='text')
     // unless key_value 'domain'
     // iframe.invert(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-    .ui.icon.circular.button.tagger
-        i.dna.icon
+    // .ui.icon.circular.button.tagger
+    //     i.dna.icon
     // if watson
     //     +watson_view
