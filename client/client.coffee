@@ -5,6 +5,11 @@ Template.registerHelper 'two_posts', ()-> Counts.get('result_counter') is 2
 Template.registerHelper 'seven_tags', ()-> @tags[..7]
 Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 
+
+log = (input)->
+    console.log input
+
+
 Template.registerHelper 'youtube_parse', ()->
     console.log @url
     regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -37,6 +42,7 @@ Template.reddit.onRendered ->
     #     console.log 'points'
     
 Template.home.events
+    'click .print_me': (e,t)-> log @
     'click .tagger': (e,t)->
         Meteor.call 'call_watson', @_id, 'url', 'url', ->
     'keyup .tag_post': (e,t)->
@@ -44,6 +50,8 @@ Template.home.events
         if e.which is 13
             # $(e.currentTarget).closest('.button')
             tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
+            console.log tag
+            console.log @
             Docs.update @_id,
                 $addToSet: tags: tag
             $(e.currentTarget).closest('.tag_post').val('')
@@ -52,22 +60,26 @@ Template.home.events
         # console.log @valueOf()
         selected_tags.push @valueOf()
         # # if Meteor.user()
-        Meteor.call 'call_wiki', @valueOf(), ->
+        if Session.equals('view_mode', 'wikipedia')
+            Meteor.call 'call_wiki', @valueOf(), ->
         #     # Meteor.call 'calc_term', @title, ->
         #     # Meteor.call 'omega', @title, ->
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+        if Session.equals('view_mode', 'reddit')
+            Meteor.call 'search_reddit', selected_tags.array(), ->
 
 
 
-Template.post.events
-    'click .add_tag': -> 
-        # console.log @valueOf()
-        selected_tags.push @valueOf()
-        # # if Meteor.user()
-        Meteor.call 'call_wiki', @valueOf(), ->
-        #     # Meteor.call 'calc_term', @title, ->
-        #     # Meteor.call 'omega', @title, ->
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+# Template.post.events
+#     'click .add_tag': -> 
+#         # console.log @valueOf()
+#         selected_tags.push @valueOf()
+#         # # if Meteor.user()
+#         if Session.equals('view_mode', 'reddit')
+#             Meteor.call 'call_wiki', @valueOf(), ->
+#         #     # Meteor.call 'calc_term', @title, ->
+#         #     # Meteor.call 'omega', @title, ->
+#         if Session.equals('view_mode', 'reddit')
+#             Meteor.call 'search_reddit', selected_tags.array(), ->
 
 
         
@@ -148,7 +160,7 @@ Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
-        match = {model:$in:['post','wikipedia','reddit','page']}
+        match = {model:$in:['post','wikipedia','reddit','porn','page']}
         # match = {model:$in:['post','wikipedia','reddit']}
         # match = {model:'wikipedia'}
         if selected_tags.array().length>0
@@ -246,6 +258,7 @@ Template.home.events
             unless search in selected_tags.array()
                 selected_tags.push search
                 Meteor.call 'call_wiki', search, ->
+                Session.set('skip',0)
                 # Session.set('query','')
                 search = $('.search_title').val('')
                 Meteor.setTimeout( ->

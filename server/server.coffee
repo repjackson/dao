@@ -112,7 +112,7 @@ Meteor.publish 'docs', (
             match.model = $in:['wikipedia','reddit']
     if selected_tags.length > 0
         match.tags = $all:selected_tags
-        # console.log match
+        console.log 'doc', match
         Docs.find match,
             limit:5
             skip:skip
