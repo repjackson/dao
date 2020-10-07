@@ -1,10 +1,10 @@
 @Docs = new Meteor.Collection 'docs'
-
 @results = new Meteor.Collection 'results'
 
 
 Meteor.methods
     check_url: (str)->
+        console.log 'testing', str
         pattern = new RegExp('^(https?:\\/\\/)?'+ # protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ # domain name
         '((\\d{1,3}\\.){3}\\d{1,3}))'+ # OR ip (v4) address

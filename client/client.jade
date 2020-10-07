@@ -66,7 +66,7 @@ template(name='home')
                     if watson
                         +session_edit_value_button key='view_section' value='nlu' label='nlu' icon='brain'
                     if tone
-                        +session_edit_value_button key='view_section' value='tone' label='tone' icon='emotion'
+                        +session_edit_value_button key='view_section' value='tone' label='tone' icon='tuning-fork'
                     +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
                     if session_key_value_is 'view_section' 'content'
                         if key_value 'model' 'reddit'
@@ -89,10 +89,12 @@ template(name='home')
                     |#{points}
                     .ui.big.circular.circular.icon.button.vote_down
                         i.thumbs.down.outline.large.icon
-                    .ui.big.circular.circular.icon.button.back
-                        i.chevron.left.large.icon
-                    .ui.big.circular.circular.icon.button.forward
-                        i.chevron.right.large.icon
+                    unless one_post
+                        unless one_post
+                            .ui.big.circular.circular.icon.button.back
+                                i.chevron.left.large.icon
+                        .ui.big.circular.circular.icon.button.forward
+                            i.chevron.right.large.icon
                     each tags
                         a.ui.large.image.label.add_tag
                             if tag_term

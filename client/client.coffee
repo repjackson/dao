@@ -1,12 +1,13 @@
 @selected_tags = new ReactiveArray []
 
+Template.registerHelper 'skip_is_zero', ()-> Session.equals('skip', 0)
 Template.registerHelper 'one_post', ()-> Counts.get('result_counter') is 1
 Template.registerHelper 'two_posts', ()-> Counts.get('result_counter') is 2
 Template.registerHelper 'seven_tags', ()-> @tags[..7]
 Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 
 
-log = (input)-> console.log input
+# @log = (input)-> console.log input
 
 
 Template.registerHelper 'youtube_parse', ()->
@@ -23,7 +24,7 @@ Template.registerHelper 'is_image', ()->
     @domain in ['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
 
 Template.registerHelper 'is_youtube', ()->
-    @domain in ['youtube.com','youtu.be','vimeo.com']
+    @domain in ['youtube.com','youtu.be','m.youtube.com','vimeo.com']
 Template.registerHelper 'is_twitter', ()->
     @domain in ['twitter.com','mobile.twitter.com','vimeo.com']
 
@@ -38,12 +39,10 @@ Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('view_mode')
-        Session.get('skip')
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('view_mode')
-        Session.get('skip')
         Session.get('toggle')
         Session.get('query')
         )
@@ -147,11 +146,11 @@ Template.tag_selector.events
         Session.set('query','')
         Session.set('skip',0)
 
-        if Session.equals('view_mode','porn')
-            Meteor.call 'search_ph', @name, ->
-        else
-            Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+        # if Session.equals('view_mode','porn')
+        #     Meteor.call 'search_ph', @name, ->
+        # else
+        #     Meteor.call 'call_wiki', @name, ->
+        #     Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 7000)
@@ -294,44 +293,43 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
-        window.speechSynthesis.speak new SpeechSynthesisUtterance 'fuck you bitch'
+        window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
 
     # 'keyup .search_title': _.throttle((e,t)->
     'keyup .search_title': (e,t)->
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
 
-        if search.length > 4
-            Session.set('query',search)
+        # if search.length > 4
+        #     Session.set('query',search)
         if e.which is 13
             # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
             console.log search
             if search.length>0
-                Meteor.call 'check_url', search, (err,res)->
-                    console.log res
-                    if res
-                        alert 'url'
-                        Meteor.call 'lookup_url', search, (err,res)=>
-                            console.log res
-                            for tag in res.tags
-                                selected_tags.push tag
-                                
-                    else
-                        unless search in selected_tags.array()
-                            selected_tags.push search
-                            if Session.equals('view_mode','porn')
-                                Meteor.call 'search_ph', search, ->
-                            else
-                                Meteor.call 'call_wiki', search, ->
-                                Meteor.call 'search_reddit', selected_tags.array(), ->
-                                
-                            Session.set('skip',0)
-                            # Session.set('query','')
-                            search = $('.search_title').val('')
-                            Meteor.setTimeout( ->
-                                Session.set('toggle',!Session.get('toggle'))
-                            , 7000)
+                # Meteor.call 'check_url', search, (err,res)->
+                #     console.log res
+                #     if res
+                #         alert 'url'
+                #         Meteor.call 'lookup_url', search, (err,res)=>
+                #             console.log res
+                #             for tag in res.tags
+                #                 selected_tags.push tag
+                #     else
+                #         unless search in selected_tags.array()
+                selected_tags.push search
+                console.log 'selected tags', selected_tags.array()
+                if Session.equals('view_mode','porn')
+                    Meteor.call 'search_ph', search, ->
+                else
+                    Meteor.call 'call_wiki', search, ->
+                    Meteor.call 'search_reddit', selected_tags.array(), ->
+                Session.set('skip',0)
+                Session.set('query','')
+                $('.search_title').val('')
+                Meteor.setTimeout( ->
+                    Session.set('toggle',!Session.get('toggle'))
+                , 7000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
