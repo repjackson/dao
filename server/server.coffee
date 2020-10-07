@@ -106,6 +106,8 @@ Meteor.publish 'docs', (
             match.domain = $in:['twitter.com','mobile.twitter.com']
         when 'porn'
             match.model = 'porn'
+        when 'stackexchange'
+            match.model = 'stackexchange'
         else 
             match.model = $in:['wikipedia','reddit']
     if selected_tags.length > 0
@@ -137,17 +139,12 @@ Meteor.publish 'dtags', (
     )->
     self = @
     match = {}
-    match.model = $in:['wikipedia','reddit']
     
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}
-    if selected_tags.length > 0 
-        match.tags = $all: selected_tags
-    else
-        match.tags = $in:['life']
 
     count = Docs.find(match).count()
-    # console.log count
+    console.log count
     switch view_mode 
         when 'image'
             match.model = 'reddit'
@@ -163,46 +160,54 @@ Meteor.publish 'dtags', (
             match.domain = $in:['twitter.com','mobile.twitter.com']
         when 'porn'
             match.model = 'porn'
-    if query.length > 4
-        console.log 'searching query', query
-        # match.tags = {$regex:"#{query}", $options: 'i'}
-        # match.tags_string = {$regex:"#{query}", $options: 'i'}
+        when 'stackexchange'
+            match.model = 'stackexchange'
+        else
+            match.model = $in:['wikipedia','reddit']
+    if selected_tags.length > 0 
+        match.tags = $all: selected_tags
+    else if view_mode in ['reddit',null]
+        match.tags = $in:['life']
+    # if query.length > 4
+    #     console.log 'searching query', query
+    #     # match.tags = {$regex:"#{query}", $options: 'i'}
+    #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
     
-        terms = Docs.find({
-            # title: {$regex:"#{query}"}
-            model:'wikipedia'            
-            title: {$regex:"#{query}", $options: 'i'}
-        },
-            # sort:
-            #     count: -1
-            limit: 5
-        )
-        terms.forEach (term, i) ->
-            self.added 'results', Random.id(),
-                name: term.title
-                # count: term.count
-                model:'tag'
+    #     terms = Docs.find({
+    #         # title: {$regex:"#{query}"}
+    #         model:'wikipedia'            
+    #         title: {$regex:"#{query}", $options: 'i'}
+    #     },
+    #         # sort:
+    #         #     count: -1
+    #         limit: 5
+    #     )
+    #     terms.forEach (term, i) ->
+    #         self.added 'results', Random.id(),
+    #             name: term.title
+    #             # count: term.count
+    #             model:'tag'
 
         
-    else
-        tag_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "tags": 1 }
-            { $unwind: "$tags" }
-            { $group: _id: "$tags", count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: count }
-            { $limit:13 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # console.log 'cloud: ', tag_cloud
-        # console.log 'tag match', match
-        tag_cloud.forEach (tag, i) ->
-            self.added 'results', Random.id(),
-                name: tag.name
-                count: tag.count
-                model:'tag'
+    # else
+    tag_cloud = Docs.aggregate [
+        { $match: match }
+        { $project: "tags": 1 }
+        { $unwind: "$tags" }
+        { $group: _id: "$tags", count: $sum: 1 }
+        { $match: _id: $nin: selected_tags }
+        { $sort: count: -1, _id: 1 }
+        { $match: count: $lt: count }
+        { $limit:20 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # console.log 'cloud: ', tag_cloud
+    console.log 'tag match', match
+    tag_cloud.forEach (tag, i) ->
+        self.added 'results', Random.id(),
+            name: tag.name
+            count: tag.count
+            model:'tag'
     
     
     self.ready()

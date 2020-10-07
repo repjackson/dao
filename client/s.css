@@ -97,12 +97,12 @@ input {
 }
 .button:hover {
     z-index: 1000 !important;
-    transform: scale(1.1) !important;
+    /*transform: scale(1.1) !important;*/
 }
 .zoomer:hover {
     transition: all s linear !important; 
     z-index: 1000 !important;
-    transform: scale(1.1) !important;
+    transform: scale(1.06) !important;
 }
 .label:hover {
     z-index: 1000 !important;

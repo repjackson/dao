@@ -232,28 +232,28 @@ Template.home.events
             # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
             # console.log search
-            if search.length>0
-                Meteor.call 'check_url', search, (err,res)->
-                    console.log res
-                    if res
-                        alert 'url'
-                        Meteor.call 'lookup_url', search, (err,res)=>
-                            console.log res
-                            for tag in res.tags
-                                selected_tags.push tag
+            # if search.length>0
+            #     Meteor.call 'check_url', search, (err,res)->
+            #         console.log res
+            #         # if res
+                    #     alert 'url'
+                    #     Meteor.call 'lookup_url', search, (err,res)=>
+                    #         console.log res
+                    #         for tag in res.tags
+                    #             selected_tags.push tag
                                 
-                    else
-                        unless search in selected_tags.array()
-                            selected_tags.push search
-                            Meteor.call 'call_wiki', search, ->
-                            # Session.set('query','')
-                            search = $('.search_title').val('')
-                            Meteor.setTimeout( ->
-                                Session.set('toggle',!Session.get('toggle'))
-                            , 7000)
-                            # Meteor.setTimeout( ->
-                            #     Session.set('toggle',!Session.get('toggle'))
-                            # , 1000)
+                    # else
+            unless search in selected_tags.array()
+                selected_tags.push search
+                Meteor.call 'call_wiki', search, ->
+                # Session.set('query','')
+                search = $('.search_title').val('')
+                Meteor.setTimeout( ->
+                    Session.set('toggle',!Session.get('toggle'))
+                , 7000)
+                # Meteor.setTimeout( ->
+                #     Session.set('toggle',!Session.get('toggle'))
+                # , 1000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
@@ -266,7 +266,11 @@ Template.view_mode.helpers
     toggle_mode_class: -> if Session.equals('view_mode',@key) then "#{@icon} blue circular" else "#{@icon} grey"
 
 Template.view_mode.events
-    'click .toggle_mode': -> Session.set('view_mode', @key)
+    'click .toggle_mode': -> 
+        if Session.equals('view_mode', @key)
+            Session.set('view_mode', null)
+        else
+            Session.set('view_mode', @key)
 
 
 

@@ -1,7 +1,7 @@
 head
     title dao
-    // meta(name='viewport', content='user-scalable=yes, initial-scale=1.0, maximum-scale=1.6, width=device-width')
-    meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
+    meta(name='viewport', content='user-scalable=yes, initial-scale=1.0, maximum-scale=1.4, width=device-width')
+    // meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='apple-mobile-web-app-status-bar-style', content='black')
     meta(name="msapplication-TileColor" content="#da532c")
@@ -48,17 +48,15 @@ template(name='home')
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
-                // .row
-                //     .four.wide.right.aligned.column
                 .ui.inline.small.header(title='results') #{doc_count}
-                // .ui.circular.compact.icon.large.button.set_twitter
                 +view_mode key='twitter' icon='twitter'
                 +view_mode key='video' icon='youtube'
                 +view_mode key='image' icon='picture'
                 +view_mode key='reddit' icon='reddit'
                 +view_mode key='wikipedia' icon='wikipedia'
-                +view_mode key='porm' icon='mercury'
-                +view_mode key='porm' icon='stack exchange'
+                +view_mode key='porn' icon='mercury'
+                +view_mode key='stackexchange' icon='stack exchange disabled'
+                +view_mode key='github' icon='github disabled'
             .sixteen.wide.column
                 .spacer
                 each docs
@@ -85,7 +83,7 @@ template(name='home')
 
 
 template(name='view_mode')
-    i.big.link.zoomer.icon.toggle_mode(class=toggle_mode_class)
+    i.big.link.zoomer.icon.toggle_mode(class=toggle_mode_class title='key')
 
 template(name='post')         
     // .ui.fluid.
@@ -108,13 +106,13 @@ template(name='call_watson')
 
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.big.image.label.zoomer.select_term(href='#')
+    a.unselect_tag.ui.black.large.image.label.zoomer.select_term(href='#')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.big.image.label.zoomer.select_tag.select_term(href='#' title="#{count} results")
+    a.ui.large.image.label.zoomer.select_tag.select_term(href='#' title="#{count} results")
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         | #{name}
@@ -123,7 +121,6 @@ template(name='tag_selector')
 
 template(name='reddit')
     .ui.header #{title}
-    | #{url}
     div
     if is_image
         img.ui.fluid.image(src=url)
@@ -141,11 +138,19 @@ template(name='reddit')
     //     |from 
     //     a(href="http://www.reddit.com/r/#{subreddit}") 
     //         |r/#{subreddit}
-    .ui.header #{subreddit} subreddit
-    .ui.header #{author} author
-    .ui.header #{ups} ups
-    |#{body}
-    |#{selftext}
+    .ui.inline.header r/#{subreddit}
+    .ui.inline.header 
+        i.user.outline.icon
+        |#{author}
+    .ui.inline.header
+        i.thumbs.up.outline.icon
+        |#{ups}
+    .ui.inline.header
+        | #{url}
+    .spacer
+    |!{body}
+    .spacer
+    |!{selftext}
     // blockquote(class="reddit-card")
     //     a(href="https://www.reddit.com#{permalink}") 
     //         |#{title}
@@ -155,7 +160,7 @@ template(name='reddit')
     // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
    
    
-    a.ui.fluid.basic.circular.button(href=url target='_window' title=url)
+    a.ui.large.circular.button(href=url target='_window' title=url)
         i.external.icon
         |#{domain}
     // unless key_value 'domain'
