@@ -327,11 +327,11 @@ Template.home.events
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
 
-        if search.length > 3
-            Session.set('query',search)
+        # if search.length > 3
+        #     Session.set('query',search)
         if e.which is 13
             # window.speechSynthesis.cancel()
-            window.speechSynthesis.speak new SpeechSynthesisUtterance search
+            # window.speechSynthesis.speak new SpeechSynthesisUtterance search
             console.log search
             if search.length>0
                 Meteor.call 'check_url', search, (err,res)->

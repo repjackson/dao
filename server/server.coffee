@@ -106,7 +106,7 @@ Meteor.publish 'docs', (
     skip
     )->
     match = {}
-    console.log 'skip', skip
+    # console.log 'skip', skip
     # match.model = 'wikipedia'
     switch view_mode 
         when 'image'
@@ -125,29 +125,21 @@ Meteor.publish 'docs', (
             match.model = 'porn'
         when 'stackexchange'
             match.model = 'stackexchange'
+        when 'alpha'
+            match.model = 'alpha'
         else 
             match.model = $in:['wikipedia','reddit','page']
-    if selected_tags.length > 0
-        match.tags = $all:selected_tags
-        console.log 'doc match', match
-        Docs.find match,
-            limit:5
-            skip:skip
-            sort:
-                points: -1
-                views: -1
-                _timestamp:-1
-    else
-        match.tags = $in:['daoism']
-        # console.log match
-        Docs.find match,
-            limit:5
-            skip:skip
-            sort:
-                points: -1
-                ups:-1
-                views: -1
-                _timestamp:-1
+    # if selected_tags.length > 0
+    match.tags = $all:selected_tags
+    # console.log 'doc match', match
+    Docs.find match,
+        limit:5
+        skip:skip
+        sort:
+            points: -1
+            ups:-1
+            views: -1
+            _timestamp:-1
                     
                     
 Meteor.publish 'dtags', (
@@ -163,9 +155,9 @@ Meteor.publish 'dtags', (
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}
     if selected_tags.length > 0
-        console.log 'tags', selected_tags
-        console.log 'view_mode', view_mode
-        console.log 'query', query
+        # console.log 'tags', selected_tags
+        # console.log 'view_mode', view_mode
+        # console.log 'query', query
     
         switch view_mode 
             when 'image'
@@ -187,13 +179,13 @@ Meteor.publish 'dtags', (
             else
                 match.model = $in:['wikipedia','reddit']
         # match.model = $in:['wikipedia','reddit']
-        if selected_tags.length > 0 
-            match.tags = $all: selected_tags
-        else if view_mode in ['reddit',null]
-            match.tags = $in:['daoism']
+        match.tags = $all: selected_tags
+        # if selected_tags.length > 0 
+        # else if view_mode in ['reddit',null]
+        #     match.tags = $in:['daoism']
         doc_count = Docs.find(match).count()
         console.log 'count',doc_count
-        if query.length > 2
+        if query.length > 3
             match.title = {$regex:"#{query}"}
             
         # if query.length > 4
@@ -229,7 +221,7 @@ Meteor.publish 'dtags', (
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # # console.log 'cloud: ', tag_cloud
-        console.log 'tag match', match
+        # console.log 'tag match', match
         tag_cloud.forEach (tag, i) ->
             self.added 'results', Random.id(),
                 name: tag.name
