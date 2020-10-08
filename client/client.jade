@@ -19,8 +19,11 @@ head
 
     link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.css")
     script(src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.4/dist/semantic.min.js")
+    script(async src="https://www.googletagmanager.com/gtag/js?id=UA-156965333-1")
 
-    // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+    script(async='' src='https://platform.twitter.com/widgets.js' charset='utf-8')
+
+    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
 
     script.
         window.dataLayer = window.dataLayer || [];
@@ -28,13 +31,15 @@ head
         gtag('js', new Date());
         gtag('config', 'UA-156965333-1');
 
+
+
 body
     +status
     +home
     
 
 template(name='home')
-    .ui.stackable.grid
+    .ui.stackable.padded.grid
         .row
             .sixteen.wide.center.aligned.column
                 if selected_tags
@@ -44,7 +49,7 @@ template(name='home')
                 each selected_tags
                     +unselect_tag
                 .ui.left.icon.input 
-                    i.search.icon
+                    i.search.icon(class=loading_class)
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
@@ -61,8 +66,9 @@ template(name='home')
             .sixteen.wide.column
                 .spacer
                 each docs
-                    a.ui.header(href=url target='_window' class=post_header_class) #{title}
-                    +session_edit_value_button key='view_section' value='content' label='content' icon='shield'
+                    a.ui.header(href=url target='_window' class=post_header_class title=url) #{title}
+                    div
+                    +session_edit_value_button key='view_section' value='content' label='content' icon='content'
                     if watson
                         +session_edit_value_button key='view_section' value='nlu' label='nlu' icon='brain'
                     if tone
@@ -147,6 +153,10 @@ template(name='call_watson')
     .ui.circular.icon.basic.button.pull
         i.dna.icon
 
+template(name='convert')
+    .ui.circular.icon.basic.button.convert
+        i.exchange.icon
+
 
 template(name='unselect_tag')
     a.unselect_tag.ui.black.large.image.label.select_term(href='#')
@@ -163,8 +173,15 @@ template(name='tag_selector')
 
 
 template(name='reddit')
+    |!{embed}
     if is_image
         img.ui.centered.image(src=url)
+        // else if is_twitter
+        // blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
+        //     p(lang='en' dir='ltr')
+        //         | Twitter Support you must have the patience of 1000 camels waiting for a drink of water while the baby camels get the first drinks...does that make sense? Thank you for your dedication and time you selfishly give to each of us. You are always appreciated.
+        //     | — KayeMc76 (@KayeMc76) 
+        //     a(href=url) October 3, 2020
     else if is_youtube
         div
         // .ui.embed
@@ -191,6 +208,8 @@ template(name='reddit')
     |{{nl2br selftext}}
     div
     |{{nl2br body}}
+    div 
+    |!{parsed_selftext_html}
     if tone
         .spacer
         +tone
@@ -207,7 +226,7 @@ template(name='reddit')
         +call_tone
         .medscroll.mobile.hidden
             +watson_view
-   
+    +convert
     a.ui.large.circular.button(href=url target='_window' title=url)
         i.external.icon
         |#{domain}

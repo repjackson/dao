@@ -85,6 +85,19 @@ Meteor.methods
         # Docs.update
         console.log cur.count()
 
+    lookup_url: (url)->
+        found = Docs.findOne url:url 
+        if found
+            return found
+        else
+            new_id = 
+                Docs.insert
+                    model:'page'
+                    url:url
+            Meteor.call 'call_watson', 'url', 'url'
+            Docs.findOne new_id
+
+
 Meteor.publish 'docs', (
     selected_tags
     view_mode
@@ -113,7 +126,7 @@ Meteor.publish 'docs', (
         when 'stackexchange'
             match.model = 'stackexchange'
         else 
-            match.model = $in:['wikipedia','reddit']
+            match.model = $in:['wikipedia','reddit','page']
     if selected_tags.length > 0
         match.tags = $all:selected_tags
         console.log 'doc match', match
@@ -143,6 +156,7 @@ Meteor.publish 'dtags', (
     toggle
     query=''
     )->
+    @unblock()
     self = @
     match = {}
     

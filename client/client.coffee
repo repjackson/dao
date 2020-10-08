@@ -10,6 +10,18 @@ Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 # @log = (input)-> console.log input
 
 
+Template.registerHelper 'embed', ()->
+    if @rd and @rd.media.oembed.html
+        dom = document.createElement('textarea')
+        # dom.innerHTML = doc.body
+        dom.innerHTML = @rd.media.oembed.html
+        console.log 'innner html', dom.value
+        return dom.value
+        # Docs.update @_id,
+        #     $set:
+        #         parsed_selftext_html:dom.value
+
+
 Template.registerHelper 'youtube_parse', ()->
     console.log @url
     regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -35,6 +47,8 @@ Template.registerHelper 'is_twitter', ()->
 
         
 Template.home.onCreated ->
+    window.speechSynthesis.speak new SpeechSynthesisUtterance 'welcome to dao'
+
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
     @autorun -> Meteor.subscribe('doc_count',
@@ -65,9 +79,9 @@ Template.home.onCreated ->
 
 Template.reddit.onRendered ->
     # console.log @data
-    unless @data.watson
+    # unless @data.watson
         # console.log 'call'
-        Meteor.call 'call_watson', @data._id, 'url','url',->
+        # Meteor.call 'call_watson', @data._id, 'url','url',->
     unless @data.points
         # console.log 'no points'
         Docs.update @data._id,
@@ -76,7 +90,7 @@ Template.reddit.onRendered ->
     #     console.log 'points'
     
 Template.home.events
-    'click .print_me': (e,t)-> log @
+    'click .print_me': (e,t)-> console.log @
     'click .tagger': (e,t)->
         Meteor.call 'call_watson', @_id, 'url', 'url', ->
     'keyup .tag_post': (e,t)->
@@ -154,7 +168,7 @@ Template.tag_selector.events
             Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
-        , 7000)
+        , 10000)
        
        
 Template.session_edit_value_button.events
@@ -211,7 +225,7 @@ Template.unselect_tag.events
             Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
-        , 7000)
+        , 10000)
 
     
             
@@ -229,7 +243,7 @@ Template.home.helpers
      
         Docs.find match,
             sort:
-                points:-1
+                # points:-1
                 ups:-1
                 views:-1
                 _timestamp:-1
@@ -239,10 +253,12 @@ Template.home.helpers
         # if cur.count() is 1
         # Docs.find match
 
-    home_button_class: ->
+    loading_class: ->
         if Template.instance().subscriptionsReady()
+            console.log 'ready'
             ''
         else
+            console.log 'NOT READY'
             'disabled loading'
 
     term: ->
@@ -294,7 +310,7 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
-        window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ooooooh. aaahh. thats it. dont stop'
 
     # 'keyup .search_title': _.throttle((e,t)->
     'keyup .search_title': (e,t)->
@@ -308,29 +324,32 @@ Template.home.events
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
             console.log search
             if search.length>0
-                # Meteor.call 'check_url', search, (err,res)->
-                #     console.log res
-                #     if res
-                #         alert 'url'
-                #         Meteor.call 'lookup_url', search, (err,res)=>
-                #             console.log res
-                #             for tag in res.tags
-                #                 selected_tags.push tag
-                #     else
-                #         unless search in selected_tags.array()
-                selected_tags.push search
-                console.log 'selected tags', selected_tags.array()
-                if Session.equals('view_mode','porn')
-                    Meteor.call 'search_ph', search, ->
-                else
-                    Meteor.call 'call_wiki', search, ->
-                    Meteor.call 'search_reddit', selected_tags.array(), ->
-                Session.set('skip',0)
-                Session.set('query','')
-                $('.search_title').val('')
-                Meteor.setTimeout( ->
-                    Session.set('toggle',!Session.get('toggle'))
-                , 7000)
+                Meteor.call 'check_url', search, (err,res)->
+                    console.log res
+                    if res
+                        alert 'url'
+                        Meteor.call 'lookup_url', search, (err,res)=>
+                            console.log res
+                            for tag in res.tags
+                                selected_tags.push tag
+                            Session.set('skip',0)
+                            Session.set('query','')
+                            $('.search_title').val('')
+                    else
+                        unless search in selected_tags.array()
+                            selected_tags.push search
+                            console.log 'selected tags', selected_tags.array()
+                            if Session.equals('view_mode','porn')
+                                Meteor.call 'search_ph', search, ->
+                            else
+                                Meteor.call 'call_wiki', search, ->
+                                Meteor.call 'search_reddit', selected_tags.array(), ->
+                            Session.set('skip',0)
+                            Session.set('query','')
+                            $('.search_title').val('')
+                            Meteor.setTimeout( ->
+                                Session.set('toggle',!Session.get('toggle'))
+                            , 10000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
