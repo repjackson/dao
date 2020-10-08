@@ -111,7 +111,7 @@ input {
     transition: all .25s ease !important; 
 }
 .zoomer:hover {
-    /*transition: all .5s linear !important; */
+    transition: all .5s linear !important; 
     z-index: 1000 !important;
     transform: scale(1.1) !important;
 }

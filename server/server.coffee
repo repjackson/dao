@@ -40,6 +40,7 @@ Meteor.publish 'doc_by_title', (title)->
 Meteor.publish 'doc_count', (
     selected_tags
     view_mode
+    emotion_mode
     )->
     match = {}
     console.log 'tags', selected_tags
@@ -49,6 +50,9 @@ Meteor.publish 'doc_count', (
         match.tags = $all: selected_tags
     else
         match.tags = $in:['dao']
+    
+    if emotion_mode
+        match.max_emotion_name = emotion_mode
         
     # switch view_mode
     #     when 
@@ -104,11 +108,15 @@ Meteor.methods
 Meteor.publish 'docs', (
     selected_tags
     view_mode
+    emotion_mode
     toggle
     query=''
     skip
     )->
     match = {}
+    if emotion_mode
+        match.max_emotion_name = emotion_mode
+
     # console.log 'skip', skip
     # match.model = 'wikipedia'
     switch view_mode 
@@ -149,6 +157,7 @@ Meteor.publish 'docs', (
 Meteor.publish 'dtags', (
     selected_tags
     view_mode
+    emotion_mode
     toggle
     query=''
     )->
@@ -156,7 +165,10 @@ Meteor.publish 'dtags', (
     self = @
     match = {}
     console.log 'tags', selected_tags
-    
+    if emotion_mode
+        match.max_emotion_name = emotion_mode
+
+    console.log 'emotion mode', emotion_mode
     # if query.length > 1
     #     match.title = {$regex:"#{query}", $options: 'i'}
     # if selected_tags.length > 0

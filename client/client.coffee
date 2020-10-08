@@ -11,7 +11,7 @@ Template.registerHelper 'key_value', (key,value)-> @["#{key}"] is value
 
 
 Template.registerHelper 'embed', ()->
-    if @rd and @rd.media.oembed.html
+    if @rd and @rd.media and @rd.media.oembed and @rd.media.oembed.html
         dom = document.createElement('textarea')
         # dom.innerHTML = doc.body
         dom.innerHTML = @rd.media.oembed.html
@@ -54,16 +54,19 @@ Template.home.onCreated ->
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('view_mode')
+        Session.get('emotion_mode')
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('view_mode')
+        Session.get('emotion_mode')
         Session.get('toggle')
         Session.get('query')
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
         Session.get('view_mode')
+        Session.get('emotion_mode')
         Session.get('toggle')
         Session.get('query')
         Session.get('skip')
@@ -352,23 +355,26 @@ Template.view_mode.helpers
     toggle_view_class: -> if Session.equals('view_mode',@key) then "#{@icon} huge orange" else "#{@icon} big grey"
 
 Template.view_mode.events
-    'click .toggle_mode': -> 
+    'click .toggle_view': -> 
         if Session.equals('view_mode', @key)
             Session.set('view_mode', null)
         else
             Session.set('view_mode', @key)
+            window.speechSynthesis.speak new SpeechSynthesisUtterance @key
 
 
 Template.emotion_mode.helpers
     toggle_emotion_class: -> 
         if Session.equals('emotion_mode',@key) then "#{@icon} huge orange" else "#{@icon} big grey"
+    selected_emotion: ->  Session.equals('emotion_mode',@key)
 
 Template.emotion_mode.events
-    'click .toggle_mode': -> 
+    'click .toggle_emotion': -> 
         if Session.equals('emotion_mode', @key)
             Session.set('emotion_mode', null)
         else
             Session.set('emotion_mode', @key)
+            window.speechSynthesis.speak new SpeechSynthesisUtterance @key
 
 
 
