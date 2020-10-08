@@ -23,8 +23,8 @@ img {
 .label {
     font-size: 110% !important;
     transition: all .1s linear !important;
-    margin-bottom: 3px !important;
-    margin-top: 3px !important;
+    margin-bottom: 2px !important;
+    margin-top: 2px !important;
     border-radius: 10px !important;
 }
 ::-webkit-scrollbar {
@@ -37,8 +37,8 @@ input {
 }
 
 .input {
-    margin-top: 2px !important;
-    margin-bottom: 2px !important;
+    /*margin-top: 2px !important;*/
+    /*margin-bottom: 2px !important;*/
 }
 
 .nl2br {
@@ -124,9 +124,9 @@ input {
     transform: scale(2) !important;
 }
 .label:hover {
-  /*padding:10px !important;*/
-  /*margin:10px !important;*/
-  /*transition: all .5s linear !important; */
+  padding:10px !important;
+  margin:10px !important;
+  transition: all .25s linear !important; 
   z-index: 1000 !important;
   transform: scale(1.1) !important;
 }

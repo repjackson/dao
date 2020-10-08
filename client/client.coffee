@@ -82,19 +82,19 @@ Template.reddit.onRendered ->
     # unless @data.watson
     #     console.log 'call'
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
-    # unless @data.points
-    #     # console.log 'no points'
-    #     Docs.update @data._id,
-    #         $set:points:0
-    # if @data.rd and @data.rd.selftext_html
-    #     dom = document.createElement('textarea')
-    #     # dom.innerHTML = doc.body
-    #     dom.innerHTML = @data.rd.selftext_html
-    #     console.log 'innner html', dom.value
-    #     # return dom.value
-    #     Docs.update @data._id,
-    #         $set:
-    #             parsed_selftext_html:dom.value
+    unless @data.points
+        # console.log 'no points'
+        Docs.update @data._id,
+            $set:points:0
+    if @data.rd and @data.rd.selftext_html
+        dom = document.createElement('textarea')
+        # dom.innerHTML = doc.body
+        dom.innerHTML = @data.rd.selftext_html
+        console.log 'innner html', dom.value
+        # return dom.value
+        Docs.update @data._id,
+            $set:
+                parsed_selftext_html:dom.value
             
     # else 
     #     console.log 'points'
@@ -160,9 +160,9 @@ Template.tag_selector.events
         else
             Meteor.call 'call_wiki', @name, ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.setTimeout( ->
-        #     Session.set('toggle',!Session.get('toggle'))
-        # , 10000)
+        Meteor.setTimeout( ->
+            Session.set('toggle',!Session.get('toggle'))
+        , 10000)
        
        
 Template.session_edit_value_button.events
@@ -308,7 +308,7 @@ Template.home.events
         #     Session.set('query',search)
         if e.which is 13
             # window.speechSynthesis.cancel()
-            # window.speechSynthesis.speak new SpeechSynthesisUtterance search
+            window.speechSynthesis.speak new SpeechSynthesisUtterance search
             console.log search
             if search.length > 0
                 # Meteor.call 'check_url', search, (err,res)->
@@ -334,9 +334,9 @@ Template.home.events
                 Session.set('skip',0)
                 Session.set('query','')
                 $('.search_title').val('')
-                # Meteor.setTimeout( ->
-                #     Session.set('toggle',!Session.get('toggle'))
-                # , 10000)
+                Meteor.setTimeout( ->
+                    Session.set('toggle',!Session.get('toggle'))
+                , 10000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()

@@ -128,6 +128,8 @@ Meteor.publish 'docs', (
             match.model = 'stackexchange'
         when 'alpha'
             match.model = 'alpha'
+        when 'reddit'
+            match.model = 'reddit'
         else 
             match.model = $in:['wikipedia']
     if selected_tags.length > 0
@@ -136,10 +138,10 @@ Meteor.publish 'docs', (
     Docs.find match,
         limit:5
         skip:skip
-        # sort:
-        #     points: -1
-        #     ups:-1
-        #     # views: -1
+        sort:
+            points: -1
+            ups:-1
+            # views: -1
                     
                     
 Meteor.publish 'dtags', (
@@ -160,6 +162,8 @@ Meteor.publish 'dtags', (
         # console.log 'query', query
     
     switch view_mode 
+        when 'reddit'
+            match.model = 'reddit'
         when 'image'
             match.model = 'reddit'
             match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
@@ -168,7 +172,6 @@ Meteor.publish 'dtags', (
             match.domain = $in:['youtube.com','youtu.be','m.youtube.com','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
-            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','vimeo.com']
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
@@ -218,7 +221,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:10 }
+        { $limit:42 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # # console.log 'cloud: ', tag_cloud
