@@ -79,13 +79,23 @@ Template.home.onCreated ->
 
 Template.reddit.onRendered ->
     # console.log @data
-    # unless @data.watson
-        # console.log 'call'
-        # Meteor.call 'call_watson', @data._id, 'url','url',->
+    unless @data.watson
+        console.log 'call'
+        Meteor.call 'call_watson', @data._id, 'url','url',->
     unless @data.points
         # console.log 'no points'
         Docs.update @data._id,
             $set:points:0
+    if @data.rd and @data.rd.selftext_html
+        dom = document.createElement('textarea')
+        # dom.innerHTML = doc.body
+        dom.innerHTML = @data.rd.selftext_html
+        console.log 'innner html', dom.value
+        # return dom.value
+        Docs.update @data._id,
+            $set:
+                parsed_selftext_html:dom.value
+            
     # else 
     #     console.log 'points'
     
