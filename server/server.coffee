@@ -62,10 +62,10 @@ Meteor.publish 'doc_count', (
             match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
             match.model = 'reddit'
-            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','vimeo.com']
+            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
-            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','vimeo.com']
+            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
@@ -125,10 +125,10 @@ Meteor.publish 'docs', (
             match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
             match.model = 'reddit'
-            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','vimeo.com']
+            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
-            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','vimeo.com']
+            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
@@ -183,7 +183,7 @@ Meteor.publish 'dtags', (
             match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
             match.model = 'reddit'
-            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','vimeo.com']
+            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
         when 'twitter'

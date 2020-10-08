@@ -120,6 +120,10 @@ input {
     z-index: 1000 !important;
     transform: scale(2) !important;
 }
+.tone_item {
+  transition: all .25s linear !important; 
+  
+}
 .label:hover {
   /*padding:10px !important;*/
   /*margin:10px !important;*/

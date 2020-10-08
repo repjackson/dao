@@ -200,9 +200,8 @@ template(name='tone')
     .ui.small.list
         each tone.result.sentences_tone
             .item
-                
                 //- span #{sentence_id}
-                span.tone_item(title="#{sentence_id}" class=tone_size) 
+                span.tone_item.ui.text(title="#{sentence_id}" class="#{tone_size} #{sentence_color}") 
                     |{{lowered text}}
                     // .content
                     // .header(title="#{sentence_id}") {{lowered text}}
@@ -215,10 +214,10 @@ template(name='tone')
                             span.ui.text
                                 |#{tone_id} &nbsp;
                             | {{ to_percent score }}% 
-                    .ui.mini.transparent.icon.input
-                        input.tag_sentence(type='text' placeholder='tag')
-                    each tags 
-                        .ui.label #{this}
+                    // .ui.mini.transparent.icon.input
+                    //     input.tag_sentence(type='text' placeholder='tag')
+                    // each tags 
+                    //     .ui.label #{this}
     // unless tone                
     //- #call_tone.ui.icon.button
     //-     i.refresh.icon
@@ -228,7 +227,7 @@ template(name='tone')
 template(name='watson_view')
     // +tone
     +doc_sentiment
-    // +doc_emotion
+    +doc_emotion
     .ui.stackable.grid 
         .two.column.row 
             .column

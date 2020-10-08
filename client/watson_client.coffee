@@ -21,11 +21,11 @@ Template.small_sentiment.helpers
 
 
 Template.doc_emotion.helpers
-    sadness_percent: -> (@sadness*100).toFixed()
-    joy_percent: -> (@joy*100).toFixed()
-    disgust_percent: -> (@disgust*100).toFixed()
-    anger_percent: -> (@anger*100).toFixed()
-    fear_percent: -> (@fear*100).toFixed()
+    # sadness_percent: -> (@sadness*100).toFixed()
+    # joy_percent: -> (@joy*100).toFixed()
+    # disgust_percent: -> (@disgust*100).toFixed()
+    # anger_percent: -> (@anger*100).toFixed()
+    # fear_percent: -> (@fear*100).toFixed()
 
 
     sentiment_score_percent: ->
@@ -33,7 +33,6 @@ Template.doc_emotion.helpers
             (@doc_sentiment_score*100).toFixed()
         else
             (@doc_sentiment_score*-100).toFixed()
-
 
     sentiment_bar_class: -> if @doc_sentiment_label is 'positive' then 'green' else 'red'
 
@@ -83,6 +82,23 @@ Template.tone.events
     #         Meteor.call 'reset_sentence', Template.currentData()._id, @, ->
     #     else
     #         Meteor.call 'upvote_sentence', Template.currentData()._id, @, ->
+
+
+Template.tone.helpers
+    sentence_color: ->
+        console.log @
+        switch @tones[0].tone_id
+            when 'sadness' then 'invert blue'
+            when 'joy' then 'invert green'
+            when 'tentative' then 'invert yellow'
+            when 'analytical' then 'invert purple'
+    tone_label_class: ->
+        console.log 'class',@
+        switch @tone_id
+            when 'sadness' then 'invert blue'
+            when 'joy' then 'invert green'
+            when 'tentative' then 'invert yellow'
+            when 'analytical' then 'invert purple'
 
 # Template.call_watson.events
 #     'click .autotag': ->
@@ -143,12 +159,6 @@ Template.call_visual.events
         console.log @
         Meteor.call 'call_visual_link', @_id, @valueOf(),->
 
-Template.tone.events
-    'click #call_tone': ->
-        console.log @_id
-        console.log parent.key
-        console.log @mode
-        # Meteor.call 'call_tone', @_id, parent.key, @mode, ->
 
 
 
