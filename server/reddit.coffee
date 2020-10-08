@@ -1,5 +1,6 @@
 Meteor.methods
     search_reddit: (query)->
+        @unblock()
         console.log 'searching reddit for', query
         # console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")

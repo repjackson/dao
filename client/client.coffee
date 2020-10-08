@@ -146,11 +146,11 @@ Template.tag_selector.events
         Session.set('query','')
         Session.set('skip',0)
 
-        # if Session.equals('view_mode','porn')
-        #     Meteor.call 'search_ph', @name, ->
-        # else
-        #     Meteor.call 'call_wiki', @name, ->
-        #     Meteor.call 'search_reddit', selected_tags.array(), ->
+        if Session.equals('view_mode','porn')
+            Meteor.call 'search_ph', @name, ->
+        else
+            Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 7000)

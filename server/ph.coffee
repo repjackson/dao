@@ -1,5 +1,6 @@
 Meteor.methods
     search_ph: (query)->
+        @unblock()
         console.log 'searching for', query
         HTTP.get "http://www.pornhub.com/webmasters/search?search=#{query}&thumbsize=large",(err,response)=>
             # console.log response.data
@@ -7,7 +8,7 @@ Meteor.methods
             else if response.data.videos.length > 1
                 # console.log 'found data'
                 # console.log 'data length', response.data.data.children.length
-                _.each(response.data.videos, (item)=>
+                _.each(response.data.videos[..10], (item)=>
                     # console.log item
                     # data = item.data
                     # len = 200

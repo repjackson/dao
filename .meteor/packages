@@ -33,3 +33,4 @@ http@1.4.2
 francocatena:status
 tmeasday:publish-counts
 momentjs:moment
+mdg:meteor-apm-agent
