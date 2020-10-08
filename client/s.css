@@ -1,6 +1,7 @@
 body {
     background-color: rgba(0,0,0,.85) !important;
     filter: invert(1) !important; 
+    font-size: 110% !important;
     transition: all .25s linear !important;
 }
 .invert {
@@ -20,6 +21,7 @@ img {
     padding: 5px !important;
 }
 .label {
+    font-size: 110% !important;
     transition: all .1s linear !important;
     margin-bottom: 3px !important;
     margin-top: 3px !important;

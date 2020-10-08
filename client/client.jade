@@ -36,7 +36,7 @@ body
 template(name='home')
     .ui.stackable.grid
         .row
-            .sixteen.wide.column
+            .sixteen.wide.center.aligned.column
                 if selected_tags
                     if many_tags
                         a#clear_tags.ui.black.icon.compact.circular.button.select_term
@@ -164,7 +164,7 @@ template(name='tag_selector')
 
 template(name='reddit')
     if is_image
-        img.ui.fluid.image(src=url)
+        img.ui.centered.image(src=url)
     else if is_youtube
         div
         // .ui.embed
