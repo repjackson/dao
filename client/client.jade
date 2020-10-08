@@ -97,7 +97,7 @@ template(name='home')
                     if watson
                         +session_edit_value_button key='view_section' value='nlu' label='nlu' icon='brain'
                     if tone
-                        +session_edit_value_button key='view_section' value='tone' label='tone' icon='tuning-fork'
+                        +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
                     +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
                     if session_key_value_is 'view_section' 'content'
                         if key_value 'model' 'reddit'
@@ -160,8 +160,8 @@ template(name='session_edit_value_button')
     // .ui.circular.compact.button.set_session_value(class=calculated_class)
     a.ui.image.big.link.label.set_session_value(class=calculated_class)
         if icon
-            // i.icon(class=icon)
-            +i name=icon cl='ui avatar image'
+            i.icon(class=icon)
+            // +i name=icon cl='ui avatar image'
         if label
             |#{label}
         else 

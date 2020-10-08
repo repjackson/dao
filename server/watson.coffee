@@ -127,7 +127,7 @@ Meteor.methods
         )
 
     call_watson: (doc_id, key, mode) ->
-        # console.log 'calling watson'
+        console.log 'calling watson'
         @unblock()
         self = @
         # console.log doc_id
@@ -239,7 +239,7 @@ Meteor.methods
                 # if mode is 'url'
                 Docs.update { _id: doc_id },
                     $set:
-                        analyzed_text:response.analyzed_text
+                        # analyzed_text:response.analyzed_text
                         watson: response
                         max_emotion_name:max_emotion_name
                         max_emotion_percent:max_emotion_percent
