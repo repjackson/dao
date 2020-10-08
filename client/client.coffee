@@ -79,9 +79,9 @@ Template.home.onCreated ->
 
 Template.reddit.onRendered ->
     # console.log @data
-    # unless @data.watson
-    #     console.log 'call'
-    #     Meteor.call 'call_watson', @data._id, 'url','url',->
+    unless @data.watson
+        # console.log 'call'
+        Meteor.call 'call_watson', @data._id, 'url','url',->
     unless @data.points
         # console.log 'no points'
         Docs.update @data._id,
@@ -90,7 +90,7 @@ Template.reddit.onRendered ->
         dom = document.createElement('textarea')
         # dom.innerHTML = doc.body
         dom.innerHTML = @data.rd.selftext_html
-        console.log 'innner html', dom.value
+        # console.log 'innner html', dom.value
         # return dom.value
         Docs.update @data._id,
             $set:
@@ -274,9 +274,12 @@ Template.home.events
     'click .vote_up': -> 
         Docs.update @_id,
             $inc: points: 1
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
     'click .vote_down': -> 
         Docs.update @_id,
             $inc: points: -1
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
+            
     'click .forward': -> 
         current_skip = Session.get('skip')
         console.log current_skip
@@ -304,8 +307,8 @@ Template.home.events
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
 
-        # if search.length > 3
-        #     Session.set('query',search)
+        if search.length > 3
+            Session.set('query',search)
         if e.which is 13
             # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
@@ -346,7 +349,7 @@ Template.home.events
 # Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)
 
 Template.view_mode.helpers
-    toggle_mode_class: -> if Session.equals('view_mode',@key) then "#{@icon} huge orange" else "#{@icon} big grey"
+    toggle_view_class: -> if Session.equals('view_mode',@key) then "#{@icon} huge orange" else "#{@icon} big grey"
 
 Template.view_mode.events
     'click .toggle_mode': -> 
@@ -354,6 +357,18 @@ Template.view_mode.events
             Session.set('view_mode', null)
         else
             Session.set('view_mode', @key)
+
+
+Template.emotion_mode.helpers
+    toggle_emotion_class: -> 
+        if Session.equals('emotion_mode',@key) then "#{@icon} huge orange" else "#{@icon} big grey"
+
+Template.emotion_mode.events
+    'click .toggle_mode': -> 
+        if Session.equals('emotion_mode', @key)
+            Session.set('emotion_mode', null)
+        else
+            Session.set('emotion_mode', @key)
 
 
 

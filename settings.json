@@ -14,6 +14,14 @@
             "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/34a2c275aeff460081c2074ab5abe5c6::serviceid:ServiceId-fb595bbc-0851-4600-b24a-ad5907094a81",
             "url": "https://api.us-south.tone-analyzer.watson.cloud.ibm.com/instances/37f08ca3-6c5b-439e-8270-78d96b54d635"
 		},
+		"visual": {
+            "apikey": "JEYJRbRNiOposxwFwUHUw76WZXTcevgl9VqXWEJn5O2a",
+            "iam_apikey_description": "Auto-generated for key 8cff1a6d-8195-4301-8c93-4bf9fd55149e",
+            "iam_apikey_name": "Auto-generated service credentials",
+            "iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Manager",
+            "iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/f18c8f41459468045d98bcffc36f39d4::serviceid:ServiceId-95aa9f8c-3abd-44a3-828e-f897748abbd9",
+            "url": "https://api.us-south.visual-recognition.watson.cloud.ibm.com/instances/a215dc07-48ca-41f5-be89-6e311afcb7e6"
+		},
 	    "language": {
 	        "apikey": "WfilOI8O3M5n3cbU8byEczW_hctUm4viZDVaBSV-Gju3",
 	        "iam_apikey_description": "Auto-generated for key 4149ce4a-7fdb-4481-9c49-92493045c5f8",

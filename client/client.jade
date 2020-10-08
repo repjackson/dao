@@ -67,38 +67,18 @@ template(name='home')
                 +view_mode key='stackexchange' icon='stack exchange'
                 +view_mode key='github' icon='github'
                 +view_mode key='alpha' icon='font'
+                +emotion_mode key='disgust' icon='disgust'
             .sixteen.wide.column
                 .spacer
                 each docs
-                    a.ui.header(href=url target='_window' class=post_header_class title=url) #{title}
-                    // .ui.big.circular.circular.icon.button.vote_up
-                    //     i.thumbs.up.outline.large.icon
-                    // |#{points}
-                    // .ui.big.circular.circular.icon.button.vote_down
-                    //     i.thumbs.down.outline.large.icon
-                    // unless one_post
-                    //     unless one_post
-                    //         .ui.big.circular.circular.icon.button.back
-                    //             i.chevron.left.large.icon
-                    //     .ui.big.circular.circular.icon.button.forward
-                    //         i.chevron.right.large.icon
-                    // each tags
-                    //     a.ui.large.image.label.add_tag
-                    //         if tag_term
-                    //             img.ui.image(src=tag_term.watson.metadata.image)    
-                    //         | #{this}
-                    // |#{tags.length}
-                    // .ui.transparent.input
-                    //     i.plus.grey.icon
-                    //     input.tag_post(type='text')
-                    
-                    div
+                    a.ui.inline.header(href=url target='_window' class=post_header_class title=url) #{title}
                     +session_edit_value_button key='view_section' value='content' label='content' icon='content'
                     if watson
-                        +session_edit_value_button key='view_section' value='nlu' label='nlu' icon='brain'
+                        +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
                     if tone
                         +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-                    +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
+                    +session_edit_value_button key='view_section' value='preview' label='preview' icon='eye'
+                    // +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
                     if session_key_value_is 'view_section' 'content'
                         if key_value 'model' 'reddit'
                             +reddit
@@ -106,7 +86,7 @@ template(name='home')
                             +vid_card
                         else
                             +post
-                    if session_key_value_is 'view_section' 'nlu'
+                    if session_key_value_is 'view_section' 'analysis'
                         +call_tone    
                         +watson_view
                     if session_key_value_is 'view_section' 'tone'
@@ -114,6 +94,9 @@ template(name='home')
                     if session_key_value_is 'view_section' 'comments'
                         // +tone
                         .ui.header comments
+                    if session_key_value_is 'view_section' 'preview'
+                        .invert.rounded
+                            iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
                     .ui.hidden.divider
                     .ui.big.circular.circular.icon.button.vote_up
                         i.thumbs.up.outline.large.icon
@@ -138,7 +121,11 @@ template(name='home')
 
 
 template(name='view_mode')
-    i.link.zoomer.icon.toggle_mode(class=toggle_mode_class title=key)
+    i.link.zoomer.icon.toggle_view(class=toggle_view_class title=key)
+
+
+template(name='emotion_mode')
+    i.link.zoomer.icon.toggle_emotion(class=toggle_emotion_class title=key)
 
 template(name='post')         
     // .ui.fluid.
@@ -198,6 +185,8 @@ template(name='tag_selector')
 
 
 template(name='reddit')
+    if watson.metadata.image
+        img.ui.rounded.inline.small.image.invert(src=watson.metadata.image)    
     if is_image
         img.ui.centered.image(src=url)
         // else if is_twitter
@@ -212,18 +201,17 @@ template(name='reddit')
         // iframe(id="ytplayer" type="text/html" width="720" height="405" src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allowfullscreen)
         iframe.invert(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     else
-        |!{embed}
-        if watson.metadata.image
-            img.ui.rounded.inline.medium.image.invert(src=watson.metadata.image)    
+        .invert
+            |!{embed}
 
         // iframe(width="560" height="315" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
     // .medscroll
     // .invert
     a.ui.big.label(href="https://www.reddit.com#{permalink}" target="_window") r/#{subreddit}
-    .ui.big.label 
-        i.user.outline.icon
-        |#{author}
-    .ui.big.label
+    // .ui.big.label 
+    //     i.user.outline.icon
+    //     |#{author}
+    .ui.label
         i.thumbs.up.outline.icon
         |#{ups}
     // .ui.inline.header
@@ -231,7 +219,7 @@ template(name='reddit')
     // .spacer
     // .nl2br
     // |!{html}
-    .spacer
+    // .spacer
     // pre
     // .nl2br
     if parsed_selftext_html
@@ -244,6 +232,8 @@ template(name='reddit')
     else if tone
         .spacer
         +tone
+    // div(style='position:relative; padding-bottom:calc(125.00% + 44px)')
+    //     iframe(src='https://gfycat.com/ifr/MeanFatAmurratsnake' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen)
     // |{{selftext}}
     // blockquote(class="reddit-card")
     //     a(href="https://www.reddit.com#{permalink}") 
@@ -253,10 +243,10 @@ template(name='reddit')
     //         |r/#{subreddit}
     // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
     +call_watson
-    if watson 
-        +call_tone
-        .medscroll.mobile.hidden
-            +watson_view
+    // if watson 
+    //     +call_tone
+    //     .medscroll.mobile.hidden
+    //         +watson_view
     // +convert
     a.ui.circular.button(href=url target='_window' title=url)
         i.external.icon

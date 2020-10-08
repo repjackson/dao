@@ -67,6 +67,8 @@ Meteor.publish 'doc_count', (
             match.domain = $in:['twitter.com','mobile.twitter.com']
         when 'porn'
             match.model = 'porn'
+        when 'reddit'
+            match.model = 'reddit'
         when 'stackexchange'
             match.model = 'stackexchange'
         else 
@@ -131,7 +133,7 @@ Meteor.publish 'docs', (
         when 'reddit'
             match.model = 'reddit'
         else 
-            match.model = $in:['wikipedia']
+            match.model = $in:['wikipedia','reddit']
     if selected_tags.length > 0
         match.tags = $all:selected_tags
     # console.log 'doc match', match
@@ -148,7 +150,7 @@ Meteor.publish 'dtags', (
     selected_tags
     view_mode
     toggle
-    # query=''
+    query=''
     )->
     # @unblock()
     self = @
@@ -180,8 +182,8 @@ Meteor.publish 'dtags', (
         when 'stackexchange'
             match.model = 'stackexchange'
         else
-            match.model = $in:['wikipedia']
-    # match.model = $in:['wikipedia','reddit']
+            match.model = $in:['wikipedia','reddit']
+            # match.model = $in:['wikipedia']
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
@@ -189,8 +191,8 @@ Meteor.publish 'dtags', (
     # else if view_mode in ['reddit',null]
     doc_count = Docs.find(match).count()
     console.log 'count',doc_count
-    # if query.length > 3
-    #     match.title = {$regex:"#{query}"}
+    if query.length > 3
+        match.title = {$regex:"#{query}"}
         
     # if query.length > 4
     #     console.log 'searching query', query
@@ -221,7 +223,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:42 }
+        { $limit:20 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # # console.log 'cloud: ', tag_cloud

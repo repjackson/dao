@@ -1,6 +1,6 @@
 NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
 ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3')
-# VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3')
+VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3')
 # PersonalityInsightsV3 = require('ibm-watson/personality-insights/v3')
 # TextToSpeechV1 = require('ibm-watson/text-to-speech/v1')
 
@@ -30,13 +30,13 @@ tone_analyzer = new ToneAnalyzerV3(
     url: Meteor.settings.private.tone.url)
 
 
-# visual_recognition = new VisualRecognitionV3({
-#   version: '2018-03-19',
-#   authenticator: new IamAuthenticator({
-#     apikey: Meteor.settings.private.visual.apikey,
-#   }),
-#   url: Meteor.settings.private.visual.url,
-# });
+visual_recognition = new VisualRecognitionV3({
+  version: '2018-03-19',
+  authenticator: new IamAuthenticator({
+    apikey: Meteor.settings.private.visual.apikey,
+  }),
+  url: Meteor.settings.private.visual.url,
+});
 
 
 # kevin lang
@@ -116,7 +116,7 @@ Meteor.methods
                 visual_tags = []
                 for tag in response.result.images[0].classifiers[0].classes
                     visual_tags.push tag.class.toLowerCase()
-                # console.log(JSON.stringify(response, null, 2))
+                console.log(JSON.stringify(response, null, 2))
                 # console.log visual_tags
                 Docs.update { _id: doc_id},
                     $set:
