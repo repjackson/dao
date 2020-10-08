@@ -172,13 +172,14 @@ Meteor.publish 'dtags', (
             else
                 match.model = $in:['wikipedia']
         # match.model = $in:['wikipedia','reddit']
-        match.tags = $all: selected_tags
-        # if selected_tags.length > 0 
-        # else
-        #     match.tags = $in:['daoism']
-        # else if view_mode in ['reddit',null]
+        if selected_tags.length > 0 
+            match.tags = $all: selected_tags
+        else if view_mode in ['reddit',null]
+            match.tags = $in:['daoism']
         doc_count = Docs.find(match).count()
         console.log 'count',doc_count
+        if query.length > 2
+            match.title = {$regex:"#{query}"}
             
         # if query.length > 4
         #     console.log 'searching query', query
@@ -186,7 +187,6 @@ Meteor.publish 'dtags', (
         #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
         
         #     terms = Docs.find({
-        #         # title: {$regex:"#{query}"}
         #         model:'wikipedia'            
         #         title: {$regex:"#{query}", $options: 'i'}
                 # title: {$regex:"#{query}"}
@@ -210,7 +210,7 @@ Meteor.publish 'dtags', (
             { $match: _id: $nin: selected_tags }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: doc_count }
-            { $limit:15 }
+            { $limit:42 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # # console.log 'cloud: ', tag_cloud

@@ -60,6 +60,7 @@ tone_analyzer = new ToneAnalyzerV3(
 
 Meteor.methods
     call_tone: (doc_id)->
+        @unblock()
         self = @
         doc = Docs.findOne doc_id
         # if doc.html or doc.body
@@ -86,6 +87,7 @@ Meteor.methods
         # else return
 
     call_visual: (doc_id, field)->
+        @unblock()
         self = @
         doc = Docs.findOne doc_id
         # link = doc["#{field}"]
@@ -126,6 +128,7 @@ Meteor.methods
 
     call_watson: (doc_id, key, mode) ->
         # console.log 'calling watson'
+        @unblock()
         self = @
         # console.log doc_id
         # console.log key

@@ -33,8 +33,8 @@ Meteor.methods
                         #     $set:
                         #         title:found_doc.title.toLowerCase()
                         # console.log 'found wiki doc', found_doc.title
-                        # unless found_doc.watson
-                            # Meteor.call 'call_watson', found_doc._id, 'url','url', ->
+                        unless found_doc.watson
+                            Meteor.call 'call_watson', found_doc._id, 'url','url', ->
                     else
                         new_wiki_id = Docs.insert
                             title:term.toLowerCase()
@@ -43,4 +43,4 @@ Meteor.methods
                             model:'wikipedia'
                             # ups: 1
                             url:url
-                        # Meteor.call 'call_watson', new_wiki_id, 'url','url', ->
+                        Meteor.call 'call_watson', new_wiki_id, 'url','url', ->

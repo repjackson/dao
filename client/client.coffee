@@ -36,6 +36,7 @@ Template.registerHelper 'is_twitter', ()->
         
 Template.home.onCreated ->
     Session.setDefault('skip',0)
+    Session.setDefault('view_section','content')
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('view_mode')
@@ -300,8 +301,8 @@ Template.home.events
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
 
-        # if search.length > 4
-        #     Session.set('query',search)
+        if search.length > 3
+            Session.set('query',search)
         if e.which is 13
             # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
