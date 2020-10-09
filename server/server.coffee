@@ -135,19 +135,13 @@ Meteor.publish 'docs', (
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
-        when 'porn'
-            match.model = 'porn'
-        when 'stackexchange'
-            match.model = 'stackexchange'
-        when 'alpha'
-            match.model = 'alpha'
         when 'reddit'
             match.model = 'reddit'
         else 
             match.model = $in:['wikipedia','reddit']
     # console.log 'doc match', match
     Docs.find match,
-        limit:5
+        limit:3
         skip:skip
         sort:
             points: -1
@@ -188,10 +182,6 @@ Meteor.publish 'dtags', (
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
-        when 'porn'
-            match.model = 'porn'
-        when 'stackexchange'
-            match.model = 'stackexchange'
         else
             match.model = $in:['wikipedia','reddit']
             # match.model = $in:['wikipedia']
