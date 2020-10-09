@@ -40,9 +40,9 @@ body
 
 template(name='home')
     if selected_tags
-        if many_tags
-            a#clear_tags.ui.black.icon.compact.circular.button.select_term
-                i.remove.icon
+        // if many_tags
+        //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
+        //         i.remove.icon
         each selected_tags
             +unselect_tag
     .ui.left.icon.input 
@@ -73,7 +73,7 @@ template(name='home')
     .spacer
     each docs
         a.ui.header(href=url target='_window' class=post_header_class title=url) #{title}
-        div
+        // div
         +session_edit_value_button key='view_section' value='content' label='content' icon='content'
         if watson
             +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
@@ -98,11 +98,9 @@ template(name='home')
             .invert.rounded
                 iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         .ui.hidden.divider
-        .ui.huge.circular.circular.icon.button.vote_up
-            i.thumbs.up.outline.huge.icon
+        i.thumbs.up.outline.huge.grey.link.icon.vote_up
         |#{points}
-        .ui.huge.circular.circular.icon.button.vote_down
-            i.thumbs.down.outline.huge.icon
+        i.thumbs.down.outline.huge.grey.link.icon.vote_down
         unless one_post
             unless one_post
                 .ui.big.circular.circular.icon.button.back
@@ -153,14 +151,13 @@ template(name='post')
 
 template(name='session_edit_value_button')
     // .ui.circular.compact.button.set_session_value(class=calculated_class)
-    a.ui.image.big.link.label.set_session_value(class=calculated_class)
-        if icon
-            i.icon(class=icon)
-            // +i name=icon cl='ui avatar image'
-        if label
-            |#{label}
-        else 
-            |#{value}
+    a.ui.big.icon.button.set_session_value(class=calculated_class)
+        i.icon(class=icon)
+        // +i name=icon cl='ui avatar image'
+        // if label
+        //     |#{label}
+        // else 
+        //     |#{value}
 
 
     
