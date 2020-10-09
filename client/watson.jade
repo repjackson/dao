@@ -197,7 +197,7 @@ template(name='tone')
     .ui.horizontal.list
         each tone.result.document_tone.tones
             .item #{tone_id} {{ to_percent score }}%
-    .ui.small.list
+    .ui.list
         each tone.result.sentences_tone
             .item
                 //- span #{sentence_id}
@@ -210,7 +210,7 @@ template(name='tone')
                     i.chevron.down.link.grey.large.icon.downvote_sentence
                     each tones
                         // .ui.basic.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
-                        .ui.basic.inverted.invert.small.compact.circular.label(class="{{calculated_size 'weight'}} #{tone_label_class}") 
+                        .ui.small.compact.circular.inverted.label(class="{{calculated_size 'weight'}} #{tone_label_class}") 
                             span.ui.text
                                 |#{tone_id} &nbsp;
                             | {{ to_percent score }}% 

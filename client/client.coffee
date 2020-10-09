@@ -102,31 +102,39 @@ Template.reddit.onRendered ->
     # else 
     #     console.log 'points'
     
-Template.home.events
-    'click .print_me': (e,t)-> console.log @
-    # 'click .tagger': (e,t)->
-    #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
-    'keyup .tag_post': (e,t)->
-        # console.log 
-        if e.which is 13
-            # $(e.currentTarget).closest('.button')
-            tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
-            console.log tag
-            console.log @
-            Docs.update @_id,
-                $addToSet: tags: tag
-            $(e.currentTarget).closest('.tag_post').val('')
-            # console.log tag
-    'click .add_tag': -> 
-        # console.log @valueOf()
-        selected_tags.push @valueOf()
-        # # if Meteor.user()
-        if Session.equals('view_mode', 'wikipedia')
+
+
+Template.unselect_tag.onCreated ->
+    console.log @
+    @autorun => Meteor.subscribe('doc_by_title', @data)
+    
+Template.unselect_tag.helpers
+    term: ->
+        console.log @valueOf()
+        found = 
+            Docs.findOne 
+                # model:'wikipedia'
+                title:@valueOf()
+         console.log found
+         found
+Template.unselect_tag.events
+   'click .unselect_tag': -> 
+        selected_tags.remove @valueOf()
+        Session.set('skip',0)
+
+        if Session.equals('view_mode','porn')
+            Meteor.call 'search_ph', selected_tags.array(), ->
+        else
             Meteor.call 'call_wiki', @valueOf(), ->
-        #     # Meteor.call 'calc_term', @title, ->
-        #     # Meteor.call 'omega', @title, ->
-        if Session.equals('view_mode', 'reddit')
             Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.setTimeout( ->
+            Session.set('toggle',!Session.get('toggle'))
+        , 10000)
+
+    
+
+
+
 
 
 Template.tag_selector.onCreated ->
@@ -141,6 +149,46 @@ Template.tag_selector.helpers
         if term
             if term.max_emotion_name
                 switch term.max_emotion_name
+                    when 'joy' then 'inverted pink'
+                    when 'anger' then 'inverted green'
+                    when 'sadness' then 'inverted orange'
+                    when 'disgust' then 'inverted pink'
+                    when 'fear' then 'inverted white'
+    term: ->
+        Docs.findOne 
+            title:@name
+Template.tag_selector.events
+    'click .select_tag': -> 
+        # results.update
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
+        
+        selected_tags.push @name
+        Session.set('query','')
+        Session.set('skip',0)
+        $('.search_title').val('')
+
+        if Session.equals('view_mode','porn')
+            Meteor.call 'search_ph', @name, ->
+        else
+            Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.setTimeout( ->
+            Session.set('toggle',!Session.get('toggle'))
+        , 10000)
+       
+       
+Template.doc_tag.onCreated ->
+    # console.log @
+    @autorun => Meteor.subscribe('doc_by_title', @data)
+Template.doc_tag.helpers
+    selector_header_class: ()->
+        # console.log @
+        term = 
+            Docs.findOne 
+                title:@valueOf()
+        if term
+            if term.max_emotion_name
+                switch term.max_emotion_name
                     when 'joy' then 'pink'
                     when 'anger' then 'green'
                     when 'sadness' then 'orange'
@@ -148,20 +196,20 @@ Template.tag_selector.helpers
                     when 'fear' then 'white'
     term: ->
         Docs.findOne 
-            title:@name
-Template.tag_selector.events
+            title:@valueOf()
+Template.doc_tag.events
     'click .select_tag': -> 
         # results.update
         # window.speechSynthesis.speak new SpeechSynthesisUtterance @name
         
-        selected_tags.push @name
+        selected_tags.push @valueOf()
         Session.set('query','')
         Session.set('skip',0)
 
         if Session.equals('view_mode','porn')
-            Meteor.call 'search_ph', @name, ->
+            Meteor.call 'search_ph', @valueOf(), ->
         else
-            Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'call_wiki', @valueOf(), ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
@@ -193,31 +241,6 @@ Template.session_edit_value_button.helpers
             res
 
 
-Template.unselect_tag.onCreated ->
-    # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data)
-    
-Template.unselect_tag.helpers
-    term: ->
-        Docs.findOne 
-            model:'wikipedia'
-            title:@valueOf()
-            
-Template.unselect_tag.events
-   'click .unselect_tag': -> 
-        selected_tags.remove @valueOf()
-        Session.set('skip',0)
-
-        if Session.equals('view_mode','porn')
-            Meteor.call 'search_ph', selected_tags.array(), ->
-        else
-            Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.setTimeout( ->
-            Session.set('toggle',!Session.get('toggle'))
-        , 10000)
-
-    
             
             
 
@@ -251,11 +274,11 @@ Template.home.helpers
             console.log 'NOT READY'
             'disabled loading'
 
-    term: ->
-        # console.log @
-        Docs.find 
-            model:'wikipedia'
-            title:@valueOf()
+    # term: ->
+    #     # console.log @
+    #     Docs.find 
+    #         model:'wikipedia'
+    #         title:@valueOf()
     
     selected_tags: -> selected_tags.array()
     tag_results: ->
@@ -271,6 +294,30 @@ Template.home.helpers
 
 
 Template.home.events
+    'click .print_me': (e,t)-> console.log @
+    # 'click .tagger': (e,t)->
+    #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
+    'keyup .tag_post': (e,t)->
+        # console.log 
+        if e.which is 13
+            # $(e.currentTarget).closest('.button')
+            tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
+            console.log tag
+            console.log @
+            Docs.update @_id,
+                $addToSet: tags: tag
+            $(e.currentTarget).closest('.tag_post').val('')
+            # console.log tag
+    'click .add_tag': -> 
+        # console.log @valueOf()
+        selected_tags.push @valueOf()
+        # # if Meteor.user()
+        if Session.equals('view_mode','porn')
+            Meteor.call 'search_ph', @valueOf(), ->
+        else
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+
     # 'click .delete': -> 
     #     console.log @
     #     Docs.remove @_id
@@ -285,13 +332,13 @@ Template.home.events
             
     'click .forward': -> 
         current_skip = Session.get('skip')
-        console.log current_skip
+        # console.log current_skip
         next = current_skip+1
         Session.set('skip',next)
         # Session.get('skip')
     'click .back': -> 
         current_skip = Session.get('skip')
-        console.log current_skip
+        # console.log current_skip
         unless current_skip is 0
             prev = current_skip-1
             Session.set('skip',prev)
@@ -310,8 +357,10 @@ Template.home.events
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
 
-        if search.length > 3
+        if search.length > 4
             Session.set('query',search)
+        else if search.length is 0
+            Session.set('query','')
         if e.which is 13
             # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
