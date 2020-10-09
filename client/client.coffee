@@ -61,14 +61,14 @@ Template.home.onCreated ->
         Session.get('view_mode')
         Session.get('emotion_mode')
         Session.get('toggle')
-        Session.get('query')
+        # Session.get('query')
         )
     @autorun => Meteor.subscribe('docs',
         selected_tags.array()
         Session.get('view_mode')
         Session.get('emotion_mode')
         Session.get('toggle')
-        Session.get('query')
+        # Session.get('query')
         Session.get('skip')
         )
 
@@ -357,10 +357,10 @@ Template.home.events
         search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
 
-        if search.length > 4
-            Session.set('query',search)
-        else if search.length is 0
-            Session.set('query','')
+        # if search.length > 4
+        #     Session.set('query',search)
+        # else if search.length is 0
+        #     Session.set('query','')
         if e.which is 13
             # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
@@ -380,14 +380,14 @@ Template.home.events
                 #     else
                 # unless search in selected_tags.array()
                 selected_tags.push search
-                console.log 'selected tags', selected_tags.array()
+                # console.log 'selected tags', selected_tags.array()
                 if Session.equals('view_mode','porn')
                     Meteor.call 'search_ph', search, ->
                 else
                     Meteor.call 'call_wiki', search, ->
                     Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('skip',0)
-                Session.set('query','')
+                # Session.set('query','')
                 $('.search_title').val('')
                 Meteor.setTimeout( ->
                     Session.set('toggle',!Session.get('toggle'))

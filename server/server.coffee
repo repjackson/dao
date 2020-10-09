@@ -111,13 +111,15 @@ Meteor.publish 'docs', (
     view_mode
     emotion_mode
     toggle
-    query=''
+    # query=''
     skip
     )->
     match = {}
     if emotion_mode
         match.max_emotion_name = emotion_mode
 
+    if selected_tags.length > 0
+        match.tags = $all:selected_tags
     # console.log 'skip', skip
     # match.model = 'wikipedia'
     switch view_mode 
@@ -143,8 +145,6 @@ Meteor.publish 'docs', (
             match.model = 'reddit'
         else 
             match.model = $in:['wikipedia','reddit']
-    if selected_tags.length > 0
-        match.tags = $all:selected_tags
     # console.log 'doc match', match
     Docs.find match,
         limit:5
@@ -160,7 +160,7 @@ Meteor.publish 'dtags', (
     view_mode
     emotion_mode
     toggle
-    query=''
+    # query=''
     )->
     # @unblock()
     self = @
@@ -205,45 +205,45 @@ Meteor.publish 'dtags', (
     # if query.length > 3
     #     match.title = {$regex:"#{query}"}
     #     model:'wikipedia'
-    if query.length > 4
-        console.log 'searching query', query
-        # match.tags = {$regex:"#{query}", $options: 'i'}
-        # match.tags_string = {$regex:"#{query}", $options: 'i'}
+    # if query.length > 4
+    #     console.log 'searching query', query
+    #     # match.tags = {$regex:"#{query}", $options: 'i'}
+    #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
     
-        terms = Docs.find({
-            model:'wikipedia'            
-            title: {$regex:"#{query}", $options: 'i'}
-            title: {$regex:"#{query}"}
-        },
-            # sort:
-            #     count: -1
-            limit: 10
-        )
-        terms.forEach (term, i) ->
-            self.added 'results', Random.id(),
-                name: term.title
-                # count: term.count
-                model:'tag'
-        # self.ready()
-    else
-        tag_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "tags": 1 }
-            { $unwind: "$tags" }
-            { $group: _id: "$tags", count: $sum: 1 }
-            { $match: _id: $nin: selected_tags }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: doc_count }
-            { $limit:10 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # # console.log 'cloud: ', tag_cloud
-        console.log 'tag match', match
-        tag_cloud.forEach (tag, i) ->
-            self.added 'results', Random.id(),
-                name: tag.name
-                count: tag.count
-                model:'tag'
+    #     terms = Docs.find({
+    #         model:'wikipedia'            
+    #         title: {$regex:"#{query}", $options: 'i'}
+    #         title: {$regex:"#{query}"}
+    #     },
+    #         # sort:
+    #         #     count: -1
+    #         limit: 10
+    #     )
+    #     terms.forEach (term, i) ->
+    #         self.added 'results', Random.id(),
+    #             name: term.title
+    #             # count: term.count
+    #             model:'tag'
+    #     # self.ready()
+    # else
+    tag_cloud = Docs.aggregate [
+        { $match: match }
+        { $project: "tags": 1 }
+        { $unwind: "$tags" }
+        { $group: _id: "$tags", count: $sum: 1 }
+        { $match: _id: $nin: selected_tags }
+        { $sort: count: -1, _id: 1 }
+        { $match: count: $lt: doc_count }
+        { $limit:10 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # # console.log 'cloud: ', tag_cloud
+    # console.log 'tag match', match
+    tag_cloud.forEach (tag, i) ->
+        self.added 'results', Random.id(),
+            name: tag.name
+            count: tag.count
+            model:'tag'
     self.ready()
     
         
