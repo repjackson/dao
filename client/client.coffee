@@ -122,11 +122,8 @@ Template.unselect_tag.events
         selected_tags.remove @valueOf()
         Session.set('skip',0)
 
-        if Session.equals('view_mode','porn')
-            Meteor.call 'search_ph', selected_tags.array(), ->
-        else
-            Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'call_wiki', @valueOf(), ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -167,11 +164,8 @@ Template.tag_selector.events
         Session.set('skip',0)
         $('.search_title').val('')
 
-        if Session.equals('view_mode','porn')
-            Meteor.call 'search_ph', @name, ->
-        else
-            Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'call_wiki', @name, ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -200,17 +194,14 @@ Template.doc_tag.helpers
 Template.doc_tag.events
     'click .select_tag': -> 
         # results.update
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance @name
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
         
         selected_tags.push @valueOf()
         Session.set('query','')
         Session.set('skip',0)
 
-        if Session.equals('view_mode','porn')
-            Meteor.call 'search_ph', @valueOf(), ->
-        else
-            Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'call_wiki', @valueOf(), ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -248,7 +239,7 @@ Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
-        match = {model:$in:['post','wikipedia','reddit','porn','page']}
+        match = {model:$in:['post','wikipedia','reddit','page']}
         # match = {model:$in:['post','wikipedia','reddit']}
         # match = {model:'wikipedia'}
         # if selected_tags.array().length>0
@@ -258,8 +249,7 @@ Template.home.helpers
             sort:
                 # points:-1
                 ups:-1
-                views:-1
-                _timestamp:-1
+                # _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
             limit:1
             skip:Session.get('skip')
@@ -302,7 +292,7 @@ Template.home.events
         if e.which is 13
             # $(e.currentTarget).closest('.button')
             tag = $(e.currentTarget).closest('.tag_post').val().toLowerCase().trim()
-            console.log tag
+            # console.log tag
             console.log @
             Docs.update @_id,
                 $addToSet: tags: tag
@@ -312,11 +302,8 @@ Template.home.events
         # console.log @valueOf()
         selected_tags.push @valueOf()
         # # if Meteor.user()
-        if Session.equals('view_mode','porn')
-            Meteor.call 'search_ph', @valueOf(), ->
-        else
-            Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'call_wiki', @valueOf(), ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
 
     # 'click .delete': -> 
     #     console.log @
@@ -324,11 +311,11 @@ Template.home.events
     'click .vote_up': -> 
         Docs.update @_id,
             $inc: points: 1
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
+        window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
     'click .vote_down': -> 
         Docs.update @_id,
             $inc: points: -1
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
+        window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
             
     'click .forward': -> 
         current_skip = Session.get('skip')
@@ -350,7 +337,7 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ooooooh. aaahh. thats it. dont stop'
+        window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
 
     # 'keyup .search_title': _.throttle((e,t)->
     'keyup .search_title': (e,t)->
@@ -381,11 +368,8 @@ Template.home.events
                 # unless search in selected_tags.array()
                 selected_tags.push search
                 # console.log 'selected tags', selected_tags.array()
-                if Session.equals('view_mode','porn')
-                    Meteor.call 'search_ph', search, ->
-                else
-                    Meteor.call 'call_wiki', search, ->
-                    Meteor.call 'search_reddit', selected_tags.array(), ->
+                Meteor.call 'call_wiki', search, ->
+                Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('skip',0)
                 # Session.set('query','')
                 $('.search_title').val('')
