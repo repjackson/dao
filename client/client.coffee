@@ -80,11 +80,11 @@ Template.alpha.onRendered ->
     # unless @data.watson
     #     # console.log 'call'
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
-    if @data.response
-        Meteor.setTimeout( =>
-            window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.datatypes
-        , 3000)
-
+    # if @data.response
+    Meteor.setTimeout( =>
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.datatypes
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
+    , 7000)
 
 
 

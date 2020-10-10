@@ -21,19 +21,18 @@ template(name='alpha')
             // .item related: #{related}
             // .item version: #{version}
         each pods
-            .ui.segment
-                .ui.small.inline.header #{title}
-                .item #{scanner}
-                // .item id #{id}
-                // .item position #{position}
-                // .item error #{error}
-                // .item numsubpods #{numsubpods}
-                // .item subpods
-                    // .ui.list
+            // .ui.small.inline.header #{title}
+            // .item #{scanner}
+            // .item id #{id}
+            // .item position #{position}
+            // .item error #{error}
+            // .item numsubpods #{numsubpods}
+            // .item subpods
+            .ui.list
                 each subpods
-                    .ui.small.header #{plaintext}
-                    // .item title: #{title}
-                    // .item primary: #{primary}
+                    .item #{plaintext}
+                // .item title: #{title}
+                // .item primary: #{primary}
     //   div assumptions": {
     //     "type": "Clash",
     //     "word": "time",
