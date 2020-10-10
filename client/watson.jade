@@ -209,8 +209,8 @@ template(name='tone')
                     i.chevron.up.link.grey.large.icon.upvote_sentence
                     i.chevron.down.link.grey.large.icon.downvote_sentence
                     each tones
-                        // .ui.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
-                        .ui.small.compact.circular.inverted.label(class="{{calculated_size 'weight'}} #{tone_label_class}") 
+                        .ui.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
+                        // .ui.small.compact.circular.inverted.label(class="{{calculated_size 'weight'}} #{tone_label_class}") 
                             span.ui.text
                                 |#{tone_id} &nbsp;
                             | {{ to_percent score }}% 

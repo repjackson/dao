@@ -39,6 +39,22 @@ body
     
 
 template(name='home')
+    +emotion_mode key='joy' icon='happy--v1'
+    +emotion_mode key='sadness' icon='sad--v1'
+    +emotion_mode key='anger' icon='angry--v1'
+    +emotion_mode key='disgust' icon='disgusting'
+    +emotion_mode key='fear' icon='scream'
+    .ui.label(title='results') #{doc_count}
+    // +view_mode key='twitter' icon='twitter'
+    +view_mode key='video' icon='youtube'
+    +view_mode key='image' icon='picture'
+    +view_mode key='reddit' icon='newspaper'
+    +view_mode key='wikipedia' icon='book'
+    // +view_mode key='stackexchange' icon='disabled stack exchange'
+    // +view_mode key='github' icon='disabled github'
+    // +view_mode key='alpha' icon='disabled brain'
+    // div
+    // .sixteen.wide.column
     if selected_tags
         // if many_tags
         //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
@@ -54,25 +70,12 @@ template(name='home')
     //         input.search_title(type='text' autofocus='')
     each tag_results
         +tag_selector
-    .ui.label(title='results') #{doc_count}
-    +view_mode key='twitter' icon='twitter'
-    +view_mode key='video' icon='youtube'
-    +view_mode key='image' icon='picture'
-    +view_mode key='reddit' icon='reddit'
-    +view_mode key='wikipedia' icon='wikipedia'
-    +view_mode key='stackexchange' icon='disabled stack exchange'
-    +view_mode key='github' icon='disabled github'
-    +view_mode key='alpha' icon='disabled brain'
-    +emotion_mode key='disgust' icon='disgusting'
-    +emotion_mode key='joy' icon='happy--v1'
-    +emotion_mode key='sadness' icon='sad--v1'
-    +emotion_mode key='fear' icon='scream'
-    +emotion_mode key='anger' icon='angry--v1'
-    // .sixteen.wide.column
-    // .spacer
+    .spacer
     each docs
-        a.ui.header(href=url target='_window' class=post_header_class title=url) #{title}
         // div
+        a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
+        .spacer
+        div
         +session_edit_value_button key='view_section' value='content' label='content' icon='content'
         if watson
             +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
