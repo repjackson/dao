@@ -147,7 +147,7 @@ template(name='keyword_list')
     .ui.small.grey.header 
         |#{watson_keywords.length} keywords
     each watson_keywords
-        .ui.large.basic.label #{this}
+        .ui.large.label #{this}
         span(class="{{calculated_size 'relevance'}}") #{this}
 
 
@@ -156,7 +156,7 @@ template(name='concept_list')
     .ui.small.grey.header 
         |#{watson_concepts.length} concepts
     each watson_concepts
-        .ui.large.basic.label #{this}
+        .ui.large.label #{this}
 
 
 
@@ -209,7 +209,7 @@ template(name='tone')
                     i.chevron.up.link.grey.large.icon.upvote_sentence
                     i.chevron.down.link.grey.large.icon.downvote_sentence
                     each tones
-                        // .ui.basic.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
+                        // .ui.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
                         .ui.small.compact.circular.inverted.label(class="{{calculated_size 'weight'}} #{tone_label_class}") 
                             span.ui.text
                                 |#{tone_id} &nbsp;

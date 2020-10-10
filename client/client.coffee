@@ -47,7 +47,7 @@ Template.registerHelper 'is_twitter', ()->
 
         
 Template.home.onCreated ->
-    # window.speechSynthesis.speak new SpeechSynthesisUtterance 'welcome to dao'
+    window.speechSynthesis.speak new SpeechSynthesisUtterance 'welcome to dao'
 
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
@@ -311,11 +311,11 @@ Template.home.events
     'click .vote_up': -> 
         Docs.update @_id,
             $inc: points: 1
-        window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
     'click .vote_down': -> 
         Docs.update @_id,
             $inc: points: -1
-        window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
             
     'click .forward': -> 
         current_skip = Session.get('skip')
@@ -337,7 +337,7 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
-        window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
 
     # 'keyup .search_title': _.throttle((e,t)->
     'keyup .search_title': (e,t)->

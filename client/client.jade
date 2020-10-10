@@ -60,17 +60,16 @@ template(name='home')
     +view_mode key='image' icon='picture'
     +view_mode key='reddit' icon='reddit'
     +view_mode key='wikipedia' icon='wikipedia'
-    // +view_mode key='porn' icon='mercury'
-    // +view_mode key='stackexchange' icon='stack exchange'
-    // +view_mode key='github' icon='github'
-    // +view_mode key='alpha' icon='font'
+    +view_mode key='stackexchange' icon='disabled stack exchange'
+    +view_mode key='github' icon='disabled github'
+    +view_mode key='alpha' icon='disabled brain'
     +emotion_mode key='disgust' icon='disgusting'
     +emotion_mode key='joy' icon='happy--v1'
     +emotion_mode key='sadness' icon='sad--v1'
     +emotion_mode key='fear' icon='scream'
     +emotion_mode key='anger' icon='angry--v1'
     // .sixteen.wide.column
-    .spacer
+    // .spacer
     each docs
         a.ui.header(href=url target='_window' class=post_header_class title=url) #{title}
         // div
@@ -97,15 +96,15 @@ template(name='home')
         if session_key_value_is 'view_section' 'preview'
             .invert.rounded
                 iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        .ui.hidden.divider
-        i.thumbs.up.outline.huge.grey.link.circular.icon.vote_up
+        // .ui.hidden.divider
+        i.thumbs.up.outline.huge.grey.link.icon.vote_up
         |#{points}
-        i.thumbs.down.outline.huge.grey.link.circular.icon.vote_down
+        i.thumbs.down.outline.huge.grey.link.icon.vote_down
         unless one_post
             unless one_post
-                .ui.big.circular.circular.icon.button.back
+                .ui.big.icon.button.back
                     i.chevron.left.big.icon
-            .ui.big.circular.circular.icon.button.forward
+            .ui.big.icon.button.forward
                 i.chevron.right.big.icon
         each tags
             +doc_tag
