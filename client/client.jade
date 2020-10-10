@@ -71,56 +71,60 @@ template(name='home')
     each tag_results
         +tag_selector
     .spacer
-    each alphas
-        +alpha    
-    each docs
-        // div
-        a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
-        // .spacer
-        // div
-        +session_edit_value_button key='view_section' value='content' label='content' icon='content'
-        if watson
-            +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
-        if tone
-            +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-        +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
-        // +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
-        if session_key_value_is 'view_section' 'content'
-            if key_value 'model' 'reddit'
-                +reddit
-            else
-                +post
-        if session_key_value_is 'view_section' 'analysis'
-            +call_tone    
-            +watson_view
-        if session_key_value_is 'view_section' 'tone'
-            +tone
-        if session_key_value_is 'view_section' 'comments'
-            // +tone
-            .ui.header comments
-        if session_key_value_is 'view_section' 'preview'
-            .invert.rounded
-                iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        // .ui.hidden.divider
-        i.thumbs.up.outline.huge.grey.link.icon.vote_up
-        |#{points}
-        i.thumbs.down.outline.huge.grey.link.icon.vote_down
-        unless one_post
-            unless one_post
-                .ui.big.icon.circular.button.back
-                    i.chevron.left.big.icon
-            .ui.big.icon.circular.button.forward
-                i.chevron.right.big.icon
-        each tags
-            +doc_tag
-            // a.ui.large.image.label.add_tag
-            //     if tag_term
-            //         img.ui.image(src=tag_term.watson.metadata.image)    
-            //     | #{this}
-        |#{tags.length}
-        .ui.transparent.input
-            i.plus.grey.icon
-            input.tag_post(type='text')
+    .ui.equal.width.grid
+        if alphas 
+            each alphas
+                .column
+                    +alpha 
+        each docs
+            .column
+                // div
+                a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
+                // .spacer
+                // div
+                +session_edit_value_button key='view_section' value='content' label='content' icon='content'
+                if watson
+                    +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
+                if tone
+                    +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
+                +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
+                // +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
+                if session_key_value_is 'view_section' 'content'
+                    if key_value 'model' 'reddit'
+                        +reddit
+                    else
+                        +post
+                if session_key_value_is 'view_section' 'analysis'
+                    +call_tone    
+                    +watson_view
+                if session_key_value_is 'view_section' 'tone'
+                    +tone
+                if session_key_value_is 'view_section' 'comments'
+                    // +tone
+                    .ui.header comments
+                if session_key_value_is 'view_section' 'preview'
+                    .invert.rounded
+                        iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+            .column
+                i.thumbs.up.outline.huge.grey.link.icon.vote_up
+                |#{points}
+                i.thumbs.down.outline.huge.grey.link.icon.vote_down
+                unless one_post
+                    unless one_post
+                        .ui.big.icon.circular.button.back
+                            i.chevron.left.big.icon
+                    .ui.big.icon.circular.button.forward
+                        i.chevron.right.big.icon
+                each tags
+                    +doc_tag
+                    // a.ui.large.image.label.add_tag
+                    //     if tag_term
+                    //         img.ui.image(src=tag_term.watson.metadata.image)    
+                    //     | #{this}
+                |#{tags.length}
+                .ui.transparent.input
+                    i.plus.grey.icon
+                    input.tag_post(type='text')
 
 
 template(name='view_mode')
