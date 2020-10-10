@@ -86,7 +86,11 @@ Template.alpha.onRendered ->
         window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
     , 7000)
 
-
+Template.alpha.events
+    'click .alphatemp': ->
+        console.log @
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @pods[1].subpods[0].plaintext
+        
 
 
 Template.reddit.onRendered ->
