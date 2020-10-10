@@ -51,7 +51,7 @@ Template.home.onCreated ->
 
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
-    @autorun -> Meteor.subscribe('alpha')
+    @autorun -> Meteor.subscribe('alpha',selected_tags.array())
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('view_mode')
@@ -75,7 +75,15 @@ Template.home.onCreated ->
 
 
 
-
+Template.alpha.onRendered ->
+    console.log @data
+    # unless @data.watson
+    #     # console.log 'call'
+    #     Meteor.call 'call_watson', @data._id, 'url','url',->
+    if @data.response
+        Meteor.setTimeout( =>
+            window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.datatypes
+        , 3000)
 
 
 

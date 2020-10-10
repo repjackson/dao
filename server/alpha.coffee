@@ -1,7 +1,7 @@
-Meteor.publish 'alpha', ->
+Meteor.publish 'alpha', (selected_tags)->
     Docs.find 
         model:'alpha'
-
+        query: $in: selected_tags
 Meteor.methods
     call_alpha: (query)->
         @unblock()
@@ -11,6 +11,7 @@ Meteor.methods
                 model:'alpha'
                 query:query
         if found_alpha_query
+            console.log 'skipping existing alpha for ', query
             return found_alpha_query
         else
             console.log 'creating new alpha for ', query
@@ -19,8 +20,8 @@ Meteor.methods
                     model:'alpha'
                     query:query
                     
-            HTTP.get "https://api.wolframalpha.com/v2/query?input=#{query}&format=plaintext&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
-                console.log response
+            HTTP.get "https://api.wolframalpha.com/v2/query?input=#{query}&format=html,image,plaintext,sound&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
+                # console.log response
                 if err then console.log err
                 else
                     parsed = JSON.parse(response.content)
