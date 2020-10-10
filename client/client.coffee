@@ -164,7 +164,7 @@ Template.tag_selector.events
         Session.set('query','')
         Session.set('skip',0)
         $('.search_title').val('')
-
+        Meteor.call 'call_alpha', @name, ->
         Meteor.call 'call_wiki', @name, ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
