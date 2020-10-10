@@ -47,10 +47,11 @@ Template.registerHelper 'is_twitter', ()->
 
         
 Template.home.onCreated ->
-    window.speechSynthesis.speak new SpeechSynthesisUtterance 'welcome to dao'
+    window.speechSynthesis.speak new SpeechSynthesisUtterance 'dao'
 
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
+    @autorun -> Meteor.subscribe('alpha')
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('view_mode')
@@ -236,6 +237,10 @@ Template.session_edit_value_button.helpers
             
 
 Template.home.helpers
+    alphas: ->
+        Docs.find 
+            model:'alpha'
+
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->

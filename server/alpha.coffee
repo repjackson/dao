@@ -1,10 +1,11 @@
+Meteor.publish 'alpha', ->
+    Docs.find 
+        model:'alpha'
+
 Meteor.methods
     search_alpha: (query)->
         @unblock()
         console.log 'searching alpha for', query
-        # console.log 'type of query', typeof(query)
-        # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
-        # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
         HTTP.get "https://api.wolframalpha.com/v2/query?input=#{query}&format=plaintext&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
             console.log response
             if err then console.log err
@@ -13,8 +14,18 @@ Meteor.methods
                     Docs.findOne 
                         model:'alpha'
                         query:query
+                parsed = JSON.parse(response.content)
+                
                 if found_alpha_query
-                    Docs.update found_alpha_query._d
+                    
+                    Docs.update found_alpha_query._id,
+                        $set:
+                            response:parsed
+                else
+                    Docs.insert
+                        model:'alpha'
+                        query:query
+                        response:parsed
                 
                 
                 
