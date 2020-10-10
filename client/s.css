@@ -1,7 +1,7 @@
 body {
-    background-color: rgba(0,0,0,.85) !important;
+    background-color: rgba(0,0,0,.9) !important;
     filter: invert(1) !important; 
-    font-size: 110% !important;
+    /*font-size: 110% !important;*/
     transition: all .25s linear !important;
 }
 .invert {
@@ -89,6 +89,11 @@ input {
 	/*padding-left: 1em;*/
 }
 
+/*.toggle_emotion {*/
+  /*text-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);*/
+  /*text-shadow: 1px 1px 2px 0px rgba(0,0,0,0.8);*/
+
+/*}*/
 
 .pointer:hover {
     cursor: pointer !important;
@@ -99,6 +104,7 @@ input {
     /*transform: scale(1.) !important;*/
     z-index: 1000 !important;
     /*text-shadow: 0 20px 20px 20px rgba(50, 50, 100, 0.1) !important; */
+    /*text-shadow: 0 0 3px grey !important;*/
     /*text-shadow: 0 0 3px grey !important;*/
     /*filter: drop-shadow(0px 0px 1px grey);    */
     /*transition: all .2s linear !important; */

@@ -74,8 +74,8 @@ template(name='home')
     each docs
         // div
         a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
-        .spacer
-        div
+        // .spacer
+        // div
         +session_edit_value_button key='view_section' value='content' label='content' icon='content'
         if watson
             +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
@@ -105,9 +105,9 @@ template(name='home')
         i.thumbs.down.outline.huge.grey.link.icon.vote_down
         unless one_post
             unless one_post
-                .ui.big.icon.button.back
+                .ui.big.icon.circular.button.back
                     i.chevron.left.big.icon
-            .ui.big.icon.button.forward
+            .ui.big.icon.circular.button.forward
                 i.chevron.right.big.icon
         each tags
             +doc_tag
@@ -129,7 +129,7 @@ template(name='emotion_mode')
     if selected_emotion
         img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/color/50/000000/#{icon}.png" class=cl title=title)
     else
-        img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/ios/50/000000/#{icon}.png" class=cl title=title)
+        img.ui.inline.image.toggle_emotion.inverted.zoomer.pointer(src="https://img.icons8.com/ios/50/000000/#{icon}.png" class=cl title=title)
 
     
 template(name='post')         
