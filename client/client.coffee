@@ -202,6 +202,7 @@ Template.doc_tag.events
         Session.set('skip',0)
 
         Meteor.call 'call_wiki', @valueOf(), ->
+        Meteor.call 'call_alpha', @valueOf(), ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
@@ -240,7 +241,7 @@ Template.home.helpers
     alphas: ->
         Docs.find 
             model:'alpha'
-
+            query: $in: selected_tags.array()
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
@@ -373,6 +374,7 @@ Template.home.events
                 # unless search in selected_tags.array()
                 selected_tags.push search
                 # console.log 'selected tags', selected_tags.array()
+                Meteor.call 'call_alpha', search, ->
                 Meteor.call 'call_wiki', search, ->
                 Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('skip',0)
