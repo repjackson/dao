@@ -5,7 +5,7 @@ Meteor.publish 'alpha', (selected_tags)->
         query: selected_tags.toString()
 Meteor.methods
     call_alpha: (query)->
-        # @unblock()
+        @unblock()
         console.log 'searching alpha for', query
         found_alpha = 
             Docs.findOne 
