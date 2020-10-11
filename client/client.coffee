@@ -84,6 +84,8 @@ Template.alpha.onRendered ->
     # if @data.response
     window.speechSynthesis.cancel()
     window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
+    window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[1].plaintext
+    console.log response.queryresult.pods[1].subpods
     # Meteor.setTimeout( =>
     # , 7000)
 
