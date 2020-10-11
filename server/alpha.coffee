@@ -3,6 +3,8 @@ Meteor.publish 'alpha', (selected_tags)->
         model:'alpha'
         # query: $in: selected_tags
         query: selected_tags.toString()
+        
+        
 Meteor.methods
     call_alpha: (query)->
         @unblock()
@@ -29,30 +31,43 @@ Meteor.methods
                     parsed = JSON.parse(response.content)
                     Docs.update new_query_id,
                         $set:
-                            response:parsed    
-    chat_alpha: (chat)->
-        @unblock()
-        console.log 'chatting alpha for', query
-        found_chat = 
-            Docs.findOne 
-                model:'chat'
-                body:chat
-        if found_alpha
-            # console.log 'skipping existing alpha for ', query, found_alpha
-            return found_alpha
-        else
-            console.log 'creating new alpha for ', query
-            new_query_id = 
-                Docs.insert
-                    model:'alpha'
-                    query:query
-                    tags:[query]
-                    
-            HTTP.get "http://api.wolframalpha.com/v1/conversation.jsp?appid=UULLYY-QR2ALYJ9JU&i=#{chat}",(err,response)=>
+                            response:parsed  
+                            
+            HTTP.get "http://api.wolframalpha.com/v1/spoken?appid=DEMO&i=#{query}&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
                 # console.log response
                 if err then console.log err
                 else
                     parsed = JSON.parse(response.content)
+                    console.log 'voice', parsed
                     Docs.update new_query_id,
                         $set:
-                            response:parsed
+                            voice:parsed  
+                            
+                            
+                            
+    add_chat: (chat)->
+        @unblock()
+        console.log 'chatting alpha for', chat
+        now = Date.now()
+        found_last_chat = 
+            Docs.findOne { 
+                model:'chat'
+                _timestamp: $lt:now
+            }, limit:1
+        console.log 'last', found_last_chat
+        new_id = 
+            Docs.insert 
+                model:'chat'
+                body:chat
+                bot:false
+        # console.log 'creating new chat for ', chat
+        HTTP.get "http://api.wolframalpha.com/v1/conversation.jsp?appid=UULLYY-QR2ALYJ9JU&i=#{chat}",(err,response)=>
+            if err then console.log err
+            else
+                console.log response
+                parsed = JSON.parse(response.content)
+                Docs.insert
+                    model:'chat'
+                    bot:true
+                    response:parsed
+            

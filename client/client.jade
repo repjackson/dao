@@ -126,12 +126,23 @@ template(name='home')
                 i.code.link.icon.print_me
         .one.column.row
             .column
-                .ui.header chat
-                each chats
-                    .ui.small.header #{body}
-                .ui.fluid.icon.input 
-                    i.chat.icon
-                    input.new_chat(type='text')
+                +chat
+                
+                
+template(name='chat')                
+    .ui.header chat
+    each chats
+        .ui.small.header
+            if bot
+                i.grey.brain.icon 
+            |#{response.result} #{body}
+                    
+            // .comment
+            //     .content
+            //         // .meta #{_timestamp}
+    .ui.fluid.icon.input 
+        i.chat.icon
+        input.new_chat(type='text')
 
 template(name='view_mode')
     i.link.zoomer.icon.toggle_view(class=toggle_view_class title=key)

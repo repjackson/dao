@@ -26,10 +26,13 @@ Docs.allow
 
 Meteor.publish 'chat', (title)->
     # console.log title
-    @unblock()
+    # @unblock()
     Docs.find({
         model:'chat'
-    })
+    }, 
+        sort:_timestamp:-1
+        limit:5
+    )
 Meteor.publish 'doc_by_title', (title)->
     # console.log title
     @unblock()
@@ -76,12 +79,8 @@ Meteor.publish 'doc_count', (
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
-        when 'porn'
-            match.model = 'porn'
         when 'reddit'
             match.model = 'reddit'
-        when 'stackexchange'
-            match.model = 'stackexchange'
         else 
             match.model = $in:['wikipedia','reddit']
 

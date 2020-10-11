@@ -469,13 +469,25 @@ Template.call_watson.events
 Template.chat.onCreated ->
     @autorun -> Meteor.subscribe('chat')
 
+Template.chat.helpers
+    chats: ->
+        Docs.find {
+            model:'chat'
+        },
+            limit:7
+            sort:_timestamp:1
 Template.chat.events
     'keyup .new_chat': (e,t)->
         chat = $('.new_chat').val().toLowerCase().trim()
         if e.which is 13
-            window.speechSynthesis.cancel()
-            window.speechSynthesis.speak new SpeechSynthesisUtterance search
+            # window.speechSynthesis.cancel()
+            # console.log 'chat'
             Meteor.call 'add_chat', chat, ->
-
-
-
+            $('.new_chat').val('')
+            Meteor.setTimeout =>
+                last = Docs.findOne
+                    model:'chat'
+                , sort:_timestamp:-1
+                console.log 'last', last
+                window.speechSynthesis.speak new SpeechSynthesisUtterance last.response.result
+            , 1000

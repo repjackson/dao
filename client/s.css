@@ -90,6 +90,14 @@ input {
     padding: .2em;
     /*padding-left: 1em;*/
 }
+.smallscroll{
+    max-height: 300px !important;
+    overflow-y:scroll;
+    overflow-x:hidden;
+    /* padding-top: .2em; */
+    padding: .2em;
+    /*padding-left: 1em;*/
+}
 
 /*.toggle_emotion {*/
   /*text-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.75);*/
