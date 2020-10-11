@@ -74,8 +74,9 @@ template(name='home')
     .ui.stackable.grid.grid
         each alphas
             .six.wide.column
-                // if response.queryresult
-                if voice
+                // if voice
+                
+                if response.queryresult
                     +alpha 
         each docs
             .ten.wide.column
@@ -131,7 +132,7 @@ template(name='home')
                 
                 
 template(name='chat')                
-    .ui.header chat
+    .ui.inline.header chat
     each chats
         .ui.small.header
             if bot
@@ -141,6 +142,7 @@ template(name='chat')
             // .comment
             //     .content
             //         // .meta #{_timestamp}
+    .spacer
     .ui.fluid.icon.input 
         i.chat.icon
         input.new_chat(type='text')

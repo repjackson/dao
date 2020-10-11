@@ -24,6 +24,13 @@ Meteor.methods
                     query:query
                     tags:[query]
                     
+        HTTP.get "http://api.wolframalpha.com/v1/spoken?i=#{query}&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
+            # console.log response.content
+            if err then console.log err
+            else
+                Docs.update new_query_id,
+                    $set:
+                        voice:response.content  
             HTTP.get "https://api.wolframalpha.com/v2/query?input=#{query}&format=html,image,plaintext,sound&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
                 # console.log response
                 if err then console.log err
@@ -32,15 +39,6 @@ Meteor.methods
                     Docs.update new_query_id,
                         $set:
                             response:parsed  
-                    HTTP.get "http://api.wolframalpha.com/v1/spoken?i=#{query}&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
-                        # console.log response.content
-                        if err then console.log err
-                        else
-                            # parsed = JSON.parse(response.content)
-                            # console.log 'voice', parsed
-                            Docs.update new_query_id,
-                                $set:
-                                    voice:response.content  
                                     
                                     
                             

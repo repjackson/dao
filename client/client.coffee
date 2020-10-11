@@ -83,9 +83,11 @@ Template.alpha.onRendered ->
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
     # if @data.response
     window.speechSynthesis.cancel()
-    # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
     # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[1].plaintext
-    window.speechSynthesis.speak new SpeechSynthesisUtterance @data.voice
+    if @data.voice
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @data.voice
+    else
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
     # console.log response.queryresult.pods[1].subpods
     # Meteor.setTimeout( =>
     # , 7000)
