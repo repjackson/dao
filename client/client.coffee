@@ -89,7 +89,7 @@ Template.alpha.onRendered ->
 Template.alpha.events
     'click .alphatemp': ->
         console.log @
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @pods[1].subpods[0].plaintext
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @plaintext
         
 
 

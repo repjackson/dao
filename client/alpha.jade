@@ -1,39 +1,40 @@
 template(name='alpha')
     with response.queryresult
-        .alphatemp
-            .ui.inline.header #{datatypes}
+        .ui.inline.header #{datatypes}
+        // .ui.list
+            // .item success: #{success}
+            // .item error: #{error}
+            // .item numpods: #{numpods}
+            // .item datatypes: #{datatypes}
+                // each datatypes
+                //     .ui.button
+                //         |#{this}
+            // .item timedout: #{timedout}
+            // .item timedoutpods: #{timedoutpods}
+            // .item timing: #{timing}
+            // .item parsetiming: #{parsetiming}
+            // .item parsetimedout: #{parsetimedout}
+            // .item recalculate: #{recalculate}
+            // .item id: #{id}
+            // .item host: #{host}
+            // .item server: #{server}
+            // .item related: #{related}
+            // .item version: #{version}
+        each pods
+            // .ui.small.inline.header #{title}
+            // .item #{scanner}
+            // .item id #{id}
+            // .item position #{position}
+            // .item error #{error}
+            // .item numsubpods #{numsubpods}
+            // .item subpods
             // .ui.list
-                // .item success: #{success}
-                // .item error: #{error}
-                // .item numpods: #{numpods}
-                // .item datatypes: #{datatypes}
-                    // each datatypes
-                    //     .ui.button
-                    //         |#{this}
-                // .item timedout: #{timedout}
-                // .item timedoutpods: #{timedoutpods}
-                // .item timing: #{timing}
-                // .item parsetiming: #{parsetiming}
-                // .item parsetimedout: #{parsetimedout}
-                // .item recalculate: #{recalculate}
-                // .item id: #{id}
-                // .item host: #{host}
-                // .item server: #{server}
-                // .item related: #{related}
-                // .item version: #{version}
-            each pods
-                // .ui.small.inline.header #{title}
-                // .item #{scanner}
-                // .item id #{id}
-                // .item position #{position}
-                // .item error #{error}
-                // .item numsubpods #{numsubpods}
-                // .item subpods
-                .ui.list
-                    each subpods
-                        .item #{plaintext}
-                    // .item title: #{title}
-                    // .item primary: #{primary}
+            each subpods
+                .item.alphatemp
+                    img.ui.image(src=img.src)
+                    // |#{plaintext}
+                // .item title: #{title}
+                // .item primary: #{primary}
     //   div assumptions": {
     //     "type": "Clash",
     //     "word": "time",
