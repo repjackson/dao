@@ -24,6 +24,12 @@ Docs.allow
 
 
 
+Meteor.publish 'chat', (title)->
+    # console.log title
+    @unblock()
+    Docs.find({
+        model:'chat'
+    })
 Meteor.publish 'doc_by_title', (title)->
     # console.log title
     @unblock()

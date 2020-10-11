@@ -71,13 +71,13 @@ template(name='home')
     each tag_results
         +tag_selector
     .spacer
-    .ui.equal.width.stackable.grid.grid
+    .ui.stackable.grid.grid
         each alphas
-            .column
+            .six.wide.column
                 if response.queryresult
                     +alpha 
         each docs
-            .column
+            .ten.wide.column
                 // div
                 a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
                 // .spacer
@@ -102,10 +102,10 @@ template(name='home')
                 //     // +tone
                 //     .ui.header comments
                 // if session_key_value_is 'view_section' 'preview'
-            // .column
-            //     .invert.rounded
-            //         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-            .column
+                // // .column
+                // //     .invert.rounded
+                // //         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+                // .column
                 i.thumbs.up.outline.huge.grey.link.icon.vote_up
                 |#{points}
                 i.thumbs.down.outline.huge.grey.link.icon.vote_down

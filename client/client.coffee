@@ -464,3 +464,18 @@ Template.call_watson.events
 #             # placeholder: '/images/bear-waving.jpg'
 #         });
 #     , 1000)
+
+
+Template.chat.onCreated ->
+    @autorun -> Meteor.subscribe('chat')
+
+Template.chat.events
+    'keyup .new_chat': (e,t)->
+        chat = $('.new_chat').val().toLowerCase().trim()
+        if e.which is 13
+            window.speechSynthesis.cancel()
+            window.speechSynthesis.speak new SpeechSynthesisUtterance search
+            Meteor.call 'add_chat', chat, ->
+
+
+

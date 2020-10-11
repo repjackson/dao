@@ -42,10 +42,12 @@ input {
     white-space: pre-wrap;
 }
 
-.rounded.image {
-    transition: all .2s linear !important;
-    margin: 5px !important;
-    border-radius: 10px !important;
+.alphatemp {
+    /*transition: all .2s linear !important;*/
+    /*margin-top: 5px !important;*/
+    margin-top: 5px !important;
+    /*padding: 10px !important;*/
+    border-radius: 5px !important;
 }
 .button:not(.circular) {
     border-radius: 10px !important;
@@ -83,10 +85,10 @@ input {
     border-style: solid !important; */
     max-height: 700px !important;
     overflow-y:scroll;
-	overflow-x:hidden;
-	/* padding-top: .2em; */
-	padding: .2em;
-	/*padding-left: 1em;*/
+    overflow-x:hidden;
+    /* padding-top: .2em; */
+    padding: .2em;
+    /*padding-left: 1em;*/
 }
 
 /*.toggle_emotion {*/

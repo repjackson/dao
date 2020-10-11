@@ -29,4 +29,30 @@ Meteor.methods
                     parsed = JSON.parse(response.content)
                     Docs.update new_query_id,
                         $set:
+                            response:parsed    
+    chat_alpha: (chat)->
+        @unblock()
+        console.log 'chatting alpha for', query
+        found_chat = 
+            Docs.findOne 
+                model:'chat'
+                body:chat
+        if found_alpha
+            # console.log 'skipping existing alpha for ', query, found_alpha
+            return found_alpha
+        else
+            console.log 'creating new alpha for ', query
+            new_query_id = 
+                Docs.insert
+                    model:'alpha'
+                    query:query
+                    tags:[query]
+                    
+            HTTP.get "http://api.wolframalpha.com/v1/conversation.jsp?appid=UULLYY-QR2ALYJ9JU&i=#{chat}",(err,response)=>
+                # console.log response
+                if err then console.log err
+                else
+                    parsed = JSON.parse(response.content)
+                    Docs.update new_query_id,
+                        $set:
                             response:parsed
