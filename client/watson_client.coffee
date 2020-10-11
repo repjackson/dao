@@ -75,13 +75,16 @@ Template.tone.events
         console.log Template.currentData()
         console.log Template.parentData()
         Meteor.call 'downvote_sentence', Template.currentData()._id, @, ->
-    # 'click .tone_item': ->
-    #     # console.log @
-    #     doc_id = Docs.findOne()._id
-    #     if @weight is 3
-    #         Meteor.call 'reset_sentence', Template.currentData()._id, @, ->
-    #     else
-    #         Meteor.call 'upvote_sentence', Template.currentData()._id, @, ->
+    'click .tone_item': ->
+        window.speechSynthesis.cancel()
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @text
+
+        # console.log @
+        doc_id = Docs.findOne()._id
+        if @weight is 3
+            Meteor.call 'reset_sentence', Template.currentData()._id, @, ->
+        else
+            Meteor.call 'upvote_sentence', Template.currentData()._id, @, ->
 
 
 Template.tone.helpers

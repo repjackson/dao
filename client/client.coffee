@@ -82,10 +82,10 @@ Template.alpha.onRendered ->
     #     # console.log 'call'
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
     # if @data.response
-    Meteor.setTimeout( =>
-        window.speechSynthesis.cancel()
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
-    , 7000)
+    window.speechSynthesis.cancel()
+    window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
+    # Meteor.setTimeout( =>
+    # , 7000)
 
 Template.alpha.events
     'click .alphatemp': ->
@@ -362,7 +362,7 @@ Template.home.events
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
         window.speechSynthesis.cancel()# 
-        window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
 
     # 'keyup .search_title': _.throttle((e,t)->
     'keyup .search_title': (e,t)->
