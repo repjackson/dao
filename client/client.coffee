@@ -104,7 +104,8 @@ Template.alpha.events
         console.log @
         selected_tags.push @valueOf().toLowerCase()
     'click .alphatemp': ->
-        console.log @
+        console.log @plaintext
+        console.log @plaintext.split '|'
         window.speechSynthesis.cancel()
         window.speechSynthesis.speak new SpeechSynthesisUtterance @plaintext
         
