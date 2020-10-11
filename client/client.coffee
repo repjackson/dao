@@ -83,9 +83,10 @@ Template.alpha.onRendered ->
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
     # if @data.response
     window.speechSynthesis.cancel()
-    window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
-    window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[1].plaintext
-    console.log response.queryresult.pods[1].subpods
+    # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
+    # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[1].plaintext
+    window.speechSynthesis.speak new SpeechSynthesisUtterance @data.voice
+    # console.log response.queryresult.pods[1].subpods
     # Meteor.setTimeout( =>
     # , 7000)
 
@@ -474,7 +475,7 @@ Template.chat.helpers
         Docs.find {
             model:'chat'
         },
-            limit:7
+            limit:8
             sort:_timestamp:1
 Template.chat.events
     'keyup .new_chat': (e,t)->
@@ -488,6 +489,6 @@ Template.chat.events
                 last = Docs.findOne
                     model:'chat'
                 , sort:_timestamp:-1
-                console.log 'last', last
+                # console.log 'last', last
                 window.speechSynthesis.speak new SpeechSynthesisUtterance last.response.result
             , 1000
