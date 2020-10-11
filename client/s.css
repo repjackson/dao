@@ -1,11 +1,11 @@
 body {
-    background-color: rgba(0,0,0,.9) !important;
-    filter: invert(1) !important; 
+    /*background-color: rgba(0,0,0,.9) !important;*/
+    /*filter: invert(1) !important; */
     /*font-size: 110% !important;*/
     transition: all .25s linear !important;
 }
 .invert {
-     filter: invert(1) !important; 
+     /*filter: invert(1) !important; */
     
 }
 img {

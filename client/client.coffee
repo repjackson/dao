@@ -92,6 +92,10 @@ Template.alpha.onRendered ->
     # Meteor.setTimeout( =>
     # , 7000)
 
+Template.alpha.helpers
+    split_datatypes: ->
+        console.log 'data', @
+
 Template.alpha.events
     'click .alphatemp': ->
         console.log @
@@ -261,8 +265,6 @@ Template.session_edit_value_button.helpers
             
 
 Template.home.helpers
-    split_datatypes: ->
-        console.log 'data', @
     alphas: ->
         Docs.find 
             model:'alpha'
