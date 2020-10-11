@@ -59,7 +59,7 @@ Meteor.publish 'doc_count', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['eternity']
+        match.tags = $in:['dao']
     
     if emotion_mode
         match.max_emotion_name = emotion_mode
@@ -81,8 +81,9 @@ Meteor.publish 'doc_count', (
             match.domain = $in:['twitter.com','mobile.twitter.com']
         when 'reddit'
             match.model = 'reddit'
+            match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         else 
-            match.model = $in:['wikipedia','reddit']
+            match.model = $in:['wikipedia','reddit','alpha']
 
     Counts.publish this, 'result_counter', Docs.find(match)
     return undefined    # otherwise coffeescript returns a Counts.publish
@@ -142,8 +143,9 @@ Meteor.publish 'docs', (
             match.domain = $in:['twitter.com','mobile.twitter.com']
         when 'reddit'
             match.model = 'reddit'
+            match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         else 
-            match.model = $in:['wikipedia','reddit']
+            match.model = $in:['wikipedia','reddit','alpha']
     # console.log 'doc match', match
     Docs.find match,
         limit:3
@@ -176,6 +178,7 @@ Meteor.publish 'dtags', (
     switch view_mode 
         when 'reddit'
             match.model = 'reddit'
+            match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'image'
             match.model = 'reddit'
             match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
@@ -188,12 +191,12 @@ Meteor.publish 'dtags', (
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
         else
-            match.model = $in:['wikipedia','reddit']
+            match.model = $in:['wikipedia','reddit','alpha']
             # match.model = $in:['wikipedia']
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['eternity']
+        match.tags = $in:['dao']
     # else if view_mode in ['reddit',null]
     doc_count = Docs.find(match).count()
     console.log 'count',doc_count

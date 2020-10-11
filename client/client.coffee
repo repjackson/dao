@@ -261,6 +261,8 @@ Template.session_edit_value_button.helpers
             
 
 Template.home.helpers
+    split_datatypes: ->
+        console.log 'data', @
     alphas: ->
         Docs.find 
             model:'alpha'
@@ -269,7 +271,7 @@ Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
-        match = {model:$in:['post','wikipedia','reddit','page']}
+        match = {model:$in:['post','wikipedia','reddit','page','alpha']}
         # match = {model:$in:['post','wikipedia','reddit']}
         # match = {model:'wikipedia'}
         # if selected_tags.array().length>0
@@ -493,4 +495,4 @@ Template.chat.events
                 , sort:_timestamp:-1
                 # console.log 'last', last
                 window.speechSynthesis.speak new SpeechSynthesisUtterance last.response.result
-            , 1000
+            , 4000

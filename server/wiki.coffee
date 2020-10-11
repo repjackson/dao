@@ -25,7 +25,7 @@ Meteor.methods
                             url: url
                             model:'wikipedia'
                     if found_doc
-                        console.log 'found wiki doc for term', term
+                        # console.log 'found wiki doc for term', term
                         # console.log 'found wiki doc for term', term, found_doc
                         # Docs.update found_doc._id,
                         #     # $pull:

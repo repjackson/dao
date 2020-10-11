@@ -1,6 +1,8 @@
 template(name='alpha')
     with response.queryresult
         .ui.inline.header #{datatypes}
+        each split_datatypes
+            .ui.button #{this}
         // .ui.list
             // .item success: #{success}
             // .item error: #{error}
@@ -30,7 +32,7 @@ template(name='alpha')
             // .item subpods
             // .ui.list
             each subpods
-                img.ui.inline.image.zoomer.pointer.alphatemp(src=img.src)
+                img.ui.inline.image.alphatemp(src=img.src)
                 // .item.alphatemp
                 // |#{plaintext}
                 // .item title: #{title}
