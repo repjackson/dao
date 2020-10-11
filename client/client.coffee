@@ -47,6 +47,7 @@ Template.registerHelper 'is_twitter', ()->
 
         
 Template.home.onCreated ->
+    window.speechSynthesis.cancel()
     window.speechSynthesis.speak new SpeechSynthesisUtterance 'dao'
 
     Session.setDefault('skip',0)
@@ -82,13 +83,14 @@ Template.alpha.onRendered ->
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
     # if @data.response
     Meteor.setTimeout( =>
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.datatypes
+        window.speechSynthesis.cancel()
         window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
     , 7000)
 
 Template.alpha.events
     'click .alphatemp': ->
         console.log @
+        window.speechSynthesis.cancel()
         window.speechSynthesis.speak new SpeechSynthesisUtterance @plaintext
         
 
@@ -170,6 +172,7 @@ Template.tag_selector.helpers
 Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
+        window.speechSynthesis.cancel()
         window.speechSynthesis.speak new SpeechSynthesisUtterance @name
         
         selected_tags.push @name
@@ -207,6 +210,7 @@ Template.doc_tag.helpers
 Template.doc_tag.events
     'click .select_tag': -> 
         # results.update
+        window.speechSynthesis.cancel()
         window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
         
         selected_tags.push @valueOf()
@@ -329,11 +333,13 @@ Template.home.events
     'click .vote_up': -> 
         Docs.update @_id,
             $inc: points: 1
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
+        window.speechSynthesis.cancel()# 
+        window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
     'click .vote_down': -> 
         Docs.update @_id,
             $inc: points: -1
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
+            window.speechSynthesis.cancel()# 
+        window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
             
     'click .forward': -> 
         current_skip = Session.get('skip')
@@ -355,7 +361,8 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
+        window.speechSynthesis.cancel()# 
+        window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
 
     # 'keyup .search_title': _.throttle((e,t)->
     'keyup .search_title': (e,t)->
@@ -367,7 +374,7 @@ Template.home.events
         # else if search.length is 0
         #     Session.set('query','')
         if e.which is 13
-            # window.speechSynthesis.cancel()
+            window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance search
             console.log search
             if search.length > 0
@@ -412,6 +419,7 @@ Template.view_mode.events
             Session.set('view_mode', null)
         else
             Session.set('view_mode', @key)
+            window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance @key
 
 
@@ -426,6 +434,7 @@ Template.emotion_mode.events
             Session.set('emotion_mode', null)
         else
             Session.set('emotion_mode', @key)
+            window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance @key
 
 
