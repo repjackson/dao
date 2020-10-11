@@ -215,11 +215,11 @@ Template.doc_tag.helpers
         if term
             if term.max_emotion_name
                 switch term.max_emotion_name
-                    when 'joy' then 'pink'
-                    when 'anger' then 'green'
-                    when 'sadness' then 'orange'
-                    when 'disgust' then 'pink'
-                    when 'fear' then 'white'
+                    when 'joy' then 'joy'
+                    when 'anger' then 'red'
+                    when 'sadness' then 'blue'
+                    when 'disgust' then 'orange'
+                    when 'fear' then 'grey'
     term: ->
         Docs.findOne 
             title:@valueOf()
