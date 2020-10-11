@@ -95,8 +95,14 @@ Template.alpha.onRendered ->
 Template.alpha.helpers
     split_datatypes: ->
         console.log 'data', @
+        split = @datatypes.split ','
+        console.log split
+        split
 
 Template.alpha.events
+    'click .select_datatype': ->
+        console.log @
+        selected_tags.push @valueOf().toLowerCase()
     'click .alphatemp': ->
         console.log @
         window.speechSynthesis.cancel()
@@ -170,11 +176,11 @@ Template.tag_selector.helpers
         if term
             if term.max_emotion_name
                 switch term.max_emotion_name
-                    when 'joy' then 'inverted pink'
-                    when 'anger' then 'inverted green'
-                    when 'sadness' then 'inverted orange'
-                    when 'disgust' then 'inverted pink'
-                    when 'fear' then 'inverted white'
+                    when 'joy' then ' green'
+                    when 'anger' then ' red'
+                    when 'sadness' then ' blue'
+                    when 'disgust' then ' orange'
+                    when 'fear' then ' grey'
     term: ->
         Docs.findOne 
             title:@name

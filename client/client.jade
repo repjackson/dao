@@ -135,16 +135,15 @@ template(name='home')
 template(name='chat')                
     .ui.inline.header chat
     each chats
-        .ui.big.label
-            if bot
-                i.grey.brain.icon 
-            |#{response.result} #{body}
-                    
-            // .comment
-            //     .content
-            //         // .meta #{_timestamp}
-    .spacer
-    .ui.fluid.icon.input 
+        if bot
+            i.grey.brain.icon 
+        |#{response.result} #{body}
+        i.pencil.icon
+        // .comment
+        //     .content
+        //         // .meta #{_timestamp}
+    // .spacer
+    .ui.icon.input 
         i.chat.icon
         input.new_chat(type='text')
 
