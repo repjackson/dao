@@ -17,7 +17,7 @@ Meteor.methods
         # console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=20&include_facets=false",(err,response)=>
+        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=100&include_facets=false",(err,response)=>
             # console.log response.data
             if err then console.log err
             else if response.data.data.dist > 1
@@ -36,7 +36,7 @@ Meteor.methods
                         # added_tags = [query]
                         # console.log 'quer', query
                         # added_tags.push data.domain.toLowerCase()
-                        added_tags.push data.subreddit.toLowerCase()
+                        # added_tags.push data.subreddit.toLowerCase()
                         # added_tags.push data.author.toLowerCase()
                         # console.log 'added_tags1', added_tags
                         flat = _.flatten(added_tags)

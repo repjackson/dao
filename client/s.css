@@ -26,6 +26,8 @@ img {
     transition: all .1s linear !important;
     margin-bottom: 2px !important;
     margin-top: 2px !important;
+    vertical-align: middle !important;
+    
     /*border-radius: 10px !important;*/
 }
 ::-webkit-scrollbar {

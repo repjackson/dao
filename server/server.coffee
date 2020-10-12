@@ -59,7 +59,7 @@ Meteor.publish 'doc_count', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['ai']
+        match.tags = $in:['love']
     
     if emotion_mode
         match.max_emotion_name = emotion_mode
@@ -196,7 +196,7 @@ Meteor.publish 'dtags', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['ai']
+        match.tags = $in:['love']
     # else if view_mode in ['reddit',null]
     doc_count = Docs.find(match).count()
     console.log 'count',doc_count
@@ -232,7 +232,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:10 }
+        { $limit:15 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # # console.log 'cloud: ', tag_cloud

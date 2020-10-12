@@ -23,8 +23,8 @@ Meteor.methods
         if found_alpha
             # console.log 'skipping existing alpha for ', query, found_alpha
             target = found_alpha
-            if target.updated
-                return target
+            # if target.updated
+            #     return target
         else
             # console.log 'creating new alpha for ', query
             target_id = 
