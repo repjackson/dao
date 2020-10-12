@@ -189,6 +189,8 @@ template(name='categories')
             .item
                 strong #{label}
                 |{{ to_percent score }}%
+                each explanation.relevant_text 
+                    .ui.label #{text}
 
 
 //- 

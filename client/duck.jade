@@ -1,18 +1,16 @@
 template(name='duck')
     with content
         // .ui.segment
-        .ui.header #{Heading}
+        .ui.inline.header #{Heading}
         // .item abstract #{Abstract}
         .item !{AbstractText}
         a.ui.circular.icon.button(href=AbstractURL)
             // #{AbstractURL}
             i.large.external.icon
         img(src=Image)
-        .ui.items
-            each RelatedTopics
-                .ui.item
-                    img.ui.small.inline.rounded.image(src=Icon.URL)
-                    .ui.inline.small.header #{Text}
-                    // .content
-                    //     .item #{FirstURL}
-                        // .item !{Result}
+        each RelatedTopics
+            img.ui.small.inline.rounded.pointer.zoomer.image(src=Icon.URL)
+            .ui.inline.tiny.rounded.pointer.zoomer.header #{Text}
+            // .content
+            //     .item #{FirstURL}
+                // .item !{Result}

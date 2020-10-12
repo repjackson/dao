@@ -125,21 +125,6 @@ Template.tone.helpers
 #         Meteor.call 'call_watson', Template.parentData()._id, parent.key, @mode, ->
 #         # Meteor.call 'call_watson', doc._id, @key, @mode, ->
 
-Template.convert.events
-    'click .convert': ->
-        # console.log @
-        if @rd and @rd.selftext_html
-            dom = document.createElement('textarea')
-            # dom.innerHTML = doc.body
-            dom.innerHTML = @rd.selftext_html
-            console.log 'innner html', dom.value
-            # return dom.value
-            Docs.update @_id,
-                $set:
-                    parsed_selftext_html:dom.value
-        
-        # doc = Template.parentData()
-        # Meteor.call 'call_watson', @_id, 'url', 'url', ->
 
 
 Template.call_tone.events

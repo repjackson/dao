@@ -48,7 +48,7 @@ Template.reddit.onRendered ->
     #     # console.log 'call'
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
     # if @data.response
-    window.speechSynthesis.cancel()
+    # window.speechSynthesis.cancel()
     if @data.title
         window.speechSynthesis.speak new SpeechSynthesisUtterance @data.title
 
@@ -92,7 +92,7 @@ Template.alpha.onRendered ->
     #     # console.log 'call'
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
     # if @data.response
-    window.speechSynthesis.cancel()
+    # window.speechSynthesis.cancel()
     # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[1].plaintext
     if @data.voice
         window.speechSynthesis.speak new SpeechSynthesisUtterance @data.voice
