@@ -39,7 +39,7 @@ body
     
 
 template(name='home')
-    .ui.stackable.padded.grid
+    .ui.stackable.grid
         .row
             .sixteen.wide.column
                 if selected_tags
@@ -53,15 +53,13 @@ template(name='home')
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
-        .row
-            .six.wide.column
                 .ui.basic.label(title='results') #{doc_count}
                 +emotion_mode key='joy' icon='happy--v1'
                 +emotion_mode key='sadness' icon='sad--v1'
                 +emotion_mode key='anger' icon='angry--v1'
                 +emotion_mode key='disgust' icon='disgusting'
                 +emotion_mode key='fear' icon='scream'
-                div
+                // div
                 +view_mode key='twitter' icon='twitter'
                 +view_mode key='video' icon='youtube'
                 +view_mode key='image' icon='picture'
@@ -70,27 +68,14 @@ template(name='home')
                 +view_mode key='stackexchange' icon='disabled stack exchange'
                 +view_mode key='github' icon='disabled github'
                 +view_mode key='alpha' icon='disabled brain'
-                // div
-                // .sixteen.wide.column
-                // else
-                //     .ui.left.icon.big.input 
-                //         i.search.icon(class=loading_class)
-                //         input.search_title(type='text' autofocus='')
+        .row
+            .six.wide.column
                 div
                 each alphas
-                    // .six.wide.column
-                    // if voice
-                    
                     if response.queryresult
                         +alpha 
-                    
                 each ducks
-                    // .six.wide.column
-                    // if voice
-                    
-                    // if response.queryresult
                     +duck 
-    
             .ten.wide.column
                 .spacer
                 .ui.stackable.grid
@@ -176,7 +161,7 @@ template(name='emotion_mode')
     if selected_emotion
         img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/color/50/000000/#{icon}.png" class=cl title=title)
     else
-        img.ui.inline.image.toggle_emotioned.zoomer.pointer(src="https://img.icons8.com/ios/50/000000/#{icon}.png" class=cl title=title)
+        img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/ios/36/000000/#{icon}.png" class=cl title=title)
 
     
 template(name='post')         

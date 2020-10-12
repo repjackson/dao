@@ -8,8 +8,8 @@ Meteor.publish 'alpha', (selected_tags)->
 Meteor.publish 'duck', (selected_tags)->
     Docs.find 
         model:'duck'
-        # query: $in: selected_tags
-        query: selected_tags.toString()
+        query: $in: selected_tags
+        # query: selected_tags.toString()
         
         
 Meteor.methods

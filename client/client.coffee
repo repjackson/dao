@@ -296,8 +296,8 @@ Template.home.helpers
     ducks: ->
         Docs.find 
             model:'duck'
-            # query: $in: selected_tags.array()
-            query: selected_tags.array().toString()
+            query: $in: selected_tags.array()
+            # query: selected_tags.array().toString()
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
@@ -434,7 +434,7 @@ Template.home.events
                 selected_tags.push search
                 # console.log 'selected tags', selected_tags.array()
                 # Meteor.call 'call_alpha', search, ->
-                Meteor.call 'search_ddg', selected_tags.array().toString(), ->
+                Meteor.call 'search_ddg', search, ->
                 
                 Meteor.call 'call_alpha', selected_tags.array().toString(), ->
                 Meteor.call 'call_wiki', search, ->
