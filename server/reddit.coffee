@@ -20,11 +20,12 @@ Meteor.methods
                         #     console.log 'is STRING'
                         #     added_tags = [query]
                         # else
-                        added_tags = [query]
+                        added_tags = query
                         # added_tags = [query]
-                        # added_tags.push data.domain.toLowerCase()
+                        console.log 'quer', query
+                        added_tags.push data.domain.toLowerCase()
                         added_tags.push data.subreddit.toLowerCase()
-                        # added_tags.push data.author.toLowerCase()
+                        added_tags.push data.author.toLowerCase()
                         # console.log 'added_tags1', added_tags
                         added_tags = _.flatten(added_tags)
                         # console.log 'added_tags2', added_tags
