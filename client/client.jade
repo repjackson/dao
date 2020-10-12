@@ -42,9 +42,9 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.column
-                i.big.yin.yang.icon
+                i#clear_tags.link.big.yin.yang.icon(class=loading_class)
                 .ui.left.icon.inline.input 
-                    i.search.icon(class=loading_class)
+                    i.search.icon
                     input.search_title(type='text' autofocus='')
                 if selected_tags
                     // if many_tags
@@ -54,7 +54,7 @@ template(name='home')
                         +unselect_tag
                 each tag_results
                     +tag_selector
-                .ui.basic.label(title='results') #{doc_count}
+                .ui.basic.circular.label(title='results') #{doc_count}
                 +emotion_mode key='joy' icon='happy--v1'
                 +emotion_mode key='sadness' icon='sad--v1'
                 +emotion_mode key='anger' icon='angry--v1'
@@ -70,25 +70,35 @@ template(name='home')
                 +view_mode key='github' icon='disabled github'
                 +view_mode key='alpha' icon='disabled brain'
         .row
-            .six.wide.column
+            .five.wide.right.aligned.column
                 div
                 each alphas
                     if response.queryresult
                         +alpha 
                 each ducks
                     +duck 
-            .ten.wide.column
-                .spacer
-                .ui.stackable.grid
+            .eleven.wide.column
+                // .spacer
+                .ui.stackable.padded.grid
                     each docs
                         .sixteen.wide.column
                             // div
-                            if watson.metadata.image
-                                img.ui.rounded.inline.small.image(src=watson.metadata.image)    
-                            if is_image
-                                img.ui.centered.image(src=url)
+                            unless one_post
+                                unless one_post
+                                    .ui.big.icon.circular.basic.button.back
+                                        i.chevron.left.big.icon
+                                .ui.big.icon.circular.basic.button.forward
+                                    i.chevron.right.big.icon
+                            i.thumbs.up.outline.huge.grey.link.icon.vote_up
+                            |#{points}
+                            i.thumbs.down.outline.huge.grey.link.icon.vote_down
+                            unless key_value 'model' 'reddit'
+                                if watson.metadata.image
+                                    img.ui.rounded.inline.small.image(src=watson.metadata.image)    
+                                if is_image
+                                    img.ui.centered.image(src=url)
+                                a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
     
-                            a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
                             // .spacer
                             // div
                             // +session_edit_value_button key='view_section' value='content' label='content' icon='content'
@@ -115,15 +125,6 @@ template(name='home')
                             // //     .rounded
                             // //         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
                             // .column
-                            i.thumbs.up.outline.huge.grey.link.icon.vote_up
-                            |#{points}
-                            i.thumbs.down.outline.huge.grey.link.icon.vote_down
-                            unless one_post
-                                unless one_post
-                                    .ui.big.icon.circular.basic.button.back
-                                        i.chevron.left.big.icon
-                                .ui.big.icon.circular.basic.button.forward
-                                    i.chevron.right.big.icon
                             each tags
                                 +doc_tag
                             +call_tone    

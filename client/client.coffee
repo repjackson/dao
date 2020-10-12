@@ -23,7 +23,7 @@ Template.registerHelper 'embed', ()->
 
 
 Template.registerHelper 'youtube_parse', ()->
-    console.log @url
+    # console.log @url
     regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     match = @url.match(regExp);
     if match and match[2].length is 11
@@ -87,7 +87,7 @@ Template.home.onCreated ->
 
 
 Template.alpha.onRendered ->
-    console.log @data
+    # console.log @data
     # unless @data.watson
     #     # console.log 'call'
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
@@ -104,7 +104,7 @@ Template.alpha.onRendered ->
 
 Template.alpha.helpers
     split_datatypes: ->
-        console.log 'data', @
+        # console.log 'data', @
         split = @datatypes.split ','
         console.log split
         split
