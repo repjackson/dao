@@ -477,7 +477,7 @@ Template.emotion_mode.events
             Session.set('emotion_mode', null)
         else
             Session.set('emotion_mode', @key)
-            window.speechSynthesis.cancel()
+            # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance @key
 
 

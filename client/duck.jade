@@ -9,8 +9,9 @@ template(name='duck')
             i.large.external.icon
         img(src=Image)
         each RelatedTopics
-            img.ui.small.inline.rounded.pointer.zoomer.image(src=Icon.URL)
-            .ui.inline.tiny.rounded.pointer.zoomer.header #{Text}
+            .ui.item
+                img.ui.tiny.inline.rounded.pointer.zoomer.image(src=Icon.URL)
+                .ui.inline.small.pointer.zoomer.header #{Text}
             // .content
             //     .item #{FirstURL}
                 // .item !{Result}
