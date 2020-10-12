@@ -23,9 +23,9 @@ Meteor.methods
                         added_tags = query
                         # added_tags = [query]
                         console.log 'quer', query
-                        added_tags.push data.domain.toLowerCase()
+                        # added_tags.push data.domain.toLowerCase()
                         added_tags.push data.subreddit.toLowerCase()
-                        added_tags.push data.author.toLowerCase()
+                        # added_tags.push data.author.toLowerCase()
                         # console.log 'added_tags1', added_tags
                         added_tags = _.flatten(added_tags)
                         # console.log 'added_tags2', added_tags
@@ -46,7 +46,7 @@ Meteor.methods
                             # source:'reddit'
                         # console.log 'reddit post', reddit_post
                         existing_doc = Docs.findOne url:data.url
-                        if existing_doc
+                        # if existing_doc
                             # if Meteor.isDevelopment
                                 # console.log 'skipping existing url', data.url
                                 # console.log 'adding', query, 'to tags'
@@ -56,10 +56,10 @@ Meteor.methods
                             #     Doc.update
                             #         $unset: tags: 1
                             # console.log 'existing ', reddit_post.title
-                            Docs.update existing_doc._id,
-                                $addToSet: tags: $each: added_tags
+                            # Docs.update existing_doc._id,
+                            #     $addToSet: tags: $each: added_tags
 
-                            Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
+                            # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
                         unless existing_doc
                             # console.log 'importing url', data.url
                             new_reddit_post_id = Docs.insert reddit_post

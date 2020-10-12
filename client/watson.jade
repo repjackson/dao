@@ -201,7 +201,7 @@ template(name='tone')
         each tone.result.sentences_tone
             .item
                 //- span #{sentence_id}
-                span.tone_item.ui.text(title="#{sentence_id}" class="#{tone_size} #{sentence_color}") 
+                span.tone_item.ui.zoomer.pointer.text(title="#{sentence_id}" class="#{tone_size} #{sentence_color}") 
                     |{{lowered text}}
                     // .content
                     // .header(title="#{sentence_id}") {{lowered text}}
