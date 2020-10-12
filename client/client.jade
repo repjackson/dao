@@ -40,113 +40,118 @@ body
 
 template(name='home')
     .ui.stackable.padded.grid
-        .six.wide.column
-            if selected_tags
-                // if many_tags
-                //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
-                //         i.remove.icon
-                each selected_tags
-                    +unselect_tag
-            .ui.left.icon.input 
-                i.search.icon(class=loading_class)
-                input.search_title(type='text' autofocus='')
-            +emotion_mode key='joy' icon='happy--v1'
-            +emotion_mode key='sadness' icon='sad--v1'
-            +emotion_mode key='anger' icon='angry--v1'
-            +emotion_mode key='disgust' icon='disgusting'
-            +emotion_mode key='fear' icon='scream'
-            .ui.label(title='results') #{doc_count}
-            each tag_results
-                +tag_selector
-            +view_mode key='twitter' icon='twitter'
-            +view_mode key='video' icon='youtube'
-            +view_mode key='image' icon='picture'
-            +view_mode key='reddit' icon='newspaper'
-            +view_mode key='wikipedia' icon='book'
-            +view_mode key='stackexchange' icon='disabled stack exchange'
-            +view_mode key='github' icon='disabled github'
-            +view_mode key='alpha' icon='disabled brain'
-            // div
-            // .sixteen.wide.column
-            // else
-            //     .ui.left.icon.big.input 
-            //         i.search.icon(class=loading_class)
-            //         input.search_title(type='text' autofocus='')
-            each alphas
-                // .six.wide.column
-                // if voice
-                
-                if response.queryresult
-                    +alpha 
-                
-            each ducks
-                // .six.wide.column
-                // if voice
-                
-                // if response.queryresult
-                +duck 
-
-        .ten.wide.column
-            .spacer
-            .ui.stackable.grid
-                each docs
-                    .sixteen.wide.column
-                        // div
-                        if watson.metadata.image
-                            img.ui.rounded.inline.small.image(src=watson.metadata.image)    
-                        if is_image
-                            img.ui.centered.image(src=url)
-
-                        a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
-                        // .spacer
-                        // div
-                        // +session_edit_value_button key='view_section' value='content' label='content' icon='content'
-                        // if watson
-                        //     +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
-                        // if tone
-                        //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-                        // +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
-                        // +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
-                        // if session_key_value_is 'view_section' 'content'
-                        if key_value 'model' 'reddit'
-                            +reddit
-                        else
-                            +post
-                        // if session_key_value_is 'view_section' 'analysis'
-                        if tone
-                            .column
-                                +tone
-                        // if session_key_value_is 'view_section' 'comments'
-                        //     // +tone
-                        //     .ui.header comments
-                        // if session_key_value_is 'view_section' 'preview'
-                        // // .column
-                        // //     .rounded
-                        // //         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-                        // .column
-                        i.thumbs.up.outline.huge.grey.link.icon.vote_up
-                        |#{points}
-                        i.thumbs.down.outline.huge.grey.link.icon.vote_down
-                        unless one_post
+        .row
+            .sixteen.wide.column
+                if selected_tags
+                    // if many_tags
+                    //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
+                    //         i.remove.icon
+                    each selected_tags
+                        +unselect_tag
+                .ui.left.icon.inline.input 
+                    i.search.icon(class=loading_class)
+                    input.search_title(type='text' autofocus='')
+                each tag_results
+                    +tag_selector
+        .row
+            .six.wide.column
+                .ui.basic.label(title='results') #{doc_count}
+                +emotion_mode key='joy' icon='happy--v1'
+                +emotion_mode key='sadness' icon='sad--v1'
+                +emotion_mode key='anger' icon='angry--v1'
+                +emotion_mode key='disgust' icon='disgusting'
+                +emotion_mode key='fear' icon='scream'
+                div
+                +view_mode key='twitter' icon='twitter'
+                +view_mode key='video' icon='youtube'
+                +view_mode key='image' icon='picture'
+                +view_mode key='reddit' icon='newspaper'
+                +view_mode key='wikipedia' icon='book'
+                +view_mode key='stackexchange' icon='disabled stack exchange'
+                +view_mode key='github' icon='disabled github'
+                +view_mode key='alpha' icon='disabled brain'
+                // div
+                // .sixteen.wide.column
+                // else
+                //     .ui.left.icon.big.input 
+                //         i.search.icon(class=loading_class)
+                //         input.search_title(type='text' autofocus='')
+                div
+                each alphas
+                    // .six.wide.column
+                    // if voice
+                    
+                    if response.queryresult
+                        +alpha 
+                    
+                each ducks
+                    // .six.wide.column
+                    // if voice
+                    
+                    // if response.queryresult
+                    +duck 
+    
+            .ten.wide.column
+                .spacer
+                .ui.stackable.grid
+                    each docs
+                        .sixteen.wide.column
+                            // div
+                            if watson.metadata.image
+                                img.ui.rounded.inline.small.image(src=watson.metadata.image)    
+                            if is_image
+                                img.ui.centered.image(src=url)
+    
+                            a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
+                            // .spacer
+                            // div
+                            // +session_edit_value_button key='view_section' value='content' label='content' icon='content'
+                            // if watson
+                            //     +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
+                            // if tone
+                            //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
+                            // +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
+                            // +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
+                            // if session_key_value_is 'view_section' 'content'
+                            if key_value 'model' 'reddit'
+                                +reddit
+                            else
+                                +post
+                            // if session_key_value_is 'view_section' 'analysis'
+                            if tone
+                                .column
+                                    +tone
+                            // if session_key_value_is 'view_section' 'comments'
+                            //     // +tone
+                            //     .ui.header comments
+                            // if session_key_value_is 'view_section' 'preview'
+                            // // .column
+                            // //     .rounded
+                            // //         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+                            // .column
+                            i.thumbs.up.outline.huge.grey.link.icon.vote_up
+                            |#{points}
+                            i.thumbs.down.outline.huge.grey.link.icon.vote_down
                             unless one_post
-                                .ui.big.icon.circular.button.back
-                                    i.chevron.left.big.icon
-                            .ui.big.icon.circular.button.forward
-                                i.chevron.right.big.icon
-                        each tags
-                            +doc_tag
-                        +call_tone    
-                        // +watson_view
-                        |#{tags.length}
-                        .ui.transparent.input
-                            i.plus.grey.icon
-                            input.tag_post(type='text')
-                        i.code.link.icon.print_me
-        
-        // .one.column.row
-        //     .column
-        //         +chat
-                
+                                unless one_post
+                                    .ui.big.icon.circular.button.back
+                                        i.chevron.left.big.icon
+                                .ui.big.icon.circular.button.forward
+                                    i.chevron.right.big.icon
+                            each tags
+                                +doc_tag
+                            +call_tone    
+                            // +watson_view
+                            |#{tags.length}
+                            .ui.transparent.input
+                                i.plus.grey.icon
+                                input.tag_post(type='text')
+                            i.code.link.icon.print_me
+            
+            // .one.column.row
+            //     .column
+            //         +chat
+                    
                 
 template(name='chat')                
     .ui.inline.header chat
@@ -220,7 +225,7 @@ template(name='convert')
 
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.large.image.label.select_term(href='#')
+    a.unselect_tag.ui.black.large.image.circular.label.select_term(href='#')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         strong #{this}

@@ -7,10 +7,10 @@ template(name='duck')
                 .item duck #{AbstractText}
             a.ui.inline.header(href=AbstractURL) #{AbstractURL}
             img(src=Image)
-            each RelatedTopics
-                .ui.compact.segment
-                    img.ui.small.image(src=Icon.URL)
-                    .content
-                        .item #{FirstURL}
-                        .item #{Text}
+            .ui.list
+                each RelatedTopics
+                    img.ui.small.inline.image(src=Icon.URL)
+                    .ui.inline.small.header #{Text}
+                    // .content
+                    //     .item #{FirstURL}
                         // .item !{Result}

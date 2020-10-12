@@ -34,9 +34,9 @@ img {
 }
 
 input {
-    /*border-radius: 10px !important;*/
-    margin-top: 2px !important;
-    margin-bottom: 2px !important;
+    border-radius:20px !important;
+    margin: 2px !important;
+    /*margin-bottom: 2px !important;*/
 }
 
 .nl2br {
