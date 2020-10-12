@@ -313,7 +313,7 @@ Template.home.helpers
                 ups:-1
                 # _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:1
+            limit:5
             skip:Session.get('skip')
         # if cur.count() is 1
         # Docs.find match
@@ -374,12 +374,12 @@ Template.home.events
         Docs.update @_id,
             $inc: points: 1
         window.speechSynthesis.cancel()# 
-        window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
     'click .vote_down': -> 
         Docs.update @_id,
             $inc: points: -1
             window.speechSynthesis.cancel()# 
-        window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
             
     'click .forward': -> 
         current_skip = Session.get('skip')

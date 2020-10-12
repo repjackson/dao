@@ -1,12 +1,16 @@
 template(name='duck')
-    .ui.segment
-        .ui.inline.header heading #{Heading}
-        .ui.inline.header abstract #{Abstract}
-        .ui.inline.header duck #{AbstractText}
-        a.ui.inline.header(href=AbstractURL) #{AbstractURL}
-        img(src=content.Image)
-        each RelatedTopics
-            .ui.segment
-                .ui.header #{FirstURL}
-                .ui.header #{Text}
-                .ui.header #{Result}
+    with content
+        .ui.segment
+            .ui.list
+                .item heading #{Heading}
+                .item abstract #{Abstract}
+                .item duck #{AbstractText}
+            a.ui.inline.header(href=AbstractURL) #{AbstractURL}
+            img(src=Image)
+            each RelatedTopics
+                .ui.compact.segment
+                    img.ui.small.image(src=Icon.URL)
+                    .content
+                        .item #{FirstURL}
+                        .item #{Text}
+                        // .item !{Result}
