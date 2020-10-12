@@ -43,15 +43,15 @@ template(name='home')
         .row
             .sixteen.wide.column
                 i#clear_tags.link.big.yin.yang.icon(class=loading_class)
-                .ui.left.icon.inline.input 
-                    i.search.icon
-                    input.search_title(type='text' autofocus='')
                 if selected_tags
                     // if many_tags
                     //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
                     //         i.remove.icon
                     each selected_tags
                         +unselect_tag
+                .ui.left.icon.inline.input 
+                    i.search.icon
+                    input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
                 .ui.basic.circular.label(title='results') #{doc_count}
@@ -61,11 +61,11 @@ template(name='home')
                 +emotion_mode key='disgust' icon='disgusting'
                 +emotion_mode key='fear' icon='scream'
                 // div
-                +view_mode key='twitter' icon='twitter'
-                +view_mode key='video' icon='youtube'
-                +view_mode key='image' icon='picture'
-                +view_mode key='reddit' icon='newspaper'
-                +view_mode key='wikipedia' icon='book'
+                +view_mode key='twitter' icon='twitter' color='blue'
+                +view_mode key='video' icon='youtube' color='red'
+                +view_mode key='image' icon='picture' color='green'
+                +view_mode key='reddit' icon='newspaper' color='teal'
+                +view_mode key='wikipedia' icon='book' color='purple'
                 +view_mode key='stackexchange' icon='disabled stack exchange'
                 +view_mode key='github' icon='disabled github'
                 +view_mode key='alpha' icon='disabled brain'
@@ -83,12 +83,12 @@ template(name='home')
                     each docs
                         .sixteen.wide.column
                             // div
+                            if key_value 'model' 'reddit'
+                                +reddit
                             unless one_post
                                 unless one_post
-                                    .ui.big.icon.circular.basic.button.back
-                                        i.chevron.left.big.icon
-                                .ui.big.icon.circular.basic.button.forward
-                                    i.chevron.right.big.icon
+                                    i.chevron.left.big.circular.grey.link.icon.back
+                                    i.chevron.right.big.circular.grey.link.icon.forward
                             i.thumbs.up.outline.huge.grey.link.icon.vote_up
                             |#{points}
                             i.thumbs.down.outline.huge.grey.link.icon.vote_down
@@ -101,22 +101,21 @@ template(name='home')
     
                             // .spacer
                             // div
-                            // +session_edit_value_button key='view_section' value='content' label='content' icon='content'
-                            // if watson
-                            //     +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
-                            // if tone
-                            //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-                            // +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
-                            // +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
-                            // if session_key_value_is 'view_section' 'content'
-                            if key_value 'model' 'reddit'
-                                +reddit
-                            else
-                                +post
-                            // if session_key_value_is 'view_section' 'analysis'
+                            +session_edit_value_button key='view_section' value='content' label='content' icon='content'
+                            if watson
+                                +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
                             if tone
-                                .column
-                                    +tone
+                                +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
+                            +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
+                            +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
+                            if session_key_value_is 'view_section' 'content'
+                                +post
+                            // else
+                            if session_key_value_is 'view_section' 'analysis'
+                                +watson_view
+                                if tone
+                                    .column
+                                        +tone
                             // if session_key_value_is 'view_section' 'comments'
                             //     // +tone
                             //     .ui.header comments
@@ -128,7 +127,6 @@ template(name='home')
                             each tags
                                 +doc_tag
                             +call_tone    
-                            // +watson_view
                             |#{tags.length}
                             .ui.transparent.input
                                 i.plus.grey.icon
@@ -175,8 +173,8 @@ template(name='post')
     if watson.metadata.image
         img.ui.rounded.inline.image(src=watson.metadata.image)    
     
-    // .rounded
-    //     iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    .rounded
+        iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     // if tone
     //     +tone
     // // iframe(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
@@ -187,7 +185,7 @@ template(name='post')
 
 template(name='session_edit_value_button')
     // .ui.circular.compact.button.set_session_value(class=calculated_class)
-    a.ui.big.icon.button.set_session_value(class=calculated_class)
+    a.ui.big.icon.circular.button.set_session_value(class=calculated_class)
         i.icon(class=icon)
         // +i name=icon cl='ui avatar image'
         // if label
@@ -252,7 +250,7 @@ template(name='reddit')
         //     div
         //     // iframe(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         //     iframe(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-    |!{embed}
+    // |!{embed}
     // else
 
         // iframe(width="560" height="315" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        

@@ -1,10 +1,9 @@
 template(name='duck')
     with content
         // .ui.segment
-        .ui.list
-            .item #{Heading}
-            // .item abstract #{Abstract}
-            .item !{AbstractText}
+        .ui.header #{Heading}
+        // .item abstract #{Abstract}
+        .item !{AbstractText}
         a.ui.circular.icon.button(href=AbstractURL)
             // #{AbstractURL}
             i.large.external.icon

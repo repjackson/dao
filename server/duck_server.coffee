@@ -5,7 +5,7 @@ Meteor.methods
         console.log 'searching ddg for', query
         # console.log 'type of query', typeof(query)
         HTTP.get "https://api.duckduckgo.com/?q=#{query}&format=json&pretty=1",(err,response)=>
-            console.log response.content
+            # console.log response.content
             if err then console.log err
             else
                 parsed = JSON.parse(response.content)
@@ -24,8 +24,8 @@ Meteor.methods
                             model:'duck'
                             query:query
                             content:parsed
-                console.log 'data hading', response.content.Heading
-                console.log 'data url', response.content.AbstractURL
+                # console.log 'data hading', response.content.Heading
+                # console.log 'data url', response.content.AbstractURL
                 # for topic in response.content.RelatedTopics
                 #     console.log 'related topic', topic
                     

@@ -43,7 +43,7 @@ Template.registerHelper 'is_twitter', ()->
 
 
 Template.reddit.onRendered ->
-    console.log @data
+    # console.log @data
     # unless @data.watson
     #     # console.log 'call'
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
@@ -276,10 +276,10 @@ Template.session_edit_value_button.helpers
             res += @classes
         if Session.get(@key)
             if Session.equals(@key,@value)
-                res += ' active large compact'
+                res += ' blue large'
             else
                 # res += ' compact displaynone'
-                res += ' compact'
+                res += ' compact basic'
             # console.log res
             res
 
@@ -454,7 +454,7 @@ Template.home.events
 # Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)
 
 Template.view_mode.helpers
-    toggle_view_class: -> if Session.equals('view_mode',@key) then "#{@icon} huge orange" else "#{@icon} big grey"
+    toggle_view_class: -> if Session.equals('view_mode',@key) then "#{@icon} huge #{@color}" else "#{@icon} big grey"
 
 Template.view_mode.events
     'click .toggle_view': -> 
