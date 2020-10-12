@@ -26,7 +26,7 @@ img {
     transition: all .1s linear !important;
     margin-bottom: 2px !important;
     margin-top: 2px !important;
-    border-radius: 10px !important;
+    /*border-radius: 10px !important;*/
 }
 ::-webkit-scrollbar {
   width: 0px !important;
@@ -34,7 +34,7 @@ img {
 }
 
 input {
-    border-radius: 10px !important;
+    /*border-radius: 10px !important;*/
     margin-top: 2px !important;
     margin-bottom: 2px !important;
 }
@@ -48,10 +48,10 @@ input {
     /*margin-top: 5px !important;*/
     margin-top: 5px !important;
     padding: 7px !important;
-    border-radius: 5px !important;
+    /*border-radius: 5px !important;*/
 }
 .button:not(.circular) {
-    border-radius: 10px !important;
+    /*border-radius: 10px !important;*/
 }
 .button {
     transition: all .2s linear !important;

@@ -42,6 +42,15 @@ Template.registerHelper 'is_twitter', ()->
 
 
 
+Template.reddit.onRendered ->
+    console.log @data
+    # unless @data.watson
+    #     # console.log 'call'
+    #     Meteor.call 'call_watson', @data._id, 'url','url',->
+    # if @data.response
+    window.speechSynthesis.cancel()
+    if @data.title
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @data.title
 
 
 
