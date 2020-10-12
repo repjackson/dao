@@ -62,6 +62,7 @@ Template.home.onCreated ->
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
     @autorun -> Meteor.subscribe('alpha',selected_tags.array())
+    @autorun -> Meteor.subscribe('duck',selected_tags.array())
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
         Session.get('view_mode')
@@ -125,6 +126,7 @@ Template.reddit.onRendered ->
     unless @data.watson
         # console.log 'call'
         Meteor.call 'call_watson', @data._id, 'url','url',->
+    Meteor.call 'uniq', @data._id, ->
     unless @data.points
         # console.log 'no points'
         Docs.update @data._id,
@@ -207,6 +209,7 @@ Template.tag_selector.events
         Meteor.call 'call_alpha', selected_tags.array().toString(), ->
         # Meteor.call 'call_alpha', @name, ->
         Meteor.call 'call_wiki', @name, ->
+        Meteor.call 'search_ddg', @name, ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
@@ -233,6 +236,8 @@ Template.doc_tag.helpers
     term: ->
         Docs.findOne 
             title:@valueOf()
+            
+            
 Template.doc_tag.events
     'click .select_tag': -> 
         # results.update
@@ -261,6 +266,8 @@ Template.session_edit_value_button.events
         else
             Session.set(@key, @value)
 
+
+
 Template.session_edit_value_button.helpers
     calculated_class: ->
         res = ''
@@ -284,6 +291,11 @@ Template.home.helpers
     alphas: ->
         Docs.find 
             model:'alpha'
+            # query: $in: selected_tags.array()
+            query: selected_tags.array().toString()
+    ducks: ->
+        Docs.find 
+            model:'duck'
             # query: $in: selected_tags.array()
             query: selected_tags.array().toString()
     many_tags: -> selected_tags.array().length > 1
@@ -422,6 +434,8 @@ Template.home.events
                 selected_tags.push search
                 # console.log 'selected tags', selected_tags.array()
                 # Meteor.call 'call_alpha', search, ->
+                Meteor.call 'search_ddg', selected_tags.array().toString(), ->
+                
                 Meteor.call 'call_alpha', selected_tags.array().toString(), ->
                 Meteor.call 'call_wiki', search, ->
                 Meteor.call 'search_reddit', selected_tags.array(), ->

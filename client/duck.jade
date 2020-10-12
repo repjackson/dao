@@ -1,5 +1,6 @@
-template(name='alpha')
-    with response.queryresult
+template(name='duck')
+    .ui.header duck
+    with content
         // .ui.inline.header #{datatypes}
         // each split_datatypes
         //     .ui.button.basic.compact.circular.buton.select_datatype
@@ -32,23 +33,4 @@ template(name='alpha')
             // .item numsubpods #{numsubpods}
             // .item subpods
             // .ui.list
-            each subpods
-                // .ui.small.inline.header #{title}
-                img.ui.inline.zoomer.image.alphatemp(src=img.src)
-                // .item.alphatemp
-                // |#{plaintext}
-                // .item title: #{title}
-                // .item primary: #{primary}
-    each tags
-        .ui.label #{this}
-    // .alphatemp voice: #{voice}
-    //   div assumptions": {
-    //     "type": "Clash",
-    //     "word": "time",
-    //     "template": "Assuming \"${word}\" is ${desc1}. Use as ${desc2} instead",
-    //     "count": 4,
-    //     "values": [
-    //       {
-    //         "name": "CalendarWord",
-    //         "desc": " referring to a calendar computation",
-    //         "input": "*C.time-_*CalendarWord-"
+            // each subpods

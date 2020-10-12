@@ -1,11 +1,23 @@
 Meteor.methods
+    uniq: (doc_id)->
+        doc = Docs.findOne doc_id 
+        # console.log 'tags', doc.tags
+        flat = _.flatten(doc.tags)
+        # console.log 'flat', doc.flat
+        uniq = _.uniq(flat)
+        # console.log 'uniq', uniq
+        Docs.update doc._id,
+            $set:
+                tags:uniq
+
+
     search_reddit: (query)->
         @unblock()
         console.log 'searching reddit for', query
         # console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=30&include_facets=false",(err,response)=>
+        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=20&include_facets=false",(err,response)=>
             # console.log response.data
             if err then console.log err
             else if response.data.data.dist > 1
@@ -22,12 +34,13 @@ Meteor.methods
                         # else
                         added_tags = query
                         # added_tags = [query]
-                        console.log 'quer', query
+                        # console.log 'quer', query
                         # added_tags.push data.domain.toLowerCase()
                         added_tags.push data.subreddit.toLowerCase()
                         # added_tags.push data.author.toLowerCase()
                         # console.log 'added_tags1', added_tags
-                        added_tags = _.flatten(added_tags)
+                        flat = _.flatten(added_tags)
+                        added_tags = _.uniq(flat)
                         # console.log 'added_tags2', added_tags
                         # console.log 'ups?', data.ups
                         reddit_post =
