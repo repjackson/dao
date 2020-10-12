@@ -373,12 +373,12 @@ Template.home.events
     'click .vote_up': -> 
         Docs.update @_id,
             $inc: points: 1
-        window.speechSynthesis.cancel()# 
+        # window.speechSynthesis.cancel()# 
         # window.speechSynthesis.speak new SpeechSynthesisUtterance 'yeah'
     'click .vote_down': -> 
         Docs.update @_id,
             $inc: points: -1
-            window.speechSynthesis.cancel()# 
+            # window.speechSynthesis.cancel()# 
         # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
             
     'click .forward': -> 

@@ -40,7 +40,7 @@ body
 
 template(name='home')
     .ui.stackable.padded.grid
-        .ten.wide.column
+        .six.wide.column
             if selected_tags
                 // if many_tags
                 //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
@@ -56,27 +56,47 @@ template(name='home')
             +emotion_mode key='disgust' icon='disgusting'
             +emotion_mode key='fear' icon='scream'
             .ui.label(title='results') #{doc_count}
-            // +view_mode key='twitter' icon='twitter'
+            each tag_results
+                +tag_selector
+            +view_mode key='twitter' icon='twitter'
             +view_mode key='video' icon='youtube'
             +view_mode key='image' icon='picture'
             +view_mode key='reddit' icon='newspaper'
             +view_mode key='wikipedia' icon='book'
-            // +view_mode key='stackexchange' icon='disabled stack exchange'
-            // +view_mode key='github' icon='disabled github'
-            // +view_mode key='alpha' icon='disabled brain'
+            +view_mode key='stackexchange' icon='disabled stack exchange'
+            +view_mode key='github' icon='disabled github'
+            +view_mode key='alpha' icon='disabled brain'
             // div
             // .sixteen.wide.column
             // else
             //     .ui.left.icon.big.input 
             //         i.search.icon(class=loading_class)
             //         input.search_title(type='text' autofocus='')
-            each tag_results
-                +tag_selector
+            each alphas
+                // .six.wide.column
+                // if voice
+                
+                if response.queryresult
+                    +alpha 
+                
+            each ducks
+                // .six.wide.column
+                // if voice
+                
+                // if response.queryresult
+                +duck 
+
+        .ten.wide.column
             .spacer
-            .ui.stackable.grid.scrolling
+            .ui.stackable.grid
                 each docs
                     .sixteen.wide.column
                         // div
+                        if watson.metadata.image
+                            img.ui.rounded.inline.small.image(src=watson.metadata.image)    
+                        if is_image
+                            img.ui.centered.image(src=url)
+
                         a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
                         // .spacer
                         // div
@@ -101,7 +121,7 @@ template(name='home')
                         //     .ui.header comments
                         // if session_key_value_is 'view_section' 'preview'
                         // // .column
-                        // //     .invert.rounded
+                        // //     .rounded
                         // //         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
                         // .column
                         i.thumbs.up.outline.huge.grey.link.icon.vote_up
@@ -122,24 +142,10 @@ template(name='home')
                             i.plus.grey.icon
                             input.tag_post(type='text')
                         i.code.link.icon.print_me
-        .six.wide.column
-            each alphas
-                // .six.wide.column
-                // if voice
-                
-                if response.queryresult
-                    +alpha 
-                
-            each ducks
-                // .six.wide.column
-                // if voice
-                
-                // if response.queryresult
-                +duck 
         
-        .one.column.row
-            .column
-                +chat
+        // .one.column.row
+        //     .column
+        //         +chat
                 
                 
 template(name='chat')                
@@ -165,23 +171,23 @@ template(name='emotion_mode')
     if selected_emotion
         img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/color/50/000000/#{icon}.png" class=cl title=title)
     else
-        img.ui.inline.image.toggle_emotion.inverted.zoomer.pointer(src="https://img.icons8.com/ios/50/000000/#{icon}.png" class=cl title=title)
+        img.ui.inline.image.toggle_emotioned.zoomer.pointer(src="https://img.icons8.com/ios/50/000000/#{icon}.png" class=cl title=title)
 
     
 template(name='post')         
     // .ui.fluid.
     // if watson.metadata.image
-    //     img.ui.rounded.inline.medium.image.invert(src=watson.metadata.image)    
+    //     img.ui.rounded.inline.medium.image(src=watson.metadata.image)    
     // else
     //     img.ui.image(src=url)
     if watson.metadata.image
-        img.ui.rounded.inline.image.invert(src=watson.metadata.image)    
+        img.ui.rounded.inline.image(src=watson.metadata.image)    
     
-    // .invert.rounded
+    // .rounded
     //     iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     // if tone
     //     +tone
-    // // iframe.invert(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    // // iframe(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     // if watson 
     //     +call_tone
     //     .medscroll.mobile.hidden
@@ -220,14 +226,14 @@ template(name='unselect_tag')
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.large.image.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
+    a.ui.large.image.basic.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         | #{name}
         // small #{count}
 
 template(name='doc_tag')
-    a.ui.image.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
+    a.ui.image.basic.small.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         | #{this}
@@ -235,10 +241,10 @@ template(name='doc_tag')
 
 
 template(name='reddit')
-    if watson.metadata.image
-        img.ui.rounded.inline.small.image.invert(src=watson.metadata.image)    
-    if is_image
-        img.ui.centered.image(src=url)
+    // if watson.metadata.image
+    //     img.ui.rounded.inline.small.image(src=watson.metadata.image)    
+    // if is_image
+    //     img.ui.centered.image(src=url)
         // else if is_twitter
         // blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
         //     p(lang='en' dir='ltr')
@@ -249,18 +255,17 @@ template(name='reddit')
         //     div
         // .ui.embed
         // iframe(id="ytplayer" type="text/html" width="720" height="405" src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allowfullscreen)
-        // iframe.invert(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        // iframe(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         // else if is_video
         //     div
-        //     // iframe.invert(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        //     iframe.invert(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-    else
-        .invert
-            |!{embed}
+        //     // iframe(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        //     iframe(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    |!{embed}
+    // else
 
         // iframe(width="560" height="315" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
     // .medscroll
-    // .invert
+    // 
     a.ui.label(href="https://www.reddit.com#{permalink}" target="_window") r/#{subreddit}
     // .ui.big.label 
     //     i.user.outline.icon
@@ -290,13 +295,13 @@ template(name='reddit')
     // div(style='position:relative; padding-bottom:calc(125.00% + 44px)')
     //     iframe(src='https://gfycat.com/ifr/MeanFatAmurratsnake' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen)
     // |{{selftext}}
-    // blockquote(class="reddit-card")
-    //     a(href="https://www.reddit.com#{permalink}") 
-    //         |#{title}
-    //     |from 
-    //     a(href="http://www.reddit.com/r/#{subreddit}") 
-    //         |r/#{subreddit}
-    // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+    blockquote(class="reddit-card")
+        a(href="https://www.reddit.com#{permalink}") 
+            |#{title}
+        |from 
+        a(href="http://www.reddit.com/r/#{subreddit}") 
+            |r/#{subreddit}
+    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
     +call_watson
     // if watson 
     //     +call_tone
@@ -308,6 +313,6 @@ template(name='reddit')
         // |#{domain}
     // unless key_value 'domain'
     // if dev
-    // iframe.invert(width="100%" height="500" src="https://v.redd.it/seckv25qiir51" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    // iframe(width="100%" height="500" src="https://v.redd.it/seckv25qiir51" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     // .ui.icon.circular.button.tagger
     //     i.dna.icon
