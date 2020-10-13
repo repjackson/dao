@@ -1,5 +1,5 @@
 template(name='doc_sentiment') 
-    //- .ui.header 
+    //- .ui.inline.header 
     //-     |sentiment
     //- .ui.tiny.disabled.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
     //-     .bar
@@ -21,7 +21,7 @@ template(name='small_sentiment')
 //- 
 template(name='doc_emotion') 
     .spacer
-    // .ui.dividing.header 
+    // .ui.dividing.inline.header 
     //     | emotion
     //- with watson.emotion
     //- div
@@ -83,12 +83,9 @@ template(name='keywords')
         each watson.keywords
             .ui.column
                 span.large120(class="{{calculated_size 'relevance'}}" title="{{ to_percent relevance }}% relevant") #{text}
-                .spacer
-                .meta
-                    .ui.list 
-                        .item {{ to_percent relevance }}% relevant
-                        .item {{ sentiment.label }} {{ to_percent sentiment.score }}%:
-                        .item #{count} count
+                .ui.basic.circular.label(title='relevant') {{ to_percent relevance }}% rel
+                .ui.basic.circular.label {{ sentiment.label }} {{ to_percent sentiment.score }}%:
+                .ui.basic.circular.label(title='instance count') #{count}x
                 .description
                     if emotion
                         with emotion
@@ -117,17 +114,15 @@ template(name='entities')
                 .spacer
                 .ui.list 
                     .item {{ to_percent relevance }}% relevant
-                    .item sentiment:  {{ sentiment.label }} {{ to_percent sentiment.score }}%:
+                    .item(title="sentiment") {{ sentiment.label }} {{ to_percent sentiment.score }}%:
                     .item #{count} count
                     .item {{ to_percent confidence}}% confident
-                .meta 
-                    with disambiguation
-                        .ui.small.header subtypes
-                        .ui.bulleted.list
-                            each subtype
-                                .item #{this}
-                        a.ui.tiny.grey.header(href=dbpedia_resource target='_window') name
-                            |#{name}
+                with disambiguation
+                    .ui.small.header subtypes
+                    each subtype
+                        .ui.tiny.basic.circular.label #{this}
+                    a.ui.tiny.grey.header.set_entity_name(href=dbpedia_resource target='_window') name
+                        |#{name}
                 if emotion
                     with emotion
                         span {{ to_percent sadness }}% sad
@@ -144,7 +139,7 @@ template(name='entities')
 
 
 template(name='keyword_list')
-    .ui.small.grey.header 
+    .ui.small.grey.inline.header 
         |#{watson_keywords.length} keywords
     each watson_keywords
         .ui.large.label #{this}
@@ -153,7 +148,7 @@ template(name='keyword_list')
 
 
 template(name='concept_list')
-    .ui.small.grey.header 
+    .ui.small.grey.inline.header 
         |#{watson_concepts.length} concepts
     each watson_concepts
         .ui.large.label #{this}
@@ -161,7 +156,7 @@ template(name='concept_list')
 
 
 template(name='concepts')
-    .ui.small.grey.header 
+    .ui.small.grey.inline.header 
         |#{watson.concepts.length} concepts
     .large150
         each watson.concepts
@@ -170,7 +165,7 @@ template(name='concepts')
 
 
 template(name='visual_classes')
-    //- .ui.small.grey.header 
+    //- .ui.small.grey.inline.header 
     //-     |#{visual_classes.length} visual classes
     .ui.list
         each visual_classes
@@ -182,7 +177,7 @@ template(name='visual_classes')
 
 
 template(name='categories')
-    .ui.small.grey.header 
+    .ui.small.grey.inline.header 
         |#{watson.categories.length} categories
     .ui.list
         each watson.categories
@@ -206,7 +201,7 @@ template(name='tone')
                 span.tone_item.ui.zoomer.pointer.text(title="#{sentence_id}" class="#{tone_size} #{sentence_color}") 
                     |{{lowered text}}
                     // .content
-                    // .header(title="#{sentence_id}") {{lowered text}}
+                    // .inline.header(title="#{sentence_id}") {{lowered text}}
                     // |weight:#{weight}
                     // i.chevron.up.link.grey.large.icon.upvote_sentence
                     // i.chevron.down.link.grey.large.icon.downvote_sentence

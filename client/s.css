@@ -2,7 +2,7 @@ body {
     /*background-color: rgba(0,0,0,.9) !important;*/
     /*filter: invert(1) !important; */
     /*font-size: 110% !important;*/
-    transition: all .25s linear !important;
+    /*transition: all .25s linear !important;*/
 }
 .invert {
      /*filter: invert(1) !important; */
@@ -28,7 +28,7 @@ img {
 }
 .label {
     font-size: 110% !important;
-    transition: all .1s linear !important;
+    /*transition: all .1s linear !important;*/
     margin-bottom: 2px !important;
     margin-top: 2px !important;
     vertical-align: middle !important;
@@ -61,7 +61,7 @@ input {
     /*border-radius: 10px !important;*/
 }
 .button {
-    transition: all .2s linear !important;
+    /*transition: all .2s linear !important;*/
     margin-bottom: 5px !important;
 }
 
@@ -135,17 +135,17 @@ input {
     transition: all .25s ease !important; 
 }
 .zoomer:hover {
-    transition: all .25s linear !important; 
+    /*transition: all .25s linear !important; */
     z-index: 1000 !important;
     transform: scale(1.05) !important;
 }
 .superzoom:hover {
-    transition: all .25 linear !important; 
+    /*transition: all .25 linear !important; */
     z-index: 1000 !important;
     transform: scale(2) !important;
 }
 .tone_item {
-  transition: all .25s linear !important; 
+  /*transition: all .25s linear !important; */
   
 }
 .label:hover {

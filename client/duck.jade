@@ -11,7 +11,7 @@ template(name='duck')
         each RelatedTopics
             .ui.compact.basic.circular.button.topic
                 img.ui.mini.inline.rounded.image(src=Icon.URL)
-                | #{Text}
+                | {{lowered Text}}
             // .content
             //     .item #{FirstURL}
                 // .item !{Result}

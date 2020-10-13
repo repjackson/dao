@@ -64,13 +64,13 @@ template(name='home')
                 +view_mode key='twitter' icon='twitter' color='blue'
                 +view_mode key='video' icon='youtube' color='red'
                 +view_mode key='image' icon='picture' color='green'
-                +view_mode key='reddit' icon='newspaper' color='teal'
-                +view_mode key='wikipedia' icon='book' color='purple'
-                +view_mode key='stackexchange' icon='disabled stack exchange'
-                // +view_mode key='github' icon='disabled github'
+                +view_mode key='reddit' icon='reddit' color='teal'
+                +view_mode key='wikipedia' icon='wikipedia' color='purple'
+                +view_mode key='stackexchange' icon='stack exchange'
+                +view_mode key='github' icon='github'
                 // +view_mode key='alpha' icon='disabled brain'
         .row
-            .eight.wide.right.aligned.column.scrolling
+            .eight.wide.right.aligned.column
                 div
                 each alphas
                     if response.queryresult
@@ -143,12 +143,16 @@ template(name='home')
                     
                 
 template(name='chat')                
-    .ui.inline.header chat
+    // .ui.inline.header chat
+    i.big.chat.outline.icon(title='chat')
     each chats
-        if bot
-            i.grey.brain.icon 
+        // if bot
+        //     i.grey.brain.icon 
         |#{response.result} #{body}
-        i.pencil.icon
+        // i.pencil.icon
+        // .ui.segment
+        &nbsp;
+        &nbsp;
         // .comment
         //     .content
         //         // .meta #{_timestamp}
