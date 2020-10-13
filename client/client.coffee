@@ -199,7 +199,7 @@ Template.tag_selector.helpers
 Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
-        window.speechSynthesis.cancel()
+        # window.speechSynthesis.cancel()
         window.speechSynthesis.speak new SpeechSynthesisUtterance @name
         
         selected_tags.push @name
@@ -343,6 +343,23 @@ Template.home.helpers
         #     })
         # else 
         results.find(model:'tag')
+
+
+Template.duck.events
+    'click .topic': (e,t)-> 
+        console.log @
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @Text
+        # console.log @FirstURL.replace(/\s+/g, '-')
+        url = new URL(@FirstURL);
+        console.log url
+        console.log url.pathname
+
+    'click .abstract': (e,t)-> 
+        console.log @
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @AbstractText
+
+    # 'click .tagger': (e,t)->
+    #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
 
 
 Template.home.events

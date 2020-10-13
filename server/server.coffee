@@ -148,7 +148,7 @@ Meteor.publish 'docs', (
             match.model = $in:['wikipedia','reddit','alpha']
     # console.log 'doc match', match
     Docs.find match,
-        limit:5
+        limit:10
         skip:skip
         sort:
             points: -1

@@ -190,7 +190,7 @@ template(name='categories')
                 strong #{label}
                 |{{ to_percent score }}%
                 each explanation.relevant_text 
-                    .ui.label #{text}
+                    .ui.small.compact.circular.button.add_text #{text}
 
 
 //- 

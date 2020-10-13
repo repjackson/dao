@@ -67,10 +67,10 @@ template(name='home')
                 +view_mode key='reddit' icon='newspaper' color='teal'
                 +view_mode key='wikipedia' icon='book' color='purple'
                 +view_mode key='stackexchange' icon='disabled stack exchange'
-                +view_mode key='github' icon='disabled github'
-                +view_mode key='alpha' icon='disabled brain'
+                // +view_mode key='github' icon='disabled github'
+                // +view_mode key='alpha' icon='disabled brain'
         .row
-            .five.wide.right.aligned.column
+            .five.wide.right.aligned.column.scrolling
                 div
                 each alphas
                     if response.queryresult
@@ -84,14 +84,15 @@ template(name='home')
                         .sixteen.wide.column
                             // div
                             if key_value 'model' 'reddit'
-                                +reddit
+                                .scrolling
+                                    +reddit
                             unless one_post
-                                unless one_post
-                                    i.chevron.left.big.circular.grey.link.icon.back
-                                    i.chevron.right.big.circular.grey.link.icon.forward
-                            i.thumbs.up.outline.huge.grey.link.icon.vote_up
+                                i.chevron.left.big.circular.grey.link.icon.back
+                            i.thumbs.up.outline.big.grey.link.circular.icon.vote_up
                             |#{points}
-                            i.thumbs.down.outline.huge.grey.link.icon.vote_down
+                            i.thumbs.down.outline.big.grey.link.circular.icon.vote_down
+                            unless one_post
+                                i.chevron.right.big.circular.grey.link.icon.forward
                             unless key_value 'model' 'reddit'
                                 if watson.metadata.image
                                     img.ui.rounded.inline.small.image(src=watson.metadata.image)    
@@ -173,8 +174,8 @@ template(name='post')
     if watson.metadata.image
         img.ui.rounded.inline.image(src=watson.metadata.image)    
     
-    .rounded
-        iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    // .rounded
+    //     iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     // if tone
     //     +tone
     // // iframe(width="100%" height="500" src="https://en.m.wikipedia.org/wiki/#{title}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
