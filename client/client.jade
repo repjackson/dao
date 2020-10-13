@@ -102,13 +102,15 @@ template(name='home')
     
                             // .spacer
                             // div
-                            +session_edit_value_button key='view_section' value='content' label='content' icon='content'
+                            // +session_edit_value_button key='view_section' value='content' label='content' icon='content'
                             if watson
-                                +session_edit_value_button key='view_section' value='analysis' label='analysis' icon='brain'
+                                .medscroll
+                                    +watson_view
                             if tone
-                                +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-                            +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
-                            +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
+                                +tone
+                            //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
+                            // +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
+                            // +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
                             if session_key_value_is 'view_section' 'content'
                                 +post
                             // else
@@ -117,9 +119,6 @@ template(name='home')
                                 if tone
                                     .column
                                         +tone
-                            // if session_key_value_is 'view_section' 'comments'
-                            //     // +tone
-                            //     .ui.header comments
                             // if session_key_value_is 'view_section' 'preview'
                             // // .column
                             // //     .rounded

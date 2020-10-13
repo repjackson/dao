@@ -147,7 +147,7 @@ Template.reddit.onRendered ->
 
 
 Template.unselect_tag.onCreated ->
-    console.log @
+    # console.log @
     @autorun => Meteor.subscribe('doc_by_title', @data)
     
 Template.unselect_tag.helpers
@@ -166,6 +166,7 @@ Template.unselect_tag.events
         Meteor.call 'call_alpha', selected_tags.array().toString(), ->
         Meteor.call 'call_wiki', @valueOf(), ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
+        window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -200,7 +201,6 @@ Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
         # window.speechSynthesis.cancel()
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
         
         selected_tags.push @name
         Session.set('query','')
@@ -211,6 +211,7 @@ Template.tag_selector.events
         Meteor.call 'call_wiki', @name, ->
         Meteor.call 'search_ddg', @name, ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
+        window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -242,7 +243,6 @@ Template.doc_tag.events
     'click .select_tag': -> 
         # results.update
         window.speechSynthesis.cancel()
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
         
         selected_tags.push @valueOf()
         Session.set('query','')
@@ -252,6 +252,9 @@ Template.doc_tag.events
         # Meteor.call 'call_alpha', @valueOf(), ->
         Meteor.call 'call_alpha', selected_tags.array().toString(), ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
+        window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+            
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -431,8 +434,8 @@ Template.home.events
         # else if search.length is 0
         #     Session.set('query','')
         if e.which is 13
-            window.speechSynthesis.cancel()
-            window.speechSynthesis.speak new SpeechSynthesisUtterance search
+            # window.speechSynthesis.cancel()
+            # window.speechSynthesis.speak new SpeechSynthesisUtterance search
             console.log search
             if search.length > 0
                 # Meteor.call 'check_url', search, (err,res)->
@@ -457,6 +460,8 @@ Template.home.events
                 Meteor.call 'call_wiki', search, ->
                 Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('skip',0)
+                window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+
                 # Session.set('query','')
                 $('.search_title').val('')
                 Meteor.setTimeout( ->
