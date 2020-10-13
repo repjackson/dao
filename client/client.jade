@@ -75,6 +75,10 @@ template(name='home')
                 each alphas
                     if response.queryresult
                         +alpha 
+                if many_tags
+                    each alpha_singles
+                        if response.queryresult
+                            +alpha 
                 each ducks
                     +duck 
             .eleven.wide.column

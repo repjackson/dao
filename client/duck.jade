@@ -8,11 +8,10 @@ template(name='duck')
         //     // #{AbstractURL}
         //     i.large.external.icon
         img(src=Image)
-        .ui.link.list
-            each RelatedTopics
-                a.item.topic
-                    img.ui.tiny.inline.rounded.pointer.zoomer.image(src=Icon.URL)
-                    .ui.inline.small.pointer.zoomer.header #{Text}
-                // .content
-                //     .item #{FirstURL}
-                    // .item !{Result}
+        each RelatedTopics
+            .ui.compact.basic.circular.button.topic
+                img.ui.mini.inline.rounded.image(src=Icon.URL)
+                | #{Text}
+            // .content
+            //     .item #{FirstURL}
+                // .item !{Result}

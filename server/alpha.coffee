@@ -1,8 +1,14 @@
-Meteor.publish 'alpha', (selected_tags)->
+Meteor.publish 'alpha_combo', (selected_tags)->
     Docs.find 
         model:'alpha'
         # query: $in: selected_tags
         query: selected_tags.toString()
+        
+Meteor.publish 'alpha_single', (selected_tags)->
+    Docs.find 
+        model:'alpha'
+        query: $in: selected_tags
+        # query: selected_tags.toString()
         
         
 Meteor.publish 'duck', (selected_tags)->

@@ -61,7 +61,8 @@ Template.home.onCreated ->
 
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
-    @autorun -> Meteor.subscribe('alpha',selected_tags.array())
+    @autorun -> Meteor.subscribe('alpha_combo',selected_tags.array())
+    @autorun -> Meteor.subscribe('alpha_single',selected_tags.array())
     @autorun -> Meteor.subscribe('duck',selected_tags.array())
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
@@ -163,13 +164,14 @@ Template.unselect_tag.events
    'click .unselect_tag': -> 
         selected_tags.remove @valueOf()
         Session.set('skip',0)
-        Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-        Meteor.call 'call_wiki', @valueOf(), ->
-        Meteor.call 'search_reddit', selected_tags.array(), ->
-        window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
-        Meteor.setTimeout( ->
-            Session.set('toggle',!Session.get('toggle'))
-        , 10000)
+        if selected_tags.array().length > 0
+            Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
+            # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+            Meteor.setTimeout( ->
+                Session.set('toggle',!Session.get('toggle'))
+            , 10000)
 
     
 
@@ -296,6 +298,11 @@ Template.home.helpers
             model:'alpha'
             # query: $in: selected_tags.array()
             query: selected_tags.array().toString()
+    alpha_singles: ->
+        Docs.find 
+            model:'alpha'
+            query: $in: selected_tags.array()
+            # query: selected_tags.array().toString()
     ducks: ->
         Docs.find 
             model:'duck'
@@ -356,6 +363,9 @@ Template.duck.events
         url = new URL(@FirstURL);
         console.log url
         console.log url.pathname
+        selected_tags.push @Text.toLowerCase()
+        Meteor.call 'call_wiki', selected_tags.array().toString(), ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
 
     'click .abstract': (e,t)-> 
         console.log @
