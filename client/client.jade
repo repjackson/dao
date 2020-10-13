@@ -88,7 +88,7 @@ template(name='home')
                         .sixteen.wide.column
                             // div
                             if key_value 'model' 'reddit'
-                                .scrolling
+                                span.scrolling
                                     +reddit
                             unless one_post
                                 i.chevron.left.big.circular.grey.link.icon.back
@@ -121,8 +121,7 @@ template(name='home')
                             if session_key_value_is 'view_section' 'analysis'
                                 +watson_view
                                 if tone
-                                    .column
-                                        +tone
+                                    +tone
                             // if session_key_value_is 'view_section' 'preview'
                             // // .column
                             // //     .rounded

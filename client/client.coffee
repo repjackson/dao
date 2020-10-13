@@ -62,7 +62,7 @@ Template.home.onCreated ->
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
     @autorun -> Meteor.subscribe('alpha_combo',selected_tags.array())
-    @autorun -> Meteor.subscribe('alpha_single',selected_tags.array())
+    # @autorun -> Meteor.subscribe('alpha_single',selected_tags.array())
     @autorun -> Meteor.subscribe('duck',selected_tags.array())
     @autorun -> Meteor.subscribe('doc_count',
         selected_tags.array()
