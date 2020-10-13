@@ -203,6 +203,8 @@ Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
         # window.speechSynthesis.cancel()
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
         
         selected_tags.push @name
         Session.set('query','')
@@ -213,7 +215,6 @@ Template.tag_selector.events
         Meteor.call 'call_wiki', @name, ->
         Meteor.call 'search_ddg', @name, ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -432,7 +433,7 @@ Template.home.events
 
     'click .search_title': (e,t)->
         Session.set('toggle',!Session.get('toggle'))
-        window.speechSynthesis.cancel()# 
+        # window.speechSynthesis.cancel()# 
         # window.speechSynthesis.speak new SpeechSynthesisUtterance 'hail satan'
 
     # 'keyup .search_title': _.throttle((e,t)->
@@ -446,7 +447,7 @@ Template.home.events
         #     Session.set('query','')
         if e.which is 13
             # window.speechSynthesis.cancel()
-            # window.speechSynthesis.speak new SpeechSynthesisUtterance search
+            window.speechSynthesis.speak new SpeechSynthesisUtterance search
             console.log search
             if search.length > 0
                 # Meteor.call 'check_url', search, (err,res)->
@@ -471,7 +472,8 @@ Template.home.events
                 Meteor.call 'call_wiki', search, ->
                 Meteor.call 'search_reddit', selected_tags.array(), ->
                 Session.set('skip',0)
-                window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+                # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+                # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
 
                 # Session.set('query','')
                 $('.search_title').val('')

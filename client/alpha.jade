@@ -25,7 +25,7 @@ template(name='alpha')
             // .item version: #{version}
         each pods
             div
-            .ui.small.inline.middle.aligned.header #{title}
+            .ui.small.inline.middle.aligned.header.middled #{title}
             // div
             // .item #{scanner}
             // .item id #{id}
@@ -36,7 +36,7 @@ template(name='alpha')
             // .ui.list
             each subpods
                 // .ui.small.inline.header #{title}
-                img.ui.inline.zoomer.pointer.image.alphatemp(src=img.src)
+                img.ui.inline.zoomer.pointer.image.alphatemp.middled(src=img.src)
                 // .item.alphatemp
                 // |#{plaintext}
                 // .item title: #{title}

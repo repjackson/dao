@@ -48,7 +48,7 @@ template(name='home')
                     //         i.remove.icon
                     each selected_tags
                         +unselect_tag
-                .ui.left.icon.inline.large.input 
+                .ui.left.icon.inline.input 
                     // i.search.icon
                     i#clear_tags.link.yin.yang.icon(class=loading_class)
                     input.search_title(type='text' autofocus='')
@@ -151,8 +151,8 @@ template(name='chat')
         |#{response.result} #{body}
         // i.pencil.icon
         // .ui.segment
-        &nbsp;
-        &nbsp;
+        |&nbsp;
+        |&nbsp;
         // .comment
         //     .content
         //         // .meta #{_timestamp}

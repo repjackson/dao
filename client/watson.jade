@@ -77,8 +77,8 @@ template(name='call_visual')
 
 
 template(name='keywords')
-    .ui.grey.inline.header 
-        |#{watson.keywords.length} keywords
+    // .ui.grey.inline.header 
+    //     |#{watson.keywords.length} keywords
     .ui.five.column.stackable.grid
         each watson.keywords
             .ui.column
@@ -104,18 +104,18 @@ template(name='keywords')
 
 
 template(name='entities')
-    .ui.grey.header 
-        |#{watson.entities.length} entities
+    // .ui.grey.header 
+    //     |#{watson.entities.length} entities
     .ui.five.column.stackable.grid
         each watson.entities
             .ui.column
-                .ui.small.grey.header #{type}
-                span.large120(class="{{calculated_size 'relevance'}}" title="{{ to_percent relevance }}% relevant") #{text}
+                .ui.small.grey.inline.header #{type}
+                span.large120.set_entity_name(class="{{calculated_size 'relevance'}}" title="{{ to_percent relevance }}% relevant") #{text}
                 // .spacer
-                .ui.basic.small.circular.label {{ to_percent relevance }}% relevant
-                .ui.basic.small.circular.label(title="sentiment") {{ sentiment.label }} {{ to_percent sentiment.score }}%:
-                .ui.basic.small.circular.label #{count} count
-                .ui.basic.small.circular.label {{ to_percent confidence}}% confident
+                .ui.basic.small.circular.label(title='relevant') {{ to_percent relevance }}%
+                .ui.basic.small.circular.label(title="sentiment") {{ sentiment.label }} {{ to_percent sentiment.score }}%
+                .ui.basic.small.circular.label(title='count') #{count}x
+                .ui.basic.small.circular.label(title='confident') {{ to_percent confidence}}% con
                 with disambiguation
                     // .ui.small.inline.header subtypes
                     each subtype
