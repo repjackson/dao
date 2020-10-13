@@ -42,15 +42,15 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.center.aligned.column
-                i#clear_tags.link.big.yin.yang.icon(class=loading_class)
                 if selected_tags
                     // if many_tags
                     //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
                     //         i.remove.icon
                     each selected_tags
                         +unselect_tag
-                .ui.left.icon.inline.input 
-                    i.search.icon
+                .ui.left.icon.inline.large.input 
+                    // i.search.icon
+                    i#clear_tags.link.yin.yang.icon(class=loading_class)
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
@@ -158,7 +158,7 @@ template(name='chat')
         //         // .meta #{_timestamp}
     // .spacer
     .ui.icon.input 
-        i.chat.icon
+        i.chat.outline.icon
         input.new_chat(type='text')
 
 template(name='view_mode')

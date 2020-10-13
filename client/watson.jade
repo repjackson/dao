@@ -111,14 +111,13 @@ template(name='entities')
             .ui.column
                 .ui.small.grey.header #{type}
                 span.large120(class="{{calculated_size 'relevance'}}" title="{{ to_percent relevance }}% relevant") #{text}
-                .spacer
-                .ui.list 
-                    .item {{ to_percent relevance }}% relevant
-                    .item(title="sentiment") {{ sentiment.label }} {{ to_percent sentiment.score }}%:
-                    .item #{count} count
-                    .item {{ to_percent confidence}}% confident
+                // .spacer
+                .ui.basic.small.circular.label {{ to_percent relevance }}% relevant
+                .ui.basic.small.circular.label(title="sentiment") {{ sentiment.label }} {{ to_percent sentiment.score }}%:
+                .ui.basic.small.circular.label #{count} count
+                .ui.basic.small.circular.label {{ to_percent confidence}}% confident
                 with disambiguation
-                    .ui.small.header subtypes
+                    // .ui.small.inline.header subtypes
                     each subtype
                         .ui.tiny.basic.circular.label #{this}
                     a.ui.tiny.grey.header.set_entity_name(href=dbpedia_resource target='_window') name
