@@ -14,6 +14,11 @@ img {
      display: inline !important;
 }
 
+.select_term {
+  zoom: 110% !important;
+
+}    
+    
     
 .five.wide.column, .four.wide.column {
     padding: 0px !important;
@@ -86,7 +91,7 @@ input {
     border-width: 1px !important;
     border-color: grey !important;
     border-style: solid !important; */
-    max-height: 700px !important;
+    max-height: 600px !important;
     overflow-y:scroll;
     overflow-x:hidden;
     /* padding-top: .2em; */

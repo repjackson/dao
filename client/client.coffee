@@ -396,6 +396,7 @@ Template.home.events
         # # if Meteor.user()
         Meteor.call 'call_wiki', @valueOf(), ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
 
     # 'click .delete': -> 
     #     console.log @
@@ -559,4 +560,4 @@ Template.chat.events
                 , sort:_timestamp:-1
                 # console.log 'last', last
                 window.speechSynthesis.speak new SpeechSynthesisUtterance last.response.result
-            , 4000
+            , 2000

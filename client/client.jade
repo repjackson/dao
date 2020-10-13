@@ -41,7 +41,7 @@ body
 template(name='home')
     .ui.stackable.padded.grid
         .row
-            .sixteen.wide.column
+            .sixteen.wide.center.aligned.column
                 i#clear_tags.link.big.yin.yang.icon(class=loading_class)
                 if selected_tags
                     // if many_tags
@@ -70,7 +70,7 @@ template(name='home')
                 // +view_mode key='github' icon='disabled github'
                 // +view_mode key='alpha' icon='disabled brain'
         .row
-            .five.wide.right.aligned.column.scrolling
+            .eight.wide.right.aligned.column.scrolling
                 div
                 each alphas
                     if response.queryresult
@@ -81,7 +81,7 @@ template(name='home')
                             +alpha 
                 each ducks
                     +duck 
-            .eleven.wide.column
+            .eight.wide.column
                 // .spacer
                 .ui.stackable.padded.grid
                     each docs
@@ -137,9 +137,9 @@ template(name='home')
                                 input.tag_post(type='text')
                             i.code.link.icon.print_me
             
-            // .one.column.row
-            //     .column
-            //         +chat
+        .one.column.row
+            .column
+                +chat
                     
                 
 template(name='chat')                
