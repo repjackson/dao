@@ -10,6 +10,27 @@ Meteor.methods
             $set:
                 tags:uniq
 
+    find_subreddit: (title)->
+        # @unblock()
+        console.log 'searching subreddit for', title
+        # console.log 'type of query', typeof(query)
+        # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
+        # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
+        HTTP.get "http://reddit.com/r/#{title}/about.json",(err,response)=>
+            # console.log response
+            # if err then console.log err
+            # else if response.data.data.dist > 1
+            #     # console.log 'found data'
+            #     # console.log 'data length', response.data.data.children.length
+            #     _.each(response.data.data.children, (item)=>
+            found = Docs.findOne 
+                model:'tribe'
+                title:title
+            unless found
+                Docs.insert 
+                    model:'tribe'
+                    title:title
+                    rd:response.data
 
     search_reddit: (query)->
         @unblock()

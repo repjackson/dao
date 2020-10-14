@@ -2,12 +2,17 @@ body {
     /*background-color: rgba(0,0,0,.9) !important;*/
     /*filter: invert(1) !important; */
     /*font-size: 110% !important;*/
-    transition: all .25s linear !important;
+    transition: all .5s linear !important;
 }
 .invert {
      /*filter: invert(1) !important; */
     
 }
+
+.full {
+  width: 100% !important;
+}
+
 img {
      /*filter: invert(1) !important; */
      position: relative;
@@ -136,10 +141,10 @@ input {
     /*transform: scale(1.1) !important;*/
 }
 .icon {
-    transition: all .25s ease !important; 
+    transition: all .5s ease !important; 
 }
 .zoomer:hover {
-    transition: all .25s linear !important; 
+    transition: all .5s linear !important; 
     z-index: 1000 !important;
     transform: scale(1.1) !important;
 }
@@ -149,13 +154,13 @@ input {
     transform: scale(2) !important;
 }
 .tone_item {
-  /*transition: all .25s linear !important; */
+  /*transition: all .5s linear !important; */
   
 }
 .label:hover {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s linear !important; 
+  transition: all .5s linear !important; 
   z-index: 1000 !important;
   transform: scale(1.06) !important;
 }

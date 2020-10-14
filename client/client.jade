@@ -62,8 +62,8 @@ template(name='home')
                 +view_mode key='image' icon='picture' color='green'
                 +view_mode key='reddit' icon='reddit' color='teal'
                 +view_mode key='wikipedia' icon='wikipedia' color='purple'
-                +view_mode key='stackexchange' icon='stack exchange'
-                +view_mode key='github' icon='github'
+                +view_mode key='stackexchange' icon='stack exchange disabled'
+                +view_mode key='github' icon='github disabled'
                 +view_mode key='alpha' icon='disabled brain'
                 +view_mode key='porn' icon='mercury'
                 .spacer
@@ -74,18 +74,21 @@ template(name='home')
                     .ui.black.circular.compact.button.unselect_subreddit
                         |#{this}
                 each subreddit_results
-                    .ui.compact.circular.basic.button.select_subreddit
-                        |#{name}
+                    +select_subreddit
                 .spacer
                 .ui.inline.header 
                     i.smile.large.grey.icon
                     |emotion
-                +emotion_mode key='joy' icon='happy--v1'
-                +emotion_mode key='sadness' icon='sad--v1'
-                +emotion_mode key='anger' icon='angry--v1'
-                +emotion_mode key='disgust' icon='disgusting'
-                +emotion_mode key='fear' icon='scream'
-
+                +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
+                +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
+                +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
+                +emotion_mode key='disgust' icon='disgusting' i2='grin tongue squint' color='orange'
+                +emotion_mode key='fear' icon='scream' i2='tired' color='black'
+                // i.grin.tongue.squint.outline.big.icon
+                // i.surprise.outline.big.icon
+                // i.smile.outline.big.icon
+                // i.frown.outline.big.icon
+                // i.tired.outline.big.icon
                 each selected_emotions
                     .ui.black.circular.compact.button.unselect_emotion
                         |#{this}
@@ -93,16 +96,16 @@ template(name='home')
                     .ui.compact.circular.basic.button.select_emotion
                         |#{name}
                 .spacer
-                .ui.inline.header 
-                    i.database.large.icon
-                    |sources
-                each selected_models
-                    .ui.black.circular.compact.button.unselect_model
-                        |#{this}
-                each model_results
-                    .ui.compact.circular.basic.button.select_model
-                        |#{name}
-                // i.smile.large.icon
+                // .ui.inline.header 
+                //     i.database.large.icon
+                //     |sources
+                // each selected_models
+                //     .ui.black.circular.compact.button.unselect_model
+                //         |#{this}
+                // each model_results
+                //     .ui.compact.circular.basic.button.select_model
+                //         |#{name}
+                // // i.smile.large.icon
                 div
                 each alphas
                     if response.queryresult
@@ -129,12 +132,12 @@ template(name='home')
                                 +vid_card
                             else
                                 .ui.item
-                                    if embed
-                                        .rounded
-                                            |!{embed}
-                                    else
-                                        if watson.metadata.image
-                                            img.ui.rounded.inline.small.pointer.zoomer.image.toggle_view(src=watson.metadata.image)    
+                                    // if embed
+                                    //     .rounded.full
+                                    //         |!{embed}
+                                    // else
+                                    if watson.metadata.image
+                                        img.ui.rounded.inline.small.pointer.zoomer.image.toggle_view(src=watson.metadata.image)    
                                     .content
                                         span.ui.pointer.text.f14.zoomer.toggle_view(class=post_header_class) #{title}
                                             // small #{max_emotion_name}
@@ -165,7 +168,7 @@ template(name='home')
                                                 //     img.ui.rounded.inline.small.image(src=watson.metadata.image)    
                                                 if is_image
                                                     img.ui.centered.image(src=url)
-                                                a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
+                                                // a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
                     
                                             // .spacer
                                             // div
@@ -176,8 +179,8 @@ template(name='home')
                                             if tone
                                                 +tone
                                             //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-                                            if session_key_value_is 'view_section' 'content'
-                                                +post
+                                            // if session_key_value_is 'view_section' 'content'
+                                            //     +post
                                             // else
                                             // if session_key_value_is 'view_section' 'preview'
                                             // // .column
@@ -197,6 +200,15 @@ template(name='home')
         // .one.column.row
         //     .column
         //         +chat
+            
+            
+template(name='select_subreddit')
+    .ui.compact.circular.basic.button.select_subreddit
+        if tribe_doc
+            img.ui.avatar.image(src=tribe_doc.rd.data.header_img)
+        |#{name}
+
+            
                     
                 
 template(name='chat')                
@@ -224,9 +236,11 @@ template(name='view_mode')
 
 template(name='emotion_mode')
     if selected_emotion
-        img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/color/50/000000/#{icon}.png" class=cl title=title)
+        i.huge.pointer.zoomer.icon.toggle_emotion(class="#{i2} #{color}" title=title)
+        // img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/color/50/000000/#{icon}.png" class=cl title=title)
     else
-        img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/ios/36/000000/#{icon}.png" class=cl title=title)
+        i.big.grey.pointer.zoomer.icon.toggle_emotion(class="#{i2} outline")
+        // img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/ios/36/000000/#{icon}.png" class=cl title=title)
 
     
 template(name='post')         
@@ -308,17 +322,17 @@ template(name='reddit')
         //         a(href=url) October 3, 2020
     else if is_youtube
         div
-        // .ui.embed
-        //     iframe(id="ytplayer" type="text/html" width="720" height="405" src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allowfullscreen)
-        iframe(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-    else if is_video
-        div
-        // iframe(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        iframe(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        .ui.fluid.embed
+            iframe(id="ytplayer" type="text/html" width="100%" height="500" src="https://www.youtube.com/embed/#{youtube_parse}" frameborder="0" allowfullscreen)
+        // iframe(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        // else if is_video
+        //     div
+        //     // iframe(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        //     iframe(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     else
         iframe(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
-
-    |!{embed}
+    .full
+        |!{embed}
     // .medscroll
     // 
     a.ui.basic.circular.label(href="https://www.reddit.com#{permalink}" target="_window") r/#{subreddit}
@@ -328,8 +342,8 @@ template(name='reddit')
     .ui.basic.circular.label
         i.thumbs.up.outline.icon
         |#{ups}
-    a.ui.inline.header(href=url target='_window')
-        | #{url}
+    // a.ui.inline.header(href=url target='_window')
+    //     | #{url}
     .ui.label
         | #{domain}
     // .spacer

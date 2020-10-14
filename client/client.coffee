@@ -295,6 +295,44 @@ Template.doc_tag.events
         , 10000)
        
        
+       
+       
+       
+Template.select_subreddit.onCreated ->
+    # console.log @
+    @autorun => Meteor.subscribe('tribe_by_title', @data.name)
+Template.select_subreddit.helpers
+    tribe_doc: ->
+        found = Docs.findOne 
+            title:@name
+            model:'tribe'
+        console.log found 
+        found 
+            
+       
+       
+       
+Template.select_subreddit.events
+    'click .select_subreddit': -> 
+        # results.update
+        window.speechSynthesis.cancel()
+        
+        selected_tags.push @valueOf()
+        Session.set('query','')
+        Session.set('skip',0)
+
+        # Meteor.call 'call_wiki', @valueOf(), ->
+        # Meteor.call 'call_alpha', @valueOf(), ->
+        # Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+        # Meteor.call 'search_reddit', selected_tags.array(), ->
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
+            
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
+        # Meteor.setTimeout( ->
+        #     Session.set('toggle',!Session.get('toggle'))
+        # , 10000)
+       
+       
 Template.session_edit_value_button.events
     'click .set_session_value': ->
         # console.log @key
@@ -575,15 +613,15 @@ Template.call_watson.events
         # Meteor.call 'search_stack', selected_tags.array(), ->
        
 
-# Template.reddit.onRendered ->
-#     Meteor.setTimeout( =>
-#         console.log @
-#         $('.ui.embed').embed({
-#             source: 'youtube',
-#             url: @data.url
-#             # placeholder: '/images/bear-waving.jpg'
-#         });
-#     , 1000)
+Template.reddit.onRendered ->
+    Meteor.setTimeout( =>
+        console.log @
+        $('.ui.embed').embed({
+            source: 'youtube',
+            # url: @data.url
+            # placeholder: '/images/bear-waving.jpg'
+        });
+    , 1000)
 
 
 # Template.chat.onCreated ->

@@ -46,6 +46,31 @@ Meteor.publish 'doc_by_title', (title)->
             max_emotion_name:1
             model:1
     )
+Meteor.publish 'tribe_by_title', (title)->
+    console.log 'finding tribe',title
+    # @unblock()
+    found = 
+        Docs.findOne({
+            title:title
+            model:'tribe'
+        })
+    if found
+        console.log 'found', found
+        Docs.find({
+            title:title
+            model:'tribe'
+        })
+    else 
+        console.log 'tribe not found, searching'
+        Meteor.call 'find_subreddit', title, ->
+    # },
+    #     fields:
+    #         title:1
+    #         url:true
+    #         "watson.metadata":1
+    #         max_emotion_name:1
+    #         model:1
+    # )
 
 Meteor.publish 'doc_count', (
     selected_tags
@@ -56,7 +81,7 @@ Meteor.publish 'doc_count', (
     selected_emotions
     )->
     match = {}
-    console.log 'tags', selected_tags
+    # console.log 'tags', selected_tags
     # match.model = $in:['wikipedia']
     # match.model = 'wikipedia'
     if selected_tags.length > 0 
@@ -224,7 +249,7 @@ Meteor.publish 'dtags', (
         match.tags = $in:['dao']
     # else if view_mode in ['reddit',null]
     doc_count = Docs.find(match).count()
-    console.log 'count',doc_count
+    # console.log 'count',doc_count
     # if query.length > 3
     #     match.title = {$regex:"#{query}"}
     #     model:'wikipedia'
@@ -301,18 +326,18 @@ Meteor.publish 'dtags', (
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', emotion_cloud
-    console.log 'emotion match', match
+    # console.log 'emotion match', match
     emotion_cloud.forEach (emotion, i) ->
-        console.log 'emotion',emotion
+        # console.log 'emotion',emotion
         self.added 'results', Random.id(),
             name: emotion.name
             count: emotion.count
             model:'emotion'
   
     if view_mode is 'porn'
-        tag_limit = 42
-    else
         tag_limit = 20
+    else
+        tag_limit = 15
   
     tag_cloud = Docs.aggregate [
         { $match: match }
