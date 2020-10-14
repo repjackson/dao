@@ -67,6 +67,9 @@ Meteor.publish 'doc_count', (
     if emotion_mode
         match.max_emotion_name = emotion_mode
         
+    if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
+    if selected_subreddits.length > 0 then match.subreddit = $all:selected_subreddits
+    if selected_models.length > 0 then match.model = $all:selected_models
     # switch view_mode
     #     when 
     switch view_mode 
@@ -85,6 +88,8 @@ Meteor.publish 'doc_count', (
         when 'reddit'
             match.model = 'reddit'
             match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+        when 'porn'
+            match.model = 'porn'
         else 
             match.model = $in:['wikipedia','reddit','alpha']
 
@@ -134,6 +139,10 @@ Meteor.publish 'docs', (
         match.tags = $all:selected_tags
     # console.log 'skip', skip
     # match.model = 'wikipedia'
+    if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
+    if selected_subreddits.length > 0 then match.subreddit = $all:selected_subreddits
+    if selected_models.length > 0 then match.model = $all:selected_models
+    
     switch view_mode 
         when 'image'
             match.model = 'reddit'
@@ -147,6 +156,8 @@ Meteor.publish 'docs', (
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
+        when 'porn'
+            match.model = 'porn'
         when 'reddit'
             match.model = 'reddit'
             match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
@@ -178,6 +189,9 @@ Meteor.publish 'dtags', (
     console.log 'tags', selected_tags
     if emotion_mode
         match.max_emotion_name = emotion_mode
+    if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
+    if selected_subreddits.length > 0 then match.subreddit = $all:selected_subreddits
+    if selected_models.length > 0 then match.model = $all:selected_models
 
     # console.log 'emotion mode', emotion_mode
     # if selected_tags.length > 0
@@ -199,6 +213,8 @@ Meteor.publish 'dtags', (
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
+        when 'porn'
+            match.model = 'porn'
         else
             match.model = $in:['wikipedia','reddit','alpha']
             # match.model = $in:['wikipedia']
@@ -272,6 +288,31 @@ Meteor.publish 'dtags', (
             model:'subreddit'
   
   
+  
+    emotion_cloud = Docs.aggregate [
+        { $match: match }
+        { $project: "max_emotion_name": 1 }
+        # { $unwind: "$emotions" }
+        { $group: _id: "max_emotion_name", count: $sum: 1 }
+        { $match: _id: $nin: selected_emotions }
+        { $sort: count: -1, _id: 1 }
+        { $match: count: $lt: doc_count }
+        { $limit:10 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # # console.log 'cloud: ', emotion_cloud
+    # console.log 'emotion match', match
+    emotion_cloud.forEach (emotion, i) ->
+        self.added 'results', Random.id(),
+            name: emotion.name
+            count: emotion.count
+            model:'emotion'
+  
+    if view_mode is 'porn'
+        tag_limit = 42
+    else
+        tag_limit = 10
+  
     tag_cloud = Docs.aggregate [
         { $match: match }
         { $project: "tags": 1 }
@@ -280,7 +321,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:10 }
+        { $limit:tag_limit }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # # console.log 'cloud: ', tag_cloud

@@ -178,9 +178,12 @@ Template.unselect_tag.events
         selected_tags.remove @valueOf()
         Session.set('skip',0)
         if selected_tags.array().length > 0
-            Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-            Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+            if Session.equals('view_mode','porn')
+                Meteor.call 'search_ph', selected_tags.array(), ->
+            else
+                Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+                Meteor.call 'call_wiki', @valueOf(), ->
+                Meteor.call 'search_reddit', selected_tags.array(), ->
             # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
             Meteor.setTimeout( ->
                 Session.set('toggle',!Session.get('toggle'))
@@ -214,11 +217,15 @@ Template.tag_selector.helpers
             title:@name
             
 Template.home.events
-    'click .select_model': -> 
-        selected_models.push @name
-            
-    'click .select_subreddit': -> 
-        selected_subreddits.push @name
+    'click .select_model': -> selected_models.push @name
+    'click .select_emotion': -> selected_emotions.push @name
+    'click .select_subreddit': -> selected_subreddits.push @name
+    'click .select_location': -> selected_locations.push @name
+    
+    'click .unselect_location': -> selected_locations.remove @valueOf()
+    'click .unselect_model': -> selected_models.remove @valueOf()
+    'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
+    'click .unselect_emotion': -> selected_emotions.remove @valueOf()
             
             
 Template.tag_selector.events
@@ -226,17 +233,20 @@ Template.tag_selector.events
         # results.update
         # window.speechSynthesis.cancel()
         # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
         
         selected_tags.push @name
         Session.set('query','')
         Session.set('skip',0)
         $('.search_title').val('')
-        Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-        # Meteor.call 'call_alpha', @name, ->
-        Meteor.call 'call_wiki', @name, ->
-        Meteor.call 'search_ddg', @name, ->
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+        if Session.equals('view_mode','porn')
+            Meteor.call 'search_ph', @name, ->
+        else        
+            window.speechSynthesis.speak new SpeechSynthesisUtterance @name
+            Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+            # Meteor.call 'call_alpha', @name, ->
+            Meteor.call 'call_wiki', @name, ->
+            Meteor.call 'search_ddg', @name, ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -334,11 +344,11 @@ Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
-        match = {model:$in:['post','wikipedia','reddit','page','alpha']}
+        match = {model:$in:['post','wikipedia','reddit','page','alpha','porn']}
         # match = {model:$in:['post','wikipedia','reddit']}
         # match = {model:'wikipedia'}
-        # if selected_tags.array().length>0
-        match.tags = $all:selected_tags.array()
+        if selected_tags.array().length>0
+            match.tags = $all:selected_tags.array()
      
         Docs.find match,
             sort:
@@ -368,6 +378,9 @@ Template.home.helpers
     selected_tags: -> selected_tags.array()
     selected_models: -> selected_models.array()
     selected_subreddits: -> selected_subreddits.array()
+    selected_emotions: -> selected_emotions.array()
+   
+    emotion_results: -> results.find(model:'emotion')
     model_results: -> results.find(model:'model')
     subreddit_results: -> results.find(model:'subreddit')
     tag_results: ->
@@ -473,8 +486,7 @@ Template.home.events
         #     Session.set('query','')
         if e.which is 13
             # window.speechSynthesis.cancel()
-            window.speechSynthesis.speak new SpeechSynthesisUtterance search
-            console.log search
+            # console.log search
             if search.length > 0
                 # Meteor.call 'check_url', search, (err,res)->
                 #     console.log res
@@ -493,19 +505,23 @@ Template.home.events
                 # console.log 'selected tags', selected_tags.array()
                 # Meteor.call 'call_alpha', search, ->
                 Meteor.call 'search_ddg', search, ->
-                
-                Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-                Meteor.call 'call_wiki', search, ->
-                Meteor.call 'search_reddit', selected_tags.array(), ->
+                if Session.equals('view_mode','porn')
+                    Meteor.call 'search_ph', search, ->
+                else
+                    window.speechSynthesis.speak new SpeechSynthesisUtterance search
+                    Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+                    Meteor.call 'call_wiki', search, ->
+                    Meteor.call 'search_reddit', selected_tags.array(), ->
+
                 Session.set('skip',0)
                 # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
                 # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
 
                 # Session.set('query','')
                 $('.search_title').val('')
-                Meteor.setTimeout( ->
-                    Session.set('toggle',!Session.get('toggle'))
-                , 10000)
+                # Meteor.setTimeout( ->
+                #     Session.set('toggle',!Session.get('toggle'))
+                # , 10000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()
@@ -564,28 +580,28 @@ Template.call_watson.events
 #     , 1000)
 
 
-Template.chat.onCreated ->
-    @autorun -> Meteor.subscribe('chat')
+# Template.chat.onCreated ->
+#     @autorun -> Meteor.subscribe('chat')
 
-Template.chat.helpers
-    chats: ->
-        Docs.find {
-            model:'chat'
-        },
-            limit:8
-            sort:_timestamp:1
-Template.chat.events
-    'keyup .new_chat': (e,t)->
-        chat = $('.new_chat').val().toLowerCase().trim()
-        if e.which is 13
-            # window.speechSynthesis.cancel()
-            # console.log 'chat'
-            Meteor.call 'add_chat', chat, ->
-            $('.new_chat').val('')
-            Meteor.setTimeout =>
-                last = Docs.findOne
-                    model:'chat'
-                , sort:_timestamp:-1
-                # console.log 'last', last
-                window.speechSynthesis.speak new SpeechSynthesisUtterance last.response.result
-            , 2000
+# Template.chat.helpers
+#     chats: ->
+#         Docs.find {
+#             model:'chat'
+#         },
+#             limit:8
+#             sort:_timestamp:1
+# Template.chat.events
+#     'keyup .new_chat': (e,t)->
+#         chat = $('.new_chat').val().toLowerCase().trim()
+#         if e.which is 13
+#             # window.speechSynthesis.cancel()
+#             # console.log 'chat'
+#             Meteor.call 'add_chat', chat, ->
+#             $('.new_chat').val('')
+#             Meteor.setTimeout =>
+#                 last = Docs.findOne
+#                     model:'chat'
+#                 , sort:_timestamp:-1
+#                 # console.log 'last', last
+#                 window.speechSynthesis.speak new SpeechSynthesisUtterance last.response.result
+#             , 2000

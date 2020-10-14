@@ -22,3 +22,28 @@ template(name='i')
 template(name='ismall')
     img(src="https://img.icons8.com/pastel-glyph/24/000000/#{name}.png" class=classes title=title)
     //- img(src="https://img.icons8.com/ultraviolet/24/000000/#{name}.png" class=classes title=title)
+
+
+template(name='vid_card')
+    .ui.stackable.grid
+        .sixteen.wide.center.aligned.column
+            each thumbs
+                img.ui.small.superzoom.rounded.inline.image.mobile.hidden(src=src)    
+                // img.ui.tiny.zoom.rounded.inline.image.mobile.only(src=src)    
+            iframe.invert(src="https://www.pornhub.com/embed/#{video_id}" frameborder="0" width="100%" height='500' scrolling="no")
+            // img.ui.image.rounded.pointer(src=default_thumb)
+            //- a.ui.small.header(href=url target='_window') #{title}
+            a.ui.grey.center.aligned.header(href="/m/vid/#{_id}/view" class=emotion_color_class) !{lowered_title}
+            .spacer
+                
+            |#{when}
+            if dev
+                +print_this
+                i.remove.big.icon
+                i.fork.big.icon
+            .ui.label #{views}
+            // .ui.basic.label #{rating} rating
+            // .ui.basic.label #{ratings} ratings
+            // .ui.basic.label #{views} views
+            // if dev 
+            //     i.code.link.icon.print_me
