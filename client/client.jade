@@ -66,15 +66,9 @@ template(name='home')
                 +view_mode key='alpha' icon='disabled brain'
                 +view_mode key='porn' icon='mercury'
                 .spacer
-                +emotion_mode key='joy' icon='happy--v1'
-                +emotion_mode key='sadness' icon='sad--v1'
-                +emotion_mode key='anger' icon='angry--v1'
-                +emotion_mode key='disgust' icon='disgusting'
-                +emotion_mode key='fear' icon='scream'
-                .spacer
                 .ui.inline.header 
-                    i.reddit.large.icon
-                    |groups
+                    i.users.large.icon
+                    |group
                 each selected_subreddits
                     .ui.black.circular.compact.button.unselect_subreddit
                         |#{this}
@@ -84,8 +78,13 @@ template(name='home')
                 .spacer
                 .ui.inline.header 
                     i.smile.large.icon
-                    |main emotion
-                    
+                    |emotion
+                +emotion_mode key='joy' icon='happy--v1'
+                +emotion_mode key='sadness' icon='sad--v1'
+                +emotion_mode key='anger' icon='angry--v1'
+                +emotion_mode key='disgust' icon='disgusting'
+                +emotion_mode key='fear' icon='scream'
+
                 each selected_emotions
                     .ui.black.circular.compact.button.unselect_emotion
                         |#{this}
@@ -130,11 +129,27 @@ template(name='home')
                                 +vid_card
                             else
                                 .ui.item
-                                    if watson.metadata.image
-                                        img.ui.rounded.inline.small.pointer.zoomer.image.toggle_view(src=watson.metadata.image)    
+                                    if embed
+                                        .rounded
+                                            |!{embed}
+                                    else
+                                        if watson.metadata.image
+                                            img.ui.rounded.inline.small.pointer.zoomer.image.toggle_view(src=watson.metadata.image)    
                                     .content
-                                        a.ui.header.toggle_view #{title}
-                                    
+                                        span.ui.pointer.text.f14.zoomer.toggle_view(class=post_header_class) #{title}
+                                            // small #{max_emotion_name}
+                                        .ui.basic.small.circular.label
+                                            i.thumbs.up.outline.grey.icon
+                                            |#{ups}
+                                        .ui.basic.small.circular.label(title='subreddit')
+                                            i.reddit.grey.icon
+                                            |#{subreddit}
+                                        .ui.basic.small.circular.label(title='author')
+                                            i.user.outline.grey.icon
+                                            |#{author}
+                                        .ui.basic.small.circular.label(title='domain')
+                                            i.user.outline.grey.icon
+                                            |#{domain}
                                         if viewing_doc
                                             if key_value 'model' 'reddit'
                                                 +reddit
@@ -179,7 +194,6 @@ template(name='home')
                                                 i.plus.grey.icon
                                                 input.tag_post(type='text')
                                             i.code.link.icon.print_me
-            
         // .one.column.row
         //     .column
         //         +chat
@@ -294,15 +308,15 @@ template(name='reddit')
         //         a(href=url) October 3, 2020
     else if is_youtube
         div
-        .ui.embed
-        iframe(id="ytplayer" type="text/html" width="720" height="405" src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allowfullscreen)
+        // .ui.embed
+        //     iframe(id="ytplayer" type="text/html" width="720" height="405" src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allowfullscreen)
         iframe(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     else if is_video
         div
         // iframe(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         iframe(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
     else
-        iframe(width="560" height="315" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
+        iframe(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
 
     |!{embed}
     // .medscroll
@@ -314,8 +328,10 @@ template(name='reddit')
     .ui.basic.circular.label
         i.thumbs.up.outline.icon
         |#{ups}
-    .ui.inline.header
+    a.ui.inline.header(href=url target='_window')
         | #{url}
+    .ui.label
+        | #{domain}
     // .spacer
     // .nl2br
     // |!{html}

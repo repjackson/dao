@@ -46,7 +46,7 @@ Template.keywords.helpers
         (@sentiment.score*100).toFixed()
 
     sadness_percent: -> (@sadness*100).toFixed()
-    # joy_percent: -> (@joy*100).toFixed()
+    joy_percent: -> (@joy*100).toFixed()
     disgust_percent: -> (@disgust*100).toFixed()
     anger_percent: -> (@anger*100).toFixed()
     fear_percent: -> (@fear*100).toFixed()

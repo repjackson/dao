@@ -293,11 +293,11 @@ Meteor.publish 'dtags', (
         { $match: match }
         { $project: "max_emotion_name": 1 }
         # { $unwind: "$emotions" }
-        { $group: _id: "max_emotion_name", count: $sum: 1 }
+        { $group: _id: "$max_emotion_name", count: $sum: 1 }
         # { $match: _id: $nin: selected_emotions }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:10 }
+        { $limit:5 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # console.log 'cloud: ', emotion_cloud
