@@ -353,7 +353,7 @@ Template.home.helpers
      
         Docs.find match,
             sort:
-                # points:-1
+                points:-1
                 ups:-1
                 # _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')

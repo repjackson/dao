@@ -62,7 +62,7 @@ Meteor.publish 'doc_count', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['love']
+        match.tags = $in:['dao']
     
     if emotion_mode
         match.max_emotion_name = emotion_mode
@@ -221,7 +221,7 @@ Meteor.publish 'dtags', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['love']
+        match.tags = $in:['dao']
     # else if view_mode in ['reddit',null]
     doc_count = Docs.find(match).count()
     console.log 'count',doc_count
@@ -312,7 +312,7 @@ Meteor.publish 'dtags', (
     if view_mode is 'porn'
         tag_limit = 42
     else
-        tag_limit = 10
+        tag_limit = 20
   
     tag_cloud = Docs.aggregate [
         { $match: match }

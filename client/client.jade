@@ -44,9 +44,9 @@ template(name='home')
             .sixteen.wide.column
                 i#clear_tags.link.yin.yang.big.icon(class=loading_class)
                 if selected_tags
-                    if many_tags
-                        a#clear_tags.ui.black.icon.small.compact.circular.button.select_term
-                            i.remove.icon
+                    // if many_tags
+                    //     a#clear_tags.ui.black.icon.small.compact.circular.button.select_term
+                    //         i.remove.icon
                     each selected_tags
                         +unselect_tag
                 .ui.left.icon.inline.input 
@@ -54,6 +54,7 @@ template(name='home')
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
+                .ui.basic.circular.label(title='results') #{doc_count}
         .row
             .five.wide.right.aligned.column.scrolling
                 +view_mode key='twitter' icon='twitter' color='blue'
@@ -67,7 +68,7 @@ template(name='home')
                 +view_mode key='porn' icon='mercury'
                 .spacer
                 .ui.inline.header 
-                    i.users.large.icon
+                    i.users.large.grey.icon
                     |group
                 each selected_subreddits
                     .ui.black.circular.compact.button.unselect_subreddit
@@ -77,7 +78,7 @@ template(name='home')
                         |#{name}
                 .spacer
                 .ui.inline.header 
-                    i.smile.large.icon
+                    i.smile.large.grey.icon
                     |emotion
                 +emotion_mode key='joy' icon='happy--v1'
                 +emotion_mode key='sadness' icon='sad--v1'
@@ -115,13 +116,12 @@ template(name='home')
                 // .five.wide.column.scrolling
                 // each docs
             .ten.wide.column
-                .ui.basic.circular.label(title='results') #{doc_count}
-                .ui.button
-                    |sort
-                .ui.button
-                    i.list.icon
-                .ui.button
-                    i.th.icon
+                // .ui.button
+                //     |sort
+                // .ui.button
+                //     i.list.icon
+                // .ui.button
+                //     i.th.icon
                 .ui.stackable.padded.grid.scrolling
                     .ui.items
                         each docs
@@ -150,16 +150,16 @@ template(name='home')
                                         .ui.basic.small.circular.label(title='domain')
                                             i.user.outline.grey.icon
                                             |#{domain}
+                                            // unless one_post
+                                            //     i.chevron.left.big.circular.grey.link.icon.back
+                                        i.thumbs.up.outline.big.grey.link.icon.vote_up
+                                        |#{points}
+                                        i.thumbs.down.outline.big.grey.link.icon.vote_down
+                                            // unless one_post
+                                            //     i.chevron.right.big.circular.grey.link.icon.forward
                                         if viewing_doc
                                             if key_value 'model' 'reddit'
                                                 +reddit
-                                            unless one_post
-                                                i.chevron.left.big.circular.grey.link.icon.back
-                                            i.thumbs.up.outline.big.grey.link.circular.icon.vote_up
-                                            |#{points}
-                                            i.thumbs.down.outline.big.grey.link.circular.icon.vote_down
-                                            unless one_post
-                                                i.chevron.right.big.circular.grey.link.icon.forward
                                             unless key_value 'model' 'reddit'
                                                 // if watson.metadata.image
                                                 //     img.ui.rounded.inline.small.image(src=watson.metadata.image)    
