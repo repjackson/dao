@@ -1,4 +1,7 @@
 @selected_tags = new ReactiveArray []
+@selected_models = new ReactiveArray []
+@selected_subreddits = new ReactiveArray []
+@selected_emotions = new ReactiveArray []
 
 Template.registerHelper 'skip_is_zero', ()-> Session.equals('skip', 0)
 Template.registerHelper 'one_post', ()-> Counts.get('result_counter') is 1
@@ -49,9 +52,10 @@ Template.reddit.onRendered ->
     #     Meteor.call 'call_watson', @data._id, 'url','url',->
     # if @data.response
     # window.speechSynthesis.cancel()
-    if @data.title
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @data.title
-
+    # Meteor.setTimeout =>
+    #     if @data.title
+    #         window.speechSynthesis.speak new SpeechSynthesisUtterance @data.title
+    # , 1000
 
 
         
@@ -68,12 +72,18 @@ Template.home.onCreated ->
         selected_tags.array()
         Session.get('view_mode')
         Session.get('emotion_mode')
+        selected_models.array()
+        selected_subreddits.array()
+        selected_emotions.array()
         )
     @autorun => Meteor.subscribe('dtags',
         selected_tags.array()
         Session.get('view_mode')
         Session.get('emotion_mode')
         Session.get('toggle')
+        selected_models.array()
+        selected_subreddits.array()
+        selected_emotions.array()
         # Session.get('query')
         )
     @autorun => Meteor.subscribe('docs',
@@ -81,6 +91,9 @@ Template.home.onCreated ->
         Session.get('view_mode')
         Session.get('emotion_mode')
         Session.get('toggle')
+        selected_models.array()
+        selected_subreddits.array()
+        selected_emotions.array()
         # Session.get('query')
         Session.get('skip')
         )
@@ -199,6 +212,15 @@ Template.tag_selector.helpers
     term: ->
         Docs.findOne 
             title:@name
+            
+Template.home.events
+    'click .select_model': -> 
+        selected_models.push @name
+            
+    'click .select_subreddit': -> 
+        selected_subreddits.push @name
+            
+            
 Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
@@ -299,16 +321,16 @@ Template.home.helpers
             model:'alpha'
             # query: $in: selected_tags.array()
             query: selected_tags.array().toString()
-    alpha_singles: ->
-        Docs.find 
-            model:'alpha'
-            query: $in: selected_tags.array()
-            # query: selected_tags.array().toString()
+    # alpha_singles: ->
+    #     Docs.find 
+    #         model:'alpha'
+    #         query: $in: selected_tags.array()
+    #         # query: selected_tags.array().toString()
     ducks: ->
         Docs.find 
             model:'duck'
-            query: $in: selected_tags.array()
-            # query: selected_tags.array().toString()
+            # query: $in: selected_tags.array()
+            query: selected_tags.array().toString()
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
@@ -324,7 +346,7 @@ Template.home.helpers
                 ups:-1
                 # _timestamp:-1
                 # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:1
+            limit:10
             skip:Session.get('skip')
         # if cur.count() is 1
         # Docs.find match
@@ -344,6 +366,10 @@ Template.home.helpers
     #         title:@valueOf()
     
     selected_tags: -> selected_tags.array()
+    selected_models: -> selected_models.array()
+    selected_subreddits: -> selected_subreddits.array()
+    model_results: -> results.find(model:'model')
+    subreddit_results: -> results.find(model:'subreddit')
     tag_results: ->
         # match = {model:'wikipedia'}
         # doc_count = Docs.find(match).count()

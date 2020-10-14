@@ -51,6 +51,9 @@ Meteor.publish 'doc_count', (
     selected_tags
     view_mode
     emotion_mode
+    selected_models
+    selected_subreddits
+    selected_emotions
     )->
     match = {}
     console.log 'tags', selected_tags
@@ -117,6 +120,9 @@ Meteor.publish 'docs', (
     view_mode
     emotion_mode
     toggle
+    selected_models
+    selected_subreddits
+    selected_emotions
     # query=''
     skip
     )->
@@ -161,6 +167,9 @@ Meteor.publish 'dtags', (
     view_mode
     emotion_mode
     toggle
+    selected_models
+    selected_subreddits
+    selected_emotions
     # query=''
     )->
     # @unblock()
@@ -224,6 +233,45 @@ Meteor.publish 'dtags', (
     #             model:'tag'
     #     # self.ready()
     # else
+    model_cloud = Docs.aggregate [
+        { $match: match }
+        { $project: "model": 1 }
+        # { $unwind: "$models" }
+        { $group: _id: "$model", count: $sum: 1 }
+        { $match: _id: $nin: selected_models }
+        { $sort: count: -1, _id: 1 }
+        { $match: count: $lt: doc_count }
+        { $limit:10 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # # console.log 'cloud: ', model_cloud
+    # console.log 'model match', match
+    model_cloud.forEach (model, i) ->
+        self.added 'results', Random.id(),
+            name: model.name
+            count: model.count
+            model:'model'
+  
+    subreddit_cloud = Docs.aggregate [
+        { $match: match }
+        { $project: "subreddit": 1 }
+        # { $unwind: "$subreddits" }
+        { $group: _id: "$subreddit", count: $sum: 1 }
+        { $match: _id: $nin: selected_subreddits }
+        { $sort: count: -1, _id: 1 }
+        { $match: count: $lt: doc_count }
+        { $limit:10 }
+        { $project: _id: 0, name: '$_id', count: 1 }
+        ]
+    # # console.log 'cloud: ', subreddit_cloud
+    # console.log 'subreddit match', match
+    subreddit_cloud.forEach (subreddit, i) ->
+        self.added 'results', Random.id(),
+            name: subreddit.name
+            count: subreddit.count
+            model:'subreddit'
+  
+  
     tag_cloud = Docs.aggregate [
         { $match: match }
         { $project: "tags": 1 }
@@ -232,7 +280,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:7 }
+        { $limit:10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # # console.log 'cloud: ', tag_cloud

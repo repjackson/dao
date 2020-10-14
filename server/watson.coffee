@@ -144,17 +144,17 @@ Meteor.methods
                 limit:20
             features:
                 entities:
-                    emotion: true
-                    sentiment: true
-                    mentions: true
+                    emotion: false
+                    sentiment: false
+                    mentions: false
                     limit: 20
                 keywords:
-                    emotion: true
-                    sentiment: true
+                    emotion: false
+                    sentiment: false
                     limit: 20
                 concepts: {}
                 categories:
-                    explanation:true
+                    explanation:false
                 emotion: {}
                 metadata: {}
                 # relations: {}

@@ -54,6 +54,12 @@ template(name='home')
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
+                each model_results
+                    .ui.compact.cicular.basic.button.select_model
+                        |#{name}
+                each subreddit_results
+                    .ui.compact.cicular.basic.button.select_subreddit
+                        |r/#{name}
                 .ui.basic.circular.label(title='results') #{doc_count}
                 +emotion_mode key='joy' icon='happy--v1'
                 +emotion_mode key='sadness' icon='sad--v1'
@@ -66,11 +72,11 @@ template(name='home')
                 +view_mode key='image' icon='picture' color='green'
                 +view_mode key='reddit' icon='reddit' color='teal'
                 +view_mode key='wikipedia' icon='wikipedia' color='purple'
-                // +view_mode key='stackexchange' icon='stack exchange'
-                // +view_mode key='github' icon='github'
-                // +view_mode key='alpha' icon='disabled brain'
+                +view_mode key='stackexchange' icon='stack exchange'
+                +view_mode key='github' icon='github'
+                +view_mode key='alpha' icon='disabled brain'
         .row
-            .eight.wide.right.aligned.column
+            .five.wide.right.aligned.column.scrolling
                 div
                 each alphas
                     if response.queryresult
@@ -81,15 +87,26 @@ template(name='home')
                             +alpha 
                 each ducks
                     +duck 
-            .eight.wide.column
+            .five.wide.column.scrolling
+                each docs
+                    .ui.header #{title}
+                    .ui.compact.circular.button.pick_subreddit
+                        |r/#{subreddit}
+                    .ui.compact.circular.button.pick_subreddit
+                        i.user.outline.icon
+                        |#{author}
+                    each tags
+                        .ui.compact.tiny.circular.button.add_tag
+                            |#{this}
+            .six.wide.column
                 // .spacer
-                .ui.stackable.padded.grid
+                .ui.stackable.padded.grid.scrolling
                     each docs
-                        .sixteen.wide.column
+                        .sixteen.wide.colum
                             // div
                             if key_value 'model' 'reddit'
-                                span.scrolling
-                                    +reddit
+                                // span.scrolling
+                                +reddit
                             unless one_post
                                 i.chevron.left.big.circular.grey.link.icon.back
                             i.thumbs.up.outline.big.grey.link.circular.icon.vote_up
@@ -113,15 +130,9 @@ template(name='home')
                             if tone
                                 +tone
                             //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-                            // +session_edit_value_button key='view_section' value='preview' label='embed' icon='eye'
-                            // +session_edit_value_button key='view_section' value='comments' label='comments' icon='chat'
                             if session_key_value_is 'view_section' 'content'
                                 +post
                             // else
-                            if session_key_value_is 'view_section' 'analysis'
-                                +watson_view
-                                if tone
-                                    +tone
                             // if session_key_value_is 'view_section' 'preview'
                             // // .column
                             // //     .rounded
@@ -136,9 +147,9 @@ template(name='home')
                                 input.tag_post(type='text')
                             i.code.link.icon.print_me
             
-        .one.column.row
-            .column
-                +chat
+        // .one.column.row
+        //     .column
+        //         +chat
                     
                 
 template(name='chat')                
