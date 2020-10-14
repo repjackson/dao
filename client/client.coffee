@@ -326,6 +326,7 @@ Template.session_edit_value_button.helpers
             
 
 Template.home.helpers
+    viewing_doc: -> Session.equals('viewing_doc', @_id)
     alphas: ->
         Docs.find 
             model:'alpha'
@@ -416,6 +417,11 @@ Template.duck.events
 
 
 Template.home.events
+    'click .toggle_view': (e,t)-> 
+        if Session.equals('viewing_doc', @_id)
+            Session.set('viewing_doc', null)
+        else
+            Session.set('viewing_doc', @_id)
     'click .print_me': (e,t)-> console.log @
     # 'click .tagger': (e,t)->
     #     Meteor.call 'call_watson', @_id, 'url', 'url', ->

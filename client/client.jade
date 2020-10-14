@@ -23,7 +23,7 @@ head
 
     // script(async='' src='https://platform.twitter.com/widgets.js' charset='utf-8')
 
-    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+    // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
 
     script.
         window.dataLayer = window.dataLayer || [];
@@ -45,7 +45,7 @@ template(name='home')
                 i#clear_tags.link.yin.yang.big.icon(class=loading_class)
                 if selected_tags
                     if many_tags
-                        a#clear_tags.ui.black.icon.compact.circular.button.select_term
+                        a#clear_tags.ui.black.icon.small.compact.circular.button.select_term
                             i.remove.icon
                     each selected_tags
                         +unselect_tag
@@ -79,7 +79,7 @@ template(name='home')
                     .ui.black.circular.compact.button.unselect_subreddit
                         |#{this}
                 each subreddit_results
-                    .ui.compact.cicular.basic.button.select_subreddit
+                    .ui.compact.circular.basic.button.select_subreddit
                         |#{name}
                 .spacer
                 .ui.inline.header 
@@ -90,7 +90,7 @@ template(name='home')
                     .ui.black.circular.compact.button.unselect_emotion
                         |#{this}
                 each emotion_results
-                    .ui.compact.cicular.basic.button.select_emotion
+                    .ui.compact.circular.basic.button.select_emotion
                         |#{name}
                 .spacer
                 .ui.inline.header 
@@ -100,7 +100,7 @@ template(name='home')
                     .ui.black.circular.compact.button.unselect_model
                         |#{this}
                 each model_results
-                    .ui.compact.cicular.basic.button.select_model
+                    .ui.compact.circular.basic.button.select_model
                         |#{name}
                 // i.smile.large.icon
                 div
@@ -124,64 +124,61 @@ template(name='home')
                 .ui.button
                     i.th.icon
                 .ui.stackable.padded.grid.scrolling
-                    each docs
-                        .sixteen.wide.colum
+                    .ui.items
+                        each docs
                             if key_value 'model' 'porn'
                                 +vid_card
                             else
-                                if watson.metadata.image
-                                    img.ui.rounded.inline.image(src=watson.metadata.image)    
-                                .ui.header #{title}
-                                .ui.compact.circular.basic.button.pick_subreddit
-                                    |r/#{subreddit}
-                                .ui.compact.circular.basic.button.pick_subreddit
-                                    i.user.outline.icon
-                                    |#{author}
-                                if key_value 'model' 'reddit'
-                                    div
-                                    // span.scrolling
-                                    +reddit
-                                unless one_post
-                                    i.chevron.left.big.circular.grey.link.icon.back
-                                i.thumbs.up.outline.big.grey.link.circular.icon.vote_up
-                                |#{points}
-                                i.thumbs.down.outline.big.grey.link.circular.icon.vote_down
-                                unless one_post
-                                    i.chevron.right.big.circular.grey.link.icon.forward
-                                unless key_value 'model' 'reddit'
+                                .ui.item
                                     if watson.metadata.image
-                                        img.ui.rounded.inline.small.image(src=watson.metadata.image)    
-                                    if is_image
-                                        img.ui.centered.image(src=url)
-                                    a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
-        
-                                // .spacer
-                                // div
-                                // +session_edit_value_button key='view_section' value='content' label='content' icon='content'
-                                // if watson
-                                //     .medscroll
-                                //         +watson_view
-                                if tone
-                                    +tone
-                                //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-                                if session_key_value_is 'view_section' 'content'
-                                    +post
-                                // else
-                                // if session_key_value_is 'view_section' 'preview'
-                                // // .column
-                                // //     .rounded
-                                // //         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-                                // .column
-                                each tags
-                                    +doc_tag
-                                +call_watson
-                                if watson    
-                                    +call_tone    
-                                |#{tags.length}
-                                .ui.transparent.input
-                                    i.plus.grey.icon
-                                    input.tag_post(type='text')
-                                i.code.link.icon.print_me
+                                        img.ui.rounded.inline.small.pointer.zoomer.image.toggle_view(src=watson.metadata.image)    
+                                    .content
+                                        a.ui.header.toggle_view #{title}
+                                    
+                                        if viewing_doc
+                                            if key_value 'model' 'reddit'
+                                                +reddit
+                                            unless one_post
+                                                i.chevron.left.big.circular.grey.link.icon.back
+                                            i.thumbs.up.outline.big.grey.link.circular.icon.vote_up
+                                            |#{points}
+                                            i.thumbs.down.outline.big.grey.link.circular.icon.vote_down
+                                            unless one_post
+                                                i.chevron.right.big.circular.grey.link.icon.forward
+                                            unless key_value 'model' 'reddit'
+                                                // if watson.metadata.image
+                                                //     img.ui.rounded.inline.small.image(src=watson.metadata.image)    
+                                                if is_image
+                                                    img.ui.centered.image(src=url)
+                                                a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
+                    
+                                            // .spacer
+                                            // div
+                                            // +session_edit_value_button key='view_section' value='content' label='content' icon='content'
+                                            // if watson
+                                            //     .medscroll
+                                            //         +watson_view
+                                            if tone
+                                                +tone
+                                            //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
+                                            if session_key_value_is 'view_section' 'content'
+                                                +post
+                                            // else
+                                            // if session_key_value_is 'view_section' 'preview'
+                                            // // .column
+                                            // //     .rounded
+                                            // //         iframe.rounded(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+                                            // .column
+                                            each tags
+                                                +doc_tag
+                                            +call_watson
+                                            if watson    
+                                                +call_tone    
+                                            |#{tags.length}
+                                            .ui.transparent.input
+                                                i.plus.grey.icon
+                                                input.tag_post(type='text')
+                                            i.code.link.icon.print_me
             
         // .one.column.row
         //     .column
@@ -264,13 +261,13 @@ template(name='convert')
 
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.big.image.circular.label.select_term(href='#')
+    a.unselect_tag.ui.black.large.image.circular.label.select_term(href='#')
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.big.image.basic.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
+    a.ui.large.image.basic.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
         if term
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         | #{name}
@@ -287,65 +284,65 @@ template(name='doc_tag')
 template(name='reddit')
     // if watson.metadata.image
     //     img.ui.rounded.inline.small.image(src=watson.metadata.image)    
-    // if is_image
-    //     img.ui.centered.image(src=url)
+    if is_image
+        img.ui.centered.image(src=url)
         // else if is_twitter
-        // blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
-        //     p(lang='en' dir='ltr')
-        //         | Twitter Support you must have the patience of 1000 camels waiting for a drink of water while the baby camels get the first drinks...does that make sense? Thank you for your dedication and time you selfishly give to each of us. You are always appreciated.
-        //     | — KayeMc76 (@KayeMc76) 
-        //     a(href=url) October 3, 2020
-        // else if is_youtube
-        //     div
-        // .ui.embed
-        // iframe(id="ytplayer" type="text/html" width="720" height="405" src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allowfullscreen)
-        // iframe(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        // else if is_video
-        //     div
-        //     // iframe(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-        //     iframe(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-    // |!{embed}
-    // else
+        //     blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
+        //         p(lang='en' dir='ltr')
+        //             | Twitter Support you must have the patience of 1000 camels waiting for a drink of water while the baby camels get the first drinks...does that make sense? Thank you for your dedication and time you selfishly give to each of us. You are always appreciated.
+        //         | — KayeMc76 (@KayeMc76) 
+        //         a(href=url) October 3, 2020
+    else if is_youtube
+        div
+        .ui.embed
+        iframe(id="ytplayer" type="text/html" width="720" height="405" src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allowfullscreen)
+        iframe(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    else if is_video
+        div
+        // iframe(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+        iframe(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
+    else
+        iframe(width="560" height="315" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
 
-        // iframe(width="560" height="315" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
+    |!{embed}
     // .medscroll
     // 
-    // a.ui.basic.circular.label(href="https://www.reddit.com#{permalink}" target="_window") r/#{subreddit}
-    // .ui.big.label 
-    //     i.user.outline.icon
-    //     |#{author}
-    // .ui.basic.circular.label
-    //     i.thumbs.up.outline.icon
-    //     |#{ups}
-    // .ui.inline.header
-    //     | #{url}
+    a.ui.basic.circular.label(href="https://www.reddit.com#{permalink}" target="_window") r/#{subreddit}
+    .ui.big.label 
+        i.user.outline.icon
+        |#{author}
+    .ui.basic.circular.label
+        i.thumbs.up.outline.icon
+        |#{ups}
+    .ui.inline.header
+        | #{url}
     // .spacer
     // .nl2br
     // |!{html}
     // .spacer
     // pre
     // .nl2br
-    if viewing
-        if parsed_selftext_html
-            |!{parsed_selftext_html}
-        else if selftext
-            |{{nl2br selftext}}
-        else if body
-            div
-            |{{nl2br body}}
-    // else if tone
-    //     .spacer
-    //     +tone
+    // if viewing
+    if parsed_selftext_html
+        |!{parsed_selftext_html}
+    else if selftext
+        |{{nl2br selftext}}
+    else if body
+        div
+        |{{nl2br body}}
+    else if tone
+        .spacer
+        +tone
     // div(style='position:relative; padding-bottom:calc(125.00% + 44px)')
     //     iframe(src='https://gfycat.com/ifr/MeanFatAmurratsnake' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen)
     // |{{selftext}}
-    blockquote(class="reddit-card")
-        a(href="https://www.reddit.com#{permalink}") 
-            |#{title}
-        |from 
-        a(href="http://www.reddit.com/r/#{subreddit}") 
-            |r/#{subreddit}
-    script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
+    // blockquote(class="reddit-card")
+    //     a(href="https://www.reddit.com#{permalink}") 
+    //         |#{title}
+    //     |from 
+    //     a(href="http://www.reddit.com/r/#{subreddit}") 
+    //         |r/#{subreddit}
+    // script(src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8")
     +call_watson
     // if watson 
     //     +call_tone
