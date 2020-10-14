@@ -46,7 +46,7 @@ Template.registerHelper 'tone_size', () ->
 
 
 Template.registerHelper 'post_header_class', (metric) ->
-    console.log @
+    # console.log @
     switch @max_emotion_name
         when 'joy' then 'green'
         when 'anger' then 'red'

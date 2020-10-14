@@ -219,7 +219,6 @@ Template.tag_selector.helpers
 Template.home.events
     'click .select_model': -> selected_models.push @name
     'click .select_emotion': -> selected_emotions.push @name
-    'click .select_subreddit': -> selected_subreddits.push @name
     'click .select_location': -> selected_locations.push @name
     
     'click .unselect_location': -> selected_locations.remove @valueOf()
@@ -306,7 +305,7 @@ Template.select_subreddit.helpers
         found = Docs.findOne 
             title:@name
             model:'tribe'
-        console.log found 
+        # console.log found 
         found 
             
        
@@ -316,8 +315,8 @@ Template.select_subreddit.events
     'click .select_subreddit': -> 
         # results.update
         window.speechSynthesis.cancel()
-        
-        selected_tags.push @valueOf()
+        console.log @
+        selected_subreddits.push @name
         Session.set('query','')
         Session.set('skip',0)
 
@@ -325,7 +324,7 @@ Template.select_subreddit.events
         # Meteor.call 'call_alpha', @valueOf(), ->
         # Meteor.call 'call_alpha', selected_tags.array().toString(), ->
         # Meteor.call 'search_reddit', selected_tags.array(), ->
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
             
         # window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
         # Meteor.setTimeout( ->
