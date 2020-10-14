@@ -42,27 +42,20 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.column
+                i#clear_tags.link.yin.yang.big.icon(class=loading_class)
                 if selected_tags
-                    // if many_tags
-                    //     a#clear_tags.ui.black.icon.compact.circular.button.select_term
-                    //         i.remove.icon
+                    if many_tags
+                        a#clear_tags.ui.black.icon.compact.circular.button.select_term
+                            i.remove.icon
                     each selected_tags
                         +unselect_tag
                 .ui.left.icon.inline.input 
-                    // i.search.icon
-                    i#clear_tags.link.yin.yang.icon(class=loading_class)
+                    i.search.icon
                     input.search_title(type='text' autofocus='')
                 each tag_results
                     +tag_selector
         .row
             .five.wide.right.aligned.column.scrolling
-                .ui.basic.circular.label(title='results') #{doc_count}
-                +emotion_mode key='joy' icon='happy--v1'
-                +emotion_mode key='sadness' icon='sad--v1'
-                +emotion_mode key='anger' icon='angry--v1'
-                +emotion_mode key='disgust' icon='disgusting'
-                +emotion_mode key='fear' icon='scream'
-                // div
                 +view_mode key='twitter' icon='twitter' color='blue'
                 +view_mode key='video' icon='youtube' color='red'
                 +view_mode key='image' icon='picture' color='green'
@@ -72,6 +65,13 @@ template(name='home')
                 +view_mode key='github' icon='github'
                 +view_mode key='alpha' icon='disabled brain'
                 +view_mode key='porn' icon='mercury'
+                .spacer
+                +emotion_mode key='joy' icon='happy--v1'
+                +emotion_mode key='sadness' icon='sad--v1'
+                +emotion_mode key='anger' icon='angry--v1'
+                +emotion_mode key='disgust' icon='disgusting'
+                +emotion_mode key='fear' icon='scream'
+                .spacer
                 .ui.inline.header 
                     i.reddit.large.icon
                     |groups
@@ -80,8 +80,8 @@ template(name='home')
                         |#{this}
                 each subreddit_results
                     .ui.compact.cicular.basic.button.select_subreddit
-                        |r/#{name}
-                div
+                        |#{name}
+                .spacer
                 .ui.inline.header 
                     i.smile.large.icon
                     |main emotion
@@ -92,7 +92,7 @@ template(name='home')
                 each emotion_results
                     .ui.compact.cicular.basic.button.select_emotion
                         |#{name}
-                div
+                .spacer
                 .ui.inline.header 
                     i.database.large.icon
                     |sources
@@ -116,7 +116,13 @@ template(name='home')
                 // .five.wide.column.scrolling
                 // each docs
             .ten.wide.column
-                // .spacer
+                .ui.basic.circular.label(title='results') #{doc_count}
+                .ui.button
+                    |sort
+                .ui.button
+                    i.list.icon
+                .ui.button
+                    i.th.icon
                 .ui.stackable.padded.grid.scrolling
                     each docs
                         .sixteen.wide.colum

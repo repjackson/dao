@@ -276,7 +276,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_subreddits }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:10 }
+        { $limit:20 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # # console.log 'cloud: ', subreddit_cloud
@@ -294,15 +294,16 @@ Meteor.publish 'dtags', (
         { $project: "max_emotion_name": 1 }
         # { $unwind: "$emotions" }
         { $group: _id: "max_emotion_name", count: $sum: 1 }
-        { $match: _id: $nin: selected_emotions }
+        # { $match: _id: $nin: selected_emotions }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
         { $limit:10 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
-    # # console.log 'cloud: ', emotion_cloud
-    # console.log 'emotion match', match
+    # console.log 'cloud: ', emotion_cloud
+    console.log 'emotion match', match
     emotion_cloud.forEach (emotion, i) ->
+        console.log 'emotion',emotion
         self.added 'results', Random.id(),
             name: emotion.name
             count: emotion.count
