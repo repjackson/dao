@@ -1,6 +1,6 @@
 @selected_tags = new ReactiveArray []
-@selected_models = new ReactiveArray []
-@selected_subreddits = new ReactiveArray []
+# @selected_models = new ReactiveArray []
+# @selected_subreddits = new ReactiveArray []
 @selected_emotions = new ReactiveArray []
 
 Template.registerHelper 'skip_is_zero', ()-> Session.equals('skip', 0)
@@ -72,8 +72,8 @@ Template.home.onCreated ->
         selected_tags.array()
         Session.get('view_mode')
         Session.get('emotion_mode')
-        selected_models.array()
-        selected_subreddits.array()
+        # selected_models.array()
+        # selected_subreddits.array()
         selected_emotions.array()
         )
     @autorun => Meteor.subscribe('dtags',
@@ -81,8 +81,8 @@ Template.home.onCreated ->
         Session.get('view_mode')
         Session.get('emotion_mode')
         Session.get('toggle')
-        selected_models.array()
-        selected_subreddits.array()
+        # selected_models.array()
+        # selected_subreddits.array()
         selected_emotions.array()
         # Session.get('query')
         )
@@ -91,8 +91,8 @@ Template.home.onCreated ->
         Session.get('view_mode')
         Session.get('emotion_mode')
         Session.get('toggle')
-        selected_models.array()
-        selected_subreddits.array()
+        # selected_models.array()
+        # selected_subreddits.array()
         selected_emotions.array()
         # Session.get('query')
         Session.get('skip')
@@ -207,11 +207,11 @@ Template.tag_selector.helpers
         if term
             if term.max_emotion_name
                 switch term.max_emotion_name
-                    when 'joy' then ' green'
-                    when 'anger' then ' red'
-                    when 'sadness' then ' blue'
-                    when 'disgust' then ' orange'
-                    when 'fear' then ' grey'
+                    when 'joy' then 'invert green'
+                    when 'anger' then 'invert red'
+                    when 'sadness' then 'invert blue'
+                    when 'disgust' then 'invert orange'
+                    when 'fear' then 'invert grey'
     term: ->
         Docs.findOne 
             title:@name
@@ -245,6 +245,7 @@ Template.tag_selector.events
         # Meteor.call 'call_alpha', @name, ->
         Meteor.call 'call_wiki', @name, ->
         Meteor.call 'search_ddg', @name, ->
+        Session.set('viewing_doc',null)
         Meteor.call 'search_reddit', selected_tags.array(), ->
         # Meteor.setTimeout( ->
         #     Session.set('toggle',!Session.get('toggle'))
@@ -314,6 +315,7 @@ Template.doc_tag.events
 
 Template.doc.helpers
     viewing_doc: -> Session.equals('viewing_doc', @_id)
+    card_class: -> if Session.equals('viewing_doc', @_id) then 'fluid'
 Template.home.helpers
     alphas: ->
         Docs.find 
@@ -333,22 +335,25 @@ Template.home.helpers
     many_tags: -> selected_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     docs: ->
-        match = {model:$in:['post','wikipedia','reddit','page','alpha','porn']}
-        # match = {model:$in:['post','wikipedia','reddit']}
-        # match = {model:'wikipedia'}
-        if selected_tags.array().length>0
-            match.tags = $all:selected_tags.array()
-     
-        Docs.find match,
-            sort:
-                points:-1
-                ups:-1
-                # _timestamp:-1
-                # "#{Session.get('sort_key')}": Session.get('sort_direction')
-            limit:10
-            skip:Session.get('skip')
-        # if cur.count() is 1
-        # Docs.find match
+        if Session.get('viewing_doc')
+            Docs.find Session.get('viewing_doc')
+        else
+            match = {model:$in:['post','wikipedia','reddit']}
+            # match = {model:$in:['post','wikipedia','reddit']}
+            # match = {model:'wikipedia'}
+            if selected_tags.array().length>0
+                match.tags = $all:selected_tags.array()
+         
+            Docs.find match,
+                sort:
+                    points:-1
+                    ups:-1
+                    # _timestamp:-1
+                    # "#{Session.get('sort_key')}": Session.get('sort_direction')
+                limit:10
+                # skip:Session.get('skip')
+            # if cur.count() is 1
+            # Docs.find match
 
     loading_class: ->
         if Template.instance().subscriptionsReady()
@@ -433,6 +438,8 @@ Template.doc.events
         # console.log @valueOf()
         selected_tags.push @valueOf()
         # # if Meteor.user()
+        Session.set('viewing_doc',null)
+
         Meteor.call 'call_wiki', @valueOf(), ->
         Meteor.call 'search_reddit', selected_tags.array(), ->
         window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
@@ -505,14 +512,15 @@ Template.home.events
                 # console.log 'selected tags', selected_tags.array()
                 # Meteor.call 'call_alpha', search, ->
                 Meteor.call 'search_ddg', search, ->
-                if Session.equals('view_mode','porn')
-                    Meteor.call 'search_ph', search, ->
-                else
-                    # window.speechSynthesis.speak new SpeechSynthesisUtterance search
-                    window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
-                    Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-                    Meteor.call 'call_wiki', search, ->
-                    Meteor.call 'search_reddit', selected_tags.array(), ->
+                # if Session.equals('view_mode','porn')
+                #     Meteor.call 'search_ph', search, ->
+                # else
+                # window.speechSynthesis.speak new SpeechSynthesisUtterance search
+                window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+                Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+                Meteor.call 'call_wiki', search, ->
+                Meteor.call 'search_reddit', selected_tags.array(), ->
+                Session.set('viewing_doc',null)
 
                 Session.set('skip',0)
                 # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()

@@ -10,9 +10,10 @@ template(name='duck')
         img(src=Image)
         each RelatedTopics
             if Text
-                .ui.compact.basic.circular.button.topic
+                .ui.compact.black.button.topic
                     img.ui.mini.inline.rounded.image(src=Icon.URL)
-                    | {{lowered Text}}
+                    |#{Text}
+                    // | {{lowered Text}}
             // .content
             //     .item #{FirstURL}
                 // .item !{Result}

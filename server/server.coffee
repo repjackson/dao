@@ -76,8 +76,8 @@ Meteor.publish 'doc_count', (
     selected_tags
     view_mode
     emotion_mode
-    selected_models
-    selected_subreddits
+    # selected_models
+    # selected_subreddits
     selected_emotions
     )->
     match = {}
@@ -93,8 +93,8 @@ Meteor.publish 'doc_count', (
         match.max_emotion_name = emotion_mode
         
     if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
-    if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
-    if selected_models.length > 0 then match.model = $all:selected_models
+    # if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
+    # if selected_models.length > 0 then match.model = $all:selected_models
     # switch view_mode
     #     when 
     switch view_mode 
@@ -175,8 +175,8 @@ Meteor.publish 'docs', (
     view_mode
     emotion_mode
     toggle
-    selected_models
-    selected_subreddits
+    # selected_models
+    # selected_subreddits
     selected_emotions
     # query=''
     skip
@@ -190,8 +190,8 @@ Meteor.publish 'docs', (
     # console.log 'skip', skip
     # match.model = 'wikipedia'
     if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
-    if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
-    if selected_models.length > 0 then match.model = $all:selected_models
+    # if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
+    # if selected_models.length > 0 then match.model = $all:selected_models
     
     switch view_mode 
         when 'image'
@@ -228,8 +228,8 @@ Meteor.publish 'dtags', (
     view_mode
     emotion_mode
     toggle
-    selected_models
-    selected_subreddits
+    # selected_models
+    # selected_subreddits
     selected_emotions
     # query=''
     )->
@@ -240,8 +240,8 @@ Meteor.publish 'dtags', (
     if emotion_mode
         match.max_emotion_name = emotion_mode
     if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
-    if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
-    if selected_models.length > 0 then match.model = $all:selected_models
+    # if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
+    # if selected_models.length > 0 then match.model = $all:selected_models
 
     # console.log 'emotion mode', emotion_mode
     # if selected_tags.length > 0
@@ -273,8 +273,8 @@ Meteor.publish 'dtags', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        unless selected_subreddits.length>0
-            match.tags = $in:['dao']
+        # unless selected_subreddits.length>0
+        match.tags = $in:['dao']
     # else if view_mode in ['reddit',null]
     doc_count = Docs.find(match).count()
     # console.log 'count',doc_count
