@@ -11,7 +11,7 @@ Meteor.methods
                 tags:uniq
 
     find_subreddit: (title)->
-        return
+        # return
         @unblock()
         console.log 'searching subreddit for', title
         # console.log 'type of query', typeof(query)
@@ -32,6 +32,8 @@ Meteor.methods
                     model:'tribe'
                     title:title
                     rd:response.data
+            return
+        return
 
     search_reddit: (query)->
         # @unblock()

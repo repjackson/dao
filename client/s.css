@@ -31,7 +31,7 @@ img {
     padding: 5px !important;
 }
 .label {
-    font-size: 110% !important;
+    /*font-size: 110% !important;*/
     /*transition: all .1s ease !important;*/
     margin-bottom: 2px !important;
     margin-top: 2px !important;
