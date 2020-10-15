@@ -45,7 +45,7 @@ Template.registerHelper 'is_twitter', ()->
 
 
 
-Template.reddit.onRendered ->
+Template.doc.onRendered ->
     # console.log @data
     # unless @data.watson
     #     # console.log 'call'
@@ -135,7 +135,7 @@ Template.alpha.events
         
 
 
-Template.reddit.onRendered ->
+Template.doc.onRendered ->
     # console.log @data
     unless @data.watson
         # console.log 'call'
@@ -453,7 +453,7 @@ Template.duck.events
     #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
 
 
-Template.home.events
+Template.doc.events
     'click .toggle_view': (e,t)-> 
         if Session.equals('viewing_doc', @_id)
             Session.set('viewing_doc', null)
@@ -509,6 +509,7 @@ Template.home.events
             Session.set('skip',prev)
             # Session.get('skip')
 
+Template.home.events
     'click #clear_tags': -> 
         selected_tags.clear()
 
@@ -570,8 +571,6 @@ Template.home.events
         #         selected_tags.pop()
     # , 1000)
 
-# Template.registerHelper 'session_is', (key)-> Session.get(key)
-# Template.registerHelper 'session_key_value', (key,value)-> Session.equals("#{key}",value)
 
 Template.view_mode.helpers
     toggle_view_class: -> if Session.equals('view_mode',@key) then "#{@icon} huge #{@color}" else "#{@icon} big grey"
@@ -612,7 +611,7 @@ Template.call_watson.events
         # Meteor.call 'search_stack', selected_tags.array(), ->
        
 
-Template.reddit.onRendered ->
+Template.doc.onRendered ->
     Meteor.setTimeout( =>
         console.log @
         $('.ui.embed').embed({
