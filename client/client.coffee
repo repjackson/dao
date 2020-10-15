@@ -528,7 +528,7 @@ Template.home.events
         # else if search.length is 0
         #     Session.set('query','')
         if e.which is 13
-            # window.speechSynthesis.cancel()
+            window.speechSynthesis.cancel()
             # console.log search
             if search.length > 0
                 # Meteor.call 'check_url', search, (err,res)->
@@ -551,13 +551,13 @@ Template.home.events
                 if Session.equals('view_mode','porn')
                     Meteor.call 'search_ph', search, ->
                 else
-                    window.speechSynthesis.speak new SpeechSynthesisUtterance search
+                    # window.speechSynthesis.speak new SpeechSynthesisUtterance search
+                    window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
                     Meteor.call 'call_alpha', selected_tags.array().toString(), ->
                     Meteor.call 'call_wiki', search, ->
                     Meteor.call 'search_reddit', selected_tags.array(), ->
 
                 Session.set('skip',0)
-                # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
                 # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
 
                 # Session.set('query','')
@@ -582,7 +582,7 @@ Template.view_mode.events
             Session.set('view_mode', null)
         else
             Session.set('view_mode', @key)
-            window.speechSynthesis.cancel()
+            # window.speechSynthesis.cancel()
             window.speechSynthesis.speak new SpeechSynthesisUtterance @key
 
 

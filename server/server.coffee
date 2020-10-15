@@ -62,7 +62,7 @@ Meteor.publish 'tribe_by_title', (title)->
         })
     else 
         console.log 'tribe not found, searching'
-        Meteor.call 'find_subreddit', title, ->
+        # Meteor.call 'find_subreddit', title, ->
     # },
     #     fields:
     #         title:1
@@ -110,7 +110,7 @@ Meteor.publish 'doc_count', (
         when 'twitter'
             match.model = 'reddit'
             match.domain = $in:['twitter.com','mobile.twitter.com']
-        when 'reddit'
+        when 'posts'
             match.model = 'reddit'
             match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'porn'
@@ -208,7 +208,7 @@ Meteor.publish 'docs', (
             # match.domain = $in:['twitter.com','mobile.twitter.com']
         when 'porn'
             match.model = 'porn'
-        when 'reddit'
+        when 'posts'
             match.model = 'reddit'
             # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         else 
@@ -249,7 +249,7 @@ Meteor.publish 'dtags', (
         # console.log 'query', query
     
     switch view_mode 
-        when 'reddit'
+        when 'posts'
             match.model = 'reddit'
             # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'image'
