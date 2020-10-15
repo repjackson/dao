@@ -11,7 +11,8 @@ Meteor.methods
                 tags:uniq
 
     find_subreddit: (title)->
-        # @unblock()
+        return
+        @unblock()
         console.log 'searching subreddit for', title
         # console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
@@ -33,12 +34,13 @@ Meteor.methods
                     rd:response.data
 
     search_reddit: (query)->
-        @unblock()
+        # @unblock()
+        # return
         console.log 'searching reddit for', query
         # console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=50&include_facets=false",(err,response)=>
+        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=10&include_facets=false",(err,response)=>
             # console.log response.data
             if err then console.log err
             else if response.data.data.dist > 1

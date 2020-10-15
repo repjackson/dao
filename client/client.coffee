@@ -185,9 +185,9 @@ Template.unselect_tag.events
                 Meteor.call 'call_wiki', @valueOf(), ->
                 Meteor.call 'search_reddit', selected_tags.array(), ->
             # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
-            Meteor.setTimeout( ->
-                Session.set('toggle',!Session.get('toggle'))
-            , 10000)
+            # Meteor.setTimeout( ->
+            #     Session.set('toggle',!Session.get('toggle'))
+            # , 10000)
 
     
 
@@ -246,9 +246,9 @@ Template.tag_selector.events
             Meteor.call 'call_wiki', @name, ->
             Meteor.call 'search_ddg', @name, ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
-        Meteor.setTimeout( ->
-            Session.set('toggle',!Session.get('toggle'))
-        , 10000)
+        # Meteor.setTimeout( ->
+        #     Session.set('toggle',!Session.get('toggle'))
+        # , 10000)
        
        
 Template.doc_tag.onCreated ->

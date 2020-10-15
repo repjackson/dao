@@ -131,6 +131,31 @@ Meteor.methods
         }, limit:10)
         # Docs.update
         console.log cur.count()
+    convert_img: ->
+        cur = 
+            Docs.find({
+                model:'reddit'
+                domain: $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+            }, {
+                limit:10
+                fields:
+                    _id:1
+                })
+        console.log 'images', cur.fetch()
+        # domain: $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+        Docs.update({
+            model:'reddit'
+            domain: 'i.imgur.com'
+        }, {
+            $set:
+                model:'image'
+                source:'reddit'
+        },{multi:true})
+        # for image in cur.fetch()
+        #     Docs.update image._id,
+        #     console.log 'new image', Docs.findOne(image._id).model
+        # Docs.update
+        # console.log cur.count()
 
     lookup_url: (url)->
         found = Docs.findOne url:url 
@@ -170,22 +195,22 @@ Meteor.publish 'docs', (
     
     switch view_mode 
         when 'image'
-            match.model = 'reddit'
-            match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+            match.model = 'image'
+            # match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
-            match.model = 'reddit'
-            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+            match.model = 'video'
+            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
             # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'twitter'
-            match.model = 'reddit'
-            match.domain = $in:['twitter.com','mobile.twitter.com']
+            match.model = 'twitter'
+            # match.domain = $in:['twitter.com','mobile.twitter.com']
         when 'porn'
             match.model = 'porn'
         when 'reddit'
             match.model = 'reddit'
-            match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+            # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         else 
             match.model = $in:['wikipedia','alpha']
     console.log 'doc match', match
@@ -226,18 +251,20 @@ Meteor.publish 'dtags', (
     switch view_mode 
         when 'reddit'
             match.model = 'reddit'
-            match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+            # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'image'
-            match.model = 'reddit'
-            match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+            match.model = 'image'
+            match.source = 'reddit'
+            # match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
-            match.model = 'reddit'
-            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+            match.model = 'video'
+            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
         when 'twitter'
-            match.model = 'reddit'
-            match.domain = $in:['twitter.com','mobile.twitter.com']
+            match.model = 'twitter'
+            match.source = 'reddit'
+            # match.domain = $in:['twitter.com','mobile.twitter.com']
         when 'porn'
             match.model = 'porn'
         else
@@ -275,28 +302,27 @@ Meteor.publish 'dtags', (
     #             model:'tag'
     #     # self.ready()
     # else
-    model_cloud = Docs.aggregate [
-        { $match: match }
-        { $project: "model": 1 }
-        # { $unwind: "$models" }
-        { $group: _id: "$model", count: $sum: 1 }
-        { $match: _id: $nin: selected_models }
-        { $sort: count: -1, _id: 1 }
-        { $match: count: $lt: doc_count }
-        { $limit:10 }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # # console.log 'cloud: ', model_cloud
-    # console.log 'model match', match
-    model_cloud.forEach (model, i) ->
-        self.added 'results', Random.id(),
-            name: model.name
-            count: model.count
-            model:'model'
+    # model_cloud = Docs.aggregate [
+    #     { $match: match }
+    #     { $project: "model": 1 }
+    #     # { $unwind: "$models" }
+    #     { $group: _id: "$model", count: $sum: 1 }
+    #     { $match: _id: $nin: selected_models }
+    #     { $sort: count: -1, _id: 1 }
+    #     { $match: count: $lt: doc_count }
+    #     { $limit:10 }
+    #     { $project: _id: 0, name: '$_id', count: 1 }
+    #     ]
+    # # # console.log 'cloud: ', model_cloud
+    # # console.log 'model match', match
+    # model_cloud.forEach (model, i) ->
+    #     self.added 'results', Random.id(),
+    #         name: model.name
+    #         count: model.count
+    #         model:'model'
   
   
     unless selected_subreddits.length > 0
-      
         subreddit_cloud = Docs.aggregate [
             { $match: match }
             { $project: "subreddit": 1 }
@@ -305,7 +331,7 @@ Meteor.publish 'dtags', (
             # { $match: _id: $nin: selected_subreddits }
             { $sort: count: -1, _id: 1 }
             { $match: count: $lt: doc_count }
-            { $limit:20 }
+            { $limit:10 }
             { $project: _id: 0, name: '$_id', count: 1 }
             ]
         # # console.log 'cloud: ', subreddit_cloud
@@ -342,7 +368,7 @@ Meteor.publish 'dtags', (
     if view_mode is 'porn'
         tag_limit = 20
     else
-        tag_limit = 15
+        tag_limit = 10
   
     tag_cloud = Docs.aggregate [
         { $match: match }
