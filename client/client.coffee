@@ -217,13 +217,13 @@ Template.tag_selector.helpers
             title:@name
             
 Template.home.events
-    'click .select_model': -> selected_models.push @name
+    # 'click .select_model': -> selected_models.push @name
     'click .select_emotion': -> selected_emotions.push @name
-    'click .select_location': -> selected_locations.push @name
+    # 'click .select_location': -> selected_locations.push @name
     
-    'click .unselect_location': -> selected_locations.remove @valueOf()
-    'click .unselect_model': -> selected_models.remove @valueOf()
-    'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
+    # 'click .unselect_location': -> selected_locations.remove @valueOf()
+    # 'click .unselect_model': -> selected_models.remove @valueOf()
+    # 'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
     'click .unselect_emotion': -> selected_emotions.remove @valueOf()
             
             
@@ -237,15 +237,15 @@ Template.tag_selector.events
         Session.set('query','')
         Session.set('skip',0)
         $('.search_title').val('')
-        if Session.equals('view_mode','porn')
-            Meteor.call 'search_ph', @name, ->
-        else        
-            window.speechSynthesis.speak new SpeechSynthesisUtterance @name
-            Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-            # Meteor.call 'call_alpha', @name, ->
-            Meteor.call 'call_wiki', @name, ->
-            Meteor.call 'search_ddg', @name, ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
+        # if Session.equals('view_mode','porn')
+        #     Meteor.call 'search_ph', @name, ->
+        # else        
+        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
+        Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+        # Meteor.call 'call_alpha', @name, ->
+        Meteor.call 'call_wiki', @name, ->
+        Meteor.call 'search_ddg', @name, ->
+        Meteor.call 'search_reddit', selected_tags.array(), ->
         # Meteor.setTimeout( ->
         #     Session.set('toggle',!Session.get('toggle'))
         # , 10000)
@@ -297,73 +297,24 @@ Template.doc_tag.events
        
        
        
-Template.select_subreddit.onCreated ->
-    # console.log @
-    @autorun => Meteor.subscribe('tribe_by_title', @data.name)
-Template.select_subreddit.helpers
-    tribe_doc: ->
-        found = Docs.findOne 
-            title:@name
-            model:'tribe'
-        # console.log found 
-        found 
+# Template.select_subreddit.onCreated ->
+#     # console.log @
+#     @autorun => Meteor.subscribe('tribe_by_title', @data.name)
+# Template.select_subreddit.helpers
+#     tribe_doc: ->
+#         found = Docs.findOne 
+#             title:@name
+#             model:'tribe'
+#         # console.log found 
+#         found 
             
        
        
        
-Template.select_subreddit.events
-    'click .select_subreddit': -> 
-        # results.update
-        window.speechSynthesis.cancel()
-        console.log @
-        selected_subreddits.push @name
-        Session.set('query','')
-        Session.set('skip',0)
 
-        # Meteor.call 'call_wiki', @valueOf(), ->
-        # Meteor.call 'call_alpha', @valueOf(), ->
-        # Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-        # Meteor.call 'search_reddit', selected_tags.array(), ->
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
-            
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
-        # Meteor.setTimeout( ->
-        #     Session.set('toggle',!Session.get('toggle'))
-        # , 10000)
-       
-       
-Template.session_edit_value_button.events
-    'click .set_session_value': ->
-        # console.log @key
-        # console.log @value
-        if Session.equals(@key,@value)
-            Session.set(@key, null)
-        else
-            Session.set(@key, @value)
-
-
-
-Template.session_edit_value_button.helpers
-    calculated_class: ->
-        res = ''
-        # console.log @
-        if @classes
-            res += @classes
-        if Session.get(@key)
-            if Session.equals(@key,@value)
-                res += ' blue large'
-            else
-                # res += ' compact displaynone'
-                res += ' compact basic'
-            # console.log res
-            res
-
-
-            
-            
-
-Template.home.helpers
+Template.doc.helpers
     viewing_doc: -> Session.equals('viewing_doc', @_id)
+Template.home.helpers
     alphas: ->
         Docs.find 
             model:'alpha'
@@ -414,13 +365,13 @@ Template.home.helpers
     #         title:@valueOf()
     
     selected_tags: -> selected_tags.array()
-    selected_models: -> selected_models.array()
-    selected_subreddits: -> selected_subreddits.array()
+    # selected_models: -> selected_models.array()
+    # selected_subreddits: -> selected_subreddits.array()
     selected_emotions: -> selected_emotions.array()
    
     emotion_results: -> results.find(model:'emotion')
-    model_results: -> results.find(model:'model')
-    subreddit_results: -> results.find(model:'subreddit')
+    # model_results: -> results.find(model:'model')
+    # subreddit_results: -> results.find(model:'subreddit')
     tag_results: ->
         # match = {model:'wikipedia'}
         # doc_count = Docs.find(match).count()
@@ -457,8 +408,13 @@ Template.doc.events
     'click .toggle_view': (e,t)-> 
         if Session.equals('viewing_doc', @_id)
             Session.set('viewing_doc', null)
+            window.speechSynthesis.cancel()# 
         else
             Session.set('viewing_doc', @_id)
+            window.speechSynthesis.speak new SpeechSynthesisUtterance @title
+            if @tone 
+                for sentance in @tone.result.sentences_tone
+                    window.speechSynthesis.speak new SpeechSynthesisUtterance sentance.text
     'click .print_me': (e,t)-> console.log @
     # 'click .tagger': (e,t)->
     #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
@@ -495,19 +451,19 @@ Template.doc.events
             # window.speechSynthesis.cancel()# 
         # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
             
-    'click .forward': -> 
-        current_skip = Session.get('skip')
-        # console.log current_skip
-        next = current_skip+1
-        Session.set('skip',next)
-        # Session.get('skip')
-    'click .back': -> 
-        current_skip = Session.get('skip')
-        # console.log current_skip
-        unless current_skip is 0
-            prev = current_skip-1
-            Session.set('skip',prev)
-            # Session.get('skip')
+    # 'click .forward': -> 
+    #     current_skip = Session.get('skip')
+    #     # console.log current_skip
+    #     next = current_skip+1
+    #     Session.set('skip',next)
+    #     # Session.get('skip')
+    # 'click .back': -> 
+    #     current_skip = Session.get('skip')
+    #     # console.log current_skip
+    #     unless current_skip is 0
+    #         prev = current_skip-1
+    #         Session.set('skip',prev)
+    #         # Session.get('skip')
 
 Template.home.events
     'click #clear_tags': -> 
@@ -621,29 +577,3 @@ Template.doc.onRendered ->
         });
     , 1000)
 
-
-# Template.chat.onCreated ->
-#     @autorun -> Meteor.subscribe('chat')
-
-# Template.chat.helpers
-#     chats: ->
-#         Docs.find {
-#             model:'chat'
-#         },
-#             limit:8
-#             sort:_timestamp:1
-# Template.chat.events
-#     'keyup .new_chat': (e,t)->
-#         chat = $('.new_chat').val().toLowerCase().trim()
-#         if e.which is 13
-#             # window.speechSynthesis.cancel()
-#             # console.log 'chat'
-#             Meteor.call 'add_chat', chat, ->
-#             $('.new_chat').val('')
-#             Meteor.setTimeout =>
-#                 last = Docs.findOne
-#                     model:'chat'
-#                 , sort:_timestamp:-1
-#                 # console.log 'last', last
-#                 window.speechSynthesis.speak new SpeechSynthesisUtterance last.response.result
-#             , 2000
