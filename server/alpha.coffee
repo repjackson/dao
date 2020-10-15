@@ -50,7 +50,7 @@ Meteor.methods
                         voice:response.content  
             # console.log 'type query', typeof(query)
             # HTTP.get "https://api.wolframalpha.com/v2/query?input=#{query}&mag=1&ignorecase=true&scantimeout=3&format=html,image,plaintext,sound&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
-            HTTP.get "https://api.wolframalpha.com/v2/query?input=#{query}&ignorecase=true&scantimeout=3&format=html,image,plaintext,sound&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
+            HTTP.get "https://api.wolframalpha.com/v2/query?input=#{query}&ignorecase=true&scantimeout=4&format=html,image,plaintext,sound&output=JSON&appid=UULLYY-QR2ALYJ9JU",(err,response)=>
                 # console.log response
                 if err then console.log err
                 else

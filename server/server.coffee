@@ -102,7 +102,7 @@ Meteor.publish 'doc_count', (
             match.model = 'reddit'
             match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
-            match.model = 'reddit'
+            # match.model = 'reddit'
             match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
@@ -198,8 +198,8 @@ Meteor.publish 'docs', (
             match.model = 'image'
             # match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
-            match.model = 'video'
-            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+            # match.model = 'video'
+            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
             # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
@@ -257,8 +257,8 @@ Meteor.publish 'dtags', (
             match.source = 'reddit'
             # match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
-            match.model = 'video'
-            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+            # match.model = 'video'
+            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
         when 'twitter'
@@ -322,26 +322,26 @@ Meteor.publish 'dtags', (
     #         model:'model'
   
   
-    unless selected_subreddits.length > 0
-        subreddit_cloud = Docs.aggregate [
-            { $match: match }
-            { $project: "subreddit": 1 }
-            # { $unwind: "$subreddits" }
-            { $group: _id: "$subreddit", count: $sum: 1 }
-            # { $match: _id: $nin: selected_subreddits }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: doc_count }
-            { $limit:10 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        # # console.log 'cloud: ', subreddit_cloud
-        # console.log 'subreddit match', match
-        subreddit_cloud.forEach (subreddit, i) ->
-            # console.log subreddit
-            self.added 'results', Random.id(),
-                name: subreddit.name
-                count: subreddit.count
-                model:'subreddit'
+    # unless selected_subreddits.length > 0
+    #     subreddit_cloud = Docs.aggregate [
+    #         { $match: match }
+    #         { $project: "subreddit": 1 }
+    #         # { $unwind: "$subreddits" }
+    #         { $group: _id: "$subreddit", count: $sum: 1 }
+    #         # { $match: _id: $nin: selected_subreddits }
+    #         { $sort: count: -1, _id: 1 }
+    #         { $match: count: $lt: doc_count }
+    #         { $limit:10 }
+    #         { $project: _id: 0, name: '$_id', count: 1 }
+    #         ]
+    #     # # console.log 'cloud: ', subreddit_cloud
+    #     # console.log 'subreddit match', match
+    #     subreddit_cloud.forEach (subreddit, i) ->
+    #         # console.log subreddit
+    #         self.added 'results', Random.id(),
+    #             name: subreddit.name
+    #             count: subreddit.count
+    #             model:'subreddit'
       
   
   
@@ -368,7 +368,7 @@ Meteor.publish 'dtags', (
     if view_mode is 'porn'
         tag_limit = 20
     else
-        tag_limit = 10
+        tag_limit = 15
   
     tag_cloud = Docs.aggregate [
         { $match: match }

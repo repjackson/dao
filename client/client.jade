@@ -41,7 +41,7 @@ body
 template(name='home')
     .ui.stackable.padded.grid
         .row
-            .sixteen.wide.column
+            .sixteen.wide.center.aligned.column
                 i#clear_tags.link.yin.yang.big.icon(class=loading_class)
                 if selected_tags
                     // if many_tags
@@ -55,32 +55,14 @@ template(name='home')
                 each tag_results
                     +tag_selector
                 .ui.basic.circular.label(title='results') #{doc_count}
-        .row
-            .five.wide.right.aligned.column.scrolling
                 // +view_mode key='twitter' icon='twitter' color='blue'
                 +view_mode key='video' icon='youtube' color='red'
                 +view_mode key='image' icon='picture' color='green'
                 +view_mode key='posts' icon='newspaper' color='teal'
                 +view_mode key='wikipedia' icon='wikipedia' color='purple'
-                // +view_mode key='stackexchange' icon='stack exchange disabled'
-                // +view_mode key='github' icon='github disabled'
-                // +view_mode key='alpha' icon='disabled brain'
-                // +view_mode key='porn' icon='mercury'
-                // +view_mode key='bitcoin' icon='bitcoin disabled'
-                // +view_mode key='covid' icon='covid disabled'
-                .spacer
-                .ui.inline.header 
-                    i.users.large.grey.icon
-                    |group
-                each selected_subreddits
-                    .ui.black.circular.compact.button.unselect_subreddit
-                        |#{this}
-                each subreddit_results
-                    +select_subreddit
-                .spacer
-                .ui.inline.header 
-                    i.smile.large.grey.icon
-                    |emotion
+                // .ui.inline.header 
+                //     i.smile.large.grey.icon
+                //     |emotion
                 +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
                 +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
                 +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
@@ -98,7 +80,23 @@ template(name='home')
                     if name
                         .ui.compact.circular.basic.button.select_emotion
                             |#{name}
-                .spacer
+                // +view_mode key='stackexchange' icon='stack exchange disabled'
+                // +view_mode key='github' icon='github disabled'
+                // +view_mode key='alpha' icon='disabled brain'
+                // +view_mode key='porn' icon='mercury'
+                // +view_mode key='bitcoin' icon='bitcoin disabled'
+                // +view_mode key='covid' icon='covid disabled'
+                // .spacer
+                // .ui.inline.header 
+                //     i.users.large.grey.icon
+                //     |group
+                // each selected_subreddits
+                //     .ui.black.circular.compact.button.unselect_subreddit
+                //         |#{this}
+                // each subreddit_results
+                //     +select_subreddit
+                // // .spacer
+                // .spacer
                 // .ui.inline.header 
                 //     i.database.large.icon
                 //     |sources
@@ -110,6 +108,8 @@ template(name='home')
                 //         |#{name}
                 // // i.smile.large.icon
                 div
+        .row
+            .five.wide.right.aligned.column.scrolling
                 each alphas
                     if response.queryresult
                         +alpha 
@@ -325,10 +325,10 @@ template(name='reddit')
         //             | Twitter Support you must have the patience of 1000 camels waiting for a drink of water while the baby camels get the first drinks...does that make sense? Thank you for your dedication and time you selfishly give to each of us. You are always appreciated.
         //         | — KayeMc76 (@KayeMc76) 
         //         a(href=url) October 3, 2020
-    else if is_youtube
-        div
-        .ui.fluid.embed
-            iframe(id="ytplayer" type="text/html" width="100%" height="500" src="https://www.youtube.com/embed/#{youtube_parse}" frameborder="0" allowfullscreen)
+    // else if is_youtube
+    //     div
+    //     .ui.fluid.embed
+    //         iframe(id="ytplayer" type="text/html" width="100%" height="500" src="https://www.youtube.com/embed/#{youtube_parse}" frameborder="0" allowfullscreen)
         // iframe(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         // else if is_video
         //     div
