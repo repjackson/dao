@@ -99,7 +99,7 @@ Meteor.publish 'doc_count', (
     #     when 
     switch view_mode 
         when 'image'
-            match.model = 'reddit'
+            # match.model = 'reddit'
             match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
             # match.model = 'reddit'
@@ -195,8 +195,8 @@ Meteor.publish 'docs', (
     
     switch view_mode 
         when 'image'
-            match.model = 'image'
-            # match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+            # match.model = 'image'
+            match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
             # match.model = 'video'
             match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
@@ -253,9 +253,9 @@ Meteor.publish 'dtags', (
             match.model = 'reddit'
             # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'image'
-            match.model = 'image'
-            match.source = 'reddit'
-            # match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+            # match.model = 'image'
+            # match.source = 'reddit'
+            match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
         when 'video'
             # match.model = 'video'
             match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']

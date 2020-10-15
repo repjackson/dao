@@ -1,11 +1,11 @@
 body {
-    /*background-color: rgba(0,0,0,.9) !important;*/
-    /*filter: invert(1) !important; */
+    background-color: rgba(0,0,0,.9) !important;
+    filter: invert(1) !important; 
     /*font-size: 110% !important;*/
     transition: all .5s ease !important;
 }
-.invert {
-     /*filter: invert(1) !important; */
+.label, .button, .input, .icon, .header, .invert {
+  filter: invert(1) !important; 
     
 }
 
@@ -13,8 +13,10 @@ body {
   width: 100% !important;
 }
 
+
+
 img {
-     /*filter: invert(1) !important; */
+     filter: invert(1) !important; 
      position: relative;
      display: inline !important;
 }
@@ -165,24 +167,36 @@ input {
 .label {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .5s ease !important; 
 }
 .label:hover {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .5s ease !important; 
   z-index: 1000 !important;
   transform: scale(1.1) !important;
+}
+.item {
+  /*padding:10px !important;*/
+  /*margin:10px !important;*/
+  transition: all .5 ease !important; 
+}
+.item:hover {
+  /*padding:10px !important;*/
+  /*margin:10px !important;*/
+  transition: all .5s ease !important; 
+  z-index: 1000 !important;
+  /*transform: scale(1.1) !important;*/
 }
 .icon {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .5s ease !important; 
 }
 .icon:hover {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .5s ease !important; 
   z-index: 1000 !important;
   transform: scale(1.1) !important;
 }
