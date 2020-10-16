@@ -42,43 +42,44 @@ template(name='home')
     .ui.stackable.padded.grid
         .row
             .sixteen.wide.center.aligned.column
-                i#clear_tags.link.yin.yang.big.icon(class=loading_class)
-                if selected_tags
-                    // if many_tags
-                    //     a#clear_tags.ui.black.icon.small.compact.circular.button.select_term
-                    //         i.remove.icon
-                    each selected_tags
-                        +unselect_tag
-                .ui.inline.input 
-                    input.search_title(type='text' autofocus='')
-                each tag_results
-                    +tag_selector
-                .ui.circular.label(title='results') #{doc_count}
-                // +view_mode key='twitter' icon='twitter' color='blue'
-                +view_mode key='video' icon='youtube' color='red'
-                +view_mode key='image' icon='picture' color='green'
-                +view_mode key='posts' icon='newspaper' color='teal'
-                +view_mode key='wikipedia' icon='wikipedia' color='purple'
-                // .ui.inline.header 
-                //     i.smile.large.grey.icon
-                //     |emotion
-                // +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
-                // +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
-                // +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
-                // +emotion_mode key='disgust' icon='disgusting' i2='grin tongue squint' color='orange'
-                // +emotion_mode key='fear' icon='scream' i2='tired' color='black'
-                // i.grin.tongue.squint.outline.big.icon
-                // i.surprise.outline.big.icon
-                // i.smile.outline.big.icon
-                // i.frown.outline.big.icon
-                // i.tired.outline.big.icon
-                each selected_emotions
-                    .ui.black.circular.compact.button.unselect_emotion
-                        |#{this}
-                each emotion_results
-                    if name
-                        .ui.compact.circular.inverted.basic.button.select_emotion
-                            |#{name}
+                unless viewing_doc
+                    i#clear_tags.link.yin.yang.big.icon(class=loading_class)
+                    if selected_tags
+                        // if many_tags
+                        //     a#clear_tags.ui.black.icon.small.compact.circular.button.select_term
+                        //         i.remove.icon
+                        each selected_tags
+                            +unselect_tag
+                    .ui.inline.input 
+                        input.search_title(type='text' autofocus='')
+                    each tag_results
+                        +tag_selector
+                    .ui.circular.label(title='results') #{doc_count}
+                    // +view_mode key='twitter' icon='twitter' color='blue'
+                    +view_mode key='video' icon='youtube' color='red'
+                    +view_mode key='image' icon='picture' color='green'
+                    +view_mode key='posts' icon='newspaper' color='teal'
+                    +view_mode key='wikipedia' icon='wikipedia' color='purple'
+                    // .ui.inline.header 
+                    //     i.smile.large.grey.icon
+                    //     |emotion
+                    // +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
+                    // +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
+                    // +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
+                    // +emotion_mode key='disgust' icon='disgusting' i2='grin tongue squint' color='orange'
+                    // +emotion_mode key='fear' icon='scream' i2='tired' color='black'
+                    // i.grin.tongue.squint.outline.big.icon
+                    // i.surprise.outline.big.icon
+                    // i.smile.outline.big.icon
+                    // i.frown.outline.big.icon
+                    // i.tired.outline.big.icon
+                    each selected_emotions
+                        .ui.black.circular.compact.button.unselect_emotion
+                            |#{this}
+                    each emotion_results
+                        if name
+                            .ui.compact.circular.inverted.basic.button.select_emotion
+                                |#{name}
                 // +view_mode key='stackexchange' icon='stack exchange disabled'
                 // +view_mode key='github' icon='github disabled'
                 // +view_mode key='alpha' icon='disabled brain'
@@ -112,22 +113,23 @@ template(name='home')
             .sixteen.wide.center.aligned.column
                 .ui.centered.cards
                     each docs
-                        if key_value 'model' 'porn'
-                            +vid_card
-                        else
-                            +doc
-                each alphas
-                    if response.queryresult
-                        +alpha 
-                if many_tags
-                    each alpha_singles
+                        // if key_value 'model' 'porn'
+                        //     +vid_card
+                        // else
+                        +doc
+                unless viewing_doc
+                    each alphas
                         if response.queryresult
                             +alpha 
-                each ducks
-                    +duck 
-                // .five.wide.column.scrolling
-                // each docs
-                // .eleven.wide.column
+                    if many_tags
+                        each alpha_singles
+                            if response.queryresult
+                                +alpha 
+                    each ducks
+                        +duck 
+                    // .five.wide.column.scrolling
+                    // each docs
+                    // .eleven.wide.column
 template(name="doc")
     .ui.card(class=card_class)
         // if embed
@@ -135,9 +137,9 @@ template(name="doc")
         //         |!{embed}
         // else
         if watson.metadata.image
-            img.ui.rounded.inline.pointer.zoomer.image.toggle_view(src=watson.metadata.image)    
+            img.ui.rounded.inline.pointer.image.toggle_view(src=watson.metadata.image)    
         else if is_image
-            img.ui.centered.image(src=url)
+            img.ui.centered.image.pointer.toggle_view(src=url)
 
         .content
             span.ui.pointer.text.invert.f13.zoomer.toggle_view(class=post_header_class) #{title}

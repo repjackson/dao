@@ -140,6 +140,10 @@ Template.doc.onRendered ->
     unless @data.watson
         # console.log 'call'
         Meteor.call 'call_watson', @data._id, 'url','url',->
+    if @data.watson
+        unless @data.tone
+            # console.log 'call'
+            Meteor.call 'call_tone', @data._id, 'url','url',->
     Meteor.call 'uniq', @data._id, ->
     unless @data.points
         # console.log 'no points'
@@ -178,12 +182,12 @@ Template.unselect_tag.events
         selected_tags.remove @valueOf()
         Session.set('skip',0)
         if selected_tags.array().length > 0
-            if Session.equals('view_mode','porn')
-                Meteor.call 'search_ph', selected_tags.array(), ->
-            else
-                Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-                Meteor.call 'call_wiki', @valueOf(), ->
-                Meteor.call 'search_reddit', selected_tags.array(), ->
+            # if Session.equals('view_mode','porn')
+            #     Meteor.call 'search_ph', selected_tags.array(), ->
+            # else
+            Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+            Meteor.call 'call_wiki', @valueOf(), ->
+            Meteor.call 'search_reddit', selected_tags.array(), ->
             # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
             # Meteor.setTimeout( ->
             #     Session.set('toggle',!Session.get('toggle'))
@@ -317,6 +321,7 @@ Template.doc.helpers
     viewing_doc: -> Session.equals('viewing_doc', @_id)
     card_class: -> if Session.equals('viewing_doc', @_id) then 'fluid'
 Template.home.helpers
+    viewing_doc: -> Session.get('viewing_doc')
     alphas: ->
         Docs.find 
             model:'alpha'
@@ -413,8 +418,9 @@ Template.doc.events
     'click .toggle_view': (e,t)-> 
         if Session.equals('viewing_doc', @_id)
             Session.set('viewing_doc', null)
-            window.speechSynthesis.cancel()# 
+            window.speechSynthesis.cancel()
         else
+            window.speechSynthesis.cancel()
             Session.set('viewing_doc', @_id)
             window.speechSynthesis.speak new SpeechSynthesisUtterance @title
             if @tone 
