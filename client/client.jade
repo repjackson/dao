@@ -78,7 +78,7 @@ template(name='home')
                             |#{this}
                     each emotion_results
                         if name
-                            .ui.compact.circular.inverted.basic.button.select_emotion
+                            .ui.compact.circular.basic.button.select_emotion
                                 |#{name}
                 // +view_mode key='stackexchange' icon='stack exchange disabled'
                 // +view_mode key='github' icon='github disabled'
@@ -150,6 +150,8 @@ template(name="doc")
             if viewing_doc
                 i.caret.down.big.grey.link.icon.vote_down
                 i.caret.up.big.grey.link.icon.vote_up
+                .ui.circular.icon.big.button.read 
+                    i.rss.icon
                 // if is_image
                 //     img.ui.centered.image(src=url)
                 .invert

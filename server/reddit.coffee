@@ -1,5 +1,6 @@
 Meteor.methods
     uniq: (doc_id)->
+        @unblock()
         doc = Docs.findOne doc_id 
         # console.log 'tags', doc.tags
         flat = _.flatten(doc.tags)
@@ -36,7 +37,7 @@ Meteor.methods
         return
 
     search_reddit: (query)->
-        # @unblock()
+        @unblock()
         # return
         console.log 'searching reddit for', query
         # console.log 'type of query', typeof(query)

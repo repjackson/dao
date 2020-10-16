@@ -60,8 +60,8 @@ Template.doc.onRendered ->
 
         
 Template.home.onCreated ->
-    window.speechSynthesis.cancel()
-    window.speechSynthesis.speak new SpeechSynthesisUtterance 'dao'
+    # window.speechSynthesis.cancel()
+    # window.speechSynthesis.speak new SpeechSynthesisUtterance 'dao'
 
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
@@ -140,10 +140,10 @@ Template.doc.onRendered ->
     unless @data.watson
         # console.log 'call'
         Meteor.call 'call_watson', @data._id, 'url','url',->
-    if @data.watson
-        unless @data.tone
-            # console.log 'call'
-            Meteor.call 'call_tone', @data._id, 'url','url',->
+    # if @data.watson
+    unless @data.tone
+        # console.log 'call'
+        Meteor.call 'call_tone', @data._id,->
     Meteor.call 'uniq', @data._id, ->
     unless @data.points
         # console.log 'no points'
@@ -189,9 +189,9 @@ Template.unselect_tag.events
             Meteor.call 'call_wiki', @valueOf(), ->
             Meteor.call 'search_reddit', selected_tags.array(), ->
             # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
-            # Meteor.setTimeout( ->
-            #     Session.set('toggle',!Session.get('toggle'))
-            # , 10000)
+            Meteor.setTimeout( ->
+                Session.set('toggle',!Session.get('toggle'))
+            , 10000)
 
     
 
@@ -251,9 +251,9 @@ Template.tag_selector.events
         Meteor.call 'search_ddg', @name, ->
         Session.set('viewing_doc',null)
         Meteor.call 'search_reddit', selected_tags.array(), ->
-        # Meteor.setTimeout( ->
-        #     Session.set('toggle',!Session.get('toggle'))
-        # , 10000)
+        Meteor.setTimeout( ->
+            Session.set('toggle',!Session.get('toggle'))
+        , 10000)
        
        
 Template.doc_tag.onCreated ->
@@ -286,6 +286,7 @@ Template.doc_tag.events
         selected_tags.push @valueOf()
         Session.set('query','')
         Session.set('skip',0)
+        Session.set('viewing_doc',null)
 
         Meteor.call 'call_wiki', @valueOf(), ->
         # Meteor.call 'call_alpha', @valueOf(), ->
@@ -424,8 +425,17 @@ Template.doc.events
             Session.set('viewing_doc', @_id)
             window.speechSynthesis.speak new SpeechSynthesisUtterance @title
             if @tone 
-                for sentance in @tone.result.sentences_tone
-                    window.speechSynthesis.speak new SpeechSynthesisUtterance sentance.text
+                for sentence in @tone.result.sentences_tone
+                    console.log sentence
+                    Session.set('current_reading_sentence',sentence)
+                    window.speechSynthesis.speak new SpeechSynthesisUtterance sentence.text
+    'click .read': (e,t)-> 
+        if @tone 
+            window.speechSynthesis.cancel()
+            for sentence in @tone.result.sentences_tone
+                console.log sentence
+                Session.set('current_reading_sentence',sentence)
+                window.speechSynthesis.speak new SpeechSynthesisUtterance sentence.text
     'click .print_me': (e,t)-> console.log @
     # 'click .tagger': (e,t)->
     #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
@@ -520,9 +530,9 @@ Template.home.events
 
                 # Session.set('query','')
                 $('.search_title').val('')
-                # Meteor.setTimeout( ->
-                #     Session.set('toggle',!Session.get('toggle'))
-                # , 10000)
+                Meteor.setTimeout( ->
+                    Session.set('toggle',!Session.get('toggle'))
+                , 10000)
         # if e.which is 8
         #     if search.length is 0
         #         selected_tags.pop()

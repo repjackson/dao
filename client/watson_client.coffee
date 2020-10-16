@@ -88,14 +88,23 @@ Template.tone.events
 
 
 Template.tone.helpers
+    is_reading: ->
+        # console.log @sentence_id
+        Session.equals('current_reading_sentence', @sentence_id)
+        console.log Session.get('current_reading_sentence')
+    sentence_class: ->
+        # console.log @sentence_id
+        # if Session.equals('current_reading_sentence', @sentence_id) then 'ui segment' else 'ui red label'
+        # console.log Session.get('current_reading_sentence')
     sentence_color: ->
         # console.log @
-        switch @tones[0].tone_id
-            when 'sadness' then 'invert blue'
-            when 'joy' then 'invert green'
-            when 'tentative' then 'invert yellow'
-            when 'analytical' then 'invert purple'
-            else ' invert grey'
+        if @tones[0]
+            switch @tones[0].tone_id
+                when 'sadness' then 'invert blue'
+                when 'joy' then 'invert green'
+                when 'tentative' then 'invert yellow'
+                when 'analytical' then 'invert purple'
+                else ' grey'
     tone_label_class: ->
         # console.log 'class',@
         switch @tone_id

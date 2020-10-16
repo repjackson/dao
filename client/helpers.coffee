@@ -52,7 +52,7 @@ Template.registerHelper 'post_header_class', (metric) ->
         when 'anger' then 'red'
         when 'sadness' then 'blue'
         when 'disgust' then 'orange'
-        when 'fear' then ''
+        when 'fear' then 'grey'
         else 'grey'
 
 Template.registerHelper 'session_key_value_is', (key, value) ->
