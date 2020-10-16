@@ -91,10 +91,11 @@ Template.tone.helpers
     sentence_color: ->
         # console.log @
         switch @tones[0].tone_id
-            when 'sadness' then ' blue'
-            when 'joy' then ' green'
-            when 'tentative' then ' yellow'
-            when 'analytical' then ' purple'
+            when 'sadness' then 'invert blue'
+            when 'joy' then 'invert green'
+            when 'tentative' then 'invert yellow'
+            when 'analytical' then 'invert purple'
+            else ' invert grey'
     tone_label_class: ->
         # console.log 'class',@
         switch @tone_id

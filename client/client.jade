@@ -150,9 +150,10 @@ template(name="doc")
             if viewing_doc
                 i.caret.down.big.grey.link.icon.vote_down
                 i.caret.up.big.grey.link.icon.vote_up
-                if is_image
-                    img.ui.centered.image(src=url)
-                |!{embed}
+                // if is_image
+                //     img.ui.centered.image(src=url)
+                .invert
+                    |!{embed}
                 // else if is_twitter
                 //     blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
                 //         p(lang='en' dir='ltr')
@@ -212,7 +213,7 @@ template(name="doc")
                 //     iframe(src='https://gfycat.com/ifr/MeanFatAmurratsnake' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen)
                 // |{{selftext}}
                 // +convert
-                a.ui.circular.icon.button(href=url target='_window' title=domain)
+                a.ui.circular.icon.big.button(href=url target='_window' title=domain)
                     i.external.icon
                     // |#{domain}
                 // a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
@@ -231,15 +232,6 @@ template(name="doc")
                 i.code.link.icon.print_me
             
             
-template(name='select_subreddit')
-    if name
-        .ui.image.circular.pointer.zoomer.label.select_subreddit
-            if tribe_doc
-                img.ui.avatar.image(src=tribe_doc.rd.data.header_img)
-            |#{name}
-
-            
-                    
                 
 template(name='view_mode')
     i.link.zoomer.icon.toggle_view(class=toggle_view_class title=key)

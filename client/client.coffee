@@ -211,11 +211,11 @@ Template.tag_selector.helpers
         if term
             if term.max_emotion_name
                 switch term.max_emotion_name
-                    when 'joy' then 'invert green'
-                    when 'anger' then 'invert red'
-                    when 'sadness' then 'invert blue'
-                    when 'disgust' then 'invert orange'
-                    when 'fear' then 'invert grey'
+                    when 'joy' then 'invert basic inverted green'
+                    when 'anger' then 'invert basic inverted red'
+                    when 'sadness' then 'invert basic inverted blue'
+                    when 'disgust' then 'invert basic inverted orange'
+                    when 'fear' then 'invert basic inverted grey'
     term: ->
         Docs.findOne 
             title:@name
@@ -418,7 +418,7 @@ Template.doc.events
     'click .toggle_view': (e,t)-> 
         if Session.equals('viewing_doc', @_id)
             Session.set('viewing_doc', null)
-            window.speechSynthesis.cancel()
+            # window.speechSynthesis.cancel()
         else
             window.speechSynthesis.cancel()
             Session.set('viewing_doc', @_id)
@@ -464,19 +464,6 @@ Template.doc.events
             # window.speechSynthesis.cancel()# 
         # window.speechSynthesis.speak new SpeechSynthesisUtterance 'ouch'
             
-    # 'click .forward': -> 
-    #     current_skip = Session.get('skip')
-    #     # console.log current_skip
-    #     next = current_skip+1
-    #     Session.set('skip',next)
-    #     # Session.get('skip')
-    # 'click .back': -> 
-    #     current_skip = Session.get('skip')
-    #     # console.log current_skip
-    #     unless current_skip is 0
-    #         prev = current_skip-1
-    #         Session.set('skip',prev)
-    #         # Session.get('skip')
 
 Template.home.events
     'click #clear_tags': -> 
@@ -582,12 +569,12 @@ Template.call_watson.events
        
 
 Template.doc.onRendered ->
-    Meteor.setTimeout( =>
-        console.log @
-        $('.ui.embed').embed({
-            source: 'youtube',
-            # url: @data.url
-            # placeholder: '/images/bear-waving.jpg'
-        });
-    , 1000)
+    # Meteor.setTimeout( =>
+    #     # console.log @
+    #     $('.ui.embed').embed({
+    #         source: 'youtube',
+    #         # url: @data.url
+    #         # placeholder: '/images/bear-waving.jpg'
+    #     });
+    # , 1000)
 
