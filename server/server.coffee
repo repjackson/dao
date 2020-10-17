@@ -207,10 +207,10 @@ Meteor.publish 'docs', (
             match.model = 'reddit'
             # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         else 
-            match.model = $in:['wikipedia','reddit','alpha']
+            match.model = $in:['wikipedia','reddit']
     console.log 'doc match', match
     Docs.find match,
-        limit:20
+        limit:8
         skip:skip
         sort:
             points: -1
@@ -257,7 +257,7 @@ Meteor.publish 'dtags', (
         when 'wikipedia'
             match.model = 'wikipedia'
         else
-            match.model = $in:['wikipedia','reddit','alpha']
+            match.model = $in:['wikipedia','reddit']
             # match.model = $in:['wikipedia']
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
@@ -354,7 +354,7 @@ Meteor.publish 'dtags', (
             count: emotion.count
             model:'emotion'
   
-    tag_limit = 13
+    tag_limit = 11
   
     tag_cloud = Docs.aggregate [
         { $match: match }

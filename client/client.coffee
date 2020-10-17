@@ -242,9 +242,6 @@ Template.tag_selector.events
         Session.set('query','')
         Session.set('skip',0)
         $('.search_title').val('')
-        # if Session.equals('view_mode','porn')
-        #     Meteor.call 'search_ph', @name, ->
-        # else        
         window.speechSynthesis.speak new SpeechSynthesisUtterance @name
         Meteor.call 'call_alpha', selected_tags.array().toString(), ->
         # Meteor.call 'call_alpha', @name, ->
@@ -478,7 +475,8 @@ Template.doc.events
 
 Template.home.events
     'click #clear_tags': -> 
-        selected_tags.clear()
+        # selected_tags.clear()
+        window.speechSynthesis.cancel()
 
 
     'click .search_title': (e,t)->

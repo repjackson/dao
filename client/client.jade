@@ -414,3 +414,12 @@ template(name='tone')
     //- #call_tone.ui.icon.button
     //-     i.refresh.icon
             // +jsonView(json=tone)
+
+
+template(name='call_tone')
+    button.ui.large.circular.button.call
+        i.big.download.icon
+        // |call tone
+        |download
+    if page_doc.tone 
+        i.checkmark.icon
