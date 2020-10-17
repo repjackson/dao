@@ -293,3 +293,83 @@ template(name='doc_tag')
             img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         | #{this}
         // small #{count}
+
+
+template(name='duck')
+    with content
+        // .ui.segment
+        .ui.inline.header #{Heading}
+        // .item abstract #{Abstract}
+        .item.abstract !{AbstractText}
+        // a.ui.circular.icon.button(href=AbstractURL)
+        //     // #{AbstractURL}
+        //     i.large.external.icon
+        img(src=Image)
+        each RelatedTopics
+            if Text
+                .ui.compact.button.topic
+                    img.ui.mini.inline.rounded.image(src=Icon.URL)
+                    |#{Text}
+                    // | {{lowered Text}}
+            // .content
+            //     .item #{FirstURL}
+                // .item !{Result}
+
+
+
+template(name='alpha')
+    with response.queryresult
+        // .ui.inline.header #{datatypes}
+        // each split_datatypes
+        //     .ui.button.basic.compact.circular.buton.select_datatype
+        //         |#{this}
+        // .ui.list
+            // .item success: #{success}
+            // .item error: #{error}
+            // .item numpods: #{numpods}
+            // .item datatypes: #{datatypes}
+                // each datatypes
+                //     .ui.button
+                //         |#{this}
+            // .item timedout: #{timedout}
+            // .item timedoutpods: #{timedoutpods}
+            // .item timing: #{timing}
+            // .item parsetiming: #{parsetiming}
+            // .item parsetimedout: #{parsetimedout}
+            // .item recalculate: #{recalculate}
+            // .item id: #{id}
+            // .item host: #{host}
+            // .item server: #{server}
+            // .item related: #{related}
+            // .item version: #{version}
+        each pods
+            // div
+            .ui.small.inline.middle.aligned.header.middled #{title}
+            // div
+            // .item #{scanner}
+            // .item id #{id}
+            // .item position #{position}
+            // .item error #{error}
+            // .item numsubpods #{numsubpods}
+            // .item subpods
+            // .ui.list
+            each subpods
+                // .ui.small.inline.header #{title}
+                img.ui.zoomer.pointer.image.alphatemp.middled(src=img.src)
+                // .item.alphatemp
+                // |#{plaintext}
+                // .item title: #{title}
+                // .item primary: #{primary}
+    // each tags
+    //     .ui.label #{this}
+    // .alphatemp voice: #{voice}
+    //   div assumptions": {
+    //     "type": "Clash",
+    //     "word": "time",
+    //     "template": "Assuming \"${word}\" is ${desc1}. Use as ${desc2} instead",
+    //     "count": 4,
+    //     "values": [
+    //       {
+    //         "name": "CalendarWord",
+    //         "desc": " referring to a calendar computation",
+    //         "input": "*C.time-_*CalendarWord-"
