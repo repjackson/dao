@@ -109,8 +109,8 @@ template(name='home')
                 // // i.smile.large.icon
                 div
         .row
-            // .five.wide.right.aligned.column
             .sixteen.wide.center.aligned.column
+                // .five.wide.right.aligned.column
                 unless viewing_doc
                     each alphas
                         if response.queryresult
@@ -119,28 +119,28 @@ template(name='home')
                         each alpha_singles
                             if response.queryresult
                                 +alpha 
+                unless viewing_doc
+                    each ducks
+                        +duck 
+                // .eleven.wide.column
                 .ui.centered.cards
                     each docs
                         // if key_value 'model' 'porn'
                         //     +vid_card
                         // else
                         +doc
-                unless viewing_doc
-                    each ducks
-                        +duck 
                     // .five.wide.column.scrolling
-                    // each docs
-                    // .eleven.wide.column
+                // each docs
 template(name="doc")
     .ui.card(class=card_class)
         // if embed
         //     .rounded.full
         //         |!{embed}
         // else
-        if watson.metadata.image
-            img.ui.rounded.inline.pointer.image.toggle_view(src=watson.metadata.image)    
-        else if is_image
-            img.ui.centered.image.pointer.toggle_view(src=url)
+        if is_image
+            img.ui.centered.image.pointer.zoomer.toggle_view(src=url)
+        else if watson.metadata.image
+            img.ui.rounded.inline.pointer.zoomer.image.toggle_view(src=watson.metadata.image)    
 
         .content
             span.ui.pointer.text.invert.f13.zoomer.toggle_view(class=post_header_class) #{title}
@@ -312,8 +312,9 @@ template(name='duck')
         img(src=Image)
         each RelatedTopics
             if Text
-                .ui.compact.button.topic
-                    img.ui.mini.inline.rounded.image(src=Icon.URL)
+                // .ui.compact.button.topic
+                .ui.small.header.pointer.topic
+                    img.ui.tiny.inline.rounded.image(src=Icon.URL)
                     |#{Text}
                     // | {{lowered Text}}
             // .content
@@ -348,9 +349,10 @@ template(name='alpha')
             // .item related: #{related}
             // .item version: #{version}
         each pods
-            // div
-            .ui.small.inline.middle.aligned.header.middled #{title}
-            // div
+            div
+            // .ui.small.inline.middle.aligned.header.middled #{title}
+            .ui.small.inline.header #{title}
+            div
             // .item #{scanner}
             // .item id #{id}
             // .item position #{position}
@@ -360,7 +362,7 @@ template(name='alpha')
             // .ui.list
             each subpods
                 // .ui.small.inline.header #{title}
-                img.ui.zoomer.pointer.image.alphatemp.middled(src=img.src)
+                img.ui.zoomer.pointer.image.alphatemp(src=img.src)
                 // .item.alphatemp
                 // |#{plaintext}
                 // .item title: #{title}
@@ -378,3 +380,37 @@ template(name='alpha')
     //         "name": "CalendarWord",
     //         "desc": " referring to a calendar computation",
     //         "input": "*C.time-_*CalendarWord-"
+    
+    
+    
+    
+template(name='tone')
+    // h3 tone
+    .ui.horizontal.list
+        each tone.result.document_tone.tones
+            .item #{tone_id} {{ to_percent score }}%
+    .ui.list
+        each tone.result.sentences_tone
+            .item(class=sentence_class)
+                //- span #{sentence_id}
+                span.tone_item.ui.zoomer.pointer.text(title="#{sentence_id}" class="#{tone_size} #{sentence_color}") 
+                    |{{lowered text}}
+                    // .content
+                    // .inline.header(title="#{sentence_id}") {{lowered text}}
+                    // |weight:#{weight}
+                    // i.chevron.up.link.grey.large.icon.upvote_sentence
+                    // i.chevron.down.link.grey.large.icon.downvote_sentence
+                    // each tones
+                    //     .ui.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
+                        // .ui.small.compact.circular.inverted.label(class="{{calculated_size 'weight'}} #{tone_label_class}") 
+                            span.ui.text
+                                |#{tone_id} &nbsp;
+                            | {{ to_percent score }}% 
+                    // .ui.mini.transparent.icon.input
+                    //     input.tag_sentence(type='text' placeholder='tag')
+                    // each tags 
+                    //     .ui.label #{this}
+    // unless tone                
+    //- #call_tone.ui.icon.button
+    //-     i.refresh.icon
+            // +jsonView(json=tone)

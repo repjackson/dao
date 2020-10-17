@@ -87,7 +87,7 @@ Meteor.publish 'doc_count', (
     if selected_tags.length > 0 
         match.tags = $all: selected_tags
     else
-        match.tags = $in:['dao']
+        match.tags = $in:['life']
     
     if emotion_mode
         match.max_emotion_name = emotion_mode
@@ -203,11 +203,6 @@ Meteor.publish 'docs', (
         when 'wikipedia'
             match.model = 'wikipedia'
             # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
-        when 'twitter'
-            match.model = 'twitter'
-            # match.domain = $in:['twitter.com','mobile.twitter.com']
-        when 'porn'
-            match.model = 'porn'
         when 'posts'
             match.model = 'reddit'
             # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
@@ -261,12 +256,6 @@ Meteor.publish 'dtags', (
             match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         when 'wikipedia'
             match.model = 'wikipedia'
-        when 'twitter'
-            match.model = 'twitter'
-            match.source = 'reddit'
-            # match.domain = $in:['twitter.com','mobile.twitter.com']
-        when 'porn'
-            match.model = 'porn'
         else
             match.model = $in:['wikipedia','reddit','alpha']
             # match.model = $in:['wikipedia']
@@ -274,7 +263,7 @@ Meteor.publish 'dtags', (
         match.tags = $all: selected_tags
     else
         # unless selected_subreddits.length>0
-        match.tags = $in:['dao']
+        match.tags = $in:['life']
     # else if view_mode in ['reddit',null]
     doc_count = Docs.find(match).count()
     # console.log 'count',doc_count
@@ -365,7 +354,7 @@ Meteor.publish 'dtags', (
             count: emotion.count
             model:'emotion'
   
-    tag_limit = 11
+    tag_limit = 13
   
     tag_cloud = Docs.aggregate [
         { $match: match }

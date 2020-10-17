@@ -211,11 +211,12 @@ Template.tag_selector.helpers
         if term
             if term.max_emotion_name
                 switch term.max_emotion_name
-                    when 'joy' then 'invert basic inverted green'
-                    when 'anger' then 'invert basic inverted red'
-                    when 'sadness' then 'invert basic inverted blue'
-                    when 'disgust' then 'invert basic inverted orange'
-                    when 'fear' then 'invert basic inverted grey'
+                    when 'joy' then 'invert basic green'
+                    when 'anger' then 'invert basic red'
+                    when 'sadness' then 'invert basic blue'
+                    when 'disgust' then 'invert basic orange'
+                    when 'fear' then 'invert basic grey'
+                    else 'basic'
     term: ->
         Docs.findOne 
             title:@name

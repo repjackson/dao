@@ -2,7 +2,7 @@ body {
     /*background-color: rgba(0,0,0,.9) !important;*/
     /*filter: invert(1) !important; */
     /*font-size: 110% !important;*/
-    transition: all .25s ease !important;
+    transition: all .1s ease !important;
 }
 .alphatemp, .invert {
   /*filter: invert(1) !important; */
@@ -146,15 +146,15 @@ input {
     /*transform: scale(1.1) !important;*/
 }
 .icon {
-    transition: all .25s ease !important; 
+    transition: all .1s ease !important; 
 }
 .zoomer:hover {
-    transition: all .25s ease !important; 
+    transition: all .1s ease !important; 
     z-index: 1000 !important;
     transform: scale(1.1) !important;
 }
 .zoomer {
-    transition: all .25s ease !important; 
+    transition: all .1s ease !important; 
     /*z-index: 1000 !important;*/
     /*transform: scale(1.1) !important;*/
 }
@@ -164,42 +164,42 @@ input {
     transform: scale(2) !important;
 }
 .tone_item {
-  /*transition: all .25s ease !important; */
+  /*transition: all .1s ease !important; */
   
 }
 .label {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .1s ease !important; 
 }
 .label:hover {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .1s ease !important; 
   z-index: 1000 !important;
   transform: scale(1.1) !important;
 }
 .item {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .5 ease !important; 
+  transition: all .25 ease !important; 
 }
 .item:hover {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .1s ease !important; 
   z-index: 1000 !important;
   /*transform: scale(1.1) !important;*/
 }
 .icon {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .1s ease !important; 
 }
 .icon:hover {
   /*padding:10px !important;*/
   /*margin:10px !important;*/
-  transition: all .25s ease !important; 
+  transition: all .1s ease !important; 
   z-index: 1000 !important;
   transform: scale(1.1) !important;
 }
