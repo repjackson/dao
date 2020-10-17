@@ -354,7 +354,7 @@ Meteor.publish 'dtags', (
             count: emotion.count
             model:'emotion'
   
-    tag_limit = 11
+    tag_limit = 15
   
     tag_cloud = Docs.aggregate [
         { $match: match }

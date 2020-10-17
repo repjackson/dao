@@ -54,7 +54,7 @@ template(name='home')
                         input.search_title(type='text' autofocus='')
                     each tag_results
                         +tag_selector
-                    .ui.circular.label(title='results') #{doc_count}
+                    .ui.circular.basic.label(title='results') #{doc_count}
                     // +view_mode key='twitter' icon='twitter' color='blue'
                     +view_mode key='video' icon='youtube' color='red'
                     +view_mode key='image' icon='picture' color='green'
@@ -286,9 +286,11 @@ template(name='unselect_tag')
         strong #{this}
 
 template(name='tag_selector')
-    a.ui.big.image.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
+    // a.ui.big.image.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
+    a.ui.tertiary.basic.circular.button.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
         if term
-            img.ui.avatar.compact.invert.image(src=term.watson.metadata.image)    
+            if term.watson.metadata.image
+                img.ui.avatar.compact.invert.image(src=term.watson.metadata.image)    
         | #{name}
         // small #{count}
 
@@ -313,7 +315,7 @@ template(name='duck')
         each RelatedTopics
             if Text
                 // .ui.compact.button.topic
-                .ui.small.header.pointer.topic
+                .ui.small.tertiary.basic.button.topic
                     img.ui.tiny.inline.rounded.image(src=Icon.URL)
                     |#{Text}
                     // | {{lowered Text}}
