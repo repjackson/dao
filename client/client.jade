@@ -111,12 +111,6 @@ template(name='home')
         .row
             // .five.wide.right.aligned.column
             .sixteen.wide.center.aligned.column
-                .ui.centered.cards
-                    each docs
-                        // if key_value 'model' 'porn'
-                        //     +vid_card
-                        // else
-                        +doc
                 unless viewing_doc
                     each alphas
                         if response.queryresult
@@ -125,6 +119,13 @@ template(name='home')
                         each alpha_singles
                             if response.queryresult
                                 +alpha 
+                .ui.centered.cards
+                    each docs
+                        // if key_value 'model' 'porn'
+                        //     +vid_card
+                        // else
+                        +doc
+                unless viewing_doc
                     each ducks
                         +duck 
                     // .five.wide.column.scrolling
@@ -148,13 +149,16 @@ template(name="doc")
                 // unless one_post
                 //     i.chevron.right.big.circular.grey.link.icon.forward
             if viewing_doc
-                i.caret.down.big.grey.link.icon.vote_down
-                i.caret.up.big.grey.link.icon.vote_up
+                .ui.circular.icon.button.vote_down
+                    i.caret.down.big.grey.icon
+                .ui.circular.icon.button.vote_up
+                    i.caret.up.big.grey.icon
                 .ui.circular.icon.big.button.read 
                     i.rss.icon
+                    |read
                 // if is_image
                 //     img.ui.centered.image(src=url)
-                .invert
+                span.invert
                     |!{embed}
                 // else if is_twitter
                 //     blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
@@ -175,7 +179,7 @@ template(name="doc")
                 //     iframe(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
                 // .medscroll
                 // 
-                // a.ui.circular.label(href="https://www.reddit.com#{permalink}" target="_window") r/#{subreddit}
+                a.ui.circular.label(href="https://www.reddit.com#{permalink}" target="_window") r/#{subreddit}
                 // .ui.big.label 
                 //     i.user.outline.icon
                 //     |#{author}
@@ -194,7 +198,7 @@ template(name="doc")
                 // .nl2br
                 // if viewing
                 
-                +call_watson
+                // +call_watson
                 if watson    
                     unless tone
                         +call_tone    
@@ -217,6 +221,7 @@ template(name="doc")
                 // +convert
                 a.ui.circular.icon.big.button(href=url target='_window' title=domain)
                     i.external.icon
+                    |view site
                     // |#{domain}
                 // a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
 
@@ -283,7 +288,7 @@ template(name='unselect_tag')
 template(name='tag_selector')
     a.ui.big.image.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
         if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image)    
+            img.ui.avatar.compact.invert.image(src=term.watson.metadata.image)    
         | #{name}
         // small #{count}
 
