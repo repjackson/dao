@@ -364,7 +364,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: selected_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:tag_limit }
+        { $limit:7 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # # console.log 'cloud: ', tag_cloud

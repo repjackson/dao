@@ -149,11 +149,11 @@ template(name="doc")
                 // unless one_post
                 //     i.chevron.right.big.circular.grey.link.icon.forward
             if viewing_doc
-                .ui.circular.icon.button.vote_down
+                .ui.circular.icon.basic.button.vote_down
                     i.caret.down.big.grey.icon
-                .ui.circular.icon.button.vote_up
+                .ui.circular.icon.basic.button.vote_up
                     i.caret.up.big.grey.icon
-                .ui.circular.icon.big.button.read 
+                .ui.circular.icon.big.basic.button.read 
                     i.rss.icon
                     |read
                 // if is_image
@@ -219,10 +219,10 @@ template(name="doc")
                 //     iframe(src='https://gfycat.com/ifr/MeanFatAmurratsnake' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen)
                 // |{{selftext}}
                 // +convert
-                a.ui.circular.icon.big.button(href=url target='_window' title=domain)
+                a.ui.circular.icon.big.basic.button(href=url target='_window' title=domain)
                     i.external.icon
-                    |view site
-                    // |#{domain}
+                    |view site 
+                    |#{domain}
                 // a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
 
                 // .spacer
@@ -253,19 +253,6 @@ template(name='emotion_mode')
         // img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/ios/36/000000/#{icon}.png" class=cl title=title)
 
 
-template(name='session_edit_value_button')
-    // .ui.circular.compact.button.set_session_value(class=calculated_class)
-    a.ui.big.icon.circular.button.set_session_value(class=calculated_class)
-        i.icon(class=icon)
-        // +i name=icon cl='ui avatar image'
-        // if label
-        //     |#{label}
-        // else 
-        //     |#{value}
-
-
-    
-                    
 template(name='pull_reddit')
     .ui.circular.icon.button.pull
         i.reddit.icon
