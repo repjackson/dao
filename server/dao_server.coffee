@@ -166,7 +166,7 @@ Meteor.methods
                 Docs.insert
                     model:'page'
                     url:url
-            Meteor.call 'call_watson', 'url', 'url'
+            # Meteor.call 'call_watson', 'url', 'url'
             Docs.findOne new_id
 
 
@@ -207,7 +207,8 @@ Meteor.publish 'docs', (
             match.model = 'reddit'
             # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
         else 
-            match.model = $in:['wikipedia','reddit']
+            # match.model = $in:['wikipedia','reddit']
+            match.model = $in:['reddit']
     console.log 'doc match', match
     Docs.find match,
         limit:8
@@ -260,121 +261,123 @@ Meteor.publish 'dtags', (
     #         match.model = $in:['wikipedia','reddit']
     #         # match.model = $in:['wikipedia']
     # # if picked_tags.length > 0 
-    match.tags = $all: picked_tags
-    # else
-    #     # unless selected_subreddits.length>0
-    #     match.tags = $in:['life']
-    # else if view_mode in ['reddit',null]
-    doc_count = Docs.find(match).count()
-    # console.log 'count',doc_count
-    # if query.length > 3
-    #     match.title = {$regex:"#{query}"}
-    #     model:'wikipedia'
-    # if query.length > 4
-    #     console.log 'searching query', query
-    #     # match.tags = {$regex:"#{query}", $options: 'i'}
-    #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
+    if picked_tags and picked_tags.length > 0
+        match.tags = $all: picked_tags
     
-    #     terms = Docs.find({
-    #         model:'wikipedia'            
-    #         title: {$regex:"#{query}", $options: 'i'}
-    #         title: {$regex:"#{query}"}
-    #     },
-    #         # sort:
-    #         #     count: -1
-    #         limit: 10
-    #     )
-    #     terms.forEach (term, i) ->
-    #         self.added 'results', Random.id(),
-    #             name: term.title
-    #             # count: term.count
-    #             model:'tag'
-    #     # self.ready()
-    # else
-    # model_cloud = Docs.aggregate [
-    #     { $match: match }
-    #     { $project: "model": 1 }
-    #     # { $unwind: "$models" }
-    #     { $group: _id: "$model", count: $sum: 1 }
-    #     { $match: _id: $nin: selected_models }
-    #     { $sort: count: -1, _id: 1 }
-    #     { $match: count: $lt: doc_count }
-    #     { $limit:10 }
-    #     { $project: _id: 0, name: '$_id', count: 1 }
-    #     ]
-    # # # console.log 'cloud: ', model_cloud
-    # # console.log 'model match', match
-    # model_cloud.forEach (model, i) ->
-    #     self.added 'results', Random.id(),
-    #         name: model.name
-    #         count: model.count
-    #         model:'model'
-  
-  
-    # unless selected_subreddits.length > 0
-    #     subreddit_cloud = Docs.aggregate [
-    #         { $match: match }
-    #         { $project: "subreddit": 1 }
-    #         # { $unwind: "$subreddits" }
-    #         { $group: _id: "$subreddit", count: $sum: 1 }
-    #         # { $match: _id: $nin: selected_subreddits }
-    #         { $sort: count: -1, _id: 1 }
-    #         { $match: count: $lt: doc_count }
-    #         { $limit:10 }
-    #         { $project: _id: 0, name: '$_id', count: 1 }
-    #         ]
-    #     # # console.log 'cloud: ', subreddit_cloud
-    #     # console.log 'subreddit match', match
-    #     subreddit_cloud.forEach (subreddit, i) ->
-    #         # console.log subreddit
-    #         self.added 'results', Random.id(),
-    #             name: subreddit.name
-    #             count: subreddit.count
-    #             model:'subreddit'
+        # else
+        #     # unless selected_subreddits.length>0
+        #     match.tags = $in:['life']
+        # else if view_mode in ['reddit',null]
+        doc_count = Docs.find(match).count()
+        # console.log 'count',doc_count
+        # if query.length > 3
+        #     match.title = {$regex:"#{query}"}
+        #     model:'wikipedia'
+        # if query.length > 4
+        #     console.log 'searching query', query
+        #     # match.tags = {$regex:"#{query}", $options: 'i'}
+        #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
+        
+        #     terms = Docs.find({
+        #         model:'wikipedia'            
+        #         title: {$regex:"#{query}", $options: 'i'}
+        #         title: {$regex:"#{query}"}
+        #     },
+        #         # sort:
+        #         #     count: -1
+        #         limit: 10
+        #     )
+        #     terms.forEach (term, i) ->
+        #         self.added 'results', Random.id(),
+        #             name: term.title
+        #             # count: term.count
+        #             model:'tag'
+        #     # self.ready()
+        # else
+        # model_cloud = Docs.aggregate [
+        #     { $match: match }
+        #     { $project: "model": 1 }
+        #     # { $unwind: "$models" }
+        #     { $group: _id: "$model", count: $sum: 1 }
+        #     { $match: _id: $nin: selected_models }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $match: count: $lt: doc_count }
+        #     { $limit:10 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # # # console.log 'cloud: ', model_cloud
+        # # console.log 'model match', match
+        # model_cloud.forEach (model, i) ->
+        #     self.added 'results', Random.id(),
+        #         name: model.name
+        #         count: model.count
+        #         model:'model'
       
-  
-  
-    # emotion_cloud = Docs.aggregate [
-    #     { $match: match }
-    #     { $project: "max_emotion_name": 1 }
-    #     # { $unwind: "$emotions" }
-    #     { $group: _id: "$max_emotion_name", count: $sum: 1 }
-    #     # { $match: _id: $nin: selected_emotions }
-    #     { $sort: count: -1, _id: 1 }
-    #     { $match: count: $lt: doc_count }
-    #     { $limit:5 }
-    #     { $project: _id: 0, name: '$_id', count: 1 }
-    #     ]
-    # # console.log 'cloud: ', emotion_cloud
-    # # console.log 'emotion match', match
-    # emotion_cloud.forEach (emotion, i) ->
-    #     # console.log 'emotion',emotion
-    #     self.added 'results', Random.id(),
-    #         name: emotion.name
-    #         count: emotion.count
-    #         model:'emotion'
-  
-    tag_limit = 15
-  
-    tag_cloud = Docs.aggregate [
-        { $match: match }
-        { $project: "tags": 1 }
-        { $unwind: "$tags" }
-        { $group: _id: "$tags", count: $sum: 1 }
-        { $match: _id: $nin: picked_tags }
-        { $sort: count: -1, _id: 1 }
-        { $match: count: $lt: doc_count }
-        { $limit:20 }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # # console.log 'cloud: ', tag_cloud
-    console.log 'tag match', match
-    tag_cloud.forEach (tag, i) ->
-        self.added 'results', Random.id(),
-            name: tag.name
-            count: tag.count
-            model:'tag'
-    self.ready()
+      
+        # unless selected_subreddits.length > 0
+        #     subreddit_cloud = Docs.aggregate [
+        #         { $match: match }
+        #         { $project: "subreddit": 1 }
+        #         # { $unwind: "$subreddits" }
+        #         { $group: _id: "$subreddit", count: $sum: 1 }
+        #         # { $match: _id: $nin: selected_subreddits }
+        #         { $sort: count: -1, _id: 1 }
+        #         { $match: count: $lt: doc_count }
+        #         { $limit:10 }
+        #         { $project: _id: 0, name: '$_id', count: 1 }
+        #         ]
+        #     # # console.log 'cloud: ', subreddit_cloud
+        #     # console.log 'subreddit match', match
+        #     subreddit_cloud.forEach (subreddit, i) ->
+        #         # console.log subreddit
+        #         self.added 'results', Random.id(),
+        #             name: subreddit.name
+        #             count: subreddit.count
+        #             model:'subreddit'
+          
+      
+      
+        # emotion_cloud = Docs.aggregate [
+        #     { $match: match }
+        #     { $project: "max_emotion_name": 1 }
+        #     # { $unwind: "$emotions" }
+        #     { $group: _id: "$max_emotion_name", count: $sum: 1 }
+        #     # { $match: _id: $nin: selected_emotions }
+        #     { $sort: count: -1, _id: 1 }
+        #     { $match: count: $lt: doc_count }
+        #     { $limit:5 }
+        #     { $project: _id: 0, name: '$_id', count: 1 }
+        #     ]
+        # # console.log 'cloud: ', emotion_cloud
+        # # console.log 'emotion match', match
+        # emotion_cloud.forEach (emotion, i) ->
+        #     # console.log 'emotion',emotion
+        #     self.added 'results', Random.id(),
+        #         name: emotion.name
+        #         count: emotion.count
+        #         model:'emotion'
+      
+        tag_limit = 15
+      
+        tag_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "tags": 1 }
+            { $unwind: "$tags" }
+            { $group: _id: "$tags", count: $sum: 1 }
+            { $match: _id: $nin: picked_tags }
+            { $sort: count: -1, _id: 1 }
+            { $match: count: $lt: doc_count }
+            { $limit:20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+            ]
+        # # console.log 'cloud: ', tag_cloud
+        console.log 'tag match', match
+        tag_cloud.forEach (tag, i) ->
+            self.added 'results', Random.id(),
+                name: tag.name
+                count: tag.count
+                model:'tag'
+        self.ready()
     
         
                         
