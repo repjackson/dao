@@ -378,19 +378,19 @@ Template.home.helpers
     # selected_subreddits: -> selected_subreddits.array()
     selected_emotions: -> selected_emotions.array()
    
-    emotion_results: -> results.find(model:'emotion')
-    # model_results: -> results.find(model:'model')
-    # subreddit_results: -> results.find(model:'subreddit')
+    emotion_results: -> Results.find(model:'emotion')
+    # model_results: -> Results.find(model:'model')
+    # subreddit_results: -> Results.find(model:'subreddit')
     tag_results: ->
         # match = {model:'wikipedia'}
         # doc_count = Docs.find(match).count()
         # if 0 < doc_count < 3 
-        #     results.find({ 
+        #     Results.find({ 
         #         count:$lt:doc_count 
         #         model:'tag'
         #     })
         # else 
-        results.find(model:'tag')
+        Results.find(model:'tag')
 
 
 Template.duck.events

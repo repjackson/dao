@@ -11,6 +11,9 @@ template(name='nav')
             +i name='yin-yang'
         a.icon.item.zoomer.mobile.hidden(href="/products" class="{{isActiveRoute 'products'}}")
             +i name='shop'
+        a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
+            +i name='blog'
+            span.mobile.hidden posts
         a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
             +i name='tasks'
         a.icon.item.zoomer.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}")
@@ -83,9 +86,6 @@ template(name='nav')
                 +topbar
     if viewing_secnav
         .ui.small.attached.borderless.menu.hscroll
-            a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
-                +i name='blog'
-                span.mobile.hidden posts
             a.icon.item.zoomer(href="/sources" class="{{isActiveRoute 'sources'}}")
                 +i name='field-and-tractor'
                 span.mobile.hidden sources

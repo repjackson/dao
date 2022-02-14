@@ -24,6 +24,7 @@ mquandalle:jade
 underscore@1.0.10
 coffeescript
 zimme:active-route
+momentjs:moment
 fourseven:scss
 lepozepo:cloudinary
 constellation:console
@@ -36,3 +37,4 @@ http@1.4.2
 francocatena:status
 tmeasday:publish-counts
 lamhieu:unblock
+reactive-var@1.0.11

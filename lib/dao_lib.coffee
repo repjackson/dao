@@ -1,5 +1,5 @@
 @Docs = new Meteor.Collection 'docs'
-@results = new Meteor.Collection 'results'
+@Results = new Meteor.Collection 'results'
 
 
 Meteor.methods
