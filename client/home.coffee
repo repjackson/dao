@@ -97,17 +97,17 @@ Template.home.onCreated ->
     # Meteor.subscribe("posts", {
     # });
         
-    # @autorun => Meteor.subscribe('docs',
-    #     picked_tags.array()
-    #     # Session.get('view_mode')
-    #     # Session.get('emotion_mode')
-    #     # Session.get('toggle')
-    #     # # selected_models.array()
-    #     # # selected_subreddits.array()
-    #     # picked_emotions.array()
-    #     # # Session.get('query')
-    #     # Session.get('skip')
-    #     )
+    @autorun => Meteor.subscribe('docs',
+        picked_tags.array()
+        # Session.get('view_mode')
+        # Session.get('emotion_mode')
+        # Session.get('toggle')
+        # # selected_models.array()
+        # # selected_subreddits.array()
+        # picked_emotions.array()
+        # # Session.get('query')
+        # Session.get('skip')
+        )
 
 
 
@@ -327,7 +327,7 @@ Template.doc.helpers
 Template.home.helpers
     timer_diff: ->
         if Session.get('end_timer')
-            (Session.get('end_timer')-Session.get('start_timer'))/100
+            (Session.get('end_timer')-Session.get('start_timer'))/1000
     viewing_doc: -> Session.get('viewing_doc')
     alphas: ->
         Docs.find 
@@ -347,25 +347,26 @@ Template.home.helpers
     many_tags: -> picked_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
     result_docs: ->
-        if Session.get('viewing_doc')
-            Docs.find Session.get('viewing_doc')
-        else
-            match = {model:$in:['post','wikipedia','reddit']}
-            # match = {model:$in:['post','wikipedia','reddit']}
-            # match = {model:'wikipedia'}
-            # if picked_tags.array().length>0
-            match.tags = $all:picked_tags.array()
-         
-            Docs.find match,
-                sort:
-                    points:-1
-                    ups:-1
-                    # _timestamp:-1
-                    # "#{Session.get('sort_key')}": Session.get('sort_direction')
-                limit:10
-                # skip:Session.get('skip')
-            # if cur.count() is 1
-            # Docs.find match
+        # if Session.get('viewing_doc')
+        #     Docs.find Session.get('viewing_doc')
+        # else
+        # match = {model:$in:['post','wikipedia','reddit']}
+        match = {model:'reddit'}
+        # match = {model:$in:['post','wikipedia','reddit']}
+        # match = {model:'wikipedia'}
+        # if picked_tags.array().length>0
+        # match.tags = $all:picked_tags.array()
+     
+        Docs.find match
+            # sort:
+            #     points:-1
+            #     ups:-1
+            #     # _timestamp:-1
+            #     # "#{Session.get('sort_key')}": Session.get('sort_direction')
+            # limit:10
+            # skip:Session.get('skip')
+        # if cur.count() is 1
+        # Docs.find match
 
     loading_class: ->
         if Template.instance().subscriptionsReady()

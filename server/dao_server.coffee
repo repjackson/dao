@@ -172,51 +172,52 @@ Meteor.methods
 
 Meteor.publish 'docs', (
     picked_tags
-    view_mode
-    emotion_mode
-    toggle
+    # view_mode
+    # emotion_mode
+    # toggle
     # selected_models
     # selected_subreddits
-    selected_emotions
+    # selected_emotions
     # query=''
-    skip
+    # skip
     )->
-    match = {}
-    if emotion_mode
-        match.max_emotion_name = emotion_mode
+    match = {model:'reddit'}
+    # if emotion_mode
+    #     match.max_emotion_name = emotion_mode
 
     # if picked_tags.length > 0
-    match.tags = $all:picked_tags
-    # console.log 'skip', skip
-    # match.model = 'wikipedia'
-    if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
-    # if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
-    # if selected_models.length > 0 then match.model = $all:selected_models
-    
-    switch view_mode 
-        when 'image'
-            # match.model = 'image'
-            match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-        when 'video'
-            # match.model = 'video'
-            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
-        when 'wikipedia'
-            match.model = 'wikipedia'
-            # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
-        when 'posts'
-            match.model = 'reddit'
-            # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
-        else 
-            # match.model = $in:['wikipedia','reddit']
-            match.model = $in:['reddit']
-    console.log 'doc match', match
-    Docs.find match,
-        limit:8
-        skip:skip
-        sort:
-            points: -1
-            ups:-1
-            # views: -1
+    # match.tags = $all:picked_tags
+    if picked_tags and picked_tags.length > 0
+        # console.log 'skip', skip
+        # match.model = 'wikipedia'
+        # if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
+        # if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
+        # if selected_models.length > 0 then match.model = $all:selected_models
+        
+        # switch view_mode 
+        #     when 'image'
+        #         # match.model = 'image'
+        #         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+        #     when 'video'
+        #         # match.model = 'video'
+        #         match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+        #     when 'wikipedia'
+        #         match.model = 'wikipedia'
+        #         # match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+        #     when 'posts'
+        #         match.model = 'reddit'
+        #         # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+        #     else 
+        #         # match.model = $in:['wikipedia','reddit']
+        #         match.model = $in:['reddit']
+        console.log 'doc match', match
+        Docs.find match,
+            limit:8
+            # skip:skip
+            sort:
+                points: -1
+                ups:-1
+                # views: -1
                     
                     
 Meteor.publish 'dtags', (
