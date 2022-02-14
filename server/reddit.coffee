@@ -1,118 +1,161 @@
 Meteor.methods
-    uniq: (doc_id)->
-        @unblock()
-        doc = Docs.findOne doc_id 
-        # console.log 'tags', doc.tags
-        flat = _.flatten(doc.tags)
-        # console.log 'flat', doc.flat
-        uniq = _.uniq(flat)
-        # console.log 'uniq', uniq
-        Docs.update doc._id,
-            $set:
-                tags:uniq
+    # uniq: (doc_id)->
+    #     @unblock()
+    #     doc = Docs.findOne doc_id 
+    #     # console.log 'tags', doc.tags
+    #     flat = _.flatten(doc.tags)
+    #     # console.log 'flat', doc.flat
+    #     uniq = _.uniq(flat)
+    #     # console.log 'uniq', uniq
+    #     Docs.update doc._id,
+    #         $set:
+    #             tags:uniq
 
-    find_subreddit: (title)->
-        # return
-        @unblock()
-        console.log 'searching subreddit for', title
-        # console.log 'type of query', typeof(query)
-        # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
-        # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/r/#{title}/about.json",(err,response)=>
-            # console.log response
-            # if err then console.log err
-            # else if response.data.data.dist > 1
-            #     # console.log 'found data'
-            #     # console.log 'data length', response.data.data.children.length
-            #     _.each(response.data.data.children, (item)=>
-            found = Docs.findOne 
-                model:'tribe'
-                title:title
-            unless found
-                Docs.insert 
-                    model:'tribe'
-                    title:title
-                    rd:response.data
-            return
-        return
+    # find_subreddit: (title)->
+    #     # return
+    #     @unblock()
+    #     console.log 'searching subreddit for', title
+    #     # console.log 'type of query', typeof(query)
+    #     # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
+    #     # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
+    #     HTTP.get "http://reddit.com/r/#{title}/about.json",(err,response)=>
+    #         # console.log response
+    #         # if err then console.log err
+    #         # else if response.data.data.dist > 1
+    #         #     # console.log 'found data'
+    #         #     # console.log 'data length', response.data.data.children.length
+    #         #     _.each(response.data.data.children, (item)=>
+    #         found = Docs.findOne 
+    #             model:'tribe'
+    #             title:title
+    #         unless found
+    #             Docs.insert 
+    #                 model:'tribe'
+    #                 title:title
+    #                 rd:response.data
+    #         return
+    #     return
+    # search_reddit: (query)->
+    #     console.log 'searching reddit', query
+    #     # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
+    #     # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
+    #     # HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&include_over_18=on&limit=20&include_facets=true",(err,response)=>
+    #     HTTP.get "http://reddit.com/search.json?q=#{query}",(err,response)=>
+    #         if response.data.data.dist > 1
+    #             _.each(response.data.data.children, (item)=>
+    #                 unless item.domain is "OneWordBan"
+    #                     data = item.data
+    #                     len = 200
+    #                     # added_tags = [query]
+    #                     # added_tags.push data.domain.toLowerCase()
+    #                     # added_tags.push data.author.toLowerCase()
+    #                     # added_tags = _.flatten(added_tags)
+    #                     reddit_post =
+    #                         reddit_id: data.id
+    #                         url: data.url
+    #                         # domain: data.domain
+    #                         # comment_count: data.num_comments
+    #                         # permalink: data.permalink
+    #                         # title: data.title
+    #                         # root: query
+    #                         # selftext: false
+    #                         # thumbnail: false
+    #                         tags: query
+    #                         model:'reddit'
+    #                     existing_doc = Docs.findOne url:data.url
+    #                     if existing_doc
+    #                         # if Meteor.isDevelopment
+    #                         # if typeof(existing_doc.tags) is 'string'
+    #                         #     Doc.update
+    #                         #         $unset: tags: 1
+    #                         Docs.update existing_doc._id,
+    #                             $addToSet: tags: $each: query
 
-    search_reddit: (query)->
-        # @unblock()
-        # return
-        console.log 'searching reddit for', query
-        # console.log 'type of query', typeof(query)
-        # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
-        # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        # HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=20&include_facets=false",(err,response)=>
+    #                         # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
+    #                     unless existing_doc
+    #                         new_reddit_post_id = Docs.insert reddit_post
+    #                         # Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
+    #                     console.log 'done searching'
+    #                     return true
+    #             )
+
+    # search_reddit: (query)->
+    #     # @unblock()
+    #     # return
+    #     console.log 'searching reddit for', query
+    #     # console.log 'type of query', typeof(query)
+    #     # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
+    #     # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
+    #     # HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=20&include_facets=false",(err,response)=>
         
-        # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        # HTTP.get "http://reddit.com/search.json?q=#{query}",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&include_over_18=on&limit=20&include_facets=true",(err,response)=>
-            # console.log response.data
-            if err then console.log err
-            else if response.data.data.dist > 1
-                # console.log 'found data'
-                # console.log 'data length', response.data.data.children.length
-                _.each(response.data.data.children, (item)=>
-                    # console.log item.data
-                    unless item.domain is "OneWordBan"
-                        data = item.data
-                        len = 200
-                        # if typeof(query) is String
-                        #     console.log 'is STRING'
-                        #     added_tags = [query]
-                        # else
-                        added_tags = query
-                        # added_tags = [query]
-                        # console.log 'quer', query
-                        # added_tags.push data.domain.toLowerCase()
-                        # added_tags.push data.subreddit.toLowerCase()
-                        # added_tags.push data.author.toLowerCase()
-                        # console.log 'added_tags1', added_tags
-                        flat = _.flatten(added_tags)
-                        added_tags = _.uniq(flat)
-                        # console.log 'added_tags2', added_tags
-                        # console.log 'ups?', data.ups
-                        reddit_post =
-                            reddit_id: data.id
-                            url: data.url
-                            domain: data.domain
-                            comment_count: data.num_comments
-                            permalink: data.permalink
-                            ups: data.ups
-                            title: data.title
-                            # root: query
-                            # selftext: false
-                            # thumbnail: false
-                            tags: added_tags
-                            model:'reddit'
-                            # source:'reddit'
-                        # console.log 'reddit post', reddit_post
-                        existing_doc = Docs.findOne url:data.url
-                        # if existing_doc
-                            # if Meteor.isDevelopment
-                                # console.log 'skipping existing url', data.url
-                                # console.log 'adding', query, 'to tags'
-                            # console.log 'type of tags', typeof(existing_doc.tags)
-                            # if typeof(existing_doc.tags) is 'string'
-                            #     # console.log 'unsetting tags because string', existing_doc.tags
-                            #     Doc.update
-                            #         $unset: tags: 1
-                            # console.log 'existing ', reddit_post.title
-                            # Docs.update existing_doc._id,
-                            #     $addToSet: tags: $each: added_tags
+    #     # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
+    #     # HTTP.get "http://reddit.com/search.json?q=#{query}",(err,response)=>
+    #     HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&include_over_18=on&limit=20&include_facets=true",(err,response)=>
+    #         # console.log response.data
+    #         if err then console.log err
+    #         else if response.data.data.dist > 1
+    #             # console.log 'found data'
+    #             # console.log 'data length', response.data.data.children.length
+    #             _.each(response.data.data.children, (item)=>
+    #                 # console.log item.data
+    #                 unless item.domain is "OneWordBan"
+    #                     data = item.data
+    #                     len = 200
+    #                     # if typeof(query) is String
+    #                     #     console.log 'is STRING'
+    #                     #     added_tags = [query]
+    #                     # else
+    #                     added_tags = query
+    #                     # added_tags = [query]
+    #                     # console.log 'quer', query
+    #                     # added_tags.push data.domain.toLowerCase()
+    #                     # added_tags.push data.subreddit.toLowerCase()
+    #                     # added_tags.push data.author.toLowerCase()
+    #                     # console.log 'added_tags1', added_tags
+    #                     flat = _.flatten(added_tags)
+    #                     added_tags = _.uniq(flat)
+    #                     # console.log 'added_tags2', added_tags
+    #                     # console.log 'ups?', data.ups
+    #                     reddit_post =
+    #                         reddit_id: data.id
+    #                         url: data.url
+    #                         domain: data.domain
+    #                         comment_count: data.num_comments
+    #                         permalink: data.permalink
+    #                         ups: data.ups
+    #                         title: data.title
+    #                         # root: query
+    #                         # selftext: false
+    #                         # thumbnail: false
+    #                         tags: added_tags
+    #                         model:'reddit'
+    #                         # source:'reddit'
+    #                     # console.log 'reddit post', reddit_post
+    #                     existing_doc = Docs.findOne url:data.url
+    #                     # if existing_doc
+    #                         # if Meteor.isDevelopment
+    #                             # console.log 'skipping existing url', data.url
+    #                             # console.log 'adding', query, 'to tags'
+    #                         # console.log 'type of tags', typeof(existing_doc.tags)
+    #                         # if typeof(existing_doc.tags) is 'string'
+    #                         #     # console.log 'unsetting tags because string', existing_doc.tags
+    #                         #     Doc.update
+    #                         #         $unset: tags: 1
+    #                         # console.log 'existing ', reddit_post.title
+    #                         # Docs.update existing_doc._id,
+    #                         #     $addToSet: tags: $each: added_tags
 
-                            # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
-                        unless existing_doc
-                            # console.log 'importing url', data.url
-                            new_reddit_post_id = Docs.insert reddit_post
-                            # Meteor.users.update Meteor.userId(),
-                            #     $inc:points:1
-                            # Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
-                            # console.log 'get post res', res
-                    else
-                        console.log 'NO found data'
-                )
+    #                         # Meteor.call 'get_reddit_post', existing_doc._id, data.id, (err,res)->
+    #                     unless existing_doc
+    #                         # console.log 'importing url', data.url
+    #                         new_reddit_post_id = Docs.insert reddit_post
+    #                         # Meteor.users.update Meteor.userId(),
+    #                         #     $inc:points:1
+    #                         # Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
+    #                         # console.log 'get post res', res
+    #                 else
+    #                     console.log 'NO found data'
+    #             )
 
         # _.each(response.data.data.children, (item)->
         #     # data = item.data
@@ -136,7 +179,7 @@ Meteor.methods
 
 
     get_reddit_post: (doc_id, reddit_id, root)->
-        @unblock()
+        # @unblock()
         # console.log 'getting reddit post', doc_id, reddit_id
         doc = Docs.findOne doc_id
         if doc.reddit_id

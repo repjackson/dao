@@ -220,21 +220,21 @@ Meteor.publish 'docs', (
                     
 Meteor.publish 'dtags', (
     picked_tags
-    view_mode
-    emotion_mode
-    toggle
+    # view_mode
+    # emotion_mode
+    # toggle
     # selected_models
     # selected_subreddits
-    selected_emotions
+    # selected_emotions
     # query=''
     )->
     # @unblock()
     self = @
-    match = {}
+    match = {model:'reddit'}
     console.log 'tags', picked_tags
-    if emotion_mode
-        match.max_emotion_name = emotion_mode
-    if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
+    # if emotion_mode
+    #     match.max_emotion_name = emotion_mode
+    # if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
     # if selected_subreddits.length > 0 then match.subreddit = selected_subreddits.toString()
     # if selected_models.length > 0 then match.model = $all:selected_models
 
@@ -243,23 +243,23 @@ Meteor.publish 'dtags', (
         # console.log 'view_mode', view_mode
         # console.log 'query', query
     
-    switch view_mode 
-        when 'posts'
-            match.model = 'reddit'
-            # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
-        when 'image'
-            # match.model = 'image'
-            # match.source = 'reddit'
-            match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
-        when 'video'
-            # match.model = 'video'
-            match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
-        when 'wikipedia'
-            match.model = 'wikipedia'
-        else
-            match.model = $in:['wikipedia','reddit']
-            # match.model = $in:['wikipedia']
-    # if picked_tags.length > 0 
+    # switch view_mode 
+    #     when 'posts'
+    #         match.model = 'reddit'
+    #         # match.domain = $nin:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com','youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+    #     when 'image'
+    #         # match.model = 'image'
+    #         # match.source = 'reddit'
+    #         match.domain = $in:['i.imgur.com','i.reddit.com','i.redd.it','imgur.com']
+    #     when 'video'
+    #         # match.model = 'video'
+    #         match.domain = $in:['youtube.com','youtu.be','m.youtube.com','v.redd.it','vimeo.com']
+    #     when 'wikipedia'
+    #         match.model = 'wikipedia'
+    #     else
+    #         match.model = $in:['wikipedia','reddit']
+    #         # match.model = $in:['wikipedia']
+    # # if picked_tags.length > 0 
     match.tags = $all: picked_tags
     # else
     #     # unless selected_subreddits.length>0
@@ -334,25 +334,25 @@ Meteor.publish 'dtags', (
       
   
   
-    emotion_cloud = Docs.aggregate [
-        { $match: match }
-        { $project: "max_emotion_name": 1 }
-        # { $unwind: "$emotions" }
-        { $group: _id: "$max_emotion_name", count: $sum: 1 }
-        # { $match: _id: $nin: selected_emotions }
-        { $sort: count: -1, _id: 1 }
-        { $match: count: $lt: doc_count }
-        { $limit:5 }
-        { $project: _id: 0, name: '$_id', count: 1 }
-        ]
-    # console.log 'cloud: ', emotion_cloud
-    # console.log 'emotion match', match
-    emotion_cloud.forEach (emotion, i) ->
-        # console.log 'emotion',emotion
-        self.added 'results', Random.id(),
-            name: emotion.name
-            count: emotion.count
-            model:'emotion'
+    # emotion_cloud = Docs.aggregate [
+    #     { $match: match }
+    #     { $project: "max_emotion_name": 1 }
+    #     # { $unwind: "$emotions" }
+    #     { $group: _id: "$max_emotion_name", count: $sum: 1 }
+    #     # { $match: _id: $nin: selected_emotions }
+    #     { $sort: count: -1, _id: 1 }
+    #     { $match: count: $lt: doc_count }
+    #     { $limit:5 }
+    #     { $project: _id: 0, name: '$_id', count: 1 }
+    #     ]
+    # # console.log 'cloud: ', emotion_cloud
+    # # console.log 'emotion match', match
+    # emotion_cloud.forEach (emotion, i) ->
+    #     # console.log 'emotion',emotion
+    #     self.added 'results', Random.id(),
+    #         name: emotion.name
+    #         count: emotion.count
+    #         model:'emotion'
   
     tag_limit = 15
   
@@ -364,7 +364,7 @@ Meteor.publish 'dtags', (
         { $match: _id: $nin: picked_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
-        { $limit:7 }
+        { $limit:20 }
         { $project: _id: 0, name: '$_id', count: 1 }
         ]
     # # console.log 'cloud: ', tag_cloud

@@ -65,73 +65,84 @@ Template.home.onCreated ->
 
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
-    @autorun -> Meteor.subscribe('alpha_combo',picked_tags.array())
+    # @autorun -> Meteor.subscribe('alpha_combo',picked_tags.array())
     # @autorun -> Meteor.subscribe('alpha_single',picked_tags.array())
-    @autorun -> Meteor.subscribe('duck',picked_tags.array())
-    @autorun -> Meteor.subscribe('doc_count',
-        picked_tags.array()
-        Session.get('view_mode')
-        Session.get('emotion_mode')
-        # selected_models.array()
-        # selected_subreddits.array()
-        picked_emotions.array()
-        )
+    # @autorun -> Meteor.subscribe('duck',picked_tags.array())
+    # @autorun -> Meteor.subscribe('doc_count',
+    #     picked_tags.array()
+    #     Session.get('view_mode')
+    #     Session.get('emotion_mode')
+    #     # selected_models.array()
+    #     # selected_subreddits.array()
+    #     picked_emotions.array()
+    #     )
+    # sub = Meteor.subscribe('dtags',
     @autorun => Meteor.subscribe('dtags',
         picked_tags.array()
-        Session.get('view_mode')
-        Session.get('emotion_mode')
-        Session.get('toggle')
+        # Session.get('view_mode')
+        # Session.get('emotion_mode')
+        # Session.get('toggle')
         # selected_models.array()
         # selected_subreddits.array()
-        picked_emotions.array()
+        # picked_emotions.array()
         # Session.get('query')
+        , {    
+            onReady: ()-> 
+                # console.log("onReady And the Items actually Arrive", arguments)
+                Session.set('end_timer', Date.now())
+            onError: ()-> console.log("onError", arguments)
+        }
         )
-    @autorun => Meteor.subscribe('docs',
-        picked_tags.array()
-        Session.get('view_mode')
-        Session.get('emotion_mode')
-        Session.get('toggle')
-        # selected_models.array()
-        # selected_subreddits.array()
-        picked_emotions.array()
-        # Session.get('query')
-        Session.get('skip')
-        )
+    # console.log sub.ready()
+    # Meteor.subscribe("posts", {
+    # });
+        
+    # @autorun => Meteor.subscribe('docs',
+    #     picked_tags.array()
+    #     # Session.get('view_mode')
+    #     # Session.get('emotion_mode')
+    #     # Session.get('toggle')
+    #     # # selected_models.array()
+    #     # # selected_subreddits.array()
+    #     # picked_emotions.array()
+    #     # # Session.get('query')
+    #     # Session.get('skip')
+    #     )
 
 
 
-Template.alpha.onRendered ->
-    # console.log @data
-    # unless @data.watson
-    #     # console.log 'call'
-    #     Meteor.call 'call_watson', @data._id, 'url','url',->
-    # if @data.response
-    # window.speechSynthesis.cancel()
-    # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[1].plaintext
-    if @data.voice
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @data.voice
-    else
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
-    # console.log response.queryresult.pods[1].subpods
-    # Meteor.setTimeout( =>
-    # , 7000)
+# Template.alpha.onRendered ->
+#     # console.log @data
+#     # unless @data.watson
+#     #     # console.log 'call'
+#     #     Meteor.call 'call_watson', @data._id, 'url','url',->
+#     # if @data.response
+#     # window.speechSynthesis.cancel()
+#     # window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[1].plaintext
+#     if @data.voice
+#         window.speechSynthesis.speak new SpeechSynthesisUtterance @data.voice
+#     else
+#         window.speechSynthesis.speak new SpeechSynthesisUtterance @data.response.queryresult.pods[1].subpods[0].plaintext
+#     # console.log response.queryresult.pods[1].subpods
+#     # Meteor.setTimeout( =>
+#     # , 7000)
 
-Template.alpha.helpers
-    split_datatypes: ->
-        # console.log 'data', @
-        split = @datatypes.split ','
-        console.log split
-        split
+# Template.alpha.helpers
+#     split_datatypes: ->
+#         # console.log 'data', @
+#         split = @datatypes.split ','
+#         console.log split
+#         split
 
-Template.alpha.events
-    'click .select_datatype': ->
-        console.log @
-        picked_tags.push @valueOf().toLowerCase()
-    'click .alphatemp': ->
-        console.log @plaintext
-        console.log @plaintext.split '|'
-        window.speechSynthesis.cancel()
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @plaintext
+# Template.alpha.events
+#     'click .select_datatype': ->
+#         console.log @
+#         picked_tags.push @valueOf().toLowerCase()
+#     'click .alphatemp': ->
+#         console.log @plaintext
+#         console.log @plaintext.split '|'
+#         window.speechSynthesis.cancel()
+#         window.speechSynthesis.speak new SpeechSynthesisUtterance @plaintext
         
 
 
@@ -144,20 +155,20 @@ Template.doc.onRendered ->
     # unless @data.tone
     #     # console.log 'call'
     #     Meteor.call 'call_tone', @data._id,->
-    Meteor.call 'uniq', @data._id, ->
-    unless @data.points
-        # console.log 'no points'
-        Docs.update @data._id,
-            $set:points:0
-    if @data.rd and @data.rd.selftext_html
-        dom = document.createElement('textarea')
-        # dom.innerHTML = doc.body
-        dom.innerHTML = @data.rd.selftext_html
-        # console.log 'innner html', dom.value
-        # return dom.value
-        Docs.update @data._id,
-            $set:
-                parsed_selftext_html:dom.value
+    # Meteor.call 'uniq', @data._id, ->
+    # unless @data.points
+    #     # console.log 'no points'
+    #     Docs.update @data._id,
+    #         $set:points:0
+    # if @data.rd and @data.rd.selftext_html
+    #     dom = document.createElement('textarea')
+    #     # dom.innerHTML = doc.body
+    #     dom.innerHTML = @data.rd.selftext_html
+    #     # console.log 'innner html', dom.value
+    #     # return dom.value
+    #     Docs.update @data._id,
+    #         $set:
+    #             parsed_selftext_html:dom.value
             
     # else 
     #     console.log 'points'
@@ -166,17 +177,19 @@ Template.doc.onRendered ->
 
 Template.unselect_tag.onCreated ->
     # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data)
+    # @autorun => Meteor.subscribe('doc_by_title', @data)
     
-Template.unselect_tag.helpers
-    term: ->
-        console.log @valueOf()
-        found = 
-            Docs.findOne 
-                # model:'wikipedia'
-                title:@valueOf()
-         console.log found
-         found
+# Template.unselect_tag.helpers
+#     term: ->
+#         console.log @valueOf()
+#         found = 
+#             Docs.findOne 
+#                 # model:'wikipedia'
+#                 title:@valueOf()
+#          console.log found
+#          found
+         
+         
 Template.unselect_tag.events
    'click .unselect_tag': -> 
         picked_tags.remove @valueOf()
@@ -185,9 +198,9 @@ Template.unselect_tag.events
             # if Session.equals('view_mode','porn')
             #     Meteor.call 'search_ph', picked_tags.array(), ->
             # else
-            Meteor.call 'call_alpha', picked_tags.array().toString(), ->
-            Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', picked_tags.array(), ->
+            # Meteor.call 'call_alpha', picked_tags.array().toString(), ->
+            # Meteor.call 'call_wiki', @valueOf(), ->
+            # Meteor.call 'search_reddit', picked_tags.array(), ->
             # window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
             Meteor.setTimeout( ->
                 Session.set('toggle',!Session.get('toggle'))
@@ -201,35 +214,27 @@ Template.unselect_tag.events
 
 Template.tag_selector.onCreated ->
     # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data.name)
+    # @autorun => Meteor.subscribe('doc_by_title', @data.name)
 Template.tag_selector.helpers
     selector_header_class: ()->
         # console.log @
-        term = 
-            Docs.findOne 
-                title:@name
-        if term
-            if term.max_emotion_name
-                switch term.max_emotion_name
-                    when 'joy' then 'invert basic green'
-                    when 'anger' then 'invert basic red'
-                    when 'sadness' then 'invert basic blue'
-                    when 'disgust' then 'invert basic orange'
-                    when 'fear' then 'invert basic grey'
-                    else 'basic'
+        # term = 
+        #     Docs.findOne 
+        #         title:@name
+        # if term
+        #     if term.max_emotion_name
+        #         switch term.max_emotion_name
+        #             when 'joy' then 'invert basic green'
+        #             when 'anger' then 'invert basic red'
+        #             when 'sadness' then 'invert basic blue'
+        #             when 'disgust' then 'invert basic orange'
+        #             when 'fear' then 'invert basic grey'
+        #             else 'basic'
     term: ->
-        Docs.findOne 
-            title:@name
+        # Docs.findOne 
+        #     title:@name
             
 Template.home.events
-    # 'click .select_model': -> selected_models.push @name
-    'click .select_emotion': -> picked_emotions.push @name
-    # 'click .select_location': -> selected_locations.push @name
-    
-    # 'click .unselect_location': -> selected_locations.remove @valueOf()
-    # 'click .unselect_model': -> selected_models.remove @valueOf()
-    # 'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
-    'click .unselect_emotion': -> picked_emotions.remove @valueOf()
             
             
 Template.tag_selector.events
@@ -256,24 +261,24 @@ Template.tag_selector.events
        
 Template.doc_tag.onCreated ->
     # console.log @
-    @autorun => Meteor.subscribe('doc_by_title', @data)
-Template.doc_tag.helpers
-    selector_header_class: ()->
-        # console.log @
-        term = 
-            Docs.findOne 
-                title:@valueOf()
-        if term
-            if term.max_emotion_name
-                switch term.max_emotion_name
-                    when 'joy' then 'joy'
-                    when 'anger' then 'red'
-                    when 'sadness' then 'blue'
-                    when 'disgust' then 'orange'
-                    when 'fear' then 'grey'
-    term: ->
-        Docs.findOne 
-            title:@valueOf()
+    # @autorun => Meteor.subscribe('doc_by_title', @data)
+# Template.doc_tag.helpers
+#     selector_header_class: ()->
+#         # console.log @
+#         term = 
+#             Docs.findOne 
+#                 title:@valueOf()
+#         if term
+#             if term.max_emotion_name
+#                 switch term.max_emotion_name
+#                     when 'joy' then 'joy'
+#                     when 'anger' then 'red'
+#                     when 'sadness' then 'blue'
+#                     when 'disgust' then 'orange'
+#                     when 'fear' then 'grey'
+#     term: ->
+#         Docs.findOne 
+#             title:@valueOf()
             
             
 Template.doc_tag.events
@@ -286,9 +291,9 @@ Template.doc_tag.events
         Session.set('skip',0)
         Session.set('viewing_doc',null)
 
-        Meteor.call 'call_wiki', @valueOf(), ->
+        # Meteor.call 'call_wiki', @valueOf(), ->
         # Meteor.call 'call_alpha', @valueOf(), ->
-        Meteor.call 'call_alpha', picked_tags.array().toString(), ->
+        # Meteor.call 'call_alpha', picked_tags.array().toString(), ->
         Meteor.call 'search_reddit', picked_tags.array(), ->
         window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
             
@@ -320,6 +325,9 @@ Template.doc.helpers
     viewing_doc: -> Session.equals('viewing_doc', @_id)
     card_class: -> if Session.equals('viewing_doc', @_id) then 'fluid'
 Template.home.helpers
+    timer_diff: ->
+        if Session.get('end_timer')
+            (Session.get('end_timer')-Session.get('start_timer'))/100
     viewing_doc: -> Session.get('viewing_doc')
     alphas: ->
         Docs.find 
@@ -393,21 +401,21 @@ Template.home.helpers
         Results.find(model:'tag')
 
 
-Template.duck.events
-    'click .topic': (e,t)-> 
-        console.log @
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @Text
-        # console.log @FirstURL.replace(/\s+/g, '-')
-        url = new URL(@FirstURL);
-        console.log url
-        console.log url.pathname
-        picked_tags.push @Text.toLowerCase()
-        Meteor.call 'call_wiki', picked_tags.array().toString(), ->
-        Meteor.call 'search_reddit', picked_tags.array(), ->
+# Template.duck.events
+#     'click .topic': (e,t)-> 
+#         console.log @
+#         window.speechSynthesis.speak new SpeechSynthesisUtterance @Text
+#         # console.log @FirstURL.replace(/\s+/g, '-')
+#         url = new URL(@FirstURL);
+#         console.log url
+#         console.log url.pathname
+#         picked_tags.push @Text.toLowerCase()
+#         Meteor.call 'call_wiki', picked_tags.array().toString(), ->
+#         Meteor.call 'search_reddit', picked_tags.array(), ->
 
-    'click .abstract': (e,t)-> 
-        console.log @
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @AbstractText
+#     'click .abstract': (e,t)-> 
+#         console.log @
+#         window.speechSynthesis.speak new SpeechSynthesisUtterance @AbstractText
 
     # 'click .tagger': (e,t)->
     #     Meteor.call 'call_watson', @_id, 'url', 'url', ->
@@ -477,6 +485,14 @@ Template.home.events
     'click #clear_tags': -> 
         # picked_tags.clear()
         window.speechSynthesis.cancel()
+    # 'click .select_model': -> selected_models.push @name
+    # 'click .select_emotion': -> picked_emotions.push @name
+    # 'click .select_location': -> selected_locations.push @name
+    
+    # 'click .unselect_location': -> selected_locations.remove @valueOf()
+    # 'click .unselect_model': -> selected_models.remove @valueOf()
+    # 'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
+    # 'click .unselect_emotion': -> picked_emotions.remove @valueOf()
 
 
     'click .search_title': (e,t)->
@@ -486,7 +502,6 @@ Template.home.events
 
     # 'keyup .search_title': _.throttle((e,t)->
     'keyup .search_title': (e,t)->
-        search = $('.search_title').val().toLowerCase().trim()
         # _.throttle( =>
 
         # if search.length > 4
@@ -494,6 +509,7 @@ Template.home.events
         # else if search.length is 0
         #     Session.set('query','')
         if e.which is 13
+            search = $('.search_title').val().toLowerCase().trim()
             window.speechSynthesis.cancel()
             # console.log search
             if search.length > 0
@@ -510,6 +526,7 @@ Template.home.events
                 #             $('.search_title').val('')
                 #     else
                 # unless search in picked_tags.array()
+                Session.set('start_timer', Date.now())
                 picked_tags.push search
                 $('body').toast(
                     showIcon: 'search'
@@ -530,15 +547,15 @@ Template.home.events
                 # window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
                 # Meteor.call 'call_alpha', picked_tags.array().toString(), ->
                 # Meteor.call 'call_wiki', search, ->
-                Meteor.call 'search_reddit', picked_tags.array(), ->
-                    $('body').toast(
-                        showIcon: 'checkmark'
-                        message: "searched reddit for #{picked_tags.array()}"
-                        # showProgress: 'bottom'
-                        class: 'success'
-                        # displayTime: 'auto',
-                        position: "bottom right"
-                    )
+                # Meteor.call 'search_reddit', picked_tags.array(), ->
+                #     $('body').toast(
+                #         showIcon: 'checkmark'
+                #         message: "searched reddit for #{picked_tags.array()}"
+                #         # showProgress: 'bottom'
+                #         class: 'success'
+                #         # displayTime: 'auto',
+                #         position: "bottom right"
+                #     )
 
                 Session.set('viewing_doc',null)
 

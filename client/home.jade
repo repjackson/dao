@@ -16,14 +16,16 @@ template(name='home')
                     each tag_results
                         +tag_selector
                     .ui.circular.basic.label(title='results') #{doc_count}
+                    if timer_diff
+                        .ui.inline.header #{timer_diff} timer diff
                     // +view_mode key='twitter' icon='twitter' color='blue'
-                    +view_mode key='video' icon='youtube' color='red'
-                    +view_mode key='image' icon='picture' color='green'
-                    +view_mode key='posts' icon='newspaper' color='teal'
-                    +view_mode key='wikipedia' icon='wikipedia' color='purple'
-                    .ui.inline.header 
-                        i.smile.large.grey.icon
-                        |emotion
+                    // +view_mode key='video' icon='youtube' color='red'
+                    // +view_mode key='image' icon='picture' color='green'
+                    // +view_mode key='posts' icon='newspaper' color='teal'
+                    // +view_mode key='wikipedia' icon='wikipedia' color='purple'
+                    // .ui.inline.header 
+                    //     i.smile.large.grey.icon
+                    //     |emotion
                     // +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
                     // +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
                     // +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
@@ -48,25 +50,25 @@ template(name='home')
                 // +view_mode key='bitcoin' icon='bitcoin disabled'
                 // +view_mode key='covid' icon='covid disabled'
                 // .spacer
-                .ui.inline.header 
-                    i.users.large.grey.icon
-                    |group
-                each selected_subreddits
-                    .ui.black.circular.compact.button.unselect_subreddit
-                        |#{this}
-                each subreddit_results
-                    +select_subreddit
-                // .spacer
-                // .spacer
-                .ui.inline.header 
-                    i.database.large.icon
-                    |sources
-                each selected_models
-                    .ui.black.circular.compact.button.unselect_model
-                        |#{this}
-                each model_results
-                    .ui.compact.circular.button.select_model
-                        |#{name}
+                // .ui.inline.header 
+                //     i.users.large.grey.icon
+                //     |group
+                // each selected_subreddits
+                //     .ui.black.circular.compact.button.unselect_subreddit
+                //         |#{this}
+                // each subreddit_results
+                //     +select_subreddit
+                // // .spacer
+                // // .spacer
+                // .ui.inline.header 
+                //     i.database.large.icon
+                //     |sources
+                // each selected_models
+                //     .ui.black.circular.compact.button.unselect_model
+                //         |#{this}
+                // each model_results
+                //     .ui.compact.circular.button.select_model
+                //         |#{name}
                 // i.smile.large.icon
                 div
         .row
@@ -86,15 +88,15 @@ template(name='home')
                 //     each ducks
                 //         +duck 
                 // .eleven.wide.column
-            .twelve.wide.column
-                .ui.centered.cards
-                    each result_docs
-                        // if key_value 'model' 'porn'
-                        //     +vid_card
-                        // else
-                        +doc
-                    // .five.wide.column.scrolling
-                // each docs
+            // .twelve.wide.column
+            //     .ui.centered.cards
+            //         each result_docs
+            //             // if key_value 'model' 'porn'
+            //             //     +vid_card
+            //             // else
+            //             +doc
+            //         // .five.wide.column.scrolling
+            //     // each docs
 
 
 template(name='call_tone')
@@ -243,17 +245,17 @@ template(name='convert')
 
 
 template(name='unselect_tag')
-    a.unselect_tag.ui.black.big.image.circular.label.select_term(href='#')
-        if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image)    
+    a.unselect_tag.ui.black.big.circular.button.select_term(href='#')
+        // if term
+        //     img.ui.avatar.compact.image(src=term.watson.metadata.image)    
         strong #{this}
 
 template(name='tag_selector')
     // a.ui.big.image.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
-    a.ui.tertiary.basic.circular.button.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
-        if term
-            if term.watson.metadata.image
-                img.ui.avatar.compact.invert.image(src=term.watson.metadata.image)    
+    a.ui.circular.button.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
+        // if term
+        //     if term.watson.metadata.image
+        //         img.ui.avatar.compact.invert.image(src=term.watson.metadata.image)    
         | #{name}
         // small #{count}
 
