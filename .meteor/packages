@@ -32,5 +32,4 @@ ecmascript@0.14.3
 http@1.4.2
 francocatena:status
 tmeasday:publish-counts
-mdg:meteor-apm-agent
 lamhieu:unblock
