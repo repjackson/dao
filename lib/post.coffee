@@ -1,4 +1,6 @@
 if Meteor.isClient
+    @picked_post_tags = new ReactiveArray []
+    
     Router.route '/posts', (->
         @layout 'layout'
         @render 'posts'
@@ -19,16 +21,18 @@ if Meteor.isClient
     
     Template.posts.onCreated ->
         @autorun => @subscribe 'post_docs',
-            picked_tags.array()
+            picked_post_tags.array()
             Session.get('post_title_filter')
 
         @autorun => @subscribe 'post_facets',
-            picked_tags.array()
+            picked_post_tags.array()
             Session.get('post_title_filter')
 
     
     
     Template.posts.events
+        'click .pick_post_tag': -> picked_post_tags.push @title
+        'click .unpick_post_tag': -> picked_post_tags.remove @valueOf()
         'click .add_post': ->
             new_id = 
                 Docs.insert 
@@ -38,12 +42,12 @@ if Meteor.isClient
             
             
     Template.posts.helpers
-        picked_tags: -> picked_tags.array()
+        picked_post_tags: -> picked_post_tags.array()
     
         post_docs: ->
             Docs.find {
                 model:'post'
-                private:$ne:true
+                # private:$ne:true
             }, sort:_timestamp:-1    
         tag_results: ->
             Results.find {
@@ -158,7 +162,7 @@ if Meteor.isServer
             _author_id:user._id
     
     Meteor.publish 'post_count', (
-        picked_tags
+        picked_post_tags
         picked_sections
         post_query
         view_vegan
@@ -166,11 +170,11 @@ if Meteor.isServer
         )->
         # @unblock()
     
-        # console.log picked_tags
+        # console.log picked_post_tags
         self = @
         match = {model:'post'}
-        if picked_tags.length > 0
-            match.ingredients = $all: picked_tags
+        if picked_post_tags.length > 0
+            match.ingredients = $all: picked_post_tags
             # sort = 'price_per_serving'
         if picked_sections.length > 0
             match.menu_section = $all: picked_sections
@@ -237,7 +241,7 @@ if Meteor.isClient
             
 if Meteor.isServer
     Meteor.publish 'post_facets', (
-        picked_tags=[]
+        picked_post_tags=[]
         title_filter
         picked_authors=[]
         picked_tasks=[]
@@ -264,7 +268,7 @@ if Meteor.isServer
         # if view_local
         #     match.local = true
         if picked_authors.length > 0 then match._author_username = $in:picked_authors
-        if picked_tags.length > 0 then match.tags = $all:picked_tags 
+        if picked_post_tags.length > 0 then match.tags = $all:picked_post_tags 
         if picked_locations.length > 0 then match.location_title = $in:picked_locations 
         if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
         # match.$regex:"#{product_query}", $options: 'i'}
@@ -297,7 +301,7 @@ if Meteor.isServer
             { $project: "tags": 1 }
             { $unwind: "$tags" }
             { $group: _id: "$tags", count: $sum: 1 }
-            { $match: _id: $nin: picked_tags }
+            { $match: _id: $nin: picked_post_tags }
             # { $match: _id: {$regex:"#{product_query}", $options: 'i'} }
             { $sort: count: -1, _id: 1 }
             { $limit: 20 }
@@ -367,7 +371,7 @@ if Meteor.isServer
         self.ready()
         
     Meteor.publish 'post_docs', (
-        picked_tags
+        picked_post_tags
         # title_filter
         # picked_authors=[]
         # picked_tasks=[]
@@ -396,7 +400,7 @@ if Meteor.isServer
         # if view_local
         #     match.local = true
         # if picked_authors.length > 0 then match._author_username = $in:picked_authors
-        # if picked_tags.length > 0 then match.tags = $all:picked_tags 
+        if picked_post_tags.length > 0 then match.tags = $all:picked_post_tags 
         # if picked_locations.length > 0 then match.location_title = $in:picked_locations 
         # if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
         console.log match

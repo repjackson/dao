@@ -1,7 +1,7 @@
 @picked_tags = new ReactiveArray []
 # @selected_models = new ReactiveArray []
 # @selected_subreddits = new ReactiveArray []
-@selected_emotions = new ReactiveArray []
+@picked_emotions = new ReactiveArray []
 
 Template.registerHelper 'skip_is_zero', ()-> Session.equals('skip', 0)
 Template.registerHelper 'one_post', ()-> Counts.get('result_counter') is 1
@@ -74,7 +74,7 @@ Template.home.onCreated ->
         Session.get('emotion_mode')
         # selected_models.array()
         # selected_subreddits.array()
-        selected_emotions.array()
+        picked_emotions.array()
         )
     @autorun => Meteor.subscribe('dtags',
         picked_tags.array()
@@ -83,7 +83,7 @@ Template.home.onCreated ->
         Session.get('toggle')
         # selected_models.array()
         # selected_subreddits.array()
-        selected_emotions.array()
+        picked_emotions.array()
         # Session.get('query')
         )
     @autorun => Meteor.subscribe('docs',
@@ -93,7 +93,7 @@ Template.home.onCreated ->
         Session.get('toggle')
         # selected_models.array()
         # selected_subreddits.array()
-        selected_emotions.array()
+        picked_emotions.array()
         # Session.get('query')
         Session.get('skip')
         )
@@ -137,13 +137,13 @@ Template.alpha.events
 
 Template.doc.onRendered ->
     # console.log @data
-    unless @data.watson
-        # console.log 'call'
-        Meteor.call 'call_watson', @data._id, 'url','url',->
-    # if @data.watson
-    unless @data.tone
-        # console.log 'call'
-        Meteor.call 'call_tone', @data._id,->
+    # unless @data.watson
+    #     # console.log 'call'
+    #     Meteor.call 'call_watson', @data._id, 'url','url',->
+    # # if @data.watson
+    # unless @data.tone
+    #     # console.log 'call'
+    #     Meteor.call 'call_tone', @data._id,->
     Meteor.call 'uniq', @data._id, ->
     unless @data.points
         # console.log 'no points'
@@ -223,13 +223,13 @@ Template.tag_selector.helpers
             
 Template.home.events
     # 'click .select_model': -> selected_models.push @name
-    'click .select_emotion': -> selected_emotions.push @name
+    'click .select_emotion': -> picked_emotions.push @name
     # 'click .select_location': -> selected_locations.push @name
     
     # 'click .unselect_location': -> selected_locations.remove @valueOf()
     # 'click .unselect_model': -> selected_models.remove @valueOf()
     # 'click .unselect_subreddit': -> selected_subreddits.remove @valueOf()
-    'click .unselect_emotion': -> selected_emotions.remove @valueOf()
+    'click .unselect_emotion': -> picked_emotions.remove @valueOf()
             
             
 Template.tag_selector.events
@@ -376,7 +376,7 @@ Template.home.helpers
     picked_tags: -> picked_tags.array()
     # selected_models: -> selected_models.array()
     # selected_subreddits: -> selected_subreddits.array()
-    selected_emotions: -> selected_emotions.array()
+    picked_emotions: -> picked_emotions.array()
    
     emotion_results: -> Results.find(model:'emotion')
     # model_results: -> Results.find(model:'model')
@@ -511,6 +511,15 @@ Template.home.events
                 #     else
                 # unless search in picked_tags.array()
                 picked_tags.push search
+                $('body').toast(
+                    showIcon: 'search'
+                    message: "searching #{picked_tags.array()}"
+                    # showProgress: 'bottom'
+                    class: 'success'
+                    # displayTime: 'auto',
+                    position: "bottom right"
+                )
+                
                 # console.log 'selected tags', picked_tags.array()
                 # Meteor.call 'call_alpha', search, ->
                 Meteor.call 'search_ddg', search, ->
@@ -522,6 +531,15 @@ Template.home.events
                 Meteor.call 'call_alpha', picked_tags.array().toString(), ->
                 Meteor.call 'call_wiki', search, ->
                 Meteor.call 'search_reddit', picked_tags.array(), ->
+                    $('body').toast(
+                        showIcon: 'checkmark'
+                        message: "searched reddit for #{picked_tags.array()}"
+                        # showProgress: 'bottom'
+                        class: 'success'
+                        # displayTime: 'auto',
+                        position: "bottom right"
+                    )
+
                 Session.set('viewing_doc',null)
 
                 Session.set('skip',0)

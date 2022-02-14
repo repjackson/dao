@@ -259,11 +259,11 @@ Meteor.publish 'dtags', (
         else
             match.model = $in:['wikipedia','reddit']
             # match.model = $in:['wikipedia']
-    if picked_tags.length > 0 
-        match.tags = $all: picked_tags
-    else
-        # unless selected_subreddits.length>0
-        match.tags = $in:['life']
+    # if picked_tags.length > 0 
+    match.tags = $all: picked_tags
+    # else
+    #     # unless selected_subreddits.length>0
+    #     match.tags = $in:['life']
     # else if view_mode in ['reddit',null]
     doc_count = Docs.find(match).count()
     # console.log 'count',doc_count

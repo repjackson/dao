@@ -5,9 +5,9 @@ template(name='posts')
                 +i name='blog'
                 |posts
                 // if currentUser
-                .ui.icon.button.add_post
-                    i.plus.large.icon
-            each picked_tags
+            .ui.icon.green.button.add_post
+                i.plus.large.icon
+            each picked_post_tags
                 a.ui.blue.button.unpick_post_tag
                     |#{this}
             each tag_results

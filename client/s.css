@@ -231,9 +231,9 @@ img {
 }    
     
     
-.five.wide.column, .four.wide.column {
-    padding: 0px !important;
-}
+/*.five.wide.column, .four.wide.column {*/
+/*    padding: 0px !important;*/
+/*}*/
 .toggle_mode {
     padding: 5px !important;
 }
