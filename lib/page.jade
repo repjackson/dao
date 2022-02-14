@@ -1,0 +1,19 @@
+template(name='page')
+    with page_doc 
+        .ui.center.aligned.header 
+            |#{title}
+        |!{content}
+        if currentUser.admin_mode
+            +text_edit key='title' direct=true
+            +html_edit key='content' direct=true
+    else 
+        if currentUser.admin_mode
+            .ui.red.button.create_doc 
+                |create doc with key: #{key}
+            
+// template(name='doc')
+//     with content 
+//         |!{content}
+//     if currentUser 
+//         .ui.icon.button.edit_doc
+//             i.large.edit.icon
