@@ -1,4 +1,4 @@
-@selected_tags = new ReactiveArray []
+@picked_tags = new ReactiveArray []
 # @selected_models = new ReactiveArray []
 # @selected_subreddits = new ReactiveArray []
 @selected_emotions = new ReactiveArray []
@@ -65,11 +65,11 @@ Template.home.onCreated ->
 
     Session.setDefault('skip',0)
     Session.setDefault('view_section','content')
-    @autorun -> Meteor.subscribe('alpha_combo',selected_tags.array())
-    # @autorun -> Meteor.subscribe('alpha_single',selected_tags.array())
-    @autorun -> Meteor.subscribe('duck',selected_tags.array())
+    @autorun -> Meteor.subscribe('alpha_combo',picked_tags.array())
+    # @autorun -> Meteor.subscribe('alpha_single',picked_tags.array())
+    @autorun -> Meteor.subscribe('duck',picked_tags.array())
     @autorun -> Meteor.subscribe('doc_count',
-        selected_tags.array()
+        picked_tags.array()
         Session.get('view_mode')
         Session.get('emotion_mode')
         # selected_models.array()
@@ -77,7 +77,7 @@ Template.home.onCreated ->
         selected_emotions.array()
         )
     @autorun => Meteor.subscribe('dtags',
-        selected_tags.array()
+        picked_tags.array()
         Session.get('view_mode')
         Session.get('emotion_mode')
         Session.get('toggle')
@@ -87,7 +87,7 @@ Template.home.onCreated ->
         # Session.get('query')
         )
     @autorun => Meteor.subscribe('docs',
-        selected_tags.array()
+        picked_tags.array()
         Session.get('view_mode')
         Session.get('emotion_mode')
         Session.get('toggle')
@@ -126,7 +126,7 @@ Template.alpha.helpers
 Template.alpha.events
     'click .select_datatype': ->
         console.log @
-        selected_tags.push @valueOf().toLowerCase()
+        picked_tags.push @valueOf().toLowerCase()
     'click .alphatemp': ->
         console.log @plaintext
         console.log @plaintext.split '|'
@@ -179,16 +179,16 @@ Template.unselect_tag.helpers
          found
 Template.unselect_tag.events
    'click .unselect_tag': -> 
-        selected_tags.remove @valueOf()
+        picked_tags.remove @valueOf()
         Session.set('skip',0)
-        if selected_tags.array().length > 0
+        if picked_tags.array().length > 0
             # if Session.equals('view_mode','porn')
-            #     Meteor.call 'search_ph', selected_tags.array(), ->
+            #     Meteor.call 'search_ph', picked_tags.array(), ->
             # else
-            Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+            Meteor.call 'call_alpha', picked_tags.array().toString(), ->
             Meteor.call 'call_wiki', @valueOf(), ->
-            Meteor.call 'search_reddit', selected_tags.array(), ->
-            # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+            Meteor.call 'search_reddit', picked_tags.array(), ->
+            # window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
             Meteor.setTimeout( ->
                 Session.set('toggle',!Session.get('toggle'))
             , 10000)
@@ -236,19 +236,19 @@ Template.tag_selector.events
     'click .select_tag': -> 
         # results.update
         # window.speechSynthesis.cancel()
-        # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
         
-        selected_tags.push @name
+        picked_tags.push @name
         Session.set('query','')
         Session.set('skip',0)
         $('.search_title').val('')
         window.speechSynthesis.speak new SpeechSynthesisUtterance @name
-        Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+        Meteor.call 'call_alpha', picked_tags.array().toString(), ->
         # Meteor.call 'call_alpha', @name, ->
         Meteor.call 'call_wiki', @name, ->
         Meteor.call 'search_ddg', @name, ->
         Session.set('viewing_doc',null)
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'search_reddit', picked_tags.array(), ->
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -281,16 +281,16 @@ Template.doc_tag.events
         # results.update
         window.speechSynthesis.cancel()
         
-        selected_tags.push @valueOf()
+        picked_tags.push @valueOf()
         Session.set('query','')
         Session.set('skip',0)
         Session.set('viewing_doc',null)
 
         Meteor.call 'call_wiki', @valueOf(), ->
         # Meteor.call 'call_alpha', @valueOf(), ->
-        Meteor.call 'call_alpha', selected_tags.array().toString(), ->
-        Meteor.call 'search_reddit', selected_tags.array(), ->
-        window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+        Meteor.call 'call_alpha', picked_tags.array().toString(), ->
+        Meteor.call 'search_reddit', picked_tags.array(), ->
+        window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
             
         # window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
         Meteor.setTimeout( ->
@@ -324,29 +324,29 @@ Template.home.helpers
     alphas: ->
         Docs.find 
             model:'alpha'
-            # query: $in: selected_tags.array()
-            query: selected_tags.array().toString()
+            # query: $in: picked_tags.array()
+            query: picked_tags.array().toString()
     # alpha_singles: ->
     #     Docs.find 
     #         model:'alpha'
-    #         query: $in: selected_tags.array()
-    #         # query: selected_tags.array().toString()
+    #         query: $in: picked_tags.array()
+    #         # query: picked_tags.array().toString()
     ducks: ->
         Docs.find 
             model:'duck'
-            # query: $in: selected_tags.array()
-            query: selected_tags.array().toString()
-    many_tags: -> selected_tags.array().length > 1
+            # query: $in: picked_tags.array()
+            query: picked_tags.array().toString()
+    many_tags: -> picked_tags.array().length > 1
     doc_count: -> Counts.get('result_counter')
-    docs: ->
+    result_docs: ->
         if Session.get('viewing_doc')
             Docs.find Session.get('viewing_doc')
         else
             match = {model:$in:['post','wikipedia','reddit']}
             # match = {model:$in:['post','wikipedia','reddit']}
             # match = {model:'wikipedia'}
-            if selected_tags.array().length>0
-                match.tags = $all:selected_tags.array()
+            # if picked_tags.array().length>0
+            match.tags = $all:picked_tags.array()
          
             Docs.find match,
                 sort:
@@ -373,7 +373,7 @@ Template.home.helpers
     #         model:'wikipedia'
     #         title:@valueOf()
     
-    selected_tags: -> selected_tags.array()
+    picked_tags: -> picked_tags.array()
     # selected_models: -> selected_models.array()
     # selected_subreddits: -> selected_subreddits.array()
     selected_emotions: -> selected_emotions.array()
@@ -401,9 +401,9 @@ Template.duck.events
         url = new URL(@FirstURL);
         console.log url
         console.log url.pathname
-        selected_tags.push @Text.toLowerCase()
-        Meteor.call 'call_wiki', selected_tags.array().toString(), ->
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+        picked_tags.push @Text.toLowerCase()
+        Meteor.call 'call_wiki', picked_tags.array().toString(), ->
+        Meteor.call 'search_reddit', picked_tags.array(), ->
 
     'click .abstract': (e,t)-> 
         console.log @
@@ -450,12 +450,12 @@ Template.doc.events
             # console.log tag
     'click .add_tag': -> 
         # console.log @valueOf()
-        selected_tags.push @valueOf()
+        picked_tags.push @valueOf()
         # # if Meteor.user()
         Session.set('viewing_doc',null)
 
         Meteor.call 'call_wiki', @valueOf(), ->
-        Meteor.call 'search_reddit', selected_tags.array(), ->
+        Meteor.call 'search_reddit', picked_tags.array(), ->
         window.speechSynthesis.speak new SpeechSynthesisUtterance @valueOf()
 
     # 'click .delete': -> 
@@ -475,7 +475,7 @@ Template.doc.events
 
 Template.home.events
     'click #clear_tags': -> 
-        # selected_tags.clear()
+        # picked_tags.clear()
         window.speechSynthesis.cancel()
 
 
@@ -504,28 +504,28 @@ Template.home.events
                 #         Meteor.call 'lookup_url', search, (err,res)=>
                 #             console.log res
                 #             for tag in res.tags
-                #                 selected_tags.push tag
+                #                 picked_tags.push tag
                 #             Session.set('skip',0)
                 #             Session.set('query','')
                 #             $('.search_title').val('')
                 #     else
-                # unless search in selected_tags.array()
-                selected_tags.push search
-                # console.log 'selected tags', selected_tags.array()
+                # unless search in picked_tags.array()
+                picked_tags.push search
+                # console.log 'selected tags', picked_tags.array()
                 # Meteor.call 'call_alpha', search, ->
                 Meteor.call 'search_ddg', search, ->
                 # if Session.equals('view_mode','porn')
                 #     Meteor.call 'search_ph', search, ->
                 # else
                 # window.speechSynthesis.speak new SpeechSynthesisUtterance search
-                window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
-                Meteor.call 'call_alpha', selected_tags.array().toString(), ->
+                window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
+                Meteor.call 'call_alpha', picked_tags.array().toString(), ->
                 Meteor.call 'call_wiki', search, ->
-                Meteor.call 'search_reddit', selected_tags.array(), ->
+                Meteor.call 'search_reddit', picked_tags.array(), ->
                 Session.set('viewing_doc',null)
 
                 Session.set('skip',0)
-                # window.speechSynthesis.speak new SpeechSynthesisUtterance selected_tags.array().toString()
+                # window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
 
                 # Session.set('query','')
                 $('.search_title').val('')
@@ -534,7 +534,7 @@ Template.home.events
                 , 10000)
         # if e.which is 8
         #     if search.length is 0
-        #         selected_tags.pop()
+        #         picked_tags.pop()
     # , 1000)
 
 
@@ -570,11 +570,11 @@ Template.emotion_mode.events
 Template.pull_reddit.events
     'click .pull': -> 
         Meteor.call 'get_reddit_post', @_id, @reddit_id, ->
-        # Meteor.call 'search_stack', selected_tags.array(), ->
+        # Meteor.call 'search_stack', picked_tags.array(), ->
 Template.call_watson.events
     'click .pull': -> 
         Meteor.call 'call_watson', @_id, 'url','url', ->
-        # Meteor.call 'search_stack', selected_tags.array(), ->
+        # Meteor.call 'search_stack', picked_tags.array(), ->
        
 
 Template.doc.onRendered ->

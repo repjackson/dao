@@ -1,6 +1,6 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
-    #topnav.topnav.ui.attached.borderless.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.inverted.menu.hscroll
         // if is_loading
         //     .icon.item
         //         i.big.loading.grey.refresh.icon.cancel
@@ -9,30 +9,12 @@ template(name='nav')
             i.large.bars.icon
         a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
             +i name='yin-yang'
-            // i.large.home.icon
-            // img.ui.tiny.image(src="{{c.url 'fblogo' gravity='face' crop='fill'}}")
-            // span foodbridge
-        a.icon.item.zoomer.mobile.hidden(href="/mission" class="{{isActiveRoute 'mission'}}")
-            +i name='mission-of-a-company'
-            // i.large.inbox.icon
-            // +i name='blog'
-            span.mobile.hidden mission
-        a.icon.item.zoomer.mobile.hidden(href="/prepared" class="{{isActiveRoute 'prepared'}}")
-            // i.large.inbox.icon
-            +i name='meal'
-            span.mobile.hidden prepared meals
         a.icon.item.zoomer.mobile.hidden(href="/products" class="{{isActiveRoute 'products'}}")
-            // i.large.inbox.icon
             +i name='shop'
-            span.mobile.hidden products
-        a.icon.item.zoomer.mobile.hidden(href="/chefs" class="{{isActiveRoute 'chefs'}}")
-            // i.large.inbox.icon
-            +i name='chef-hat'
-            span.mobile.hidden meet our chefs
+        a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
+            +i name='tasks'
         a.icon.item.zoomer.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}")
-            // i.large.inbox.icon
             +i name='groups'
-            span.mobile.hidden community
 
         // .search.item.zoomer.mobile.hidden(title='search')
         //     .ui.icon.transparent.input
@@ -99,38 +81,35 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
-    .ui.small.attached.borderless.menu.hscroll
-        a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
-            // i.large.inbox.icon
-            +i name='tasks'
-            span.mobile.hidden tasks
-        a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
-            +i name='blog'
-            span.mobile.hidden posts
-        a.icon.item.zoomer(href="/sources" class="{{isActiveRoute 'sources'}}")
-            +i name='field-and-tractor'
-            span.mobile.hidden sources
-        a.icon.item.zoomer(href="/partners" class="{{isActiveRoute 'partners'}}")
-            +i name='farm'
-            span.mobile.hidden partners
-        a.icon.item.zoomer(href="/catering" class="{{isActiveRoute 'catering'}}")
-            +i name='new-years-eve'
-            span.mobile.hidden catering
-        a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
-            +i name='calendar'
-            span.mobile.hidden events
-        // a.icon.item.zoomer(href="/recipes" class="{{isActiveRoute 'recipes'}}")
-        //     +i name='beer-recipe'
-        //     span.mobile.hidden recipes
-        // a.icon.item.zoomer(href="/tribes" class="{{isActiveRoute 'tribes'}}")
-        //     +i name='campfire'
-        //     span.mobile.hidden tribes
-        // a.icon.item.zoomer(href="/classes" class="{{isActiveRoute 'classes'}}")
-        //     +i name='university'
-        //     span.mobile.hidden classes
-        a.icon.item.zoomer(href="/subscriptions" class="{{isActiveRoute 'subscriptions'}}")
-            +i name='clock'
-            span.mobile.hidden subscriptions
+    if viewing_secnav
+        .ui.small.attached.borderless.menu.hscroll
+            a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
+                +i name='blog'
+                span.mobile.hidden posts
+            a.icon.item.zoomer(href="/sources" class="{{isActiveRoute 'sources'}}")
+                +i name='field-and-tractor'
+                span.mobile.hidden sources
+            a.icon.item.zoomer(href="/partners" class="{{isActiveRoute 'partners'}}")
+                +i name='farm'
+                span.mobile.hidden partners
+            a.icon.item.zoomer(href="/catering" class="{{isActiveRoute 'catering'}}")
+                +i name='new-years-eve'
+                span.mobile.hidden catering
+            a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
+                +i name='calendar'
+                span.mobile.hidden events
+            // a.icon.item.zoomer(href="/recipes" class="{{isActiveRoute 'recipes'}}")
+            //     +i name='beer-recipe'
+            //     span.mobile.hidden recipes
+            // a.icon.item.zoomer(href="/tribes" class="{{isActiveRoute 'tribes'}}")
+            //     +i name='campfire'
+            //     span.mobile.hidden tribes
+            // a.icon.item.zoomer(href="/classes" class="{{isActiveRoute 'classes'}}")
+            //     +i name='university'
+            //     span.mobile.hidden classes
+            a.icon.item.zoomer(href="/subscriptions" class="{{isActiveRoute 'subscriptions'}}")
+                +i name='clock'
+                span.mobile.hidden subscriptions
 
 
 

@@ -1,3 +1,109 @@
+template(name='home')
+    .ui.stackable.padded.grid
+        .row
+            .sixteen.wide.center.aligned.column
+                unless viewing_doc
+                    if selected_tags
+                        i#clear_tags.link.remove.circular.big.icon(class=loading_class)
+                        // if many_tags
+                        //     a#clear_tags.ui.black.icon.small.compact.circular.button.select_term
+                        //         i.remove.icon
+                        each selected_tags
+                            +unselect_tag
+                    .ui.inline.input 
+                        input.search_title(type='text' autofocus='')
+                    each tag_results
+                        +tag_selector
+                    .ui.circular.basic.label(title='results') #{doc_count}
+                    // +view_mode key='twitter' icon='twitter' color='blue'
+                    +view_mode key='video' icon='youtube' color='red'
+                    +view_mode key='image' icon='picture' color='green'
+                    +view_mode key='posts' icon='newspaper' color='teal'
+                    +view_mode key='wikipedia' icon='wikipedia' color='purple'
+                    .ui.inline.header 
+                        i.smile.large.grey.icon
+                        |emotion
+                    +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
+                    +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
+                    +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
+                    +emotion_mode key='disgust' icon='disgusting' i2='grin tongue squint' color='orange'
+                    +emotion_mode key='fear' icon='scream' i2='tired' color='black'
+                    // i.grin.tongue.squint.outline.big.icon
+                    // i.surprise.outline.big.icon
+                    // i.smile.outline.big.icon
+                    // i.frown.outline.big.icon
+                    // i.tired.outline.big.icon
+                    each selected_emotions
+                        .ui.black.circular.compact.button.unselect_emotion
+                            |#{this}
+                    each emotion_results
+                        if name
+                            .ui.compact.circular.basic.button.select_emotion
+                                |#{name}
+                +view_mode key='stackexchange' icon='stack exchange disabled'
+                +view_mode key='github' icon='github disabled'
+                +view_mode key='alpha' icon='disabled brain'
+                +view_mode key='porn' icon='mercury'
+                +view_mode key='bitcoin' icon='bitcoin disabled'
+                +view_mode key='covid' icon='covid disabled'
+                .spacer
+                .ui.inline.header 
+                    i.users.large.grey.icon
+                    |group
+                each selected_subreddits
+                    .ui.black.circular.compact.button.unselect_subreddit
+                        |#{this}
+                each subreddit_results
+                    +select_subreddit
+                // .spacer
+                .spacer
+                .ui.inline.header 
+                    i.database.large.icon
+                    |sources
+                each selected_models
+                    .ui.black.circular.compact.button.unselect_model
+                        |#{this}
+                each model_results
+                    .ui.compact.circular.button.select_model
+                        |#{name}
+                // i.smile.large.icon
+                div
+        .row
+            .four.wide.center.aligned.column
+                // .five.wide.right.aligned.column
+                unless viewing_doc
+                    each alphas
+                        if response.queryresult
+                            +alpha 
+                    if many_tags
+                        each alpha_singles
+                            if response.queryresult
+                                +alpha 
+                unless viewing_doc
+                    each ducks
+                        +duck 
+                // .eleven.wide.column
+            .twelve.wide.center.aligned.column
+                .ui.centered.cards
+                    each result_docs
+                        // if key_value 'model' 'porn'
+                        //     +vid_card
+                        // else
+                        +doc
+                    // .five.wide.column.scrolling
+                // each docs
+
+
+template(name='call_tone')
+    button.ui.large.circular.button.call
+        i.big.download.icon
+        // |call tone
+        |download
+    if page_doc.tone 
+        i.checkmark.icon
+
+
+
 template(name="doc")
     .ui.card(class=card_class)
         // if embed

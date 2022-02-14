@@ -73,7 +73,7 @@ Meteor.publish 'tribe_by_title', (title)->
     # )
 
 Meteor.publish 'doc_count', (
-    selected_tags
+    picked_tags
     view_mode
     emotion_mode
     # selected_models
@@ -81,11 +81,11 @@ Meteor.publish 'doc_count', (
     selected_emotions
     )->
     match = {}
-    # console.log 'tags', selected_tags
+    # console.log 'tags', picked_tags
     # match.model = $in:['wikipedia']
     # match.model = 'wikipedia'
-    if selected_tags.length > 0 
-        match.tags = $all: selected_tags
+    if picked_tags.length > 0 
+        match.tags = $all: picked_tags
     else
         match.tags = $in:['life']
     
@@ -171,7 +171,7 @@ Meteor.methods
 
 
 Meteor.publish 'docs', (
-    selected_tags
+    picked_tags
     view_mode
     emotion_mode
     toggle
@@ -185,8 +185,8 @@ Meteor.publish 'docs', (
     if emotion_mode
         match.max_emotion_name = emotion_mode
 
-    if selected_tags.length > 0
-        match.tags = $all:selected_tags
+    # if picked_tags.length > 0
+    match.tags = $all:picked_tags
     # console.log 'skip', skip
     # match.model = 'wikipedia'
     if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
@@ -219,7 +219,7 @@ Meteor.publish 'docs', (
                     
                     
 Meteor.publish 'dtags', (
-    selected_tags
+    picked_tags
     view_mode
     emotion_mode
     toggle
@@ -231,7 +231,7 @@ Meteor.publish 'dtags', (
     # @unblock()
     self = @
     match = {}
-    console.log 'tags', selected_tags
+    console.log 'tags', picked_tags
     if emotion_mode
         match.max_emotion_name = emotion_mode
     if selected_emotions.length > 0 then match.max_emotion_name = $all:selected_emotions
@@ -239,7 +239,7 @@ Meteor.publish 'dtags', (
     # if selected_models.length > 0 then match.model = $all:selected_models
 
     # console.log 'emotion mode', emotion_mode
-    # if selected_tags.length > 0
+    # if picked_tags.length > 0
         # console.log 'view_mode', view_mode
         # console.log 'query', query
     
@@ -259,8 +259,8 @@ Meteor.publish 'dtags', (
         else
             match.model = $in:['wikipedia','reddit']
             # match.model = $in:['wikipedia']
-    if selected_tags.length > 0 
-        match.tags = $all: selected_tags
+    if picked_tags.length > 0 
+        match.tags = $all: picked_tags
     else
         # unless selected_subreddits.length>0
         match.tags = $in:['life']
@@ -361,7 +361,7 @@ Meteor.publish 'dtags', (
         { $project: "tags": 1 }
         { $unwind: "$tags" }
         { $group: _id: "$tags", count: $sum: 1 }
-        { $match: _id: $nin: selected_tags }
+        { $match: _id: $nin: picked_tags }
         { $sort: count: -1, _id: 1 }
         { $match: count: $lt: doc_count }
         { $limit:7 }
