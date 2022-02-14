@@ -32,10 +32,146 @@ head
         gtag('config', 'UA-156965333-1');
 
 
+    // meta(name='viewport', content='user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width')
+    // meta(name='apple-mobile-web-app-capable', content='yes')
+    // meta(name='apple-mobile-web-app-status-bar-style', content='black')
+    
+    // link(rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon.png")
+    // link(rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png")
+    // link(rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png")
 
-body
-    +status
-    +home
+    // link(rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5")
+    // meta(name="apple-mobile-web-app-title" content="gratigen")
+    // meta(name="application-name" content="gratigen")
+    // meta(name="msapplication-TileColor" content="#da532c")
+    // meta(name="theme-color" content="#ffffff")
+    
+    
+    
+    // link(rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css')
+    // // link(href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet")
+    // link(href="https://fonts.googleapis.com/css?family=Ubuntu:300,400&display=swap" rel="stylesheet")
+    // link(rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png")
+    // link(rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png")
+    // link(rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png")
+    // link(rel="manifest" href="/site.webmanifest")
+    // link(href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet")
+    // // link(rel='stylesheet', href='/layerslider/css/layerslider.css', type='text/css')
+    // // link(rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    // //     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    // //     crossorigin="")
+    // // script(src='./qrcode.min.js')
+    // script(src='https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js')
+    // script(src='https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js')
+    
+    // script(src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js')
+    // link(href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet')
+    
+    // script(src='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js')
+    // link(href='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css' rel='stylesheet')
+    
+    // script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    //     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    //     crossorigin="")
+    //- // External libraries: GreenSock
+    // - /* script(src='/layerslider/js/jquery.js', type='text/javascript') */
+    
+    
+    // script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
+    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
+    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
+
+    //- script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-140259454-1')
+    script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        gtag('config', 'G-GLYPPRGJFQ');
+
+    
+template(name='full')
+    img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange'}}")
+    // +nav
+    #man.ui.bottom.attached.pushable.segment
+        // +topbar
+        +left_sidebar
+        +right_sidebar
+        // +cartbar
+        // +walletbar
+        #ain_area.global_conainer.pusher
+            +yield
+            +footer
+    
+template(name='layout')
+    +nav
+    img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}")
+    #main.ui.bottom.attached.pushable.segment
+        // +topbar
+        +left_sidebar
+        +right_sidebar
+        #ain_area.global_conainer.pusher
+            +yield
+            +footer
+
+
+template(name='mlayout')
+    .global_container(class=invert_class)
+        unless is_frontdesk
+            +nav
+        //- img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")    
+        +yield
+
+
+template(name='dashboard')
+    // .ui.padded.stackable.grid
+    //     .ui.big.button
+template(name='not_found')
+    .ui.center.aligned.padded.basic.segment
+        +ibig name='park-bench' 
+            |browser_back
+        .ui.center.aligned.header page not found
+        a.ui.big.basic.button(href="/") 
+            +i name='home' 
+            // |home
+        .ui.basic.big.button.browser_back
+            i.large.undo.icon
+            |go back
+
+
+template(name='shortcut_modal')
+    .ui.shortcut.modal
+        .ui.header keyboard shortcuts
+        .content
+            .ui.large.list
+                each shortcuts
+                    .item 
+                        .header #{combo}
+                        .content #{action}
+
+
+template(name='footer')
+    if currentUser.admin_mode
+        .ui.stackable.padded.divided.grid
+            .eight.wide.column
+                .ui.header 
+                    i.users.icon
+                    |accessible users
+                .ui.list
+                    each user_docs 
+                        a.item(href="/user/#{username}") #{username}
+            .eight.wide.column
+                .ui.header 
+                    i.document.icon
+                    |accessible docs
+                .ui.list
+                    each doc_docs
+                        a.item(href="/#{model}/#{_id}") #{title} #{model}
+                +page key=current_route
+                
+// body
+//     +status
+//     +home
     
 
 template(name='home')
@@ -60,14 +196,14 @@ template(name='home')
                     +view_mode key='image' icon='picture' color='green'
                     +view_mode key='posts' icon='newspaper' color='teal'
                     +view_mode key='wikipedia' icon='wikipedia' color='purple'
-                    // .ui.inline.header 
-                    //     i.smile.large.grey.icon
-                    //     |emotion
-                    // +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
-                    // +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
-                    // +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
-                    // +emotion_mode key='disgust' icon='disgusting' i2='grin tongue squint' color='orange'
-                    // +emotion_mode key='fear' icon='scream' i2='tired' color='black'
+                    .ui.inline.header 
+                        i.smile.large.grey.icon
+                        |emotion
+                    +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
+                    +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
+                    +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
+                    +emotion_mode key='disgust' icon='disgusting' i2='grin tongue squint' color='orange'
+                    +emotion_mode key='fear' icon='scream' i2='tired' color='black'
                     // i.grin.tongue.squint.outline.big.icon
                     // i.surprise.outline.big.icon
                     // i.smile.outline.big.icon
@@ -131,278 +267,6 @@ template(name='home')
                         +doc
                     // .five.wide.column.scrolling
                 // each docs
-template(name="doc")
-    .ui.card(class=card_class)
-        // if embed
-        //     .rounded.full
-        //         |!{embed}
-        // else
-        if is_image
-            img.ui.centered.image.pointer.zoomer.toggle_view(src=url)
-        else if watson.metadata.image
-            img.ui.rounded.inline.pointer.zoomer.image.toggle_view(src=watson.metadata.image)    
-
-        .content
-            span.ui.pointer.text.invert.f13.zoomer.toggle_view(class=post_header_class) #{title}
-                // small #{max_emotion_name}
-            // |#{points}
-                // unless one_post
-                //     i.chevron.right.big.circular.grey.link.icon.forward
-            if viewing_doc
-                .ui.circular.icon.basic.button.vote_down
-                    i.caret.down.big.grey.icon
-                .ui.circular.icon.basic.button.vote_up
-                    i.caret.up.big.grey.icon
-                .ui.circular.icon.big.basic.button.read 
-                    i.rss.icon
-                    |read
-                // if is_image
-                //     img.ui.centered.image(src=url)
-                span.invert
-                    |!{embed}
-                // else if is_twitter
-                //     blockquote.twitter-tweet(data-dnt='true' data-theme='dark')
-                //         p(lang='en' dir='ltr')
-                //             | Twitter Support you must have the patience of 1000 camels waiting for a drink of water while the baby camels get the first drinks...does that make sense? Thank you for your dedication and time you selfishly give to each of us. You are always appreciated.
-                //         | — KayeMc76 (@KayeMc76) 
-                //         a(href=url) October 3, 2020
-                // else if is_youtube
-                //     div
-                //     .ui.fluid.embed
-                //         iframe(id="ytplayer" type="text/html" width="100%" height="500" src="https://www.youtube.com/embed/#{youtube_parse}" frameborder="0" allowfullscreen)
-                    // iframe(width="100%" height="600" src="https://www.youtube.com/embed/#{youtube_parse}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-                    // else if is_video
-                    //     div
-                    //     // iframe(width="100%" height="600" src="https://v.redd.it/9vk3khyb08e51/DASH_360.mp4?source=fallback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-                    //     iframe(width="100%" height="600" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
-                // else
-                //     iframe(width="100%" height="500" src=url frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)        
-                // .medscroll
-                // 
-                a.ui.circular.label(href="https://www.reddit.com#{permalink}" target="_window") r/#{subreddit}
-                // .ui.big.label 
-                //     i.user.outline.icon
-                //     |#{author}
-                // .ui.circular.label
-                //     i.thumbs.up.outline.icon
-                //     |#{ups}
-                // a.ui.inline.header(href=url target='_window')
-                //     | #{url}
-                // .ui.label
-                //     | #{domain}
-                // .spacer
-                // .nl2br
-                // |!{html}
-                // .spacer
-                // pre
-                // .nl2br
-                // if viewing
-                
-                // +call_watson
-                if watson    
-                    unless tone
-                        +call_tone    
-                if parsed_selftext_html
-                    .ui.segment
-                        |!{parsed_selftext_html}
-                else if selftext
-                    .ui.segment
-                        |{{nl2br selftext}}
-                else if body
-                    div
-                    .ui.segment
-                        |{{nl2br body}}
-                // else if tone
-                //     .spacer
-                //     +tone
-                // div(style='position:relative; padding-bottom:calc(125.00% + 44px)')
-                //     iframe(src='https://gfycat.com/ifr/MeanFatAmurratsnake' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0;' allowfullscreen)
-                // |{{selftext}}
-                // +convert
-                a.ui.circular.icon.big.basic.button(href=url target='_window' title=domain)
-                    i.external.icon
-                    |view site 
-                    |#{domain}
-                // a.ui.center.aligned.header(href=url target='_window' class=post_header_class title=url) #{title}
-
-                // .spacer
-                // div
-                if tone
-                    +tone
-                //     +session_edit_value_button key='view_section' value='tone' label='tone' icon='smile'
-                each tags
-                    +doc_tag
-                |#{tags.length}
-                .ui.input
-                    i.plus.grey.icon
-                    input.tag_post(type='text')
-                i.code.link.icon.print_me
-            
-            
-                
-template(name='view_mode')
-    i.link.zoomer.icon.toggle_view(class=toggle_view_class title=key)
-
-
-template(name='emotion_mode')
-    if selected_emotion
-        i.huge.pointer.zoomer.icon.toggle_emotion(class="#{i2} #{color}" title=title)
-        // img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/color/50/000000/#{icon}.png" class=cl title=title)
-    else
-        i.big.grey.pointer.zoomer.icon.toggle_emotion(class="#{i2} outline")
-        // img.ui.inline.image.toggle_emotion.zoomer.pointer(src="https://img.icons8.com/ios/36/000000/#{icon}.png" class=cl title=title)
-
-
-template(name='pull_reddit')
-    .ui.circular.icon.button.pull
-        i.reddit.icon
-        
-template(name='call_watson')
-    .ui.circular.icon.button.pull
-        i.dna.icon
-
-template(name='convert')
-    .ui.circular.icon.button.convert
-        i.exchange.icon
-
-
-template(name='unselect_tag')
-    a.unselect_tag.ui.black.big.image.circular.label.select_term(href='#')
-        if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image)    
-        strong #{this}
-
-template(name='tag_selector')
-    // a.ui.big.image.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
-    a.ui.tertiary.basic.circular.button.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
-        if term
-            if term.watson.metadata.image
-                img.ui.avatar.compact.invert.image(src=term.watson.metadata.image)    
-        | #{name}
-        // small #{count}
-
-template(name='doc_tag')
-    a.ui.image.small.circular.label.pointer.select_tag.select_term(href='#' title="#{count} results" class=selector_header_class)
-        if term
-            img.ui.avatar.compact.image(src=term.watson.metadata.image)    
-        | #{this}
-        // small #{count}
-
-
-template(name='duck')
-    with content
-        // .ui.segment
-        .ui.inline.header #{Heading}
-        // .item abstract #{Abstract}
-        .item.abstract !{AbstractText}
-        // a.ui.circular.icon.button(href=AbstractURL)
-        //     // #{AbstractURL}
-        //     i.large.external.icon
-        img(src=Image)
-        each RelatedTopics
-            if Text
-                // .ui.compact.button.topic
-                .ui.small.tertiary.basic.button.topic
-                    img.ui.tiny.inline.rounded.image(src=Icon.URL)
-                    |#{Text}
-                    // | {{lowered Text}}
-            // .content
-            //     .item #{FirstURL}
-                // .item !{Result}
-
-
-
-template(name='alpha')
-    with response.queryresult
-        // .ui.inline.header #{datatypes}
-        // each split_datatypes
-        //     .ui.button.basic.compact.circular.buton.select_datatype
-        //         |#{this}
-        // .ui.list
-            // .item success: #{success}
-            // .item error: #{error}
-            // .item numpods: #{numpods}
-            // .item datatypes: #{datatypes}
-                // each datatypes
-                //     .ui.button
-                //         |#{this}
-            // .item timedout: #{timedout}
-            // .item timedoutpods: #{timedoutpods}
-            // .item timing: #{timing}
-            // .item parsetiming: #{parsetiming}
-            // .item parsetimedout: #{parsetimedout}
-            // .item recalculate: #{recalculate}
-            // .item id: #{id}
-            // .item host: #{host}
-            // .item server: #{server}
-            // .item related: #{related}
-            // .item version: #{version}
-        each pods
-            div
-            // .ui.small.inline.middle.aligned.header.middled #{title}
-            .ui.small.inline.header #{title}
-            div
-            // .item #{scanner}
-            // .item id #{id}
-            // .item position #{position}
-            // .item error #{error}
-            // .item numsubpods #{numsubpods}
-            // .item subpods
-            // .ui.list
-            each subpods
-                // .ui.small.inline.header #{title}
-                img.ui.zoomer.pointer.image.alphatemp(src=img.src)
-                // .item.alphatemp
-                // |#{plaintext}
-                // .item title: #{title}
-                // .item primary: #{primary}
-    // each tags
-    //     .ui.label #{this}
-    // .alphatemp voice: #{voice}
-    //   div assumptions": {
-    //     "type": "Clash",
-    //     "word": "time",
-    //     "template": "Assuming \"${word}\" is ${desc1}. Use as ${desc2} instead",
-    //     "count": 4,
-    //     "values": [
-    //       {
-    //         "name": "CalendarWord",
-    //         "desc": " referring to a calendar computation",
-    //         "input": "*C.time-_*CalendarWord-"
-    
-    
-    
-    
-template(name='tone')
-    // h3 tone
-    .ui.horizontal.list
-        each tone.result.document_tone.tones
-            .item #{tone_id} {{ to_percent score }}%
-    .ui.list
-        each tone.result.sentences_tone
-            .item(class=sentence_class)
-                //- span #{sentence_id}
-                span.tone_item.ui.zoomer.pointer.text(title="#{sentence_id}" class="#{tone_size} #{sentence_color}") 
-                    |{{lowered text}}
-                    // .content
-                    // .inline.header(title="#{sentence_id}") {{lowered text}}
-                    // |weight:#{weight}
-                    // i.chevron.up.link.grey.large.icon.upvote_sentence
-                    // i.chevron.down.link.grey.large.icon.downvote_sentence
-                    // each tones
-                    //     .ui.inverted.invert.small.compact.circular.label(class="#{tone_label_class}") 
-                        // .ui.small.compact.circular.inverted.label(class="{{calculated_size 'weight'}} #{tone_label_class}") 
-                            span.ui.text
-                                |#{tone_id} &nbsp;
-                            | {{ to_percent score }}% 
-                    // .ui.mini.transparent.icon.input
-                    //     input.tag_sentence(type='text' placeholder='tag')
-                    // each tags 
-                    //     .ui.label #{this}
-    // unless tone                
-    //- #call_tone.ui.icon.button
-    //-     i.refresh.icon
-            // +jsonView(json=tone)
 
 
 template(name='call_tone')
