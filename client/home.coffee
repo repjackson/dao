@@ -242,13 +242,13 @@ Template.tag_selector.events
         Session.set('query','')
         Session.set('skip',0)
         $('.search_title').val('')
-        window.speechSynthesis.speak new SpeechSynthesisUtterance @name
-        Meteor.call 'call_alpha', picked_tags.array().toString(), ->
-        # Meteor.call 'call_alpha', @name, ->
-        Meteor.call 'call_wiki', @name, ->
-        Meteor.call 'search_ddg', @name, ->
-        Session.set('viewing_doc',null)
+        # window.speechSynthesis.speak new SpeechSynthesisUtterance @name
         Meteor.call 'search_reddit', picked_tags.array(), ->
+        # Meteor.call 'call_alpha', picked_tags.array().toString(), ->
+        # # Meteor.call 'call_alpha', @name, ->
+        # Meteor.call 'call_wiki', @name, ->
+        # Meteor.call 'search_ddg', @name, ->
+        Session.set('viewing_doc',null)
         Meteor.setTimeout( ->
             Session.set('toggle',!Session.get('toggle'))
         , 10000)
@@ -522,14 +522,14 @@ Template.home.events
                 
                 # console.log 'selected tags', picked_tags.array()
                 # Meteor.call 'call_alpha', search, ->
-                Meteor.call 'search_ddg', search, ->
+                # Meteor.call 'search_ddg', search, ->
                 # if Session.equals('view_mode','porn')
                 #     Meteor.call 'search_ph', search, ->
                 # else
                 # window.speechSynthesis.speak new SpeechSynthesisUtterance search
-                window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
-                Meteor.call 'call_alpha', picked_tags.array().toString(), ->
-                Meteor.call 'call_wiki', search, ->
+                # window.speechSynthesis.speak new SpeechSynthesisUtterance picked_tags.array().toString()
+                # Meteor.call 'call_alpha', picked_tags.array().toString(), ->
+                # Meteor.call 'call_wiki', search, ->
                 Meteor.call 'search_reddit', picked_tags.array(), ->
                     $('body').toast(
                         showIcon: 'checkmark'

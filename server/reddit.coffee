@@ -37,13 +37,17 @@ Meteor.methods
         return
 
     search_reddit: (query)->
-        @unblock()
+        # @unblock()
         # return
         console.log 'searching reddit for', query
         # console.log 'type of query', typeof(query)
         # response = HTTP.get("http://reddit.com/search.json?q=#{query}")
         # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
-        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=20&include_facets=false",(err,response)=>
+        # HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&limit=20&include_facets=false",(err,response)=>
+        
+        # HTTP.get "http://reddit.com/search.json?q=#{query}+nsfw:0+sort:top",(err,response)=>
+        # HTTP.get "http://reddit.com/search.json?q=#{query}",(err,response)=>
+        HTTP.get "http://reddit.com/search.json?q=#{query}&nsfw=1&include_over_18=on&limit=20&include_facets=true",(err,response)=>
             # console.log response.data
             if err then console.log err
             else if response.data.data.dist > 1
@@ -104,7 +108,7 @@ Meteor.methods
                             new_reddit_post_id = Docs.insert reddit_post
                             # Meteor.users.update Meteor.userId(),
                             #     $inc:points:1
-                            Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
+                            # Meteor.call 'get_reddit_post', new_reddit_post_id, data.id, (err,res)->
                             # console.log 'get post res', res
                     else
                         console.log 'NO found data'

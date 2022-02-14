@@ -53,6 +53,14 @@ if Meteor.isClient
             Results.find {
                 model:'tag'
             }, sort:_timestamp:-1
+        location_tag_results: ->
+            Results.find {
+                model:'location_tag'
+            }, sort:_timestamp:-1
+        timestamp_tag_results: ->
+            Results.find {
+                model:'timestamp_tag'
+            }, sort:_timestamp:-1
 
     Template.user_posts.onCreated ->
         @autorun => Meteor.subscribe 'user_posts', Router.current().params.username, ->
@@ -174,19 +182,19 @@ if Meteor.isServer
         self = @
         match = {model:'post'}
         if picked_post_tags.length > 0
-            match.ingredients = $all: picked_post_tags
+            match.tags = $all: picked_post_tags
             # sort = 'price_per_serving'
-        if picked_sections.length > 0
-            match.menu_section = $all: picked_sections
+        # if picked_sections.length > 0
+        #     match.menu_section = $all: picked_sections
             # sort = 'price_per_serving'
         # else
             # match.tags = $nin: ['wikipedia']
         sort = '_timestamp'
             # match.source = $ne:'wikipedia'
-        if view_vegan
-            match.vegan = true
-        if view_gf
-            match.gluten_free = true
+        # if view_vegan
+        #     match.vegan = true
+        # if view_gf
+        #     match.gluten_free = true
         if post_query and post_query.length > 1
             console.log 'searching post_query', post_query
             match.title = {$regex:"#{post_query}", $options: 'i'}
@@ -339,7 +347,7 @@ if Meteor.isServer
             self.added 'results', Random.id(),
                 title: location.title
                 count: location.count
-                model:'location'
+                model:'location_tag'
                 # category:key
                 # index: i
     
@@ -372,11 +380,11 @@ if Meteor.isServer
         
     Meteor.publish 'post_docs', (
         picked_post_tags
-        # title_filter
-        # picked_authors=[]
-        # picked_tasks=[]
-        # picked_locations=[]
-        # picked_timestamp_tags=[]
+        title_filter
+        picked_authors=[]
+        picked_tasks=[]
+        picked_locations=[]
+        picked_timestamp_tags=[]
         # product_query
         # view_vegan
         # view_gf
@@ -401,8 +409,8 @@ if Meteor.isServer
         #     match.local = true
         # if picked_authors.length > 0 then match._author_username = $in:picked_authors
         if picked_post_tags.length > 0 then match.tags = $all:picked_post_tags 
-        # if picked_locations.length > 0 then match.location_title = $in:picked_locations 
-        # if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
+        if picked_locations.length > 0 then match.location_title = $in:picked_locations 
+        if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
         console.log match
         Docs.find match, 
             limit:20

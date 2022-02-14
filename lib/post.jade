@@ -15,8 +15,25 @@ template(name='posts')
                 a.ui.compact.button.pick_post_tag
                     |#{title} 
                     // small.ui.grey.text #{count}
-                    
-        .twelve.wide.column
+            i.big.marker.icon
+            each picked_post_location_tags
+                a.ui.blue.button.unpick_post_location_tag
+                    |#{this}
+            each location_tag_results
+                // if title
+                a.ui.compact.button.pick_post_location_tag
+                    |#{title} 
+                    // small.ui.grey.text #{count}
+            i.big.clock.icon
+            each picked_post_timestamp_tags
+                a.ui.blue.button.unpick_post_timestamp_tag
+                    |#{this}
+            each timestamp_tag_results
+                // if title
+                a.ui.compact.button.pick_post_timestamp_tag
+                    |#{title} 
+                    // small.ui.grey.text #{count}
+        .twelve.wide.column.scrolling
             .ui.centered.stackable.cards
                 each post_docs 
                     +post_card
@@ -34,6 +51,7 @@ template(name='post_card')
                 i.large.lock.icon
             .smallscroll
                 |!{content}
+                |!{body}
                 .ui.label 
                     i.user.icon
                     |#{_author_username}

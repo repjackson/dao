@@ -24,29 +24,29 @@ template(name='home')
                     .ui.inline.header 
                         i.smile.large.grey.icon
                         |emotion
-                    +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
-                    +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
-                    +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
-                    +emotion_mode key='disgust' icon='disgusting' i2='grin tongue squint' color='orange'
-                    +emotion_mode key='fear' icon='scream' i2='tired' color='black'
+                    // +emotion_mode key='joy' icon='happy--v1' i2='smile' color='green'
+                    // +emotion_mode key='sadness' icon='sad--v1' i2='surprise' color='blue'
+                    // +emotion_mode key='anger' icon='angry--v1' i2='frown' color='red'
+                    // +emotion_mode key='disgust' icon='disgusting' i2='grin tongue squint' color='orange'
+                    // +emotion_mode key='fear' icon='scream' i2='tired' color='black'
                     // i.grin.tongue.squint.outline.big.icon
                     // i.surprise.outline.big.icon
                     // i.smile.outline.big.icon
                     // i.frown.outline.big.icon
                     // i.tired.outline.big.icon
-                    each picked_emotions
-                        .ui.black.circular.compact.button.unselect_emotion
-                            |#{this}
-                    each emotion_results
-                        if name
-                            .ui.compact.circular.basic.button.select_emotion
-                                |#{name}
-                +view_mode key='stackexchange' icon='stack exchange disabled'
-                +view_mode key='github' icon='github disabled'
-                +view_mode key='alpha' icon='disabled brain'
-                +view_mode key='porn' icon='mercury'
-                +view_mode key='bitcoin' icon='bitcoin disabled'
-                +view_mode key='covid' icon='covid disabled'
+                    // each picked_emotions
+                    //     .ui.black.circular.compact.button.unselect_emotion
+                    //         |#{this}
+                    // each emotion_results
+                    //     if name
+                    //         .ui.compact.circular.basic.button.select_emotion
+                    //             |#{name}
+                // +view_mode key='stackexchange' icon='stack exchange disabled'
+                // +view_mode key='github' icon='github disabled'
+                // +view_mode key='alpha' icon='disabled brain'
+                // +view_mode key='porn' icon='mercury'
+                // +view_mode key='bitcoin' icon='bitcoin disabled'
+                // +view_mode key='covid' icon='covid disabled'
                 // .spacer
                 .ui.inline.header 
                     i.users.large.grey.icon
@@ -72,19 +72,19 @@ template(name='home')
         .row
             .four.wide.column
                 // .five.wide.right.aligned.column
-                .ui.inline.header alpha
-                unless viewing_doc
-                    each alphas
-                        if response.queryresult
-                            +alpha 
-                    if many_tags
-                        each alpha_singles
-                            if response.queryresult
-                                +alpha 
-                unless viewing_doc
-                    .ui.inline.header duckduckgo
-                    each ducks
-                        +duck 
+                // .ui.inline.header alpha
+                // unless viewing_doc
+                //     each alphas
+                //         if response.queryresult
+                //             +alpha 
+                //     if many_tags
+                //         each alpha_singles
+                //             if response.queryresult
+                //                 +alpha 
+                // unless viewing_doc
+                //     .ui.inline.header duckduckgo
+                //     each ducks
+                //         +duck 
                 // .eleven.wide.column
             .twelve.wide.column
                 .ui.centered.cards
