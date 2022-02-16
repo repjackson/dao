@@ -60,7 +60,7 @@ visual_recognition = new VisualRecognitionV3({
 
 Meteor.methods
     call_tone: (doc_id)->
-        @unblock()
+        # @unblock()
         self = @
         doc = Docs.findOne doc_id
         # if doc.html or doc.body
@@ -87,7 +87,7 @@ Meteor.methods
         # else return
 
     call_visual: (doc_id, field)->
-        @unblock()
+        # @unblock()
         self = @
         doc = Docs.findOne doc_id
         # link = doc["#{field}"]

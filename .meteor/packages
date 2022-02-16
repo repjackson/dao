@@ -18,6 +18,7 @@ meteorhacks:aggregate
 mobile-experience@1.1.0
 
 blaze-html-templates
+lepozepo:cloudinary
 shell-server@0.5.0
 matb33:collection-hooks
 mquandalle:jade
@@ -25,16 +26,6 @@ underscore@1.0.10
 coffeescript
 zimme:active-route
 momentjs:moment
-fourseven:scss
-lepozepo:cloudinary
-constellation:console
-constellation:subscriptions
-constellation:session
-babrahams:temple
 dburles:collection-helpers
-ecmascript@0.14.3
-http@1.4.2
-francocatena:status
-tmeasday:publish-counts
-lamhieu:unblock
+ecmascript
 reactive-var@1.0.11

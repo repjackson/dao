@@ -35,7 +35,7 @@ Meteor.publish 'chat', (title)->
     )
 Meteor.publish 'doc_by_title', (title)->
     # console.log title
-    @unblock()
+    # @unblock()
     Docs.find({
         title:title
         model:'wikipedia'

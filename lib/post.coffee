@@ -169,37 +169,37 @@ if Meteor.isServer
             model:'post'
             _author_id:user._id
     
-    Meteor.publish 'post_count', (
-        picked_post_tags
-        picked_sections
-        post_query
-        view_vegan
-        view_gf
-        )->
-        # @unblock()
+    # Meteor.publish 'post_count', (
+    #     picked_post_tags
+    #     picked_sections
+    #     post_query
+    #     view_vegan
+    #     view_gf
+    #     )->
+    #     # @unblock()
     
-        # console.log picked_post_tags
-        self = @
-        match = {model:'post'}
-        if picked_post_tags.length > 0
-            match.tags = $all: picked_post_tags
-            # sort = 'price_per_serving'
-        # if picked_sections.length > 0
-        #     match.menu_section = $all: picked_sections
-            # sort = 'price_per_serving'
-        # else
-            # match.tags = $nin: ['wikipedia']
-        sort = '_timestamp'
-            # match.source = $ne:'wikipedia'
-        # if view_vegan
-        #     match.vegan = true
-        # if view_gf
-        #     match.gluten_free = true
-        if post_query and post_query.length > 1
-            console.log 'searching post_query', post_query
-            match.title = {$regex:"#{post_query}", $options: 'i'}
-        Counts.publish this, 'post_counter', Docs.find(match)
-        return undefined
+    #     # console.log picked_post_tags
+    #     self = @
+    #     match = {model:'post'}
+    #     if picked_post_tags.length > 0
+    #         match.tags = $all: picked_post_tags
+    #         # sort = 'price_per_serving'
+    #     # if picked_sections.length > 0
+    #     #     match.menu_section = $all: picked_sections
+    #         # sort = 'price_per_serving'
+    #     # else
+    #         # match.tags = $nin: ['wikipedia']
+    #     sort = '_timestamp'
+    #         # match.source = $ne:'wikipedia'
+    #     # if view_vegan
+    #     #     match.vegan = true
+    #     # if view_gf
+    #     #     match.gluten_free = true
+    #     if post_query and post_query.length > 1
+    #         console.log 'searching post_query', post_query
+    #         match.title = {$regex:"#{post_query}", $options: 'i'}
+    #     Counts.publish this, 'post_counter', Docs.find(match)
+    #     return undefined
 
 
 if Meteor.isClient
