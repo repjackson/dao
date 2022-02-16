@@ -381,8 +381,3 @@ Meteor.publish 'dtags', (
         self.ready()
     
         
-                        
-                        
-Cloudinary.config
-    cloud_name: 'facet'
-    api_key: Meteor.settings.private.cloudinary_key
