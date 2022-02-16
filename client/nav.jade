@@ -9,13 +9,13 @@ template(name='nav')
             i.large.bars.icon
         a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
             +i name='yin-yang'
-        a.icon.item.zoomer.mobile.hidden(href="/products" class="{{isActiveRoute 'products'}}")
-            +i name='shop'
+        // a.icon.item.zoomer.mobile.hidden(href="/products" class="{{isActiveRoute 'products'}}")
+        //     +i name='shop'
         a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
             +i name='blog'
             span.mobile.hidden posts
-        a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
-            +i name='tasks'
+        // a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
+        //     +i name='tasks'
         a.icon.item.zoomer.mobile.hidden(href="/users" class="{{isActiveRoute 'users'}}")
             +i name='groups'
 

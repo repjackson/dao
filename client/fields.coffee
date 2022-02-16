@@ -231,6 +231,25 @@ Template.image_edit.events
                         Meteor.users.update parent._id,
                             $set:"#{@key}":res.public_id
                             
+
+    # "change input[name='upload_image']": (e) ->
+    #     files = e.currentTarget.files
+    #     parent = Template.parentData()
+    #     Cloudinary.upload files[0],
+    #         # folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
+    #         # model:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
+    #         (err,res) => #optional callback, you can catch with the Cloudinary collection as well
+    #             if err
+    #                 console.error 'Error uploading', err
+    #             else
+    #                 doc = Docs.findOne parent._id
+    #                 if doc
+    #                     Docs.update parent._id,
+    #                         $set:"#{@key}":res.public_id
+    #                 else 
+    #                     Meteor.users.update parent._id,
+    #                         $set:"#{@key}":res.public_id
+                            
                         
     'click .call_cloud_visual': (e,t)->
         Meteor.call 'call_visual', Router.current().params.doc_id, 'cloud', ->
