@@ -113,6 +113,14 @@ Template.tone.helpers
             when 'tentative' then ' yellow'
             when 'analytical' then ' purple'
 
+
+Template.call_watson.events
+    'click .pull': -> 
+        Meteor.call 'call_watson', Router.current().params.doc_id, 'url','url', ->
+        # Meteor.call 'search_stack', picked_tags.array(), ->
+       
+
+
 # Template.call_watson.events
 #     'click .autotag': ->
 #         # console.log @

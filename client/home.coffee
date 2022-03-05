@@ -607,11 +607,6 @@ Template.pull_reddit.events
     'click .pull': -> 
         Meteor.call 'get_reddit_post', @_id, @reddit_id, ->
         # Meteor.call 'search_stack', picked_tags.array(), ->
-Template.call_watson.events
-    'click .pull': -> 
-        Meteor.call 'call_watson', @_id, 'url','url', ->
-        # Meteor.call 'search_stack', picked_tags.array(), ->
-       
 
 Template.doc.onRendered ->
     # Meteor.setTimeout( =>

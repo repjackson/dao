@@ -423,8 +423,9 @@ Template.registerHelper 'editing_doc', () ->
     Docs.findOne Session.get('editing_id')
 
 Template.registerHelper 'can_edit', () ->
-    if Meteor.user()
-        Meteor.userId() is @_author_id or Meteor.user().admin
+    Meteor.user()
+    # if Meteor.user()
+    #     Meteor.userId() is @_author_id or Meteor.user().admin
     # Meteor.user()
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 Template.registerHelper 'ingredient_products', () -> 

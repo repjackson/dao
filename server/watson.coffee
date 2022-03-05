@@ -127,8 +127,8 @@ Meteor.methods
         )
 
     call_watson: (doc_id, key, mode) ->
-        console.log 'calling watson'
-        @unblock()
+        console.log 'calling watson', doc_id, key, mode
+        # @unblock()
         self = @
         # console.log doc_id
         # console.log key
@@ -139,55 +139,58 @@ Meteor.methods
         #     console.log 'skipping flagged doc', doc.title
         # else
         # console.log 'analyzing', doc.title, 'tags', doc.tags
-        parameters =
-            concepts:
-                limit:20
-            features:
-                entities:
-                    emotion: false
-                    sentiment: false
-                    mentions: false
-                    limit: 20
-                keywords:
-                    emotion: false
-                    sentiment: false
-                    limit: 20
-                concepts: {}
-                categories:
-                    explanation:false
-                emotion: {}
-                metadata: {}
-                # relations: {}
-                # semantic_roles: {}
-                sentiment: {}
-        if doc.domain and doc.domain in ['i.redd.it','i.imgur.com','imgur.com','gyfycat.com','m.youtube.com','v.redd.it','giphy.com','youtube.com','youtu.be']
-            parameters.url = "https://www.reddit.com#{doc.permalink}"
-            parameters.returnAnalyzedText = false
-            parameters.clean = false
-            console.log 'calling image'
-        else 
-            switch mode
-                when 'html'
-                    # parameters.html = doc["#{key}"]
-                    parameters.returnAnalyzedText = true
-                    parameters.html = doc.description
-                when 'text'
-                    parameters.text = doc["#{key}"]
-                when 'url'
-                    # parameters.url = doc["#{key}"]
-                    parameters.url = doc.url
-                    parameters.returnAnalyzedText = true
-                    parameters.clean = true
-                when 'video'
-                    parameters.url = "https://www.reddit.com#{doc.permalink}"
-                    parameters.returnAnalyzedText = false
-                    parameters.clean = true
-                    # console.log 'calling video'
-                when 'image'
-                    parameters.url = "https://www.reddit.com#{doc.permalink}"
-                    parameters.returnAnalyzedText = false
-                    parameters.clean = true
-                    console.log 'calling image'
+        if doc
+            parameters =
+                concepts:
+                    limit:20
+                features:
+                    entities:
+                        emotion: true
+                        sentiment: true
+                        mentions: true
+                        limit: 20
+                    keywords:
+                        emotion: true
+                        sentiment: true
+                        limit: 20
+                    concepts: {}
+                    categories:
+                        explanation:true
+                    emotion: {}
+                    metadata: {}
+                    relations: {}
+                    semantic_roles: {}
+                    sentiment: {}
+        # if doc.domain and doc.domain in ['i.redd.it','i.imgur.com','imgur.com','gyfycat.com','m.youtube.com','v.redd.it','giphy.com','youtube.com','youtu.be']
+        #     parameters.url = "https://www.reddit.com#{doc.permalink}"
+        #     parameters.returnAnalyzedText = false
+        #     parameters.clean = false
+        #     console.log 'calling image'
+        # else 
+        parameters.html = doc.content
+        parameters.returnAnalyzedText = true
+        # switch mode
+        #     when 'html'
+        #         # parameters.html = doc["#{key}"]
+        #         parameters.returnAnalyzedText = true
+        #         parameters.html = doc.description
+        #     when 'text'
+        #         parameters.text = doc["#{key}"]
+        #     when 'url'
+        #         # parameters.url = doc["#{key}"]
+        #         parameters.url = doc.url
+        #         parameters.returnAnalyzedText = true
+        #         parameters.clean = true
+        #     when 'video'
+        #         parameters.url = "https://www.reddit.com#{doc.permalink}"
+        #         parameters.returnAnalyzedText = false
+        #         parameters.clean = true
+        #         # console.log 'calling video'
+        #     when 'image'
+        #         parameters.url = "https://www.reddit.com#{doc.permalink}"
+        #         parameters.returnAnalyzedText = false
+        #         parameters.clean = true
+        #         console.log 'calling image'
 
         # console.log 'parameters', parameters
 
